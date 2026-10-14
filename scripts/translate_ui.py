@@ -34,7 +34,20 @@ def fnv(s):                                   # same hash as the page (UTF-16 co
 
 HASH = {k: fnv(v) for k, v in STR.items()}
 
-def ph_ok(en, tr): return sorted(PH.findall(en)) == sorted(PH.findall(tr))
+import unicodedata
+def _digits(s):
+    norm = ''.join(str(unicodedata.digit(ch)) if ch.isdigit() else ch for ch in s)
+    return re.findall(r'[0-9]+', norm)
+
+def ph_ok(en, tr):
+    """Placeholders must match exactly, and every number in the English text must appear in the
+    translation (catches texts the model attached to the wrong key)."""
+    if sorted(PH.findall(en)) != sorted(PH.findall(tr)): return False
+    have = _digits(tr)
+    for d in _digits(en):
+        if d in have: have.remove(d)
+        else: return False
+    return True
 
 def prompt(lang, chunk):
     L = lang['name']

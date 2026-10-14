@@ -6797,8 +6797,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "2.8", "date": "2026-10-14", "notes": {"he": "Investing.com בזמן אמת: לוח חי עם הדולר מול כל המטבעות, מטבעות עיקריים, קריפטו ולוח אירועים כלכליים.", "ar": "Investing.com لحظيًا: لوحة حيّة للدولار مقابل كل العملات، والعملات الرئيسية، والعملات المشفّرة، والأجندة الاقتصادية.", "en": "Investing.com in real time: a live board with the dollar against every currency, major pairs, crypto and the economic calendar."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.091326';
+var CHANGELOG = [{"v": "2.8.1", "date": "2026-10-14", "notes": {"he": "בדיקת איכות אוטומטית לתרגומים: תרגום שהגיע לטקסט הלא נכון נפסל ומתורגם מחדש.", "ar": "فحص جودة تلقائي للترجمات: الترجمة التي أُلحقت بنص خاطئ تُرفض وتُعاد ترجمتها.", "en": "Automatic quality check for translations: a translation attached to the wrong text is rejected and translated again."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.091630';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -6957,7 +6957,15 @@ function txSrc(){
 }
 function txEnName(c){ try { return new Intl.DisplayNames(['en'], {type: 'language'}).of(c) || c; } catch (e) { return c; } }
 function txNative(c){ const l = LANG_LIST.find(x => x[0] === c); return l ? l[1] : c; }
-function txPhOk(en, tr){ const re = /\{[A-Za-z0-9_]+\}/g, a = (String(en).match(re) || []).sort().join(), b = (String(tr).match(re) || []).sort().join(); return a === b; }
+function txDigits(s){ const Z = [0x30, 0x660, 0x6F0, 0x966, 0x9E6, 0xA66, 0xAE6, 0xB66, 0xBE6, 0xC66, 0xCE6, 0xD66, 0xE50, 0xED0, 0x1040, 0x17E0, 0x1810, 0xFF10];
+  return (String(s).replace(/\p{Nd}/gu, c => { const cp = c.codePointAt(0), z = Z.find(x => cp >= x && cp < x + 10); return z == null ? c : String(cp - z); }).match(/[0-9]+/g) || []); }
+function txPhOk(en, tr){
+  const re = /\{[A-Za-z0-9_]+\}/g, a = (String(en).match(re) || []).sort().join(), b = (String(tr).match(re) || []).sort().join();
+  if (a !== b) return false;
+  const have = txDigits(tr);                       // every number of the English text must survive (catches texts attached to the wrong key)
+  for (const d of txDigits(en)){ const i = have.indexOf(d); if (i < 0) return false; have.splice(i, 1); }
+  return true;
+}
 function txValid(pack, src){
   const out = Object.create(null); if (!pack || !pack.t) return out;
   const h = pack.h || {};
