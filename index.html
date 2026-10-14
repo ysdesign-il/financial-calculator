@@ -983,6 +983,41 @@ a.gold-btn.rc-open{display:inline-flex;align-items:center;justify-content:center
 .tbl tr.tot th,.tbl tr.tot td{font-weight:700;border-top:2px solid var(--line, #ccc)}
 .tb2-f{margin:8px 4px 0}
 #tb2-salary .tbl th,#tb2-salary .tbl td{padding:8px 5px;font-size:.88rem}#tb2-salary .tbl th[scope=row]{white-space:normal}
+/* live sync + system figures */
+.lv-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 6px}
+.lv-head b{font-size:.98rem}
+.lv-pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:.78rem;font-weight:700;border:1px solid var(--line);color:var(--ink-2)}
+.lv-pill i{width:8px;height:8px;border-radius:50%;background:#9aa3ad}
+.lv-pill.on{color:#16855a;border-color:rgba(47,191,134,.55);background:rgba(47,191,134,.1)}
+.lv-pill.on i{background:#2fbf86;box-shadow:0 0 0 0 rgba(47,191,134,.6);animation:lvPulse 2s infinite}
+@keyframes lvPulse{0%{box-shadow:0 0 0 0 rgba(47,191,134,.55)}70%{box-shadow:0 0 0 7px rgba(47,191,134,0)}100%{box-shadow:0 0 0 0 rgba(47,191,134,0)}}
+@media (prefers-reduced-motion: reduce){.lv-pill.on i{animation:none}}
+.lv-rows{display:grid;gap:6px;margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:12px}
+.lv-rows div{display:flex;justify-content:space-between;gap:10px;font-size:.88rem}
+.lv-rows dt{color:var(--ink-2)}.lv-rows dd{margin:0;font-weight:600}
+.lv-rem{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 12px;border-radius:12px;border:1px solid rgba(224,169,58,.6);background:rgba(224,169,58,.08);font-size:.88rem;margin:8px 0}
+.lv-rem span{flex:1 1 180px}
+.fg-src{margin-top:-4px}
+.fg-g{border:1px solid var(--line);border-radius:12px;margin:8px 0;background:var(--surface)}
+.fg-g>summary{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;cursor:pointer;font-weight:700;list-style:none}
+.fg-g>summary::-webkit-details-marker{display:none}
+.fg-g>summary::after{content:'';width:8px;height:8px;border-inline-end:2px solid var(--ink-2);border-bottom:2px solid var(--ink-2);transform:rotate(45deg);margin-inline-start:auto;transition:transform .2s}
+.fg-g[open]>summary::after{transform:rotate(-135deg)}
+.fg-n{font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px;background:rgba(138,92,208,.12);color:#6B46D6}
+.fg-list{display:grid;gap:4px;padding:0 12px 12px}
+.fg-row{display:grid;grid-template-columns:1fr minmax(120px,42%);gap:4px 10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.fg-row:first-child{border-top:0}
+.fg-row label{font-size:.88rem}
+.fg-in{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:10px;padding:0 10px;background:var(--field);min-height:40px}
+.fg-in input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-weight:600;color:var(--ink);padding:8px 0;text-align:end;direction:ltr}
+.fg-in input:focus{outline:none}.fg-in:focus-within{border-color:var(--focus,#1F4FB8);box-shadow:0 0 0 3px rgba(31,79,184,.15)}
+.fg-in .u{font-size:.75rem;color:var(--ink-2);white-space:nowrap}
+.fg-sub{grid-column:1/-1;display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--ink-2);font-size:.78rem}
+.fg-row.mine .fg-in{border-color:rgba(138,92,208,.6);background:rgba(138,92,208,.06)}
+.fg-tag{font-size:.72rem;padding:1px 7px;border-radius:999px;background:rgba(138,92,208,.14);color:#6B46D6}
+.fg-x{border:0;background:none;color:var(--focus,#1F4FB8);font:inherit;font-size:.78rem;cursor:pointer;padding:2px 0;text-decoration:underline}
+.fg-err{grid-column:1/-1;color:#C2412D;font-size:.78rem}
+.fg-own{margin-top:12px;padding:12px 14px;border-radius:12px;border:1px dashed rgba(224,169,58,.7)}
 
 </style>
 </head>
@@ -3306,6 +3341,54 @@ Object.assign(T, {
   r_brTotal:['סך הכול על הרכב','المجموع على السيارة','Total on the car'], r_sCarMarg:['מדרגת המס השולית','الشريحة الضريبية الحدية','Marginal tax bracket'], r_sCarMargV:['מ-{a} ל-{b}','من {a} إلى {b}','{a} to {b}'],
   n_sCarBr:['השווי נוסף מעל השכר, ולכן הוא ממוסה במדרגות הגבוהות שלך. המדרגות של 2026: 10% עד 7,010 ₪, 14% עד 10,060 ₪, 20% עד 19,000 ₪, 31% עד 25,100 ₪, 35% עד 46,690 ₪ ו-47% מעל.','تُضاف القيمة فوق الراتب، لذلك تُفرض عليها الضريبة في شرائحك الأعلى. شرائح 2026: 10% حتى 7,010 ₪، 14% حتى 10,060 ₪، 20% حتى 19,000 ₪، 31% حتى 25,100 ₪، 35% حتى 46,690 ₪ و47% فوق ذلك.','The benefit sits on top of your pay, so it is taxed at your highest brackets. 2026 brackets: 10% up to ₪7,010, 14% up to ₪10,060, 20% up to ₪19,000, 31% up to ₪25,100, 35% up to ₪46,690 and 47% above.']
 });
+Object.assign(T, {
+  /* live data sync */
+  set_sync:['סנכרון חי של הנתונים','مزامنة البيانات المباشرة','Live data sync'],
+  lv_live:['חי','مباشر','Live'], lv_wait:['מתחבר…','جارٍ الاتصال…','Connecting…'],
+  lv_tCloud:['מסונכרן בין כל המכשירים שלך','متزامن بين كل أجهزتك','Synced across all your devices'],
+  lv_tTabs:['מסונכרן בין החלונות במכשיר הזה','متزامن بين النوافذ على هذا الجهاز','Synced between windows on this device'],
+  lv_tLocal:['נשמר במכשיר הזה','محفوظ على هذا الجهاز','Saved on this device'],
+  lv_cloud:['כל שינוי מגיע מיד לכל מכשיר וחלון שבו נכנסת ל-{u}. הנתונים מוצפנים בסיסמה שלך לפני שהם יוצאים מהמכשיר, ורק אתה יכול לראות ולשנות אותם. גם בעל האפליקציה לא רואה אותם.','كل تغيير يصل فورًا إلى كل جهاز ونافذة دخلت فيها إلى {u}. تُشفَّر البيانات بكلمة مرورك قبل خروجها من الجهاز، وأنت وحدك يمكنك رؤيتها وتعديلها. حتى مالك التطبيق لا يراها.','Every change reaches every device and window where you are signed in to {u} right away. Your data is encrypted with your password before it leaves the device, and only you can see and change it. Not even the app owner can see it.'],
+  lv_tabs:['כל שינוי מגיע מיד לחלונות אחרים במכשיר הזה, והנתונים מוצפנים בסיסמה שלך. לאתר אין שרת, ולכן סנכרון בין מכשירים עובד באפליקציה בתוך Claude. להעברה חד-פעמית יש "מעבר לטלפון חדש".','كل تغيير يصل فورًا إلى النوافذ الأخرى على هذا الجهاز، والبيانات مشفّرة بكلمة مرورك. لا يوجد خادم للموقع، لذلك تعمل المزامنة بين الأجهزة في التطبيق داخل Claude. للنقل لمرة واحدة استخدم "الانتقال إلى هاتف جديد".','Every change reaches other windows on this device right away, encrypted with your password. The website has no server, so syncing between devices works in the app inside Claude. For a one-time move, use "Move to a new phone".'],
+  lv_tabsIn:['כל שינוי מגיע מיד לחלונות אחרים במכשיר הזה, והנתונים מוצפנים בסיסמה שלך. החיבור לענן הפרטי שלך עדיין לא זמין, ולכן הסנכרון בין מכשירים ימשיך כשהוא יחזור.','كل تغيير يصل فورًا إلى النوافذ الأخرى على هذا الجهاز، والبيانات مشفّرة بكلمة مرورك. الاتصال بسحابتك الخاصة غير متاح بعد، وستستمر المزامنة بين الأجهزة عند عودته.','Every change reaches other windows on this device right away, encrypted with your password. Your private cloud is not reachable yet; syncing between devices resumes when it is.'],
+  lv_local:['הנתונים נשמרים רק במכשיר הזה ומתעדכנים מיד בין חלונות פתוחים. אף אחד אחר לא רואה אותם. כדי להצפין אותם ולסנכרן בין מכשירים, צרו חשבון או היכנסו.','تُحفظ البيانات على هذا الجهاز فقط وتتحدث فورًا بين النوافذ المفتوحة. لا يراها أحد غيرك. لتشفيرها ومزامنتها بين الأجهزة، أنشئ حسابًا أو سجّل الدخول.','Your data stays on this device only and updates right away between open windows. Nobody else sees it. To encrypt it and sync between devices, create an account or sign in.'],
+  lv_in:['עדכון אחרון שהתקבל','آخر تحديث وصل','Last update received'], lv_out:['נשמר וסונכרן לאחרונה','آخر حفظ ومزامنة','Last saved and synced'], lv_never:['עדיין לא','ليس بعد','Not yet'],
+  lv_what:['מה מסתנכרן: הגדרות ועיצוב, ערכים במחשבונים, תרחישים, הוצאות חודשיות, לקוחות, רשימות (הלוואות, חלוקות, הצעות עבודה ומחירים) ונתוני מערכת ששינית. המסך שפתוח נשאר נפרד בכל חלון.','ما تتم مزامنته: الإعدادات والمظهر، قيم الحاسبات، السيناريوهات، المصاريف الشهرية، العملاء، القوائم (القروض، التقسيمات، عروض العمل والأسعار) وبيانات النظام التي عدّلتها. الشاشة المفتوحة تبقى منفصلة في كل نافذة.','What syncs: settings and look, calculator values, scenarios, monthly expenses, clients, lists (loans, splits, job offers and prices) and system figures you changed. The open screen stays separate in each window.'],
+  lv_remOff:['ערכים שמקלידים במחשבונים לא נשמרים כרגע, ולכן גם לא מסתנכרנים.','القيم التي تكتبها في الحاسبات لا تُحفظ حاليًا، لذلك لا تتم مزامنتها.','Values you type in calculators are not saved right now, so they do not sync.'],
+  lv_remOn:['לשמור ולסנכרן גם אותם','حفظها ومزامنتها أيضًا','Save and sync them too'], lv_remDone:['ערכי המחשבונים נשמרים ומסתנכרנים','تُحفظ قيم الحاسبات وتتم مزامنتها','Calculator values now save and sync'],
+  lv_now:['סנכרון עכשיו','مزامنة الآن','Sync now'], lv_done:['הנתונים מסונכרנים','البيانات متزامنة','Your data is in sync'], lv_toAcc:['לכניסה או ליצירת חשבון','لتسجيل الدخول أو إنشاء حساب','Sign in or create an account'],
+  lv_gotDev:['עודכן ממכשיר אחר','تم التحديث من جهاز آخر','Updated from another device'], lv_gotWin:['עודכן מחלון אחר','تم التحديث من نافذة أخرى','Updated from another window'],
+  lv_keyErr:['הסיסמה שונתה בחלון או במכשיר אחר, ולכן אי אפשר לפתוח את העדכונים כאן. צאו והיכנסו שוב עם הסיסמה החדשה.','تم تغيير كلمة المرور في نافذة أو جهاز آخر، لذلك لا يمكن فتح التحديثات هنا. اخرج وادخل مجددًا بكلمة المرور الجديدة.','The password was changed in another window or device, so updates can\'t be opened here. Sign out and sign in again with the new password.'],
+  lv_pwMoved:['הסיסמה שונתה במכשיר אחר. היכנסו עם הסיסמה החדשה.','تم تغيير كلمة المرور على جهاز آخر. ادخل بكلمة المرور الجديدة.','The password was changed on another device. Sign in with the new password.'],
+  /* system figures */
+  set_figs:['נתוני מערכת: חיים וניתנים לשינוי','بيانات النظام: مباشرة وقابلة للتعديل','System figures: live and editable'],
+  fg_intro:['הנתונים הרשמיים מתעדכנים לבד, בלי לחכות לגרסה חדשה. אפשר לשנות כל נתון לעצמך: השינוי נשמר רק אצלך (מוצפן בחשבון אם נכנסת), לא גלוי לאף אחד אחר, וכל החישובים משתמשים בו מיד.','تتحدث البيانات الرسمية تلقائيًا دون انتظار إصدار جديد. يمكنك تعديل أي قيمة لنفسك: يُحفظ التعديل عندك فقط (مشفّرًا في الحساب إن سجّلت الدخول)، ولا يراه أحد غيرك، وتستخدمه كل الحسابات فورًا.','Official figures update by themselves, without waiting for a new version. You can change any of them for yourself: the change is kept only for you (encrypted in your account when signed in), visible to nobody else, and every calculation uses it right away.'],
+  fg_src:['מקור הנתונים הרשמיים: {s}','مصدر البيانات الرسمية: {s}','Official figures from: {s}'], fg_srcBuilt:['ערכי 2026 המובנים','قيم 2026 المضمّنة','the built-in 2026 values'], fg_srcLive:['עדכון חי מבעל האפליקציה','تحديث مباشر من مالك التطبيق','a live update from the app owner'],
+  fg_boiSrc:['ריבית ומדד: בנק ישראל והלמ"ס, חי','الفائدة والمؤشر: بنك إسرائيل ودائرة الإحصاء، مباشر','Rate and CPI: Bank of Israel and CBS, live'],
+  fg_nOv:['שינית {n} נתונים','عدّلت {n} قيم','You changed {n} figures'], fg_none:['כל הנתונים רשמיים','كل القيم رسمية','All figures are official'], fg_gN:['{n} שונו','{n} معدّلة','{n} changed'],
+  fg_resetAll:['החזרת הכול לרשמי','إعادة الكل إلى الرسمي','Reset all to official'], fg_resetDone:['כל הנתונים חזרו לרשמיים','عادت كل القيم إلى الرسمية','All figures are back to official'],
+  fg_off:['רשמי: {v}','رسمي: {v}','Official: {v}'], fg_back:['חזרה לרשמי','العودة إلى الرسمي','Back to official'], fg_mine:['שלך','قيمتك','Yours'],
+  fg_bad:['ערך לא תקין','قيمة غير صالحة','Invalid value'], fg_badOrder:['המדרגה צריכה להיות בין המדרגה הקודמת לבאה','يجب أن تكون الشريحة بين السابقة والتالية','Must sit between the previous and the next bracket'],
+  fg_warn:['החישוב משתמש בנתוני מערכת ששינית בהגדרות ({n}).','يستخدم الحساب بيانات نظام عدّلتها في الإعدادات ({n}).','This uses system figures you changed in settings ({n}).'],
+  fg_g_tax:['מס הכנסה','ضريبة الدخل','Income tax'], fg_g_ni:['ביטוח לאומי ומס בריאות','التأمين الوطني وضريبة الصحة','National Insurance and health tax'], fg_g_work:['שכר, קצבאות וחיסכון','الأجور والمخصصات والادخار','Pay, benefits and savings'], fg_g_car:['רכב מהעבודה','سيارة العمل','Work car'], fg_g_market:['ריבית, מדד ומע"מ','الفائدة والمؤشر وضريبة القيمة المضافة','Interest, CPI and VAT'],
+  fg_tb:['מדרגה {n}: עד','الشريحة {n}: حتى','Bracket {n}: up to'], fg_tr:['מדרגה {n}: שיעור המס','الشريحة {n}: نسبة الضريبة','Bracket {n}: tax rate'],
+  fg_point:['שווי נקודת זיכוי','قيمة نقطة الاستحقاق','Credit point value'], fg_pensCr:['זיכוי על הפרשה לפנסיה','خصم على إيداع التقاعد','Pension contribution credit'], fg_pensDep:['הפרשה מזכה לפנסיה (מהשכר)','الإيداع التقاعدي المؤهل (من الراتب)','Qualifying pension contribution (of pay)'], fg_pensCap:['תקרת שכר לזיכוי פנסיה','سقف الراتب لخصم التقاعد','Pay cap for the pension credit'],
+  fg_surFrom:['מס יסף: מהכנסה של','الضريبة الإضافية: من دخل','Surtax: from income of'], fg_surRate:['מס יסף: שיעור','الضريبة الإضافية: النسبة','Surtax: rate'],
+  fg_niCut:['ביטוח לאומי: סף השיעור המופחת','التأمين الوطني: حد النسبة المخفضة','NI: reduced-rate threshold'], fg_niMax:['ביטוח לאומי: תקרת הכנסה','التأمين الوطني: سقف الدخل','NI: income ceiling'],
+  fg_niLow:['ביטוח לאומי לעובד: שיעור מופחת','التأمين الوطني للعامل: نسبة مخفضة','Employee NI: reduced rate'], fg_niHigh:['ביטוח לאומי לעובד: שיעור מלא','التأمين الوطني للعامل: نسبة كاملة','Employee NI: full rate'],
+  fg_hLow:['מס בריאות: שיעור מופחת','ضريبة الصحة: نسبة مخفضة','Health tax: reduced rate'], fg_hHigh:['מס בריאות: שיעור מלא','ضريبة الصحة: نسبة كاملة','Health tax: full rate'],
+  fg_erNiLow:['ביטוח לאומי למעסיק: מופחת','التأمين الوطني للمشغّل: مخفض','Employer NI: reduced'], fg_erNiHigh:['ביטוח לאומי למעסיק: מלא','التأمين الوطني للمشغّل: كامل','Employer NI: full'],
+  fg_minHour:['שכר מינימום לשעה','الحد الأدنى للأجر بالساعة','Minimum hourly wage'], fg_hishCap:['תקרת שכר לקרן השתלמות','سقف الراتب لصندوق الاستكمال','Study fund pay cap'], fg_hishErMax:['הפרשת מעסיק פטורה להשתלמות','إيداع المشغّل المعفى للاستكمال','Tax-free employer study fund rate'],
+  fg_hishSelfCap:['השתלמות לעצמאי: תקרת הכנסה','الاستكمال للمستقل: سقف الدخل','Self-employed study fund: income cap'], fg_hishSelfCG:['השתלמות לעצמאי: תקרת הפקדה פטורה','الاستكمال للمستقل: سقف الإيداع المعفى','Self-employed study fund: tax-free deposit cap'],
+  fg_childDep:['חיסכון לכל ילד: הפקדה בחודש','ادخار لكل ولد: إيداع شهري','Savings for every child: monthly deposit'], fg_unMax1:['דמי אבטלה: תקרה ליום (125 ימים ראשונים)','مخصص البطالة: سقف يومي (أول 125 يومًا)','Unemployment: daily cap (first 125 days)'], fg_unMax2:['דמי אבטלה: תקרה ליום (אחר כך)','مخصص البطالة: سقف يومي (بعد ذلك)','Unemployment: daily cap (after that)'], fg_matMaxDay:['דמי לידה: תקרה ליום','مخصص الولادة: سقف يومي','Maternity pay: daily cap'],
+  fg_carPct:['שווי שימוש: אחוז ממחיר המחירון','قيمة الاستخدام: نسبة من سعر القائمة','Car benefit: share of the list price'], fg_carCap:['שווי שימוש: תקרת מחיר','قيمة الاستخدام: سقف السعر','Car benefit: price cap'], fg_carHy:['הפחתה לרכב היברידי','خصم للسيارة الهجينة','Hybrid reduction'], fg_carPl:['הפחתה לפלאג-אין','خصم للهجينة القابلة للشحن','Plug-in reduction'], fg_carEv:['הפחתה לרכב חשמלי','خصم للسيارة الكهربائية','Electric reduction'],
+  fg_boi:['ריבית בנק ישראל','فائدة بنك إسرائيل','Bank of Israel rate'], fg_prime:['תוספת הפריים מעל הריבית','هامش البرايم فوق الفائدة','Prime margin over the rate'], fg_cpi:['אינפלציה ב-12 חודשים','التضخم خلال 12 شهرًا','12-month inflation'], fg_vat:['מע"מ','ضريبة القيمة المضافة','VAT'],
+  fg_u_m:['₪ לחודש','₪ شهريًا','₪ a month'], fg_u_y:['₪ לשנה','₪ سنويًا','₪ a year'], fg_u_d:['₪ ליום','₪ يوميًا','₪ a day'], fg_u_h:['₪ לשעה','₪ للساعة','₪ an hour'],
+  fg_ownT:['לבעל האפליקציה בלבד','لمالك التطبيق فقط','For the app owner only'],
+  fg_pubS:['הערכים ששינית יהפכו לרשמיים לכל מי שפותח את האפליקציה ב-Claude, מיד ובלי גרסה חדשה. ריבית ומדד ממשיכים להגיע מבנק ישראל.','ستصبح القيم التي عدّلتها رسمية لكل من يفتح التطبيق في Claude، فورًا ودون إصدار جديد. تستمر الفائدة والمؤشر من بنك إسرائيل.','The figures you changed become official for everyone who opens the app in Claude, right away and without a new version. Rate and CPI keep coming from the Bank of Israel.'],
+  fg_pub:['פרסום הנתונים שלי כרשמיים לכולם','نشر قيمي كرسمية للجميع','Publish my figures as official for everyone'], fg_unpub:['החזרה לערכים המובנים לכולם','إعادة القيم المضمّنة للجميع','Back to the built-in values for everyone'],
+  fg_pubSure:['לחיצה נוספת תשנה לכולם','نقرة أخرى تغيّر للجميع','Tap again to change it for everyone'], fg_pubOk:['פורסם לכולם','تم النشر للجميع','Published for everyone'], fg_unpubOk:['כולם חזרו לערכים המובנים','عاد الجميع إلى القيم المضمّنة','Everyone is back to the built-in values'], fg_pubErr:['הפרסום נכשל. נסו שוב.','فشل النشر. حاول مجددًا.','Publishing failed. Try again.']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -3321,8 +3404,11 @@ const pk = k => FUSER ? k + ':' + ENC_NAME(FUSER) : k;
 const WK = k => 'w:' + pk(k);
 var persistTimer = null;
 function persistSoon(){ clearTimeout(persistTimer); persistTimer = setTimeout(() => { persistNow(); }, 600); }
+var LIVE_ID = (() => { try { return Array.from(crypto.getRandomValues(new Uint8Array(8)), x => x.toString(16).padStart(2, '0')).join(''); } catch (e) { return String(Math.random()).slice(2, 18); } })();
+var LIVE_APPLYING = false, LIVE_FORCE = false, LIVE_SEALED = '', LIVE_SEAL_AT = 0;
+function liveTouch(k){ if (LIVE_APPLYING || !FUSER) return; try { const ts = JSON.parse(SS.getItem(WK('__ts')) || '{}') || {}; ts[k] = Date.now(); SS.setItem(WK('__ts'), JSON.stringify(ts)); } catch (e) {} }
 const LS = FUSER
-  ? {getItem: k => SS.getItem(WK(k)), setItem: (k, v) => { SS.setItem(WK(k), v); persistSoon(); }, removeItem: k => { SS.removeItem(WK(k)); persistSoon(); }}
+  ? {getItem: k => SS.getItem(WK(k)), setItem: (k, v) => { v = String(v); if (SS.getItem(WK(k)) === v) return; SS.setItem(WK(k), v); liveTouch(k); persistSoon(); }, removeItem: k => { if (SS.getItem(WK(k)) == null) return; SS.removeItem(WK(k)); liveTouch(k); persistSoon(); }}
   : {getItem: k => RAWLS.getItem(k), setItem: (k, v) => RAWLS.setItem(k, v), removeItem: k => RAWLS.removeItem(k)};
 const DATA_KEYS = ['fin-set', 'fin-vals', 'fin-scn', 'fin-lang', 'fin-cur', 'fin-tab', 'fin-exp', 'fin-clients'];
 let RATES = {"USD":1,"AED":3.6725,"AFN":64.924614,"ALL":81.907653,"AMD":362.201696,"ANG":1.79,"AOA":928.339731,"ARS":1515.8766,"AUD":1.436501,"AWG":1.79,"AZN":1.699787,"BAM":1.750825,"BBD":2,"BDT":123.198998,"BGN":1.750825,"BHD":0.376,"BIF":3001.103523,"BMD":1,"BND":1.280792,"BOB":11.842148,"BRL":4.989911,"BSD":1,"BTN":95.913362,"BWP":13.974043,"BYN":3.011836,"BZD":2,"CAD":1.427373,"CDF":2312.138431,"CHF":0.834009,"CLF":0.024719,"CLP":977.033618,"CNH":6.694513,"CNY":6.70582,"COP":3198.099135,"CRC":455.303365,"CUP":24,"CVE":98.707321,"CZK":21.829017,"DJF":177.721,"DKK":6.684975,"DOP":60.873077,"DZD":134.631082,"EGP":52.658715,"ERN":15,"ETB":161.476064,"EUR":0.895156,"FJD":2.248408,"FKP":0.75643,"FOK":6.686339,"GBP":0.756615,"GEL":2.596409,"GGP":0.75643,"GHS":11.772815,"GIP":0.75643,"GMD":74.559797,"GNF":8800.490983,"GTQ":7.64477,"GYD":209.038401,"HKD":7.847659,"HNL":26.838812,"HRK":6.744754,"HTG":130.923287,"HUF":326.831837,"IDR":17924.343507,"ILS":3.076893,"IMP":0.75643,"INR":95.90693,"IQD":1508.260905,"IRR":1718298.042257,"ISK":122.079821,"JEP":0.75643,"JMD":158.979857,"JOD":0.709,"JPY":158.544079,"KES":129.690434,"KGS":87.469028,"KHR":4054.023004,"KID":1.43646,"KMF":440.40102,"KRW":1333.744079,"KWD":0.311015,"KYD":0.833333,"KZT":450.740106,"LAK":22218.824732,"LBP":89500,"LKR":330.778402,"LRD":170.808183,"LSL":16.543726,"LYD":6.423041,"MAD":9.71107,"MDL":17.871956,"MGA":4526.158467,"MKD":54.573615,"MMK":2098.574459,"MNT":3603.898415,"MOP":8.083243,"MRU":40.200665,"MUR":47.506193,"MVR":15.441956,"MWK":1742.182803,"MXN":18.293254,"MYR":4.083336,"MZN":63.723629,"NAD":16.543726,"NGN":1331.44261,"NIO":36.792486,"NOK":9.573394,"NPR":153.461379,"NZD":1.788691,"OMR":0.384497,"PAB":1,"PEN":3.434509,"PGK":4.407143,"PHP":62.786942,"PKR":276.919098,"PLN":3.92703,"PYG":5715.389721,"QAR":3.64,"RON":4.772581,"RSD":104.934937,"RUB":84.043643,"RWF":1477.750986,"SAR":3.75,"SBD":7.984757,"SCR":14.458129,"SDG":454.209545,"SEK":10.031647,"SGD":1.280778,"SHP":0.75643,"SLE":24.587682,"SLL":24587.681848,"SOS":571.628492,"SRD":37.649374,"SSP":5751.002658,"STN":21.931976,"SYP":121.714922,"SZL":16.543726,"THB":33.618266,"TJS":9.23153,"TMT":3.499779,"TND":3.006979,"TOP":2.392271,"TRY":49.355625,"TTD":6.785624,"TVD":1.43646,"TWD":31.958914,"TZS":2633.373235,"UAH":44.965677,"UGX":4004.878818,"UYU":40.220831,"UZS":11887.066267,"VES":876.7976,"VND":25897.062624,"VUV":119.457954,"WST":2.749526,"XAF":587.20136,"XCD":2.7,"XCG":1.79,"XDR":0.739486,"XOF":587.20136,"XPF":106.823942,"YER":236.158165,"ZAR":16.544146,"ZMW":20.088454,"ZWG":26.6492,"ZWL":26.6492};
@@ -3734,6 +3820,8 @@ Object.assign(ICON, {prime: ic('<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2
 /* ================= field builders ================= */
 /* ---- settings icons (24px, stroke style) ---- */
 const SICO = {
+  set_sync:'<path d="M20 12a8 8 0 0 1-13.7 5.7M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4M6 21v-4h4"/>',
+  set_figs:'<path d="M4 19V5M4 19h16"/><path d="M8 15l3-4 3 2 5-6"/><circle cx="19" cy="7" r="1.2"/>',
   set_account:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
   set_look:'<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/>',
   set_lang:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
@@ -4514,6 +4602,8 @@ function settingsPanelHTML(){
     <div class="perm" id="perm" role="status"><span class="perm-dot"></span><div><b id="perm_t"></b><small id="perm_s"></small></div></div>
     ${sec('set_account', accountHTML())}
     ${sec('set_security', '<div id="sec_box" class="sec-box"></div>')}
+    ${sec('set_sync', '<div id="lv_box" class="lv-box" aria-live="polite"></div>')}
+    ${sec('set_figs', '<div id="fg_box" class="fg-box"></div>')}
     ${SETDEFS.slice(0, 2).map(([k, fs]) => sec(k, (k === 'set_look' ? '<div class="skins" id="skins" role="radiogroup" data-ia="f_theme"></div>' : '') + fl(fs))).join('')}
     ${sec('set_clock', '<div class="cstyles" id="cstyles" role="radiogroup" data-ia="set_clock"></div><div class="fields">' + [
       SEL('set_clock24','f_clock24','1',[['1','o_24h'],['0','o_12h']]),
@@ -6686,7 +6776,7 @@ function calcInflation(){
 }
 Object.assign(CALC, {inflation: calcInflation});
 /* --- interest & prime (Israel: prime = Bank of Israel rate + 1.5%) --- */
-const PRIME_SPREAD = 1.5;
+var PRIME_SPREAD = 1.5;
 function calcPrime(){
   const mode = $('#pr_mode').value, amt = Math.max(0, v('pr_amt'));
   const boi = Math.max(0, v('pr_boi')), prime = boi + PRIME_SPREAD, margin = v('pr_margin');
@@ -7355,13 +7445,19 @@ async function sealMap(name, rawB64, map){
   const iv = rnd(12);
   const key = await crypto.subtle.importKey('raw', u8(rawB64), 'AES-GCM', false, ['encrypt']);
   const ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, key, new TextEncoder().encode(JSON.stringify(map)));
-  RAWLS.setItem(encName(name), JSON.stringify({iv: b64(iv), ct: b64(ct)}));
+  const at = Date.now();
+  RAWLS.setItem(encName(name), JSON.stringify({iv: b64(iv), ct: b64(ct), at, by: LIVE_ID}));
+  LIVE_SEAL_AT = at;
 }
 async function persistNow(){
   if (!FUSER) return;
   const ek = SS.getItem('fin-ek'); if (!ek) return;
   const map = {}; DATA_KEYS.forEach(k => { const v = SS.getItem(WK(k)); if (v != null) map[k] = v; });
-  try { await sealMap(FUSER, ek, map); } catch (e) {}
+  const ts = SS.getItem(WK('__ts')); if (ts) map.__ts = ts;
+  const j = JSON.stringify(map);
+  if (!LIVE_FORCE && j === LIVE_SEALED && RAWLS.getItem(encName(FUSER))) return;     // nothing new: leave newer copies from other windows alone
+  LIVE_FORCE = false;
+  try { await sealMap(FUSER, ek, map); LIVE_SEALED = j; } catch (e) {}
 }
 /* unlock = decrypt stored data into the per-tab working copy, then start the session */
 async function unlockSession(name, pw, rec, seed){
@@ -7468,7 +7564,7 @@ panelsEl.addEventListener('click', e => {
     const sfx = ':' + ENC_NAME(FUSER), nm = FUSER;
     try { RAWLS.removeItem(accKey(nm)); RAWLS.removeItem(encName(nm)); RAWLS.removeItem('fin-fail:' + accKey(nm)); DATA_KEYS.forEach(k => RAWLS.removeItem(k + sfx)); } catch (err) {}
     (async () => {
-      try { if (!HD.ready) await hdInit(); if (HD.ready){ const s = await HD.db.doc('claims/' + HD.uid).get(); if (s.exists && (s.data() || {}).handle === nm) await HD.db.doc('claims/' + HD.uid).delete(); } } catch (err) {}
+      try { if (!HD.ready) await hdInit(); if (HD.ready){ const s = await HD.db.doc('claims/' + HD.uid).get(); if (s.exists && await claimIs(s.data(), nm)) await HD.db.doc('claims/' + HD.uid).delete(); } } catch (err) {}
       clearSession(); try { location.reload(); } catch (err) {}
     })();
   }
@@ -8344,6 +8440,15 @@ binStart();
 var HD = {db: null, uid: null, ready: false};
 const hdNorm = s => String(s || '').trim().replace(/^@+/, '').normalize('NFKC').toLowerCase();
 const hdValid = s => /^[\p{L}][\p{L}\p{N}_.]{2,19}$/u.test(s) && !/[._]{2}/.test(s) && !/[._]$/.test(s);
+/* the shared list keeps only a fingerprint of each name, never the name itself, so nobody can read who signed up */
+async function hdHash(s){ const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('fincalc-handle-v1:' + hdNorm(s))); return Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join(''); }
+async function claimIs(d, nm){ if (!d || !nm) return false; if (d.handle) return d.handle === hdNorm(nm); return !!d.hh && d.hh === await hdHash(nm); }
+async function hdClean(d){ if (!d || !d.handle) return d; const o = Object.assign({}, d, {hh: await hdHash(d.handle)}); delete o.handle; return o; }
+async function hdHits(claims, name){
+  const hh = await hdHash(name), seen = new Set();
+  const [a, b] = await Promise.all([claims.where('hh', '==', hh).get(), claims.where('handle', '==', hdNorm(name)).get()]);
+  return (a.docs || []).concat(b.docs || []).filter(d => !seen.has(d.id) && seen.add(d.id));
+}
 const hdLockId = s => 'h_' + Array.from(new TextEncoder().encode(s)).map(b => b.toString(16).padStart(2, '0')).join('');
 function hdMsg(k, p, ok){ const m = $('#hd_msg'); if (m){ m.textContent = k ? t(k, p) : ''; m.className = 'hd-msg' + (ok ? ' ok' : k ? ' bad' : ''); } }
 function hdShow(){
@@ -8361,22 +8466,24 @@ async function hdInit(){
     const uid = await user.id(); if (!uid) return;
     HD = {db, uid, ready: true};
     const s = await db.doc('claims/' + uid).get();
-    const h = s.exists && s.data() && s.data().handle;
+    const d = s.exists ? (s.data() || {}) : null;
+    let h = '';
+    if (d && d.handle){ h = d.handle; try { await db.doc('claims/' + uid).set(await hdClean(d)); } catch (e) {} }   // older claims kept the name in clear
+    else if (d && d.hh){ for (const c of [MY_HANDLE, FUSER]) if (c && await hdHash(c) === d.hh){ h = hdNorm(c); break; } }
     if (h !== MY_HANDLE){ MY_HANDLE = h || ''; hdShow(); }
   } catch (e) { /* stays local */ }
 }
 async function hdClaim(name){
   try {
-    const claims = HD.db.collection('claims');
-    const hits = await claims.where('handle', '==', name).get();
-    if (hits.docs.some(d => d.id !== HD.uid)) return 'taken';
-    const cur = await HD.db.doc('claims/' + HD.uid).get();
-    const prev = cur.exists ? (cur.data() || {}).handle : '', at = Date.now();
-    const pd = cur.exists ? (cur.data() || {}) : {};
-    await HD.db.doc('claims/' + HD.uid).set(Object.assign({handle: name, at}, pd.handle === name && pd.mh ? {mh: pd.mh, mat: pd.mat || at} : {}));
-    const again = await claims.where('handle', '==', name).get();
-    const rival = again.docs.find(d => d.id !== HD.uid && (+(d.data() || {}).at < at || (+(d.data() || {}).at === at && d.id < HD.uid)));
-    if (rival){ if (prev) await HD.db.doc('claims/' + HD.uid).set({handle: prev, at: Date.now()}); else await HD.db.doc('claims/' + HD.uid).delete(); return 'taken'; }
+    const claims = HD.db.collection('claims'), hh = await hdHash(name);
+    const hits = await hdHits(claims, name);
+    if (hits.some(d => d.id !== HD.uid)) return 'taken';
+    const cur = await HD.db.doc('claims/' + HD.uid).get(), at = Date.now();
+    const pd = cur.exists ? (cur.data() || {}) : null, same = pd && await claimIs(pd, name);
+    await HD.db.doc('claims/' + HD.uid).set(Object.assign({hh, at}, same && pd.mh ? {mh: pd.mh, mat: pd.mat || at} : {}));
+    const again = await hdHits(claims, name);
+    const rival = again.find(d => d.id !== HD.uid && (+(d.data() || {}).at < at || (+(d.data() || {}).at === at && d.id < HD.uid)));
+    if (rival){ if (pd) await HD.db.doc('claims/' + HD.uid).set(await hdClean(pd)); else await HD.db.doc('claims/' + HD.uid).delete(); return 'taken'; }
     MY_HANDLE = name;
     return 'ok';
   } catch (e) { return e && e.code === 'invalid_argument' ? 'noWrite' : 'err'; }
@@ -8391,15 +8498,15 @@ async function hdSave(){
   hdMsg('hd_checking');
   try {
     const claims = HD.db.collection('claims');
-    const hits = await claims.where('handle', '==', name).get();
-    if (hits.docs.some(d => d.id !== HD.uid)) return hdMsg('hd_taken', {n: '@' + name});
+    const hits = await hdHits(claims, name);
+    if (hits.some(d => d.id !== HD.uid)) return hdMsg('hd_taken', {n: '@' + name});
     const prev = MY_HANDLE, at = Date.now();
-    await HD.db.doc('claims/' + HD.uid).set({handle: name, at});
+    await HD.db.doc('claims/' + HD.uid).set({hh: await hdHash(name), at});
     // each person writes only their own claim, so settle a simultaneous pick: the earlier claim keeps the name
-    const again = await claims.where('handle', '==', name).get();
-    const rival = again.docs.find(d => d.id !== HD.uid && (+(d.data() || {}).at < at || (+(d.data() || {}).at === at && d.id < HD.uid)));
+    const again = await hdHits(claims, name);
+    const rival = again.find(d => d.id !== HD.uid && (+(d.data() || {}).at < at || (+(d.data() || {}).at === at && d.id < HD.uid)));
     if (rival){
-      if (prev) await HD.db.doc('claims/' + HD.uid).set({handle: prev, at: Date.now()}); else await HD.db.doc('claims/' + HD.uid).delete();
+      if (prev) await HD.db.doc('claims/' + HD.uid).set({hh: await hdHash(prev), at: Date.now()}); else await HD.db.doc('claims/' + HD.uid).delete();
       return hdMsg('hd_taken', {n: '@' + name});
     }
     MY_HANDLE = name; if (q) q.value = ''; hdShow();
@@ -8597,11 +8704,14 @@ async function siteRates(){
   } catch (e) { /* not a standalone site */ }
 }
 setTimeout(siteRates, 1200);
-setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
+setInterval(() => { if (!document.hidden) siteRates(); }, 5 * 60000);
+var siteRatesAt = Date.now();
+document.addEventListener('visibilitychange', () => { if (!document.hidden && SITE_RATES && Date.now() - siteRatesAt > 60000){ siteRatesAt = Date.now(); siteRates(); } });
+window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "5.3", "date": "2026-10-14", "notes": {"he": "ברכב מהעבודה במחשבון השכר: טבלת מדרגות המס על שווי הרכב. רואים כמה מהשווי נופל בכל מדרגה, כמה מס משלמים בה, ביטוח לאומי ומס בריאות, ומאיזו מדרגה שולית לאיזו הרכב מעביר אותך.", "ar": "في سيارة العمل بحاسبة الراتب: جدول شرائح الضريبة على قيمة السيارة. ترى كم من القيمة يقع في كل شريحة وكم ضريبة تدفع فيها، والتأمين الوطني وضريبة الصحة، ومن أي شريحة حدية إلى أي شريحة تنقلك السيارة.", "en": "Work car in the salary calculator: a tax bracket table for the car benefit. See how much of it falls in each bracket, the tax there, National Insurance and health tax, and which marginal bracket the car moves you into."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.173614';
+var CHANGELOG = [{"v": "5.4", "date": "2026-10-14", "notes": {"he": "נתונים חיים: כל שינוי מגיע מיד לחלונות ולמכשירים שלך, מוצפן ופרטי. בהגדרות נוסף \"נתוני מערכת: חיים וניתנים לשינוי\" – מדרגות מס, ביטוח לאומי, שכר מינימום, רכב, ריבית ומע\"מ מתעדכנים לבד, ואפשר לשנות כל נתון לעצמך. רשימת שמות המשתמשים נשמרת רק כטביעה מוצפנת.", "ar": "بيانات مباشرة: كل تغيير يصل فورًا إلى نوافذك وأجهزتك، مشفّرًا وخاصًا. أُضيف في الإعدادات \"بيانات النظام: مباشرة وقابلة للتعديل\" – شرائح الضريبة والتأمين الوطني والحد الأدنى للأجور والسيارة والفائدة وضريبة القيمة المضافة تتحدث تلقائيًا، ويمكنك تعديل أي قيمة لنفسك. قائمة أسماء المستخدمين تُحفظ كبصمة مشفّرة فقط.", "en": "Live data: every change reaches your windows and devices right away, encrypted and private. New in settings, \"System figures: live and editable\": tax brackets, National Insurance, minimum wage, car, interest and VAT update by themselves, and you can change any figure for yourself. The username list now keeps only encrypted fingerprints."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.192721';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -8683,10 +8793,10 @@ renderStamp = function(){ _rsUpd.apply(this, arguments); updRender(); };
 
 /* ---- settings: a clear hub of categories, each opening its own page ---- */
 var SET_CATS = [
-  {id: 'account', c: 'c-blue',   ic: 'set_account', g: 0, secs: ['set_account']},
+  {id: 'account', c: 'c-blue',   ic: 'set_account', g: 0, secs: ['set_account', 'set_sync']},
   {id: 'security', c: 'c-red',   ic: 'set_security', g: 0, secs: ['set_security']},
   {id: 'display', c: 'c-violet', ic: 'set_look',    g: 1, secs: ['set_look', 'set_clock', 'set_lang', 'set_numbers', 'set_tabs']},
-  {id: 'calc',    c: 'c-gold',   ic: 'set_calc',    g: 1, secs: ['set_calc', 'set_profile', 'set_curBy']},
+  {id: 'calc',    c: 'c-gold',   ic: 'set_calc',    g: 1, secs: ['set_calc', 'set_figs', 'set_profile', 'set_curBy']},
   {id: 'conn',    c: 'c-green',  ic: 'set_live',    g: 2, secs: ['set_live', 'set_ai']},
   {id: 'system',  c: 'c-gray',   ic: 'set_upd',     g: 3, secs: ['set_upd', 'set_data']}
 ];
@@ -9259,10 +9369,13 @@ async function mvCloudInit(){
 function mvDoc(name){ return MV.db.collection('data/users/' + MV.uid).doc('acc-' + txHash(String(name).toLowerCase())); }
 async function mvCloudSave(){
   if (!FUSER || MV.dead || !(await mvCloudInit())) return;
+  if (typeof LIVE === 'object' && LIVE.started && !LIVE.pulled) return;    // pull before pushing, so an old copy never overwrites a newer one
   const pkg = await mvPackage(); if (MV.dead) return; if (!pkg || pkg === MV.last) return;
-  try { await mvDoc(FUSER).set({p: pkg, at: Date.now()}); MV.last = pkg;  } catch (e) {  }
+  const sig = RAWLS.getItem(encName(FUSER)) + '|' + RAWLS.getItem(accKey(FUSER));
+  if (sig === MV.sig) return;
+  try { const at = Date.now(); await mvDoc(FUSER).set({p: pkg, at, by: LIVE_ID}); MV.last = pkg; MV.sig = sig; if (typeof LIVE === 'object'){ LIVE.outAt = at; LIVE.cloudAt = Math.max(LIVE.cloudAt || 0, at); if (typeof lvRender === 'function') lvRender(); } } catch (e) {  }
 }
-persistNow = async function(){ await persistNow0.apply(this, arguments); if (FUSER && IN_CLAUDE){ clearTimeout(MV.timer); MV.timer = setTimeout(mvCloudSave, 20000); } };
+persistNow = async function(){ await persistNow0.apply(this, arguments); if (FUSER && IN_CLAUDE){ clearTimeout(MV.timer); MV.timer = setTimeout(mvCloudSave, 1500); } else if (FUSER && typeof LIVE === 'object'){ LIVE.outAt = Date.now(); if (typeof lvRender === 'function') lvRender(); } };
 async function mvCloudGet(name){ if (!(await mvCloudInit())) return null; try { const d = await mvDoc(name).get(); return d && d.exists ? mvParse((d.data() || {}).p) : null; } catch (e) { return null; } }
 /* inside Claude: signing in on a new phone finds the account in the cloud by itself */
 const doLogin0 = doLogin;
@@ -9276,7 +9389,7 @@ doLogin = async function(){
   }
   return doLogin0.apply(this, arguments);
 };
-if (FUSER && IN_CLAUDE) setTimeout(async () => { await mvCloudInit(); mvCloudSave(); }, 2500);
+if (FUSER && IN_CLAUDE) setTimeout(() => { if (typeof liveCloudStart === 'function') liveCloudStart(); else mvCloudInit().then(mvCloudSave); }, 1200);
 
 /* one "new phone" panel: send from this phone ↔ receive on the new phone, with a personal one-time code */
 const MV_ABC = '23456789ABCDEFGHJKMNPQRSTUVWXYZ', MV_TTL = 15 * 60000;
@@ -9441,7 +9554,7 @@ async function doDelete(){
           else if (id === 'sec-' + h || id === 'kick-' + h || (id.indexOf('sess-') === 0 && x.a === h)) await col.doc(id).delete(); } } catch (e) { if (listed) fail = true; }
       if (!listed && MV.cloudKey){ try { await col.doc(MV.cloudKey).delete(); } catch (e) { fail = true; } }
     }
-    if (!fail) try { if (!HD.ready) await hdInit(); if (HD.ready){ const ref = HD.db.doc('claims/' + HD.uid), s = await ref.get(); if (s.exists && (s.data() || {}).handle === nm) await ref.delete(); } } catch (e) { fail = true; }
+    if (!fail) try { if (!HD.ready) await hdInit(); if (HD.ready){ const ref = HD.db.doc('claims/' + HD.uid), s = await ref.get(); if (s.exists && await claimIs(s.data(), nm)) await ref.delete(); } } catch (e) { fail = true; }
     if (fail){ MV.dead = false; delReady(); return delSt('del_cloudFail', 'bad'); }
   }
   const sfx = ':' + ENC_NAME(nm);
@@ -9795,11 +9908,11 @@ async function rcClaimMail(mh){
   if (!HD.ready) return 'skip';
   try {
     const ref = HD.db.doc('claims/' + HD.uid), cur = await ref.get(), d = cur.exists ? (cur.data() || {}) : null;
-    if (!d || d.handle !== FUSER) return 'skip';
-    const mat = Date.now(); await ref.set(Object.assign({}, d, {mh, mat}));
+    if (!d || !(await claimIs(d, FUSER))) return 'skip';
+    const mat = Date.now(); await ref.set(Object.assign({}, await hdClean(d), {mh, mat}));
     const again = await HD.db.collection('claims').where('mh', '==', mh).get();
     const rival = (again.docs || []).find(x => x.id !== HD.uid && (+((x.data() || {}).mat) || 0) <= mat);
-    if (rival){ const dd = Object.assign({}, d); delete dd.mh; delete dd.mat; await ref.set(dd); return 'taken'; }
+    if (rival){ const dd = Object.assign({}, await hdClean(d)); delete dd.mh; delete dd.mat; await ref.set(dd); return 'taken'; }
     return 'ok';
   } catch (e) { return 'err'; }
 }
@@ -9807,7 +9920,7 @@ async function rcUnclaimMail(){
   if (!IN_CLAUDE) return;
   try { if (!HD.ready) await hdInit(); if (!HD.ready) return;
     const ref = HD.db.doc('claims/' + HD.uid), cur = await ref.get(); if (!cur.exists) return;
-    const d = Object.assign({}, cur.data() || {}); if (d.handle !== FUSER || !d.mh) return;
+    const d = Object.assign({}, await hdClean(cur.data() || {})); if (!(await claimIs(d, FUSER)) || !d.mh) return;
     delete d.mh; delete d.mat; await ref.set(d); } catch (e) {}
 }
 /* accounts that set an email before this change get their fingerprint on the next sign-in */
@@ -10228,6 +10341,327 @@ const _alSe = applyLang;
 applyLang = function(){ const r = _alSe.apply(this, arguments); seRender(); return r; };
 seRender();
 if (tab === 'salary') calc(tab);
+
+/* ================= live data: each change reaches your other windows and devices right away, encrypted and private ================= */
+var LIVE = {pulled: false, inAt: 0, outAt: 0, cloudAt: 0, cloudSeen: false, started: false, key: null, keyFor: '', q: new Set(), qT: null, qSrc: '', typedAt: 0, err: '', hash0: ''};
+try { const b = JSON.parse(RAWLS.getItem(FUSER ? encName(FUSER) : '') || 'null'); if (b && b.at) LIVE_SEAL_AT = +b.at; } catch (e) {}
+try { if (FUSER) LIVE.hash0 = (getAcc(FUSER) || {}).hash || ''; } catch (e) {}
+document.addEventListener('input', () => { LIVE.typedAt = Date.now(); }, true);
+document.addEventListener('focusout', () => { if (LIVE.q.size) setTimeout(liveFlush, 60); }, true);
+function liveMode(){ return FUSER ? (IN_CLAUDE && MV.ok ? 'cloud' : 'tabs') : 'local'; }
+function liveBusy(){
+  const a = document.activeElement;
+  const typing = a && a !== document.body && ((a.tagName === 'INPUT' && !/^(checkbox|radio|range|button|submit)$/.test(a.type)) || a.tagName === 'TEXTAREA' || a.isContentEditable);
+  return !!typing && Date.now() - LIVE.typedAt < 5000;
+}
+function liveQueue(keys, src){ keys.forEach(k => LIVE.q.add(k)); LIVE.qSrc = src || LIVE.qSrc; liveFlush(); }
+function liveFlush(){
+  clearTimeout(LIVE.qT);
+  if (!LIVE.q.size) return;
+  if (liveBusy()){ LIVE.qT = setTimeout(liveFlush, 1200); return; }      // never pull the text out from under your fingers
+  const keys = [...LIVE.q], src = LIVE.qSrc; LIVE.q.clear(); LIVE.qSrc = '';
+  LIVE_APPLYING = true;
+  try { liveApplyKeys(keys); } catch (e) {} finally { LIVE_APPLYING = false; }
+  LIVE.inAt = Date.now();
+  try { toast(t(src === 'cloud' ? 'lv_gotDev' : 'lv_gotWin')); } catch (e) {}
+  lvRender();
+}
+var LV_DEFK = ['fee', 'pens', 'study', 'erPens', 'erSev', 'erStudy', 'loanRate', 'invRate', 'cpi', 'infl', 'gainTax', 'dealer', 'buyer', 'dtax', 'deptime', 'capkind'];
+function liveApplyKeys(keys){
+  const has = k => keys.includes(k);
+  if (has('fin-set')){
+    let sv = {}; try { sv = JSON.parse(LS.getItem('fin-set') || '{}') || {}; } catch (e) {}
+    const old = SET;
+    SET = Object.assign(cloneDef(), sv); SET.prof = Object.assign({}, SET_DEF.prof, sv.prof || {});
+    const ch = Object.keys(Object.assign({}, old, SET)).filter(k => JSON.stringify(old[k]) !== JSON.stringify(SET[k]));
+    try { applyTheme(); } catch (e) {}
+    try { if (typeof applySize === 'function') applySize(); } catch (e) {}
+    if (ch.some(k => LV_DEFK.includes(k))) try { applyDefaults(); } catch (e) {}
+    if (ch.some(k => ['order', 'hidden', 'pins', 'sort', 'favCur'].includes(k))) try { rebuildNav(); } catch (e) {}
+    if (ch.includes('autoRef')) try { schedRef(); } catch (e) {}
+    if (ch.includes('figOv') && typeof figApply === 'function') figApply(false);
+    [typeof lcRender === 'function' && lcRender, typeof spRender === 'function' && spRender, typeof joRender === 'function' && joRender,
+     typeof upRender === 'function' && upRender, typeof seRender === 'function' && seRender, typeof fgRender === 'function' && fgRender].forEach(f => { if (f) try { f(); } catch (e) {} });
+  }
+  if (has('fin-lang')){ const l = LS.getItem('fin-lang'); if (l && l !== lang && LANG_LIST.some(x => x[0] === l)) lang = l; }
+  if (has('fin-cur')){ const c = LS.getItem('fin-cur'); if (c && RATES[c] && c !== baseCur) try { setBase(c); } catch (e) {} }
+  if (has('fin-scn')){ try { SCN = JSON.parse(LS.getItem('fin-scn') || '{}') || {}; } catch (e) {} }
+  if (has('fin-vals') && SET.remember === '1'){
+    let o = {}; try { o = JSON.parse(LS.getItem('fin-vals') || '{}') || {}; } catch (e) {}
+    TOUCHED = String(o.__touched || '').split(',').filter(x => TABS.includes(x)); delete o.__touched;
+    const a = document.activeElement; if (a && a.id && o[a.id] != null && liveBusy()) delete o[a.id];
+    try { setVals(o); } catch (e) {}
+  }
+  if (has('fin-exp')){ EXP = null; if (tab === 'expenses') try { expRender(); } catch (e) {} }
+  if (has('fin-clients')){ CL = null; if (tab === 'clients') try { clRender(); } catch (e) {} }
+  if (has('fin-set') || has('fin-lang') || has('fin-cur') || has('fin-vals') || has('fin-scn')){ try { applyLang(true); } catch (e) { try { calc(tab); } catch (e2) {} } }
+}
+/* same device, guest: plain storage events */
+window.addEventListener('storage', e => {
+  try {
+    if (!e.key) return;
+    if (!FUSER){ if (DATA_KEYS.includes(e.key) && e.key !== 'fin-tab') liveQueue([e.key], 'tab'); return; }
+    if (e.key === encName(FUSER) && e.newValue) liveFromBlob(e.newValue, 'tab');
+    else if (e.key === accKey(FUSER) && e.newValue){
+      const r = JSON.parse(e.newValue || 'null');
+      if (r && LIVE.hash0 && r.hash !== LIVE.hash0) livePwMoved(null);     // the password changed in another window
+    }
+  } catch (err) {}
+});
+async function liveKey(){
+  const ek = SS.getItem('fin-ek'); if (!ek) return null;
+  if (LIVE.keyFor !== ek){ LIVE.key = await crypto.subtle.importKey('raw', u8(ek), 'AES-GCM', false, ['decrypt']); LIVE.keyFor = ek; }
+  return LIVE.key;
+}
+async function liveFromBlob(str, src, at){
+  let blob; try { blob = typeof str === 'string' ? JSON.parse(str) : str; } catch (e) { return false; }
+  if (!blob || !blob.ct || blob.by === LIVE_ID) return false;
+  let map;
+  try { const key = await liveKey(); if (!key) return false; map = JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name: 'AES-GCM', iv: u8(blob.iv)}, key, u8(blob.ct)))); }
+  catch (e) { LIVE.err = 'key'; lvRender(); return false; }
+  LIVE.err = '';
+  liveMerge(map, src);
+  return true;
+}
+function liveMerge(map, src){
+  let lts = {}, rts = {};
+  try { lts = JSON.parse(SS.getItem(WK('__ts')) || '{}') || {}; } catch (e) {}
+  try { rts = JSON.parse(map.__ts || '{}') || {}; } catch (e) {}
+  const changed = []; let mine = false;
+  DATA_KEYS.forEach(k => {
+    if (k === 'fin-tab') return;                              // each window keeps its own screen
+    const rv = map[k], lv = SS.getItem(WK(k));
+    if (rv === lv) return;
+    const rt = +rts[k] || 0, lt = +lts[k] || 0;
+    if (rv == null){ if (lv != null) mine = true; return; }
+    if (rt >= lt){ SS.setItem(WK(k), rv); lts[k] = rt; changed.push(k); }
+    else mine = true;                                          // what this window changed is newer
+  });
+  if (changed.length || mine) SS.setItem(WK('__ts'), JSON.stringify(lts));
+  if (changed.length) liveQueue(changed, src);
+  if (mine){ LIVE_FORCE = true; persistSoon(); }
+  else if (changed.length && src === 'cloud') persistNow0();   // keep this device's sealed copy current, without echoing back
+}
+/* other devices: your private, encrypted copy in the cloud (inside Claude) */
+async function liveCloudStart(){
+  if (LIVE.started || !FUSER || !IN_CLAUDE) return;
+  LIVE.started = true;
+  if (!(await mvCloudInit())){ lvRender(); return; }
+  try { await liveFromCloud(await mvDoc(FUSER).get()); } catch (e) {}
+  if (LIVE.pulled && !LIVE.cloudSeen) mvCloudSave();           // first time: put this device's copy there
+  try { mvDoc(FUSER).onSnapshot(d => { liveFromCloud(d); }, () => {}); } catch (e) {}
+  lvRender();
+}
+async function liveFromCloud(d){
+  if (!d) return;
+  LIVE.pulled = true;                                          // this device has seen the cloud copy, so it may now send its own
+  if (!d.exists) return;
+  const x = d.data() || {}; LIVE.cloudSeen = true;
+  if (x.by === LIVE_ID || !(+x.at > LIVE.cloudAt)) return;
+  LIVE.cloudAt = +x.at;
+  const pkg = mvParse(x.p); if (!pkg || hdNorm(pkg.name) !== hdNorm(FUSER)) return;
+  const loc = getAcc(FUSER) || {};
+  if (pkg.rec && pkg.rec.hash !== loc.hash){
+    if ((+pkg.rec.pwAt || 0) > (+loc.pwAt || 0)) return livePwMoved(pkg);
+    return;                                                    // this device holds the newer password; it reaches the cloud next save
+  }
+  if (pkg.rec){ let add = false; Object.keys(pkg.rec).forEach(k => { if (loc[k] == null && pkg.rec[k] != null){ loc[k] = pkg.rec[k]; add = true; } }); if (add) try { RAWLS.setItem(accKey(FUSER), JSON.stringify(loc)); } catch (e) {} }
+  await liveFromBlob(pkg.enc, 'cloud', +pkg.at || +x.at);
+}
+function livePwMoved(pkg){
+  if (pkg){ try { RAWLS.setItem(accKey(pkg.name), JSON.stringify(pkg.rec)); RAWLS.setItem(encName(pkg.name), JSON.stringify(pkg.enc)); } catch (e) {} }
+  try { SS.setItem('fin-pwmoved', '1'); } catch (e) {}
+  clearSession(); try { location.reload(); } catch (e) {}
+}
+try { if (SS.getItem('fin-pwmoved')){ SS.removeItem('fin-pwmoved'); setTimeout(() => { try { toast(t('lv_pwMoved')); accMsg('lv_pwMoved'); } catch (e) {} }, 900); } } catch (e) {}
+/* changing the password stamps the time, so other devices know which one is newer */
+const doChangeLv = doChange;
+doChange = async function(){
+  const h0 = (getAcc(FUSER) || {}).hash;
+  const r = await doChangeLv.apply(this, arguments);
+  const rec = getAcc(FUSER);
+  if (rec && rec.hash !== h0){ rec.pwAt = Date.now(); try { RAWLS.setItem(accKey(FUSER), JSON.stringify(rec)); } catch (e) {} LIVE.hash0 = rec.hash; LIVE.key = null; LIVE_FORCE = true; persistNow(); }
+  return r;
+};
+async function liveNow(){
+  LIVE_FORCE = true;
+  try { await persistNow0(); } catch (e) {}
+  if (FUSER && IN_CLAUDE){ MV.sig = ''; try { await mvCloudSave(); const d = await mvDoc(FUSER).get(); LIVE.cloudAt = 0; await liveFromCloud(d); } catch (e) {} }
+  else if (!FUSER){ LIVE.outAt = Date.now(); }
+  LIVE.outAt = LIVE.outAt || Date.now();
+  lvRender(); toast(t('lv_done'));
+}
+function lvAgo(ts){ return ts ? (typeof secAgo === 'function' ? secAgo(ts) : new Date(ts).toLocaleTimeString()) : t('lv_never'); }
+function lvRender(){
+  const box = $('#lv_box'); if (!box) return;
+  const m = liveMode(), on = m !== 'cloud' || MV.ok;
+  const msg = m === 'cloud' ? t('lv_cloud', {u: '@' + FUSER}) : m === 'tabs' ? t(IN_CLAUDE ? 'lv_tabsIn' : 'lv_tabs') : t('lv_local');
+  let h = `<div class="lv-head"><span class="lv-pill ${on ? 'on' : ''}"><i></i>${asEsc(t(on ? 'lv_live' : 'lv_wait'))}</span><b>${asEsc(t(m === 'cloud' ? 'lv_tCloud' : m === 'tabs' ? 'lv_tTabs' : 'lv_tLocal'))}</b></div>`;
+  h += `<p class="fine lv-msg">${asEsc(msg)}</p>`;
+  if (LIVE.err === 'key') h += `<p class="warn">${asEsc(t('lv_keyErr'))}</p>`;
+  h += `<dl class="lv-rows"><div><dt>${asEsc(t('lv_in'))}</dt><dd>${asEsc(lvAgo(LIVE.inAt))}</dd></div>${FUSER ? `<div><dt>${asEsc(t('lv_out'))}</dt><dd>${asEsc(lvAgo(LIVE.outAt))}</dd></div>` : ''}</dl>`;
+  h += `<p class="fine">${asEsc(t('lv_what'))}</p>`;
+  if (SET.remember !== '1') h += `<div class="lv-rem"><span>${asEsc(t('lv_remOff'))}</span><button type="button" class="mv wide" id="lv_rem">${asEsc(t('lv_remOn'))}</button></div>`;
+  h += `<div class="btnrow">${FUSER ? `<button type="button" class="mv wide" id="lv_now">${asEsc(t('lv_now'))}</button>` : `<button type="button" class="mv wide" id="lv_acc">${asEsc(t('lv_toAcc'))}</button>`}</div>`;
+  box.innerHTML = h;
+}
+document.addEventListener('click', e => {
+  if (e.target.closest('#lv_now')) liveNow();
+  else if (e.target.closest('#lv_rem')){ SET.remember = '1'; saveSet(); saveVals(); const s = $('#set_remember'); if (s) s.value = '1'; lvRender(); toast(t('lv_remDone')); }
+  else if (e.target.closest('#lv_acc')){ const top = $('.set-sec[data-sk="set_account"]'); if (top) top.scrollIntoView({behavior: 'smooth', block: 'start'}); }
+});
+setInterval(() => { if (tab === 'settings' && !document.hidden) lvRender(); }, 20000);
+lvRender();
+
+/* ================= system figures: official values update live, and you can change any of them for yourself ================= */
+var FG_LIST = [], FG_BY = {}, FG_BUILT = {}, FG_OFF = {}, FG_SRC = {src: 'built', at: 0, n: 0}, FG_MARKET = ['boi', 'cpi'];
+function fgAdd(id, g, u, get, set, lab, p){ const f = {id, g, u, get, set, lab: lab || 'fg_' + id, p}; FG_LIST.push(f); FG_BY[id] = f; }
+for (let i = 0; i < 5; i++) fgAdd('tb' + (i + 1), 'tax', 'm', () => TAX.brackets[i][0] / 12, v => { TAX.brackets[i][0] = v * 12; }, 'fg_tb', {n: i + 1});
+for (let i = 0; i < 6; i++) fgAdd('tr' + (i + 1), 'tax', 'p', () => TAX.brackets[i][1] * 100, v => { TAX.brackets[i][1] = v / 100; }, 'fg_tr', {n: i + 1});
+fgAdd('point', 'tax', 'm', () => TAX.point / 12, v => { TAX.point = v * 12; });
+fgAdd('pensCr', 'tax', 'p', () => TAX.pensCreditRate * 100, v => { TAX.pensCreditRate = v / 100; });
+fgAdd('pensDep', 'tax', 'p', () => TAX.pensDepRate * 100, v => { TAX.pensDepRate = v / 100; });
+fgAdd('pensCap', 'tax', 'm', () => TAX.pensSalaryCap, v => { TAX.pensSalaryCap = v; });
+fgAdd('surFrom', 'tax', 'y', () => TAX.surtaxFrom, v => { TAX.surtaxFrom = v; });
+fgAdd('surRate', 'tax', 'p', () => TAX.surtaxRate * 100, v => { TAX.surtaxRate = v / 100; });
+[['niCut', 'm'], ['niMax', 'm']].forEach(([k, u]) => fgAdd(k, 'ni', u, () => TAX[k], v => { TAX[k] = v; }));
+['niLow', 'niHigh', 'hLow', 'hHigh', 'erNiLow', 'erNiHigh'].forEach(k => fgAdd(k, 'ni', 'p', () => TAX[k] * 100, v => { TAX[k] = v / 100; }));
+if (typeof IL26 === 'object'){
+  [['minHour', 'h'], ['hishCap', 'm'], ['hishSelfCap', 'y'], ['hishSelfCG', 'y'], ['childDep', 'm'], ['unMax1', 'd'], ['unMax2', 'd'], ['matMaxDay', 'd']].forEach(([k, u]) => fgAdd(k, 'work', u, () => IL26[k], v => { IL26[k] = v; }));
+  fgAdd('hishErMax', 'work', 'p', () => IL26.hishErMax * 100, v => { IL26.hishErMax = v / 100; });
+  fgAdd('carPct', 'car', 'p', () => IL26.carPct * 100, v => { IL26.carPct = v / 100; });
+  fgAdd('carCap', 'car', 'i', () => IL26.carCap, v => { IL26.carCap = v; });
+  [['carHy', 'hybrid'], ['carPl', 'plugin'], ['carEv', 'ev']].forEach(([id, k]) => fgAdd(id, 'car', 'm', () => IL26.carDed[k], v => { IL26.carDed[k] = v; }));
+  fgAdd('vat', 'market', 'p', () => IL26.vat * 100, v => { IL26.vat = v / 100; });
+}
+fgAdd('boi', 'market', 'p', () => MKT.boi, v => { MKT.boi = v; });
+fgAdd('prime', 'market', 'p', () => PRIME_SPREAD, v => { PRIME_SPREAD = v; });
+fgAdd('cpi', 'market', 'p', () => MKT.cpi, v => { MKT.cpi = v; });
+var FG_GROUPS = ['tax', 'ni', 'work', 'car', 'market'];
+const fgR = x => Math.round(x * 1e6) / 1e6;
+FG_LIST.forEach(f => { FG_BUILT[f.id] = FG_OFF[f.id] = fgR(f.get()); });
+function fgOv(){ return SET.figOv && typeof SET.figOv === 'object' ? SET.figOv : {}; }
+function fgOvCount(){ const o = fgOv(); return Object.keys(o).filter(k => FG_BY[k] && isFinite(+o[k])).length; }
+function figApply(recalc){
+  const ov = fgOv();
+  FG_LIST.forEach(f => { const v = ov[f.id] != null && isFinite(+ov[f.id]) ? +ov[f.id] : FG_OFF[f.id]; if (isFinite(v)) try { f.set(v); } catch (e) {} });
+  if (recalc !== false){ try { if (tab === 'home' && typeof renderMarket === 'function') renderMarket(); else if (tab !== 'settings') calc(tab); } catch (e) {} }
+  fgRender();
+}
+/* official values: built in, then refreshed live (the app owner's updates, Bank of Israel and CPI) */
+function figOfficialSet(d, src){
+  FG_LIST.forEach(f => { if (!FG_MARKET.includes(f.id)) FG_OFF[f.id] = FG_BUILT[f.id]; });
+  const v = d && d.v && typeof d.v === 'object' ? d.v : {};
+  let n = 0;
+  Object.keys(v).forEach(id => { if (FG_BY[id] && !FG_MARKET.includes(id) && isFinite(+v[id]) && +v[id] >= 0){ FG_OFF[id] = +v[id]; n++; } });
+  FG_SRC = {src: n ? src : 'built', at: +(d && d.asOf) || 0, n};
+  figApply(true);
+}
+const applyMacroFg = applyMacro;
+applyMacro = function(d){
+  MKT.boi = FG_OFF.boi; MKT.cpi = FG_OFF.cpi;                 // let the official feed see the official numbers
+  const r = applyMacroFg.apply(this, arguments);
+  FG_OFF.boi = fgR(+MKT.boi); FG_OFF.cpi = fgR(+MKT.cpi);
+  figApply(true);
+  return r;
+};
+(async () => {
+  if (!IN_CLAUDE) return;
+  try { const db = await window.claude.use('db'); if (!db) return; FG_DB = db;
+    db.doc('rates/figures').onSnapshot(s => { figOfficialSet(s && s.exists ? s.data() : null, 'db'); }, () => {}); } catch (e) {}
+})();
+var FG_DB = null, FG_SITE_AT = 0;
+async function figSite(){
+  if (IN_CLAUDE) return;
+  try { const r = await fetch('figures.json?v=' + Math.floor(Date.now() / 300000), {cache: 'no-store'}); if (!r.ok) return; const d = await r.json(); FG_SITE_AT = Date.now(); if (d && typeof d === 'object') figOfficialSet(d, 'site'); } catch (e) {}
+}
+setTimeout(figSite, 1500);
+setInterval(() => { if (!document.hidden) figSite(); }, 5 * 60000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden && FG_SITE_AT && Date.now() - FG_SITE_AT > 60000) figSite(); });
+/* calculators that rely on these figures say so when you changed any */
+var FG_SKIP = ['home', 'settings', 'convert', 'percent', 'expenses', 'clients', 'split', 'discount', 'unitprice', 'workdays', 'appliance', 'compound', 'yield', 'dividends', 'evfuel'];
+const showFg = show;
+show = function(id, res){
+  const n = fgOvCount();
+  if (n && res && !FG_SKIP.includes(id)) res = Object.assign({}, res, {warn: (res.warn || []).concat(t('fg_warn', {n}))});
+  return showFg.call(this, id, res);
+};
+function fgFmt(x){ return isFinite(x) ? N(x, null, 4) : '—'; }
+function fgUnit(u){ return u === 'p' ? '%' : u === 'i' ? '₪' : t('fg_u_' + u); }
+function fgVal(f, x){ return fgFmt(x) + (f.u === 'p' ? '%' : ' ' + fgUnit(f.u)); }
+var FG_OPEN = {};
+function fgRender(){
+  const box = $('#fg_box'); if (!box) return;
+  if (box.contains(document.activeElement) && document.activeElement.tagName === 'INPUT') return;   // don't redraw under your cursor
+  const ov = fgOv(), n = fgOvCount();
+  const srcTxt = FG_SRC.src === 'built' ? t('fg_srcBuilt') : t('fg_srcLive') + (FG_SRC.at ? ' · ' + lvAgo(FG_SRC.at) : '');
+  let h = `<div class="lv-head"><span class="lv-pill on"><i></i>${asEsc(t('lv_live'))}</span><b>${asEsc(n ? t('fg_nOv', {n}) : t('fg_none'))}</b></div>`;
+  h += `<p class="fine">${asEsc(t('fg_intro'))}</p><p class="fine fg-src">${asEsc(t('fg_src', {s: srcTxt}))} · ${asEsc(t('fg_boiSrc'))}</p>`;
+  if (n) h += `<div class="btnrow"><button type="button" class="mv wide" id="fg_resetAll">${asEsc(t('fg_resetAll'))}</button></div>`;
+  FG_GROUPS.forEach(g => {
+    const items = FG_LIST.filter(f => f.g === g); if (!items.length) return;
+    const gn = items.filter(f => ov[f.id] != null).length;
+    h += `<details class="fg-g" data-fgg="${g}"${FG_OPEN[g] ? ' open' : ''}><summary><span>${asEsc(t('fg_g_' + g))}</span>${gn ? `<span class="fg-n">${asEsc(t('fg_gN', {n: gn}))}</span>` : ''}</summary><div class="fg-list">`;
+    items.forEach(f => {
+      const mine = ov[f.id] != null && isFinite(+ov[f.id]), cur = mine ? +ov[f.id] : FG_OFF[f.id];
+      h += `<div class="fg-row${mine ? ' mine' : ''}" data-fg="${f.id}"><label for="fg_${f.id}">${asEsc(t(f.lab, f.p))}</label>
+        <div class="fg-in"><input id="fg_${f.id}" data-fgi="${f.id}" inputmode="decimal" autocomplete="off" value="${asEsc(String(fgR(cur)))}"><span class="u">${asEsc(fgUnit(f.u))}</span></div>
+        <small class="fg-sub"><span>${asEsc(t('fg_off', {v: fgVal(f, FG_OFF[f.id])}))}</span>${mine ? `<b class="fg-tag">${asEsc(t('fg_mine'))}</b><button type="button" class="fg-x" data-fgx="${f.id}">↺ ${asEsc(t('fg_back'))}</button>` : ''}</small>
+        <small class="fg-err" id="fge_${f.id}" hidden></small></div>`;
+    });
+    h += '</div></details>';
+  });
+  if (IN_CLAUDE && typeof PERM !== 'undefined' && PERM === 'owner'){
+    h += `<div class="fg-own"><b>${asEsc(t('fg_ownT'))}</b><p class="fine">${asEsc(t('fg_pubS'))}</p><div class="btnrow"><button type="button" class="gold-btn" id="fg_pub">${asEsc(t('fg_pub'))}</button>${FG_SRC.n ? `<button type="button" class="mv wide" id="fg_unpub">${asEsc(t('fg_unpub'))}</button>` : ''}</div><p class="fine" id="fg_pubMsg"></p></div>`;
+  }
+  box.innerHTML = h;
+}
+function fgCheck(f, v){
+  if (!isFinite(v) || v < 0 || (f.u === 'p' && v > 100)) return 'fg_bad';
+  const m = /^tb(\d)$/.exec(f.id);
+  if (m){ const i = +m[1], prev = i > 1 ? FG_BY['tb' + (i - 1)].get() : 0, next = i < 5 ? FG_BY['tb' + (i + 1)].get() : Infinity; if (!(v > prev && v < next)) return 'fg_badOrder'; }
+  return '';
+}
+var FG_T = null;
+document.addEventListener('input', e => {
+  const inp = e.target.closest && e.target.closest('[data-fgi]'); if (!inp) return;
+  clearTimeout(FG_T);
+  FG_T = setTimeout(() => {
+    const f = FG_BY[inp.dataset.fgi]; if (!f) return;
+    const raw = String(inp.value).replace(/[^\d.,-]/g, '').replace(',', '.'), v = parseFloat(raw), er = $('#fge_' + f.id);
+    const bad = raw === '' ? '' : fgCheck(f, v);
+    if (er){ er.hidden = !bad; er.textContent = bad ? t(bad) : ''; }
+    if (bad || raw === '') return;
+    const ov = Object.assign({}, fgOv());
+    if (Math.abs(v - FG_OFF[f.id]) < 1e-9) delete ov[f.id]; else ov[f.id] = fgR(v);
+    SET.figOv = ov; saveSet(); figApply(false);
+    const row = inp.closest('.fg-row'); if (row) row.classList.toggle('mine', ov[f.id] != null);
+  }, 450);
+});
+document.addEventListener('focusout', e => { if (e.target.closest && e.target.closest('[data-fgi]')) setTimeout(() => { if (!$('#fg_box') || !$('#fg_box').contains(document.activeElement)) fgRender(); }, 600); }, true);
+document.addEventListener('toggle', e => { const d = e.target; if (d && d.classList && d.classList.contains('fg-g')) FG_OPEN[d.dataset.fgg] = d.open; }, true);
+document.addEventListener('click', async e => {
+  const x = e.target.closest('[data-fgx]');
+  if (x){ const ov = Object.assign({}, fgOv()); delete ov[x.dataset.fgx]; SET.figOv = ov; saveSet(); figApply(false); return; }
+  if (e.target.closest('#fg_resetAll')){ SET.figOv = {}; saveSet(); figApply(false); toast(t('fg_resetDone')); return; }
+  const pb = e.target.closest('#fg_pub, #fg_unpub');
+  if (pb){
+    if (!pb.dataset.sure){ pb.dataset.sure = '1'; pb.textContent = t('fg_pubSure'); return; }
+    const msg = $('#fg_pubMsg'), un = pb.id === 'fg_unpub';
+    try {
+      if (!FG_DB) FG_DB = await window.claude.use('db');
+      const v = {};
+      if (!un) FG_LIST.forEach(f => { if (FG_MARKET.includes(f.id)) return; const cur = fgR(f.get()); if (Math.abs(cur - FG_BUILT[f.id]) > 1e-9) v[f.id] = cur; });
+      await FG_DB.doc('rates/figures').set({v, asOf: Date.now()});
+      const ov = Object.assign({}, fgOv()); Object.keys(ov).forEach(k => { if (!FG_MARKET.includes(k)) delete ov[k]; }); SET.figOv = ov; saveSet();
+      toast(t(un ? 'fg_unpubOk' : 'fg_pubOk'));
+    } catch (err) { if (msg) msg.textContent = t('fg_pubErr'); }
+  }
+});
+['#set_reset', '#set_import', '#set_clear'].forEach(sel => document.addEventListener('click', e => { if (e.target.closest(sel)) setTimeout(() => figApply(true), 50); }));
+const _alFg = applyLang;
+applyLang = function(){ const r = _alFg.apply(this, arguments); fgRender(); lvRender(); return r; };
+figApply(true);
 
 applyLang(false);
 activate(tab);
