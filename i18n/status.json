@@ -1,24 +1,19 @@
 {
- "started": "2026-10-14 08:51:46 UTC",
+ "started": "2026-10-14 10:10:06 UTC",
  "events": [
   "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
-  "published ru",
+  "  gemini gemini-3.8-flash: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
+  "published uk",
   "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
-  "published am",
-  "published fr",
-  "published es",
-  "  gemini gemini-flash-lite-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
+  "  gemini gemini-flash-lite-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
   "  gemini: gemini quota used up",
-  "published uk"
+  "published de"
  ],
  "langs": {
-  "ru": 1989,
-  "am": 1989,
-  "fr": 1989,
-  "es": 1989,
-  "uk": 1943
+  "uk": 1989,
+  "de": 1943
  },
- "finished": "2026-10-14 08:52:48 UTC",
+ "finished": "2026-10-14 10:10:22 UTC",
  "coverage": {
   "am": 1989,
   "sq": 1933,
@@ -89,7 +84,7 @@
   "te": 0,
   "th": 0,
   "tr": 1932,
-  "uk": 1943,
+  "uk": 1989,
   "ur": 0,
   "uz": 0,
   "vi": 0,
