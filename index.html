@@ -2096,7 +2096,7 @@ Object.assign(T, {
 });
 Object.assign(T, {
   h_account:['החשבון והסיסמה נשמרים רק בדפדפן הזה, בלי שרת. ההגדרות, התרחישים והערכים השמורים של החשבון מוצפנים בדפדפן (AES-256) במפתח שנגזר מהסיסמה, ונפתחים רק אחרי כניסה. הכניסה תקפה עד סגירת הלשונית. אי אפשר לשחזר סיסמה שנשכחה, והנתונים המוצפנים יאבדו אם תמחק את החשבון. זו הגנה על מה שנשמר בדפדפן, אבל לא נגד מי ששולט במכשיר בזמן שאתה מחובר.','يُحفظ الحساب وكلمة المرور في هذا المتصفح فقط بدون خادم. الإعدادات والسيناريوهات والقيم المحفوظة مشفرة في المتصفح (AES-256) بمفتاح مشتق من كلمة المرور وتُفتح بعد الدخول فقط. الدخول صالح حتى إغلاق التبويب. لا يمكن استرجاع كلمة المرور المنسية. هذه حماية لما هو محفوظ في المتصفح، وليست ضد من يتحكم بالجهاز أثناء تسجيل دخولك.','The account and password are stored only in this browser, with no server. The account’s settings, scenarios and saved values are encrypted in the browser (AES-256) with a key derived from your password and only opened after sign-in. Sign-in lasts until the tab closes. A forgotten password cannot be recovered. This protects what is stored in the browser, not against someone controlling the device while you are signed in.'],
-  f_openSignup:['הרשמת חשבונות נוספים במכשיר','تسجيل حسابات إضافية على الجهاز','Allow more accounts on this device'],
+  f_openSignup:['הרשמת חשבונות חדשים במכשיר','تسجيل حسابات جديدة على الجهاز','New accounts on this device'],
   o_closed:['חסום','محظور','Blocked'],
   o_open:['מותר','مسموح','Allowed'],
   h_openSignup:['כשחסום, אף אחד לא יכול ליצור חשבון חדש בדפדפן הזה. מי שיש לו גישה לדפדפן יכול עדיין לעקוף את זה, ולכן גם צריך להגביל את הקישור בתפריט השיתוף.','عند الحظر لا يمكن لأحد إنشاء حساب جديد في هذا المتصفح. من يصل إلى المتصفح يمكنه التحايل على ذلك، لذا قيّد الرابط أيضًا من قائمة المشاركة.','When blocked, nobody can create a new account in this browser. Someone with access to the browser can still bypass this, so also restrict the link in the Share menu.'],
@@ -2888,7 +2888,17 @@ Object.assign(T, {
   rc_stale:['הקוד נכון, אבל לא הצלחנו לפתוח את הנתונים השמורים. שלחו מייל שחזור חדש מהמכשיר שבו אתם מחוברים.','الرمز صحيح لكن تعذّر فتح البيانات المحفوظة. أرسل رسالة استعادة جديدة من الجهاز الذي تسجّل الدخول فيه.','The key is right, but the saved data could not be opened. Send a new recovery email from a device where you are signed in.'],
   rc_done:['הסיסמה הוחלפה. נכנסים…','تم تغيير كلمة المرور. جارٍ الدخول…','Password changed. Signing in…'],
   rc_doneIn:['הסיסמה החדשה נקבעה וכל הנתונים נשמרו.','تم تعيين كلمة المرور الجديدة وبقيت كل البيانات.','The new password is set and all data was kept.'],
-  rc_otherUser:['הקישור שייך ל-{n}. התנתקו קודם כדי להשתמש בו.','الرابط يخص {n}. سجّل الخروج أولًا لاستخدامه.','The link belongs to {n}. Sign out first to use it.']
+  rc_otherUser:['הקישור שייך ל-{n}. התנתקו קודם כדי להשתמש בו.','الرابط يخص {n}. سجّل الخروج أولًا لاستخدامه.','The link belongs to {n}. Sign out first to use it.'],
+  f_signupAll:['הרשמת משתמשים חדשים באפליקציה','تسجيل مستخدمين جدد في التطبيق','New user sign-ups in the app'],
+  h_signupAll:['כשחסום, אף אחד לא יכול להירשם או להוסיף חשבון חדש, בשום מכשיר, גם לא דרך טלפון חדש, כניסה מהענן או שחזור. החסימה נשמרת בענן ורק אתה, בעל האפליקציה, יכול לשנות אותה. משתמשים קיימים ממשיכים להיכנס כרגיל.','عند الحظر لا يستطيع أحد التسجيل أو إضافة حساب جديد على أي جهاز، ولا عبر هاتف جديد أو الدخول من السحابة أو الاستعادة. يُحفظ الحظر في السحابة وأنت فقط، مالك التطبيق، يمكنك تغييره. يستمر المستخدمون الحاليون بالدخول كالمعتاد.','When blocked, nobody can sign up or add a new account on any device, not via new phone, cloud sign-in or recovery either. The block is stored in the cloud and only you, the app owner, can change it. Existing users keep signing in as usual.'],
+  h_signupDev:['כשחסום, אי אפשר ליצור או להוסיף חשבון חדש במכשיר הזה, גם לא דרך טלפון חדש או שחזור. רק {n} יכול לשנות את ההגדרה.','عند الحظر لا يمكن إنشاء أو إضافة حساب جديد على هذا الجهاز، ولا عبر هاتف جديد أو الاستعادة. فقط {n} يمكنه تغيير الإعداد.','When blocked, no new account can be created or added on this device, not via new phone or recovery either. Only {n} can change this setting.'],
+  h_signupLocked:['ההגדרה נעולה: רק {n} יכול לשנות אותה.','الإعداد مقفل: فقط {n} يمكنه تغييره.','This setting is locked: only {n} can change it.'],
+  h_signupByOwner:['בעל האפליקציה חסם הרשמה של משתמשים חדשים, ורק הוא יכול לפתוח אותה.','حظر مالك التطبيق تسجيل المستخدمين الجدد، وهو وحده يمكنه فتحه.','The app owner has blocked new sign-ups, and only the owner can reopen them.'],
+  m_closedAll:['בעל האפליקציה חסם הרשמה של משתמשים חדשים. אפשר להיכנס רק לחשבון קיים.','حظر مالك التطبيق تسجيل المستخدمين الجدد. يمكن الدخول إلى حساب موجود فقط.','The app owner has blocked new sign-ups. You can only sign in to an existing account.'],
+  m_closedAdd:['הוספת חשבון חדש למכשיר הזה חסומה. אפשר להיכנס רק לחשבון שכבר נמצא כאן.','إضافة حساب جديد إلى هذا الجهاز محظورة. يمكن الدخول فقط إلى حساب موجود هنا.','Adding a new account to this device is blocked. You can only sign in to an account already here.'],
+  pol_closed:['ההרשמה נחסמה','تم حظر التسجيل','Sign-up blocked'],
+  pol_opened:['ההרשמה נפתחה','تم فتح التسجيل','Sign-up opened'],
+  pol_fail:['לא הצלחנו לשמור את ההגדרה בענן. נסו שוב.','تعذّر حفظ الإعداد في السحابة. حاول مرة أخرى.','Could not save the setting in the cloud. Try again.']
 });
 
 const t = (k, p) => {
@@ -3900,13 +3910,7 @@ const ONOFF = [['1','o_on'],['0','o_off']];
 const CUR_TABS = ['vat','loan','mortgage','compound','yield','dividends','capital'];
 const NUMF = (id, label, unit, hint) => ({id, label, unit, val:'', wide:false, hint});
 const PLATFORMS = [
-  ['Blink · בלינק', 'pl_blink', 'https://www.heyblink.com'],
-  ['inter.il', 'pl_inter', 'https://www.inter.il'],
   ['Investing.com', 'pl_investing', 'https://il.investing.com/']
-];
-const USEFUL_LINKS = [
-  ['ln_kz', 'ln_kzD', [['ln_site', 'https://www.kolzchut.org.il/he/'], ['ln_kzRes', encodeURI('https://www.kolzchut.org.il/he/נקודות_זיכוי_ממס_הכנסה_ללוחמי_מילואים')]]],
-  ['ln_btl', 'ln_btlD', [['ln_site', 'https://www.btl.gov.il/'], ['ln_btlCalc', 'https://www.btl.gov.il/Simulators/Pages/default.aspx'], ['ln_btlMe', 'https://ps.btl.gov.il']]]
 ];
 const PROFK = [['k0','f_k0'],['k12','f_k12'],['k3','f_k3'],['k45','f_k45'],['k617','f_k617'],['k18','f_k18']];
 const SETDEFS = [
@@ -3953,7 +3957,9 @@ const SETDEFS = [
 ];
 const PWREQ = `<ul class="pwreq" data-pw="%ID%"><li data-r="len" data-i="pw_len"></li><li data-r="up" data-i="pw_up"></li><li data-r="sp" data-i="pw_sp"></li></ul>`;
 function anyAccount(){ try { for (let i = 0; i < RAWLS.length; i++){ if ((RAWLS.key(i) || '').indexOf('fin-acc:') === 0) return true; } } catch (e) {} return false; }
-function signupAllowed(){ try { return !anyAccount() || RAWLS.getItem('fin-signup-open') === '1'; } catch (e) { return true; } }
+function signupLocalOpen(){ try { return RAWLS.getItem('fin-signup-open') === '1'; } catch (e) { return false; } }
+function signupGlobalOpen(){ return typeof POL === 'undefined' || !POL || POL.open || (typeof PERM !== 'undefined' && PERM === 'owner'); }
+function signupAllowed(){ if (!signupGlobalOpen()) return false; try { return !anyAccount() || signupLocalOpen(); } catch (e) { return true; } }
 function accountHTML(){
   const msg = '<p class="fine acc-msg" id="acc_msg" role="alert" aria-live="polite"></p>';
   const pwf = (id, lab, ac) => `<div class="field wide"><label for="${id}" data-i="${lab}"></label><input id="${id}" type="password" autocomplete="${ac}" class="lookup"></div>`;
@@ -3962,11 +3968,11 @@ function accountHTML(){
     <details class="adv"><summary data-i="b_chgPw"></summary><div class="fields">${pwf('acc_cur','f_curPw','current-password')}${pwf('acc_new','f_newPw','new-password')}${pwf('acc_new2','f_newPw2','new-password')}</div>${PWREQ.replace('%ID%', 'acc_new')}
       <div class="btnrow"><button type="button" class="btn" id="acc_chg" data-i="b_chgPw"></button></div></details>
     <details class="adv rc-d" id="rc_d"><summary><span class="rc-sum"><span data-i="rc_title"></span><span class="rc-pill" id="rc_pill"></span></span></summary><div class="rc-box" id="rc_box"></div></details>
-    <div class="field wide"><label for="acc_open" data-i="f_openSignup"></label><select id="acc_open"><option value="0" data-i="o_closed"></option><option value="1" data-i="o_open"></option></select><small class="hint" data-i="h_openSignup"></small></div>
+    <div class="field wide"><label for="acc_open" id="acc_open_l"></label><select id="acc_open"><option value="0" data-i="o_closed"></option><option value="1" data-i="o_open"></option></select><small class="hint" id="acc_open_h"></small></div>
     <div class="mvx" id="acc_f_mv" hidden></div>
     ${msg}<p class="fine" data-i="h_account"></p>
     <div class="acc-danger"><button type="button" class="btn danger del-open" id="del_open" aria-expanded="false" aria-controls="del_box">🗑️ <span data-i="del_btn"></span></button><div class="del-box" id="del_box" hidden></div></div>`;
-  return `<div class="seg acc-seg" role="group"><button type="button" id="acc_tin" class="on" data-i="acc_signin"></button><button type="button" id="acc_tup" data-i="acc_signup"${signupAllowed() ? '' : ' hidden'}></button><button type="button" id="acc_tmv" data-i="mv_tab"></button></div>
+  return `<div class="seg acc-seg" role="group"><button type="button" id="acc_tin" class="on" data-i="acc_signin"></button><button type="button" id="acc_tup" data-i="acc_signup"${signupAllowed() ? '' : ' hidden'}></button><button type="button" id="acc_tmv" data-i="mv_tab"${signupAllowed() ? '' : ' hidden'}></button></div>
     <div id="acc_f_in"><div class="field wide"><label for="acc_user" data-i="f_username"></label><input id="acc_user" type="text" maxlength="21" autocomplete="username" autocapitalize="none" spellcheck="false" dir="auto" class="lookup" placeholder="@"></div>
       ${pwf('acc_pass','f_password','current-password')}
       <div class="btnrow"><button type="button" class="btn" id="acc_in" data-i="b_login"></button></div>
@@ -4017,9 +4023,6 @@ function settingsPanelHTML(){
         <div class="src-h"><b>${n}</b></div><div class="src-s" data-i="${d}"></div>
         <div class="src-l">${d === 'pl_investing' ? '<button type="button" class="src-a iv-btn" data-ivx="fx"><span data-i="iv_btn"></span></button>' : ''}<a class="src-a" href="${u}" target="_blank" rel="noopener noreferrer"><span data-i="ln_site"></span> ↗</a></div></div>`).join('')}</div>
       <p class="fine" data-i="h_liveNoAcc"></p>`)}
-    ${sec('set_links', `<div class="src-list" id="set_links_l">${USEFUL_LINKS.map(([n, d, ls]) => `<div class="src-c">
-      <div class="src-h"><b data-i="${n}"></b></div><div class="src-s" data-i="${d}"></div>
-      <div class="src-l">${ls.map(([k, u]) => `<a class="src-a" href="${u}" target="_blank" rel="noopener noreferrer"><span data-i="${k}"></span> ↗</a>`).join('')}</div></div>`).join('')}</div>`)}
     ${sec('set_upd', `<div class="upd-box"><div class="upd-row"><span data-i="upd_mine"></span> <b class="num" id="upd_cur" dir="ltr"></b></div>
       <p class="gk-st" id="upd_st" role="status" aria-live="polite"></p>
       <div class="btnrow"><button type="button" class="gold-btn" id="upd_chk" data-i="upd_chk"></button><button type="button" class="btn" id="upd_now" data-i="upd_go"></button></div>
@@ -6473,6 +6476,8 @@ async function unlockSession(name, pw, rec, seed){
 }
 async function doSignup(){
   if (!(window.crypto && crypto.subtle)) return accMsg('m_nocrypto');
+  try { await PERM_P; await polInit(); } catch (e) {}
+  if (!signupGlobalOpen()) return accMsg('m_closedAll');
   if (!signupAllowed()) return accMsg('m_closed');
   const name = hdNorm($('#acc_ruser').value), p = $('#acc_rpass').value, p2 = $('#acc_rpass2').value;
   if (!hdValid(name)) return accMsg('hd_bad');
@@ -6558,7 +6563,7 @@ panelsEl.addEventListener('click', e => {
   }
 });
 panelsEl.addEventListener('change', e => {
-  if (e.target.id === 'acc_open'){ try { RAWLS.setItem('fin-signup-open', e.target.value); } catch (err) {} }
+  if (e.target.id === 'acc_open') polSet(e.target.value === '1');
 });
 panelsEl.addEventListener('input', e => { if (e.target.type === 'password') updPwReq(e.target); });
 panelsEl.addEventListener('keydown', e => {
@@ -7529,7 +7534,7 @@ async function permInit(){
 }
 const _rsPerm = renderStamp;
 renderStamp = function(){ _rsPerm.apply(this, arguments); permRender(); };
-permInit();
+var PERM_P = permInit();
 
 panelsEl.addEventListener('input', e => {
   if (e.target.id !== 'acc_ruser') return;
@@ -7687,8 +7692,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "3.9", "date": "2026-10-14", "notes": {"he": "אימות אימייל ושחזור סיסמה: שולחים לעצמכם מייל עם קוד שחזור, ואם שוכחים סיסמה קובעים חדשה בלי לאבד נתונים.", "ar": "تأكيد البريد واستعادة كلمة المرور: ترسل لنفسك رسالة فيها رمز استعادة، وإذا نسيت كلمة المرور تعيّن واحدة جديدة دون فقدان البيانات.", "en": "Email verification and password recovery: send yourself an email with a recovery key, and if you forget your password set a new one without losing data."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.111406';
+var CHANGELOG = [{"v": "4.0", "date": "2026-10-14", "notes": {"he": "חסימת הרשמה שאי אפשר לעקוף: ב-Claude היא חלה על כל המשתמשים ורק בעל האפליקציה משנה אותה, וגם טלפון חדש ושחזור חסומים. הוסרו הקישורים לבלינק, אינטר, כל זכות וביטוח לאומי.", "ar": "حظر تسجيل لا يمكن تجاوزه: في Claude يسري على جميع المستخدمين ويغيّره مالك التطبيق فقط، ويُحظر أيضًا الهاتف الجديد والاستعادة. أُزيلت روابط Blink وinter.il وكول زخوت والتأمين الوطني.", "en": "A sign-up block that cannot be bypassed: in Claude it applies to all users and only the app owner can change it, and new phone and recovery are blocked too. Removed the Blink, inter.il, Kol Zchut and National Insurance links."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.112514';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -7774,7 +7779,6 @@ var SET_CATS = [
   {id: 'display', c: 'c-violet', ic: 'set_look',    g: 1, secs: ['set_look', 'set_clock', 'set_lang', 'set_numbers', 'set_tabs']},
   {id: 'calc',    c: 'c-gold',   ic: 'set_calc',    g: 1, secs: ['set_calc', 'set_profile', 'set_curBy']},
   {id: 'conn',    c: 'c-green',  ic: 'set_live',    g: 2, secs: ['set_live', 'set_ai']},
-  {id: 'links',   c: 'c-teal',   ic: 'set_links',   g: 2, secs: ['set_links']},
   {id: 'system',  c: 'c-gray',   ic: 'set_upd',     g: 3, secs: ['set_upd', 'set_data']}
 ];
 var SCAT = '';
@@ -8425,6 +8429,7 @@ doLogin = async function(){
   if (name && !getAcc(name) && IN_CLAUDE && window.crypto && crypto.subtle){
     accMsg('m_wait', null, true);
     const pkg = await mvCloudGet(name);
+    if (pkg){ try { await PERM_P; await polInit(); } catch (e) {} if (!signupAllowed()) return accMsg(signupGlobalOpen() ? 'm_closedAdd' : 'm_closedAll'); }
     if (pkg){ const r = await mvRestore(pkg, $('#acc_pass').value); if (r === 'bad') return accMsg('m_bad'); if (r === 'lock') return accMsg('m_lock', {s: lockLeft(name)}); return; }
   }
   return doLogin0.apply(this, arguments);
@@ -8524,6 +8529,8 @@ async function mvGo(){
   else if (/FINCALC1:/.test(src)) pkg = mvParse(src);
   if (!src || pkg === null) return mvSt(IN_CLAUDE && !txt ? 'mv_notFound' : 'mv_notPkg', 'bad');
   if (pkg === 'badcode') return mvSt('mv_codeWrong', 'bad');
+  try { await PERM_P; await polInit(); } catch (e) {}
+  if (pkg && pkg.name && !getAcc(pkg.name) && !signupAllowed()) return mvSt(signupGlobalOpen() ? 'm_closedAdd' : 'm_closedAll', 'bad');
   if (pkg.exp && Date.now() > pkg.exp) return mvSt('mv_expired', 'bad');
   let pwOk = false; try { pwOk = (await hashPw(pw, u8(pkg.rec.salt), pkg.rec.iter || 200000)) === pkg.rec.hash; } catch (e) {}
   if (pwOk && IN_CLAUDE && MV.db){ try { await MV.db.collection('data/users/' + MV.uid).doc('xfer-' + txHash(code)).delete(); } catch (e) {} }   // a used transfer is removed before the app reloads
@@ -8596,6 +8603,7 @@ async function doDelete(){
   }
   const sfx = ':' + ENC_NAME(nm);
   try { RAWLS.removeItem(accKey(nm)); RAWLS.removeItem(encName(nm)); RAWLS.removeItem('fin-fail:' + accKey(nm)); DATA_KEYS.forEach(k => RAWLS.removeItem(k + sfx)); } catch (e) {}
+  try { if ((polLock() || {}).by === nm) RAWLS.removeItem('fin-signup-lock'); } catch (e) {}
   clearSession();
   try { SS.setItem('fin-del-ok', nm); } catch (e) {}
   try { location.reload(); } catch (e) {}
@@ -8747,6 +8755,7 @@ async function rcRecover(){
   try {
     const {rec, enc} = await rcFind(name);
     if (!rec) return rcRStSet('rc_noAcc', 'bad');
+    if (!getAcc(name)){ try { await PERM_P; await polInit(); } catch (e) {} if (!signupAllowed()) return rcRStSet(signupGlobalOpen() ? 'm_closedAdd' : 'm_closedAll', 'bad'); }
     if (!rec.rcv) return rcRStSet('rc_none', 'bad');
     if (rcFmt(code).replace(/-/g, '').length !== 20) return rcRStSet('rc_codeShort', 'bad');
     if (!pwOk(p1)) return rcRStSet('m_weak', 'bad');
@@ -8834,6 +8843,72 @@ function rcLinkUse(lk, delay){
 })();
 window.addEventListener('hashchange', () => { const lk = rcLinkGrab(); if (lk) rcLinkUse(lk, 60); });
 try { if (SS.getItem('fin-rc-ok')){ SS.removeItem('fin-rc-ok'); setTimeout(() => toast(t('rc_doneIn')), 700); } } catch (e) {}
+
+/* ---- blocking sign-up so it cannot be side-stepped.
+   In Claude the owner's choice is kept in the shared database (only the owner can write it) and applies to every
+   person and device. On the website it applies to this device, and only the account that set it may change it.
+   While blocked, no path can add a new account: sign-up, new phone, cloud sign-in and email recovery. */
+var POL = {ready: false, open: true, db: null, p: null};
+function polLock(){ try { return JSON.parse(RAWLS.getItem('fin-signup-lock') || 'null') || {}; } catch (e) { return {}; } }
+function polOwnerMode(){ return IN_CLAUDE && PERM === 'owner' && !!POL.db; }
+function polInit(){
+  if (POL.p) return POL.p;
+  POL.p = (async () => {
+    if (IN_CLAUDE){
+      try {
+        const db = await window.claude.use('db');
+        if (db){
+          POL.db = db;
+          const sn = await db.doc('policy/signup').get();
+          POL.open = !(sn && sn.exists && (sn.data() || {}).open === false);
+          try { db.doc('policy/signup').onSnapshot(x => { const o = !(x && x.exists && (x.data() || {}).open === false); if (o !== POL.open){ POL.open = o; polApply(); } }, () => {}); } catch (e) {}
+        }
+      } catch (e) {}
+    }
+    POL.ready = true; polApply(); return POL;
+  })();
+  return POL.p;
+}
+function polSelRender(){
+  const sel = $('#acc_open'), lab = $('#acc_open_l'), hint = $('#acc_open_h'); if (!sel || !FUSER) return;
+  const iso = n => '⁨@' + n + '⁩';
+  if (polOwnerMode()){
+    sel.disabled = false; sel.value = POL.open ? '1' : '0';
+    if (lab) lab.textContent = t('f_signupAll'); if (hint) hint.textContent = t('h_signupAll');
+    return;
+  }
+  if (lab) lab.textContent = t('f_openSignup');
+  if (!signupGlobalOpen()){ sel.disabled = true; sel.value = '0'; if (hint) hint.textContent = t('h_signupByOwner'); return; }
+  let lk = polLock();
+  if (!lk.by){ lk = {by: FUSER, at: Date.now()}; try { RAWLS.setItem('fin-signup-lock', JSON.stringify(lk)); } catch (e) {} }
+  const mine = lk.by === FUSER;
+  sel.disabled = !mine; sel.value = signupLocalOpen() ? '1' : '0';
+  if (hint) hint.textContent = mine ? t('h_signupDev', {n: iso(lk.by)}) : t('h_signupLocked', {n: iso(lk.by)});
+}
+function polApply(){
+  const ok = signupAllowed();
+  const up = $('#acc_tup'), mv = $('#acc_tmv');
+  if (up) up.hidden = !ok;
+  if (mv && !FUSER) mv.hidden = !ok;
+  if (!ok){ ['up', 'mv'].forEach(k => { const f = $('#acc_f_' + k); if (f && !f.hidden && !FUSER){ f.hidden = true; const fi = $('#acc_f_in'), ti = $('#acc_tin'); if (fi) fi.hidden = false; if (ti) ti.classList.add('on'); } }); }
+  polSelRender();
+}
+async function polSet(open){
+  await PERM_P; await polInit();
+  if (polOwnerMode()){
+    try { await POL.db.doc('policy/signup').set({open, at: Date.now()}); POL.open = open; }
+    catch (e) { toast(t('pol_fail')); return polSelRender(); }
+  } else {
+    if (!signupGlobalOpen()) return polSelRender();
+    const lk = polLock(); if (lk.by && lk.by !== FUSER) return polSelRender();
+  }
+  try { RAWLS.setItem('fin-signup-open', open ? '1' : '0'); RAWLS.setItem('fin-signup-lock', JSON.stringify({by: FUSER, at: Date.now()})); } catch (e) {}
+  polApply(); toast(t(open ? 'pol_opened' : 'pol_closed'));
+}
+const _alPol = applyLang;
+applyLang = function(){ const r = _alPol.apply(this, arguments); polSelRender(); return r; };
+Promise.resolve(PERM_P).then(polInit, polInit);
+setTimeout(polSelRender, 0);
 
 applyLang(false);
 activate(tab);
