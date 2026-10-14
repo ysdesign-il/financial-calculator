@@ -1103,6 +1103,34 @@ body:not(.own) .own-only{display:none!important}
 .rf-btn.spin svg,#gRefresh.spin svg{animation:rfSpin .9s linear infinite}
 @keyframes rfSpin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion: reduce){.rf-btn.spin svg,#gRefresh.spin svg{animation:none}}
+/* developer: data sources centre */
+.src-env{padding:10px 12px;border-radius:12px;border:1px dashed var(--line);font-size:.86rem;margin:8px 0}
+.src-sum{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.src-st{display:inline-flex;align-items:center;padding:2px 9px;border-radius:999px;font-size:.74rem;font-weight:700;border:1px solid var(--line);white-space:nowrap}
+.src-st.s-live{color:#16855a;border-color:rgba(47,191,134,.55);background:rgba(47,191,134,.1)}
+.src-st.s-delay{color:#9A6A06;border-color:rgba(224,169,58,.6);background:rgba(224,169,58,.12)}
+.src-st.s-sched{color:#2A5FD6;border-color:rgba(42,95,214,.4);background:rgba(42,95,214,.08)}
+.src-st.s-stale{color:#C2412D;border-color:rgba(229,83,75,.5);background:rgba(229,83,75,.08)}
+.src-h{margin:16px 2px 6px;font-size:.85rem;color:var(--ink-2)}
+.src-list{display:grid;gap:8px}
+.src-row{padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface)}
+.src-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.src-val{font-size:1.05rem;font-weight:700;margin-top:2px}
+.src-meta{font-size:.78rem;color:var(--ink-2);margin-top:2px}
+.src-why{font-size:.8rem;margin:6px 0 4px;color:var(--ink)}
+.src-links{display:flex;flex-wrap:wrap;gap:6px 12px}
+.src-a{font-size:.8rem;font-weight:600;color:var(--focus,#1F4FB8);text-decoration:none}
+.src-a:hover{text-decoration:underline}
+.src-tests{list-style:none;margin:8px 0;padding:0;display:grid;gap:6px}
+.src-tests li{display:flex;align-items:center;gap:8px;font-size:.86rem}
+.src-tests li b{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:.78rem}
+.src-tests li.s-ok b{background:#2fbf86}.src-tests li.s-bad b{background:#E5534B}
+.src-tests li span{flex:1}.src-tests li small{color:var(--ink-2)}
+.src-foot{margin-top:12px}
+.dev-box{margin-top:10px;padding:10px;border-radius:12px;border:1px dashed var(--line)}
+.dev-box label{display:block;font-size:.85rem;margin-bottom:6px}
+.dev-row{display:flex;gap:8px}
+.dev-row input{flex:1;min-width:0;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink);font:inherit;letter-spacing:.08em}
 
 </style>
 </head>
@@ -3536,6 +3564,42 @@ Object.assign(T, {
 Object.assign(T, {
   fx_on:['מחובר: שערי שוק בזמן אמת (בין-בנקאי), מתעדכן {n}.','متصل: أسعار السوق في الوقت الفعلي (بين البنوك)، يتحدّث {n}.','Connected: real-time interbank market rates, updating {n}.']
 });
+Object.assign(T, {
+  /* developer: data sources centre */
+  set_src:['מקורות הנתונים (רק למפתח)','مصادر البيانات (للمطوّر فقط)','Data sources (developer only)'],
+  src_intro:['כל נתון באפליקציה, מאיפה הוא מגיע, מתי התעדכן ולמה הוא עלול לאחר. המשתמשים רואים רק את התוצאות; המסך הזה גלוי רק לך.','كل رقم في التطبيق، من أين يأتي، ومتى تحدّث ولماذا قد يتأخر. المستخدمون يرون النتائج فقط؛ هذه الشاشة لك وحدك.','Every number in the app, where it comes from, when it changed and why it may lag. People only see results; this screen is yours alone.'],
+  src_envSite:['אתה צופה באתר: הנתונים נמשכים חי ישירות מהמקורות.','أنت تتصفح الموقع: البيانات تُسحب مباشرة من المصادر.','You are on the website: data is pulled live from the sources.'],
+  src_envClaude:['אתה צופה באפליקציה בתוך Claude: אין כאן חיבור חי למקורות, ולכן מוצג המצב האחרון שנשמר לאפליקציה ({t}). באתר הכול חי.','أنت داخل Claude: لا يوجد اتصال مباشر بالمصادر هنا، لذلك تُعرض آخر حالة محفوظة ({t}). في الموقع كل شيء مباشر.','You are in the app inside Claude: there is no live connection here, so the last saved state is shown ({t}). On the website everything is live.'],
+  src_testBtn:['בדיקה חיה של כל המקורות','فحص مباشر لكل المصادر','Test every source live'], src_testing:['בודק…','جارٍ الفحص…','Testing…'],
+  src_s_live:['חי','مباشر','Live'], src_s_delay:['באיחור הספק','تأخير المزوّد','Provider delay'], src_s_sched:['לפי לוח פרסום','حسب جدول النشر','On schedule'], src_s_stale:['לא עדכני','غير محدّث','Not current'],
+  src_g_fx:['מטבעות וקריפטו','العملات والعملات المشفّرة','Currencies and crypto'], src_g_rate:['ריבית','الفائدة','Interest'], src_g_idx:['מדדים רשמיים (הלמ"ס)','مؤشرات رسمية (دائرة الإحصاء)','Official indices (CBS)'], src_g_mkt:['בורסות וסחורות','البورصات والسلع','Markets and commodities'],
+  src_upd:['עודכן {t} ({a})','تحدّث {t} ({a})','Updated {t} ({a})'], src_pub:['המדד של {m}','مؤشر {m}','The {m} index'],
+  src_never:['אין עדכון','لا تحديث','no update'], src_sec:['לפני {n} שניות','قبل {n} ثانية','{n}s ago'], src_min:['לפני {n} דק׳','قبل {n} دقيقة','{n} min ago'], src_hr:['לפני {n} שעות','قبل {n} ساعات','{n} h ago'], src_day:['לפני {n} ימים','قبل {n} أيام','{n} days ago'],
+  src_m_cnbc:['שער שוק בין-בנקאי (CNBC)','سعر السوق بين البنوك (CNBC)','Interbank market quote (CNBC)'], src_m_coinbase:['Coinbase','Coinbase','Coinbase'], src_m_snap:['עותק שמור באפליקציה','نسخة محفوظة في التطبيق','Saved copy in the app'], src_m_boi:['בנק ישראל (שער יציג)','بنك إسرائيل (السعر الرسمي)','Bank of Israel (official rate)'], src_m_built:['ערך מובנה בגרסה','قيمة مضمّنة في الإصدار','Built into this version'],
+  src_m_boiInt:['בנק ישראל','بنك إسرائيل','Bank of Israel'], src_m_cbs:['הלשכה המרכזית לסטטיסטיקה','دائرة الإحصاء المركزية','Central Bureau of Statistics'],
+  src_w_cnbc:['שער מסחר בזמן אמת, מתעדכן כל 15 שניות כשהמסך פתוח.','سعر تداول فوري، يتحدّث كل 15 ثانية عندما تكون الشاشة مفتوحة.','Real-time trading rate, refreshed every 15 seconds while the screen is open.'],
+  src_w_coinbase:['שער שוק מ-Coinbase, מתעדכן כל שנייה.','سعر سوق من Coinbase، يتحدّث كل ثانية.','Market rate from Coinbase, refreshed every second.'],
+  src_w_snap:['אין חיבור חי כרגע, ולכן מוצג השער האחרון שנשמר. העדכון השמור מתחדש פעמיים בשעה באתר.','لا يوجد اتصال مباشر حاليًا، لذا يُعرض آخر سعر محفوظ. تتجدد النسخة المحفوظة مرتين في الساعة على الموقع.','No live connection right now, so the last saved rate is shown. The saved copy renews twice an hour on the website.'],
+  src_w_boi:['השער היציג מתפרסם פעם ביום בימי עסקים (בסביבות 15:30), ולכן במהלך היום הוא שונה משער השוק.','يُنشر السعر الرسمي مرة يوميًا في أيام العمل (نحو 15:30)، لذا يختلف خلال اليوم عن سعر السوق.','The official rate is published once a business day (around 15:30), so during the day it differs from the market.'],
+  src_w_built:['לא נטען אף מקור עדיין.','لم يُحمّل أي مصدر بعد.','No source has loaded yet.'],
+  src_boiRep:['שער יציג של בנק ישראל','السعر الرسمي لبنك إسرائيل','Bank of Israel official rate'], src_w_boiRep:['לשימוש רשמי (חוזים, דיווחים). מתפרסם פעם ביום בימי עסקים.','للاستخدام الرسمي (عقود وتقارير). يُنشر مرة يوميًا في أيام العمل.','For official use (contracts, reports). Published once a business day.'],
+  src_w_crypto:['מתעדכן כל שנייה מ-Coinbase כשהחיבור החי פעיל.','يتحدّث كل ثانية من Coinbase عندما يكون الاتصال المباشر فعّالًا.','Refreshed every second from Coinbase while the live connection is on.'],
+  src_w_boiInt:['משתנה רק בהחלטת ריבית. ההחלטה האחרונה: {d}. הבאה: {n}.','تتغير فقط بقرار فائدة. آخر قرار: {d}. القادم: {n}.','Changes only at a rate decision. Last: {d}. Next: {n}.'],
+  src_w_cbs:['מדד חודשי שמתפרסם ב-15 לחודש הבא בשעה 18:30. המדד הבא צפוי ב-{n}, ואז הוא נכנס לאפליקציה לבד תוך חצי שעה.','مؤشر شهري يُنشر في 15 من الشهر التالي الساعة 18:30. المتوقع التالي في {n}، ويدخل التطبيق تلقائيًا خلال نصف ساعة.','A monthly index published on the 15th of the next month at 18:30. The next one is due {n} and reaches the app by itself within half an hour.'],
+  src_w_house:['מדד מחירי הדירות מתפרסם באיחור של כחודשיים מטבעו, ושלושת החודשים האחרונים זמניים. הפרסום הבא צפוי ב-{n}.','يُنشر مؤشر أسعار المساكن بتأخير طبيعي نحو شهرين، وآخر ثلاثة أشهر مؤقتة. النشر التالي متوقع في {n}.','The home prices index naturally lags about two months, and the last three months are provisional. Next release due {n}.'],
+  src_w_rt:['בזמן אמת, מתעדכן כל 15 שניות כשהמסך פתוח.','في الوقت الفعلي، يتحدّث كل 15 ثانية عندما تكون الشاشة مفتوحة.','Real time, refreshed every 15 seconds while the screen is open.'],
+  src_w_prov:['ספק הנתונים החינמי מעכב את הנתון בכ-15 דקות (בורסת ת"א וחוזי זהב ונפט). נתון בזמן אמת דורש רישיון בתשלום מהבורסה.','يؤخّر مزوّد البيانات المجاني هذه القيمة نحو 15 دقيقة (بورصة تل أبيب وعقود الذهب والنفط). البيانات الفورية تتطلب ترخيصًا مدفوعًا من البورصة.','The free data provider delays this by about 15 minutes (Tel Aviv exchange, gold and oil futures). Real-time data needs a paid exchange licence.'],
+  src_w_closed:['המסחר כנראה סגור עכשיו, ולכן מוצג מחיר הסגירה האחרון.','التداول مغلق على الأرجح الآن، لذا يُعرض آخر سعر إغلاق.','Trading is probably closed now, so the last closing price is shown.'],
+  src_w_claude:['בתוך Claude אין חיבור חי, ולכן זה העותק האחרון שנשמר לאפליקציה.','داخل Claude لا يوجد اتصال مباشر، لذا هذه آخر نسخة محفوظة للتطبيق.','Inside Claude there is no live connection, so this is the last copy saved for the app.'],
+  src_w_snapMk:['החיבור החי עוד לא החזיר נתון, ולכן מוצג העותק השמור.','لم يُرجع الاتصال المباشر بيانات بعد، لذا تُعرض النسخة المحفوظة.','The live connection has not answered yet, so the saved copy is shown.'],
+  src_lSrc:['המקור','المصدر','Source'], src_lRaw:['הנתון הגולמי','البيانات الخام','Raw data'], src_lCheck:['השוואה ב-Google','مقارنة في Google','Compare on Google'], src_lOfficial:['שער יציג','السعر الرسمي','Official rate'],
+  src_t_cnbc:['שערי שוק ובורסות (CNBC)','أسعار السوق والبورصات (CNBC)','Market quotes (CNBC)'], src_t_cb:['מטבעות וקריפטו (Coinbase)','العملات والعملات المشفّرة (Coinbase)','Currencies and crypto (Coinbase)'], src_t_gh:['עותק נתונים רשמי (GitHub)','نسخة البيانات الرسمية (GitHub)','Official data copy (GitHub)'], src_t_db:['מסד הנתונים של האפליקציה','قاعدة بيانات التطبيق','App database'],
+  src_ms:['מחובר · {n} מ"ש','متصل · {n} ملّي ثانية','Connected · {n} ms'], src_blocked:['חסום כאן','محجوب هنا','Blocked here'], src_failed:['לא ענה','لم يستجب','No answer'], src_dbAt:['נשמר {t}','محفوظ {t}','saved {t}'],
+  src_pipe:['איך זה עובד: באתר הנתונים נמשכים חי ישירות מהמקורות. במקביל, משימה אוטומטית ב-GitHub מושכת פעמיים בשעה את הנתונים הרשמיים ושומרת עותק.','كيف يعمل: في الموقع تُسحب البيانات مباشرة من المصادر. وبالتوازي تسحب مهمة تلقائية في GitHub البيانات الرسمية مرتين في الساعة وتحفظ نسخة.','How it works: on the website data is pulled live from the sources. A GitHub job also pulls the official data twice an hour and keeps a copy.'],
+  src_open:['מקורות ועיכובים (למפתח)','المصادر والتأخيرات (للمطوّر)','Sources and delays (developer)'],
+  dev_code:['קוד מפתח','رمز المطوّر','Developer code'], dev_go:['כניסה','دخول','Enter'], dev_bad:['הקוד לא נכון','الرمز غير صحيح','Wrong code'],
+  dev_onDone:['מצב מפתח הופעל במכשיר הזה','تم تفعيل وضع المطوّر على هذا الجهاز','Developer mode is on for this device'], dev_off:['יציאה ממצב מפתח','الخروج من وضع المطوّر','Leave developer mode'], dev_offDone:['מצב מפתח כבוי','تم إيقاف وضع المطوّر','Developer mode is off']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -3967,6 +4031,7 @@ Object.assign(ICON, {prime: ic('<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2
 /* ================= field builders ================= */
 /* ---- settings icons (24px, stroke style) ---- */
 const SICO = {
+  set_src:'<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/><path d="M8.5 11h5M11 8.5v5"/>',
   set_sync:'<path d="M20 12a8 8 0 0 1-13.7 5.7M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4M6 21v-4h4"/>',
   set_figs:'<path d="M4 19V5M4 19h16"/><path d="M8 15l3-4 3 2 5-6"/><circle cx="19" cy="7" r="1.2"/>',
   set_account:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
@@ -4784,6 +4849,7 @@ function settingsPanelHTML(){
       <div class="btnrow"><button type="button" class="gold-btn" id="gk_ok" data-i="gk_ok"></button><button type="button" class="btn" id="gk_del" data-i="gk_del"></button></div>
       <p class="gk-st" id="gk_st" role="status" aria-live="polite"></p>
       <p class="fine"><a class="src-a" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer"><span data-i="ln_gkey"></span> ↗</a></p></div>`)}
+    ${sec('set_src', '<div id="src_box" class="src-box"></div>')}
     ${sec('set_live', `<div class="conn-all"><button type="button" class="gold-btn" id="src_all" data-i="b_connAll"></button><p class="fine" data-i="h_connAll"></p></div>
       <div class="src-list" id="set_live_st"></div>
       <details class="adv-live"><summary data-i="m_advLive"></summary><div class="fields">${[
@@ -7987,7 +8053,7 @@ async function fxTick(){
           const q = v / old, cr = !!CRYPTO[k];
           if (cr ? SET.liveCrypto === '0' : SET.liveFiat === '0') return;
           if (cr ? (q < 0.5 || q > 2) : (q < 0.8 || q > 1.25)) return;
-          RATES[k] = v; if (cr) nc++; else n++;
+          RATES[k] = v; if (typeof FXSRC === 'object') FXSRC[k] = {s: 'coinbase', at: Date.now()}; if (cr) nc++; else n++;
         });
         if (n + nc > 0){
           ok = true; RATES.USD = 1;
@@ -8916,8 +8982,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "5.8", "date": "2026-10-14", "notes": {"he": "שערים מדויקים: הדולר, האירו והמטבעות העיקריים מגיעים עכשיו משערי שוק בין-בנקאיים בזמן אמת, ולא רק מהשער היציג שמתפרסם פעם ביום. כפתור חדש \"רענון כל הנתונים\" במסך הבית (וגם הכפתור בראש המסך) מרענן מיד שערים, קריפטו, מדדים, בורסות ונתונים רשמיים.", "ar": "أسعار دقيقة: الدولار واليورو والعملات الرئيسية تأتي الآن من أسعار السوق بين البنوك في الوقت الفعلي، وليس فقط من السعر الرسمي الذي يُنشر مرة يوميًا. زر جديد \"تحديث كل البيانات\" في الشاشة الرئيسية (وكذلك الزر أعلى الشاشة) يحدّث فورًا الأسعار والعملات المشفّرة والمؤشرات والبورصات والبيانات الرسمية.", "en": "Accurate rates: the dollar, euro and main currencies now come from real-time interbank market rates, not only the once-a-day official rate. A new \"Refresh all data\" button on the home screen (and the one at the top) instantly refreshes rates, crypto, indices, markets and official data."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.215426';
+var CHANGELOG = [{"v": "5.9", "date": "2026-10-14", "notes": {"he": "מרכז מקורות הנתונים, רק למפתח: לכל נתון רואים מאיפה הוא מגיע, מתי התעדכן, כמה הוא מאחר ולמה, עם קישורים ישירים למקור, לנתון הגולמי ולהשוואה, ובדיקה חיה של כל החיבורים. למשתמשים הכול עובד מאחורי הקלעים.", "ar": "مركز مصادر البيانات للمطوّر فقط: لكل رقم ترى مصدره ووقت تحديثه ومقدار تأخره وسببه، مع روابط مباشرة للمصدر والبيانات الخام والمقارنة، وفحص مباشر لكل الاتصالات. للمستخدمين يعمل كل شيء خلف الكواليس.", "en": "A data sources centre for the developer only: for every number see where it comes from, when it changed, how late it is and why, with direct links to the source, the raw data and a comparison, plus a live test of every connection. For people everything runs behind the scenes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.222026';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -9003,7 +9069,7 @@ var SET_CATS = [
   {id: 'security', c: 'c-red',   ic: 'set_security', g: 0, secs: ['set_security']},
   {id: 'display', c: 'c-violet', ic: 'set_look',    g: 1, secs: ['set_look', 'set_clock', 'set_lang', 'set_numbers', 'set_tabs']},
   {id: 'calc',    c: 'c-gold',   ic: 'set_calc',    g: 1, secs: ['set_calc', 'set_figs', 'set_profile', 'set_curBy']},
-  {id: 'conn',    c: 'c-green',  ic: 'set_live',    g: 2, secs: ['set_live', 'set_ai']},
+  {id: 'conn',    c: 'c-green',  ic: 'set_live',    g: 2, secs: ['set_src', 'set_live', 'set_ai']},
   {id: 'system',  c: 'c-gray',   ic: 'set_upd',     g: 3, secs: ['set_upd', 'set_data']}
 ];
 var SCAT = '';
@@ -10540,9 +10606,9 @@ joRender(); upRender();
 if (['joboffer', 'unitprice'].includes(tab)) calc(tab);
 
 /* ---- live connections are shown only to the app owner (checked by claude.ai, never trusted from the page) ---- */
-function liveOwner(){ return IN_CLAUDE && PERM === 'owner'; }
+function liveOwner(){ return (IN_CLAUDE && PERM === 'owner') || DEV_ON === true; }
 /* everything about where the data comes from stays behind the scenes: only the owner (inside Claude) sees and manages it */
-var OWN_SECS = ['set_live', 'set_figs', 'set_sync'], OWN_LAST = null;
+var OWN_SECS = ['set_src', 'set_live', 'set_figs', 'set_sync'], OWN_LAST = null;
 function liveApply(){
   const own = liveOwner();
   OWN_SECS.forEach(k => { const sec = $(`#panel-settings .set-sec[data-sk="${k}"]`); if (sec){ sec.dataset.own = '1'; if (sec.hidden === own) GS_IDX = null; sec.hidden = !own; } });
@@ -11019,7 +11085,7 @@ async function ixRemote(){
 /* live market quotes straight from the public quote feed while the screen is open (no account, no key, nothing sent about you) */
 var IXL = {timer: null, ok: null, fails: 0, at: 0};
 var FX_CN = {ILS: ['ILS=', 0], EUR: ['EUR=', 1], GBP: ['GBP=', 1], JPY: ['JPY=', 0], CHF: ['CHF=', 0], CAD: ['CAD=', 0], AUD: ['AUD=', 1], JOD: ['JOD=', 0], AED: ['AED=', 0], SAR: ['SAR=', 0], EGP: ['EGP=', 0], TRY: ['TRY=', 0], CNY: ['CNY=', 0], INR: ['INR=', 0]};
-var FXL = {pin: {}, at: 0};
+var FXL = {pin: {}, at: 0}, FXSRC = {};
 const IX_QURL = 'https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=' + IX_MK.map(k => encodeURIComponent(IX_SYM[k])).concat(Object.keys(FX_CN).map(k => encodeURIComponent(FX_CN[k][0]))).join('%7C') + '&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1';
 const ixNum = x => { const n = parseFloat(String(x == null ? '' : x).replace(/[,%+\s]/g, '')); return isFinite(n) ? n : NaN; };
 var IX_TABS = ['home', 'convert', 'compound', 'yield', 'retire', 'cpilink', 'expenses'];
@@ -11040,7 +11106,7 @@ async function ixLiveTick(force){
       if (fk){
         const p = ixNum(q.last); if (!(p > 0) || SET.liveFiat === '0') return;
         const v = FX_CN[fk][1] ? 1 / p : p, old = RATES[fk]; if (old && (v / old < 0.8 || v / old > 1.25)) return;
-        RATES[fk] = v; FXL.pin[fk] = Date.now(); nf++; return;
+        RATES[fk] = v; FXL.pin[fk] = Date.now(); FXSRC[fk] = {s: 'cnbc', at: Date.now()}; nf++; return;
       }
       const k = IX_MK.find(x => IX_SYM[x] === q.symbol); if (!k) return;
       const p = ixNum(q.last), o = IX.mkt[k] || {}; if (!(p > 0) || (o.p && (p / o.p < 0.6 || p / o.p > 1.6))) return;
@@ -11137,7 +11203,7 @@ function fxApplySnap(L){
   if (META.live && now - (META.unix || 0) < 180) return false;            // something fresher is already on screen
   if (!(at > (META.unix || 0))) return false;
   let n = 0;
-  Object.keys(L.usd).forEach(k => { const v = +L.usd[k], old = RATES[k]; if (!/^[A-Z]{3}$/.test(k) || !(v > 0) || (old && (v / old < 0.8 || v / old > 1.25))) return; RATES[k] = v; n++; });
+  Object.keys(L.usd).forEach(k => { const v = +L.usd[k], old = RATES[k]; if (!/^[A-Z]{3}$/.test(k) || !(v > 0) || (old && (v / old < 0.8 || v / old > 1.25))) return; RATES[k] = v; FXSRC[k] = {s: 'snap', at: at * 1000}; n++; });
   if (!n) return false;
   RATES.USD = 1; META.unix = at; META.mkt = true; META.live = false; META.official = false;
   try { fillCurSelects(); renderStamp(); if (tab === 'home') renderMarket(); else calc(tab); } catch (e) {}
@@ -11156,7 +11222,7 @@ async function fxCoinbaseOnce(){
       const q = v / old, cr = !!CRYPTO[k];
       if (cr ? SET.liveCrypto === '0' : SET.liveFiat === '0') return;
       if (cr ? (q < 0.5 || q > 2) : (q < 0.8 || q > 1.25)) return;
-      RATES[k] = v; if (cr) nc++; else n++;
+      RATES[k] = v; FXSRC[k] = {s: 'coinbase', at: Date.now()}; if (cr) nc++; else n++;
     });
     const now = Math.floor(Date.now() / 1000);
     if (n){ META.live = true; META.official = false; META.mkt = false; META.unix = now; }
@@ -11207,6 +11273,128 @@ async function refreshEverything(manual){
 /* every refresh in the app now refreshes everything, and never labels a once-a-day rate as live */
 tryLive = function(manual){ return refreshEverything(!!manual); };
 document.addEventListener('click', e => { if (e.target.closest('.rf-btn')) refreshEverything(true); });
+
+/* ================= data sources centre: for the developer only. Every number, where it comes from, when it changed and why it may lag ================= */
+var DEV_HASH = '0a8be6ca6fcadfecd55911539a813806fbce68c862977f7bf479fffeeea14500', DEV_ON = false;
+try { DEV_ON = !IN_CLAUDE && RAWLS.getItem('fin-dev') === DEV_HASH; } catch (e) {}
+var OFFI = {ils: NaN, eur: NaN, at: 0};
+const applyDbRatesSrc = applyDbRates;
+applyDbRates = function(d){ try { if (d && d.usd && +d.usd.ILS > 0 && +d.asOf >= (OFFI.at || 0)){ OFFI = {ils: +d.usd.ILS, eur: +d.usd.EUR > 0 ? +d.usd.ILS / +d.usd.EUR : NaN, at: +d.asOf}; } } catch (e) {} const r = applyDbRatesSrc.apply(this, arguments); try { if (d && META.official && META.unix === +d.asOf) Object.keys(d.usd || {}).forEach(k => { FXSRC[k] = {s: 'boi', at: +d.asOf * 1000}; }); } catch (e) {} return r; };
+var SRC = {test: {}, testing: false, timer: null};
+const SRC_L = {
+  cnbcFx: s => 'https://www.cnbc.com/quotes/' + encodeURIComponent(s), gFin: q => 'https://www.google.com/finance/quote/' + q,
+  boiFx: 'https://boi.org.il/roles/statistics/foreign-exchange-market/exchange-rates/', boi: 'https://www.boi.org.il/', cbs: 'https://www.cbs.gov.il/he/Pages/default.aspx',
+  cbsApi: id => 'https://api.cbs.gov.il/index/data/price?id=' + id + '&format=json&download=false&last=3&lang=he',
+  cb: 'https://api.coinbase.com/v2/exchange-rates?currency=USD', cbBtc: 'https://www.coinbase.com/price/bitcoin',
+  gh: 'https://ysdesign-il.github.io/financial-calculator/rates.json', ghAct: 'https://github.com/ysdesign-il/financial-calculator/actions'
+};
+const SRC_G = {ILS: 'USD-ILS', EUR: 'EUR-ILS', ta35: '142:TLV', ta125: '137:TLV', spx: '.INX:INDEXSP', ndx: 'NDX:INDEXNASDAQ', dji: '.DJI:INDEXDJX', gold: 'GCW00:COMEX', brent: 'BZW00:NYMEX'};
+function srcAge(ms){
+  if (!ms) return t('src_never');
+  const s = Math.max(0, Math.round((Date.now() - ms) / 1000));
+  if (s < 60) return t('src_sec', {n: s}); if (s < 3600) return t('src_min', {n: Math.round(s / 60)});
+  if (s < 86400) return t('src_hr', {n: Math.round(s / 3600)}); return t('src_day', {n: Math.round(s / 86400)});
+}
+function srcWhen(ms){ if (!ms) return '—'; try { const d = new Date(ms), same = d.toDateString() === new Date().toDateString(); return new Intl.DateTimeFormat(locOf(), same ? {hour: '2-digit', minute: '2-digit', second: '2-digit'} : {day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'}).format(d); } catch (e) { return ''; } }
+function srcNextCbs(m){ const [y, mo] = String(m || '').split('-').map(Number); if (!y) return 0; const d = new Date(y, mo + 1, 15, 18, 30); return d.getTime(); }     // index for month m comes out on the 15th of m+1; the next one on the 15th of m+2
+function srcItems(){
+  const L = [], now = Date.now(), live = (ms, lim) => ms && now - ms < (lim || 120000);
+  const fxRow = (k, name, val) => {
+    const fs = FXSRC[k] || {s: 'built', at: 0}, at = fs.at, mode = fs.s;
+    const st = (mode === 'cnbc' || mode === 'coinbase') && live(at) ? 'live' : mode === 'boi' ? 'sched' : 'stale';
+    L.push({g: 'fx', name, val, at, st, src: t('src_m_' + mode), why: t('src_w_' + mode), links: [[t('src_lSrc'), mode === 'boi' ? SRC_L.boiFx : SRC_L.cnbcFx(k === 'ILS' ? 'ILS=' : 'EURILS=')], [t('src_lCheck'), SRC_L.gFin(SRC_G[k])], [t('src_lOfficial'), SRC_L.boiFx]]});
+  };
+  const fx = (a, b) => RATES[a] && RATES[b] ? RATES[b] / RATES[a] : NaN;
+  fxRow('ILS', t('mk_usd'), N(fx('USD', 'ILS'), null, 4) + ' ₪');
+  fxRow('EUR', t('mk_eur'), N(fx('EUR', 'ILS'), null, 4) + ' ₪');
+  L.push({g: 'fx', name: t('src_boiRep'), val: isFinite(OFFI.ils) ? N(OFFI.ils, null, 4) + ' ₪' + (isFinite(OFFI.eur) ? ' · € ' + N(OFFI.eur, null, 4) : '') : '—', at: OFFI.at * 1000, st: 'sched', src: t('src_m_boi'), why: t('src_w_boiRep'), links: [[t('src_lSrc'), SRC_L.boiFx]]});
+  L.push({g: 'fx', name: t('mk_btc'), val: RATES.BTC ? '$' + N(1 / RATES.BTC, null, 0) : '—', at: (META.cunix || 0) * 1000, st: live((META.cunix || 0) * 1000, 30000) ? 'live' : 'stale', src: t('src_m_coinbase'), why: t('src_w_crypto'), links: [[t('src_lSrc'), SRC_L.cbBtc], [t('src_lRaw'), SRC_L.cb]]});
+  L.push({g: 'rate', name: t('mk_boi'), val: PC(MKT.boi), at: (typeof macroAt === 'number' ? macroAt : 0) * 1000, st: 'sched', src: t('src_m_boiInt'), why: t('src_w_boiInt', {d: MKT.boiDate || '—', n: MKT.boiNext || '—'}), links: [[t('src_lSrc'), SRC_L.boi]]});
+  [['cpi', '120010'], ['build', '200010'], ['house', '40010']].forEach(([k, id]) => {
+    const d = IX.idx[k]; if (!d) return;
+    const next = srcNextCbs(d.m), late = next && now > next + 86400000;
+    L.push({g: 'idx', name: ixName(k), val: N(+d.v, 1) + ' · ' + lkLabel(d.m), at: next ? srcNextCbs(d.m) - 30 * 86400000 : 0, atTxt: t('src_pub', {m: lkLabel(d.m)}), st: late ? 'stale' : 'sched', src: t('src_m_cbs'),
+      why: t(k === 'house' ? 'src_w_house' : 'src_w_cbs', {n: next ? srcWhen(next) : '—'}), links: [[t('src_lSrc'), SRC_L.cbs], [t('src_lRaw'), SRC_L.cbsApi(id)]]});
+  });
+  IX_MK.forEach(k => {
+    const d = IX.mkt[k]; if (!d || !(d.p > 0)) return;
+    const at = (+d.t || 0) * 1000, age = now - at, lv = d.live && IXL.ok;
+    const st = lv && d.rt && age < 180000 ? 'live' : lv && !d.rt && age < 40 * 60000 ? 'delay' : 'stale';
+    const why = !lv ? t(IN_CLAUDE ? 'src_w_claude' : 'src_w_snapMk') : !d.rt ? t('src_w_prov') : age > 30 * 60000 ? t('src_w_closed') : t('src_w_rt');
+    L.push({g: 'mkt', name: ixName(k), val: (k === 'gold' || k === 'brent' ? '$' : '') + N(d.p, null, d.p >= 1000 ? 0 : 2), at, st, src: t(lv ? 'src_m_cnbc' : 'src_m_snap'), why, links: [[t('src_lSrc'), SRC_L.cnbcFx(d.sym || IX_SYM[k])], [t('src_lCheck'), SRC_L.gFin(SRC_G[k])]]});
+  });
+  return L;
+}
+async function srcTest(){
+  if (SRC.testing) return; SRC.testing = true; srcRender(true);
+  const probe = async (k, url, ok) => { const t0 = performance.now(); try { const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 6000); const r = await fetch(url, {signal: ctl.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); clearTimeout(to); const good = r.ok && (!ok || ok(await r.json())); SRC.test[k] = {ok: good, ms: Math.round(performance.now() - t0), at: Date.now()}; } catch (e) { SRC.test[k] = {ok: false, ms: Math.round(performance.now() - t0), at: Date.now(), blocked: true}; } };
+  await Promise.all([
+    probe('cnbc', IX_QURL, j => !!(j && j.FormattedQuoteResult)),
+    probe('coinbase', SRC_L.cb, j => !!(j && j.data && j.data.rates)),
+    probe('gh', IN_CLAUDE ? SRC_L.gh : 'rates.json?v=' + Date.now(), j => !!(j && j.usd))
+  ]);
+  if (IN_CLAUDE){ const t0 = performance.now(); try { const db = IX_DB || await window.claude.use('db'); const x = db ? await db.doc('rates/live').get() : null; SRC.test.db = {ok: !!(x && x.exists), ms: Math.round(performance.now() - t0), at: Date.now(), asOf: x && x.exists ? +(x.data() || {}).asOf || 0 : 0}; } catch (e) { SRC.test.db = {ok: false, ms: 0, at: Date.now()}; } }
+  try { await refreshEverything(false); } catch (e) {}
+  SRC.testing = false; srcRender(true);
+}
+function srcRender(force){
+  const box = $('#src_box'); if (!box || !liveOwner()) return;
+  if (!force && (box.closest('.set-cat') || {}).hidden) return;
+  const items = srcItems(), cnt = {live: 0, delay: 0, sched: 0, stale: 0}; items.forEach(i => cnt[i.st]++);
+  const env = IN_CLAUDE ? t('src_envClaude', {t: srcWhen((META.unix || 0) * 1000)}) : t('src_envSite');
+  const pill = st => `<span class="src-st s-${st}">${asEsc(t('src_s_' + st))}</span>`;
+  const lk = l => `<a href="${asEsc(l[1])}" target="_blank" rel="noopener noreferrer" class="src-a">${asEsc(l[0])} ↗</a>`;
+  let h = `<p class="fine">${asEsc(t('src_intro'))}</p><div class="src-env">${asEsc(env)}</div>`;
+  h += `<div class="src-sum">${['live', 'delay', 'sched', 'stale'].map(k => `<span class="src-st s-${k}">${asEsc(t('src_s_' + k))} · ${cnt[k]}</span>`).join('')}</div>`;
+  h += `<div class="btnrow"><button type="button" class="gold-btn" id="src_test"${SRC.testing ? ' disabled' : ''}>${asEsc(t(SRC.testing ? 'src_testing' : 'src_testBtn'))}</button>${DEV_ON ? `<button type="button" class="mv wide" id="dev_off">${asEsc(t('dev_off'))}</button>` : ''}</div>`;
+  const T = SRC.test;
+  if (Object.keys(T).length){
+    const row = (k, name) => T[k] ? `<li class="${T[k].ok ? 's-ok' : 's-bad'}"><b>${T[k].ok ? '✓' : '✗'}</b><span>${asEsc(name)}</span><small>${T[k].ok ? asEsc(t('src_ms', {n: T[k].ms})) : asEsc(t(T[k].blocked ? 'src_blocked' : 'src_failed'))}${k === 'db' && T.db.asOf ? ' · ' + asEsc(t('src_dbAt', {t: srcWhen(T.db.asOf * 1000)})) : ''}</small></li>` : '';
+    h += `<ul class="src-tests">${row('cnbc', t('src_t_cnbc'))}${row('coinbase', t('src_t_cb'))}${row('gh', t('src_t_gh'))}${row('db', t('src_t_db'))}</ul>`;
+  }
+  ['fx', 'rate', 'idx', 'mkt'].forEach(g => {
+    const rows = items.filter(i => i.g === g); if (!rows.length) return;
+    h += `<h4 class="src-h">${asEsc(t('src_g_' + g))}</h4><div class="src-list">`;
+    rows.forEach(i => { h += `<div class="src-row"><div class="src-top"><b>${asEsc(i.name)}</b>${pill(i.st)}</div><div class="src-val num">${asEsc(i.val)}</div>
+      <div class="src-meta">${asEsc(i.atTxt || t('src_upd', {t: srcWhen(i.at), a: srcAge(i.at)}))} · ${asEsc(i.src)}</div><p class="src-why">${asEsc(i.why)}</p><div class="src-links">${i.links.map(lk).join('')}</div></div>`; });
+    h += '</div>';
+  });
+  h += `<p class="fine src-foot">${asEsc(t('src_pipe'))} <a href="${SRC_L.gh}" target="_blank" rel="noopener noreferrer" class="src-a">rates.json ↗</a> <a href="${SRC_L.ghAct}" target="_blank" rel="noopener noreferrer" class="src-a">GitHub Actions ↗</a></p>`;
+  box.innerHTML = h;
+}
+document.addEventListener('click', e => {
+  if (e.target.closest('#src_test')) srcTest();
+  else if (e.target.closest('#dev_off')){ try { RAWLS.removeItem('fin-dev'); } catch (err) {} DEV_ON = false; liveApply(); try { activate('settings'); } catch (err) {} toast(t('dev_offDone')); }
+  else if (e.target.closest('#src_open')){ activate('settings'); setTimeout(() => { const r = $('.sh-row[data-scat="conn"]'); if (r) r.click(); setTimeout(() => { srcRender(true); const s = $('.set-sec[data-sk="set_src"]'); if (s) s.scrollIntoView({block: 'start'}); }, 200); }, 120); }
+});
+setInterval(() => { if (!document.hidden && tab === 'settings' && SCAT === 'conn') srcRender(); }, 5000);
+document.addEventListener('click', e => { if (e.target.closest('.sh-row[data-scat="conn"]')) setTimeout(() => srcRender(true), 150); });
+/* developer mode on the website: tap the version number five times, then enter your private developer code */
+var DEV_TAPS = [];
+document.addEventListener('click', e => {
+  if (!e.target.closest('#upd_cur') || IN_CLAUDE) return;
+  const now = Date.now(); DEV_TAPS = DEV_TAPS.filter(x => now - x < 3000).concat(now);
+  if (DEV_TAPS.length < 5 || $('#dev_box')) return;
+  DEV_TAPS = [];
+  const box = e.target.closest('.upd-box') || e.target.parentNode;
+  box.insertAdjacentHTML('beforeend', `<div class="dev-box" id="dev_box"><label for="dev_code">${asEsc(t('dev_code'))}</label><div class="dev-row"><input id="dev_code" type="password" autocomplete="off" autocapitalize="characters" spellcheck="false" dir="ltr"><button type="button" class="gold-btn" id="dev_go">${asEsc(t('dev_go'))}</button></div><small class="hint" id="dev_msg"></small></div>`);
+  setTimeout(() => { const i = $('#dev_code'); if (i) i.focus(); }, 50);
+});
+async function devTry(){
+  const i = $('#dev_code'), m = $('#dev_msg'); if (!i) return;
+  const code = String(i.value || '').replace(/[^0-9a-z]/gi, '').toUpperCase();
+  let h = '';
+  try { const b = await pbk(code, new TextEncoder().encode('fincalc-dev-v1'), 150000, 256); h = Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join(''); } catch (e) {}
+  if (h && h === DEV_HASH){ try { RAWLS.setItem('fin-dev', DEV_HASH); } catch (e) {} DEV_ON = true; const b = $('#dev_box'); if (b) b.remove(); liveApply(); toast(t('dev_onDone')); }
+  else if (m) m.textContent = t('dev_bad');
+}
+document.addEventListener('click', e => { if (e.target.closest('#dev_go')) devTry(); });
+document.addEventListener('keydown', e => { if (e.target && e.target.id === 'dev_code' && e.key === 'Enter'){ e.preventDefault(); devTry(); } });
+/* a quiet shortcut for the developer under the home board */
+const ixBoardSrc = ixBoard;
+ixBoard = function(){ const r = ixBoardSrc.apply(this, arguments); const n = $('#hmx .mkt-note'); if (n && liveOwner() && !$('#src_open')) n.insertAdjacentHTML('beforeend', ` <button type="button" class="fg-x" id="src_open">${asEsc(t('src_open'))}</button>`); return r; };
+liveApply();
+try { if (tab === 'home') ixBoard(); } catch (e) {}
 
 applyLang(false);
 activate(tab);
