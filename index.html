@@ -11678,7 +11678,7 @@ function devSha(str){
   return H.map(v=>(v>>>0).toString(16).padStart(8,'0')).join('');
 }
 /* only a hash of the unlock value lives in the page; the value itself comes from the name + code and is kept on the owner's device */
-var DEV_CHECK = '85932e057340394b0358aea7e4496d941fbea755b915fc172488ae974e095f2d', DEV_ON = false;
+var DEV_CHECK = '2ff82c4945c39ddf16442f25fdc6b3ee96b832d2ea9b26448813ba9087d1c285', DEV_ON = false;
 const devOk = v => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) && devSha(v) === DEV_CHECK;
 try { DEV_ON = devOk(RAWLS.getItem('fin-dev')); } catch (e) {}
 var OFFI = {ils: NaN, eur: NaN, at: 0};
