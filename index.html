@@ -666,30 +666,6 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
 .as-eng{display:inline-flex;flex-wrap:wrap}
 .as-eng button{font-size:.85rem;padding:6px 12px}
 .pm-badge{margin-top:10px;opacity:.75}
-.iv-box{width:min(820px,100%);height:94vh;max-height:94vh}
-.iv-tabs{display:flex;flex-wrap:wrap;gap:2px}
-.iv-tabs button{font-size:.85rem;padding:7px 12px}
-.iv-frame{flex:1 1 auto;min-height:0;border-radius:14px;overflow:auto;border:1px solid var(--line);background:var(--surface);direction:ltr;-webkit-overflow-scrolling:touch}
-.iv-wrap{position:relative;overflow:hidden;margin:0 auto}
-.iv-wrap iframe{position:absolute;top:0;left:0;border:0;display:block;transform-origin:0 0}
-.iv-tools{display:flex;align-items:center;gap:6px;justify-content:flex-end}
-.iv-z{appearance:none;font:inherit;font-weight:700;min-width:36px;height:32px;padding:0 10px;border-radius:10px;border:1px solid var(--line);background:var(--g1);color:var(--ink);cursor:pointer}
-.iv-fit{font-weight:600;font-size:.85rem}
-.iv-zv{min-width:44px;text-align:center;font-size:.85rem;color:var(--ink-2)}
-.iv-foot{margin:0}
-.iv-btn{appearance:none;font:inherit;cursor:pointer;background:none}
-.iv-home{appearance:none;font:inherit;font-weight:600;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;margin:12px 0 4px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:linear-gradient(160deg,var(--g1),var(--g2))}
-.iv-home:hover{border-color:var(--gold-ui)}
-.iv-dot{width:9px;height:9px;border-radius:50%;background:#2fbf86;box-shadow:0 0 0 0 rgba(47,191,134,.6);animation:ivp 1.8s infinite}
-@keyframes ivp{0%{box-shadow:0 0 0 0 rgba(47,191,134,.6)}70%{box-shadow:0 0 0 8px rgba(47,191,134,0)}100%{box-shadow:0 0 0 0 rgba(47,191,134,0)}}
-:root[data-motion="reduced"] .iv-dot{animation:none}
-@media (max-height:540px){
-  .iv-box{height:100vh;max-height:100vh;border-radius:0;padding:8px 12px;gap:6px}
-  .iv-box #iv_note{display:none}
-  .iv-box .cp-top h3{font-size:1rem;margin:0}
-  .iv-tabs button{padding:5px 10px}
-  .iv-z{height:28px}
-}
 /* themes: chrome that was hard-coded follows the active theme */
 :root[data-skin] body{background:var(--sk-body);background-attachment:fixed}
 :root[data-skin] .rail{background:var(--sk-rail)}
@@ -769,11 +745,6 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
 .cs-pv .ck{transform:scale(.46);transform-origin:center;width:217%;flex:none}
 .cs-pv .ck-min{transform:scale(.62);width:160%}
 .cs-off{font-size:2rem;color:var(--ink-2)}
-.iv-search{display:flex;gap:8px}
-.iv-search input{flex:1;min-width:0;font:inherit;padding:9px 12px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--ink)}
-.iv-search .gold-btn{padding:9px 16px}
-.iv-chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
-.iv-chips .as-chip{flex:none}
 /* tools: expenses + clients */
 body[data-tab="expenses"] .ghost-btn,body[data-tab="clients"] .ghost-btn,body[data-tab="expenses"] .ex-btn,body[data-tab="clients"] .ex-btn{display:none}
 .tool-panel{display:block}
@@ -922,6 +893,65 @@ a.gold-btn.rc-open{display:inline-flex;align-items:center;justify-content:center
 .acc-warn{margin:4px 0 12px;padding:10px 12px;border:1.5px solid rgba(229,83,75,.65);border-radius:12px;background:rgba(229,83,75,.09);color:#FF8A7A;font-weight:700;line-height:1.5}
 :root[data-theme="light"] .acc-warn{color:#C0392B;background:rgba(192,57,43,.07);border-color:rgba(192,57,43,.55)}
 .hint.rc-nopw{display:block;margin-top:6px;color:#1f9d6b;font-weight:600}
+.lc-wrap{display:flex;flex-direction:column;gap:12px}
+.lc-card{border:1px solid var(--line);border-radius:16px;padding:12px;background:var(--g1,transparent)}
+.lc-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.lc-num{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:.85rem;background:var(--gold-ui,#E0A93A);color:#3a2604}
+.lc-name{flex:1;min-width:0;font:inherit;font-weight:700;font-size:1rem;padding:9px 12px;border-radius:12px;border:1px solid var(--line);background:var(--field,transparent);color:var(--ink)}
+.lc-del{flex:none;appearance:none;width:38px;height:38px;border-radius:12px;border:1px solid rgba(229,83,75,.5);background:transparent;color:#E5534B;font-size:1rem;cursor:pointer}
+.lc-del:hover{background:rgba(229,83,75,.1)}
+.lc-l{display:block;font-size:.83rem;font-weight:500;color:var(--ink-2);margin-bottom:5px}
+.lc-add{appearance:none;font:inherit;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:48px;border-radius:14px;border:2px dashed var(--gold-ui,#E0A93A);background:transparent;color:var(--ink);cursor:pointer}
+.lc-add span{font-size:1.3rem;color:var(--gold-ui,#E0A93A)}
+.lc-add:hover{background:rgba(224,169,58,.08)}
+.lc-hint{margin:0}
+.lc-card .fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lc-card .field{margin:0;min-width:0}
+.lc-card .control input{min-width:0}
+.sp-row{display:grid;grid-template-columns:28px minmax(0,1fr) minmax(0,1fr) 38px;gap:8px;align-items:center}
+.sp-row .lc-name{font-size:.95rem;padding:9px 10px}
+.sp-v{min-width:0}.sp-v input{min-width:0}
+.sp-gap{width:38px}
+.sp-head{margin:0 0 -4px;font-size:.83rem;font-weight:600;color:var(--ink-2)}
+.c-red{background:linear-gradient(160deg,#FF8A7A,#D9483B)}
+.sec-box{display:flex;flex-direction:column;gap:10px}
+.sec-alert{padding:10px 12px;border-radius:12px;border:1.5px solid rgba(229,83,75,.6);background:rgba(229,83,75,.09);color:#FF8A7A;font-weight:700}
+:root[data-theme="light"] .sec-alert{color:#B53A2A}
+.sec-score{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;border:1px solid var(--line)}
+.sec-score.s-ok{border-color:rgba(47,191,134,.55);background:rgba(47,191,134,.08)}
+.sec-score.s-warn{border-color:rgba(224,169,58,.6);background:rgba(224,169,58,.08)}
+.sec-score b{display:block}.sec-score small{color:var(--ink-2)}
+.sec-shield{font-size:1.6rem}
+.sec-list,.sec-devs,.sec-act{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.sec-c{display:flex;align-items:center;gap:10px;font-size:.92rem}
+.sec-c b{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;color:#fff}
+.sec-c.s-ok b{background:#2fbf86}.sec-c.s-warn b{background:#E0A93A}.sec-c.s-bad b{background:#E5534B}
+.sec-c span{flex:1}
+.sec-mini{padding:5px 12px;min-height:0;font-size:.82rem}
+.sec-h{display:flex;align-items:center;gap:8px;margin:10px 0 2px;font-size:1rem}
+.sec-live{width:9px;height:9px;border-radius:50%;background:#2fbf86;animation:secp 1.8s infinite}
+.sec-live-t{font-size:.75rem;font-weight:600;color:#1f9d6b}
+@keyframes secp{0%{box-shadow:0 0 0 0 rgba(47,191,134,.6)}70%{box-shadow:0 0 0 8px rgba(47,191,134,0)}100%{box-shadow:0 0 0 0 rgba(47,191,134,0)}}
+:root[data-motion="reduced"] .sec-live{animation:none}
+.sec-count{margin:0}
+.sec-dev{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px}
+.sec-dev.me{border-color:rgba(47,191,134,.55)}
+.sec-dev div{flex:1;min-width:0}.sec-dev b{display:block}.sec-dev small{color:var(--ink-2)}
+.sec-dot{width:9px;height:9px;border-radius:50%;background:#2fbf86;flex:none}
+.sec-act li{display:flex;gap:10px;align-items:flex-start;font-size:.9rem}
+.sec-act li.s-bad b{color:#E5534B}
+.sec-act div{display:flex;flex-direction:column}.sec-act small{color:var(--ink-2)}
+.sec-priv{margin-top:4px}
+.sec-bar{position:fixed;left:12px;right:12px;top:12px;z-index:9000;display:flex;align-items:center;gap:8px;padding:12px 14px;border-radius:14px;background:#B53A2A;color:#fff;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.sec-bar span{flex:1}
+.sec-bar-go{appearance:none;border:1px solid rgba(255,255,255,.7);background:transparent;color:#fff;font:inherit;font-weight:700;padding:6px 12px;border-radius:10px;cursor:pointer}
+.sec-bar-x{appearance:none;border:0;background:transparent;color:#fff;font-size:1.4rem;line-height:1;padding:0 6px;cursor:pointer}
+.sh-badge.alert{background:#E5534B;border-color:#E5534B;color:#fff}
+.sh-badge.cnt{color:#1f9d6b;border-color:rgba(47,191,134,.55)}
+.sec-c{border:0;padding:0;background:none;margin:0}
+.sec-c span{min-width:0}
+.sec-mini{flex:none !important;width:auto !important;white-space:nowrap}
+.sec-c span{flex:1 1 auto}
 
 </style>
 </head>
@@ -1625,7 +1655,7 @@ Object.assign(T, {
   d_purchasetax:['מס רכישה לפי מדרגות, לדירה יחידה, דירה נוספת ועולה, כולל עלויות נלוות.','ضريبة الشراء حسب الشرائح لشقة وحيدة أو إضافية أو لمهاجر مع التكاليف الجانبية.','Purchase tax by bracket for a single home, an additional home or an immigrant, with closing costs.'],
   d_landtax:['מס שבח על מכירת דירה: שבח ריאלי, הצמדה, פטור דירת מגורים ומס יסף.','ضريبة التحسين على بيع شقة: الربح الحقيقي والتضخم وإعفاء السكن والضريبة الإضافية.','Land appreciation tax on selling a home: real gain, inflation, residence exemption and surtax.'],
   d_refi:['האם משתלם למחזר משכנתא אחרי עלויות, וכמה חודשים עד נקודת האיזון.','هل يستحق إعادة تمويل الرهن بعد التكاليف ومتى تتعادل.','Whether refinancing pays off after costs, and the break-even point.'],
-  d_loancmp:['שתי הצעות הלוואה זו מול זו, עם עלות כוללת וריבית אפקטיבית.','عرضا قرض جنبًا إلى جنب مع التكلفة الإجمالية والفائدة الفعلية.','Two loan offers side by side with total cost and effective rate.'],
+  d_loancmp:['כמה הצעות הלוואה שרוצים זו מול זו, עם שם לכל הצעה, עלות כוללת וריבית אפקטיבית.','عروض قروض بقدر ما تريد جنبًا إلى جنب، مع اسم لكل عرض والتكلفة الإجمالية والفائدة الفعلية.','As many loan offers as you like side by side, each with a name, total cost and effective rate.'],
   d_prepay:['האם עדיף לפרוע הלוואה מוקדם או להשקיע את הסכום.','هل الأفضل سداد القرض مبكرًا أم استثمار المبلغ.','Is it better to prepay a loan or invest the money?'],
   d_savegoal:['כמה להפקיד בחודש כדי להגיע ליעד, או כמה זמן ייקח.','كم تودع شهريًا للوصول إلى الهدف أو كم سيستغرق.','How much to save monthly to reach a goal, or how long it takes.'],
   d_retire:['כמה תצטבר עד הפרישה, איזו קצבה חודשית תקבל וכמה חסר.','كم ستجمع حتى التقاعد وما الدخل الشهري وكم ينقص.','What you will accumulate, the monthly income it supports, and any gap.'],
@@ -1634,7 +1664,7 @@ Object.assign(T, {
   d_carlease:['עלות כוללת של ליסינג מול רכישת רכב בהלוואה.','التكلفة الإجمالية لتأجير سيارة مقابل شرائها بقرض.','Total cost of leasing a car versus buying it with a loan.'],
   d_avgcost:['ממוצע עלות חדש אחרי קנייה נוספת, ורווח או הפסד.','متوسط التكلفة الجديد بعد شراء إضافي والربح أو الخسارة.','New average cost after buying more, and profit or loss.'],
   d_breakeven:['כמה יחידות צריך למכור כדי לכסות הוצאות ולהגיע ליעד רווח.','كم وحدة يجب بيعها لتغطية التكاليف وتحقيق هدف الربح.','Units to sell to cover costs and hit a profit target.'],
-  d_split:['חלוקת חשבון שווה בשווה או לפי הכנסה, כולל טיפ.','تقسيم الفاتورة بالتساوي أو حسب الدخل مع البقشيش.','Split a bill equally or by income, with tip.'],
+  d_split:['חלוקת חשבון או הוצאות משותפות: שווה בשווה, לפי הכנסה, אחוזים, חלקים או מה שכל אחד הזמין, והתחשבנות מי מעביר למי.','تقسيم فاتورة أو مصاريف مشتركة: بالتساوي، حسب الدخل، بالنسب، بالحصص أو حسب ما طلبه كل شخص، وتسوية من يحوّل لمن.','Split a bill or shared costs: equally, by income, percentages, parts or what each ordered, and settle up who pays whom.'],
   /* fields */
   o_svYes:['זכאי לפיצויים (פיטורין או התפטרות מזכה)','مستحق للتعويض (فصل أو استقالة مبررة)','Entitled (dismissed or qualifying resignation)'],
   o_svNo:['לא זכאי (התפטרות רגילה)','غير مستحق (استقالة عادية)','Not entitled (ordinary resignation)'],
@@ -1754,7 +1784,7 @@ Object.assign(T, {
   f_beTarget:['יעד רווח חודשי','هدف الربح الشهري','Monthly profit target'],
   f_beUnits:['מכירות בפועל בחודש (יחידות)','المبيعات الفعلية شهريًا (وحدات)','Actual monthly sales (units)'],
   o_spEq:['שווה בשווה','بالتساوي','Equally'],
-  o_spInc:['לפי הכנסה (שניים)','حسب الدخل (اثنان)','By income (two people)'],
+  o_spInc:['לפי הכנסה','حسب الدخل','By income'],
   f_spMode:['אופן החלוקה','طريقة التقسيم','Split method'],
   f_spTotal:['סכום החשבון','مبلغ الفاتورة','Bill amount'],
   f_spTip:['טיפ','بقشيش','Tip'],
@@ -2117,7 +2147,7 @@ Object.assign(T, {
   st_gok:['עודכן דרך Gemini ({d})','تم التحديث عبر Gemini ({d})','Updated via Gemini ({d})'],
   st_gnokey:['בחרתם ב-Gemini אבל לא הוזן מפתח API.','اخترتَ Gemini لكن لم يُدخَل مفتاح API.','Gemini is selected but no API key was entered.'],
   st_gblocked:['העמוד הזה לא הצליח להגיע ל-Gemini (חסימת רשת של העמוד המאוחסן). שמרו את הקובץ ופתחו אותו מחוץ לאתר כדי שזה יעבוד. מוצגים שערי {d}.','لم تستطع هذه الصفحة الوصول إلى Gemini (حظر الشبكة في الصفحة المستضافة). احفظ الملف وافتحه خارج الموقع. الأسعار المعروضة {d}.','This page could not reach Gemini (the hosted page blocks outside network calls). Save the file and open it outside the site for this to work. Showing rates from {d}.'],
-  st_gerr:['Gemini לא החזיר שערים ({e}). מוצגים שערי {d}.','لم يُرجع Gemini أسعارًا ({e}). الأسعار المعروضة {d}.','Gemini returned no rates ({e}). Showing rates from {d}.'],
+  st_gerr:['Gemini לא החזיר שערים ({e}). מוצגים שערי {d}.','لم يُرجع Gemini أسعارًا ({e}). الأسعار المعروضة {d}.','Gemini returned no rates ({e}). Showing rates from {d}.']
 });
 Object.assign(T, {
   tab_assist:['חיפוש ועוזר AI','البحث ومساعد AI','Search & AI assistant'],
@@ -2133,7 +2163,7 @@ Object.assign(T, {
   as_c1:['איזה מחשבון מתאים לי לבדיקת משכנתא?','أي حاسبة تناسب فحص الرهن العقاري؟','Which calculator fits checking a mortgage?'],
   as_c2:['איך יוצאים מחובות בצורה חכמה?','كيف أخرج من الديون بذكاء؟','How do I get out of debt smartly?'],
   as_c3:['מה ההבדל בין ברוטו לנטו?','ما الفرق بين الإجمالي والصافي؟','What is the difference between gross and net?'],
-  as_c4:['כמה כדאי לחסוך כל חודש לפרישה?','كم يجب أن أدخر شهريًا للتقاعد؟','How much should I save monthly for retirement?'],
+  as_c4:['כמה כדאי לחסוך כל חודש לפרישה?','كم يجب أن أدخر شهريًا للتقاعد؟','How much should I save monthly for retirement?']
 });
 Object.assign(T, {
   as_prov:['ספק ה-AI','مزوّد الذكاء الاصطناعي','AI provider'],
@@ -2141,13 +2171,13 @@ Object.assign(T, {
   as_key:['מפתח API','مفتاح API','API key'],
   as_nokey:['חסר מפתח API לספק שנבחר. הזינו אותו בשדה למעלה.','مفتاح API مفقود للمزوّد المحدد. أدخله في الحقل أعلاه.','No API key for the selected provider. Enter it in the field above.'],
   as_blocked:['העמוד המאוחסן חוסם פניות לשירות הזה. עם Claude זה עובד בלי מפתח, או שמרו את הקובץ ופתחו אותו מחוץ לאתר.','الصفحة المستضافة تحظر الاتصال بهذه الخدمة. مع Claude يعمل بدون مفتاح، أو احفظ الملف وافتحه خارج الموقع.','The hosted page blocks calls to this service. Claude works without a key here, or save the file and open it outside the site.'],
-  as_note:['העוזר מסביר ומכוון למחשבון המתאים, ואינו יועץ פיננסי או מס מוסמך. השאלה נשלחת לספק ה-AI שבחרתם, והמפתחות נשמרים רק בדפדפן הזה (מוצפנים אם אתם מחוברים) ולא נכללים בייצוא.','المساعد يشرح ويوجّه إلى الحاسبة المناسبة وليس مستشارًا ماليًا أو ضريبيًا مرخّصًا. يُرسل السؤال إلى مزوّد الذكاء الاصطناعي الذي اخترته، والمفاتيح تُحفظ في هذا المتصفح فقط (مشفّرة عند تسجيل الدخول) ولا تُضمَّن في التصدير.','The assistant explains and points you to the right calculator; it is not a licensed financial or tax adviser. Your question goes to the AI provider you chose; keys stay only in this browser (encrypted when signed in) and are left out of exports.'],
+  as_note:['העוזר מסביר ומכוון למחשבון המתאים, ואינו יועץ פיננסי או מס מוסמך. השאלה נשלחת לספק ה-AI שבחרתם, והמפתחות נשמרים רק בדפדפן הזה (מוצפנים אם אתם מחוברים) ולא נכללים בייצוא.','المساعد يشرح ويوجّه إلى الحاسبة المناسبة وليس مستشارًا ماليًا أو ضريبيًا مرخّصًا. يُرسل السؤال إلى مزوّد الذكاء الاصطناعي الذي اخترته، والمفاتيح تُحفظ في هذا المتصفح فقط (مشفّرة عند تسجيل الدخول) ولا تُضمَّن في التصدير.','The assistant explains and points you to the right calculator; it is not a licensed financial or tax adviser. Your question goes to the AI provider you chose; keys stay only in this browser (encrypted when signed in) and are left out of exports.']
 });
 Object.assign(T, {
-  as_noai:['Claude לא זמין מחוץ ל-Artifact. בחרו Gemini או ChatGPT והזינו מפתח API. החיפוש לפי שם ממשיך לעבוד.','Claude غير متاح خارج Artifact. اختر Gemini أو ChatGPT وأدخل مفتاح API. البحث بالاسم يعمل دائمًا.','Claude is not available outside the Artifact. Pick Gemini or ChatGPT and enter an API key. Search by name still works.'],
+  as_noai:['Claude לא זמין מחוץ ל-Artifact. בחרו Gemini או ChatGPT והזינו מפתח API. החיפוש לפי שם ממשיך לעבוד.','Claude غير متاح خارج Artifact. اختر Gemini أو ChatGPT وأدخل مفتاح API. البحث بالاسم يعمل دائمًا.','Claude is not available outside the Artifact. Pick Gemini or ChatGPT and enter an API key. Search by name still works.']
 });
 Object.assign(T, {
-  set_info:['נתוני מס ושכר: ישראל 2026.','بيانات الضرائب والرواتب: إسرائيل 2026.','Tax and wage data: Israel 2026.'],
+  set_info:['נתוני מס ושכר: ישראל 2026.','بيانات الضرائب والرواتب: إسرائيل 2026.','Tax and wage data: Israel 2026.']
 });
 Object.assign(T, {
   home_mine:['הנתונים שלי','بياناتي','My data'],
@@ -2170,12 +2200,12 @@ Object.assign(T, {
   mk_boi_s:['הוחלט {d} · הבאה {n}','قرار {d} · التالي {n}','Set {d} · next {n}'],
   mk_prime_s:['ריבית בנק ישראל + 1.5%','فائدة بنك إسرائيل + 1.5%','Bank of Israel rate + 1.5%'],
   mk_cpi_s:['מדד {m} (הלמ״ס)','مؤشر {m} (دائرة الإحصاء)','CPI {m} (CBS)'],
-  mk_note:['שערי המטבע והקריפטו מתעדכנים לבד כשהדף יכול להתחבר לשרתי השערים; כאן מוצג העדכון האחרון שנשמר. ריבית ואינפלציה: נתונים רשמיים אחרונים, מתעדכנים בגרסאות.','تتحدّث أسعار العملات والعملات المشفّرة تلقائيًا عندما تستطيع الصفحة الاتصال بخوادم الأسعار؛ وإلا يظهر آخر تحديث محفوظ. الفائدة والتضخم: آخر بيانات رسمية، تُحدَّث مع الإصدارات.','Currency and crypto prices refresh on their own when the page can reach the rate servers; otherwise the last saved update is shown. Interest and inflation: latest official figures, updated with app versions.'],
+  mk_note:['שערי המטבע והקריפטו מתעדכנים לבד כשהדף יכול להתחבר לשרתי השערים; כאן מוצג העדכון האחרון שנשמר. ריבית ואינפלציה: נתונים רשמיים אחרונים, מתעדכנים בגרסאות.','تتحدّث أسعار العملات والعملات المشفّرة تلقائيًا عندما تستطيع الصفحة الاتصال بخوادم الأسعار؛ وإلا يظهر آخر تحديث محفوظ. الفائدة والتضخم: آخر بيانات رسمية، تُحدَّث مع الإصدارات.','Currency and crypto prices refresh on their own when the page can reach the rate servers; otherwise the last saved update is shown. Interest and inflation: latest official figures, updated with app versions.']
 });
 Object.assign(T, {
   st_official:['שער יציג {d}','السعر الرسمي {d}','official rate {d}'],
   mk_official:['שער יציג, בנק ישראל · {d}','السعر الرسمي، بنك إسرائيل · {d}','Bank of Israel official · {d}'],
-  mk_note:['דולר/שקל: השער היציג של בנק ישראל, ושאר המטבעות לפי הבנק המרכזי האירופי. השערים מתעדכנים כל יום עסקים אחרי פרסום השער היציג, וכשהדף יכול להתחבר ישירות לשרתי השערים הם מתעדכנים גם בזמן אמת. ריבית ואינפלציה: הנתונים הרשמיים האחרונים.','دولار/شيكل: السعر الرسمي لبنك إسرائيل، وباقي العملات حسب البنك المركزي الأوروبي. تتحدّث الأسعار كل يوم عمل بعد نشر السعر الرسمي، وعندما تستطيع الصفحة الاتصال مباشرة بخوادم الأسعار تتحدّث مباشرة أيضًا. الفائدة والتضخم: آخر البيانات الرسمية.','USD/ILS: the Bank of Israel official representative rate; other currencies from the European Central Bank. Rates update every business day after the official rate is published, and live when the page can reach the rate servers directly. Interest and inflation: latest official figures.'],
+  mk_note:['דולר/שקל: השער היציג של בנק ישראל, ושאר המטבעות לפי הבנק המרכזי האירופי. השערים מתעדכנים כל יום עסקים אחרי פרסום השער היציג, וכשהדף יכול להתחבר ישירות לשרתי השערים הם מתעדכנים גם בזמן אמת. ריבית ואינפלציה: הנתונים הרשמיים האחרונים.','دولار/شيكل: السعر الرسمي لبنك إسرائيل، وباقي العملات حسب البنك المركزي الأوروبي. تتحدّث الأسعار كل يوم عمل بعد نشر السعر الرسمي، وعندما تستطيع الصفحة الاتصال مباشرة بخوادم الأسعار تتحدّث مباشرة أيضًا. الفائدة والتضخم: آخر البيانات الرسمية.','USD/ILS: the Bank of Israel official representative rate; other currencies from the European Central Bank. Rates update every business day after the official rate is published, and live when the page can reach the rate servers directly. Interest and inflation: latest official figures.']
 });
 Object.assign(T, {
   tab_inflation:['מחשבון אינפלציה','حاسبة التضخم','Inflation calculator'],
@@ -2214,13 +2244,13 @@ Object.assign(T, {
   l_inRealV:['שווי ריאלי','القيمة الحقيقية','Real value'], l_inEaten:['נשחק באינפלציה','تآكل بالتضخم','Eaten by inflation'],
   t_inYears:['אינפלציה לפי שנה','التضخم حسب السنة','Inflation by year'],
   h_inYr:['אינפלציה','التضخم','Inflation'], h_inValue:['שווי {a} של {y}','قيمة {a} من {y}','Value of {a} from {y}'],
-  h_inCost:['מחיר','السعر','Price'], h_inReal:['במחירי היום','بأسعار اليوم','In today\'s prices'], h_inNom:['נומינלי','اسمي','Nominal'],
+  h_inCost:['מחיר','السعر','Price'], h_inReal:['במחירי היום','بأسعار اليوم','In today\'s prices'], h_inNom:['נומינלי','اسمي','Nominal']
 });
 Object.assign(T, {
   n_inPast:['לפי השינוי השנתי במדד המחירים לצרכן בישראל (נתוני הלמ״ס), מעוגל, ולכן התוצאה משוערת. לחישוב הצמדה רשמי של חוזה או חוב השתמשו במחשבון ההצמדה של הלמ״ס.','حسب التغير السنوي في مؤشر أسعار المستهلك في إسرائيل (بيانات دائرة الإحصاء)، مقرّب، لذا النتيجة تقديرية. لحساب ربط رسمي لعقد أو دين استخدم حاسبة الربط لدائرة الإحصاء.','Based on the annual change in Israel\'s consumer price index (CBS data), rounded, so the result is approximate. For an official linkage of a contract or debt, use the CBS linkage calculator.'],
   note:['החישובים להמחשה בלבד ואינם מהווים ייעוץ פיננסי או ייעוץ מס. נתוני המס והשכר הם לשנת 2026 בישראל. שערי המטבע לעיון בלבד ואינם שערי עסקה.','الحسابات للتوضيح فقط وليست استشارة مالية أو ضريبية. بيانات الضرائب والرواتب لعام 2026 في إسرائيل. أسعار العملات للاطلاع فقط وليست أسعار صفقات.','Calculations are for illustration only and are not financial or tax advice. Tax and wage data are for Israel, 2026. Exchange rates are for reference only, not transaction rates.'],
   src_boi:['שערים: בנק ישראל ו-ECB','الأسعار: بنك إسرائيل و-ECB','Rates: Bank of Israel & ECB'],
-  src_cbs:['מדד: הלמ״ס','المؤشر: دائرة الإحصاء','CPI: CBS'],
+  src_cbs:['מדד: הלמ״ס','المؤشر: دائرة الإحصاء','CPI: CBS']
 });
 Object.assign(T, {
   fx_live:['עדכון חי כל שנייה','تحديث مباشر كل ثانية','Live, every second'],
@@ -2228,7 +2258,7 @@ Object.assign(T, {
   fx_conn:['מתחבר לשערים חיים…','جارٍ الاتصال بالأسعار المباشرة…','Connecting to live rates…'],
   fx_on:['מחובר: דולר, אירו וקריפטו מתעדכנים כל שנייה (שערי שוק מ-Coinbase).','متصل: الدولار واليورو والعملات المشفّرة تتحدّث كل ثانية (أسعار سوق من Coinbase).','Connected: dollar, euro and crypto update every second (market rates from Coinbase).'],
   fx_offline:['אין חיבור לאינטרנט. מוצגים השערים האחרונים.','لا يوجد اتصال بالإنترنت. تُعرض آخر الأسعار.','No internet connection. Showing the last rates.'],
-  fx_blocked:['העמוד הזה לא יכול להתחבר ישירות לשרת השערים, ולכן מוצג השער היציג. בקובץ שמור או באתר משלכם העדכון יעבוד כל שנייה. ניסיון חוזר בעוד דקה.','لا تستطيع هذه الصفحة الاتصال مباشرة بخادم الأسعار، لذا يُعرض السعر الرسمي. في ملف محفوظ أو موقعك الخاص يعمل التحديث كل ثانية. إعادة المحاولة بعد دقيقة.','This page cannot reach the rate server directly, so the official rate is shown. In a saved file or on your own site the update runs every second. Retrying in a minute.'],
+  fx_blocked:['העמוד הזה לא יכול להתחבר ישירות לשרת השערים, ולכן מוצג השער היציג. בקובץ שמור או באתר משלכם העדכון יעבוד כל שנייה. ניסיון חוזר בעוד דקה.','لا تستطيع هذه الصفحة الاتصال مباشرة بخادم الأسعار، لذا يُعرض السعر الرسمي. في ملف محفوظ أو موقعك الخاص يعمل التحديث كل ثانية. إعادة المحاولة بعد دقيقة.','This page cannot reach the rate server directly, so the official rate is shown. In a saved file or on your own site the update runs every second. Retrying in a minute.']
 });
 Object.assign(T, {
   set_live:['חיבורים בזמן אמת','الاتصالات المباشرة','Live connections'],
@@ -2261,7 +2291,7 @@ Object.assign(T, {
   conn_td:['מט״ח וקריפטו בזמן אמת','عملات وعملات مشفّرة مباشرة','Live forex and crypto'],
   conn_cc:['קריפטו בזמן אמת, בלי חשבון','عملات مشفّرة مباشرة بلا حساب','Live crypto, no account'],
   conn_no:['לא מחובר','غير متصل','Not connected'],
-  conn_h:['כדי להשתמש במחבר: חברו אותו בהגדרות המחברים של claude.ai ובקשו מ-Claude לחבר אותו לאפליקציה. דרך מחבר הנתונים מתרעננים בערך כל 30 שניות, וגם בתוך claude.ai.','لاستخدام موصل: صِله في إعدادات موصلات claude.ai واطلب من Claude ربطه بالتطبيق. عبر الموصل تتحدّث البيانات كل 30 ثانية تقريبًا، حتى داخل claude.ai.','To use a connector: connect it in claude.ai connector settings and ask Claude to wire it into the app. Through a connector, data refreshes about every 30 seconds, even inside claude.ai.'],
+  conn_h:['כדי להשתמש במחבר: חברו אותו בהגדרות המחברים של claude.ai ובקשו מ-Claude לחבר אותו לאפליקציה. דרך מחבר הנתונים מתרעננים בערך כל 30 שניות, וגם בתוך claude.ai.','لاستخدام موصل: صِله في إعدادات موصلات claude.ai واطلب من Claude ربطه بالتطبيق. عبر الموصل تتحدّث البيانات كل 30 ثانية تقريبًا، حتى داخل claude.ai.','To use a connector: connect it in claude.ai connector settings and ask Claude to wire it into the app. Through a connector, data refreshes about every 30 seconds, even inside claude.ai.']
 });
 Object.assign(T, {
   tab_prime:['ריבית ופריים','الفائدة والبرايم','Interest & prime'],
@@ -2315,7 +2345,7 @@ Object.assign(T, {
   n_prOd:['הערכה ליתרת מינוס קבועה. בפועל הבנק מחשב לפי היתרה בכל יום ומחייב בדרך כלל פעם ברבעון.','تقدير لرصيد سالب ثابت. فعليًا يحسب البنك حسب الرصيد اليومي ويخصم عادة كل ربع سنة.','An estimate for a constant overdraft. Banks actually charge on the daily balance, usually quarterly.'],
   n_prDep:['הריבית בפיקדון בפריים משתנה עם ריבית בנק ישראל. החישוב מניח שהיא לא משתנה בתקופה.','فائدة الوديعة المرتبطة بالبرايم تتغير مع فائدة بنك إسرائيل. يفترض الحساب أنها ثابتة.','A prime-linked deposit rate moves with the BoI rate. This assumes it stays the same.'],
   n_prConv:['אפקטיבית = (1 + נומינלית ÷ תדירות) בחזקת התדירות − 1.','الفعلية = (1 + الاسمية ÷ التواتر) ^ التواتر − 1.','Effective = (1 + nominal ÷ frequency) ^ frequency − 1.'],
-  n_prSimple:['ריבית פשוטה מחושבת רק על הקרן; ריבית דריבית גם על הריבית שנצברה.','الفائدة البسيطة على الأصل فقط؛ المركبة على الفائدة المتراكمة أيضًا.','Simple interest is on the principal only; compound interest also earns on accrued interest.'],
+  n_prSimple:['ריבית פשוטה מחושבת רק על הקרן; ריבית דריבית גם על הריבית שנצברה.','الفائدة البسيطة على الأصل فقط؛ المركبة على الفائدة المتراكمة أيضًا.','Simple interest is on the principal only; compound interest also earns on accrued interest.']
 });
 Object.assign(T, {h_prRate:['שיעור ריבית','نسبة الفائدة','Rate %']});
 Object.assign(T, {r_prAfter:['החזר אחרי שינוי של {d} (בעוד {y})','القسط بعد تغيّر {d} (بعد {y})','Payment after a {d} change (in {y})']});
@@ -2324,14 +2354,14 @@ Object.assign(T, {
   h_prBoi:['מתעדכן אוטומטית מבנק ישראל. אפשר לשנות כדי לבדוק תרחיש.','يتحدّث تلقائيًا من بنك إسرائيل. يمكن تغييره لاختبار سيناريو.','Updates automatically from the Bank of Israel. Change it to test a scenario.'],
   ls_cpiDb:['{v} ב-12 חודשים · מדד {m} · מתעדכן אוטומטית','{v} خلال 12 شهرًا · مؤشر {m} · يتحدّث تلقائيًا','{v} over 12 months · CPI {m} · updates automatically'],
   ls_boiDb:['{v} · החלטה הבאה {n} · מתעדכן אוטומטית מבנק ישראל','{v} · القرار التالي {n} · يتحدّث تلقائيًا من بنك إسرائيل','{v} · next decision {n} · updates automatically from the BoI'],
-  mk_note:['כל הנתונים רשמיים ומתעדכנים לבד ברגע שהם מתפרסמים: השער היציג וריבית בנק ישראל מבנק ישראל, המדד מהלמ״ס, ושאר המטבעות מהבנק המרכזי האירופי. כשהדף יכול להתחבר ישירות לשרתי השערים, דולר, אירו וקריפטו מתעדכנים גם בזמן אמת.','جميع البيانات رسمية وتتحدّث تلقائيًا فور نشرها: السعر الرسمي والفائدة من بنك إسرائيل، والمؤشر من دائرة الإحصاء، وباقي العملات من البنك المركزي الأوروبي. عندما تستطيع الصفحة الاتصال مباشرة بخوادم الأسعار يتحدّث الدولار واليورو والعملات المشفّرة مباشرة أيضًا.','All figures are official and update on their own as soon as they are published: the representative rate and interest rate from the Bank of Israel, CPI from the CBS, other currencies from the ECB. When the page can reach the rate servers directly, dollar, euro and crypto also update live.'],
+  mk_note:['כל הנתונים רשמיים ומתעדכנים לבד ברגע שהם מתפרסמים: השער היציג וריבית בנק ישראל מבנק ישראל, המדד מהלמ״ס, ושאר המטבעות מהבנק המרכזי האירופי. כשהדף יכול להתחבר ישירות לשרתי השערים, דולר, אירו וקריפטו מתעדכנים גם בזמן אמת.','جميع البيانات رسمية وتتحدّث تلقائيًا فور نشرها: السعر الرسمي والفائدة من بنك إسرائيل، والمؤشر من دائرة الإحصاء، وباقي العملات من البنك المركزي الأوروبي. عندما تستطيع الصفحة الاتصال مباشرة بخوادم الأسعار يتحدّث الدولار واليورو والعملات المشفّرة مباشرة أيضًا.','All figures are official and update on their own as soon as they are published: the representative rate and interest rate from the Bank of Israel, CPI from the CBS, other currencies from the ECB. When the page can reach the rate servers directly, dollar, euro and crypto also update live.']
 });
 Object.assign(T, {
   g_save:['חיסכון, השקעות וחופש כלכלי','الادخار والاستثمار والحرية المالية','Saving, investing & financial freedom'],
   g_work2:['שכר, מסים וזכויות עובד','الراتب والضرائب وحقوق العامل','Salary, tax & employee rights'],
   g_loans:['הלוואות, משכנתא ונדל״ן','القروض والرهن والعقارات','Loans, mortgage & property'],
   g_tools:['כלים שימושיים','أدوات مفيدة','Handy tools'],
-  l_pinned:['מוצמדים','المثبّتة','Pinned'],
+  l_pinned:['מוצמדים','المثبّتة','Pinned']
 });
 Object.assign(T, {
   l_allCat:['הכול','الكل','All'],
@@ -2339,7 +2369,7 @@ Object.assign(T, {
   gs_work2:['שכר ומסים','الراتب والضرائب','Salary & tax'],
   gs_loans:['הלוואות ונדל״ן','القروض والعقارات','Loans & property'],
   gs_tools:['כלים','أدوات','Tools'],
-  gs_all:['כל המחשבונים','كل الحاسبات','All calculators'],
+  gs_all:['כל המחשבונים','كل الحاسبات','All calculators']
 });
 Object.assign(T, {gs_save:['חיסכון וחופש כלכלי','الادخار والحرية المالية','Saving & freedom']});
 Object.assign(T, {
@@ -2356,7 +2386,7 @@ Object.assign(T, {
   conn_cmc:['מחירי קריפטו ונתוני שוק','أسعار العملات المشفّرة وبيانات السوق','Crypto prices & market data'],
   conn_fmp:['נתוני שוק ההון, מט״ח וסחורות','بيانات سوق المال والعملات والسلع','Market, forex & commodity data'],
   conn_h:['כדי לחבר מקור: ב-claude.ai פתחו הגדרות ← מחברים, הוסיפו אותו והפעילו אותו בשיחה, ואז בקשו מ-Claude לחבר אותו לאפליקציה. דרך מחבר הנתונים מתרעננים בערך כל 30 שניות, גם בתוך claude.ai.','لربط مصدر: في claude.ai افتح الإعدادات ← الموصلات، أضِفه وفعّله في المحادثة، ثم اطلب من Claude ربطه بالتطبيق. عبر الموصل تتحدّث البيانات كل 30 ثانية تقريبًا، حتى داخل claude.ai.','To connect a source: in claude.ai open Settings → Connectors, add it and enable it in the chat, then ask Claude to wire it into the app. Through a connector, data refreshes about every 30 seconds, even inside claude.ai.'],
-  set_live_src:['מחוברים עכשיו','متصلة الآن','Connected now'],
+  set_live_src:['מחוברים עכשיו','متصلة الآن','Connected now']
 });
 Object.assign(T, {
   s_official:['רשמי: בנק ישראל ו-ECB','رسمي: بنك إسرائيل و-ECB','Official: Bank of Israel & ECB'],
@@ -2365,10 +2395,10 @@ Object.assign(T, {
   cp_pop:['נפוצים','الأكثر استخدامًا','Popular'], cp_allFiat:['כל המטבעות','كل العملات','All currencies'],
   cp_none:['לא נמצא מטבע. נסו קוד (למשל JPY) או שם אחר.','لم يُعثر على عملة. جرّب رمزًا (مثل JPY) أو اسمًا آخر.','No currency found. Try a code (e.g. JPY) or another name.'],
   h_cvLive:['דולר, אירו וקריפטו מתעדכנים מ-Coinbase כשהדף יכול להתחבר לשרת. בתוך claude.ai: השער היציג של בנק ישראל, שמתעדכן כל יום עסקים.','يتحدّث الدولار واليورو والعملات المشفّرة من Coinbase عندما تستطيع الصفحة الاتصال بالخادم. داخل claude.ai: السعر الرسمي لبنك إسرائيل، يتحدّث كل يوم عمل.','Dollar, euro and crypto update from Coinbase when the page can reach the server. Inside claude.ai: the Bank of Israel official rate, updated each business day.'],
-  d_convert:['כל מטבעות העולם ו-29 מטבעות קריפטו, עם חיפוש לפי קוד או שם ושערים רשמיים או חיים.','جميع عملات العالم و29 عملة مشفّرة، مع بحث بالرمز أو الاسم وأسعار رسمية أو مباشرة.','All world currencies and 29 cryptocurrencies, with search by code or name and official or live rates.'],
+  d_convert:['כל מטבעות העולם ו-29 מטבעות קריפטו, עם חיפוש לפי קוד או שם ושערים רשמיים או חיים.','جميع عملات العالم و29 عملة مشفّرة، مع بحث بالرمز أو الاسم وأسعار رسمية أو مباشرة.','All world currencies and 29 cryptocurrencies, with search by code or name and official or live rates.']
 });
 Object.assign(T, {
-  fx_blocked:['העמוד הזה לא יכול להתחבר ישירות לשרת השערים, ולכן מוצג השער היציג. בקובץ שמור או באתר משלכם העדכון החי יעבוד. ניסיון חוזר בעוד דקה.','لا تستطيع هذه الصفحة الاتصال مباشرة بخادم الأسعار، لذا يُعرض السعر الرسمي. في ملف محفوظ أو موقعك يعمل التحديث المباشر. إعادة المحاولة بعد دقيقة.','This page cannot reach the rate server directly, so the official rate is shown. In a saved file or on your own site the live update works. Retrying in a minute.'],
+  fx_blocked:['העמוד הזה לא יכול להתחבר ישירות לשרת השערים, ולכן מוצג השער היציג. בקובץ שמור או באתר משלכם העדכון החי יעבוד. ניסיון חוזר בעוד דקה.','لا تستطيع هذه الصفحة الاتصال مباشرة بخادم الأسعار، لذا يُعرض السعر الرسمي. في ملف محفوظ أو موقعك يعمل التحديث المباشر. إعادة المحاولة بعد دقيقة.','This page cannot reach the rate server directly, so the official rate is shown. In a saved file or on your own site the live update works. Retrying in a minute.']
 });
 Object.assign(T, {s_official:['רשמי: בנק ישראל והבנק המרכזי האירופי','رسمي: بنك إسرائيل والبنك المركزي الأوروبي','Official: Bank of Israel & European Central Bank']});
 Object.assign(T, {
@@ -2383,7 +2413,7 @@ Object.assign(T, {
   st_srcNa:['החיבור הישיר חסום בתוך claude.ai. עובד אוטומטית בקובץ שמור או באתר משלכם.','الاتصال المباشر محظور داخل claude.ai. يعمل تلقائيًا في ملف محفوظ أو موقعك.','Direct connection is blocked inside claude.ai. Works automatically in a saved file or on your site.'],
   st_cbNa:['חסום בתוך claude.ai. עובד אוטומטית בקובץ שמור או באתר משלכם.','محظور داخل claude.ai. يعمل تلقائيًا في ملف محفوظ أو موقعك.','Blocked inside claude.ai. Works automatically in a saved file or on your site.'],
   m_advLive:['אפשרויות מתקדמות','خيارات متقدمة','Advanced options'],
-  h_liveNoAcc:['כל המקורות פתוחים לציבור ולא דורשים חשבון. בתוך claude.ai הדף לא יכול לפנות לאתרים חיצוניים, ולכן הנתונים הרשמיים מגיעים אליו דרך עדכון האפליקציה פעם ביום עסקים, ורק למי שמחובר ל-claude.ai.','جميع المصادر عامة ولا تحتاج حسابًا. داخل claude.ai لا تستطيع الصفحة الاتصال بمواقع خارجية، لذا تصلها البيانات الرسمية عبر تحديث التطبيق مرة كل يوم عمل، ولمن سجّل الدخول إلى claude.ai فقط.','All sources are public and need no account. Inside claude.ai the page cannot reach outside sites, so official data reaches it through the app update once each business day, only for people signed in to claude.ai.'],
+  h_liveNoAcc:['כל המקורות פתוחים לציבור ולא דורשים חשבון. בתוך claude.ai הדף לא יכול לפנות לאתרים חיצוניים, ולכן הנתונים הרשמיים מגיעים אליו דרך עדכון האפליקציה פעם ביום עסקים, ורק למי שמחובר ל-claude.ai.','جميع المصادر عامة ولا تحتاج حسابًا. داخل claude.ai لا تستطيع الصفحة الاتصال بمواقع خارجية، لذا تصلها البيانات الرسمية عبر تحديث التطبيق مرة كل يوم عمل، ولمن سجّل الدخول إلى claude.ai فقط.','All sources are public and need no account. Inside claude.ai the page cannot reach outside sites, so official data reaches it through the app update once each business day, only for people signed in to claude.ai.']
 });
 Object.assign(T, {
   b_explain:['הסבר לי','اشرح لي','Explain'], b_explainA:['הסבר פשוט על המחשבון, השדות והתוצאה','شرح بسيط للحاسبة والحقول والنتيجة','A simple explanation of the calculator, fields and result'],
@@ -2395,12 +2425,12 @@ Object.assign(T, {
   ex_note:['הסבר כללי מ-Claude לפי הנתונים שהזנתם. זה לא ייעוץ פיננסי או מס.','شرح عام من Claude حسب بياناتك. ليس استشارة مالية أو ضريبية.','A general explanation from Claude based on your inputs. Not financial or tax advice.'],
   ex_offline:['ההסבר המלא עם AI זמין כשהאפליקציה פתוחה בתוך claude.ai.','الشرح الكامل بالذكاء الاصطناعي متاح عند فتح التطبيق داخل claude.ai.','The full AI explanation is available when the app is open inside claude.ai.'],
   ex_denied:['לא אושר שימוש ב-AI בדף הזה. אפשר לאשר דרך תפריט ההרשאות של הדף. בינתיים, הסבר קצר:','لم يُسمح باستخدام الذكاء الاصطناعي في هذه الصفحة. يمكن السماح من قائمة أذونات الصفحة. إليك شرحًا قصيرًا:','AI use was not allowed on this page. You can allow it from the page\'s permissions menu. Meanwhile, a short explanation:'],
-  ex_busy:['העוזר עמוס כרגע. נסו שוב בעוד רגע.','المساعد مشغول الآن. حاول بعد لحظة.','The assistant is busy right now. Try again in a moment.'],
+  ex_busy:['העוזר עמוס כרגע. נסו שוב בעוד רגע.','المساعد مشغول الآن. حاول بعد لحظة.','The assistant is busy right now. Try again in a moment.']
 });
 Object.assign(T, {
   f_res:['ימי מילואים כלוחם בשנה הקודמת','أيام الاحتياط كمقاتل في السنة السابقة','Combat reserve days last year'],
   h_res:['30 ימים ומעלה בשנה הקודמת מזכים בנקודות זיכוי: 30–39 ימים = 0.5, ‏40–49 = 0.75, ‏50 = 1, ועוד 0.25 לכל 5 ימים, עד 4 נקודות (110 ימים). צריך אישור מצה״ל ולהגיש טופס 101 למעסיק.','30 يومًا فأكثر في السنة السابقة تمنح نقاط استحقاق: 30–39 يومًا = 0.5، 40–49 = 0.75، 50 = 1، وزيادة 0.25 لكل 5 أيام، حتى 4 نقاط (110 أيام). يلزم تأكيد من الجيش وتقديم نموذج 101 للمشغّل.','30+ days last year earn credit points: 30–39 days = 0.5, 40–49 = 0.75, 50 = 1, plus 0.25 per 5 more days, up to 4 points (110 days). You need IDF confirmation and Form 101 for your employer.'],
-  r_ptsRes:['(מתוכן {n} למילואים)','(منها {n} للاحتياط)','(incl. {n} for reserve duty)'],
+  r_ptsRes:['(מתוכן {n} למילואים)','(منها {n} للاحتياط)','(incl. {n} for reserve duty)']
 });
 Object.assign(T, {
   set_links:['קישורים שימושיים','روابط مفيدة','Useful links'],
@@ -2409,7 +2439,7 @@ Object.assign(T, {
   ln_kzRes:['נקודות זיכוי למילואים','نقاط الاستحقاق للاحتياط','Reserve-duty credit points'],
   ln_btl:['ביטוח לאומי','التأمين الوطني','National Insurance (Bituach Leumi)'],
   ln_btlD:['קצבאות, דמי אבטלה, דמי לידה, מילואים, דמי ביטוח ומחשבונים רשמיים.','المخصصات، بدل البطالة، بدل الولادة، الاحتياط، رسوم التأمين وحاسبات رسمية.','Benefits, unemployment, maternity, reserve duty, contributions and official calculators.'],
-  ln_site:['לאתר','الموقع','Website'], ln_btlCalc:['מחשבונים','الحاسبات','Calculators'], ln_btlMe:['אזור אישי','المنطقة الشخصية','Personal area'],
+  ln_site:['לאתר','الموقع','Website'], ln_btlCalc:['מחשבונים','الحاسبات','Calculators'], ln_btlMe:['אזור אישי','المنطقة الشخصية','Personal area']
 });
 Object.assign(T, {
   gs_btn:['חיפוש באפליקציה','البحث في التطبيق','Search the app'],
@@ -2418,23 +2448,17 @@ Object.assign(T, {
   gs_popular:['נפוצים','الأكثر استخدامًا','Popular'], gs_calcs:['מחשבונים','الحاسبات','Calculators'], gs_fields:['שדות ומושגים','الحقول والمصطلحات','Fields and terms'], gs_sets:['הגדרות','الإعدادات','Settings'],
   gs_ask:['לשאול את העוזר: "{q}"','اسأل المساعد: "{q}"','Ask the assistant: "{q}"'],
   gs_none:['לא נמצא במחשבונים או בהגדרות. אפשר לשאול את העוזר.','لم يُعثر عليه في الحاسبات أو الإعدادات. يمكنك سؤال المساعد.','Not found in calculators or settings. You can ask the assistant.'],
-  gs_tip:['טיפ: אפשר לפתוח את החיפוש מכל מקום עם / או Ctrl+K.','نصيحة: افتح البحث من أي مكان بـ / أو Ctrl+K.','Tip: open search from anywhere with / or Ctrl+K.'],
+  gs_tip:['טיפ: אפשר לפתוח את החיפוש מכל מקום עם / או Ctrl+K.','نصيحة: افتح البحث من أي مكان بـ / أو Ctrl+K.','Tip: open search from anywhere with / or Ctrl+K.']
 });
 Object.assign(T, {
   ex_offline:['ההסבר המלא עם AI זמין למי שמחובר לחשבון claude.ai. כל המחשבונים עובדים גם בלי להתחבר.','الشرح الكامل بالذكاء الاصطناعي متاح لمن سجّل الدخول إلى claude.ai. جميع الحاسبات تعمل دون تسجيل.','The full AI explanation is available to people signed in to claude.ai. Every calculator works without signing in.'],
-  as_noai:['העוזר זמין למי שמחובר לחשבון claude.ai. החיפוש לפי שם וכל המחשבונים עובדים גם בלי להתחבר.','المساعد متاح لمن سجّل الدخول إلى claude.ai. البحث بالاسم وجميع الحاسبات تعمل دون تسجيل.','The assistant is available to people signed in to claude.ai. Search by name and every calculator work without signing in.'],
+  as_noai:['העוזר זמין למי שמחובר לחשבון claude.ai. החיפוש לפי שם וכל המחשבונים עובדים גם בלי להתחבר.','المساعد متاح لمن سجّل الدخول إلى claude.ai. البحث بالاسم وجميع الحاسبات تعمل دون تسجيل.','The assistant is available to people signed in to claude.ai. Search by name and every calculator work without signing in.']
 });
 Object.assign(T, {
-  pl_t:['פלטפורמות מסחר והשקעות','منصات التداول والاستثمار','Trading and investing platforms'],
-  pl_binance:['בורסת קריפטו: מחירים חיים, מסחר וגרפים.','بورصة عملات مشفّرة: أسعار مباشرة وتداول ورسوم بيانية.','Crypto exchange: live prices, trading and charts.'],
-  pl_blink:['אפליקציית השקעות בשוק ההון: מניות, קרנות ומדדים.','تطبيق استثمار في سوق المال: أسهم وصناديق ومؤشرات.','Capital-market investing app: stocks, funds and indices.'],
-  pl_inter:['קישור לאתר inter.il.','رابط إلى موقع inter.il.','Link to the inter.il website.'],
+  pl_binance:['בורסת קריפטו: מחירים חיים, מסחר וגרפים.','بورصة عملات مشفّرة: أسعار مباشرة وتداول ورسوم بيانية.','Crypto exchange: live prices, trading and charts.']
 });
 Object.assign(T, {
-  src_bn:['Binance · קריפטו חי','Binance · عملات مشفّرة مباشرة','Binance · live crypto'],
-  pl_t:['פלטפורמות מסחר והשקעות (קישור בלבד)','منصات التداول والاستثمار (رابط فقط)','Trading and investing platforms (link only)'],
-  pl_blink:['אפליקציית השקעות בשוק ההון. אין לה חיבור פתוח לנתונים, ולכן אפשר רק לפתוח אותה.','تطبيق استثمار في سوق المال. لا يوفّر اتصالًا مفتوحًا بالبيانات، لذا يمكن فتحه فقط.','Capital-market investing app. It offers no open data connection, so it can only be opened.'],
-  pl_inter:['אין חיבור פתוח לנתונים, ולכן אפשר רק לפתוח את האתר.','لا يوجد اتصال مفتوح بالبيانات، لذا يمكن فتح الموقع فقط.','No open data connection, so the site can only be opened.'],
+  src_bn:['Binance · קריפטו חי','Binance · عملات مشفّرة مباشرة','Binance · live crypto']
 });
 Object.assign(T, {
   set_handle:['שם משתמש','اسم المستخدم','Username'],
@@ -2452,7 +2476,7 @@ Object.assign(T, {
   hd_needDb:['כדי לשמור שם משתמש ייחודי צריך לפתוח את האפליקציה בתוך claude.ai כשאתם מחוברים.','لحفظ اسم مستخدم فريد افتح التطبيق داخل claude.ai وأنت مسجّل الدخول.','To save a unique username, open the app inside claude.ai while signed in.'],
   hd_noWrite:['אין לך הרשאה לשמור כאן. בעל האפליקציה צריך לשתף אותה עם הרשאת "תורם" (Contributor).','ليست لديك صلاحية الحفظ هنا. يجب على صاحب التطبيق مشاركته بصلاحية "مساهم".','You cannot save here. The app owner needs to share it with Contributor access.'],
   hd_err:['משהו השתבש. נסו שוב.','حدث خطأ. حاول مجددًا.','Something went wrong. Try again.'],
-  hd_deleted:['שם המשתמש הוסר והתפנה לאחרים.','أُزيل اسم المستخدم وأصبح متاحًا للآخرين.','Username removed and freed for others.'],
+  hd_deleted:['שם המשתמש הוסר והתפנה לאחרים.','أُزيل اسم المستخدم وأصبح متاحًا للآخرين.','Username removed and freed for others.']
 });
 Object.assign(T, {
   perm_wait:['בודק הרשאות…','جارٍ التحقق من الصلاحيات…','Checking permissions…'], perm_waitS:['','',''],
@@ -2463,12 +2487,12 @@ Object.assign(T, {
   perm_viewer:['מצב צפייה','وضع العرض','View mode'],
   perm_viewerS:['אפשר להשתמש בכל המחשבונים, אבל לא לערוך את האפליקציה או לשנות נתונים משותפים. מה שתשנו נשמר רק אצלכם.','يمكنك استخدام كل الحاسبات دون تعديل التطبيق أو تغيير البيانات المشتركة. ما تغيّره يُحفظ لديك فقط.','You can use every calculator but cannot edit the app or change shared data. Your changes stay on your device.'],
   perm_local:['גרסה מקומית','نسخة محلية','Local copy'],
-  perm_localS:['האפליקציה פתוחה מחוץ ל-claude.ai או בלי התחברות. אין כאן עריכה משותפת: הכול נשמר רק בדפדפן הזה.','التطبيق مفتوح خارج claude.ai أو دون تسجيل. لا يوجد تعديل مشترك: كل شيء يُحفظ في هذا المتصفح فقط.','The app is open outside claude.ai or signed out. Nothing is shared: everything stays in this browser.'],
+  perm_localS:['האפליקציה פתוחה מחוץ ל-claude.ai או בלי התחברות. אין כאן עריכה משותפת: הכול נשמר רק בדפדפן הזה.','التطبيق مفتوح خارج claude.ai أو دون تسجيل. لا يوجد تعديل مشترك: كل شيء يُحفظ في هذا المتصفح فقط.','The app is open outside claude.ai or signed out. Nothing is shared: everything stays in this browser.']
 });
 Object.assign(T, {
   f_username:['שם משתמש (@)','اسم المستخدم (@)','Username (@)'],
   hd_okFmt2:['{n} תקין. בהרשמה נבדוק שהוא פנוי.','{n} صالح. سنتحقق من توفره عند التسجيل.','{n} looks good. We will check it is free when you sign up.'],
-  h_account:['ההרשמה: שם משתמש ייחודי (@) וסיסמה חזקה. שם המשתמש נבדק מול כל המשתמשים באפליקציה בתוך claude.ai, כך שאין שניים זהים. הסיסמה והנתונים נשמרים מוצפנים רק במכשיר הזה, ולכן כדי להשתמש במכשיר אחר צריך להירשם גם בו. שכחתם סיסמה? אי אפשר לשחזר אותה, כי היא לא נשמרת בשום מקום.','التسجيل: اسم مستخدم فريد (@) وكلمة مرور قوية. يتم التحقق من الاسم مقابل جميع مستخدمي التطبيق داخل claude.ai فلا يوجد اسمان متطابقان. تُحفظ كلمة المرور والبيانات مشفّرة على هذا الجهاز فقط، لذا يلزم التسجيل في كل جهاز. نسيت كلمة المرور؟ لا يمكن استعادتها لأنها لا تُحفظ في أي مكان.','Sign-up: a unique username (@) and a strong password. The username is checked against everyone using the app inside claude.ai, so no two are the same. The password and your data are stored encrypted on this device only, so another device needs its own sign-up. Forgot the password? It cannot be recovered, because it is not stored anywhere.'],
+  h_account:['ההרשמה: שם משתמש ייחודי (@) וסיסמה חזקה. שם המשתמש נבדק מול כל המשתמשים באפליקציה בתוך claude.ai, כך שאין שניים זהים. הסיסמה והנתונים נשמרים מוצפנים רק במכשיר הזה, ולכן כדי להשתמש במכשיר אחר צריך להירשם גם בו. שכחתם סיסמה? אי אפשר לשחזר אותה, כי היא לא נשמרת בשום מקום.','التسجيل: اسم مستخدم فريد (@) وكلمة مرور قوية. يتم التحقق من الاسم مقابل جميع مستخدمي التطبيق داخل claude.ai فلا يوجد اسمان متطابقان. تُحفظ كلمة المرور والبيانات مشفّرة على هذا الجهاز فقط، لذا يلزم التسجيل في كل جهاز. نسيت كلمة المرور؟ لا يمكن استعادتها لأنها لا تُحفظ في أي مكان.','Sign-up: a unique username (@) and a strong password. The username is checked against everyone using the app inside claude.ai, so no two are the same. The password and your data are stored encrypted on this device only, so another device needs its own sign-up. Forgot the password? It cannot be recovered, because it is not stored anywhere.']
 });
 Object.assign(T, {
   set_ai:['עוזר AI באתר הזה','مساعد الذكاء الاصطناعي في هذا الموقع','AI assistant on this site'],
@@ -2477,7 +2501,7 @@ Object.assign(T, {
   ln_gkey:['לקבלת מפתח חינמי','للحصول على مفتاح مجاني','Get a free key'],
   as_noai:['כדי להשתמש בעוזר כאן, הזינו מפתח Gemini חינמי בהגדרות ← עוזר AI. החיפוש לפי שם וכל המחשבונים עובדים גם בלי.','لاستخدام المساعد هنا، أدخل مفتاح Gemini مجاني في الإعدادات ← مساعد الذكاء الاصطناعي. البحث بالاسم وجميع الحاسبات تعمل دونه.','To use the assistant here, enter a free Gemini key in Settings → AI assistant. Search by name and every calculator work without it.'],
   ex_offline:['להסבר מלא עם AI באתר הזה, הזינו מפתח Gemini חינמי בהגדרות ← עוזר AI.','للحصول على شرح كامل بالذكاء الاصطناعي هنا، أدخل مفتاح Gemini مجاني في الإعدادات ← مساعد الذكاء الاصطناعي.','For a full AI explanation on this site, enter a free Gemini key in Settings → AI assistant.'],
-  as_err:['העוזר לא הצליח לענות ({e}).','لم يتمكن المساعد من الإجابة ({e}).','The assistant could not answer ({e}).'],
+  as_err:['העוזר לא הצליח לענות ({e}).','لم يتمكن المساعد من الإجابة ({e}).','The assistant could not answer ({e}).']
 });
 Object.assign(T, {as_badkey:['מפתח ה-Gemini לא התקבל. בדקו שהעתקתם אותו במלואו בהגדרות ← עוזר AI.','لم يُقبل مفتاح Gemini. تحقّق من نسخه كاملًا في الإعدادات ← مساعد الذكاء الاصطناعي.','The Gemini key was not accepted. Check you copied all of it in Settings → AI assistant.']});
 Object.assign(T, {
@@ -2656,34 +2680,19 @@ Object.assign(T, {
   o_aiAuto:['אוטומטי — הטוב ביותר שזמין','تلقائي — الأفضل المتاح','Automatic — best available'],
   o_aiPersonal:['המודל האישי (במכשיר, בלי מפתח)','النموذج الشخصي (على الجهاز، دون مفتاح)','Personal model (on device, no key)'],
   o_aiGemini:['Gemini (מפתח חינמי)','Gemini (مفتاح مجاني)','Gemini (free key)'],
-  o_aiClaude:['Claude (בתוך Claude)','Claude (داخل Claude)','Claude (inside Claude)'],
-  h_aiEngine:['המודל האישי עובד תמיד, גם בלי אינטרנט, ומסביר מונחים, מחשבונים ותוצאות. Gemini ו-Claude עונים גם על שאלות פתוחות.','النموذج الشخصي يعمل دائمًا، حتى دون إنترنت، ويشرح المصطلحات والحاسبات والنتائج. Gemini وClaude يجيبان أيضًا عن الأسئلة المفتوحة.','The personal model always works, even offline, and explains terms, calculators and results. Gemini and Claude also handle open questions.'],
+  h_aiEngine:['המודל האישי עובד תמיד, גם בלי אינטרנט, ומסביר מונחים, מחשבונים ותוצאות. Gemini עונה גם על שאלות פתוחות.','النموذج الشخصي يعمل دائمًا، حتى دون إنترنت، ويشرح المصطلحات والحاسبات والنتائج. يجيب Gemini أيضًا عن الأسئلة المفتوحة.','The personal model always works, even offline, and explains terms, calculators and results. Gemini also handles open questions.'],
   f_pmName:['שם המודל האישי','اسم النموذج الشخصي','Personal model name'],
   f_pmStyle:['סגנון התשובות','أسلوب الإجابات','Answer style'],
   o_pmShort:['קצר וברור','قصير وواضح','Short and clear'],
   o_pmLong:['מפורט','مفصّل','Detailed'],
   as_engNow:['עונה עכשיו: {n}','يجيب الآن: {n}','Answering now: {n}'],
   eng_claude:['Claude','Claude','Claude'], eng_gemini:['Gemini','Gemini','Gemini'], eng_auto:['אוטומטי','تلقائي','Auto'], eng_personal:['אישי','شخصي','Personal'],
-  pl_investing:['שערים חיים של מדדים, מניות, מטבעות וקריפטו, לוח אירועים כלכליים וחדשות שוק.','أسعار حيّة للمؤشرات والأسهم والعملات والعملات المشفّرة، وأجندة اقتصادية وأخبار السوق.','Live quotes for indices, stocks, currencies and crypto, an economic calendar and market news.'],
   as_noai:['כדי להשתמש ב-Gemini כאן, הזינו מפתח חינמי בהגדרות ← חיבורים ועוזר AI, או עברו למודל האישי שעובד בלי מפתח.','لاستخدام Gemini هنا، أدخل مفتاحًا مجانيًا في الإعدادات ← الاتصالات ومساعد الذكاء الاصطناعي، أو انتقل إلى النموذج الشخصي الذي يعمل دون مفتاح.','To use Gemini here, add a free key in Settings → Connections & AI assistant, or switch to the personal model, which needs no key.'],
   sc_connS:['שערים בזמן אמת, בנק ישראל, קריפטו, ובחירת מודל AI','أسعار حيّة، بنك إسرائيل، العملات المشفّرة، واختيار نموذج الذكاء الاصطناعي','Live rates, Bank of Israel, crypto and choosing the AI model']
 });
 Object.assign(T, {
-  iv_title:['Investing.com — בזמן אמת','Investing.com — لحظيًا','Investing.com — live'],
-  iv_btn:['לוח חי','لوحة حيّة','Live board'],
-  iv_home:['שערים חיים מ-Investing.com','أسعار حيّة من Investing.com','Live rates from Investing.com'],
-  iv_t_usd:['דולר מול כל המטבעות','الدولار مقابل كل العملات','Dollar vs every currency'],
-  iv_t_fx:['מטבעות עיקריים','العملات الرئيسية','Major pairs'],
-  iv_t_crypto:['קריפטו','العملات المشفّرة','Crypto'],
-  iv_t_cal:['לוח כלכלי','الأجندة الاقتصادية','Economic calendar'],
-  iv_open:['פתיחה באתר Investing.com','فتح في موقع Investing.com','Open on Investing.com'],
-  iv_note:['הנתונים מגיעים ישירות מהווידג׳טים הרשמיים של Investing.com ומתעדכנים בזמן אמת. אם הלוח לא נטען, פתחו אותו באתר Investing.com.','البيانات تأتي مباشرة من الأدوات الرسمية لـ Investing.com وتتحدّث لحظيًا. إذا لم تُحمَّل اللوحة، افتحها في موقع Investing.com.','The data comes straight from Investing.com\'s official widgets and updates live. If the board does not load, open it on Investing.com.'],
-  iv_close:['סגירה','إغلاق','Close']
 });
 Object.assign(T, {
-  iv_fit:['התאמה למסך','ملاءمة الشاشة','Fit to screen'],
-  iv_zoomIn:['הגדלה','تكبير','Zoom in'], iv_zoomOut:['הקטנה','تصغير','Zoom out'],
-  iv_note:['הנתונים מגיעים ישירות מהווידג׳טים הרשמיים של Investing.com ומתעדכנים בזמן אמת. הלוח מותאם לרוחב המסך; אפשר להגדיל עם + ולגלול, או לסובב את הטלפון לרוחב.','البيانات تأتي مباشرة من الأدوات الرسمية لـ Investing.com وتتحدّث لحظيًا. اللوحة ملائمة لعرض الشاشة؛ يمكنك التكبير بـ + والتمرير، أو تدوير الهاتف أفقيًا.','The data comes straight from Investing.com\'s official widgets and updates live. The board fits the screen width; zoom with + and scroll, or turn your phone sideways.']
 });
 Object.assign(T, {
   sk_pick:['ערכת נושא','السمة','Theme'],
@@ -2731,9 +2740,6 @@ Object.assign(T, {
   ck_heb:['עברי','عبري','Hebrew'], ck_hijri:['היג׳רי','هجري','Hijri'], ck_greg:['לועזי','ميلادي','Gregorian']
 });
 Object.assign(T, {
-  iv_search_ph:['חיפוש ב-Investing.com: מניה, מטבע, מדד או קריפטו','ابحث في Investing.com: سهم، عملة، مؤشر أو عملة مشفّرة','Search Investing.com: a stock, currency, index or crypto'],
-  iv_search:['חיפוש','بحث','Search'],
-  ivq_usdils:['דולר/שקל','دولار/شيكل','USD/ILS'], ivq_eurils:['אירו/שקל','يورو/شيكل','EUR/ILS'], ivq_ta35:['ת״א 35','تل أبيب 35','TA-35'], ivq_btc:['ביטקוין','بيتكوين','Bitcoin'], ivq_gold:['זהב','الذهب','Gold'], ivq_spx:['S&P 500','S&P 500','S&P 500'], ivq_ndx:['נאסד״ק 100','ناسداك 100','Nasdaq 100'], ivq_oil:['נפט ברנט','نفط برنت','Brent oil'],
 });
 Object.assign(T, {
   tab_expenses:['הוצאות חודשיות','المصاريف الشهرية','Monthly expenses'],
@@ -2909,10 +2915,114 @@ Object.assign(T, {
   rc_newPw:['סיסמה חדשה לאפליקציה','كلمة مرور جديدة للتطبيق','New password for the app'],
   rc_newPw2:['הקלידו שוב את הסיסמה החדשה לאפליקציה','أعد كتابة كلمة مرور التطبيق الجديدة','Type the new app password again'],
   rc_appPwOnly:['זו הסיסמה של האפליקציה בלבד, לא של המייל. בחרו סיסמה ייחודית שלא משמשת בשום מקום אחר.','هذه كلمة مرور التطبيق فقط وليست كلمة مرور البريد. اختر كلمة مرور فريدة لا تُستخدم في أي مكان آخر.','This is the app password only, not your email password. Choose a unique one not used anywhere else.'],
-  rc_oneAcc:['כל אימייל יכול להיות משויך לחשבון אחד בלבד.','يمكن ربط كل بريد بحساب واحد فقط.','Each email can belong to one account only.'],
+  rc_oneAcc:['כל כתובת אימייל יכולה להיות משויכת לחשבון אחד בלבד, בלי הבדל בין אותיות גדולות לקטנות.','يمكن ربط كل عنوان بريد بحساب واحد فقط، دون فرق بين الأحرف الكبيرة والصغيرة.','Each email address can belong to one account only, regardless of upper or lower case.'],
   rc_checking:['בודק שהאימייל פנוי…','جارٍ التحقق من أن البريد غير مستخدم…','Checking that the email is free…'],
   rc_mailTaken:['האימייל הזה כבר משויך לחשבון אחר. כל אימייל יכול להיות רק בחשבון אחד, אז בחרו כתובת אחרת.','هذا البريد مرتبط بحساب آخر. يمكن ربط كل بريد بحساب واحد فقط، فاختر عنوانًا آخر.','This email already belongs to another account. Each email can be used by one account only, so choose another address.'],
-  rc_mailCheckFail:['לא הצלחנו לבדוק שהאימייל פנוי. בדקו את החיבור ונסו שוב.','تعذّر التحقق من أن البريد غير مستخدم. تحقق من الاتصال وحاول مرة أخرى.','Could not check that the email is free. Check the connection and try again.']
+  rc_mailCheckFail:['לא הצלחנו לבדוק שהאימייל פנוי. בדקו את החיבור ונסו שוב.','تعذّر التحقق من أن البريد غير مستخدم. تحقق من الاتصال وحاول مرة أخرى.','Could not check that the email is free. Check the connection and try again.'],
+  gk_eInP:['בתוך Claude אין גישה ל-Google, ולכן Gemini עובד רק באתר. כאן העוזר עונה עם המודל האישי.','داخل Claude لا يمكن الوصول إلى Google، لذلك يعمل Gemini في الموقع فقط. هنا يجيب المساعد بالنموذج الشخصي.','Inside Claude, Google cannot be reached, so Gemini works only on the website. Here the assistant answers with the personal model.'],
+  gk_inClaude:['בתוך Claude העוזר עונה עם המודל האישי, בלי מפתח. מפתח Gemini עובד באתר.','داخل Claude يجيب المساعد بالنموذج الشخصي دون مفتاح. مفتاح Gemini يعمل في الموقع.','Inside Claude the assistant answers with the personal model, no key needed. A Gemini key works on the website.'],
+  o_sortGroupsAlpha:['לפי קטגוריות, ובכל קטגוריה לפי א׳ ב׳','حسب الفئات، وأبجديًا داخل كل فئة','By category, A–Z inside each category'],
+  lc_def:['הצעה {n}','العرض {n}','Offer {n}'],
+  lc_name:['שם ההצעה','اسم العرض','Offer name'],
+  lc_namePh:['למשל שם הבנק','مثلًا اسم البنك','e.g. the bank name'],
+  lc_add:['הוספת הצעה','إضافة عرض','Add an offer'],
+  lc_del:['הסרת {x}','إزالة {x}','Remove {x}'],
+  lc_max:['אפשר להשוות עד {n} הצעות.','يمكن مقارنة حتى {n} عروض.','You can compare up to {n} offers.'],
+  lc_hint:['לחצו ＋ כדי להוסיף עוד הצעות, ✕ כדי להסיר, והקלידו בשורה העליונה את שם הבנק.','اضغط ＋ لإضافة عروض، و✕ للإزالة، واكتب اسم البنك في السطر العلوي.','Tap ＋ to add more offers, ✕ to remove one, and type the bank name on the top line.'],
+  r_lcBestN:['הכי משתלמת: {x}, חיסכון של','الأوفر: {x}، توفير بمقدار','Best deal: {x}, saving'],
+  r_lcVs:['לעומת {x} · ריבית אפקטיבית {r}','مقارنة بـ {x} · فائدة فعلية {r}','vs {x} · effective rate {r}'],
+  r_lcTotalOf:['עלות כוללת · {x}','التكلفة الإجمالية · {x}','Total cost · {x}'],
+  r_lcAprOf:['ריבית אפקטיבית · {x}','الفائدة الفعلية · {x}','Effective rate · {x}'],
+  o_spPct:['לפי אחוזים','حسب النسب المئوية','By percentage'],
+  o_spSh:['לפי חלקים (ימים, מבוגרים וילדים…)','حسب الحصص (أيام، بالغون وأطفال…)','By parts (days, adults and kids…)'],
+  o_spEx:['לפי מה שכל אחד הזמין','حسب ما طلبه كل شخص','By what each person ordered'],
+  o_spPaid:['התחשבנות: מי שילם כמה','تسوية: من دفع كم','Settle up: who paid what'],
+  f_spRound:['עיגול הסכום של כל אחד','تقريب مبلغ كل شخص','Round each share'],
+  o_rnd0:['בלי עיגול','بدون تقريب','No rounding'],
+  o_rnd1:['כלפי מעלה לשלם','لأعلى إلى رقم صحيح','Up to a whole number'],
+  o_rnd5:['כלפי מעלה ל-5','لأعلى إلى 5','Up to the nearest 5'],
+  o_rnd10:['כלפי מעלה ל-10','لأعلى إلى 10','Up to the nearest 10'],
+  sp_person:['משתתף {n}','مشارك {n}','Person {n}'],
+  sp_name:['שם המשתתף','اسم المشارك','Person name'],
+  sp_add:['הוספת משתתף','إضافة مشارك','Add a person'],
+  sp_max:['אפשר עד {n} משתתפים.','حتى {n} مشاركًا.','Up to {n} people.'],
+  sp_vInc:['הכנסה חודשית של כל אחד','الدخل الشهري لكل شخص','Monthly income of each person'],
+  sp_vPct:['אחוז מהחשבון','نسبة من الفاتورة','Share of the bill (%)'],
+  sp_vSh:['מספר חלקים (למשל ימים, או 1 למבוגר ו-0.5 לילד)','عدد الحصص (مثلًا أيام، أو 1 لبالغ و0.5 لطفل)','Number of parts (e.g. days, or 1 per adult and 0.5 per child)'],
+  sp_vEx:['מה כל אחד הזמין','ما طلبه كل شخص','What each person ordered'],
+  sp_vPaid:['כמה כל אחד שילם','كم دفع كل شخص','How much each person paid'],
+  sp_hint_inc:['כל אחד משלם לפי היחס בין ההכנסות.','يدفع كل شخص حسب نسبة الدخل.','Each pays in proportion to income.'],
+  sp_hint_pct:['האחוזים צריכים להסתכם ב-100%.','يجب أن يكون مجموع النسب 100%.','The percentages should add up to 100%.'],
+  sp_hint_sh:['למשל: מי שהיה 3 ימים מקבל 3 חלקים, ומי שהיה יומיים מקבל 2.','مثلًا: من بقي 3 أيام يحصل على 3 حصص ومن بقي يومين على حصتين.','For example: someone who stayed 3 days gets 3 parts, someone who stayed 2 days gets 2.'],
+  sp_hint_ex:['מה שלא שויך לאף אחד מתחלק שווה בשווה, והטיפ לפי החלק של כל אחד.','ما لم يُنسب لأحد يُقسم بالتساوي، والبقشيش حسب حصة كل شخص.','Anything not assigned is split equally, and the tip follows each share.'],
+  sp_hint_paid:['הקלידו כמה כל אחד שילם בפועל. נחשב מי מעביר למי, עם כמה שפחות העברות.','اكتب كم دفع كل شخص فعلًا. سنحسب من يحوّل لمن بأقل عدد من التحويلات.','Type how much each person actually paid. We work out who pays whom, with as few transfers as possible.'],
+  r_spPays:['{x} משלם','{x} يدفع','{x} pays'],
+  r_spAmt:['סכום','المبلغ','Amount'],
+  r_spPct:['אחוז','النسبة','Share'],
+  r_spRoundExtra:['תוספת מהעיגול','إضافة من التقريب','Extra from rounding'],
+  r_spTotalPaid:['סך כל ההוצאות','مجموع المصاريف','Total spent'],
+  r_spEachShare:['החלק של כל אחד','حصة كل شخص','Each person\'s share'],
+  r_spOwes:['{a} מעביר ל-{b}','{a} يحوّل إلى {b}','{a} pays {b}'],
+  r_spMoves:['{n} העברות כדי שכולם ישלמו אותו דבר','{n} تحويلات ليدفع الجميع المبلغ نفسه','{n} transfers so everyone pays the same'],
+  r_spSettled:['כולם מאוזנים, אין צורך בהעברות','الجميع متساوون، لا حاجة لتحويلات','Everyone is even, no transfers needed'],
+  r_spBal:['יתרה','الرصيد','Balance'],
+  t_spTable:['פירוט לפי משתתף','التفاصيل حسب المشارك','Breakdown by person'],
+  w_spPctSum:['האחוזים מסתכמים ב-{n}% ולא ב-100%, ולכן החלוקה חושבה באופן יחסי.','مجموع النسب {n}% وليس 100%، لذلك حُسب التقسيم نسبيًا.','The percentages add up to {n}%, not 100%, so the split was scaled proportionally.'],
+  w_spExOver:['הסכומים האישיים גבוהים מסכום החשבון.','المبالغ الفردية أعلى من مبلغ الفاتورة.','The personal amounts are higher than the bill.'],
+  n_sp2:['אפשר לחלק שווה בשווה, לפי הכנסה, אחוזים, חלקים או לפי מה שכל אחד הזמין. בהתחשבנות מחושב מי מעביר למי כדי שכולם ישלמו אותו דבר.','يمكن التقسيم بالتساوي أو حسب الدخل أو النسب أو الحصص أو حسب ما طلبه كل شخص. في التسوية نحسب من يحوّل لمن ليدفع الجميع المبلغ نفسه.','Split equally, by income, percentages, parts or by what each ordered. Settle up works out who pays whom so everyone pays the same.'],
+  sc_security:['אבטחה','الأمان','Security'],
+  sc_securityS:['מכשירים מחוברים וניסיונות כניסה, בזמן אמת','الأجهزة المتصلة ومحاولات الدخول، مباشرة','Signed-in devices and sign-in attempts, live'],
+  set_security:['מכשירים וכניסות','الأجهزة وعمليات الدخول','Devices and sign-ins'],
+  sec_needLogin:['כאן רואים אילו מכשירים מחוברים לחשבון ואם מישהו מנסה להיכנס אליו. התחברו לחשבון כדי לראות.','هنا ترى الأجهزة المتصلة بالحساب وما إذا كان أحد يحاول الدخول إليه. سجّل الدخول لترى.','See which devices are signed in to your account and whether someone is trying to get in. Sign in to see it.'],
+  sec_toAcc:['מעבר לחשבון','الانتقال إلى الحساب','Go to account'],
+  sec_high:['רמת אבטחה: גבוהה','مستوى الأمان: مرتفع','Security level: high'],
+  sec_highS:['הכול מוגדר, ואין ניסיונות כניסה חשודים.','كل شيء مُعد، ولا توجد محاولات دخول مريبة.','Everything is set up and there are no suspicious sign-in attempts.'],
+  sec_mid:['רמת אבטחה: אפשר לשפר','مستوى الأمان: يمكن تحسينه','Security level: can be improved'],
+  sec_midS:['בדקו את הסעיפים המסומנים למטה.','راجع البنود المعلَّمة أدناه.','Check the items marked below.'],
+  sec_cPw:['סיסמה חזקה וייחודית, שמורה רק כטביעה מוצפנת','كلمة مرور قوية وفريدة، محفوظة كبصمة مشفّرة فقط','A strong, unique password, stored only as an encrypted fingerprint'],
+  sec_cMailOk:['אימייל לשחזור מאומת','بريد الاستعادة مؤكد','Recovery email verified'],
+  sec_cMailWait:['אימייל לשחזור ממתין לאימות','بريد الاستعادة بانتظار التأكيد','Recovery email waiting for verification'],
+  sec_cMailNo:['אין אימייל לשחזור סיסמה','لا يوجد بريد لاستعادة كلمة المرور','No email for password recovery'],
+  sec_fix:['הגדרה','إعداد','Set up'],
+  sec_cNoFails:['אין ניסיונות כניסה שגויים ב-24 השעות האחרונות','لا توجد محاولات دخول خاطئة خلال آخر 24 ساعة','No failed sign-in attempts in the last 24 hours'],
+  sec_cFails:['{n} ניסיונות כניסה שגויים ב-24 השעות האחרונות','{n} محاولات دخول خاطئة خلال آخر 24 ساعة','{n} failed sign-in attempts in the last 24 hours'],
+  sec_cLock:['אחרי 5 ניסיונות שגויים החשבון ננעל זמנית','بعد 5 محاولات خاطئة يُقفل الحساب مؤقتًا','After 5 failed attempts the account locks for a while'],
+  sec_f24:['מישהו ניסה להיכנס לחשבון: {n} ניסיונות שגויים ב-24 השעות האחרונות, האחרון {w}.','حاول أحدهم الدخول إلى الحساب: {n} محاولات خاطئة خلال 24 ساعة، آخرها {w}.','Someone tried to get into the account: {n} failed attempts in the last 24 hours, the latest {w}.'],
+  sec_locked:['החשבון נעול זמנית בגלל ניסיונות שגויים. אפשר לנסות שוב בעוד {s} שניות.','الحساب مقفل مؤقتًا بسبب محاولات خاطئة. أعد المحاولة بعد {s} ثانية.','The account is locked for now after failed attempts. Try again in {s} seconds.'],
+  sec_devT:['מכשירים מחוברים לחשבון','الأجهزة المتصلة بالحساب','Devices signed in to the account'],
+  sec_live:['בזמן אמת','مباشر','Live'],
+  sec_onlineN:['פעילים עכשיו','نشطة الآن','active now'],
+  sec_signedN:['מחוברים לחשבון','متصلة بالحساب','signed in'],
+  sec_thisDev:['המכשיר הזה','هذا الجهاز','This device'],
+  sec_activeNow:['פעיל עכשיו','نشط الآن','Active now'],
+  sec_lastSeen:['פעיל לאחרונה {w}','آخر نشاط {w}','Last active {w}'],
+  sec_since:['מחובר מ{w}','متصل منذ {w}','Signed in {w}'],
+  sec_kick:['ניתוק','فصل','Sign out'],
+  sec_kickAll:['ניתוק כל המכשירים האחרים','فصل كل الأجهزة الأخرى','Sign out all other devices'],
+  sec_kickedOne:['המכשיר נותק מהחשבון.','تم فصل الجهاز عن الحساب.','The device was signed out.'],
+  sec_kickedAll:['כל המכשירים האחרים נותקו מהחשבון.','تم فصل كل الأجهزة الأخرى عن الحساب.','All other devices were signed out.'],
+  sec_youKicked:['החשבון נותק במכשיר הזה ממכשיר אחר שלך.','تم فصل الحساب على هذا الجهاز من جهاز آخر لك.','This device was signed out from another of your devices.'],
+  sec_siteOnly:['באתר אין שרת, ולכן מוצג רק המכשיר הזה. כל מכשיר מחזיק עותק נפרד של החשבון. תצוגה חיה של כל המכשירים זמינה באפליקציה ב-Claude.','لا يوجد خادم في الموقع، لذلك يظهر هذا الجهاز فقط. كل جهاز يحمل نسخة منفصلة من الحساب. العرض المباشر لكل الأجهزة متاح في التطبيق داخل Claude.','The website has no server, so only this device is shown. Each device keeps its own copy of the account. A live view of all devices is available in the app inside Claude.'],
+  sec_actT:['פעילות וניסיונות כניסה','النشاط ومحاولات الدخول','Activity and sign-in attempts'],
+  sec_ev_fail:['ניסיון כניסה שגוי (סיסמה או קוד)','محاولة دخول خاطئة (كلمة مرور أو رمز)','Failed attempt (password or code)'],
+  sec_ev_in:['כניסה לחשבון','تسجيل دخول إلى الحساب','Signed in'],
+  sec_ev_rc:['שחזור סיסמה דרך האימייל','استعادة كلمة المرور عبر البريد','Password recovered by email'],
+  sec_ev_pw:['הסיסמה שונתה','تم تغيير كلمة المرور','Password changed'],
+  sec_ev_mail:['הוגדר אימייל לשחזור','تم إعداد بريد للاستعادة','Recovery email set'],
+  sec_ev_kick:['מכשירים אחרים נותקו','تم فصل أجهزة أخرى','Other devices signed out'],
+  sec_noAct:['אין עדיין פעילות להצגה.','لا يوجد نشاط لعرضه بعد.','No activity to show yet.'],
+  sec_clear:['ניקוי ההיסטוריה','مسح السجل','Clear history'],
+  sec_now:['עכשיו','الآن','just now'],
+  sec_privacy:['בלי מעקב: לא נשמרים מיקום, כתובת IP או מזהה קבוע של המכשיר. לכל חיבור נשמרים רק סוג המכשיר והדפדפן, והמידע גלוי רק לך.','بلا تتبّع: لا يُحفظ الموقع أو عنوان IP أو معرّف ثابت للجهاز. يُحفظ لكل اتصال نوع الجهاز والمتصفح فقط، والمعلومات مرئية لك وحدك.','No tracking: no location, IP address or fixed device ID is kept. Each sign-in keeps only the device type and browser, and only you can see it.'],
+  sec_alert:['מישהו ניסה להיכנס לחשבון שלך: {n} ניסיונות שגויים.','حاول أحدهم الدخول إلى حسابك: {n} محاولات خاطئة.','Someone tried to get into your account: {n} failed attempts.'],
+  sec_alertNow:['⚠️ מישהו מנסה להיכנס לחשבון שלך עכשיו','⚠️ أحدهم يحاول الدخول إلى حسابك الآن','⚠️ Someone is trying to get into your account right now'],
+  sec_details:['פרטים','التفاصيل','Details'],
+  dev_phone:['טלפון','هاتف','Phone'],
+  dev_tablet:['טאבלט','جهاز لوحي','Tablet'],
+  dev_computer:['מחשב','حاسوب','Computer'],
+  sec_alert1:['מישהו ניסה להיכנס לחשבון שלך: ניסיון שגוי אחד.','حاول أحدهم الدخول إلى حسابك: محاولة خاطئة واحدة.','Someone tried to get into your account: one failed attempt.'],
+  sec_f241:['מישהו ניסה להיכנס לחשבון: ניסיון שגוי אחד ב-24 השעות האחרונות, {w}.','حاول أحدهم الدخول إلى الحساب: محاولة خاطئة واحدة خلال 24 ساعة، {w}.','Someone tried to get into the account: one failed attempt in the last 24 hours, {w}.'],
+  sec_cFails1:['ניסיון כניסה שגוי אחד ב-24 השעות האחרונות','محاولة دخول خاطئة واحدة خلال آخر 24 ساعة','One failed sign-in attempt in the last 24 hours']
 });
 
 const t = (k, p) => {
@@ -3200,10 +3310,11 @@ const isVisible = id => NOHIDE.includes(id) || !SET.hidden.includes(id);
 function viewGroups(){
   normOrder();
   const g = GROUPS.map(([gk, ids]) => [gk, ids.filter(isVisible).sort((a, b) => SET.order.indexOf(a) - SET.order.indexOf(b))]).filter(x => x[1].length);
-  if (SET.sort !== 'alpha') return g;
+  if (SET.sort !== 'alpha' && SET.sort !== 'groupsAlpha') return g;
+  let cmp; try { cmp = new Intl.Collator(locOf()).compare; } catch (e) { cmp = (a, b) => a < b ? -1 : a > b ? 1 : 0; }
+  if (SET.sort === 'groupsAlpha') return g.map(([gk, ids]) => [gk, gk === 'g_main' ? ids : ids.slice().sort((a, b) => cmp(t('tab_' + a), t('tab_' + b)))]);   // A-Z inside each category
   const main = g.filter(x => x[0] === 'g_main');
   const rest = g.filter(x => x[0] !== 'g_main').flatMap(x => x[1]);
-  let cmp; try { cmp = new Intl.Collator(locOf()).compare; } catch (e) { cmp = (a, b) => a < b ? -1 : a > b ? 1 : 0; }
   rest.sort((a, b) => cmp(t('tab_' + a), t('tab_' + b)));
   return main.concat(rest.length ? [['g_all', rest]] : []);
 }
@@ -3400,6 +3511,8 @@ SICO.set_ai = '<path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1
 SICO.set_gkey = SICO.set_gkey || '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/>';
 SICO.set_upd = '<path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/>';
 SICO.set_clock = '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>';
+
+SICO.set_security = '<path d="M12 3l7 3v6c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>';
 function unitHTML(u){
   if (!u) return '';
   if (u === 'cur') return `<span class="u cur">${symOf(cur)}</span>`;
@@ -3463,6 +3576,7 @@ function pointsOf(p){
 }
 
 function fieldHTML(f){
+  if (f.type === 'html') return `<div class="field wide ${f.cls || ''}" id="${f.id}"${f.when ? ` data-when="${f.when[0]}=${f.when[1]}"` : ''}></div>`;
   const r = fieldHTML0(f);
   if (!(f.type === 'select' || f.type === 'cursel') || !f.id || f.id.indexOf('set_') !== 0) return r;
   const ic = sIcon(f.id) || sIcon(f.id.indexOf('set_p_') === 0 ? 'set_p_single' : 'set_tune');
@@ -3636,10 +3750,7 @@ Object.assign(DEFS, {
     F('rf_fee','f_rfFee','cur',3000), F('rf_feePct','f_rfFeePct','%',0,{adv:'m_adv'}), F('rf_pen','f_rfPen','cur',0,{adv:'m_adv',hint:'h_rfPen'})
   ],
   loancmp: [
-    {type:'sub',label:'w_optA'}, F('lc_aamt','f_loanAmt','cur',200000), F('lc_arate','f_rate','%',5.5), F('lc_ayrs','f_term','yrs',5),
-    F('lc_afee','f_lcFee','cur',0), F('lc_apct','f_lcPct','%',0), F('lc_amon','f_lcMon','cur',0),
-    {type:'sub',label:'w_optB'}, F('lc_bamt','f_loanAmt','cur',200000), F('lc_brate','f_rate','%',4.9), F('lc_byrs','f_term','yrs',5),
-    F('lc_bfee','f_lcFee','cur',1500), F('lc_bpct','f_lcPct','%',0.5), F('lc_bmon','f_lcMon','cur',10)
+    {type:'html', id:'lc_box', cls:'lc-wrap'}
   ],
   prepay: [
     F('pp_bal','f_ppBal','cur',400000), F('pp_rate','f_ppRate','%',5), F('pp_yrs','f_rfLeft','yrs',15), F('pp_lump','f_ppLump','cur',100000),
@@ -3679,9 +3790,11 @@ Object.assign(DEFS, {
     F('be_fix','f_beFix','cur',20000,{wide:true}), F('be_price','f_bePrice','cur',100), F('be_var','f_beVar','cur',40), F('be_target','f_beTarget','cur',5000), F('be_units','f_beUnits','',500)
   ],
   split: [
-    SEL('sp_mode','f_spMode','eq',[['eq','o_spEq'],['inc','o_spInc']],{wide:true}),
-    F('sp_total','f_spTotal','cur',600,{wide:true}), F('sp_tip','f_spTip','%',10),
-    F('sp_n','f_spN','',4,{when:['sp_mode','eq']}), F('sp_ia','f_spIa','cur',15000,{when:['sp_mode','inc']}), F('sp_ib','f_spIb','cur',10000,{when:['sp_mode','inc']})
+    SEL('sp_mode','f_spMode','eq',[['eq','o_spEq'],['inc','o_spInc'],['pct','o_spPct'],['sh','o_spSh'],['ex','o_spEx'],['paid','o_spPaid']],{wide:true}),
+    F('sp_total','f_spTotal','cur',600,{wide:true,when:['sp_mode','eq|inc|pct|sh|ex']}), F('sp_tip','f_spTip','%',10,{when:['sp_mode','eq|inc|pct|sh|ex']}),
+    F('sp_n','f_spN','',4,{when:['sp_mode','eq']}),
+    SEL('sp_round','f_spRound','0',[['0','o_rnd0'],['1','o_rnd1'],['5','o_rnd5'],['10','o_rnd10']],{when:['sp_mode','eq|inc|pct|sh|ex']}),
+    {type:'html', id:'sp_box', cls:'lc-wrap', when:['sp_mode','inc|pct|sh|ex|paid']}
   ]
 });
 Object.assign(DEFS, {
@@ -3817,7 +3930,6 @@ function homePanelHTML(){
       <label class="mk-sw"><input type="checkbox" id="fx_live"><span class="mk-knob" aria-hidden="true"></span><span data-i="fx_live"></span></label></div>
     <p class="mk-st" id="fx_st" aria-live="polite"></p>
     <div class="mkt" id="hm"></div>
-    <button type="button" class="iv-home" data-ivx="fx"><span class="iv-dot" aria-hidden="true"></span><span data-i="iv_home"></span></button>
     <p class="fine mkt-note" id="hm_n"></p>
     <h3 class="sec-t" data-i="home_popular"></h3>
     <div class="tchips" id="tchips"></div>
@@ -3923,9 +4035,6 @@ const LAST = {};
 const ONOFF = [['1','o_on'],['0','o_off']];
 const CUR_TABS = ['vat','loan','mortgage','compound','yield','dividends','capital'];
 const NUMF = (id, label, unit, hint) => ({id, label, unit, val:'', wide:false, hint});
-const PLATFORMS = [
-  ['Investing.com', 'pl_investing', 'https://il.investing.com/']
-];
 const PROFK = [['k0','f_k0'],['k12','f_k12'],['k3','f_k3'],['k45','f_k45'],['k617','f_k617'],['k18','f_k18']];
 const SETDEFS = [
   ['set_look', [
@@ -4005,6 +4114,7 @@ function settingsPanelHTML(){
   return `<section class="panel panel-flat panel-set" id="panel-settings" role="tabpanel" aria-labelledby="tab-settings" hidden>
     <div class="perm" id="perm" role="status"><span class="perm-dot"></span><div><b id="perm_t"></b><small id="perm_s"></small></div></div>
     ${sec('set_account', accountHTML())}
+    ${sec('set_security', '<div id="sec_box" class="sec-box"></div>')}
     ${SETDEFS.slice(0, 2).map(([k, fs]) => sec(k, (k === 'set_look' ? '<div class="skins" id="skins" role="radiogroup" data-ia="f_theme"></div>' : '') + fl(fs))).join('')}
     ${sec('set_clock', '<div class="cstyles" id="cstyles" role="radiogroup" data-ia="set_clock"></div><div class="fields">' + [
       SEL('set_clock24','f_clock24','1',[['1','o_24h'],['0','o_12h']]),
@@ -4014,10 +4124,10 @@ function settingsPanelHTML(){
     ${sec('set_numbers', fl(SETDEFS[2][1]))}
     ${sec('set_calc', fl(SETDEFS[3][1]))}
     ${sec('set_profile', fl(SETDEFS[4][1]))}
-    ${sec('set_tabs', `<div class="fields">${fieldHTML(SEL('set_sort','f_sort','groups',[['groups','o_sortGroups'],['alpha','o_sortAlpha']],{wide:true}))}</div><p class="fine" data-i="h_sort"></p><p class="fine" data-i="h_tabs"></p><div id="set_tabs" class="tabs-list"></div>`)}
+    ${sec('set_tabs', `<div class="fields">${fieldHTML(SEL('set_sort','f_sort','groups',[['groups','o_sortGroups'],['groupsAlpha','o_sortGroupsAlpha'],['alpha','o_sortAlpha']],{wide:true}))}</div><p class="fine" data-i="h_sort"></p><p class="fine" data-i="h_tabs"></p><div id="set_tabs" class="tabs-list"></div>`)}
     ${sec('set_curBy', `<div class="fields">${cb}</div>`)}
     ${sec('set_ai', `<div id="ai_sec"><div class="fields">${[
-        SEL('set_aiEngine','f_aiEngine','auto',[['auto','o_aiAuto'],['personal','o_aiPersonal'],['gemini','o_aiGemini'],['claude','o_aiClaude']],{wide:true, hint:'h_aiEngine'}),
+        SEL('set_aiEngine','f_aiEngine','auto',[['auto','o_aiAuto'],['personal','o_aiPersonal'],['gemini','o_aiGemini']],{wide:true, hint:'h_aiEngine'}),
         SEL('set_pmStyle','f_pmStyle','short',[['short','o_pmShort'],['long','o_pmLong']])].map(fieldHTML).join('')}
       <div class="field"><label for="set_pmName" data-i="f_pmName"></label><input id="set_pmName" type="text" maxlength="24" autocomplete="off" class="lookup" dir="auto"></div></div>
       <div class="field wide"><label for="set_gkey" data-i="f_gkeyFree"></label><input id="set_gkey" type="password" autocomplete="off" spellcheck="false" class="lookup" dir="ltr" placeholder="AIza…"><small class="hint" data-i="h_gkeyFree"></small></div>
@@ -4032,10 +4142,6 @@ function settingsPanelHTML(){
         SEL('set_liveCrypto','f_liveCrypto','1',[['1','o_on'],['0','o_off']]),
         SEL('set_autoRef','f_autoRef','5',[['0','o_off'],['1','o_ref1'],['5','o_ref5'],['15','o_ref15']],{hint:'h_autoRef'})
       ].map(fieldHTML).join('')}</div></details>
-      <h4 class="conn-t" data-i="pl_t"></h4>
-      <div class="src-list" id="set_platforms">${PLATFORMS.map(([n, d, u]) => `<div class="src-c">
-        <div class="src-h"><b>${n}</b></div><div class="src-s" data-i="${d}"></div>
-        <div class="src-l">${d === 'pl_investing' ? '<button type="button" class="src-a iv-btn" data-ivx="fx"><span data-i="iv_btn"></span></button>' : ''}<a class="src-a" href="${u}" target="_blank" rel="noopener noreferrer"><span data-i="ln_site"></span> ↗</a></div></div>`).join('')}</div>
       <p class="fine" data-i="h_liveNoAcc"></p>`)}
     ${sec('set_upd', `<div class="upd-box"><div class="upd-row"><span data-i="upd_mine"></span> <b class="num" id="upd_cur" dir="ltr"></b></div>
       <p class="gk-st" id="upd_st" role="status" aria-live="polite"></p>
@@ -4075,14 +4181,14 @@ function syncSettingsUI(){
   fillCB(); renderTabsList(); renderTiles(); renderBottom();
   if (typeof renderStamp === 'function') renderStamp();
   const an = $('#acc_name'); if (an){ an.textContent = '@' + FUSER; an.dir = 'ltr'; }
-  const ao = $('#acc_open'); if (ao){ try { ao.value = RAWLS.getItem('fin-signup-open') === '1' ? '1' : '0'; } catch (e) {} }
+  const ao = $('#acc_open'); if (ao){ try { ao.value = RAWLS.getItem('fin-signup-open') === '1' ? '1' : '0'; } catch (e) {} if (typeof polSelRender === 'function') polSelRender(); }
   if (!FUSER && !signupAllowed()){ const m = $('#acc_msg'); if (m && !m.textContent) m.textContent = t('m_closed'); }
   const hu = $('#homeUser'); if (hu) hu.hidden = true;
   const hh = $('.home-hello');
   const nm = FUSER ? '@' + FUSER : '';
   if (hh && nm){ hh.removeAttribute('data-i'); hh.textContent = helloText(nm) + ' 👋'; }
   else if (hh){ hh.setAttribute('data-i', 'home_hello'); hh.textContent = t('home_hello'); }
-  if (SET.sort === 'alpha' && typeof rebuildNav === 'function' && navEl) rebuildNav();
+  if ((SET.sort === 'alpha' || SET.sort === 'groupsAlpha') && typeof rebuildNav === 'function' && navEl) rebuildNav();
 }
 function syncRanges(){
   $$('.rng').forEach(r => { const n = $('#' + r.dataset.for); if (n){ r.value = n.value; rangeFill(r); } });
@@ -5612,24 +5718,26 @@ function aprOf(net, pay, n){
   }
   return (Math.pow(1 + (lo + hi) / 2, 12) - 1) * 100;
 }
-function loanCmpSide(p){
-  const amt = Math.max(0, v(`lc_${p}amt`)), rate = Math.max(0, v(`lc_${p}rate`)), n = Math.max(1, Math.round(v(`lc_${p}yrs`) * 12));
-  const up = Math.max(0, v(`lc_${p}fee`)) + amt * Math.max(0, v(`lc_${p}pct`)) / 100, mf = Math.max(0, v(`lc_${p}mon`));
+/* any number of named offers (a bank name instead of "offer A/B") */
+function loanCmpSide(o){
+  const amt = Math.max(0, +o.amt || 0), rate = Math.max(0, +o.rate || 0), n = Math.max(1, Math.round((+o.yrs || 0) * 12) || 1);
+  const up = Math.max(0, +o.fee || 0) + amt * Math.max(0, +o.pct || 0) / 100, mf = Math.max(0, +o.mon || 0);
   const pm = pmtOf(amt, rate, n);
   const total = (pm + mf) * n + up;
   return {amt, n, pm, mf, up, total, int: pm * n - amt, apr: amt - up > 0 ? aprOf(amt - up, pm + mf, n) : NaN};
 }
 function calcLoanCmp(){
-  const A = loanCmpSide('a'), B = loanCmpSide('b');
-  const best = A.total <= B.total ? 'A' : 'B', diff = Math.abs(A.total - B.total);
-  const row = (k, f) => [t(k), f(A), f(B)];
+  const L = lcList().map((o, i) => Object.assign(loanCmpSide(o), {name: asEsc(lcName(o, i))}));
+  const S = L.slice().sort((a, b) => a.total - b.total), best = S[0], next = S[1];
+  const star = s => (next && s === best ? '★ ' : '') + s.name;
   return {
-    hero: {label: t('r_lcBest', {x: best}), value: M(diff), sub: t('r_lcSub', {a: PC(A.apr), b: PC(B.apr)})},
-    rows: [[t('r_lcBest', {x: best}), M(diff), 'key'], [t('r_lcAprA'), PC(A.apr)], [t('r_lcAprB'), PC(B.apr)]],
+    hero: next ? {label: t('r_lcBestN', {x: best.name}), value: M(next.total - best.total), sub: t('r_lcVs', {x: next.name, r: PC(best.apr)})}
+      : {label: t('r_lcTotalOf', {x: best.name}), value: M(best.total), sub: t('r_lcApr') + ': ' + PC(best.apr)},
+    rows: (next ? [[t('r_lcBestN', {x: best.name}), M(next.total - best.total), 'key']] : []).concat(S.map(s => [t('r_lcAprOf', {x: s.name}), PC(s.apr)])),
     note: t('n_lc'),
     table: {
-      title: t('t_compare'), open: true, head: ['', t('w_optA'), t('w_optB')],
-      rows: [row('r_lcPmt', s => M(s.pm + s.mf)), row('r_lcInt', s => M(s.int)), row('r_lcUp', s => M(s.up)), row('r_lcTotal', s => M(s.total)), row('r_lcApr', s => PC(s.apr))]
+      title: t('t_compare'), open: true, head: ['', t('r_lcPmt'), t('r_lcInt'), t('r_lcUp'), t('r_lcTotal'), t('r_lcApr')],
+      rows: S.map(s => [star(s), M(s.pm + s.mf), M(s.int), M(s.up), M(s.total), PC(s.apr)])
     }
   };
 }
@@ -5841,26 +5949,52 @@ function calcBreakEven(){
   };
 }
 
-/* --- split bill --- */
+/* --- split bill: equally, by income, %, parts, what each ordered, or settle up who paid what --- */
+const SP_CLS = ['c-ink', 'c-accent', 'c-warm', 'c-soft'];
+function spRoundUp(x, step){ return step > 0 ? Math.ceil(x / step - 1e-9) * step : x; }
 function calcSplit(){
-  const total = Math.max(0, v('sp_total')), tip = Math.max(0, v('sp_tip')) / 100, mode = $('#sp_mode').value;
+  const mode = $('#sp_mode').value, total = Math.max(0, v('sp_total')), tip = Math.max(0, v('sp_tip')) / 100, step = +(($('#sp_round') || {}).value || 0);
   const bill = total * (1 + tip);
   if (mode === 'eq'){
-    const n = Math.max(1, Math.round(v('sp_n')));
-    const each = bill / n;
+    const n = Math.max(1, Math.round(v('sp_n'))), each = bill / n, r = spRoundUp(each, step);
+    const rows = [[t('r_spBillRow'), M(bill, 2)], [t('r_spTip'), M(total * tip, 2)], [t('r_spEach'), M(r, 2), 'key'], [t('r_spN'), n]];
+    if (step) rows.push([t('r_spRoundExtra'), M(r * n - bill, 2)]);
+    return {hero: {label: t('r_spEach'), value: M(r, 2), sub: t('r_spBill', {n: M(bill, 2)})}, rows, note: t('n_sp2')};
+  }
+  const P = spList(), N = P.length, nm = (p, i) => asEsc(spName(p, i));
+  if (mode === 'paid'){
+    const paid = P.map(p => Math.max(0, +p.paid || 0)), T = paid.reduce((a, b) => a + b, 0), each = T / (N || 1);
+    const bal = paid.map(x => x - each);
+    const cr = bal.map((b, i) => ({i, b})).filter(x => x.b > 0.005).sort((a, b) => b.b - a.b), db = bal.map((b, i) => ({i, b: -b})).filter(x => x.b > 0.005).sort((a, b) => b.b - a.b);
+    const moves = []; let ci = 0, di = 0;
+    while (ci < cr.length && di < db.length){ const amt = Math.min(cr[ci].b, db[di].b); moves.push([db[di].i, cr[ci].i, amt]); cr[ci].b -= amt; db[di].b -= amt; if (cr[ci].b < 0.005) ci++; if (db[di].b < 0.005) di++; }
+    const rows = [[t('r_spTotalPaid'), M(T, 2)], [t('r_spEachShare'), M(each, 2), 'key']].concat(moves.length ? moves.map(([a, b, x]) => [t('r_spOwes', {a: nm(P[a], a), b: nm(P[b], b)}), M(x, 2), 'key']) : [[t('r_spSettled'), '✓']]);
     return {
-      hero: {label: t('r_spEach'), value: M(each, 2), sub: t('r_spBill', {n: M(bill, 2)})},
-      rows: [[t('r_spBillRow'), M(bill, 2)], [t('r_spTip'), M(total * tip, 2)], [t('r_spEach'), M(each, 2), 'key'], [t('r_spN'), n]],
-      note: t('n_sp')
+      hero: {label: t('r_spEachShare'), value: M(each, 2), sub: moves.length ? t('r_spMoves', {n: moves.length}) : t('r_spSettled')},
+      rows, note: t('n_sp2'),
+      table: {title: t('t_spTable'), open: true, head: ['', t('sp_vPaid'), t('r_spEachShare'), t('r_spBal')], rows: P.map((p, i) => [nm(p, i), M(paid[i], 2), M(each, 2), (bal[i] > 0.005 ? '+' : '') + M(bal[i], 2)])}
     };
   }
-  const a = Math.max(0, v('sp_ia')), b = Math.max(0, v('sp_ib')), s = a + b || 1;
-  const sa = bill * a / s, sb = bill * b / s;
+  let share, warn = [];
+  if (mode === 'ex'){
+    const own = P.map(p => Math.max(0, +p.ex || 0)), sum = own.reduce((a, b) => a + b, 0), shared = Math.max(0, total - sum) / (N || 1);
+    if (sum > total + 0.005) warn.push(t('w_spExOver'));
+    share = own.map(x => (x + shared) * (1 + tip));
+  } else {
+    const key = mode === 'inc' ? 'inc' : mode === 'pct' ? 'pct' : 'sh';
+    const w = P.map(p => Math.max(0, +p[key] || 0)), sw = w.reduce((a, b) => a + b, 0);
+    if (mode === 'pct' && Math.abs(sw - 100) > 0.01) warn.push(t('w_spPctSum', {n: Math.round(sw * 100) / 100}));
+    share = w.map(x => sw > 0 ? bill * x / sw : bill / (N || 1));
+  }
+  const r = share.map(x => spRoundUp(x, step)), sumR = r.reduce((a, b) => a + b, 0);
+  const rows = [[t('r_spBillRow'), M(bill, 2)]].concat(P.map((p, i) => [t('r_spPays', {x: nm(p, i)}), M(r[i], 2), 'key']));
+  if (step) rows.push([t('r_spRoundExtra'), M(sumR - bill, 2)]);
+  const top = r.indexOf(Math.max(...r));
   return {
-    hero: {label: t('r_spA'), value: M(sa, 2), sub: t('r_spB') + ': ' + M(sb, 2)},
-    rows: [[t('r_spBillRow'), M(bill, 2)], [t('r_spA'), M(sa, 2), 'key'], [t('r_spB'), M(sb, 2), 'key'], [t('r_spShareA'), PC(a / s * 100)], [t('r_spShareB'), PC(b / s * 100)]],
-    note: t('n_sp'),
-    split: {title: t('r_spBillRow'), items: [{name: t('r_spA'), v: sa, cls:'c-ink', fmt: M(sa, 2)}, {name: t('r_spB'), v: sb, cls:'c-accent', fmt: M(sb, 2)}]}
+    hero: {label: t('r_spPays', {x: nm(P[top], top)}), value: M(r[top], 2), sub: t('r_spBill', {n: M(bill, 2)})},
+    rows, note: t('n_sp2'), warn,
+    table: {title: t('t_spTable'), open: N > 2, head: ['', t('r_spAmt'), t('r_spPct')], rows: P.map((p, i) => [nm(p, i), M(r[i], 2), PC(sumR > 0 ? r[i] / sumR * 100 : 0)])},
+    split: {title: t('r_spBillRow'), items: P.map((p, i) => ({name: nm(p, i), v: r[i], cls: SP_CLS[i % SP_CLS.length], fmt: M(r[i], 2)}))}
   };
 }
 
@@ -6539,7 +6673,7 @@ async function doChange(){
   try { RAWLS.setItem(accKey(FUSER), JSON.stringify(rec)); } catch (e) {}
   await persistNow();
   ['acc_cur', 'acc_new', 'acc_new2'].forEach(id => { $('#' + id).value = ''; });
-  updPwReq($('#acc_new')); accMsg('m_pwChanged', null, true);
+  updPwReq($('#acc_new')); accMsg('m_pwChanged', null, true); secLog(FUSER, 'pw');
 }
 function updPwReq(inp){
   const ul = $(`.pwreq[data-pw="${inp.id}"]`); if (!ul) return;
@@ -6660,7 +6794,7 @@ async function asAnswer(q){
     if (e instanceof TypeError) throw new Error('blocked');
     throw e;
   }
-  const sm = window.claude && window.claude.use ? await window.claude.use('sample') : null;
+  const sm = null;
   if (!sm){
     if ((SET.gkey || '').trim()) return gemChat(hist.map((m, i) => i === 0 ? {role: 'user', content: asSystem() + '\n\nUser: ' + m.content} : m));
     return pmAnswer(q);
@@ -7221,8 +7355,7 @@ async function exRun(kind, extra){
   EX.busy = true; $('#ex_send').disabled = true;
   const eng = aiPick();
   let sm = null;
-  if (eng === 'claude'){ try { sm = window.claude && typeof window.claude.use === 'function' ? await window.claude.use('sample') : null; } catch (e) { sm = null; } }
-  if (!sm && (eng === 'gemini' || eng === 'claude') && gemKey()) sm = async (m) => ({text: await gemChat(m)});
+  if (!sm && eng === 'gemini' && gemKey()) sm = async (m) => ({text: await gemChat(m)});
   if (!sm){ out.innerHTML = exLocal(id, kind, extra); EX.busy = false; $('#ex_send').disabled = false; body.scrollTop = body.scrollHeight; return; }
   const msgs = EX.hist.concat([{role: 'user', content: (EX.hist.length ? '' : exSystem() + '\n\n') + prompt}]);
   EX.ctl = new AbortController();
@@ -7630,7 +7763,7 @@ async function gemModels(key){       // the newest Flash models this key can use
 function aiErrText(e){
   const m = (e && e.message) || '';
   if (!/^gk_e/.test(m) && !(m === 'blocked' && gemKey())) return '';
-  const k = m === 'blocked' ? (AI_CLAUDE ? 'gk_eIn' : 'gk_eNet') : m;
+  const k = m === 'blocked' ? (IN_CLAUDE ? 'gk_eInP' : 'gk_eNet') : m;
   return t('gk_fail') + ' ' + t(T[k] ? k : 'gk_eOther', {h: location.host || ''}) + (e.gem ? ' (' + e.gem + ')' : '');
 }
 function gkRender(){
@@ -7643,12 +7776,12 @@ function gkRender(){
   else if (GK.st === 'blocked' && AI_CLAUDE){ cls = 'ok'; h = '<b>✓ ' + t('gk_claude') + '</b> ' + t('gk_eIn'); }
   else if (GK.st === 'gk_eQuota'){ cls = 'ok'; h = '<b>✓ ' + t('gk_valid') + '</b> ' + t('gk_eQuota'); }
   else if (GK.st){
-    const k = GK.st === 'blocked' ? (AI_CLAUDE ? 'gk_eIn' : 'gk_eNet') : GK.st;
+    const k = GK.st === 'blocked' ? (IN_CLAUDE ? 'gk_eInP' : 'gk_eNet') : GK.st;
     cls = 'bad'; h = '<b>✗ ' + t('gk_bad') + '</b> ' + asEsc(t(T[k] ? k : 'gk_eOther', {h: location.host || ''})) + (GK.e ? ' <small dir="ltr">(' + asEsc(GK.e) + ')</small>' : '');
   }
   else if (gemKey() && SET.gkOk) { cls = 'ok'; h = ok; }
   else if (gemKey()) h = t('gk_saved');
-  else if (AI_CLAUDE){ cls = 'ok'; h = '<b>✓ ' + t('gk_claude') + '</b> ' + t('gk_claudeS'); }
+  else if (IN_CLAUDE){ h = t('gk_inClaude'); }
   el.className = 'gk-st ' + cls; el.innerHTML = h;
   const d = $('#gk_del'); if (d) d.style.display = gemKey() ? '' : 'none';
   const b = $('#gk_ok'); if (b) b.disabled = GK.st === 'wait';
@@ -7678,11 +7811,7 @@ document.addEventListener('click', e => {
 });
 document.addEventListener('input', e => { if (e.target.id === 'set_gkey' && GK.st !== 'wait'){ SET.gkOk = 0; GK = {st: '', e: ''}; gkRender(); } });
 document.addEventListener('keydown', e => { if (e.target.id === 'set_gkey' && e.key === 'Enter'){ e.preventDefault(); gkApprove(); } });
-async function aiSecInit(){
-  let sm = null;
-  try { sm = window.claude && typeof window.claude.use === 'function' ? await window.claude.use('sample') : null; } catch (e) {}
-  AI_CLAUDE = !!sm; gkRender();
-}
+async function aiSecInit(){ AI_CLAUDE = false; gkRender(); }   // Claude is not used as an AI engine
 aiSecInit();
 const _rsGk = renderStamp;
 renderStamp = function(){ _rsGk.apply(this, arguments); gkRender(); };
@@ -7707,8 +7836,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "4.4", "date": "2026-10-14", "notes": {"he": "כל אימייל יכול להיות משויך לחשבון אחד בלבד. הבדיקה נעשית בלי לחשוף את הכתובת.", "ar": "يمكن ربط كل بريد بحساب واحد فقط، ويتم التحقق دون كشف العنوان.", "en": "Each email can belong to one account only, checked without revealing the address."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.152407';
+var CHANGELOG = [{"v": "4.5", "date": "2026-10-14", "notes": {"he": "קטגוריית אבטחה חיה: מכשירים מחוברים, ניסיונות כניסה וניתוק מכשירים, בלי מעקב. השוואת הלוואות עם כמה הצעות שרוצים ושם לכל אחת, חלוקת הוצאות עם 6 דרכים והתחשבנות, מיון א׳ ב׳ בתוך קטגוריות. הוסרו Investing ו-Claude מהעוזר, ואימייל נחסם רק כשהוא זהה בדיוק.", "ar": "قسم أمان مباشر: الأجهزة المتصلة ومحاولات الدخول وفصل الأجهزة دون تتبّع. مقارنة قروض بعدد غير محدود من العروض وباسم لكل عرض، تقسيم مصاريف بست طرق وتسوية، وترتيب أبجدي داخل الفئات. أُزيل Investing وClaude من المساعد، ويُحظر البريد فقط عند التطابق التام.", "en": "A live Security section: signed-in devices, sign-in attempts and signing devices out, with no tracking. Loan comparison with as many named offers as you like, bill splitting with six methods and settle-up, A–Z sorting inside categories. Removed Investing and Claude from the assistant; an email is blocked only when it is exactly the same."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.161109';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -7791,6 +7920,7 @@ renderStamp = function(){ _rsUpd.apply(this, arguments); updRender(); };
 /* ---- settings: a clear hub of categories, each opening its own page ---- */
 var SET_CATS = [
   {id: 'account', c: 'c-blue',   ic: 'set_account', g: 0, secs: ['set_account']},
+  {id: 'security', c: 'c-red',   ic: 'set_security', g: 0, secs: ['set_security']},
   {id: 'display', c: 'c-violet', ic: 'set_look',    g: 1, secs: ['set_look', 'set_clock', 'set_lang', 'set_numbers', 'set_tabs']},
   {id: 'calc',    c: 'c-gold',   ic: 'set_calc',    g: 1, secs: ['set_calc', 'set_profile', 'set_curBy']},
   {id: 'conn',    c: 'c-green',  ic: 'set_live',    g: 2, secs: ['set_live', 'set_ai']},
@@ -7825,6 +7955,7 @@ function shRender(){
   const a = $('#sh_sub_account');
   if (a) a.textContent = (FUSER ? '@' + FUSER : t('sc_accountS')) + ' · ' + t('perm_' + PERM);
   const ab = $('#sh_b_account'); if (ab){ ab.className = 'sh-badge' + (FUSER ? ' on' : ''); ab.textContent = FUSER ? '●' : ''; }
+  if (typeof secHub === 'function' && typeof SEC !== 'undefined' && SEC) secHub();
   const sb = $('#sh_b_system');
   if (sb){ const nw = typeof updNewer === 'function' && updNewer(UPD.remote); sb.className = 'sh-badge' + (nw ? ' new' : ''); sb.textContent = nw ? t('sc_new') : 'v' + APP_VER; }
 }
@@ -7909,13 +8040,11 @@ function txPrompt(code, chunk){
     '- No explanations, no notes, no markdown.\nJSON:\n' + JSON.stringify(chunk);
 }
 async function txAI(){
-  if (IN_CLAUDE){ try { const sm = await window.claude.use('sample'); if (sm) return {kind: 'claude', sm}; } catch (e) {} }
   if (gemKey()) return {kind: 'gemini'};
   return null;
 }
 async function txAsk(ai, code, chunk){
   const prompt = txPrompt(code, chunk);
-  if (ai.kind === 'claude'){ const r = await ai.sm(prompt, {modelTier: 'default', cache: true}); return txParse(r && r.text); }
   return txParse(await gemTry([SET.gmodel].concat(GEM_FALLBACK), gemKey(), [{role: 'user', parts: [{text: prompt}]}], {generationConfig: {responseMimeType: 'application/json', temperature: 0.2}}));
 }
 function txChunks(keys, src, max){
@@ -7949,7 +8078,7 @@ async function txStart(manual){
   if (!ai){ TX = tx; txCacheSet(code, tx, src); TXJ.busy = false; TXJ.err = 'noai'; txRefresh(); return; }
   const seen = new Set($$('[data-i]').filter(e => e.offsetParent).map(e => e.dataset.i));
   missing = missing.filter(k => seen.has(k)).concat(missing.filter(k => !seen.has(k)));
-  const chunks = txChunks(missing, src, ai.kind === 'claude' ? 3000 : 6000);
+  const chunks = txChunks(missing, src, 6000);
   TXJ.done = all.length - missing.length; txRender();
   let idx = 0, fails = 0, stop = '';
   const worker = async () => {
@@ -8148,12 +8277,11 @@ function aiPick(){
   const e = SET.aiEngine || 'auto';
   if (e === 'personal') return 'personal';
   if (e === 'gemini') return 'gemini';
-  if (e === 'claude') return AI_CLAUDE ? 'claude' : gemKey() ? 'gemini' : 'personal';
-  return AI_CLAUDE ? 'claude' : gemKey() ? 'gemini' : 'personal';
+  return gemKey() && !IN_CLAUDE ? 'gemini' : 'personal';   // inside Claude Google cannot be reached
 }
 function engRender(){
   const box = $('#as_eng'); if (!box) return;
-  const opts = ['auto', 'personal', 'gemini'].concat(AI_CLAUDE ? ['claude'] : []);
+  const opts = ['auto', 'personal', 'gemini'];
   const cur = opts.includes(SET.aiEngine) ? SET.aiEngine : 'auto';
   box.innerHTML = opts.map(o => `<button type="button" data-eng="${o}" aria-pressed="${o === cur}">${asEsc(o === 'personal' ? pmName() : t('eng_' + o))}</button>`).join('');
   const now = $('#as_engnow'), pk = aiPick();
@@ -8172,77 +8300,6 @@ const _rsPm = renderStamp;
 renderStamp = function(){ _rsPm.apply(this, arguments); engRender(); };
 setTimeout(engRender, 1500);
 engRender();
-
-/* ---- Investing.com in real time: the official embeddable widgets (Investing.com has no public data API) ---- */
-var IV_TABS = [
-  {k: 'usd', w: 'https://www.widgets.investing.com/single-currency-crosses?theme={th}&hideTitle=true', page: 'https://il.investing.com/currencies/usd-ils'},
-  {k: 'fx', w: 'https://www.widgets.investing.com/live-currency-cross-rates?theme={th}&hideTitle=true', page: 'https://il.investing.com/currencies/streaming-forex-rates-majors'},
-  {k: 'crypto', w: 'https://www.widgets.investing.com/crypto-currency-rates?theme={th}&hideTitle=true', page: 'https://il.investing.com/crypto/'},
-  {k: 'cal', w: 'https://sslecal2.investing.com?columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&calType=day', page: 'https://il.investing.com/economic-calendar/'}
-];
-var IV_CUR = 'usd';
-function ivTheme(){ return document.documentElement.dataset.theme === 'light' ? 'lightTheme' : 'darkTheme'; }
-function ivLang(){ return {he: 17, ar: 3, en: 1, ru: 7, fr: 5, es: 4, de: 8, it: 9, tr: 10, ja: 11, 'zh-CN': 12, pt: 13, 'pt-BR': 13, pl: 25, ko: 18}[lang] || 1; }
-function ivEnsure(){
-  if ($('#ivx')) return;
-  document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="ivx" hidden><div class="cp-box iv-box" role="dialog" aria-modal="true" aria-labelledby="iv_t">
-    <div class="cp-top"><h3 id="iv_t"></h3><button type="button" class="cp-x" id="iv_x">×</button></div>
-    <form class="iv-search" id="iv_sf" role="search"><input id="iv_q" type="search" autocomplete="off" enterkeyhint="search"><button type="submit" class="gold-btn" id="iv_go"></button></form>
-    <div class="iv-chips" id="iv_chips"></div>
-    <div class="seg iv-tabs" id="iv_tabs" role="tablist"></div>
-    <div class="iv-tools"><button type="button" class="iv-z" data-ivz="-1" id="iv_zm">−</button><span class="iv-zv" id="iv_zv"></span><button type="button" class="iv-z" data-ivz="1" id="iv_zp">+</button><button type="button" class="iv-z iv-fit" data-ivz="0" id="iv_zf"></button></div>
-    <div class="iv-frame" id="iv_frame"></div>
-    <p class="fine iv-foot"><a class="src-a" id="iv_page" target="_blank" rel="noopener noreferrer"></a></p>
-    <p class="fine" id="iv_note"></p></div></div>`);
-  const ov = $('#ivx');
-  ov.addEventListener('click', e => {
-    if (e.target === ov || e.target.closest('#iv_x')) return ivClose();
-    const b = e.target.closest('[data-ivt]'); if (b){ IV_CUR = b.dataset.ivt; ivRender(); }
-    const zb = e.target.closest('[data-ivz]'); if (zb) ivZoomStep(+zb.dataset.ivz);
-  });
-  window.addEventListener('resize', () => { if (!ov.hidden) ivFit(); });
-  $('#iv_sf').addEventListener('submit', e => { e.preventDefault(); ivSearch($('#iv_q').value); });
-  $('#iv_chips').addEventListener('click', e => { const c = e.target.closest('[data-ivs]'); if (c) ivSearch(c.dataset.ivs); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !ov.hidden) ivClose(); });
-}
-function ivRender(){
-  const tab = IV_TABS.find(x => x.k === IV_CUR) || IV_TABS[0];
-  $('#iv_t').textContent = t('iv_title');
-  $('#iv_q').placeholder = t('iv_search_ph'); $('#iv_q').setAttribute('aria-label', t('iv_search_ph')); $('#iv_go').textContent = t('iv_search');
-  $('#iv_chips').innerHTML = IV_QUICK.map(([k, q]) => `<button type="button" class="as-chip" data-ivs="${asEsc(q)}">${asEsc(t(k))}</button>`).join('');
-  $('#iv_x').setAttribute('aria-label', t('iv_close'));
-  $('#iv_tabs').innerHTML = IV_TABS.map(x => `<button type="button" role="tab" data-ivt="${x.k}" aria-pressed="${x.k === tab.k}" aria-selected="${x.k === tab.k}">${asEsc(t('iv_t_' + x.k))}</button>`).join('');
-  const src = tab.w.replace('{th}', ivTheme()).replace('{lg}', ivLang());
-  const fr = $('#iv_frame');
-  if (fr.dataset.src !== src){
-    fr.dataset.src = src;
-    fr.innerHTML = `<div class="iv-wrap"><iframe src="${src}" title="${asEsc(t('iv_t_' + tab.k))} — Investing.com" referrerpolicy="strict-origin-when-cross-origin" allowtransparency="true"></iframe></div>`;
-  }
-  $('#iv_zf').textContent = t('iv_fit'); $('#iv_zm').setAttribute('aria-label', t('iv_zoomOut')); $('#iv_zp').setAttribute('aria-label', t('iv_zoomIn'));
-  requestAnimationFrame(ivFit);
-  const a = $('#iv_page'); a.href = tab.page; a.textContent = t('iv_open') + ' ↗';
-  $('#iv_note').textContent = t('iv_note');
-}
-function ivOpen(k){ ivEnsure(); if (k) IV_CUR = k; $('#ivx').hidden = false; ivRender(); document.body.classList.add('cp-lock'); setTimeout(() => { const x = $('#iv_x'); if (x) x.focus(); }, 30); }
-function ivClose(){ const o = $('#ivx'); if (!o) return; o.hidden = true; document.body.classList.remove('cp-lock'); const f = $('#iv_frame'); if (f){ f.innerHTML = ''; f.dataset.src = ''; } }
-document.addEventListener('click', e => { const b = e.target.closest('[data-ivx]'); if (b){ e.preventDefault(); ivOpen(b.dataset.ivx === 'fx' ? '' : b.dataset.ivx); } });
-
-/* the widgets are wide tables: lay them out at their natural width and scale them to fill the whole frame */
-var IV_VW = {usd: 650, fx: 650, crypto: 600, cal: 650};
-function ivFitZoom(){ const box = $('#iv_frame'); return box ? Math.min(1.3, Math.max(0.35, box.clientWidth / (IV_VW[IV_CUR] || 650))) : 1; }
-function ivZoomNow(){ const z = (SET.ivZoom || {})[IV_CUR]; return z ? Math.min(2.5, Math.max(0.35, z)) : ivFitZoom(); }
-function ivFit(){
-  const box = $('#iv_frame'), wrap = box && $('.iv-wrap', box), fr = wrap && $('iframe', wrap); if (!fr || !box.clientWidth) return;
-  const vw = IV_VW[IV_CUR] || 650, z = ivZoomNow(), H = box.clientHeight, vh = Math.max(320, Math.floor(H / z));
-  fr.style.width = vw + 'px'; fr.style.height = vh + 'px'; fr.style.transform = 'scale(' + z + ')';
-  wrap.style.width = Math.round(vw * z) + 'px'; wrap.style.height = Math.round(vh * z) + 'px';
-  const zv = $('#iv_zv'); if (zv) zv.textContent = Math.round(z * 100) + '%';
-}
-function ivZoomStep(d){
-  SET.ivZoom = Object.assign({}, SET.ivZoom || {});
-  if (!d) delete SET.ivZoom[IV_CUR]; else SET.ivZoom[IV_CUR] = Math.round(ivZoomNow() * (d > 0 ? 1.15 : 1 / 1.15) * 100) / 100;
-  saveSet(); ivFit();
-}
 
 /* ---- theme gallery (Settings → Display, and the palette button in the header) ---- */
 function skCard(k){
@@ -8379,15 +8436,6 @@ setInterval(() => { if (document.hidden) return; if (tab === 'home') clockRender
 const _alCk = applyLang;
 applyLang = function(){ const r = _alCk.apply(this, arguments); CK_KEY = ''; const b = $('#cstyles'); if (b) b.dataset.k = ''; clockRender(); return r; };
 clockRender();
-
-/* Investing.com search: their pages cannot be shown inside the app, so results open on Investing.com itself */
-var IV_QUICK = [['ivq_usdils', 'USD/ILS'], ['ivq_ta35', 'TA 35'], ['ivq_btc', 'Bitcoin'], ['ivq_gold', 'Gold'], ['ivq_spx', 'S&P 500'], ['ivq_ndx', 'Nasdaq 100'], ['ivq_oil', 'Brent Oil'], ['ivq_eurils', 'EUR/ILS']];
-function ivHost(){ return {he: 'il', ar: 'sa', ru: 'ru', es: 'es', fr: 'fr', de: 'de', it: 'it', 'pt-BR': 'br', 'pt-PT': 'br', tr: 'tr', ja: 'jp', 'zh-CN': 'cn', 'zh-TW': 'hk', ko: 'kr', pl: 'pl', id: 'id', ms: 'my', vi: 'vn', th: 'th', hi: 'in', el: 'gr', sv: 'se', fi: 'fi', nl: 'nl'}[lang] || 'www'; }
-function ivSearch(q){
-  q = String(q || '').trim(); if (!q) { const i = $('#iv_q'); if (i) i.focus(); return; }
-  window.open('https://' + ivHost() + '.investing.com/search/?q=' + encodeURIComponent(q), '_blank', 'noopener');
-}
-
 
 /* ---- tools tabs ---- */
 CALC.expenses = () => null; CALC.clients = () => null;
@@ -8601,7 +8649,7 @@ async function doDelete(){
   let ok = false; try { ok = (await hashPw(pw, u8(rec.salt), rec.iter || 200000)) === rec.hash; } catch (e) {}
   noteFail(nm, ok);
   if (!ok){ delReady(); return delSt('m_bad', 'bad'); }
-  MV.dead = true; clearTimeout(MV.timer); clearInterval(MV.tick);
+  MV.dead = true; clearTimeout(MV.timer); clearInterval(MV.tick); clearInterval(SEC.timer);
   if (IN_CLAUDE){                       // cloud first: if it cannot be removed, nothing is removed
     let fail = false;
     if (await mvCloudInit()){
@@ -8609,8 +8657,9 @@ async function doDelete(){
       try { await mvDoc(nm).delete(); } catch (e) { fail = true; }
       let listed = false;
       try { const q = await col.get(); listed = true;
-        for (const d of (q.docs || [])){ if (String(d.id).indexOf('xfer-') !== 0) continue; const x = (d.data && d.data()) || {};
-          if (x.n === h || d.id === MV.cloudKey || !x.exp || x.exp < now) await col.doc(d.id).delete(); } } catch (e) { if (listed) fail = true; }
+        for (const d of (q.docs || [])){ const id = String(d.id), x = (d.data && d.data()) || {};
+          if (id.indexOf('xfer-') === 0){ if (x.n === h || id === MV.cloudKey || !x.exp || x.exp < now) await col.doc(id).delete(); }
+          else if (id === 'sec-' + h || id === 'kick-' + h || (id.indexOf('sess-') === 0 && x.a === h)) await col.doc(id).delete(); } } catch (e) { if (listed) fail = true; }
       if (!listed && MV.cloudKey){ try { await col.doc(MV.cloudKey).delete(); } catch (e) { fail = true; } }
     }
     if (!fail) try { if (!HD.ready) await hdInit(); if (HD.ready){ const ref = HD.db.doc('claims/' + HD.uid), s = await ref.get(); if (s.exists && (s.data() || {}).handle === nm) await ref.delete(); } } catch (e) { fail = true; }
@@ -8618,7 +8667,7 @@ async function doDelete(){
   }
   const sfx = ':' + ENC_NAME(nm);
   try { RAWLS.removeItem(accKey(nm)); RAWLS.removeItem(encName(nm)); RAWLS.removeItem('fin-fail:' + accKey(nm)); DATA_KEYS.forEach(k => RAWLS.removeItem(k + sfx)); } catch (e) {}
-  try { if ((polLock() || {}).by === nm) RAWLS.removeItem('fin-signup-lock'); } catch (e) {}
+  try { if ((polLock() || {}).by === nm) RAWLS.removeItem('fin-signup-lock'); RAWLS.removeItem(secKey(nm)); } catch (e) {}
   clearSession();
   try { SS.setItem('fin-del-ok', nm); } catch (e) {}
   try { location.reload(); } catch (e) {}
@@ -8657,9 +8706,9 @@ async function rcSetup(mail, mh){
   const kp = await crypto.subtle.generateKey({name: 'RSA-OAEP', modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: 'SHA-256'}, true, ['encrypt', 'decrypt']);
   const pub = b64(await crypto.subtle.exportKey('spki', kp.publicKey)), pk = await crypto.subtle.exportKey('pkcs8', kp.privateKey);
   const sl = rnd(16), iv = rnd(12), ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, await rcAes(code, sl), pk);
-  rec.rcv = {v: 1, hint: rcMask(mail), mh: mh || '', pub, s: b64(sl), iv: b64(iv), ct: b64(ct), wk: await rcWrap(pub, raw), ok: 0, at: Date.now()};
+  rec.rcv = {v: 1, hint: rcMask(mail), mh: mh || '', mhv: 2, pub, s: b64(sl), iv: b64(iv), ct: b64(ct), wk: await rcWrap(pub, raw), ok: 0, at: Date.now()};
   RAWLS.setItem(accKey(FUSER), JSON.stringify(rec));
-  SET.rcMail = mail; saveSet(); persistNow();
+  SET.rcMail = mail; saveSet(); persistNow(); secLog(FUSER, 'mail');
   RC.code = code; RC.mail = mail; RC.edit = false;
   return code;
 }
@@ -8801,6 +8850,7 @@ async function rcRecover(){
     RAWLS.setItem(accKey(nm), JSON.stringify(rec));
     await sealMap(nm, raw2, map);
     try { SS.setItem('fin-rc-ok', '1'); } catch (e) {}
+    secLog(nm, 'rc');
     rcRStSet('rc_done', 'ok');
     await unlockSession(nm, p1, rec, {});
   } finally { RC.busy = false; }
@@ -8939,13 +8989,9 @@ try { for (let i = 0; i < RAWLS.length; i++){ const k = RAWLS.key(i) || ''; if (
 
 /* ---- one email, one account. Only a slow one-way fingerprint of the address is compared, never the address:
    on this device against every account, and in Claude against everyone's username record. */
-function rcNorm(m){
-  let [u, d] = String(m || '').trim().toLowerCase().split('@'); if (!u || !d) return String(m || '').trim().toLowerCase();
-  u = u.split('+')[0];
-  if (d === 'gmail.com' || d === 'googlemail.com'){ u = u.replace(/\./g, ''); d = 'gmail.com'; }
-  return u + '@' + d;
-}
-async function rcMailHash(m){ return b64(await pbk(rcNorm(m), new TextEncoder().encode('fincalc-mail-v1'), 150000, 256)); }
+/* the exact address, ignoring only upper/lower case: dots and +tags make a different address */
+function rcNorm(m){ return String(m || '').trim().toLowerCase(); }
+async function rcMailHash(m){ return b64(await pbk(rcNorm(m), new TextEncoder().encode('fincalc-mail-v2'), 150000, 256)); }
 function rcLocalOwner(mh){
   try { for (let i = 0; i < RAWLS.length; i++){ const k = RAWLS.key(i) || ''; if (k.indexOf('fin-acc:') !== 0) continue;
     const r = JSON.parse(RAWLS.getItem(k) || 'null'); if (r && r.name !== FUSER && r.rcv && r.rcv.mh && r.rcv.mh === mh) return r.name; } } catch (e) {}
@@ -8983,14 +9029,268 @@ async function rcUnclaimMail(){
 /* accounts that set an email before this change get their fingerprint on the next sign-in */
 if (FUSER) setTimeout(async () => {
   try {
-    const r = getAcc(FUSER); if (!r || !r.rcv || r.rcv.mh || !SET.rcMail) return;
+    const r = getAcc(FUSER); if (!r || !r.rcv || (r.rcv.mh && r.rcv.mhv === 2) || !SET.rcMail) return;
     const mh = await rcMailHash(SET.rcMail);
     if (rcLocalOwner(mh)) return;
     if ((await rcMailFree(mh)) !== 'ok') return;
     if ((await rcClaimMail(mh)) === 'taken') return;
-    const r2 = getAcc(FUSER); if (!r2 || !r2.rcv) return; r2.rcv.mh = mh; RAWLS.setItem(accKey(FUSER), JSON.stringify(r2)); persistNow();
+    const r2 = getAcc(FUSER); if (!r2 || !r2.rcv) return; r2.rcv.mh = mh; r2.rcv.mhv = 2; RAWLS.setItem(accKey(FUSER), JSON.stringify(r2)); persistNow();
   } catch (e) {}
 }, 3500);
+
+/* ---- loan comparison: add as many offers as you like, remove them, and name each one ---- */
+const LC_MAX = 12;
+const LC_F = [['amt', 'f_loanAmt', 'cur'], ['rate', 'f_rate', '%'], ['yrs', 'f_term', 'yrs'], ['fee', 'f_lcFee', 'cur'], ['pct', 'f_lcPct', '%'], ['mon', 'f_lcMon', 'cur']];
+function lcSeed(){
+  let a = {n: '', amt: 200000, rate: 5.5, yrs: 5, fee: 0, pct: 0, mon: 0}, b = {n: '', amt: 200000, rate: 4.9, yrs: 5, fee: 1500, pct: 0.5, mon: 10};
+  try { const o = JSON.parse(LS.getItem('fin-vals') || 'null');     // keep what was typed in the old two-offer form
+    if (o && o.lc_aamt != null){ const g = (p, k) => +o['lc_' + p + k] || 0;
+      a = {n: '', amt: g('a', 'amt'), rate: g('a', 'rate'), yrs: g('a', 'yrs'), fee: g('a', 'fee'), pct: g('a', 'pct'), mon: g('a', 'mon')};
+      b = {n: '', amt: g('b', 'amt'), rate: g('b', 'rate'), yrs: g('b', 'yrs'), fee: g('b', 'fee'), pct: g('b', 'pct'), mon: g('b', 'mon')}; } } catch (e) {}
+  return [a, b];
+}
+function lcList(){ if (!Array.isArray(SET.lcOffers) || !SET.lcOffers.length) SET.lcOffers = lcSeed(); return SET.lcOffers; }
+function lcName(o, i){ return String((o && o.n) || '').trim() || t('lc_def', {n: i + 1}); }
+var LC_T = null;
+function lcSave(){ clearTimeout(LC_T); LC_T = setTimeout(saveSet, 300); }
+function lcRender(){
+  const box = $('#lc_box'); if (!box) return;
+  const L = lcList();
+  box.innerHTML = L.map((o, i) => `<div class="lc-card" data-lci="${i}">
+      <div class="lc-top"><span class="lc-num" aria-hidden="true">${i + 1}</span><input class="lc-name" type="text" maxlength="30" dir="auto" data-lci="${i}" data-lck="n" value="${asEsc(o.n || '')}" placeholder="${asEsc(t('lc_def', {n: i + 1}) + ' · ' + t('lc_namePh'))}" aria-label="${asEsc(t('lc_name') + ' ' + (i + 1))}">
+        ${L.length > 1 ? `<button type="button" class="lc-del" data-lcdel="${i}" aria-label="${asEsc(t('lc_del', {x: lcName(o, i)}))}">✕</button>` : ''}</div>
+      <div class="fields">${LC_F.map(([k, lab, u]) => `<div class="field"><span class="lc-l" aria-hidden="true">${asEsc(t(lab))}</span><div class="control"><input type="number" inputmode="decimal" step="any" data-lci="${i}" data-lck="${k}" value="${o[k] == null ? '' : o[k]}" aria-label="${asEsc(t(lab) + ' · ' + lcName(o, i))}">${unitHTML(u)}</div></div>`).join('')}</div>
+    </div>`).join('') +
+    (L.length < LC_MAX ? `<button type="button" class="lc-add" id="lc_add"><span aria-hidden="true">＋</span> ${asEsc(t('lc_add'))}</button>` : `<p class="fine">${asEsc(t('lc_max', {n: LC_MAX}))}</p>`) +
+    `<p class="fine lc-hint">${asEsc(t('lc_hint'))}</p>`;
+  $$('[data-i]', box).forEach(el => { el.textContent = t(el.dataset.i); });
+}
+document.addEventListener('input', e => {
+  const el = e.target; if (!el.dataset || el.dataset.lck == null || !el.closest('#lc_box')) return;
+  const L = lcList(), o = L[+el.dataset.lci]; if (!o) return;
+  o[el.dataset.lck] = el.dataset.lck === 'n' ? el.value.slice(0, 30) : (el.value === '' ? 0 : +el.value);
+  lcSave();
+}, true);
+document.addEventListener('click', e => {
+  if (e.target.closest('#lc_add')){
+    const L = lcList(); if (L.length >= LC_MAX) return;
+    const last = L[L.length - 1] || {}; L.push(Object.assign({}, last, {n: ''}));
+    saveSet(); lcRender(); calc(tab);
+    const ins = $$('#lc_box .lc-name'), n = ins[ins.length - 1]; if (n){ n.focus(); n.scrollIntoView({block: 'center', behavior: SET.motion === 'reduce' ? 'auto' : 'smooth'}); }
+    return;
+  }
+  const d = e.target.closest('[data-lcdel]');
+  if (d){ const L = lcList(); if (L.length <= 1) return; L.splice(+d.dataset.lcdel, 1); saveSet(); lcRender(); calc(tab); const a = $('#lc_add') || $('#lc_box .lc-name'); if (a) a.focus(); }
+});
+const _alLc = applyLang;
+applyLang = function(){ const r = _alLc.apply(this, arguments); lcRender(); return r; };
+lcRender();
+if (tab === 'loancmp') calc(tab);
+
+/* ---- split bill: a list of people with names; each mode reads its own value ---- */
+const SP_MAX = 20;
+const SP_KEY = {inc: ['inc', 'sp_vInc', 'cur'], pct: ['pct', 'sp_vPct', '%'], sh: ['sh', 'sp_vSh', ''], ex: ['ex', 'sp_vEx', 'cur'], paid: ['paid', 'sp_vPaid', 'cur']};
+function spSeed(){
+  let ia = 15000, ib = 10000;
+  try { const o = JSON.parse(LS.getItem('fin-vals') || 'null'); if (o && o.sp_ia != null){ ia = +o.sp_ia || 0; ib = +o.sp_ib || 0; } } catch (e) {}
+  return [{n: '', inc: ia, pct: 50, sh: 1, ex: 0, paid: 600}, {n: '', inc: ib, pct: 50, sh: 1, ex: 0, paid: 0}];
+}
+function spList(){ if (!Array.isArray(SET.spPeople) || SET.spPeople.length < 2) SET.spPeople = spSeed(); return SET.spPeople; }
+function spName(p, i){ return String((p && p.n) || '').trim() || t('sp_person', {n: i + 1}); }
+var SP_T = null;
+function spRender(){
+  const box = $('#sp_box'); if (!box) return;
+  const mode = ($('#sp_mode') || {}).value || 'eq', K = SP_KEY[mode]; if (!K){ box.innerHTML = ''; return; }
+  const [k, lab, u] = K, P = spList();
+  box.innerHTML = P.map((p, i) => `<div class="sp-row" data-spi="${i}">
+      <span class="lc-num" aria-hidden="true">${i + 1}</span>
+      <input class="lc-name" type="text" maxlength="24" dir="auto" data-spi="${i}" data-spk="n" value="${asEsc(p.n || '')}" placeholder="${asEsc(t('sp_person', {n: i + 1}))}" aria-label="${asEsc(t('sp_name') + ' ' + (i + 1))}">
+      <div class="control sp-v"><input type="number" inputmode="decimal" step="any" data-spi="${i}" data-spk="${k}" value="${p[k] == null ? '' : p[k]}" aria-label="${asEsc(t(lab) + ' · ' + spName(p, i))}">${unitHTML(u)}</div>
+      ${P.length > 2 ? `<button type="button" class="lc-del" data-spdel="${i}" aria-label="${asEsc(t('lc_del', {x: spName(p, i)}))}">✕</button>` : '<span class="sp-gap"></span>'}
+    </div>`).join('') +
+    `<p class="sp-head">${asEsc(t(lab))}</p>` +
+    (P.length < SP_MAX ? `<button type="button" class="lc-add" id="sp_add"><span aria-hidden="true">＋</span> ${asEsc(t('sp_add'))}</button>` : `<p class="fine">${asEsc(t('sp_max', {n: SP_MAX}))}</p>`) +
+    `<p class="fine lc-hint">${asEsc(t('sp_hint_' + mode))}</p>`;
+  const head = $('.sp-head', box); if (head) box.insertBefore(head, box.firstChild);
+  $$('[data-i]', box).forEach(el => { el.textContent = t(el.dataset.i); });
+}
+document.addEventListener('input', e => {
+  const el = e.target; if (!el.dataset || el.dataset.spk == null || !el.closest('#sp_box')) return;
+  const o = spList()[+el.dataset.spi]; if (!o) return;
+  o[el.dataset.spk] = el.dataset.spk === 'n' ? el.value.slice(0, 24) : (el.value === '' ? 0 : +el.value);
+  clearTimeout(SP_T); SP_T = setTimeout(saveSet, 300);
+}, true);
+document.addEventListener('change', e => { if (e.target.id === 'sp_mode') spRender(); }, true);
+document.addEventListener('click', e => {
+  if (e.target.closest('#sp_add')){
+    const P = spList(); if (P.length >= SP_MAX) return;
+    P.push({n: '', inc: 10000, pct: 0, sh: 1, ex: 0, paid: 0}); saveSet(); spRender(); calc(tab);
+    const ins = $$('#sp_box .lc-name'), n = ins[ins.length - 1]; if (n){ n.focus(); n.scrollIntoView({block: 'center', behavior: SET.motion === 'reduce' ? 'auto' : 'smooth'}); }
+    return;
+  }
+  const d = e.target.closest('[data-spdel]');
+  if (d){ const P = spList(); if (P.length <= 2) return; P.splice(+d.dataset.spdel, 1); saveSet(); spRender(); calc(tab); const a = $('#sp_add') || $('#sp_box .lc-name'); if (a) a.focus(); }
+});
+const _alSp = applyLang;
+applyLang = function(){ const r = _alSp.apply(this, arguments); spRender(); return r; };
+spRender();
+if (tab === 'split') calc(tab);
+
+/* ---- security: devices signed in to the account and sign-in attempts, live.
+   No tracking: no location, no IP address, no fixed device ID. A signed-in tab gets a random session id that dies
+   with the session, and only the device type and browser are kept, in the account owner's private space. */
+const SEC_ONLINE = 3 * 60000, SEC_KEEP = 14 * 864e5;
+var SEC = {sid: '', timer: null, devs: null, cloudEv: [], col: null, h: '', known: '', alertT: Date.now(), summary: false, tick: null};
+function secKey(n){ return 'fin-sec:' + accKey(n); }
+function secGet(n){ try { const o = JSON.parse(RAWLS.getItem(secKey(n)) || 'null'); return o && Array.isArray(o.ev) ? o : {ev: [], seen: 0}; } catch (e) { return {ev: [], seen: 0}; } }
+function devKind(){
+  const ua = navigator.userAgent || '';
+  if (/iPad|Tablet|PlayBook|Silk/i.test(ua) || (/Android/i.test(ua) && !/Mobile/i.test(ua)) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1)) return 'tablet';
+  if (/Mobi|iPhone|iPod|Android/i.test(ua)) return 'phone';
+  return 'computer';
+}
+function devBrowser(){
+  const ua = navigator.userAgent || '';
+  return /Edg\//.test(ua) ? 'Edge' : /OPR\/|Opera/.test(ua) ? 'Opera' : /SamsungBrowser/.test(ua) ? 'Samsung Internet' : /FxiOS|Firefox/.test(ua) ? 'Firefox' : /CriOS|Chrome/.test(ua) ? 'Chrome' : /Safari/.test(ua) ? 'Safari' : '';
+}
+function devLabel(k, b, app){ return ({phone: '📱', tablet: '📟', computer: '💻'}[k] || '📱') + ' ' + t('dev_' + (k || 'phone')) + (app === 'claude' ? ' · Claude' : b ? ' · ' + b : ''); }
+function secLog(n, k){
+  if (!n) return;
+  const ev = {t: Date.now(), k, d: devKind(), b: devBrowser(), app: IN_CLAUDE ? 'claude' : 'site'};
+  try { const s = secGet(n); s.ev.push(ev); s.ev = s.ev.slice(-40); RAWLS.setItem(secKey(n), JSON.stringify(s)); } catch (e) {}
+  if (IN_CLAUDE) (async () => { try { if (!(await mvCloudInit())) return; const ref = MV.db.collection('data/users/' + MV.uid).doc('sec-' + txHash(String(n).toLowerCase()));
+    const cur = await ref.get(), list = ((cur.exists && (cur.data() || {}).ev) || []).concat([ev]).slice(-40); await ref.set({ev: list}); } catch (e) {} })();
+}
+const _nfSec = noteFail;
+noteFail = function(n, ok){ _nfSec.apply(this, arguments); if (!ok && n && (getAcc(n) || SEC.known === n)) secLog(n, 'fail'); };
+const _mvrSec = mvRestore;
+mvRestore = async function(pkg){ SEC.known = pkg && pkg.name || ''; try { return await _mvrSec.apply(this, arguments); } finally { SEC.known = ''; } };
+const _usSec = unlockSession;
+unlockSession = async function(name){ secLog(name, 'in'); try { SS.setItem('fin-justin', '1'); SS.removeItem('fin-sid'); SS.removeItem('fin-sst'); } catch (e) {} return _usSec.apply(this, arguments); };
+function secEvents(){
+  if (!FUSER || !SEC) return [];
+  const seen = {}, out = [];
+  secGet(FUSER).ev.concat(SEC.cloudEv || []).forEach(e => { const k = e.t + '|' + e.k; if (!seen[k]){ seen[k] = 1; out.push(e); } });
+  return out.sort((a, b) => b.t - a.t);
+}
+function secUnseen(){ if (!FUSER) return 0; const seen = secGet(FUSER).seen || 0; return secEvents().filter(e => e.k === 'fail' && e.t > seen).length; }
+function secMarkSeen(){ if (!FUSER) return; try { const s = secGet(FUSER); s.seen = Date.now(); RAWLS.setItem(secKey(FUSER), JSON.stringify(s)); } catch (e) {} const b = $('#sec_bar'); if (b) b.remove(); secHub(); }
+function secAgo(ts){
+  const d = Math.round((ts - Date.now()) / 1000), a = Math.abs(d);
+  try { const rf = new Intl.RelativeTimeFormat(locOf(), {numeric: 'auto'});
+    if (a < 45) return t('sec_now'); if (a < 3600) return rf.format(Math.round(d / 60), 'minute'); if (a < 86400) return rf.format(Math.round(d / 3600), 'hour'); if (a < 7 * 86400) return rf.format(Math.round(d / 86400), 'day'); } catch (e) {}
+  try { return new Date(ts).toLocaleString(locOf(), {dateStyle: 'short', timeStyle: 'short'}); } catch (e) { return new Date(ts).toLocaleString(); }
+}
+function secHub(){
+  const b = $('#sh_b_security'); if (!b || !SEC) return;
+  const n = secUnseen(), online = (SEC.devs || []).filter(d => Date.now() - (d.seen || 0) < SEC_ONLINE).length;
+  b.className = 'sh-badge' + (n ? ' alert' : online > 1 ? ' cnt' : '');
+  b.textContent = n ? '!' : online > 1 ? String(online) : '';
+}
+function secAlert(n){
+  if (!n) return;
+  let bar = $('#sec_bar');
+  if (!bar){ bar = document.createElement('div'); bar.id = 'sec_bar'; bar.className = 'sec-bar'; bar.setAttribute('role', 'alert'); document.body.appendChild(bar); }
+  bar.innerHTML = `<span>⚠️ ${asEsc(t(n === 1 ? 'sec_alert1' : 'sec_alert', {n}))}</span><button type="button" class="sec-bar-go" id="sec_bar_go">${asEsc(t('sec_details'))}</button><button type="button" class="sec-bar-x" id="sec_bar_x" aria-label="${asEsc(t('del_cancel'))}">×</button>`;
+}
+function secCheckNew(){
+  const fresh = secEvents().filter(e => e.k === 'fail' && e.t > SEC.alertT);
+  if (fresh.length){ SEC.alertT = Math.max(...fresh.map(e => e.t)); toast(t('sec_alertNow')); secAlert(secUnseen()); }
+  secHub(); secRender();
+}
+function secSummary(){
+  if (SEC.summary) return; let flag = false; try { flag = !!SS.getItem('fin-justin'); } catch (e) {} if (!flag) return;
+  const ev = secEvents(), ins = ev.filter(e => e.k === 'in');
+  const prevIn = ins[1] ? ins[1].t : 0, curIn = ins[0] ? ins[0].t : Date.now();
+  const n = ev.filter(e => e.k === 'fail' && e.t > prevIn && e.t <= curIn && e.t > (secGet(FUSER).seen || 0)).length;
+  if (n) secAlert(n);
+}
+function secRender(){
+  const box = $('#sec_box'); if (!box || !SEC) return;
+  if (!FUSER){ box.innerHTML = `<p class="fine">${asEsc(t('sec_needLogin'))}</p><div class="btnrow"><button type="button" class="gold-btn" data-scat="account">${asEsc(t('sec_toAcc'))}</button></div>`; return; }
+  const rec = getAcc(FUSER) || {}, rv = rec.rcv, ev = secEvents(), now = Date.now();
+  const fails = ev.filter(e => e.k === 'fail'), f24 = fails.filter(e => now - e.t < 864e5), lk = lockLeft(FUSER);
+  const devs = IN_CLAUDE && SEC.devs ? SEC.devs.filter(d => now - (d.seen || 0) < SEC_KEEP).sort((a, b) => (b.id === SEC.sid) - (a.id === SEC.sid) || b.seen - a.seen) : null;
+  const online = devs ? devs.filter(d => now - (d.seen || 0) < SEC_ONLINE).length : 1;
+  const mailOk = !!(rv && rv.ok), good = mailOk && !f24.length;
+  const chk = (ok, warn, txt, act) => `<li class="sec-c ${ok ? 's-ok' : warn ? 's-warn' : 's-bad'}"><b aria-hidden="true">${ok ? '✓' : warn ? '!' : '✗'}</b><span>${asEsc(txt)}</span>${act || ''}</li>`;
+  let h = '';
+  if (f24.length) h += `<div class="sec-alert" role="alert">⚠️ ${asEsc(t(f24.length === 1 ? 'sec_f241' : 'sec_f24', {n: f24.length, w: secAgo(f24[0].t)}))}</div>`;
+  if (lk > 0) h += `<div class="sec-alert">🔒 ${asEsc(t('sec_locked', {s: lk}))}</div>`;
+  h += `<div class="sec-score ${good ? 's-ok' : 's-warn'}"><span class="sec-shield" aria-hidden="true">🛡️</span><div><b>${asEsc(t(good ? 'sec_high' : 'sec_mid'))}</b><small>${asEsc(t(good ? 'sec_highS' : 'sec_midS'))}</small></div></div>
+    <ul class="sec-list">${chk(true, false, t('sec_cPw'))}${chk(mailOk, rv && !rv.ok, t(mailOk ? 'sec_cMailOk' : rv ? 'sec_cMailWait' : 'sec_cMailNo'), mailOk ? '' : `<button type="button" class="btn sec-mini" id="sec_toRc">${asEsc(t('sec_fix'))}</button>`)}${chk(!f24.length, true, f24.length ? t(f24.length === 1 ? 'sec_cFails1' : 'sec_cFails', {n: f24.length}) : t('sec_cNoFails'))}${chk(true, false, t('sec_cLock'))}</ul>`;
+  h += `<h4 class="sec-h">${asEsc(t('sec_devT'))} <span class="sec-live" aria-hidden="true"></span><span class="sec-live-t">${asEsc(t('sec_live'))}</span></h4>`;
+  if (devs){
+    h += `<p class="sec-count"><b>${online}</b> ${asEsc(t('sec_onlineN'))} · <b>${devs.length}</b> ${asEsc(t('sec_signedN'))}</p><ul class="sec-devs">` + devs.map(d => {
+      const me = d.id === SEC.sid, on = now - (d.seen || 0) < SEC_ONLINE;
+      return `<li class="sec-dev${me ? ' me' : ''}"><div><b>${asEsc(devLabel(d.k, d.b, d.app))}</b><small>${asEsc(me ? t('sec_thisDev') : on ? t('sec_activeNow') : t('sec_lastSeen', {w: secAgo(d.seen)}))} · ${asEsc(t('sec_since', {w: secAgo(d.st || d.seen)}))}</small></div>${on ? '<i class="sec-dot" aria-hidden="true"></i>' : ''}${me ? '' : `<button type="button" class="btn danger sec-mini" data-kick="${asEsc(d.id)}">${asEsc(t('sec_kick'))}</button>`}</li>`; }).join('') + '</ul>';
+    if (devs.length > 1) h += `<div class="btnrow"><button type="button" class="btn danger" id="sec_kickAll">${asEsc(t('sec_kickAll'))}</button></div>`;
+  } else if (IN_CLAUDE){ h += `<p class="fine">${asEsc(t('m_wait'))}</p>`; }
+  else h += `<ul class="sec-devs"><li class="sec-dev me"><div><b>${asEsc(devLabel(devKind(), devBrowser(), 'site'))}</b><small>${asEsc(t('sec_thisDev'))}</small></div><i class="sec-dot" aria-hidden="true"></i></li></ul><p class="fine">${asEsc(t('sec_siteOnly'))}</p>`;
+  h += `<h4 class="sec-h">${asEsc(t('sec_actT'))}</h4>`;
+  const icon = {fail: '❌', in: '✅', rc: '🔑', pw: '🔒', mail: '📧', kick: '⛔'};
+  h += ev.length ? `<ul class="sec-act">${ev.slice(0, 15).map(e => `<li class="${e.k === 'fail' ? 's-bad' : ''}"><span aria-hidden="true">${icon[e.k] || '•'}</span><div><b>${asEsc(t('sec_ev_' + e.k))}</b><small>${asEsc(devLabel(e.d, e.b, e.app))} · ${asEsc(secAgo(e.t))}</small></div></li>`).join('')}</ul>
+    <div class="btnrow"><button type="button" class="btn" id="sec_clear">${asEsc(t('sec_clear'))}</button></div>` : `<p class="fine">${asEsc(t('sec_noAct'))}</p>`;
+  h += `<p class="fine sec-priv">🔒 ${asEsc(t('sec_privacy'))}</p><p class="gk-st" id="sec_st" role="status" aria-live="polite"></p>`;
+  box.innerHTML = h;
+}
+async function secKick(only){
+  if (!SEC.col) return;
+  try { await SEC.col.doc('kick-' + SEC.h).set({at: Date.now(), by: SEC.sid, only: only || ''});
+    if (only) await SEC.col.doc('sess-' + only).delete(); else for (const d of (SEC.devs || [])) if (d.id !== SEC.sid) await SEC.col.doc('sess-' + d.id).delete();
+    secLog(FUSER, 'kick'); toast(t(only ? 'sec_kickedOne' : 'sec_kickedAll'));
+  } catch (e) { toast(t('pol_fail')); }
+}
+async function secKicked(){
+  clearInterval(SEC.timer);
+  try { await persistNow0(); } catch (e) {}
+  try { if (SEC.col) await SEC.col.doc('sess-' + SEC.sid).delete(); } catch (e) {}
+  clearSession(); try { SS.removeItem('fin-sid'); SS.removeItem('fin-sst'); SS.setItem('fin-kicked', '1'); } catch (e) {}
+  try { location.reload(); } catch (e) {}
+}
+async function secStart(){
+  secRender();
+  if (!FUSER || !IN_CLAUDE || !(await mvCloudInit())) { secHub(); return; }
+  let sid = ''; try { sid = SS.getItem('fin-sid') || ''; if (!sid){ sid = Array.from(rnd(9), b => b.toString(16).padStart(2, '0')).join(''); SS.setItem('fin-sid', sid); SS.setItem('fin-sst', String(Date.now())); } } catch (e) {}
+  SEC.sid = sid; SEC.h = txHash(FUSER.toLowerCase()); SEC.col = MV.db.collection('data/users/' + MV.uid);
+  const st = +(SS.getItem('fin-sst') || Date.now());
+  const beat = async () => { if (document.hidden || MV.dead || !FUSER) return; try { await SEC.col.doc('sess-' + SEC.sid).set({a: SEC.h, k: devKind(), b: devBrowser(), app: 'claude', st, seen: Date.now()}); } catch (e) {} };
+  await beat(); SEC.timer = setInterval(beat, 60000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) beat(); });
+  try { SEC.col.where('a', '==', SEC.h).onSnapshot(q => {
+    SEC.devs = (q.docs || []).filter(d => String(d.id).indexOf('sess-') === 0).map(d => Object.assign({}, d.data() || {}, {id: String(d.id).slice(5)}));
+    if (SEC.sid && !SEC.devs.some(d => d.id === SEC.sid)) SEC.devs.push({id: SEC.sid, k: devKind(), b: devBrowser(), app: 'claude', st, seen: Date.now()});
+    SEC.devs.filter(d => Date.now() - (d.seen || 0) > SEC_KEEP).forEach(d => { try { SEC.col.doc('sess-' + d.id).delete(); } catch (e) {} });
+    secHub(); secRender(); }, () => {}); } catch (e) {}
+  try { SEC.col.doc('kick-' + SEC.h).onSnapshot(d => { const k = d && d.exists ? (d.data() || {}) : null; if (k && +k.at > st && k.by !== SEC.sid && (!k.only || k.only === SEC.sid)) secKicked(); }, () => {}); } catch (e) {}
+  try { SEC.col.doc('sec-' + SEC.h).onSnapshot(d => { SEC.cloudEv = (d && d.exists && (d.data() || {}).ev) || []; secSummary(); SEC.summary = true; secCheckNew(); }, () => {}); } catch (e) {}
+}
+window.addEventListener('storage', e => { if (FUSER && e.key === secKey(FUSER)) secCheckNew(); });
+document.addEventListener('click', e => {
+  const el = e.target;
+  if (el.closest('#sec_bar_x')){ const b = $('#sec_bar'); if (b) b.remove(); return; }
+  if (el.closest('#sec_bar_go')){ const ts = $('#tab-settings'); if (ts) ts.click(); setCat('security'); secMarkSeen(); secRender(); return; }
+  if (el.closest('#sec_toRc')){ setCat('account'); const d = $('#rc_d'); if (d){ d.open = true; rcRender(); setTimeout(() => d.scrollIntoView({block: 'start', behavior: SET.motion === 'reduce' ? 'auto' : 'smooth'}), 60); } return; }
+  const k = el.closest('[data-kick]');
+  if (k){ if (!k.dataset.sure){ k.dataset.sure = '1'; k.textContent = t('b_sure'); return; } secKick(k.dataset.kick); return; }
+  const ka = el.closest('#sec_kickAll');
+  if (ka){ if (!ka.dataset.sure){ ka.dataset.sure = '1'; ka.textContent = t('b_sure'); return; } secKick(''); return; }
+  const cl = el.closest('#sec_clear');
+  if (cl){ if (!cl.dataset.sure){ cl.dataset.sure = '1'; cl.textContent = t('b_sure'); return; }
+    try { const s = secGet(FUSER); s.ev = []; RAWLS.setItem(secKey(FUSER), JSON.stringify(s)); } catch (er) {}
+    if (SEC.col){ SEC.cloudEv = []; try { SEC.col.doc('sec-' + SEC.h).set({ev: []}); } catch (er) {} }
+    secRender(); secHub(); return; }
+  if (el.closest('.sh-row[data-scat="security"]')) setTimeout(() => { secMarkSeen(); secRender(); }, 50);
+});
+const _alSec = applyLang;
+applyLang = function(){ const r = _alSec.apply(this, arguments); secRender(); secHub(); return r; };
+SEC.tick = setInterval(() => { if (SCAT === 'security' && !document.hidden) secRender(); }, 30000);
+try { if (SS.getItem('fin-kicked')){ SS.removeItem('fin-kicked'); setTimeout(() => toast(t('sec_youKicked')), 700); } } catch (e) {}
+if (FUSER){ secSummary(); if (!IN_CLAUDE){ SEC.summary = true; } }
+secStart().then(() => { try { SS.removeItem('fin-justin'); } catch (e) {} }, () => {});
+/* signing out ends this session's record */
+const _loSec = logoutNow;
+logoutNow = async function(){ clearInterval(SEC.timer); try { if (SEC.col && SEC.sid) await SEC.col.doc('sess-' + SEC.sid).delete(); } catch (e) {} try { SS.removeItem('fin-sid'); SS.removeItem('fin-sst'); } catch (e) {} return _loSec.apply(this, arguments); };
 
 applyLang(false);
 activate(tab);
