@@ -612,6 +612,12 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
 .perm.view .perm-dot{background:#6FA8FF}
 .hd-live.ok{color:#2fbf86}.hd-live.bad{color:#e0675f}
 
+.gk-st{margin:4px 0 8px;font-size:.92rem;line-height:1.5;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--g1)}
+.gk-st:empty{display:none}
+.gk-st.ok{border-color:rgba(47,191,134,.5)}.gk-st.ok b{color:#2fbf86}
+.gk-st.bad{border-color:rgba(229,83,75,.5)}.gk-st.bad b{color:#e5534b}
+.gk-st.wait{opacity:.8}
+
 </style>
 </head>
 <body>
@@ -2168,6 +2174,31 @@ Object.assign(T, {
   as_err:['העוזר לא הצליח לענות ({e}).','لم يتمكن المساعد من الإجابة ({e}).','The assistant could not answer ({e}).'],
 });
 Object.assign(T, {as_badkey:['מפתח ה-Gemini לא התקבל. בדקו שהעתקתם אותו במלואו בהגדרות ← עוזר AI.','لم يُقبل مفتاح Gemini. تحقّق من نسخه كاملًا في الإعدادات ← مساعد الذكاء الاصطناعي.','The Gemini key was not accepted. Check you copied all of it in Settings → AI assistant.']});
+Object.assign(T, {
+  gk_ok:['אישור ובדיקת המפתח','تأكيد المفتاح وفحصه','Approve & test key'],
+  gk_del:['מחיקת המפתח','حذف المفتاح','Remove key'],
+  gk_wait:['בודק את המפתח מול Google…','جارٍ فحص المفتاح لدى Google…','Checking the key with Google…'],
+  gk_okT:['המפתח אושר','تمت الموافقة على المفتاح','Key approved'],
+  gk_okS:['העוזר וההסברים עובדים עם Gemini בדפדפן הזה.','المساعد والشروحات تعمل مع Gemini في هذا المتصفح.','The assistant and explanations use Gemini in this browser.'],
+  gk_valid:['המפתח תקין','المفتاح صالح','The key is valid'],
+  gk_saved:['המפתח נשמר. לחצו "אישור ובדיקת המפתח" כדי לוודא שהוא עובד.','تم حفظ المفتاح. اضغط "تأكيد المفتاح وفحصه" للتأكد من أنه يعمل.','Key saved. Tap "Approve & test key" to make sure it works.'],
+  gk_deleted:['המפתח נמחק מהדפדפן הזה.','تم حذف المفتاح من هذا المتصفح.','The key was removed from this browser.'],
+  gk_bad:['המפתח עדיין לא עובד:','المفتاح لا يعمل بعد:','The key is not working yet:'],
+  gk_fail:['Gemini לא ענה:','لم يُجب Gemini:','Gemini did not answer:'],
+  gk_claude:['העוזר פעיל כאן עם Claude','المساعد يعمل هنا مع Claude','The assistant runs here with Claude'],
+  gk_claudeS:['בתוך Claude לא צריך מפתח. מפתח Gemini נדרש רק באתר.','داخل Claude لا حاجة لمفتاح. مفتاح Gemini مطلوب فقط في الموقع.','No key is needed inside Claude. A Gemini key is only needed on the website.'],
+  gk_eNone:['הדביקו קודם את המפתח בשדה (הוא מתחיל ב-AIza).','الصق المفتاح في الحقل أولًا (يبدأ بـ AIza).','Paste the key in the field first (it starts with AIza).'],
+  gk_eKey:['Google לא מכיר את המפתח. העתיקו אותו שוב במלואו מ-Google AI Studio (מתחיל ב-AIza, בלי רווחים).','لا تتعرّف Google على المفتاح. انسخه مجددًا كاملًا من Google AI Studio (يبدأ بـ AIza، بلا مسافات).','Google does not recognise this key. Copy it again in full from Google AI Studio (starts with AIza, no spaces).'],
+  gk_eRef:['המפתח מוגבל לאתרים מסוימים. בהגדרות המפתח ב-Google הסירו את ההגבלה או הוסיפו את {h}.','المفتاح مقيّد بمواقع معيّنة. في إعدادات المفتاح لدى Google أزل القيد أو أضف {h}.','The key is restricted to certain websites. In the key settings at Google, remove the restriction or add {h}.'],
+  gk_eOff:['ה-Gemini API לא מופעל בפרויקט של המפתח. צרו מפתח חדש ב-Google AI Studio בכפתור Create API key.','واجهة Gemini API غير مفعّلة في مشروع المفتاح. أنشئ مفتاحًا جديدًا في Google AI Studio عبر زر Create API key.','The Gemini API is not enabled for this key\'s project. Create a new key in Google AI Studio with "Create API key".'],
+  gk_eQuota:['המכסה החינמית של Google נגמרה כרגע. נסו שוב בעוד דקה, או מחר אם נגמרה המכסה היומית.','نفدت حصة Google المجانية حاليًا. حاول بعد دقيقة، أو غدًا إذا نفدت الحصة اليومية.','Google\'s free quota is used up for now. Try again in a minute, or tomorrow if the daily quota ran out.'],
+  gk_eGeo:['Google לא מאפשר את השירות מהמיקום הנוכחי.','لا تتيح Google الخدمة من الموقع الحالي.','Google does not offer this service from your current location.'],
+  gk_eNet:['אין חיבור ל-Google כרגע. בדקו את האינטרנט, או כבו חוסם פרסומות או VPN שחוסם את הכתובת.','لا يوجد اتصال بـ Google حاليًا. تحقّق من الإنترنت أو أوقف مانع الإعلانات أو VPN الذي يحجب العنوان.','Cannot reach Google right now. Check your connection, or turn off an ad blocker or VPN that blocks it.'],
+  gk_eIn:['בתוך Claude אין גישה ישירה ל-Google, ולכן כאן העוזר עובד עם Claude בלי מפתח. את מפתח Gemini מאשרים באתר עצמו, כי כל אתר שומר מפתח משלו.','داخل Claude لا يوجد وصول مباشر إلى Google، لذلك يعمل المساعد هنا مع Claude دون مفتاح. يُؤكَّد مفتاح Gemini في الموقع نفسه لأن كل موقع يحفظ مفتاحه.','Inside Claude there is no direct access to Google, so the assistant uses Claude here with no key. Approve the Gemini key on the website itself; each site keeps its own key.'],
+  gk_eModel:['לא נמצא מודל Gemini זמין למפתח הזה. צרו מפתח חדש ב-Google AI Studio.','لم يُعثر على نموذج Gemini متاح لهذا المفتاح. أنشئ مفتاحًا جديدًا في Google AI Studio.','No Gemini model is available for this key. Create a new key in Google AI Studio.'],
+  gk_eEmpty:['Gemini החזיר תשובה ריקה. נסו לנסח את השאלה אחרת.','أعاد Gemini إجابة فارغة. جرّب صياغة السؤال بشكل آخر.','Gemini returned an empty answer. Try rephrasing the question.'],
+  gk_eOther:['Google החזיר שגיאה. נסו שוב בעוד רגע.','أعادت Google خطأ. حاول مرة أخرى بعد قليل.','Google returned an error. Try again in a moment.']
+});
 
 const t = (k, p) => {
   let s = (T[k] || [k,k,k])[langIdx()];
@@ -3163,6 +3194,8 @@ function settingsPanelHTML(){
     ${sec('set_tabs', `<div class="fields">${fieldHTML(SEL('set_sort','f_sort','groups',[['groups','o_sortGroups'],['alpha','o_sortAlpha']],{wide:true}))}</div><p class="fine" data-i="h_sort"></p><p class="fine" data-i="h_tabs"></p><div id="set_tabs" class="tabs-list"></div>`)}
     ${sec('set_curBy', `<div class="fields">${cb}</div>`)}
     ${sec('set_ai', `<div id="ai_sec"><div class="field wide"><label for="set_gkey" data-i="f_gkeyFree"></label><input id="set_gkey" type="password" autocomplete="off" spellcheck="false" class="lookup" dir="ltr" placeholder="AIza…"><small class="hint" data-i="h_gkeyFree"></small></div>
+      <div class="btnrow"><button type="button" class="gold-btn" id="gk_ok" data-i="gk_ok"></button><button type="button" class="btn" id="gk_del" data-i="gk_del"></button></div>
+      <p class="gk-st" id="gk_st" role="status" aria-live="polite"></p>
       <p class="fine"><a class="src-a" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer"><span data-i="ln_gkey"></span> ↗</a></p></div>`)}
     ${sec('set_live', `<div class="conn-all"><button type="button" class="gold-btn" id="src_all" data-i="b_connAll"></button><p class="fine" data-i="h_connAll"></p></div>
       <div class="src-list" id="set_live_st"></div>
@@ -5436,7 +5469,10 @@ function asCfgSync(){ return;
   const kw = $('#as_kw'); kw.hidden = p === 'claude'; $('#as_key').value = p === 'gemini' ? (SET.gkey || '') : p === 'openai' ? (SET.okey || '') : '';
 }
 async function asAnswer(q){
-  const hist = asHist.filter(m => m.role !== 'err').slice(-8).map(m => ({role: m.role === 'ai' ? 'assistant' : 'user', content: m.text}));
+  const src = asHist.filter(m => m.role !== 'err');
+  if (src.length && src[src.length - 1].role === 'ai') src.pop();          // the "thinking…" placeholder is not part of the chat
+  const hist = src.slice(-8).map(m => ({role: m.role === 'ai' ? 'assistant' : 'user', content: m.text}));
+  while (hist.length && hist[0].role !== 'user') hist.shift();
   const p = asProv(), model = asModel();
   try {
     if (p === 'gemini'){
@@ -5477,7 +5513,7 @@ async function asSend(q){
     const a = await asAnswer(q);
     asHist[asHist.length - 1] = {role:'ai', text: a || t('as_empty')};
   } catch (e) {
-    asHist[asHist.length - 1] = {role:'err', text: t({noai:'as_noai', nokey:'as_nokey', blocked:'as_blocked', badkey:'as_badkey'}[e && e.message] || 'as_err', {e: (e && e.message) || ''})};
+    asHist[asHist.length - 1] = {role:'err', text: aiErrText(e) || t({noai:'as_noai', nokey:'as_nokey', blocked:'as_blocked', badkey:'as_badkey'}[e && e.message] || 'as_err', {e: (e && e.message) || ''})};
   }
   asBusy = false; if (btn) btn.disabled = false; asRender();
 }
@@ -6035,6 +6071,8 @@ async function exRun(kind, extra){
   } catch (e) {
     if (e && e.name === 'AbortError') return;
     const c = e && e.code;
+    const ge = aiErrText(e);
+    if (ge){ out.innerHTML = `<p class="ex-err">${asEsc(ge)}</p>`; return; }
     out.innerHTML = `<p class="ex-err">${t(c === 'not_granted' ? 'ex_denied' : c === 'rate_limited' ? 'ex_busy' : (e && e.message === 'badkey') ? 'as_badkey' : 'as_err', {e: c || (e && e.message) || ''})}</p>` + (c === 'not_granted' ? exOffline(id, kind, extra) : '');
   } finally { EX.busy = false; const s = $('#ex_send'); if (s) s.disabled = false; }
 }
@@ -6355,29 +6393,133 @@ panelsEl.addEventListener('input', e => {
 });
 
 /* ---- standalone site (GitHub Pages): AI through the visitor's own free Gemini key ---- */
-async function gemChat(msgs){
-  const key = (SET.gkey || '').trim(); if (!key) throw new Error('noai');
-  const contents = msgs.map(m => ({role: m.role === 'assistant' ? 'model' : 'user', parts: [{text: m.content}]}));
-  let last = '';
-  for (const model of ['gemini-flash-latest', 'gemini-2.5-flash']){
-    try {
-      const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent', {
-        method: 'POST', headers: {'Content-Type': 'application/json', 'x-goog-api-key': key}, body: JSON.stringify({contents})});
-      if (r.status === 404){ last = 'HTTP 404'; continue; }
-      if (!r.ok){ const err = new Error(r.status === 400 || r.status === 403 ? 'badkey' : 'HTTP ' + r.status); throw err; }
-      const j = await r.json();
-      return ((((j.candidates || [])[0] || {}).content || {}).parts || []).map(p => p.text || '').join('').trim();
-    } catch (e) { if (e && e.message === 'badkey') throw e; last = (e && e.message) || 'error'; if (e instanceof TypeError) throw new Error('blocked'); }
-  }
-  throw new Error(last || 'error');
+var GEM_BASE = 'https://generativelanguage.googleapis.com/v1beta/';
+var GEM_FALLBACK = ['gemini-flash-latest', 'gemini-3.8-flash', 'gemini-3.6-flash', 'gemini-flash-lite-latest', 'gemini-2.5-flash'];
+var GEM_STOP = ['gk_eKey', 'gk_eRef', 'gk_eOff', 'gk_eGeo', 'blocked'];   // errors another model will not fix
+var AI_CLAUDE = false;                 // inside claude.ai the assistant runs on Claude
+var GK = {st: '', e: ''};              // result of the last key check
+function gemKey(){ return String(SET.gkey || '').replace(/\s+/g, ''); }
+function gemClean(msgs){               // Gemini wants user/model turns that alternate, start and end with the user
+  const out = [];
+  (msgs || []).forEach(m => {
+    const role = m.role === 'assistant' || m.role === 'model' ? 'model' : 'user', text = String(m.content || '').trim();
+    if (!text) return;
+    const last = out[out.length - 1];
+    if (last && last.role === role) last.parts[0].text += '\n\n' + text; else out.push({role, parts: [{text}]});
+  });
+  while (out.length && out[0].role !== 'user') out.shift();
+  while (out.length && out[out.length - 1].role !== 'user') out.pop();
+  return out;
 }
+function gemFail(status, j){
+  const er = (j && j.error) || {}, msg = String(er.message || ''), why = (er.details || []).map(d => (d && d.reason) || '').join(' ') + ' ' + (er.status || '') + ' ' + msg;
+  let c = 'gk_eOther';
+  if (/REFERRER|referer/i.test(why)) c = 'gk_eRef';
+  else if (/API_KEY_INVALID|API key not valid|API key expired|API_KEY_EXPIRED/i.test(why)) c = 'gk_eKey';
+  else if (/SERVICE_DISABLED|has not been used|is disabled/i.test(why)) c = 'gk_eOff';
+  else if (status === 429 || /RESOURCE_EXHAUSTED/.test(why)) c = 'gk_eQuota';
+  else if (/location is not supported/i.test(why)) c = 'gk_eGeo';
+  else if (status === 403 && /PERMISSION_DENIED/.test(why) && !/model/i.test(msg)) c = 'gk_eKey';
+  else if (status === 404) c = 'gk_eModel';
+  const e = new Error(c); e.gem = msg.slice(0, 160); e.status = status; return e;
+}
+async function gemCall(model, key, contents){
+  let r;
+  try {
+    r = await fetch(GEM_BASE + 'models/' + encodeURIComponent(model) + ':generateContent', {
+      method: 'POST', headers: {'Content-Type': 'application/json', 'x-goog-api-key': key}, body: JSON.stringify({contents})});
+  } catch (e) { throw new Error('blocked'); }
+  let j = null; try { j = await r.json(); } catch (e) {}
+  if (!r.ok) throw gemFail(r.status, j);
+  const c = ((j && j.candidates) || [])[0] || {};
+  const txt = ((c.content || {}).parts || []).filter(p => !p.thought).map(p => p.text || '').join('').trim();
+  if (!txt){ const e = new Error('gk_eEmpty'); e.gem = c.finishReason || ((j && j.promptFeedback) || {}).blockReason || ''; throw e; }
+  return txt;
+}
+async function gemTry(models, key, contents){
+  let last = null;
+  for (const m of [...new Set(models.filter(Boolean))]){
+    try { const txt = await gemCall(m, key, contents); if (SET.gmodel !== m){ SET.gmodel = m; saveSet(); } return txt; }
+    catch (e) { if (GEM_STOP.includes(e.message)) throw e; last = e; }
+  }
+  throw last || new Error('gk_eOther');
+}
+async function gemChat(msgs){
+  const key = gemKey(); if (!key) throw new Error('noai');
+  const contents = gemClean(msgs); if (!contents.length) throw new Error('gk_eEmpty');
+  return gemTry([SET.gmodel].concat(GEM_FALLBACK), key, contents);
+}
+async function gemModels(key){       // the newest Flash models this key can use
+  let r, j = null;
+  try { r = await fetch(GEM_BASE + 'models?pageSize=200', {headers: {'x-goog-api-key': key}}); } catch (e) { throw new Error('blocked'); }
+  try { j = await r.json(); } catch (e) {}
+  if (!r.ok){ const e = gemFail(r.status, j); if (GEM_STOP.includes(e.message)) throw e; return []; }
+  const ver = n => { const m = n.match(/gemini-(\d+(?:\.\d+)?)-flash/); return m ? parseFloat(m[1]) : 0; };
+  return ((j && j.models) || [])
+    .filter(m => (m.supportedGenerationMethods || []).includes('generateContent'))
+    .map(m => String(m.name || '').replace(/^models\//, ''))
+    .filter(n => /^gemini-[\d.]+-flash(-lite)?$/.test(n))
+    .sort((a, b) => (/lite/.test(a) - /lite/.test(b)) || ver(b) - ver(a));
+}
+function aiErrText(e){
+  const m = (e && e.message) || '';
+  if (!/^gk_e/.test(m) && !(m === 'blocked' && gemKey())) return '';
+  const k = m === 'blocked' ? (AI_CLAUDE ? 'gk_eIn' : 'gk_eNet') : m;
+  return t('gk_fail') + ' ' + t(T[k] ? k : 'gk_eOther', {h: location.host || ''}) + (e.gem ? ' (' + e.gem + ')' : '');
+}
+function gkRender(){
+  const el = $('#gk_st'); if (!el) return;
+  const ok = '<b>✓ ' + t('gk_okT') + '</b> ' + t('gk_okS');
+  let cls = '', h = '';
+  if (GK.st === 'wait'){ cls = 'wait'; h = t('gk_wait'); }
+  else if (GK.st === 'ok') { cls = 'ok'; h = ok; }
+  else if (GK.st === 'gk_del') h = t('gk_deleted') + (AI_CLAUDE ? ' ' + t('gk_claudeS') : '');
+  else if (GK.st === 'blocked' && AI_CLAUDE){ cls = 'ok'; h = '<b>✓ ' + t('gk_claude') + '</b> ' + t('gk_eIn'); }
+  else if (GK.st === 'gk_eQuota'){ cls = 'ok'; h = '<b>✓ ' + t('gk_valid') + '</b> ' + t('gk_eQuota'); }
+  else if (GK.st){
+    const k = GK.st === 'blocked' ? (AI_CLAUDE ? 'gk_eIn' : 'gk_eNet') : GK.st;
+    cls = 'bad'; h = '<b>✗ ' + t('gk_bad') + '</b> ' + asEsc(t(T[k] ? k : 'gk_eOther', {h: location.host || ''})) + (GK.e ? ' <small dir="ltr">(' + asEsc(GK.e) + ')</small>' : '');
+  }
+  else if (gemKey() && SET.gkOk) { cls = 'ok'; h = ok; }
+  else if (gemKey()) h = t('gk_saved');
+  else if (AI_CLAUDE){ cls = 'ok'; h = '<b>✓ ' + t('gk_claude') + '</b> ' + t('gk_claudeS'); }
+  el.className = 'gk-st ' + cls; el.innerHTML = h;
+  const d = $('#gk_del'); if (d) d.style.display = gemKey() ? '' : 'none';
+  const b = $('#gk_ok'); if (b) b.disabled = GK.st === 'wait';
+}
+async function gkApprove(){
+  const inp = $('#set_gkey'); if (!inp || GK.st === 'wait') return;
+  const key = inp.value.replace(/\s+/g, ''); inp.value = key;
+  if (!key){ GK = {st: 'gk_eNone', e: ''}; return gkRender(); }
+  SET.gkey = key; SET.gkOk = 0; saveSet();
+  GK = {st: 'wait', e: ''}; gkRender();
+  try {
+    let found = [];
+    try { found = await gemModels(key); } catch (e) { if (GEM_STOP.includes(e.message)) throw e; }
+    await gemTry(found.slice(0, 3).concat(GEM_FALLBACK), key, [{role: 'user', parts: [{text: 'Reply with the single word OK.'}]}]);
+    SET.gkOk = Date.now(); saveSet(); GK = {st: 'ok', e: ''};
+  } catch (e) { GK = {st: (e && e.message) || 'gk_eOther', e: (e && e.gem) || ''}; }
+  gkRender();
+}
+function gkDelete(){
+  SET.gkey = ''; SET.gkOk = 0; SET.gmodel = ''; saveSet();
+  const inp = $('#set_gkey'); if (inp) inp.value = '';
+  GK = {st: 'gk_del', e: ''}; gkRender();
+}
+document.addEventListener('click', e => {
+  if (e.target.closest('#gk_ok')) gkApprove();
+  else if (e.target.closest('#gk_del')) gkDelete();
+});
+document.addEventListener('input', e => { if (e.target.id === 'set_gkey' && GK.st !== 'wait'){ SET.gkOk = 0; GK = {st: '', e: ''}; gkRender(); } });
+document.addEventListener('keydown', e => { if (e.target.id === 'set_gkey' && e.key === 'Enter'){ e.preventDefault(); gkApprove(); } });
 async function aiSecInit(){
-  const box = $('#ai_sec'); if (!box) return;
   let sm = null;
   try { sm = window.claude && typeof window.claude.use === 'function' ? await window.claude.use('sample') : null; } catch (e) {}
-  const sec = box.closest('.set-sec'); if (sec) sec.hidden = !!sm;      // inside claude.ai the assistant needs no key
+  AI_CLAUDE = !!sm; gkRender();
 }
 aiSecInit();
+const _rsGk = renderStamp;
+renderStamp = function(){ _rsGk.apply(this, arguments); gkRender(); };
 
 /* ---- standalone site: official data from rates.json, kept fresh by a scheduled GitHub Action ---- */
 var SITE_RATES = false;
