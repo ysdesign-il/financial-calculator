@@ -4,7 +4,7 @@ Runs in GitHub Actions with a free Gemini key stored as the repository secret GE
 Only missing or changed texts are translated, so every run continues where the last one
 stopped and a new interface text is picked up automatically. Standard library only.
 """
-import json, os, re, sys, time, urllib.request, urllib.error
+import json, os, re, subprocess, sys, time, urllib.request, urllib.error
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = json.load(open(os.path.join(ROOT, 'i18n', 'source.json'), encoding='utf-8'))
@@ -143,6 +143,19 @@ def save(code, tx):
     os.makedirs(os.path.join(ROOT, 'lang'), exist_ok=True)
     json.dump(d, open(os.path.join(ROOT, 'lang', code + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'), sort_keys=True)
 
+def publish(code):
+    """Commit and publish one finished language right away (only inside GitHub Actions)."""
+    if os.environ.get('PUBLISH') != '1': return
+    sh = lambda *a: subprocess.run(list(a), cwd=ROOT, capture_output=True, text=True)
+    sh('git', 'config', 'user.name', 'translate-bot'); sh('git', 'config', 'user.email', 'translate-bot@users.noreply.github.com')
+    sh('git', 'add', 'lang')
+    if sh('git', 'diff', '--cached', '--quiet').returncode == 0: return
+    sh('git', 'commit', '-m', f'Translate interface: {code}')
+    sh('git', 'pull', '--rebase', 'origin', 'main')
+    r = sh('git', 'push', 'origin', 'HEAD:main')
+    if r.returncode == 0: sh('git', 'push', '--force', 'origin', 'HEAD:gh-pages'); note(f'published {code}')
+    else: note(f'publish {code} failed: {r.stderr[-200:]}')
+
 def chunks(keys, size):
     out, cur, n = [], {}, 0
     for k in keys:
@@ -178,6 +191,7 @@ def main():
             missing = [k for k in STR if k not in tx]
             if not missing: break
         save(code, tx); print(f'{code}: {len(tx)}/{len(STR)}'); LOG['langs'][code] = len(tx)
+        publish(code)
         if not providers: print('All translation services are at their limit; the next run continues.'); break
     return total_new
 
