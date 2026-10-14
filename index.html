@@ -1184,6 +1184,33 @@ body:not(.own) .own-only{display:none!important}
 .srl-b.del.sure,.srl-bar .mv.sure{background:#E5534B;color:#fff;border-color:#E5534B}
 .srl-bar{flex-wrap:wrap}
 .srl-msg{font-size:.8rem;color:#C2412D;min-height:1em}
+/* save bar on every screen */
+.svbar{display:grid;gap:4px;margin:0 0 12px;padding:8px 10px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.sv-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.sv-gap{flex:1}
+.sv-seg{display:inline-flex;padding:2px;border-radius:999px;border:1px solid var(--line);background:var(--bg)}
+.sv-seg button{display:inline-flex;align-items:center;gap:5px;font:inherit;font-size:.8rem;font-weight:600;border:0;background:transparent;color:var(--ink-2);border-radius:999px;padding:6px 12px;min-height:34px;cursor:pointer}
+.sv-seg button[aria-checked="true"]{background:var(--gold-ui);color:#1a1405}
+.sv-seg svg,.sv-clear svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sv-save,.sv-clear{display:inline-flex;align-items:center;gap:5px;font:inherit;font-size:.8rem;font-weight:700;border-radius:999px;padding:6px 13px;min-height:34px;cursor:pointer;border:1px solid var(--line);background:transparent;color:inherit}
+.sv-save.dirty{background:#2fbf86;border-color:#2fbf86;color:#06261a}
+.sv-save:disabled{opacity:.45;cursor:default}
+.sv-clear{color:#C2412D;border-color:rgba(229,83,75,.45)}
+.sv-seg button:focus-visible,.sv-save:focus-visible,.sv-clear:focus-visible,.sv-link:focus-visible{outline:2px solid var(--gold-ui);outline-offset:2px}
+.sv-st{font-size:.76rem;color:var(--ink-2);display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-height:1.2em}
+.sv-st.dirty{color:#9A6A06}
+.sv-dot{width:8px;height:8px;border-radius:50%;background:#E0A93A;flex:none}
+.sv-link{font:inherit;font-size:.76rem;font-weight:700;border:0;background:transparent;color:var(--focus,#1F4FB8);text-decoration:underline;cursor:pointer;padding:2px 4px}
+.sv-link.sure{color:#C2412D}
+.sv-box{gap:12px}
+.sv-opt{display:grid;gap:3px;text-align:start;font:inherit;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:inherit;cursor:pointer}
+.sv-opt b{font-size:.95rem}.sv-opt small{font-size:.8rem;color:var(--ink-2)}
+.sv-opt.danger{border-color:rgba(229,83,75,.5)}.sv-opt.danger b{color:#C2412D}
+.sv-opt.sure{background:#E5534B;border-color:#E5534B;color:#fff}.sv-opt.sure b,.sv-opt.sure small{color:#fff}
+.sv-opt:focus-visible{outline:2px solid var(--gold-ui);outline-offset:2px}
+.sv-warn{margin:0}.sv-none{margin:0}
+@media print{.svbar{display:none}}
+@media (max-width:430px){.sv-seg svg{display:none}.sv-seg button{padding:6px 11px}.sv-save,.sv-clear{padding:6px 10px}.sv-row{gap:5px}}
 
 </style>
 </head>
@@ -3710,6 +3737,33 @@ Object.assign(T, {
   srl_max:['עד {n} קישורים לכל נתון','حتى {n} روابط لكل بيان','Up to {n} links per item'],
   srl_saved:['הקישורים נשמרו','تم حفظ الروابط','Links saved'], srl_restored:['הקישורים חזרו לברירת המחדל','عادت الروابط إلى الافتراضي','Links are back to the default'], srl_fail:['השמירה נכשלה. נסה שוב.','فشل الحفظ. حاول مجددًا.','Saving failed. Try again.']
 });
+Object.assign(T, {
+  /* saving on every screen */
+  f_saveMode:['שמירת נתונים','حفظ البيانات','Saving data'], o_saveAuto:['אוטומטית','تلقائي','Automatic'], o_saveManual:['ידנית (בלחיצה על "שמירה")','يدوي (بالضغط على "حفظ")','Manual (tap "Save")'],
+  sv_mode:['אופן השמירה','طريقة الحفظ','How data is saved'], sv_auto:['אוטומטי','تلقائي','Auto'], sv_manual:['ידני','يدوي','Manual'],
+  sv_save:['שמירה','حفظ','Save'], sv_clear:['נקה הכל','مسح الكل','Clear all'],
+  sv_stAuto:['✓ כל שינוי נשמר אוטומטית','✓ كل تغيير يُحفظ تلقائيًا','✓ Every change is saved automatically'],
+  sv_stAutoAt:['✓ נשמר אוטומטית · {t}','✓ حُفظ تلقائيًا · {t}','✓ Saved automatically · {t}'],
+  sv_stClean:['✓ הכול שמור','✓ كل شيء محفوظ','✓ Everything is saved'],
+  sv_stDirty:['לא נשמר עדיין: {w}','لم يُحفظ بعد: {w}','Not saved yet: {w}'],
+  sv_k_vals:['ערכים במחשבונים','قيم الحاسبات','calculator values'], sv_k_scn:['תרחישים','السيناريوهات','scenarios'], sv_k_exp:['הוצאות','المصروفات','expenses'], sv_k_cl:['לקוחות','العملاء','clients'],
+  sv_discard:['ביטול השינויים','تجاهل التغييرات','Discard changes'], sv_discardSure:['לבטל? לחץ שוב','تجاهل؟ اضغط مجددًا','Discard? Tap again'],
+  sv_doneSave:['הנתונים נשמרו','تم حفظ البيانات','Your data is saved'], sv_nothing:['אין שינויים לשמור','لا توجد تغييرات للحفظ','Nothing new to save'],
+  sv_discarded:['השינויים בוטלו. מוצג המצב השמור.','تم تجاهل التغييرات. تظهر الحالة المحفوظة.','Changes discarded. The saved state is back.'],
+  sv_toAuto:['שמירה אוטומטית: כל שינוי נשמר מעכשיו, וגם מה שחיכה נשמר.','حفظ تلقائي: كل تغيير يُحفظ من الآن، وحُفظ أيضًا ما كان بالانتظار.','Auto save: every change is saved from now on, and anything waiting was saved.'],
+  sv_toManual:['שמירה ידנית: שינויים יישמרו רק כשתלחץ "שמירה".','حفظ يدوي: تُحفظ التغييرات فقط عند الضغط على "حفظ".','Manual save: changes are kept only when you tap "Save".'],
+  sv_clT:['ניקוי נתונים','مسح البيانات','Clear data'], sv_close:['סגירה','إغلاق','Close'], sv_cancel:['ביטול','إلغاء','Cancel'],
+  sv_clScreen:['נקה את המסך הזה ({n})','مسح هذه الشاشة ({n})','Clear this screen ({n})'],
+  sv_clScrCalc:['השדות יחזרו לברירת המחדל, והתרחישים השמורים של המסך יימחקו.','ستعود الحقول إلى الافتراضي، وتُحذف السيناريوهات المحفوظة لهذه الشاشة.','The fields go back to their defaults and this screen\'s saved scenarios are deleted.'],
+  sv_clScrExp:['כל ההוצאות, התקציבים וההכנסות שרשמת יימחקו.','ستُحذف كل المصروفات والميزانيات والدخل التي سجّلتها.','All the expenses, budgets and income you entered are deleted.'],
+  sv_clScrCl:['כל הלקוחות והמשימות שלהם יימחקו.','سيُحذف كل العملاء ومهامهم.','All clients and their tasks are deleted.'],
+  sv_clAll:['נקה את כל הנתונים במערכת','مسح كل البيانات في التطبيق','Clear all data in the app'],
+  sv_clAllD:['הערכים בכל המחשבונים, התרחישים, ההוצאות והלקוחות יימחקו. ההגדרות נשארות.','ستُحذف القيم في كل الحاسبات والسيناريوهات والمصروفات والعملاء. تبقى الإعدادات.','Values in every calculator, scenarios, expenses and clients are deleted. Settings stay.'],
+  sv_clNone:['למסך הזה אין נתונים משלו.','لا توجد بيانات خاصة بهذه الشاشة.','This screen has no data of its own.'],
+  sv_clWarn:['הניקוי קורה מיד, בכל אופן שמירה, ואי אפשר לבטל אותו.','يتم المسح فورًا في أي طريقة حفظ، ولا يمكن التراجع عنه.','Clearing happens at once, in either save mode, and cannot be undone.'],
+  sv_clSure:['בטוח? לחץ שוב לניקוי','متأكد؟ اضغط مجددًا للمسح','Sure? Tap again to clear'],
+  sv_clDoneS:['המסך נוקה','تم مسح الشاشة','This screen is cleared'], sv_clDoneA:['כל הנתונים נמחקו','تم حذف كل البيانات','All data is cleared']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -3732,6 +3786,25 @@ const LS = FUSER
   ? {getItem: k => SS.getItem(WK(k)), setItem: (k, v) => { v = String(v); if (SS.getItem(WK(k)) === v) return; SS.setItem(WK(k), v); liveTouch(k); persistSoon(); }, removeItem: k => { if (SS.getItem(WK(k)) == null) return; SS.removeItem(WK(k)); liveTouch(k); persistSoon(); }}
   : {getItem: k => RAWLS.getItem(k), setItem: (k, v) => RAWLS.setItem(k, v), removeItem: k => RAWLS.removeItem(k)};
 const DATA_KEYS = ['fin-set', 'fin-vals', 'fin-scn', 'fin-lang', 'fin-cur', 'fin-tab', 'fin-exp', 'fin-clients'];
+/* saving: automatic, or only when you tap Save. In manual mode your data changes wait here (and survive a reload of this tab) until you save */
+const SAVE_KEYS = ['fin-vals', 'fin-scn', 'fin-exp', 'fin-clients'];
+const LS_RAW = {getItem: LS.getItem, setItem: LS.setItem, removeItem: LS.removeItem};
+const SV = {mode: 'auto', pend: new Map(), at: 0, direct: false, key: 'fin-pend' + (FUSER ? ':' + ENC_NAME(FUSER) : '')};
+try { const s0 = JSON.parse(LS_RAW.getItem('fin-set') || 'null'); if (s0 && s0.saveMode === 'manual') SV.mode = 'manual'; } catch (e) {}
+try { if (SV.mode === 'manual'){ const p0 = JSON.parse(SS.getItem(SV.key) || '[]'); if (Array.isArray(p0)) p0.forEach(x => { if (Array.isArray(x) && SAVE_KEYS.includes(x[0])) SV.pend.set(x[0], x[1] == null ? null : String(x[1])); }); } else SS.removeItem(SV.key); } catch (e) {}
+const svHold = k => SV.mode === 'manual' && SAVE_KEYS.includes(k) && !LIVE_APPLYING && !SV.direct;
+function svKeep(){ try { if (SV.pend.size) SS.setItem(SV.key, JSON.stringify([...SV.pend])); else SS.removeItem(SV.key); } catch (e) {} try { if (typeof svUi === 'function') svUi(); } catch (e) {} }
+LS.getItem = k => SV.pend.has(k) ? SV.pend.get(k) : LS_RAW.getItem(k);
+LS.setItem = (k, v) => {
+  if (svHold(k)){ v = String(v); if (LS_RAW.getItem(k) === v) SV.pend.delete(k); else SV.pend.set(k, v); svKeep(); return; }
+  if (SV.pend.delete(k)) svKeep();
+  LS_RAW.setItem(k, v); if (SAVE_KEYS.includes(k)){ SV.at = Date.now(); try { if (typeof svUi === 'function') svUi(); } catch (e) {} }
+};
+LS.removeItem = k => {
+  if (svHold(k)){ if (LS_RAW.getItem(k) == null) SV.pend.delete(k); else SV.pend.set(k, null); svKeep(); return; }
+  if (SV.pend.delete(k)) svKeep();
+  LS_RAW.removeItem(k); if (SAVE_KEYS.includes(k)) SV.at = Date.now();
+};
 let RATES = {"USD":1,"AED":3.6725,"AFN":64.924614,"ALL":81.907653,"AMD":362.201696,"ANG":1.79,"AOA":928.339731,"ARS":1515.8766,"AUD":1.436501,"AWG":1.79,"AZN":1.699787,"BAM":1.750825,"BBD":2,"BDT":123.198998,"BGN":1.750825,"BHD":0.376,"BIF":3001.103523,"BMD":1,"BND":1.280792,"BOB":11.842148,"BRL":4.989911,"BSD":1,"BTN":95.913362,"BWP":13.974043,"BYN":3.011836,"BZD":2,"CAD":1.427373,"CDF":2312.138431,"CHF":0.834009,"CLF":0.024719,"CLP":977.033618,"CNH":6.694513,"CNY":6.70582,"COP":3198.099135,"CRC":455.303365,"CUP":24,"CVE":98.707321,"CZK":21.829017,"DJF":177.721,"DKK":6.684975,"DOP":60.873077,"DZD":134.631082,"EGP":52.658715,"ERN":15,"ETB":161.476064,"EUR":0.895156,"FJD":2.248408,"FKP":0.75643,"FOK":6.686339,"GBP":0.756615,"GEL":2.596409,"GGP":0.75643,"GHS":11.772815,"GIP":0.75643,"GMD":74.559797,"GNF":8800.490983,"GTQ":7.64477,"GYD":209.038401,"HKD":7.847659,"HNL":26.838812,"HRK":6.744754,"HTG":130.923287,"HUF":326.831837,"IDR":17924.343507,"ILS":3.076893,"IMP":0.75643,"INR":95.90693,"IQD":1508.260905,"IRR":1718298.042257,"ISK":122.079821,"JEP":0.75643,"JMD":158.979857,"JOD":0.709,"JPY":158.544079,"KES":129.690434,"KGS":87.469028,"KHR":4054.023004,"KID":1.43646,"KMF":440.40102,"KRW":1333.744079,"KWD":0.311015,"KYD":0.833333,"KZT":450.740106,"LAK":22218.824732,"LBP":89500,"LKR":330.778402,"LRD":170.808183,"LSL":16.543726,"LYD":6.423041,"MAD":9.71107,"MDL":17.871956,"MGA":4526.158467,"MKD":54.573615,"MMK":2098.574459,"MNT":3603.898415,"MOP":8.083243,"MRU":40.200665,"MUR":47.506193,"MVR":15.441956,"MWK":1742.182803,"MXN":18.293254,"MYR":4.083336,"MZN":63.723629,"NAD":16.543726,"NGN":1331.44261,"NIO":36.792486,"NOK":9.573394,"NPR":153.461379,"NZD":1.788691,"OMR":0.384497,"PAB":1,"PEN":3.434509,"PGK":4.407143,"PHP":62.786942,"PKR":276.919098,"PLN":3.92703,"PYG":5715.389721,"QAR":3.64,"RON":4.772581,"RSD":104.934937,"RUB":84.043643,"RWF":1477.750986,"SAR":3.75,"SBD":7.984757,"SCR":14.458129,"SDG":454.209545,"SEK":10.031647,"SGD":1.280778,"SHP":0.75643,"SLE":24.587682,"SLL":24587.681848,"SOS":571.628492,"SRD":37.649374,"SSP":5751.002658,"STN":21.931976,"SYP":121.714922,"SZL":16.543726,"THB":33.618266,"TJS":9.23153,"TMT":3.499779,"TND":3.006979,"TOP":2.392271,"TRY":49.355625,"TTD":6.785624,"TVD":1.43646,"TWD":31.958914,"TZS":2633.373235,"UAH":44.965677,"UGX":4004.878818,"UYU":40.220831,"UZS":11887.066267,"VES":876.7976,"VND":25897.062624,"VUV":119.457954,"WST":2.749526,"XAF":587.20136,"XCD":2.7,"XCG":1.79,"XDR":0.739486,"XOF":587.20136,"XPF":106.823942,"YER":236.158165,"ZAR":16.544146,"ZMW":20.088454,"ZWG":26.6492,"ZWL":26.6492};
 const META = {live:false, unix:1791849451};
 const PIN = ['ILS','USD','EUR','GBP','JPY','CHF','CAD','AUD','JOD','EGP','AED','SAR','TRY','CNY','INR','RUB'];
@@ -3865,10 +3938,11 @@ const SET_DEF = {clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', 
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
   prof:{single:'0', sold:'0', deg:'0', k0:'', k12:'', k3:'', k45:'', k617:'', k18:'', xp:''},
-  remember:'0', curBy:{}, rateSrc:'er', gkey:'', aiProv:'claude', aiModel:'', okey:'', stale:'1', favCur:[], order:null, hidden:[], pins:[], sort:'groups'};
+  remember:'1', saveMode:'auto', curBy:{}, rateSrc:'er', gkey:'', aiProv:'claude', aiModel:'', okey:'', stale:'1', favCur:[], order:null, hidden:[], pins:[], sort:'groups'};
 const cloneDef = () => JSON.parse(JSON.stringify(SET_DEF));
 let SET = cloneDef();
 try { const sv = JSON.parse(LS.getItem('fin-set') || '{}'); Object.assign(SET, sv); SET.prof = Object.assign({}, SET_DEF.prof, sv.prof || {}); } catch(e) {}
+SET.remember = '1'; SET.saveMode = SV.mode;                 // values are always kept now; when they are written is up to the save mode
 const saveSet = () => { try { LS.setItem('fin-set', JSON.stringify(SET)); } catch(e) {} };
 const mq = window.matchMedia ? matchMedia('(prefers-color-scheme: light)') : null;
 const AC = {gold:['#F2C45A','#9A6A06'], blue:['#6FA8FF','#2A5FD6'], green:['#46E3A4','#0D8A5B'], violet:['#B79CFF','#6B46D6']};
@@ -4171,6 +4245,7 @@ const SICO = {
   set_sep:'<path d="M6 18c2 0 2-2 2-3M12 6v6M16 18h2"/>',
   set_compact:'<path d="M8 4H4v4M16 4h4v4M8 20H4v-4M16 20h4v-4"/>',
   set_start:'<path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/>',
+  set_saveMode:'<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/>',
   set_remember:'<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/>',
   set_vat:'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 9h6M9 13h4"/>',
   set_dealer:'<rect x="4" y="8" width="16" height="12" rx="2"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
@@ -4884,7 +4959,7 @@ const SETDEFS = [
   ]],
   ['set_calc', [
     SEL('set_start','f_start','home',[['home','o_start_home'],['last','o_start_last']].concat(TABS.filter(x => x !== 'home' && x !== 'settings').map(x => [x, 'tab_' + x])),{wide:true}),
-    SEL('set_remember','f_remember','0',[['0','o_off'],['1','o_on']],{wide:true}),
+    SEL('set_saveMode','f_saveMode','auto',[['auto','o_saveAuto'],['manual','o_saveManual']],{wide:true}),
     SEL('set_vat','f_vatDef','18',[['18','o_vp18'],['17','o_vp17'],['0','o_vp0'],['16','o_vp16'],['14','o_vp14'],['15','o_vp15'],['5','o_vp5'],['19','o_vp19'],['20','o_vp20']],{wide:true}),
     SEL('set_dealer','f_dealer','murshe',[['murshe','o_murshe'],['patur','o_patur']],{wide:true}),
     SEL('set_buyer','f_buyerType','first',[['first','o_bt_first'],['upg','o_bt_upg'],['inv','o_bt_inv']],{wide:true}),
@@ -4986,7 +5061,7 @@ const SMAP = {set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
-  set_dtax:'dtax', set_deptime:'deptime', set_capkind:'capkind', set_remember:'remember', set_rateSrc:'rateSrc', set_gkey:'gkey', set_stale:'stale', set_sort:'sort', set_liveFx:'liveFx', set_fxInt:'fxInt', set_liveFiat:'liveFiat', set_liveCrypto:'liveCrypto', set_boiDb:'boiDb', set_autoRef:'autoRef', set_autoUpd:'autoUpd', set_holAuto:'holAuto', set_clock24:'clock24', set_clockSec:'clockSec', set_clockHeb:'clockHeb', set_clockHijri:'clockHijri', set_aiEngine:'aiEngine', set_pmName:'pmName', set_pmStyle:'pmStyle'};
+  set_dtax:'dtax', set_deptime:'deptime', set_capkind:'capkind', set_remember:'remember', set_saveMode:'saveMode', set_rateSrc:'rateSrc', set_gkey:'gkey', set_stale:'stale', set_sort:'sort', set_liveFx:'liveFx', set_fxInt:'fxInt', set_liveFiat:'liveFiat', set_liveCrypto:'liveCrypto', set_boiDb:'boiDb', set_autoRef:'autoRef', set_autoUpd:'autoUpd', set_holAuto:'holAuto', set_clock24:'clock24', set_clockSec:'clockSec', set_clockHeb:'clockHeb', set_clockHijri:'clockHijri', set_aiEngine:'aiEngine', set_pmName:'pmName', set_pmStyle:'pmStyle'};
 const DEFKEYS = ['vat','sex','fee','pens','study','erPens','erSev','erStudy','loanRate','invRate','cpi','infl','gainTax','dealer','buyer','dtax','deptime','capkind'];
 function fillCB(){
   CUR_TABS.forEach(id => {
@@ -9095,8 +9170,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "6.7", "date": "2026-10-14", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.233230';
+var CHANGELOG = [{"v": "6.8", "date": "2026-10-14", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.235724';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -11892,6 +11967,174 @@ liveApply = function(){
 setTimeout(srcpLoad, 500);
 setTimeout(() => { SRL_OWN = null; liveApply(); }, 700);
 setInterval(() => { if (!document.hidden && !IN_CLAUDE) srcpLoad(); }, 10 * 60000);
+
+/* ================= saving on every screen: automatic or manual (switch any time), save now, discard, and clear this screen or everything ================= */
+const SV_NAMES = {'fin-vals': 'sv_k_vals', 'fin-scn': 'sv_k_scn', 'fin-exp': 'sv_k_exp', 'fin-clients': 'sv_k_cl'};
+const SV_IC = {
+  auto: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4"/></svg>',
+  hand: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></svg>',
+  bin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>'
+};
+var SVU = {sure: '', sureT: null, open: null};
+function svKind(id){
+  if (id === 'expenses') return 'exp';
+  if (id === 'clients') return 'cl';
+  if (['home', 'settings', 'assist'].includes(id)) return '';
+  const p = $('#panel-' + id); return p && $$('input[id],select[id]', p).some(e => e.type !== 'range' && !/^set_/.test(e.id) && !e.classList.contains('scn-name')) ? 'calc' : '';
+}
+function svTime(ms){ try { return new Intl.DateTimeFormat(locOf(), {hour: '2-digit', minute: '2-digit'}).format(new Date(ms)); } catch (e) { return ''; } }
+function svBarHtml(){
+  const man = SV.mode === 'manual', dirty = man && SV.pend.size > 0, E = asEsc;
+  const what = [...SV.pend.keys()].map(k => t(SV_NAMES[k] || 'sv_k_vals')).filter((x, i, a) => a.indexOf(x) === i).join(', ');
+  const st = dirty ? `<span class="sv-dot" aria-hidden="true"></span>${E(t('sv_stDirty', {w: what}))}`
+    : man ? E(t('sv_stClean')) : SV.at ? E(t('sv_stAutoAt', {t: svTime(SV.at)})) : E(t('sv_stAuto'));
+  return `<div class="sv-row"><div class="sv-seg" role="radiogroup" aria-label="${E(t('sv_mode'))}">
+      <button type="button" role="radio" aria-checked="${!man}" data-sv="auto">${SV_IC.auto}<span>${E(t('sv_auto'))}</span></button><button type="button" role="radio" aria-checked="${man}" data-sv="manual">${SV_IC.hand}<span>${E(t('sv_manual'))}</span></button></div>
+    <span class="sv-gap"></span>
+    ${man ? `<button type="button" class="sv-save${dirty ? ' dirty' : ''}" data-sv="save"${dirty ? '' : ' disabled'}>${E(t('sv_save'))}</button>` : ''}
+    <button type="button" class="sv-clear" data-sv="clear">${SV_IC.bin}<span>${E(t('sv_clear'))}</span></button></div>
+    <div class="sv-st${dirty ? ' dirty' : ''}" role="status">${st}${dirty ? ` <button type="button" class="sv-link${SVU.sure === 'discard' ? ' sure' : ''}" data-sv="discard">${E(t(SVU.sure === 'discard' ? 'sv_discardSure' : 'sv_discard'))}</button>` : ''}</div>`;
+}
+function svInject(){
+  $$('section.panel[id^="panel-"]').forEach(p => {
+    if (p.querySelector(':scope > .svbar')) return;
+    p.insertAdjacentHTML('afterbegin', `<div class="svbar" data-svp="${asEsc(p.id.slice(6))}"></div>`);
+  });
+}
+function svUi(){
+  try { svInject(); } catch (e) {}
+  const h = svBarHtml();
+  $$('.svbar').forEach(b => { if (b.dataset.h !== h){ b.innerHTML = h; b.dataset.h = h; } });
+  const s = $('#set_saveMode'); if (s && s.value !== SV.mode) s.value = SV.mode;
+}
+function svMode(m, quiet){
+  m = m === 'manual' ? 'manual' : 'auto';
+  const prev = SV.mode; SV.mode = m; SET.saveMode = m; SET.remember = '1';
+  try { saveSet(); } catch (e) {}
+  if (prev === 'manual' && m === 'auto') svSave(true);                // switching to automatic keeps what was waiting
+  svKeep();
+  if (!quiet && prev !== m) toast(t(m === 'auto' ? 'sv_toAuto' : 'sv_toManual'));
+}
+function svSave(quiet){
+  try { clearTimeout(svT); saveVals(); } catch (e) {}                 // take the last keystrokes too
+  if (!SV.pend.size){ svKeep(); if (!quiet) toast(t('sv_nothing')); return false; }
+  SV.direct = true;
+  try { SV.pend.forEach((v, k) => { if (v == null) LS_RAW.removeItem(k); else LS_RAW.setItem(k, v); }); SV.pend.clear(); }
+  finally { SV.direct = false; }
+  SV.at = Date.now(); svKeep();
+  if (!quiet) toast(t('sv_doneSave'));
+  return true;
+}
+function svReload(keys){
+  TABS.forEach(id => { try { resetPanel(id); } catch (e) {} });
+  if (keys.includes('fin-scn')) SCN = {};
+  try { liveApplyKeys(keys); } catch (e) {}
+  try { $$('details.scn[data-tab]').forEach(b => renderScn(b.dataset.tab)); } catch (e) {}
+  try { if (tab === 'expenses') expRender(); else if (tab === 'clients') clRender(); else calc(tab); } catch (e) {}
+}
+function svDiscard(){
+  if (!SV.pend.size) return;
+  const keys = [...SV.pend.keys()];
+  SV.pend.clear(); svKeep(); svReload(['fin-vals', 'fin-scn', 'fin-exp', 'fin-clients'].filter(k => keys.includes(k) || k === 'fin-vals'));
+  toast(t('sv_discarded'));
+}
+/* change what is stored (and what is waiting to be saved) at once, whatever the mode: clearing is never left half-done */
+function svRaw(k, fn){
+  SV.direct = true;
+  try {
+    if (!fn){ LS_RAW.removeItem(k); SV.pend.delete(k); }
+    else {
+      let o = {}; try { o = JSON.parse(LS_RAW.getItem(k) || '{}') || {}; } catch (e) {}
+      const raw = JSON.stringify(fn(o)); LS_RAW.setItem(k, raw);
+      if (SV.pend.has(k) && SV.pend.get(k) != null){ let q = {}; try { q = JSON.parse(SV.pend.get(k)) || {}; } catch (e) {} const v = JSON.stringify(fn(q)); if (v === raw) SV.pend.delete(k); else SV.pend.set(k, v); }
+    }
+  } finally { SV.direct = false; }
+  SV.at = Date.now(); svKeep();
+}
+function svClearScreen(id){
+  const kind = svKind(id);
+  if (kind === 'calc'){
+    const p = $('#panel-' + id), ids = $$('input[id],select[id]', p).map(e => e.id);
+    try { resetPanel(id); } catch (e) {}
+    TOUCHED = TOUCHED.filter(x => x !== id);
+    svRaw('fin-vals', o => { ids.forEach(k => { delete o[k]; }); if (o.__touched != null) o.__touched = String(o.__touched).split(',').filter(x => x && x !== id).join(','); return o; });
+    svRaw('fin-scn', o => { delete o[id]; return o; });
+    delete SCN[id];
+    try { clearTimeout(svT); saveVals(); saveScn(); } catch (e) {}
+    try { renderScn(id); } catch (e) {}
+    try { calc(id); } catch (e) {}
+  } else if (kind === 'exp'){ svRaw('fin-exp', null); EXP = null; try { expRender(); } catch (e) {} }
+  else if (kind === 'cl'){ svRaw('fin-clients', null); CL = null; try { clRender(); } catch (e) {} }
+}
+function svClearAll(){
+  SAVE_KEYS.forEach(k => svRaw(k, null));
+  SCN = {}; TOUCHED = []; EXP = null; CL = null;
+  svReload(SAVE_KEYS.slice());
+}
+/* the clear sheet: this screen, or everything */
+function svOpen(id){
+  SVU.open = id; SVU.sure = '';
+  if (!$('#svx')) document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="svx" hidden><div class="cp-box sv-box" role="dialog" aria-modal="true" aria-labelledby="svx_t"><div class="cp-top"><h3 id="svx_t"></h3><button type="button" class="cp-x" id="svx_x">×</button></div><div id="svx_b"></div></div></div>`);
+  svSheet();
+  $('#svx').hidden = false; document.body.classList.add('cp-lock');
+  setTimeout(() => { const b = $('#svx [data-svc]'); if (b) b.focus(); }, 40);
+}
+function svSheet(){
+  const id = SVU.open, kind = svKind(id), E = asEsc, name = t('tab_' + id);
+  $('#svx_t').textContent = t('sv_clT'); $('#svx_x').setAttribute('aria-label', t('sv_close'));
+  const opt = (k, title, desc, danger) => `<button type="button" class="sv-opt${danger ? ' danger' : ''}${SVU.sure === k ? ' sure' : ''}" data-svc="${k}"><b>${E(SVU.sure === k ? t('sv_clSure') : title)}</b><small>${E(desc)}</small></button>`;
+  let h = '';
+  if (kind) h += opt('screen', t('sv_clScreen', {n: name}), t(kind === 'exp' ? 'sv_clScrExp' : kind === 'cl' ? 'sv_clScrCl' : 'sv_clScrCalc'));
+  else h += `<p class="fine sv-none">${E(t('sv_clNone'))}</p>`;
+  h += opt('all', t('sv_clAll'), t('sv_clAllD'), true);
+  h += `<p class="fine sv-warn">${E(t('sv_clWarn'))}</p><div class="btnrow"><button type="button" class="mv wide" data-svc="cancel">${E(t('sv_cancel'))}</button></div>`;
+  $('#svx_b').innerHTML = h;
+}
+function svClose(){ const o = $('#svx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); } SVU.open = null; SVU.sure = ''; const b = $(`#panel-${tab} .sv-clear`); if (b) try { b.focus(); } catch (e) {} }
+function svSure(k){ SVU.sure = k; clearTimeout(SVU.sureT); SVU.sureT = setTimeout(() => { SVU.sure = ''; if (SVU.open) svSheet(); svUi(); }, 5000); }
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-svc]');
+  if (c){
+    const k = c.dataset.svc, id = SVU.open;
+    if (k === 'cancel'){ svClose(); return; }
+    if (SVU.sure !== k){ svSure(k); svSheet(); return; }                 // every clear takes a second tap
+    svClose();
+    if (k === 'screen'){ svClearScreen(id); toast(t('sv_clDoneS')); }
+    else { svClearAll(); toast(t('sv_clDoneA')); }
+    svUi(); return;
+  }
+  if (e.target.closest('#svx_x') || e.target.id === 'svx'){ svClose(); return; }
+  const b = e.target.closest('.svbar [data-sv]'); if (!b) return;
+  const a = b.dataset.sv;
+  if (a === 'auto' || a === 'manual') svMode(a);
+  else if (a === 'save') svSave();
+  else if (a === 'clear') svOpen(b.closest('.svbar').dataset.svp);
+  else if (a === 'discard'){ if (SVU.sure !== 'discard'){ svSure('discard'); svUi(); return; } SVU.sure = ''; svDiscard(); }
+  svUi();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && SVU.open){ e.preventDefault(); svClose(); return; }
+  if ((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey) && !e.altKey){ e.preventDefault(); if (SV.mode === 'manual') svSave(); else toast(t('sv_stAuto')); svUi(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight'){ const r = e.target.closest && e.target.closest('.sv-seg [role=radio]'); if (r){ e.preventDefault(); svMode(SV.mode === 'auto' ? 'manual' : 'auto'); svUi(); const n = $(`#panel-${tab} .sv-seg [aria-checked="true"]`); if (n) n.focus(); } }
+});
+document.addEventListener('change', e => { if (e.target && e.target.id === 'set_saveMode'){ svMode(e.target.value); svUi(); } });
+window.addEventListener('beforeunload', e => { if (SV.mode === 'manual' && SV.pend.size){ e.preventDefault(); e.returnValue = ''; } });
+/* settings that arrive from your other devices carry the save mode too */
+const liveApplyKeysSv = liveApplyKeys;
+liveApplyKeys = function(keys){ const r = liveApplyKeysSv.apply(this, arguments); try { SET.remember = '1'; if (SET.saveMode !== SV.mode) svMode(SET.saveMode, true); svUi(); } catch (e) {} return r; };
+/* the reset buttons in settings act at once, in either mode */
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('#set_clear, #set_resetcalcs'); if (!b) return;
+  SV.direct = true;
+  setTimeout(() => {
+    try { if (b.id === 'set_clear'){ SAVE_KEYS.forEach(k => svRaw(k, null)); EXP = null; CL = null; } else { clearTimeout(svT); saveVals(); } } catch (err) {}
+    SV.direct = false; svKeep();
+  }, 0);
+}, true);
+const _alSv = applyLang;
+applyLang = function(){ const r = _alSv.apply(this, arguments); try { $$('.svbar').forEach(b => { b.dataset.h = ''; }); svUi(); if (SVU.open) svSheet(); } catch (e) {} return r; };
+svUi();
+setInterval(() => { if (!document.hidden && SV.mode === 'auto' && SV.at) svUi(); }, 30000);
 
 applyLang(false);
 activate(tab);
