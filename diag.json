@@ -19,64 +19,64 @@
    "symbol": "ILS=",
    "code": 0,
    "name": "US Dollar/Israeli Shekel FX Spot Rate",
-   "last": "3.0984",
-   "last_time": "2026-10-14T14:40:00.000-0400",
+   "last": "3.0983",
+   "last_time": "2026-10-14T14:42:00.000-0400",
    "realTime": "true",
-   "change_pct": "+1.18%"
+   "change_pct": "+1.17%"
   },
   {
    "symbol": "EUR=",
    "code": 0,
    "name": "EUR/USD",
-   "last": "1.1155",
-   "last_time": "2026-10-14T14:40:00.000-0400",
+   "last": "1.115",
+   "last_time": "2026-10-14T14:42:00.000-0400",
    "realTime": "true",
-   "change_pct": "-0.384%"
+   "change_pct": "-0.4286%"
   },
   {
    "symbol": "GBP=",
    "code": 0,
    "name": "GBP/USD",
-   "last": "1.3182",
-   "last_time": "2026-10-14T14:40:00.000-0400",
+   "last": "1.3178",
+   "last_time": "2026-10-14T14:42:00.000-0400",
    "realTime": "true",
-   "change_pct": "-0.5282%"
+   "change_pct": "-0.5584%"
   },
   {
    "symbol": "JPY=",
    "code": 0,
    "name": "USD/JPY",
-   "last": "158.07",
-   "last_time": "2026-10-14T14:40:00.000-0400",
+   "last": "158.13",
+   "last_time": "2026-10-14T14:42:00.000-0400",
    "realTime": "true",
-   "change_pct": "-0.139%"
+   "change_pct": "-0.1011%"
   },
   {
    "symbol": "CHF=",
    "code": 0,
    "name": "USD/CHF",
-   "last": "0.834",
-   "last_time": "2026-10-14T14:40:00.000-0400",
+   "last": "0.8344",
+   "last_time": "2026-10-14T14:42:00.000-0400",
    "realTime": "true",
-   "change_pct": "+0.2043%"
+   "change_pct": "+0.2523%"
   },
   {
    "symbol": "CAD=",
    "code": 0,
    "name": "USD/CAD",
-   "last": "1.4247",
-   "last_time": "2026-10-14T14:40:00.000-0400",
+   "last": "1.4249",
+   "last_time": "2026-10-14T14:42:00.000-0400",
    "realTime": "true",
-   "change_pct": "+0.23%"
+   "change_pct": "+0.25%"
   },
   {
    "symbol": "AUD=",
    "code": 0,
    "name": "AUD/USD",
-   "last": "0.6966",
-   "last_time": "2026-10-14T14:40:00.000-0400",
+   "last": "0.6965",
+   "last_time": "2026-10-14T14:42:00.000-0400",
    "realTime": "true",
-   "change_pct": "-0.2006%"
+   "change_pct": "-0.2149%"
   },
   {
    "symbol": "CNY=",
@@ -91,26 +91,26 @@
    "symbol": "EURILS=",
    "code": 0,
    "name": "Euro/Israeli Shekel FX Cross Rate",
-   "last": "3.4563",
-   "last_time": "2026-10-14T14:40:00.000-0400",
+   "last": "3.4552",
+   "last_time": "2026-10-14T14:42:00.000-0400",
    "realTime": "true",
-   "change_pct": "+0.76%"
+   "change_pct": "+0.73%"
   },
   {
    "symbol": "GBPILS=",
    "code": 0,
    "name": "UK Pound Sterling/Israeli Shekel FX Cross Rate",
-   "last": "4.0843",
-   "last_time": "2026-10-14T14:40:00.000-0400",
+   "last": "4.0839",
+   "last_time": "2026-10-14T14:42:00.000-0400",
    "realTime": "true",
-   "change_pct": "+0.62%"
+   "change_pct": "+0.61%"
   },
   {
    "symbol": "JOD=",
    "code": 0,
    "name": "US Dollar/Jordanian Dinar FX Spot Rate",
    "last": "0.708",
-   "last_time": "2026-10-14T14:40:00.000-0400",
+   "last_time": "2026-10-14T14:42:00.000-0400",
    "realTime": "true",
    "change_pct": "UNCH"
   },
@@ -128,7 +128,7 @@
    "code": 0,
    "name": "US Dollar/UAE Dirham FX Spot Rate",
    "last": "3.6728",
-   "last_time": "2026-10-14T14:40:00.000-0400",
+   "last_time": "2026-10-14T14:42:00.000-0400",
    "realTime": "true",
    "change_pct": "UNCH"
   },
@@ -137,7 +137,7 @@
    "code": 0,
    "name": "US Dollar/Saudi Arabian Riyal FX Spot Rate",
    "last": "3.7542",
-   "last_time": "2026-10-14T14:40:00.000-0400",
+   "last_time": "2026-10-14T14:42:00.000-0400",
    "realTime": "true",
    "change_pct": "-0.0346%"
   },
@@ -146,7 +146,7 @@
    "code": 0,
    "name": "US Dollar/Turkish Lira FX Spot Rate",
    "last": "49.3872",
-   "last_time": "2026-10-14T14:40:00.000-0400",
+   "last_time": "2026-10-14T14:42:00.000-0400",
    "realTime": "true",
    "change_pct": "+0.05%"
   },
@@ -171,7 +171,7 @@
  ],
  "probe_coinbase": {
   "headers": {
-   "Date": "Wed, 14 Oct 2026 18:40:59 GMT",
+   "Date": "Wed, 14 Oct 2026 18:42:22 GMT",
    "access-control-allow-headers": "Authorization, Content-Type, Accept, Second-Factor-Proof-Token, Client-Id, Access-Token, X-Cb-Project-Name, X-Cb-Is-Logged-In, X-Cb-Platform, X-Cb-Session-Uuid, X-Cb-Pagekey, X-Cb-UJS, Fingerprint-Tokens, X-Cb-Device-Id, X-Cb-Version-Name, X-Subaccount-Uuid",
    "access-control-allow-methods": "GET,POST,DELETE,PUT",
    "access-control-allow-origin": "*",
@@ -180,8 +180,8 @@
    "access-control-max-age": "7200",
    "Cache-Control": "no-store"
   },
-  "ILS": "3.0978275",
-  "EUR": "0.8964783333333333"
+  "ILS": "3.0980125",
+  "EUR": "0.8964709929892737"
  },
  "log": [
   "ecb 2026-10-14",
