@@ -1,25 +1,24 @@
 {
- "started": "2026-10-14 06:29:52 UTC",
+ "started": "2026-10-14 06:36:27 UTC",
  "events": [
-  "published ru",
-  "  gemini gemini-flash-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
-  "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
-  "published am",
   "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
+  "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
+  "published ru",
+  "published am",
   "published fr",
   "  gemini gemini-flash-lite-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
   "  gemini: gemini quota used up",
   "published es"
  ],
  "langs": {
-  "ru": 1649,
-  "am": 1649,
-  "fr": 1649,
+  "ru": 1679,
+  "am": 1679,
+  "fr": 1679,
   "es": 1613
  },
- "finished": "2026-10-14 06:32:02 UTC",
+ "finished": "2026-10-14 06:37:24 UTC",
  "coverage": {
-  "am": 1649,
+  "am": 1679,
   "sq": 0,
   "hy": 0,
   "az": 0,
@@ -38,7 +37,7 @@
   "et": 0,
   "fil": 0,
   "fi": 0,
-  "fr": 1649,
+  "fr": 1679,
   "ka": 0,
   "de": 1532,
   "el": 0,
@@ -75,7 +74,7 @@
   "pa": 0,
   "ps": 0,
   "ro": 0,
-  "ru": 1649,
+  "ru": 1679,
   "sr": 0,
   "si": 0,
   "sk": 0,
@@ -97,5 +96,5 @@
   "yo": 0,
   "zu": 0
  },
- "total": 1649
+ "total": 1679
 }
