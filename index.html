@@ -892,6 +892,17 @@ body[data-tab="expenses"] .ghost-btn,body[data-tab="clients"] .ghost-btn,body[da
 .mv-cin{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:1.3rem;letter-spacing:.14em;text-transform:uppercase;text-align:center}
 .mvx textarea{width:100%}
 
+.acc-danger{margin-top:16px;padding-top:14px;border-top:1px dashed rgba(240,112,90,.4)}
+.acc-danger .del-open{width:100%;justify-content:center;gap:6px;min-height:44px;font-weight:600}
+.del-box{margin-top:10px;padding:14px;border:1px solid rgba(240,112,90,.5);border-radius:14px;background:rgba(240,112,90,.08)}
+.del-warn{font-weight:700;color:#F0705A;margin:0 0 6px}
+:root[data-theme="light"] .del-warn,:root[data-theme="light"] .acc-danger .btn.danger{color:#B53A2A}
+.del-list{margin:0 0 8px;padding-inline-start:20px;font-size:.93em;line-height:1.5}
+.del-list li{margin:2px 0}
+.del-box .fields{margin-top:6px}
+.btn.del-go{background:#D9483B;border-color:#D9483B;color:#fff;font-weight:700}
+.btn.del-go:disabled{opacity:.45;cursor:not-allowed}
+
 </style>
 </head>
 <body>
@@ -2805,7 +2816,21 @@ Object.assign(T, {
   mv_notFound:['לא נמצאה העברה עם הקוד הזה. ייתכן שהקוד התחלף — הקלידו את הקוד שמופיע עכשיו בטלפון הקודם.','لم يُعثر على نقل بهذا الرمز. ربما تغيّر الرمز — اكتب الرمز الظاهر الآن على الهاتف السابق.','No transfer was found for this code. It may have changed — type the code shown now on the old phone.'],
   mv_expired:['פג תוקף ההעברה. צרו קוד חדש בטלפון הקודם ושלחו שוב.','انتهت صلاحية النقل. أنشئ رمزًا جديدًا على الهاتف السابق وأرسل مجددًا.','This transfer has expired. Create a new code on the old phone and send again.'],
   mv_notPkg:['הדביקו את חבילת ההעברה מהטלפון הקודם (מתחילה ב-FINCALC).','الصق حزمة النقل من الهاتف السابق (تبدأ بـ FINCALC).','Paste the transfer package from the old phone (it starts with FINCALC).'],
-  mv_go:['קבלת החשבון','استلام الحساب','Receive the account']
+  mv_go:['קבלת החשבון','استلام الحساب','Receive the account'],
+  del_btn:['מחיקת חשבון ושם משתמש לצמיתות','حذف الحساب واسم المستخدم نهائيًا','Delete account and username permanently'],
+  del_warn:['הפעולה סופית ואי אפשר לבטל או לשחזר אותה. יימחקו:','هذا الإجراء نهائي ولا يمكن التراجع عنه أو استرجاعه. سيتم حذف:','This is final and cannot be undone or recovered. This deletes:'],
+  del_l1:['החשבון והסיסמה','الحساب وكلمة المرور','The account and its password'],
+  del_l2:['שם המשתמש {n}, שישתחרר ולא יהיה שמור לך יותר','اسم المستخدم {n}، وسيُحرَّر ولن يبقى محجوزًا لك','The username {n}, which is released and no longer reserved for you'],
+  del_l3:['כל הנתונים של החשבון במכשיר הזה: הגדרות, תרחישים, ערכים שמורים, הוצאות ולקוחות','كل بيانات الحساب على هذا الجهاز: الإعدادات والسيناريوهات والقيم المحفوظة والمصروفات والعملاء','All of the account’s data on this device: settings, scenarios, saved values, expenses and clients'],
+  del_l4:['הגיבוי בענן וקודי ההעברה לטלפון חדש','النسخة الاحتياطية في السحابة ورموز النقل إلى هاتف جديد','The cloud backup and the new-phone transfer codes'],
+  del_note:['אם החשבון הועבר גם לטלפון אחר, צריך למחוק אותו גם שם. נתונים שנשמרו בלי חשבון נשארים.','إذا نُقل الحساب أيضًا إلى هاتف آخر فيجب حذفه هناك أيضًا. البيانات المحفوظة بدون حساب تبقى.','If the account was also moved to another phone, delete it there too. Data saved without an account stays.'],
+  del_type:['לאישור, הקלידו את שם המשתמש {n}','للتأكيد، اكتب اسم المستخدم {n}','To confirm, type the username {n}'],
+  del_go:['מחיקה לצמיתות','حذف نهائي','Delete permanently'],
+  del_cancel:['ביטול','إلغاء','Cancel'],
+  del_nameBad:['שם המשתמש לא תואם. הקלידו בדיוק {n}.','اسم المستخدم غير مطابق. اكتب {n} بالضبط.','The username does not match. Type exactly {n}.'],
+  del_wait:['מוחק…','جارٍ الحذف…','Deleting…'],
+  del_cloudFail:['לא הצלחנו למחוק את הגיבוי בענן, ולכן לא נמחק כלום. בדקו את החיבור ונסו שוב.','تعذّر حذف النسخة الاحتياطية في السحابة، لذلك لم يُحذف شيء. تحقق من الاتصال وحاول مرة أخرى.','The cloud backup could not be deleted, so nothing was deleted. Check the connection and try again.'],
+  del_done:['החשבון ושם המשתמש {n} נמחקו לצמיתות.','تم حذف الحساب واسم المستخدم {n} نهائيًا.','The account and username {n} were permanently deleted.']
 });
 
 const t = (k, p) => {
@@ -3875,12 +3900,13 @@ function accountHTML(){
   const msg = '<p class="fine acc-msg" id="acc_msg" role="alert" aria-live="polite"></p>';
   const pwf = (id, lab, ac) => `<div class="field wide"><label for="${id}" data-i="${lab}"></label><input id="${id}" type="password" autocomplete="${ac}" class="lookup"></div>`;
   if (FUSER) return `<p class="acc-who"><span data-i="l_loggedAs"></span> <b id="acc_name"></b></p>
-    <div class="btnrow"><button type="button" class="gold-btn" id="mv_open" data-i="mv_tab"></button><button type="button" class="btn" id="acc_out" data-i="b_logout"></button><button type="button" class="btn" id="acc_del" data-i="b_delProfile"></button></div>
+    <div class="btnrow"><button type="button" class="gold-btn" id="mv_open" data-i="mv_tab"></button><button type="button" class="btn" id="acc_out" data-i="b_logout"></button></div>
     <details class="adv"><summary data-i="b_chgPw"></summary><div class="fields">${pwf('acc_cur','f_curPw','current-password')}${pwf('acc_new','f_newPw','new-password')}${pwf('acc_new2','f_newPw2','new-password')}</div>${PWREQ.replace('%ID%', 'acc_new')}
       <div class="btnrow"><button type="button" class="btn" id="acc_chg" data-i="b_chgPw"></button></div></details>
     <div class="field wide"><label for="acc_open" data-i="f_openSignup"></label><select id="acc_open"><option value="0" data-i="o_closed"></option><option value="1" data-i="o_open"></option></select><small class="hint" data-i="h_openSignup"></small></div>
     <div class="mvx" id="acc_f_mv" hidden></div>
-    ${msg}<p class="fine" data-i="h_account"></p>`;
+    ${msg}<p class="fine" data-i="h_account"></p>
+    <div class="acc-danger"><button type="button" class="btn danger del-open" id="del_open" aria-expanded="false" aria-controls="del_box">🗑️ <span data-i="del_btn"></span></button><div class="del-box" id="del_box" hidden></div></div>`;
   return `<div class="seg acc-seg" role="group"><button type="button" id="acc_tin" class="on" data-i="acc_signin"></button><button type="button" id="acc_tup" data-i="acc_signup"${signupAllowed() ? '' : ' hidden'}></button><button type="button" id="acc_tmv" data-i="mv_tab"></button></div>
     <div id="acc_f_in"><div class="field wide"><label for="acc_user" data-i="f_username"></label><input id="acc_user" type="text" maxlength="21" autocomplete="username" autocapitalize="none" spellcheck="false" dir="auto" class="lookup" placeholder="@"></div>
       ${pwf('acc_pass','f_password','current-password')}
@@ -7599,8 +7625,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "3.7", "date": "2026-10-14", "notes": {"he": "טלפון חדש בכפתור אחד עם מעבר בין שליחה לקבלה, וקוד העברה אישי שמתחלף כל 15 דקות.", "ar": "هاتف جديد بزر واحد مع التبديل بين الإرسال والاستلام، ورمز نقل شخصي يتغيّر كل 15 دقيقة.", "en": "New phone in one button with a switch between send and receive, and a personal transfer code that changes every 15 minutes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.103745';
+var CHANGELOG = [{"v": "3.8", "date": "2026-10-14", "notes": {"he": "מחיקת חשבון ושם משתמש לצמיתות בכפתור נפרד בהגדרות החשבון, עם אישור בסיסמה ובהקלדת שם המשתמש.", "ar": "حذف الحساب واسم المستخدم نهائيًا بزر منفصل في إعدادات الحساب، مع التأكيد بكلمة المرور وكتابة اسم المستخدم.", "en": "Delete the account and username permanently with a separate button in account settings, confirmed by password and typing the username."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.105020';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -8324,8 +8350,8 @@ async function mvCloudInit(){
 }
 function mvDoc(name){ return MV.db.collection('data/users/' + MV.uid).doc('acc-' + txHash(String(name).toLowerCase())); }
 async function mvCloudSave(){
-  if (!FUSER || !(await mvCloudInit())) return;
-  const pkg = await mvPackage(); if (!pkg || pkg === MV.last) return;
+  if (!FUSER || MV.dead || !(await mvCloudInit())) return;
+  const pkg = await mvPackage(); if (MV.dead) return; if (!pkg || pkg === MV.last) return;
   try { await mvDoc(FUSER).set({p: pkg, at: Date.now()}); MV.last = pkg;  } catch (e) {  }
 }
 persistNow = async function(){ await persistNow0.apply(this, arguments); if (FUSER && IN_CLAUDE){ clearTimeout(MV.timer); MV.timer = setTimeout(mvCloudSave, 20000); } };
@@ -8368,7 +8394,7 @@ async function mvIssue(){
   if (await mvCloudInit()){
     try { if (MV.cloudKey) await MV.db.collection('data/users/' + MV.uid).doc(MV.cloudKey).delete(); } catch (e) {}
     MV.cloudKey = 'xfer-' + txHash(MV.code);
-    try { await MV.db.collection('data/users/' + MV.uid).doc(MV.cloudKey).set({p: MV.pkg, exp: MV.exp}); } catch (e) { MV.cloudKey = ''; }
+    try { await MV.db.collection('data/users/' + MV.uid).doc(MV.cloudKey).set({p: MV.pkg, exp: MV.exp, n: txHash(String(FUSER).toLowerCase())}); } catch (e) { MV.cloudKey = ''; }
   }
   mvRender();
 }
@@ -8454,6 +8480,75 @@ document.addEventListener('change', e => {
   if (e.target.id !== 'mv_pick' || !e.target.files || !e.target.files[0]) return;
   const r = new FileReader(); r.onload = () => { $('#mv_txt').value = String(r.result || ''); const c = $('#mv_code_in'); if (c && !c.value) c.focus(); }; r.readAsText(e.target.files[0]);
 });
+
+/* permanent delete: account + username + all its data, here and in the cloud. Password and typed username are required. */
+const DEL_N = () => '⁨@' + FUSER + '⁩';
+function delSt(k, cls, p){ const el = $('#del_st'); if (el){ el.className = 'gk-st ' + (cls || ''); el.textContent = k ? t(k, p) : ''; } }
+function delReady(){ const go = $('#del_go'); if (go) go.disabled = !(hdNorm(($('#del_name') || {}).value) === FUSER && (($('#del_pw') || {}).value || '').length > 0); }
+function delRender(){
+  const box = $('#del_box'); if (!box || box.hidden || !FUSER) return;
+  const keep = {pw: ($('#del_pw') || {}).value || '', nm: ($('#del_name') || {}).value || ''};
+  const li = ['del_l1', 'del_l2', 'del_l3'].concat(IN_CLAUDE ? ['del_l4'] : []);
+  box.innerHTML = `<p class="del-warn">⚠️ ${asEsc(t('del_warn'))}</p>
+    <ul class="del-list">${li.map(k => `<li>${asEsc(t(k, {n: DEL_N()}))}</li>`).join('')}</ul>
+    <p class="fine">${asEsc(t('del_note'))}</p>
+    <div class="fields">
+      <div class="field wide"><label for="del_pw">${asEsc(t('f_curPw'))}</label><input id="del_pw" type="password" autocomplete="current-password" class="lookup"></div>
+      <div class="field wide"><label for="del_name">${asEsc(t('del_type', {n: DEL_N()}))}</label><input id="del_name" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" dir="ltr" class="lookup" placeholder="@${asEsc(FUSER)}"></div>
+    </div>
+    <div class="btnrow"><button type="button" class="btn del-go" id="del_go" disabled>🗑️ ${asEsc(t('del_go'))}</button><button type="button" class="btn" id="del_cancel">${asEsc(t('del_cancel'))}</button></div>
+    <p class="gk-st" id="del_st" role="alert" aria-live="polite"></p>`;
+  $('#del_pw').value = keep.pw; $('#del_name').value = keep.nm; delReady();
+}
+function delToggle(open){
+  const box = $('#del_box'), b = $('#del_open'); if (!box) return;
+  box.hidden = !open; if (b) b.setAttribute('aria-expanded', String(open));
+  if (open){ box.innerHTML = ''; delRender(); box.scrollIntoView({block: 'nearest', behavior: SET.motion === 'reduce' ? 'auto' : 'smooth'}); const pw = $('#del_pw'); if (pw) pw.focus(); }
+  else box.innerHTML = '';
+}
+async function doDelete(){
+  const nm = FUSER; if (!nm) return;
+  const go = $('#del_go'), pw = ($('#del_pw') || {}).value || '';
+  if (hdNorm(($('#del_name') || {}).value) !== nm) return delSt('del_nameBad', 'bad', {n: DEL_N()});
+  if (!(window.crypto && crypto.subtle)) return delSt('m_nocrypto', 'bad');
+  const lk = lockLeft(nm); if (lk > 0) return delSt('m_lock', 'bad', {s: lk});
+  const rec = getAcc(nm); if (!rec) return;
+  if (go) go.disabled = true; delSt('del_wait', 'wait');
+  let ok = false; try { ok = (await hashPw(pw, u8(rec.salt), rec.iter || 200000)) === rec.hash; } catch (e) {}
+  noteFail(nm, ok);
+  if (!ok){ delReady(); return delSt('m_bad', 'bad'); }
+  MV.dead = true; clearTimeout(MV.timer); clearInterval(MV.tick);
+  if (IN_CLAUDE){                       // cloud first: if it cannot be removed, nothing is removed
+    let fail = false;
+    if (await mvCloudInit()){
+      const col = MV.db.collection('data/users/' + MV.uid), h = txHash(nm.toLowerCase()), now = Date.now();
+      try { await mvDoc(nm).delete(); } catch (e) { fail = true; }
+      let listed = false;
+      try { const q = await col.get(); listed = true;
+        for (const d of (q.docs || [])){ if (String(d.id).indexOf('xfer-') !== 0) continue; const x = (d.data && d.data()) || {};
+          if (x.n === h || d.id === MV.cloudKey || !x.exp || x.exp < now) await col.doc(d.id).delete(); } } catch (e) { if (listed) fail = true; }
+      if (!listed && MV.cloudKey){ try { await col.doc(MV.cloudKey).delete(); } catch (e) { fail = true; } }
+    }
+    if (!fail) try { if (!HD.ready) await hdInit(); if (HD.ready){ const ref = HD.db.doc('claims/' + HD.uid), s = await ref.get(); if (s.exists && (s.data() || {}).handle === nm) await ref.delete(); } } catch (e) { fail = true; }
+    if (fail){ MV.dead = false; delReady(); return delSt('del_cloudFail', 'bad'); }
+  }
+  const sfx = ':' + ENC_NAME(nm);
+  try { RAWLS.removeItem(accKey(nm)); RAWLS.removeItem(encName(nm)); RAWLS.removeItem('fin-fail:' + accKey(nm)); DATA_KEYS.forEach(k => RAWLS.removeItem(k + sfx)); } catch (e) {}
+  clearSession();
+  try { SS.setItem('fin-del-ok', nm); } catch (e) {}
+  try { location.reload(); } catch (e) {}
+}
+document.addEventListener('click', e => {
+  const el = e.target;
+  if (el.closest('#del_open')){ const box = $('#del_box'); delToggle(!!(box && box.hidden)); return; }
+  if (el.closest('#del_cancel')){ delToggle(false); const b = $('#del_open'); if (b) b.focus(); return; }
+  if (el.closest('#del_go')) doDelete();
+});
+document.addEventListener('input', e => { if (e.target.id === 'del_name' || e.target.id === 'del_pw'){ delReady(); delSt(''); } });
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.target.id === 'del_name' || e.target.id === 'del_pw')){ e.preventDefault(); const go = $('#del_go'); if (go && !go.disabled) doDelete(); } });
+const _alDel = applyLang;
+applyLang = function(){ const r = _alDel.apply(this, arguments); delRender(); return r; };
+try { const gone = SS.getItem('fin-del-ok'); if (gone){ SS.removeItem('fin-del-ok'); setTimeout(() => { const n = '⁨@' + gone + '⁩'; toast(t('del_done', {n})); const m = $('#acc_msg'); if (m){ m.className = 'fine acc-msg ok'; m.textContent = t('del_done', {n}); } }, 700); } } catch (e) {}
 
 applyLang(false);
 activate(tab);
