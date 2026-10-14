@@ -769,6 +769,25 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
 .cs-pv .ck{transform:scale(.46);transform-origin:center;width:217%;flex:none}
 .cs-pv .ck-min{transform:scale(.62);width:160%}
 .cs-off{font-size:2rem;color:var(--ink-2)}
+.iv-search{display:flex;gap:8px}
+.iv-search input{flex:1;min-width:0;font:inherit;padding:9px 12px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--ink)}
+.iv-search .gold-btn{padding:9px 16px}
+.iv-chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.iv-chips .as-chip{flex:none}
+.c-pink{background:linear-gradient(160deg,#FF8FB1,#D9487A)}
+.fb-box{width:min(560px,100%)}
+.fb-box form{display:flex;flex-direction:column;gap:10px;overflow:auto}
+.fb-types{display:flex;flex-wrap:wrap}
+.fb-types button{font-size:.88rem;padding:7px 12px}
+.fb-rate{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--ink-2);font-size:.92rem}
+.fb-stars{display:flex;gap:2px;direction:ltr}
+.fb-star{appearance:none;border:0;background:none;font-size:1.7rem;line-height:1;cursor:pointer;color:color-mix(in srgb,var(--ink-2) 40%,transparent);padding:2px}
+.fb-star.on{color:var(--gold-ui)}
+.fb-star:focus-visible{outline:2px solid var(--focus);border-radius:6px}
+.fb-l{font-weight:600;font-size:.92rem}
+.fb-box textarea,.fb-box input[type=text]{font:inherit;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--ink);resize:vertical}
+.fb-hp{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+.fb-send{align-self:flex-start;min-width:120px}
 
 </style>
 </head>
@@ -2576,6 +2595,26 @@ Object.assign(T, {
   cs_minimal:['מינימלי','بسيط','Minimal'], cs_minimalS:['שורה אחת קטנה ושקטה','سطر واحد صغير وهادئ','One small, quiet line'],
   cs_off:['בלי שעון','بدون ساعة','No clock'], cs_offS:['מסך הבית בלי שעון ותאריך','الشاشة الرئيسية بلا ساعة وتاريخ','Home screen without the clock'],
   ck_heb:['עברי','عبري','Hebrew'], ck_hijri:['היג׳רי','هجري','Hijri'], ck_greg:['לועזי','ميلادي','Gregorian']
+});
+Object.assign(T, {
+  iv_search_ph:['חיפוש ב-Investing.com: מניה, מטבע, מדד או קריפטו','ابحث في Investing.com: سهم، عملة، مؤشر أو عملة مشفّرة','Search Investing.com: a stock, currency, index or crypto'],
+  iv_search:['חיפוש','بحث','Search'],
+  ivq_usdils:['דולר/שקל','دولار/شيكل','USD/ILS'], ivq_eurils:['אירו/שקל','يورو/شيكل','EUR/ILS'], ivq_ta35:['ת״א 35','تل أبيب 35','TA-35'], ivq_btc:['ביטקוין','بيتكوين','Bitcoin'], ivq_gold:['זהב','الذهب','Gold'], ivq_spx:['S&P 500','S&P 500','S&P 500'], ivq_ndx:['נאסד״ק 100','ناسداك 100','Nasdaq 100'], ivq_oil:['נפט ברנט','نفط برنت','Brent oil'],
+  fb_title:['משוב','ملاحظات','Feedback'], fb_row:['שליחת משוב','إرسال ملاحظات','Send feedback'], fb_rowS:['רעיון, תקלה או מחמאה — נשלח ישירות ליוצר האפליקציה','فكرة أو خلل أو إطراء — يصل مباشرة إلى صاحب التطبيق','An idea, a bug or praise — goes straight to the app\'s creator'],
+  fb_t_idea:['רעיון','فكرة','Idea'], fb_t_bug:['תקלה','خلل','Bug'], fb_t_praise:['מחמאה','إطراء','Praise'], fb_t_other:['אחר','أخرى','Other'],
+  fb_rate:['כמה האפליקציה עוזרת לך?','إلى أي حد يساعدك التطبيق؟','How much does the app help you?'],
+  fb_msg:['מה תרצו לספר?','ماذا تودّ أن تخبرنا؟','What would you like to tell us?'], fb_ph:['כתבו כאן…','اكتب هنا…','Write here…'],
+  fb_contact:['שם או אימייל לתשובה (לא חובה)','الاسم أو البريد للرد (اختياري)','Name or email for a reply (optional)'],
+  fb_send:['שליחה','إرسال','Send'], fb_sending:['שולח…','جارٍ الإرسال…','Sending…'],
+  fb_ok:['תודה! המשוב נשלח.','شكرًا! تم إرسال الملاحظات.','Thank you! Your feedback was sent.'],
+  fb_err:['השליחה נכשלה. בדקו את החיבור לאינטרנט ונסו שוב.','فشل الإرسال. تحقّق من الاتصال وحاول مجددًا.','Sending failed. Check your connection and try again.'],
+  fb_empty:['כתבו כמה מילים לפני השליחה.','اكتب بضع كلمات قبل الإرسال.','Write a few words before sending.'],
+  fb_wait:['אפשר לשלוח שוב בעוד חצי דקה.','يمكن الإرسال مجددًا بعد نصف دقيقة.','You can send again in half a minute.'],
+  fb_off:['המשוב עוד לא מחובר לתיבת הדואר. נסו שוב מאוחר יותר.','لم تُربط الملاحظات بالبريد بعد. حاول لاحقًا.','Feedback is not connected to the inbox yet. Please try again later.'],
+  fb_inApp:['מתוך Claude אי אפשר לשלוח החוצה. אפשר לשלוח את המשוב מהאתר:','لا يمكن الإرسال إلى الخارج من داخل Claude. أرسل الملاحظات من الموقع:','Messages cannot leave the app inside Claude. Send your feedback from the website:'],
+  fb_site:['משוב באתר','الملاحظات في الموقع','Feedback on the website'],
+  fb_anon:['משתמש באפליקציה','مستخدم التطبيق','App user'],
+  fb_note:['יחד עם ההודעה נשלחים גרסת האפליקציה, השפה והמסך שבו הייתם, כדי שיהיה קל לבדוק. כתובת המייל של יוצר האפליקציה לא מופיעה באפליקציה.','مع الرسالة تُرسل نسخة التطبيق واللغة والشاشة التي كنت فيها لتسهيل الفحص. بريد صاحب التطبيق لا يظهر في التطبيق.','Your message is sent with the app version, language and the screen you were on, to make checking easy. The creator\'s email address never appears in the app.']
 });
 
 const t = (k, p) => {
@@ -7043,8 +7082,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "3.1", "date": "2026-10-14", "notes": {"he": "שעון עם תאריך לועזי ותאריך עברי במסך הבית, בחמישה סגנונות לבחירה בהגדרות.", "ar": "ساعة مع التاريخ الميلادي والعبري في الشاشة الرئيسية، بخمسة أنماط للاختيار في الإعدادات.", "en": "A clock with the Gregorian and Hebrew dates on the home screen, in five styles to choose from in Settings."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.093920';
+var CHANGELOG = [{"v": "3.2", "date": "2026-10-14", "notes": {"he": "משוב מתוך האפליקציה שנשלח ישירות ליוצר בלי לחשוף את המייל שלו, וחיפוש ב-Investing.com בלוח השערים החיים.", "ar": "ملاحظات من داخل التطبيق تصل مباشرة إلى صاحبه دون كشف بريده، وبحث في Investing.com داخل لوحة الأسعار الحيّة.", "en": "In-app feedback that goes straight to the creator without revealing their email, and Investing.com search in the live board."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.094512';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -7524,6 +7563,8 @@ function ivEnsure(){
   if ($('#ivx')) return;
   document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="ivx" hidden><div class="cp-box iv-box" role="dialog" aria-modal="true" aria-labelledby="iv_t">
     <div class="cp-top"><h3 id="iv_t"></h3><button type="button" class="cp-x" id="iv_x">×</button></div>
+    <form class="iv-search" id="iv_sf" role="search"><input id="iv_q" type="search" autocomplete="off" enterkeyhint="search"><button type="submit" class="gold-btn" id="iv_go"></button></form>
+    <div class="iv-chips" id="iv_chips"></div>
     <div class="seg iv-tabs" id="iv_tabs" role="tablist"></div>
     <div class="iv-tools"><button type="button" class="iv-z" data-ivz="-1" id="iv_zm">−</button><span class="iv-zv" id="iv_zv"></span><button type="button" class="iv-z" data-ivz="1" id="iv_zp">+</button><button type="button" class="iv-z iv-fit" data-ivz="0" id="iv_zf"></button></div>
     <div class="iv-frame" id="iv_frame"></div>
@@ -7536,11 +7577,15 @@ function ivEnsure(){
     const zb = e.target.closest('[data-ivz]'); if (zb) ivZoomStep(+zb.dataset.ivz);
   });
   window.addEventListener('resize', () => { if (!ov.hidden) ivFit(); });
+  $('#iv_sf').addEventListener('submit', e => { e.preventDefault(); ivSearch($('#iv_q').value); });
+  $('#iv_chips').addEventListener('click', e => { const c = e.target.closest('[data-ivs]'); if (c) ivSearch(c.dataset.ivs); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !ov.hidden) ivClose(); });
 }
 function ivRender(){
   const tab = IV_TABS.find(x => x.k === IV_CUR) || IV_TABS[0];
   $('#iv_t').textContent = t('iv_title');
+  $('#iv_q').placeholder = t('iv_search_ph'); $('#iv_q').setAttribute('aria-label', t('iv_search_ph')); $('#iv_go').textContent = t('iv_search');
+  $('#iv_chips').innerHTML = IV_QUICK.map(([k, q]) => `<button type="button" class="as-chip" data-ivs="${asEsc(q)}">${asEsc(t(k))}</button>`).join('');
   $('#iv_x').setAttribute('aria-label', t('iv_close'));
   $('#iv_tabs').innerHTML = IV_TABS.map(x => `<button type="button" role="tab" data-ivt="${x.k}" aria-pressed="${x.k === tab.k}" aria-selected="${x.k === tab.k}">${asEsc(t('iv_t_' + x.k))}</button>`).join('');
   const src = tab.w.replace('{th}', ivTheme()).replace('{lg}', ivLang());
@@ -7710,6 +7755,91 @@ setInterval(() => { if (document.hidden) return; if (tab === 'home') clockRender
 const _alCk = applyLang;
 applyLang = function(){ const r = _alCk.apply(this, arguments); CK_KEY = ''; const b = $('#cstyles'); if (b) b.dataset.k = ''; clockRender(); return r; };
 clockRender();
+
+/* Investing.com search: their pages cannot be shown inside the app, so results open on Investing.com itself */
+var IV_QUICK = [['ivq_usdils', 'USD/ILS'], ['ivq_ta35', 'TA 35'], ['ivq_btc', 'Bitcoin'], ['ivq_gold', 'Gold'], ['ivq_spx', 'S&P 500'], ['ivq_ndx', 'Nasdaq 100'], ['ivq_oil', 'Brent Oil'], ['ivq_eurils', 'EUR/ILS']];
+function ivHost(){ return {he: 'il', ar: 'sa', ru: 'ru', es: 'es', fr: 'fr', de: 'de', it: 'it', 'pt-BR': 'br', 'pt-PT': 'br', tr: 'tr', ja: 'jp', 'zh-CN': 'cn', 'zh-TW': 'hk', ko: 'kr', pl: 'pl', id: 'id', ms: 'my', vi: 'vn', th: 'th', hi: 'in', el: 'gr', sv: 'se', fi: 'fi', nl: 'nl'}[lang] || 'www'; }
+function ivSearch(q){
+  q = String(q || '').trim(); if (!q) { const i = $('#iv_q'); if (i) i.focus(); return; }
+  window.open('https://' + ivHost() + '.investing.com/search/?q=' + encodeURIComponent(q), '_blank', 'noopener');
+}
+
+/* ---- feedback: sent to the app owner's inbox through a form service; the address never appears in the app ---- */
+var FB_KEY = '';                 // Web3Forms access key (public by design: it does not reveal the email address)
+var FB_SITE = 'https://ysdesign-il.github.io/financial-calculator/#feedback';
+var FB = {type: 'idea', rate: 0, last: 0};
+function fbEnsure(){
+  if ($('#fbx')) return;
+  document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="fbx" hidden><div class="cp-box fb-box" role="dialog" aria-modal="true" aria-labelledby="fb_t">
+    <div class="cp-top"><h3 id="fb_t"></h3><button type="button" class="cp-x" id="fb_x">×</button></div>
+    <form id="fb_form" novalidate>
+      <div class="seg fb-types" id="fb_types" role="radiogroup"></div>
+      <div class="fb-rate"><span id="fb_rl"></span><div class="fb-stars" id="fb_stars" role="radiogroup"></div></div>
+      <label class="fb-l" for="fb_msg" id="fb_ml"></label>
+      <textarea id="fb_msg" rows="5" maxlength="2000" required></textarea>
+      <label class="fb-l" for="fb_who" id="fb_wl"></label>
+      <input id="fb_who" type="text" maxlength="120" autocomplete="email" dir="auto">
+      <input type="checkbox" name="botcheck" id="fb_bot" class="fb-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button type="submit" class="gold-btn fb-send" id="fb_send"></button>
+      <p class="gk-st" id="fb_st" role="status" aria-live="polite"></p>
+      <p class="fine" id="fb_note"></p>
+    </form></div></div>`);
+  const ov = $('#fbx');
+  ov.addEventListener('click', e => {
+    if (e.target === ov || e.target.closest('#fb_x')) return fbClose();
+    const ty = e.target.closest('[data-fbt]'); if (ty){ FB.type = ty.dataset.fbt; fbRender(); }
+    const st = e.target.closest('[data-fbr]'); if (st){ FB.rate = +st.dataset.fbr === FB.rate ? 0 : +st.dataset.fbr; fbRender(); }
+  });
+  ov.addEventListener('keydown', e => { if (e.key === 'Escape') fbClose(); });
+  $('#fb_form').addEventListener('submit', e => { e.preventDefault(); fbSend(); });
+}
+function fbRender(){
+  $('#fb_t').textContent = t('fb_title');
+  $('#fb_types').innerHTML = ['idea', 'bug', 'praise', 'other'].map(k => `<button type="button" role="radio" data-fbt="${k}" aria-pressed="${FB.type === k}" aria-checked="${FB.type === k}">${asEsc(t('fb_t_' + k))}</button>`).join('');
+  $('#fb_rl').textContent = t('fb_rate');
+  $('#fb_stars').innerHTML = [1, 2, 3, 4, 5].map(n => `<button type="button" role="radio" class="fb-star${n <= FB.rate ? ' on' : ''}" data-fbr="${n}" aria-checked="${n === FB.rate}" aria-label="${n}/5">★</button>`).join('');
+  $('#fb_ml').textContent = t('fb_msg'); $('#fb_msg').placeholder = t('fb_ph');
+  $('#fb_wl').textContent = t('fb_contact');
+  $('#fb_send').textContent = t('fb_send');
+  $('#fb_note').textContent = t('fb_note');
+}
+function fbStatus(k, cls){ const s = $('#fb_st'); s.className = 'gk-st ' + (cls || ''); s.innerHTML = k ? asEsc(t(k)) + (k === 'fb_inApp' ? ` <a class="src-a" href="${FB_SITE}" target="_blank" rel="noopener">${asEsc(t('fb_site'))} ↗</a>` : '') : ''; }
+function fbOpen(){
+  fbEnsure(); fbRender(); fbStatus(FB_KEY ? '' : 'fb_off', FB_KEY ? '' : 'new');
+  $('#fbx').hidden = false; document.body.classList.add('cp-lock');
+  setTimeout(() => { const m = $('#fb_msg'); if (m) m.focus(); }, 40);
+}
+function fbClose(){ const o = $('#fbx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); } }
+async function fbSend(){
+  const msg = $('#fb_msg').value.trim(), who = $('#fb_who').value.trim();
+  if ($('#fb_bot').checked) return fbStatus('fb_ok', 'ok');                        // a bot filled the hidden box
+  if (msg.length < 3){ fbStatus('fb_empty', 'bad'); $('#fb_msg').focus(); return; }
+  if (!FB_KEY){ fbStatus('fb_off', 'new'); return; }
+  if (Date.now() - FB.last < 30000){ fbStatus('fb_wait', 'new'); return; }
+  const btn = $('#fb_send'); btn.disabled = true; fbStatus('fb_sending', 'wait');
+  const body = {access_key: FB_KEY, subject: '[' + t('appTitle') + '] ' + t('fb_t_' + FB.type) + (FB.rate ? ' · ' + '★'.repeat(FB.rate) : '') + ' · v' + APP_VER,
+    from_name: who || t('fb_anon'), message: msg, contact: who || '-', type: FB.type, rating: FB.rate ? FB.rate + '/5' : '-',
+    version: APP_VER + ' (' + APP_BUILD + ')', language: lang, screen: tab + (SCAT ? '/' + SCAT : ''), theme: SET.theme, place: IN_CLAUDE ? 'claude.ai' : location.host, device: (navigator.userAgent || '').slice(0, 160)};
+  try {
+    const r = await fetch('https://api.web3forms.com/submit', {method: 'POST', headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}, body: JSON.stringify(body)});
+    let j = null; try { j = await r.json(); } catch (e) {}
+    if (!r.ok || !j || !j.success) throw new Error('fail');
+    FB.last = Date.now(); FB.rate = 0; $('#fb_msg').value = ''; fbRender(); fbStatus('fb_ok', 'ok');
+  } catch (e) {
+    fbStatus(e instanceof TypeError && IN_CLAUDE ? 'fb_inApp' : 'fb_err', 'bad');
+  } finally { btn.disabled = false; }
+}
+document.addEventListener('click', e => { if (e.target.closest('[data-fbopen]')) fbOpen(); });
+(function fbHub(){
+  const hub = $('#set_hub'); if (!hub || $('[data-fbopen]', hub)) return;
+  hub.insertAdjacentHTML('beforeend', `<div class="sh-group"><button type="button" class="sh-row" data-fbopen="1">
+    <span class="sh-ic c-pink"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg></span>
+    <span class="sh-tx"><b data-i="fb_row">${t('fb_row')}</b><small data-i="fb_rowS">${t('fb_rowS')}</small></span>
+    <svg class="sh-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>`);
+})();
+function fbHash(){ if (location.hash === '#feedback'){ try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} fbOpen(); } }
+setTimeout(fbHash, 600);
+window.addEventListener('hashchange', fbHash);
 
 applyLang(false);
 activate(tab);
