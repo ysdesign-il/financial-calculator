@@ -958,6 +958,26 @@ a.gold-btn.rc-open{display:inline-flex;align-items:center;justify-content:center
 .up-fields{grid-template-columns:1fr 1fr}
 .up-fields select{width:100%;font:inherit;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--field,transparent);color:var(--ink)}
 .field input[type="date"]{width:100%;font:inherit;min-height:44px;border:0;background:transparent;color:var(--ink)}
+.se-box{display:flex;flex-direction:column;gap:8px}
+.se-intro{margin:0}
+.se-h{margin:8px 0 0;font-size:.95rem}
+.se-row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto;gap:8px;align-items:center}
+.se-row.se-cust{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto 38px}
+.se-l{font-size:.9rem;font-weight:600}
+.se-a{min-width:0}.se-a input{min-width:0}
+.se-row select{font:inherit;font-size:.85rem;padding:9px 6px;border-radius:12px;border:1px solid var(--line);background:var(--field,transparent);color:var(--ink)}
+.se-row .se-name{font-size:.9rem;padding:9px 10px;font-weight:600}
+.se-calc{font-size:1rem;color:#1f9d6b}
+.se-tog{appearance:none;align-self:flex-start;background:none;border:0;padding:2px 0 6px;color:var(--accent,#4F8CFF);font:inherit;font-size:.85rem;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.se-fuel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:8px;border:1px dashed var(--line);border-radius:12px}
+.se-fuel .field{margin:0;min-width:0}
+.se-sum{margin:4px 0 0;font-weight:700}
+.se-row{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr) auto}
+.se-row.se-cust{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr) auto 38px}
+.se-row select{padding:9px 4px;max-width:78px}
+.se-box .control input{min-width:0;width:100%;padding-inline:8px}
+.se-fuel{grid-template-columns:repeat(2,minmax(0,1fr))}
+.se-fuel .field:last-child{grid-column:1 / -1}
 
 </style>
 </head>
@@ -3245,7 +3265,24 @@ Object.assign(T, {
   t_wdHol:['החגים בתקופה','العطل في الفترة','Holidays in the period'], r_wdHolName:['חג','العطلة','Holiday'], r_wdDate:['תאריך','التاريخ','Date'],
   hol_rh:['ראש השנה','رأس السنة العبرية','Rosh Hashanah'], hol_rh2:['ראש השנה (יום ב׳)','رأس السنة (اليوم الثاني)','Rosh Hashanah (day 2)'], hol_yk:['יום כיפור','يوم الغفران','Yom Kippur'], hol_suk:['סוכות','عيد العرش','Sukkot'],
   hol_st:['שמחת תורה','فرحة التوراة','Simchat Torah'], hol_pes:['פסח','عيد الفصح العبري','Passover'], hol_pes7:['שביעי של פסח','اليوم السابع من الفصح','Seventh day of Passover'], hol_shav:['שבועות','عيد الأسابيع','Shavuot'], hol_ind:['יום העצמאות','يوم الاستقلال','Independence Day'],
-  n_wd:['ימי מנוחה בישראל שנספרים כחג: ראש השנה (2), יום כיפור, סוכות, שמחת תורה, פסח (ראשון ושביעי), שבועות ויום העצמאות. ערבי חג, חול המועד ובחירות לא נספרים, וכדאי לבדוק את ההסכם במקום העבודה.','أيام الراحة في إسرائيل المحسوبة كعطل: رأس السنة (2)، الغفران، العرش، فرحة التوراة، الفصح (الأول والسابع)، الأسابيع ويوم الاستقلال. عشية الأعياد وأيام منتصف العيد والانتخابات لا تُحتسب، وتحقق من اتفاق العمل.','Israeli rest days counted as holidays: Rosh Hashanah (2), Yom Kippur, Sukkot, Simchat Torah, Passover (first and seventh), Shavuot and Independence Day. Holiday eves, intermediate days and election days are not counted, so check your work agreement.']
+  n_wd:['ימי מנוחה בישראל שנספרים כחג: ראש השנה (2), יום כיפור, סוכות, שמחת תורה, פסח (ראשון ושביעי), שבועות ויום העצמאות. ערבי חג, חול המועד ובחירות לא נספרים, וכדאי לבדוק את ההסכם במקום העבודה.','أيام الراحة في إسرائيل المحسوبة كعطل: رأس السنة (2)، الغفران، العرش، فرحة التوراة، الفصح (الأول والسابع)، الأسابيع ويوم الاستقلال. عشية الأعياد وأيام منتصف العيد والانتخابات لا تُحتسب، وتحقق من اتفاق العمل.','Israeli rest days counted as holidays: Rosh Hashanah (2), Yom Kippur, Sukkot, Simchat Torah, Passover (first and seventh), Shavuot and Independence Day. Holiday eves, intermediate days and election days are not counted, so check your work agreement.'],
+  /* owner-only live connections */
+  sc_connAi:['עוזר AI','مساعد الذكاء الاصطناعي','AI assistant'],
+  sc_connAiS:['בחירת מודל AI ומפתח Gemini','اختيار نموذج الذكاء الاصطناعي ومفتاح Gemini','Choose the AI model and Gemini key'],
+  /* salary costs */
+  g_salExp:['הוצאות מהנטו: רכב, דלק ועוד','مصاريف من الصافي: سيارة ووقود وغيرها','Costs out of net pay: car, fuel and more'],
+  se_intro:['מה יוצא כל חודש מהמשכורת, כדי לראות כמה באמת נשאר. אפשר להזין לחודש או לשנה.','ما يخرج من الراتب كل شهر لترى كم يبقى فعلًا. يمكن الإدخال شهريًا أو سنويًا.','What leaves your pay each month, to see what is really left. Enter per month or per year.'],
+  se_carT:['רכב ודלק','السيارة والوقود','Car and fuel'], se_otherT:['נסיעות והוצאות אישיות','المواصلات والمصاريف الشخصية','Travel and personal costs'],
+  se_fuel:['דלק','الوقود','Fuel'], se_carloan:['הלוואה או ליסינג לרכב','قرض أو تأجير للسيارة','Car loan or lease'], se_carins:['ביטוח רכב (חובה ומקיף)','تأمين السيارة (إلزامي وشامل)','Car insurance (mandatory and comprehensive)'],
+  se_license:['טסט ורישוי','الفحص والترخيص','Annual test and license'], se_service:['טיפולים ותיקונים','الصيانة والتصليحات','Service and repairs'], se_parking:['חניה','موقف السيارة','Parking'],
+  se_tolls:['כביש 6 ואגרות','الشارع 6 والرسوم','Highway 6 and tolls'], se_transit:['תחבורה ציבורית','المواصلات العامة','Public transport'],
+  se_per:['תקופה','الفترة','Period'], se_perM:['לחודש','شهريًا','a month'], se_perY:['לשנה','سنويًا','a year'],
+  se_fuelByKm:['חישוב הדלק לפי ק״מ','حساب الوقود حسب الكيلومترات','Work out fuel from km'], se_fuelManual:['להקליד סכום דלק בעצמי','إدخال مبلغ الوقود يدويًا','Type the fuel amount myself'],
+  se_km:['ק״מ בחודש','كم في الشهر','km a month'], se_cons:['ליטר ל-100 ק״מ','لتر لكل 100 كم','liters per 100 km'], se_price:['מחיר לליטר','السعر للتر','Price per liter'],
+  se_custom:['הוצאה אישית','مصروف شخصي','Personal cost'], se_customPh:['שם ההוצאה, למשל ביטוח בריאות','اسم المصروف، مثلًا تأمين صحي','Name, e.g. health insurance'], se_customName:['שם ההוצאה','اسم المصروف','Cost name'],
+  se_add:['הוספת הוצאה אישית','إضافة مصروف شخصي','Add a personal cost'], se_sum:['סך ההוצאות בחודש: {x}','مجموع المصاريف شهريًا: {x}','Total costs a month: {x}'],
+  r_seCar:['הוצאות רכב ודלק','مصاريف السيارة والوقود','Car and fuel costs'], r_seOther:['נסיעות והוצאות אישיות','المواصلات والمصاريف الشخصية','Travel and personal costs'],
+  r_seLeft:['נשאר בכיס אחרי ההוצאות','يبقى في الجيب بعد المصاريف','Left after costs'], r_seShare:['ההוצאות מתוך הנטו','المصاريف من الصافي','Costs as share of net'], r_seLeftS:['נשאר אחרי הוצאות {x}','يبقى بعد المصاريف {x}','{x} left after costs']
 });
 
 const t = (k, p) => {
@@ -3839,7 +3876,8 @@ const DEFS = {
     {id:'s_benefit', label:'f_benefit', unit:'ils', val:0, adv:'g_benefits', hint:'h_benefit'},
     {id:'s_erPens', label:'f_erPens', unit:'%', val:6.5, adv:'g_benefits'},
     {id:'s_erSev', label:'f_erSev', unit:'%', val:6, adv:'g_benefits'},
-    {id:'s_erStudy', label:'f_erStudy', unit:'%', val:0, adv:'g_benefits'}
+    {id:'s_erStudy', label:'f_erStudy', unit:'%', val:0, adv:'g_benefits'},
+    {type:'html', id:'se_box', cls:'se-box', adv:'g_salExp'}
   ].concat(creditDefs('s')),
   selfemp: [
     {id:'e_rev', label:'f_revenue', unit:'ils', val:300000, wide:true},
@@ -5322,6 +5360,7 @@ function calcSalary(){
   rows.push(
     [t('r_totalDed'), MI(-r.ded), 'key'],
     [t('r_netMonthly'), MI(r.net), 'key'],
+    ...(() => { const se = typeof seTotals === 'function' ? seTotals() : {total: 0}; return se.total > 0 ? [[t('r_seCar'), MI(-se.car)], [t('r_seOther'), MI(-se.other)], [t('r_seLeft'), MI(r.net - se.total), 'key'], [t('r_seShare'), PC(r.net > 0 ? se.total / r.net * 100 : NaN)]] : []; })(),
     [t('r_dedShare'), PC(r.gross > 0 ? r.ded / r.gross * 100 : NaN)],
     [t('r_points'), ptsTxt('s', pts)],
     [t('r_creditsUsed'), MI(r.credits)],
@@ -5334,7 +5373,7 @@ function calcSalary(){
   const per = k === 12 ? ' ' + t('o_perYear') : '';
   return {
     hero: mode === 'g2n'
-      ? {label: t('r_netMonthly') + per, value: MI(r.net * k), sub: t('s_fromGross', {g: MI((r.gross) * k)})}
+      ? {label: t('r_netMonthly') + per, value: MI(r.net * k), sub: t('s_fromGross', {g: MI((r.gross) * k)}) + (() => { const se = typeof seTotals === 'function' ? seTotals() : {total: 0}; return se.total > 0 ? ' · ' + t('r_seLeftS', {x: MI((r.net - se.total) * k)}) : ''; })()}
       : {label: t('r_grossMonthly') + per, value: MI((r.gross) * k), sub: t('s_toNet', {g: MI(r.net * k)})},
     rows,
     table: {title: t('t_payslip'), head: [t('h_item'), t('h_amount'), t('h_pctGross')], rows: payslipRows(r, o)},
@@ -8061,6 +8100,7 @@ function gsBuild(){
   const sp = $('#panel-settings');
   if (sp){
     $$('.set-sec', sp).forEach(sec => {
+      if (sec.hidden && sec.dataset.own) return;           // owner-only sections stay out of search
       const h = $('.sec-t', sec), st = h ? h.textContent.trim() : '';
       if (h) idx.push({type: 'set', el: sec, title: st, sub: t('tab_settings'), text: gsNorm(h.dataset.i ? all3(h.dataset.i) : st)});
       $$('label[for], .src-h b, h4[data-i]', sec).forEach(l => {
@@ -8467,8 +8507,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "5.0", "date": "2026-10-14", "notes": {"he": "16 כלים חדשים לפי נתוני 2026: שעות נוספות, החזר מס, השוואת הצעות עבודה, תעריף לשעה לעצמאים, עלות מעביד, דמי ניהול, קרן השתלמות, חיסכון לכל ילד, דמי אבטלה ולידה, כמה משכנתא אפשר לקבל, שווי רכב, רכב חשמלי מול בנזין, צריכת חשמל, מחיר ליחידה, הנחות ומבצעים וימי עבודה בין תאריכים.", "ar": "16 أداة جديدة حسب بيانات 2026: الساعات الإضافية، استرداد الضريبة، مقارنة عروض العمل، سعر الساعة للمستقل، تكلفة صاحب العمل، رسوم الإدارة، صندوق الاستكمال، ادخار لكل طفل، البطالة والولادة، كم رهنًا يمكن الحصول عليه، قيمة السيارة، كهربائي مقابل بنزين، استهلاك الكهرباء، سعر الوحدة، الخصومات وأيام العمل.", "en": "16 new tools with 2026 figures: overtime, tax refund, job offers, freelance rate, employer cost, management fees, study fund, child savings, unemployment and maternity, mortgage affordability, company car, EV vs petrol, appliance power, unit price, discounts and working days."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.165032';
+var CHANGELOG = [{"v": "5.1", "date": "2026-10-14", "notes": {"he": "במחשבון השכר: הוצאות מהנטו (רכב, דלק לפי ק״מ, ביטוח, טסט, חניה, כביש 6, תחבורה ציבורית והוצאות אישיות) וכמה נשאר בכיס. החיבורים בזמן אמת מוצגים רק לבעל האפליקציה.", "ar": "في حاسبة الراتب: مصاريف من الصافي (سيارة، وقود حسب الكيلومترات، تأمين، فحص، موقف، الشارع 6، مواصلات ومصاريف شخصية) وكم يبقى. الاتصالات المباشرة تظهر لمالك التطبيق فقط.", "en": "Salary: costs out of net pay (car, fuel by km, insurance, test, parking, Highway 6, transit and your own items) and what is left. Live connections are shown only to the app owner."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.170520';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -10024,6 +10064,77 @@ const _alLists = applyLang;
 applyLang = function(){ const r = _alLists.apply(this, arguments); joRender(); upRender(); return r; };
 joRender(); upRender();
 if (['joboffer', 'unitprice'].includes(tab)) calc(tab);
+
+/* ---- live connections are shown only to the app owner (checked by claude.ai, never trusted from the page) ---- */
+function liveOwner(){ return IN_CLAUDE && PERM === 'owner'; }
+function liveApply(){
+  const own = liveOwner(), sec = $('#panel-settings .set-sec[data-sk="set_live"]');
+  if (sec){ sec.dataset.own = '1'; if (sec.hidden === own) GS_IDX = null; sec.hidden = !own; }
+  $$('[data-i="sc_conn"], [data-i="sc_connAi"]').forEach(el => { el.dataset.i = own ? 'sc_conn' : 'sc_connAi'; el.textContent = t(el.dataset.i); });
+  const sub = $('#sh_sub_conn'); if (sub){ sub.dataset.i = own ? 'sc_connS' : 'sc_connAiS'; sub.textContent = t(sub.dataset.i); }
+}
+liveApply();
+Promise.resolve(PERM_P).then(liveApply, liveApply);
+const _rsLive = renderStamp;
+renderStamp = function(){ _rsLive.apply(this, arguments); liveApply(); };
+
+/* ---- salary: monthly costs out of the net pay (car, fuel and more, plus your own items) ---- */
+const SE_PRE = [['fuel', 'se_fuel', 'm'], ['carloan', 'se_carloan', 'm'], ['carins', 'se_carins', 'y'], ['license', 'se_license', 'y'], ['service', 'se_service', 'y'], ['parking', 'se_parking', 'm'], ['tolls', 'se_tolls', 'm'], ['transit', 'se_transit', 'm']];
+const SE_CAR = ['fuel', 'carloan', 'carins', 'license', 'service', 'parking', 'tolls'];
+function seData(){
+  let d = SET.salExp; if (!d || typeof d !== 'object') d = SET.salExp = {items: {}, custom: []};
+  if (!d.items) d.items = {}; if (!Array.isArray(d.custom)) d.custom = [];
+  SE_PRE.forEach(([k, , p]) => { if (!d.items[k]) d.items[k] = {a: 0, p}; });
+  const f = d.items.fuel; if (f.km == null){ f.km = 1500; f.cons = 7; f.price = 8.27; f.calc = 0; }
+  return d;
+}
+function seAmt(o){ return Math.max(0, +o.a || 0) / (o.p === 'y' ? 12 : 1); }
+function seFuel(f){ return Math.max(0, +f.km || 0) / 100 * Math.max(0, +f.cons || 0) * Math.max(0, +f.price || 0); }
+function seTotals(){
+  const d = seData(); let car = 0, other = 0;
+  SE_PRE.forEach(([k]) => { const o = d.items[k], m = k === 'fuel' && o.calc ? seFuel(o) : seAmt(o); if (SE_CAR.includes(k)) car += m; else other += m; });
+  d.custom.forEach(o => { other += seAmt(o); });
+  return {car, other, total: car + other};
+}
+function seRow(key, label, o, custom, i){
+  const per = `<select data-sek="${key}" data-sef="p"${custom ? ` data-sei="${i}"` : ''} aria-label="${asEsc(t('se_per') + ' · ' + label)}"><option value="m"${o.p !== 'y' ? ' selected' : ''}>${asEsc(t('se_perM'))}</option><option value="y"${o.p === 'y' ? ' selected' : ''}>${asEsc(t('se_perY'))}</option></select>`;
+  const name = custom ? `<input class="lc-name se-name" type="text" maxlength="30" dir="auto" data-sek="custom" data-sef="n" data-sei="${i}" value="${asEsc(o.n || '')}" placeholder="${asEsc(t('se_customPh'))}" aria-label="${asEsc(t('se_customName'))}">` : `<span class="se-l">${asEsc(label)}</span>`;
+  const fuelCalc = key === 'fuel' && o.calc;
+  const amt = fuelCalc ? `<b class="se-calc" aria-live="polite">${MI(seFuel(o))}</b>`
+    : `<div class="control se-a"><input type="number" inputmode="decimal" step="any" data-sek="${key}" data-sef="a"${custom ? ` data-sei="${i}"` : ''} value="${o.a || ''}" placeholder="0" aria-label="${asEsc(label)}">${unitHTML('ils')}</div>`;
+  let h = `<div class="se-row${custom ? ' se-cust' : ''}">${name}${amt}${fuelCalc ? '' : per}${custom ? `<button type="button" class="lc-del" data-sedel="${i}" aria-label="${asEsc(t('lc_del', {x: o.n || t('se_custom')}))}">✕</button>` : ''}</div>`;
+  if (key === 'fuel'){
+    h += `<button type="button" class="se-tog" data-setog="1" aria-expanded="${!!o.calc}">⛽ ${asEsc(t(o.calc ? 'se_fuelManual' : 'se_fuelByKm'))}</button>`;
+    if (o.calc) h += `<div class="se-fuel">${[['km', 'se_km', 'km'], ['cons', 'se_cons', ''], ['price', 'se_price', 'ils']].map(([k, l, u]) => `<div class="field"><span class="lc-l" aria-hidden="true">${asEsc(t(l))}</span><div class="control"><input type="number" inputmode="decimal" step="any" data-sek="fuel" data-sef="${k}" value="${o[k] == null ? '' : o[k]}" aria-label="${asEsc(t(l))}">${unitHTML(u)}</div></div>`).join('')}</div>`;
+  }
+  return h;
+}
+function seRender(){
+  const box = $('#se_box'); if (!box) return;
+  const d = seData(), tt = seTotals();
+  box.innerHTML = `<p class="fine se-intro">${asEsc(t('se_intro'))}</p>
+    <h4 class="se-h">🚗 ${asEsc(t('se_carT'))}</h4>${SE_PRE.filter(([k]) => SE_CAR.includes(k)).map(([k, l]) => seRow(k, t(l), d.items[k])).join('')}
+    <h4 class="se-h">🧾 ${asEsc(t('se_otherT'))}</h4>${seRow('transit', t('se_transit'), d.items.transit)}${d.custom.map((o, i) => seRow('custom', '', o, true, i)).join('')}
+    <button type="button" class="lc-add" id="se_add"><span aria-hidden="true">＋</span> ${asEsc(t('se_add'))}</button>
+    <p class="se-sum" id="se_sum">${asEsc(t('se_sum', {x: MI(tt.total)}))}</p>`;
+}
+function seSumUpd(){ const el = $('#se_sum'); if (el) el.textContent = t('se_sum', {x: MI(seTotals().total)}); const c = $('#se_box .se-calc'); if (c) c.textContent = MI(seFuel(seData().items.fuel)); }
+document.addEventListener('input', e => {
+  const el = e.target; if (!el.dataset || !el.dataset.sek || !el.closest('#se_box')) return;
+  const d = seData(), f = el.dataset.sef, o = el.dataset.sek === 'custom' ? d.custom[+el.dataset.sei] : d.items[el.dataset.sek]; if (!o) return;
+  o[f] = f === 'n' || f === 'p' ? String(el.value).slice(0, 30) : (el.value === '' ? 0 : +el.value);
+  seSumUpd(); clearTimeout(LIST_T); LIST_T = setTimeout(saveSet, 300);
+}, true);
+document.addEventListener('change', e => { const el = e.target; if (el.tagName === 'SELECT' && el.dataset && el.dataset.sek && el.closest('#se_box')){ el.dispatchEvent(new Event('input', {bubbles: true})); } }, true);
+document.addEventListener('click', e => {
+  if (e.target.closest('#se_add')){ const d = seData(); if (d.custom.length >= 20) return; d.custom.push({n: '', a: 0, p: 'm'}); saveSet(); seRender(); calc(tab); const n = $$('#se_box .se-name'); if (n.length) n[n.length - 1].focus(); return; }
+  const del = e.target.closest('[data-sedel]'); if (del){ seData().custom.splice(+del.dataset.sedel, 1); saveSet(); seRender(); calc(tab); return; }
+  if (e.target.closest('[data-setog]')){ const f = seData().items.fuel; f.calc = f.calc ? 0 : 1; if (!f.calc) f.a = Math.round(seFuel(f)); saveSet(); seRender(); calc(tab); const b = $('#se_box [data-setog]'); if (b) b.focus(); }
+});
+const _alSe = applyLang;
+applyLang = function(){ const r = _alSe.apply(this, arguments); seRender(); return r; };
+seRender();
+if (tab === 'salary') calc(tab);
 
 applyLang(false);
 activate(tab);
