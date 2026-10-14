@@ -230,6 +230,25 @@ def markets(prev, log):
     return {"asOf": max(ts) if ts else 0, "src": "cnbc", "items": mk} if mk else prev.get("mkt")
 
 
+def probe_fx():
+    hdr = dict(BROWSER, Origin="https://ysdesign-il.github.io")
+    try:
+        syms = ["ILS=", "EUR=", "GBP=", "JPY=", "CHF=", "CAD=", "AUD=", "CNY=", "EURILS=", "GBPILS=", "JOD=", "EGP=", "AED=", "SAR=", "TRY=", "INR=", "RUB="]
+        u = QUOTE_URL % "%7C".join(urllib.request.quote(x) for x in syms)
+        j = json.loads(get_raw(u, BROWSER, 20))
+        diag("probe_fx", [{k: x.get(k) for k in ("symbol", "code", "name", "last", "last_time", "realTime", "change_pct")} for x in j["FormattedQuoteResult"]["FormattedQuote"]])
+    except Exception as e:
+        diag("probe_fx_err", str(e))
+    try:
+        req = urllib.request.Request("https://api.coinbase.com/v2/exchange-rates?currency=USD", headers=hdr)
+        with urllib.request.urlopen(req, timeout=20) as r:
+            h = {a: b for a, b in r.headers.items() if a.lower().startswith("access-control") or a.lower() in ("cache-control", "age", "date")}
+            j = json.loads(r.read().decode())
+        diag("probe_coinbase", {"headers": h, "ILS": j["data"]["rates"].get("ILS"), "EUR": j["data"]["rates"].get("EUR")})
+    except Exception as e:
+        diag("probe_coinbase_err", str(e))
+
+
 def main():
     prev = json.load(open(PATH, encoding="utf-8"))
     out = json.loads(json.dumps(prev))
@@ -339,7 +358,8 @@ def main():
             out["mkt"] = m
     except Exception as e:
         log.append("markets failed: %s" % e)
-    if os.environ.get("RATES_DIAG", "0") == "1":
+    if os.environ.get("RATES_DIAG", "1") == "1":
+        probe_fx()
         DIAG["log"] = log
         with open("diag.json", "w", encoding="utf-8") as f:
             json.dump(DIAG, f, indent=1, ensure_ascii=False)
