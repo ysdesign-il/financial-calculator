@@ -2158,6 +2158,16 @@ Object.assign(T, {
   hd_okFmt2:['{n} תקין. בהרשמה נבדוק שהוא פנוי.','{n} صالح. سنتحقق من توفره عند التسجيل.','{n} looks good. We will check it is free when you sign up.'],
   h_account:['ההרשמה: שם משתמש ייחודי (@) וסיסמה חזקה. שם המשתמש נבדק מול כל המשתמשים באפליקציה בתוך claude.ai, כך שאין שניים זהים. הסיסמה והנתונים נשמרים מוצפנים רק במכשיר הזה, ולכן כדי להשתמש במכשיר אחר צריך להירשם גם בו. שכחתם סיסמה? אי אפשר לשחזר אותה, כי היא לא נשמרת בשום מקום.','التسجيل: اسم مستخدم فريد (@) وكلمة مرور قوية. يتم التحقق من الاسم مقابل جميع مستخدمي التطبيق داخل claude.ai فلا يوجد اسمان متطابقان. تُحفظ كلمة المرور والبيانات مشفّرة على هذا الجهاز فقط، لذا يلزم التسجيل في كل جهاز. نسيت كلمة المرور؟ لا يمكن استعادتها لأنها لا تُحفظ في أي مكان.','Sign-up: a unique username (@) and a strong password. The username is checked against everyone using the app inside claude.ai, so no two are the same. The password and your data are stored encrypted on this device only, so another device needs its own sign-up. Forgot the password? It cannot be recovered, because it is not stored anywhere.'],
 });
+Object.assign(T, {
+  set_ai:['עוזר AI באתר הזה','مساعد الذكاء الاصطناعي في هذا الموقع','AI assistant on this site'],
+  f_gkeyFree:['מפתח Gemini (חינמי)','مفتاح Gemini (مجاني)','Gemini key (free)'],
+  h_gkeyFree:['כדי שהעוזר וההסברים יעבדו באתר הזה, הדביקו מפתח חינמי מ-Google AI Studio. המפתח נשמר רק בדפדפן הזה, לא נכלל בייצוא, ונשלח רק ל-Google.','لكي يعمل المساعد والشروحات في هذا الموقع، الصق مفتاحًا مجانيًا من Google AI Studio. يُحفظ في هذا المتصفح فقط ولا يُضمَّن في التصدير ويُرسل إلى Google فقط.','For the assistant and explanations to work on this site, paste a free key from Google AI Studio. It stays in this browser, is left out of exports, and is sent only to Google.'],
+  ln_gkey:['לקבלת מפתח חינמי','للحصول على مفتاح مجاني','Get a free key'],
+  as_noai:['כדי להשתמש בעוזר כאן, הזינו מפתח Gemini חינמי בהגדרות ← עוזר AI. החיפוש לפי שם וכל המחשבונים עובדים גם בלי.','لاستخدام المساعد هنا، أدخل مفتاح Gemini مجاني في الإعدادات ← مساعد الذكاء الاصطناعي. البحث بالاسم وجميع الحاسبات تعمل دونه.','To use the assistant here, enter a free Gemini key in Settings → AI assistant. Search by name and every calculator work without it.'],
+  ex_offline:['להסבר מלא עם AI באתר הזה, הזינו מפתח Gemini חינמי בהגדרות ← עוזר AI.','للحصول على شرح كامل بالذكاء الاصطناعي هنا، أدخل مفتاح Gemini مجاني في الإعدادات ← مساعد الذكاء الاصطناعي.','For a full AI explanation on this site, enter a free Gemini key in Settings → AI assistant.'],
+  as_err:['העוזר לא הצליח לענות ({e}).','لم يتمكن المساعد من الإجابة ({e}).','The assistant could not answer ({e}).'],
+});
+Object.assign(T, {as_badkey:['מפתח ה-Gemini לא התקבל. בדקו שהעתקתם אותו במלואו בהגדרות ← עוזר AI.','لم يُقبل مفتاح Gemini. تحقّق من نسخه كاملًا في الإعدادات ← مساعد الذكاء الاصطناعي.','The Gemini key was not accepted. Check you copied all of it in Settings → AI assistant.']});
 
 const t = (k, p) => {
   let s = (T[k] || [k,k,k])[langIdx()];
@@ -2546,6 +2556,8 @@ const sIcon = k => SICO[k] ? `<svg class="ic" viewBox="0 0 24 24" aria-hidden="t
 SICO.set_p_res = '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>';
 SICO.set_links = '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>';
 SICO.set_handle = '<circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/>';
+SICO.set_ai = '<path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/>';
+SICO.set_gkey = SICO.set_gkey || '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/>';
 function unitHTML(u){
   if (!u) return '';
   if (u === 'cur') return `<span class="u cur">${symOf(cur)}</span>`;
@@ -3150,6 +3162,8 @@ function settingsPanelHTML(){
     ${sec('set_profile', fl(SETDEFS[4][1]))}
     ${sec('set_tabs', `<div class="fields">${fieldHTML(SEL('set_sort','f_sort','groups',[['groups','o_sortGroups'],['alpha','o_sortAlpha']],{wide:true}))}</div><p class="fine" data-i="h_sort"></p><p class="fine" data-i="h_tabs"></p><div id="set_tabs" class="tabs-list"></div>`)}
     ${sec('set_curBy', `<div class="fields">${cb}</div>`)}
+    ${sec('set_ai', `<div id="ai_sec"><div class="field wide"><label for="set_gkey" data-i="f_gkeyFree"></label><input id="set_gkey" type="password" autocomplete="off" spellcheck="false" class="lookup" dir="ltr" placeholder="AIza…"><small class="hint" data-i="h_gkeyFree"></small></div>
+      <p class="fine"><a class="src-a" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer"><span data-i="ln_gkey"></span> ↗</a></p></div>`)}
     ${sec('set_live', `<div class="conn-all"><button type="button" class="gold-btn" id="src_all" data-i="b_connAll"></button><p class="fine" data-i="h_connAll"></p></div>
       <div class="src-list" id="set_live_st"></div>
       <details class="adv-live"><summary data-i="m_advLive"></summary><div class="fields">${[
@@ -5448,7 +5462,10 @@ async function asAnswer(q){
     throw e;
   }
   const sm = window.claude && window.claude.use ? await window.claude.use('sample') : null;
-  if (!sm) throw new Error('noai');
+  if (!sm){
+    if ((SET.gkey || '').trim()) return gemChat(hist.map((m, i) => i === 0 ? {role: 'user', content: asSystem() + '\n\nUser: ' + m.content} : m));
+    throw new Error('noai');
+  }
   const out = await sm(hist.map((m, i) => i === 0 ? {role:'user', content: asSystem() + '\n\nUser: ' + m.content} : m), {modelTier: model, cache:false});
   return (out && out.text || '').trim();
 }
@@ -5460,7 +5477,7 @@ async function asSend(q){
     const a = await asAnswer(q);
     asHist[asHist.length - 1] = {role:'ai', text: a || t('as_empty')};
   } catch (e) {
-    asHist[asHist.length - 1] = {role:'err', text: t({noai:'as_noai', nokey:'as_nokey', blocked:'as_blocked'}[e && e.message] || 'as_err', {e: (e && e.message) || ''})};
+    asHist[asHist.length - 1] = {role:'err', text: t({noai:'as_noai', nokey:'as_nokey', blocked:'as_blocked', badkey:'as_badkey'}[e && e.message] || 'as_err', {e: (e && e.message) || ''})};
   }
   asBusy = false; if (btn) btn.disabled = false; asRender();
 }
@@ -6005,7 +6022,8 @@ async function exRun(kind, extra){
   EX.busy = true; $('#ex_send').disabled = true;
   let sm = null;
   try { sm = window.claude && typeof window.claude.use === 'function' ? await window.claude.use('sample') : null; } catch (e) { sm = null; }
-  if (!sm){ out.innerHTML = exOffline(id, kind, extra); EX.busy = false; $('#ex_send').disabled = false; return; }
+  if (!sm && !(SET.gkey || '').trim()){ out.innerHTML = exOffline(id, kind, extra); EX.busy = false; $('#ex_send').disabled = false; return; }
+  if (!sm) sm = async (m) => ({text: await gemChat(m)});
   const msgs = EX.hist.concat([{role: 'user', content: (EX.hist.length ? '' : exSystem() + '\n\n') + prompt}]);
   EX.ctl = new AbortController();
   try {
@@ -6017,7 +6035,7 @@ async function exRun(kind, extra){
   } catch (e) {
     if (e && e.name === 'AbortError') return;
     const c = e && e.code;
-    out.innerHTML = `<p class="ex-err">${t(c === 'not_granted' ? 'ex_denied' : c === 'rate_limited' ? 'ex_busy' : 'as_err', {e: c || (e && e.message) || ''})}</p>` + (c === 'not_granted' ? exOffline(id, kind, extra) : '');
+    out.innerHTML = `<p class="ex-err">${t(c === 'not_granted' ? 'ex_denied' : c === 'rate_limited' ? 'ex_busy' : (e && e.message === 'badkey') ? 'as_badkey' : 'as_err', {e: c || (e && e.message) || ''})}</p>` + (c === 'not_granted' ? exOffline(id, kind, extra) : '');
   } finally { EX.busy = false; const s = $('#ex_send'); if (s) s.disabled = false; }
 }
 function exOffline(id, kind, extra){
@@ -6335,6 +6353,50 @@ panelsEl.addEventListener('input', e => {
   h.textContent = !n ? '' : hdValid(n) ? t('hd_okFmt2', {n: '@' + n}) : t('hd_bad');
   h.className = 'hint hd-live ' + (!n ? '' : hdValid(n) ? 'ok' : 'bad');
 });
+
+/* ---- standalone site (GitHub Pages): AI through the visitor's own free Gemini key ---- */
+async function gemChat(msgs){
+  const key = (SET.gkey || '').trim(); if (!key) throw new Error('noai');
+  const contents = msgs.map(m => ({role: m.role === 'assistant' ? 'model' : 'user', parts: [{text: m.content}]}));
+  let last = '';
+  for (const model of ['gemini-flash-latest', 'gemini-2.5-flash']){
+    try {
+      const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent', {
+        method: 'POST', headers: {'Content-Type': 'application/json', 'x-goog-api-key': key}, body: JSON.stringify({contents})});
+      if (r.status === 404){ last = 'HTTP 404'; continue; }
+      if (!r.ok){ const err = new Error(r.status === 400 || r.status === 403 ? 'badkey' : 'HTTP ' + r.status); throw err; }
+      const j = await r.json();
+      return ((((j.candidates || [])[0] || {}).content || {}).parts || []).map(p => p.text || '').join('').trim();
+    } catch (e) { if (e && e.message === 'badkey') throw e; last = (e && e.message) || 'error'; if (e instanceof TypeError) throw new Error('blocked'); }
+  }
+  throw new Error(last || 'error');
+}
+async function aiSecInit(){
+  const box = $('#ai_sec'); if (!box) return;
+  let sm = null;
+  try { sm = window.claude && typeof window.claude.use === 'function' ? await window.claude.use('sample') : null; } catch (e) {}
+  const sec = box.closest('.set-sec'); if (sec) sec.hidden = !!sm;      // inside claude.ai the assistant needs no key
+}
+aiSecInit();
+
+/* ---- standalone site: official data from rates.json, kept fresh by a scheduled GitHub Action ---- */
+var SITE_RATES = false;
+async function siteRates(){
+  if (dbState === 'ok' && !SITE_RATES) return;                 // claude.ai database already feeds the page
+  try {
+    const r = await fetch('rates.json?v=' + Math.floor(Date.now() / 600000), {cache: 'no-store'});
+    if (!r.ok) return;
+    const d = await r.json(); if (!d || !d.usd) return;
+    SITE_RATES = true;
+    if (SET.boiDb !== '0'){
+      applyDbRates({usd: d.usd, asOf: d.asOf, crypto: d.crypto, cryptoAsOf: d.cryptoAsOf});
+      if (d.macro) applyMacro(Object.assign({asOf: d.asOf}, d.macro));
+    }
+    dbState = SET.boiDb === '0' ? 'off' : 'ok'; dbAsOf = +d.asOf || 0; liveStRender();
+  } catch (e) { /* not a standalone site */ }
+}
+setTimeout(siteRates, 1200);
+setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 applyLang(false);
 activate(tab);
