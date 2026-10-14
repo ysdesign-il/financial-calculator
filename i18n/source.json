@@ -3285,7 +3285,7 @@
 "st_ok": "Rates updated ({d})",
 "st_resetCalcs": "All calculators were reset",
 "st_resetDone": "Settings were reset",
-"st_saved": "Saved in the app: {v}",
+"st_saved": "File saved",
 "st_snap": "snapshot rates",
 "st_srcNa": "Direct connection is blocked inside claude.ai. Works automatically in a saved file or on your site.",
 "st_stamp": "Updated {t} · {s}",
