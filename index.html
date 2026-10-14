@@ -955,6 +955,9 @@ a.gold-btn.rc-open{display:inline-flex;align-items:center;justify-content:center
 .lc-rt{display:flex;margin:0 0 8px}
 .lc-rt button{flex:1;font-size:.82rem;padding:8px 6px}
 .lc-calc{margin:0 0 8px;padding:8px 10px;border-radius:10px;background:rgba(47,191,134,.1);color:#1f9d6b;font-weight:700;font-size:.9rem}
+.up-fields{grid-template-columns:1fr 1fr}
+.up-fields select{width:100%;font:inherit;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--field,transparent);color:var(--ink)}
+.field input[type="date"]{width:100%;font:inherit;min-height:44px;border:0;background:transparent;color:var(--ink)}
 
 </style>
 </head>
@@ -3041,6 +3044,209 @@ Object.assign(T, {
   n_lcPrime:['בהצעות לפי פריים החישוב מניח שהפריים נשאר כמו היום ({p}). בפועל הוא משתנה עם ריבית בנק ישראל.','في عروض البرايم يفترض الحساب بقاء البرايم كما هو اليوم ({p})، وفي الواقع يتغيّر مع فائدة بنك إسرائيل.','Prime-based offers assume Prime stays at today\'s {p}; in practice it moves with the Bank of Israel rate.'],
   w_lcLow:['{x}: ההחזר החודשי לא מספיק כדי להחזיר את ההלוואה בתקופה שנבחרה.','{x}: القسط الشهري لا يكفي لسداد القرض في المدة المختارة.','{x}: the monthly payment is not enough to repay the loan in the chosen term.']
 });
+Object.assign(T, {
+  /* names and descriptions */
+  tab_overtime:['שעות נוספות ושכר שעתי','الساعات الإضافية وأجر الساعة','Overtime and hourly pay'],
+  d_overtime:['כמה מגיע על שעות נוספות, שבת וחג לפי החוק, ומה השכר לשעה.','كم يستحق عن الساعات الإضافية والسبت والعطل حسب القانون، وما أجر الساعة.','What overtime, Shabbat and holiday hours pay by law, and your hourly rate.'],
+  tab_taxrefund:['החזר מס משוער','تقدير استرداد الضريبة','Estimated tax refund'],
+  d_taxrefund:['האם שילמת יותר מדי מס הכנסה השנה, וכמה אפשר לקבל בחזרה.','هل دفعت ضريبة دخل زائدة هذا العام، وكم يمكن استرداده.','Did you pay too much income tax this year, and how much could come back.'],
+  tab_joboffer:['השוואת הצעות עבודה','مقارنة عروض العمل','Compare job offers'],
+  d_joboffer:['כמה הצעות עבודה זו מול זו: נטו, חיסכון לפנסיה ולהשתלמות, רכב והטבות.','عروض عمل جنبًا إلى جنب: الصافي، التقاعد وصندوق الاستكمال، السيارة والمزايا.','Job offers side by side: net pay, pension and study fund, car and perks.'],
+  tab_freelance:['כמה לגבות לשעה','كم أتقاضى في الساعة','How much to charge per hour'],
+  d_freelance:['התעריף לשעה שעצמאי צריך כדי להגיע לנטו שרוצים, אחרי מס, ביטוח לאומי והוצאות.','السعر بالساعة الذي يحتاجه المستقل ليصل إلى الصافي المطلوب بعد الضرائب والمصاريف.','The hourly rate a freelancer needs to reach a target net income after tax and costs.'],
+  tab_empcost:['עלות מעביד','تكلفة صاحب العمل','Employer cost'],
+  d_empcost:['כמה באמת עולה עובד למעסיק מעבר לשכר הברוטו.','كم يكلّف الموظف صاحب العمل فعلًا فوق الراتب الإجمالي.','What an employee really costs the employer on top of gross pay.'],
+  tab_mgmtfees:['דמי ניהול לאורך השנים','رسوم الإدارة عبر السنين','Management fees over the years'],
+  d_mgmtfees:['כמה דמי ניהול בפנסיה או בקרן עולים לך עד הפרישה, ומה חוסכת הנחה.','كم تكلّفك رسوم الإدارة في التقاعد أو الصندوق حتى التقاعد، وكم يوفّر الخصم.','How much pension or fund fees cost you by retirement, and what a discount saves.'],
+  tab_hishtalmut:['קרן השתלמות','صندوق الاستكمال','Keren hishtalmut (study fund)'],
+  d_hishtalmut:['הפקדות, הטבות המס ותקרות 2026, וכמה ייצבר בקרן.','الإيداعات ومزايا الضريبة وسقوف 2026، وكم سيتراكم في الصندوق.','Deposits, tax benefits and 2026 ceilings, and how much the fund will grow to.'],
+  tab_kidsave:['חיסכון לכל ילד','ادخار لكل طفل','Savings for every child'],
+  d_kidsave:['כמה ייצבר בתוכנית חיסכון לכל ילד עד גיל 18 או 21, עם או בלי הפקדת הורים.','كم سيتراكم في برنامج الادخار لكل طفل حتى سن 18 أو 21، مع إيداع الأهل أو بدونه.','How much the child savings plan grows to by 18 or 21, with or without the parent deposit.'],
+  tab_benefits:['דמי אבטלה ודמי לידה','إعانة البطالة وبدل الولادة','Unemployment and maternity pay'],
+  d_benefits:['הערכת דמי אבטלה או דמי לידה מביטוח לאומי לפי כללי 2026.','تقدير إعانة البطالة أو بدل الولادة من التأمين الوطني حسب قواعد 2026.','Estimate unemployment or maternity pay from National Insurance under 2026 rules.'],
+  tab_mortcap:['כמה משכנתא אפשר לקבל','كم رهنًا عقاريًا يمكن الحصول عليه','How much mortgage can I get'],
+  d_mortcap:['לפי ההכנסה, ההון העצמי וכללי בנק ישראל: גובה ההלוואה ומחיר הדירה המרבי.','حسب الدخل ورأس المال الذاتي وقواعد بنك إسرائيل: القرض وسعر الشقة الأقصى.','From income, equity and Bank of Israel rules: the maximum loan and home price.'],
+  tab_carbenefit:['שווי רכב (מס)','قيمة استخدام السيارة (ضريبة)','Company car benefit (tax)'],
+  d_carbenefit:['כמה מס משלמים על רכב צמוד לפי 2026, וכמה הוא מוריד מהנטו.','كم ضريبة تدفع على سيارة الشركة حسب 2026، وكم تخفض من الصافي.','The 2026 tax on a company car, and how much it lowers your net pay.'],
+  tab_evfuel:['רכב חשמלי מול בנזין','سيارة كهربائية مقابل بنزين','Electric vs petrol car'],
+  d_evfuel:['עלות לק״מ, לחודש ולשנה, ותוך כמה זמן הפרש המחיר מחזיר את עצמו.','التكلفة لكل كم وشهريًا وسنويًا، ومتى يسترد فرق السعر نفسه.','Cost per km, month and year, and when the price difference pays for itself.'],
+  tab_appliance:['צריכת חשמל של מכשיר','استهلاك الكهرباء لجهاز','Appliance electricity cost'],
+  d_appliance:['כמה עולה להפעיל מזגן, דוד או כל מכשיר אחר בחודש ובשנה.','كم يكلّف تشغيل مكيف أو سخان أو أي جهاز شهريًا وسنويًا.','What it costs to run an air conditioner, water heater or any appliance per month and year.'],
+  tab_unitprice:['מחיר ליחידה בסופר','سعر الوحدة في السوبرماركت','Unit price at the supermarket'],
+  d_unitprice:['איזו אריזה זולה יותר לכל קילו, ליטר או יחידה.','أي عبوة أرخص لكل كيلو أو لتر أو وحدة.','Which pack is cheaper per kilo, liter or unit.'],
+  tab_discount:['הנחות ומבצעים','الخصومات والعروض','Discounts and deals'],
+  d_discount:['1+1, השני ב-50%, 3 ב-100, הנחה על הנחה וקופונים: מה המחיר האמיתי.','1+1، الثاني بـ50%، 3 بـ100، خصم على خصم وكوبونات: ما السعر الحقيقي.','1+1, second at 50%, 3 for 100, stacked discounts and coupons: the real price.'],
+  tab_workdays:['ימי עבודה בין תאריכים','أيام العمل بين تاريخين','Working days between dates'],
+  d_workdays:['כמה ימי עבודה יש בין שני תאריכים, כולל שבתות וחגים בישראל.','كم يوم عمل بين تاريخين، مع السبت والعطل في إسرائيل.','How many working days are between two dates, counting Israeli weekends and holidays.'],
+  /* overtime */
+  f_otBasis:['השכר שלי','راتبي','My pay'], o_otHour:['שכר שעתי','أجر بالساعة','Hourly'], o_otMonth:['שכר חודשי','راتب شهري','Monthly salary'],
+  f_otRate:['שכר לשעה','الأجر للساعة','Pay per hour'], f_otMonth:['שכר חודשי ברוטו','الراتب الشهري الإجمالي','Monthly gross salary'],
+  f_otReg:['שעות רגילות בחודש','الساعات العادية في الشهر','Regular hours per month'], h_otReg:['משרה מלאה: 182 שעות בחודש','وظيفة كاملة: 182 ساعة شهريًا','Full time: 182 hours a month'],
+  f_ot125:['שעות נוספות ב-125%','ساعات إضافية بـ125%','Overtime hours at 125%'], h_ot125:['שתי השעות הנוספות הראשונות בכל יום','أول ساعتين إضافيتين كل يوم','The first two extra hours each day'],
+  f_ot150:['שעות נוספות ב-150%','ساعات إضافية بـ150%','Overtime hours at 150%'],
+  f_otSh:['שעות בשבת או בחג (150%)','ساعات السبت أو العطلة (150%)','Shabbat or holiday hours (150%)'], h_otSh:['עבודה במנוחה השבועית','العمل في الراحة الأسبوعية','Work on the weekly rest day'],
+  f_otSh175:['שעות נוספות בשבת (175%)','ساعات إضافية يوم السبت (175%)','Shabbat overtime (175%)'], f_otSh200:['שעות נוספות בשבת (200%)','ساعات إضافية يوم السبت (200%)','Shabbat overtime (200%)'],
+  r_otHour:['שכר לשעה','الأجر للساعة','Hourly pay'], r_otBase:['שכר על שעות רגילות','الأجر عن الساعات العادية','Pay for regular hours'],
+  r_otTier:['{n} שעות ב-{p}%','{n} ساعات بـ{p}%','{n} hours at {p}%'], r_otExtra:['תוספת שעות נוספות','إضافة الساعات الإضافية','Overtime extra'],
+  r_otTotal:['שכר ברוטו כולל שעות נוספות','الإجمالي مع الساعات الإضافية','Gross pay incl. overtime'], r_otHours:['סך השעות','مجموع الساعات','Total hours'],
+  r_otEff:['ממוצע לשעה','المعدل للساعة','Average per hour'], r_otNet:['נטו משוער','الصافي التقديري','Estimated net'],
+  r_otSub:['מתוכם {x} שעות נוספות · נטו משוער {n}','منها {x} ساعات إضافية · صافٍ تقديري {n}','of which {x} overtime · estimated net {n}'],
+  w_otMin:['השכר לשעה נמוך משכר המינימום ({m} לשעה מאפריל 2026).','أجر الساعة أقل من الحد الأدنى ({m} للساعة منذ نيسان 2026).','The hourly pay is below the minimum wage ({m} per hour from April 2026).'],
+  n_ot:['לפי חוק שעות עבודה ומנוחה: שבוע עבודה מלא הוא 42 שעות, והשכר לשעה מחושב לפי 182 שעות בחודש. שתי השעות הנוספות הראשונות ביום משולמות ב-125%, ומעבר להן ב-150%. עבודה במנוחה השבועית או בחג משולמת לפחות ב-150%. שכר המינימום מאפריל 2026: 6,443.85 ₪ לחודש או 35.40 ₪ לשעה. הנטו הוא הערכה.','حسب قانون ساعات العمل والراحة: أسبوع العمل الكامل 42 ساعة، وأجر الساعة يُحسب على 182 ساعة شهريًا. أول ساعتين إضافيتين يوميًا بـ125% وما بعدهما بـ150%. العمل في الراحة الأسبوعية أو العطلة بـ150% على الأقل. الحد الأدنى منذ نيسان 2026: 6,443.85 ₪ شهريًا أو 35.40 ₪ للساعة. الصافي تقديري.','Under the Hours of Work and Rest Law: a full week is 42 hours and hourly pay is based on 182 hours a month. The first two extra hours a day pay 125%, beyond that 150%. Work on the weekly rest day or a holiday pays at least 150%. Minimum wage from April 2026: 6,443.85 ₪ a month or 35.40 ₪ an hour. Net pay is an estimate.'],
+  /* tax refund */
+  f_trGross:['הכנסה ברוטו בשנה','الدخل الإجمالي في السنة','Gross income for the year'], h_trGross:['סכום ההכנסה בטפסי 106 מכל המעסיקים','مجموع الدخل في نماذج 106 من كل المشغّلين','Income on all your 106 forms from every employer'],
+  f_trPaid:['מס הכנסה שנוכה בשנה','ضريبة الدخل المقتطعة في السنة','Income tax withheld this year'], h_trPaid:['סכום מס ההכנסה בטפסי 106','مجموع ضريبة الدخل في نماذج 106','The income tax on your 106 forms'],
+  h_trPts:['תושב 2.25, אישה 2.75, ועוד לפי ילדים, תואר ומילואים','مقيم 2.25، امرأة 2.75، وأكثر حسب الأولاد والشهادة والاحتياط','Resident 2.25, woman 2.75, plus more for children, a degree and reserve duty'],
+  f_trDon:['תרומות למוסדות מוכרים בשנה','تبرعات لمؤسسات معترف بها في السنة','Donations to approved charities this year'],
+  f_trLife:['ביטוח חיים פרטי בשנה','تأمين حياة خاص في السنة','Private life insurance this year'], f_trPens:['הפקדות עצמאיות לפנסיה בשנה','إيداعات ذاتية للتقاعد في السنة','Your own pension deposits this year'],
+  r_trBracket:['מס לפי מדרגות','الضريبة حسب الشرائح','Tax by brackets'], r_trPts:['זיכוי נקודות ({n})','خصم النقاط ({n})','Credit points ({n})'],
+  r_trDon:['זיכוי על תרומות (35%)','خصم التبرعات (35%)','Donation credit (35%)'], r_trLife:['זיכוי על ביטוח חיים (25%)','خصم تأمين الحياة (25%)','Life insurance credit (25%)'],
+  r_trPens:['זיכוי על הפקדה לפנסיה (35%)','خصم إيداع التقاعد (35%)','Pension deposit credit (35%)'], r_trSur:['מס יסף','ضريبة إضافية','Surtax'],
+  r_trDue:['המס שהיה צריך לשלם','الضريبة المستحقة فعلًا','Tax you actually owed'], r_trPaid:['המס ששולם בפועל','الضريبة المدفوعة','Tax you paid'],
+  r_trBack:['החזר מס משוער','استرداد ضريبي تقديري','Estimated refund'], r_trOwe:['ייתכן שיש להשלים','قد يلزم دفع فرق','You may owe'],
+  r_trSub:['מס נדרש {d} · שולם {p}','الضريبة المستحقة {d} · المدفوع {p}','Owed {d} · paid {p}'],
+  w_trDonMin:['זיכוי על תרומות ניתן רק מעל סכום מינימלי של כ-200 ₪ בשנה.','خصم التبرعات يُمنح فقط فوق حد أدنى نحو 200 ₪ سنويًا.','The donation credit applies only above a minimum of about 200 ₪ a year.'],
+  n_tr:['הערכה בלבד לפי מדרגות המס ונקודות הזיכוי של 2026. אפשר לבקש החזר על 6 השנים האחרונות בטופס 135 או באזור האישי של רשות המסים. סיבות נפוצות להחזר: עבודה רק בחלק מהשנה, כמה מעסיקים, תרומות, ילדים, תואר אקדמי ושירות מילואים.','تقدير فقط حسب شرائح الضريبة ونقاط الخصم لعام 2026. يمكن طلب الاسترداد عن آخر 6 سنوات بنموذج 135 أو في المنطقة الشخصية لسلطة الضرائب. أسباب شائعة: العمل جزءًا من السنة، عدة مشغّلين، تبرعات، أولاد، شهادة جامعية وخدمة الاحتياط.','An estimate only, using the 2026 tax brackets and credit points. You can claim a refund for the last 6 years with form 135 or in the Tax Authority personal area. Common reasons: working part of the year, several employers, donations, children, a degree and reserve duty.'],
+  /* job offers */
+  jo_def:['הצעה {n}','العرض {n}','Offer {n}'], jo_name:['שם ההצעה','اسم العرض','Offer name'], jo_namePh:['למשל שם החברה','مثلًا اسم الشركة','e.g. the company name'],
+  jo_add:['הוספת הצעה','إضافة عرض','Add an offer'], jo_hint:['לחצו ＋ כדי להוסיף הצעה, ✕ כדי להסיר, והקלידו את שם החברה.','اضغط ＋ لإضافة عرض و✕ للإزالة واكتب اسم الشركة.','Tap ＋ to add an offer, ✕ to remove one, and type the company name.'],
+  f_joGross:['שכר ברוטו חודשי','الراتب الإجمالي الشهري','Monthly gross'], f_joBonus:['בונוס שנתי','مكافأة سنوية','Yearly bonus'],
+  f_joCar:['שווי רכב לחודש','قيمة السيارة شهريًا','Car benefit per month'], f_joCarV:['כמה הרכב חוסך לך בחודש','كم توفّر السيارة شهريًا','What the car saves you a month'], f_joPerk:['הטבות נוספות לחודש','مزايا إضافية شهريًا','Other perks per month'],
+  r_joBest:['ההצעה המשתלמת: {x}, יותר ב','العرض الأفضل: {x}، أكثر بـ','Best offer: {x}, ahead by'], r_joVs:['לעומת {x}, בחבילה הכוללת לחודש','مقارنة بـ{x}، في الحزمة الكاملة شهريًا','vs {x}, in the full monthly package'],
+  r_joTie:['ההצעות שוות בחבילה הכוללת','العروض متساوية في الحزمة الكاملة','The offers are equal in the full package'],
+  r_joTotalOf:['חבילה כוללת · {x}','الحزمة الكاملة · {x}','Full package · {x}'], r_joNet:['נטו לחודש','الصافي شهريًا','Net per month'], r_joNetOf:['נטו · {x}','الصافي · {x}','Net · {x}'],
+  r_joSave:['חיסכון (פנסיה והשתלמות)','الادخار (تقاعد واستكمال)','Savings (pension, study fund)'], r_joPerks:['רכב והטבות','السيارة والمزايا','Car and perks'], r_joTotal:['חבילה כוללת','الحزمة الكاملة','Full package'],
+  n_jo:['הנטו מחושב לפי 2026, עם הפרשת עובד של 6% לפנסיה ו-2.5% לקרן השתלמות כשיש הפקדת מעסיק. שווי רכב מוסיף מס אבל חוסך הוצאות, ולכן אפשר להזין כמה הרכב חוסך לך. החבילה הכוללת = נטו + כל ההפקדות לחיסכון + רכב והטבות.','يُحسب الصافي حسب 2026 مع اقتطاع 6% للتقاعد و2.5% لصندوق الاستكمال عند وجود إيداع المشغّل. قيمة السيارة تضيف ضريبة لكنها توفّر مصاريف، لذا يمكن إدخال كم توفّر. الحزمة = الصافي + كل الإيداعات + السيارة والمزايا.','Net pay uses 2026 rules, with a 6% employee pension deduction and 2.5% study fund when the employer deposits. A company car adds tax but saves costs, so enter what it saves you. Full package = net + all savings deposits + car and perks.'],
+  /* freelance */
+  f_flNet:['נטו שרוצים בחודש','الصافي المطلوب شهريًا','Net you want per month'], f_flExp:['הוצאות העסק בחודש','مصاريف العمل شهريًا','Business costs per month'],
+  f_flHpd:['שעות עבודה ביום','ساعات العمل يوميًا','Work hours per day'], f_flBill:['שעות לחיוב מתוך הזמן','نسبة الساعات القابلة للفوترة','Billable share of the time'], h_flBill:['כמה מהזמן אפשר לחייב לקוחות','كم من الوقت يمكن فوترته للعملاء','How much of the time you can bill clients'],
+  f_flOff:['ימי חופש ומחלה בשנה','أيام إجازة ومرض سنويًا','Vacation and sick days a year'], h_flOff:['בלי ימי חג','دون أيام العطل','Not counting holidays'],
+  r_flRate:['תעריף לשעה (לפני מע״מ)','السعر للساعة (قبل الضريبة)','Hourly rate (before VAT)'], r_flRateVat:['תעריף לשעה כולל מע״מ','السعر للساعة مع ضريبة القيمة المضافة','Hourly rate incl. VAT'],
+  r_flDay:['תעריף ליום עבודה','السعر ليوم العمل','Rate per work day'], r_flRevM:['הכנסה נדרשת בחודש','الإيراد المطلوب شهريًا','Revenue needed per month'], r_flRevY:['הכנסה נדרשת בשנה','الإيراد المطلوب سنويًا','Revenue needed per year'],
+  r_flHours:['שעות לחיוב בשנה','الساعات القابلة للفوترة سنويًا','Billable hours a year'], r_flTaxNi:['מס הכנסה וביטוח לאומי בחודש','ضريبة الدخل والتأمين الوطني شهريًا','Income tax and NI per month'],
+  r_flExp:['הוצאות בחודש','المصاريف شهريًا','Costs per month'], r_flNet:['נטו בחודש','الصافي شهريًا','Net per month'],
+  r_flSub:['לפי {h} שעות לחיוב בשנה','على أساس {h} ساعة فوترة سنويًا','Based on {h} billable hours a year'], r_flSubVat:['ללקוח כולל מע״מ: {v} · {h} שעות לחיוב בשנה','للزبون مع الضريبة: {v} · {h} ساعة فوترة سنويًا','To the client incl. VAT: {v} · {h} billable hours a year'],
+  n_fl:['החישוב מניח 9 ימי חג בשנה, מס הכנסה וביטוח לאומי של עצמאי לפי 2026 (52% מדמי הביטוח מוכרים כהוצאה) ואת נקודות הזיכוי שהזנתם. לא כולל הפקדה לפנסיה, שכדאי להוסיף להוצאות.','يفترض الحساب 9 أيام عطل سنويًا وضريبة الدخل والتأمين الوطني للمستقل حسب 2026 (52% من رسوم التأمين مصروف معترف به) ونقاط الخصم التي أدخلتها. لا يشمل إيداع التقاعد، ويُفضّل إضافته إلى المصاريف.','Assumes 9 holidays a year, 2026 self-employed income tax and National Insurance (52% of NI is deductible) and your credit points. Pension deposits are not included, so add them to costs.'],
+  /* employer cost */
+  f_ecGross:['שכר ברוטו חודשי','الراتب الإجمالي الشهري','Monthly gross pay'], f_ecOther:['עלויות נוספות בחודש','تكاليف إضافية شهريًا','Other costs per month'], h_ecOther:['נסיעות, ארוחות, טלפון וכדומה','مواصلات ووجبات وهاتف وما شابه','Travel, meals, phone and similar'],
+  f_ecOver:['תקורה','نفقات عامة','Overhead'], h_ecOver:['ציוד, משרד וניהול, באחוזים מהברוטו','معدات ومكتب وإدارة، كنسبة من الإجمالي','Equipment, office and admin, as % of gross'],
+  r_ecGross:['שכר ברוטו','الراتب الإجمالي','Gross pay'], r_ecOther:['עלויות נוספות','تكاليف إضافية','Other costs'], r_ecOver:['תקורה','نفقات عامة','Overhead'],
+  r_ecTotal:['עלות מעביד לחודש','تكلفة صاحب العمل شهريًا','Employer cost per month'], r_ecYear:['עלות מעביד לשנה','تكلفة صاحب العمل سنويًا','Employer cost per year'],
+  r_ecRatio:['תוספת מעל הברוטו','الزيادة فوق الإجمالي','Added on top of gross'], r_ecNet:['נטו לעובד (הערכה)','الصافي للموظف (تقدير)','Employee net (estimate)'],
+  r_ecSub:['ברוטו {g} · תוספת של {p}','إجمالي {g} · زيادة {p}','Gross {g} · plus {p}'], l_ecSave:['פנסיה, פיצויים והשתלמות','تقاعد وتعويضات واستكمال','Pension, severance, study fund'],
+  n_ec:['לפי שיעורי 2026: ביטוח לאומי מעסיק 4.51% עד 7,703 ₪ ו-7.6% מעליו, פנסיה 6.5% ופיצויים 8.33% (או 6% לפי ההסכם). לא כולל דמי הבראה וימי חופשה ומחלה, שכבר כלולים בשכר.','حسب نسب 2026: تأمين وطني على المشغّل 4.51% حتى 7,703 ₪ و7.6% فوقه، تقاعد 6.5% وتعويضات 8.33% (أو 6% حسب الاتفاق). لا يشمل بدل الاستجمام وأيام الإجازة والمرض المشمولة في الراتب.','2026 rates: employer National Insurance 4.51% up to 7,703 ₪ and 7.6% above, pension 6.5% and severance 8.33% (or 6% by agreement). Recreation pay, vacation and sick days are already part of pay and not added.'],
+  /* management fees */
+  f_mfBal:['יתרה קיימת','الرصيد الحالي','Current balance'], f_mfDep:['הפקדה חודשית','الإيداع الشهري','Monthly deposit'], f_mfRet:['תשואה שנתית לפני דמי ניהול','العائد السنوي قبل الرسوم','Yearly return before fees'],
+  w_mfA:['דמי הניהול היום','الرسوم الحالية','Fees today'], w_mfB:['דמי ניהול בהצעה','الرسوم في العرض','Fees in the offer'],
+  f_mfDepFee:['דמי ניהול מהפקדה','رسوم من الإيداع','Fee on deposits'], f_mfAccFee:['דמי ניהול מצבירה','رسوم من المتراكم','Fee on balance'],
+  r_mfGain:['ההצעה תשאיר לך יותר','العرض سيترك لك أكثر','The offer leaves you more'], r_mfLoss:['ההצעה תשאיר לך פחות','العرض سيترك لك أقل','The offer leaves you less'],
+  r_mfSub:['ההפרש בסוף {n} שנים','الفرق بعد {n} سنوات','The difference after {n} years'], r_mfBalA:['יתרה בסוף · היום','الرصيد في النهاية · الحالي','Final balance · today'], r_mfBalB:['יתרה בסוף · בהצעה','الرصيد في النهاية · العرض','Final balance · offer'],
+  r_mfDiff:['הפרש','الفرق','Difference'], r_mfFeesA:['סך דמי ניהול · היום','مجموع الرسوم · الحالي','Total fees · today'], r_mfFeesB:['סך דמי ניהול · בהצעה','مجموع الرسوم · العرض','Total fees · offer'],
+  r_mfNoFee:['בלי דמי ניהול בכלל','بدون رسوم إطلاقًا','With no fees at all'], r_mfShare:['כמה מהחיסכון הולך לדמי ניהול היום','كم من الادخار يذهب للرسوم الآن','Share of savings lost to fees today'],
+  w_mfMax:['דמי הניהול שהוזנו גבוהים מהתקרה בקרן פנסיה (6% מהפקדה, 0.5% מצבירה).','الرسوم المدخلة أعلى من سقف صندوق التقاعد (6% من الإيداع، 0.5% من المتراكم).','These fees are above the pension fund caps (6% of deposits, 0.5% of balance).'],
+  n_mf:['דמי ניהול מהפקדה יורדים מכל הפקדה, ודמי ניהול מצבירה מכל הכסף שנצבר. התקרות בחוק: בקרן פנסיה עד 6% מהפקדה ו-0.5% מצבירה; בקופת גמל ובקרן השתלמות עד 4% מהפקדה ו-1.05% מצבירה. אפשר לבקש הנחה או לעבור לקרן זולה יותר.','رسوم الإيداع تُخصم من كل إيداع، ورسوم المتراكم من كل المال المتجمع. السقوف القانونية: صندوق التقاعد حتى 6% من الإيداع و0.5% من المتراكم؛ صندوق الادخار والاستكمال حتى 4% و1.05%. يمكن طلب خصم أو الانتقال لصندوق أرخص.','Deposit fees come off every deposit, balance fees off everything saved. Legal caps: pension funds up to 6% of deposits and 0.5% of balance; provident and study funds up to 4% and 1.05%. You can ask for a discount or move to a cheaper fund.'],
+  /* keren hishtalmut */
+  f_khType:['אני','أنا','I am'], o_khEmp:['שכיר','موظف','Employee'], o_khSelf:['עצמאי','مستقل','Self-employed'],
+  f_khSal:['שכר ברוטו חודשי','الراتب الإجمالي الشهري','Monthly gross'], f_khEr:['הפקדת מעסיק','إيداع المشغّل','Employer deposit'], f_khEe:['הפקדת עובד','إيداع الموظف','Employee deposit'],
+  f_khInc:['הכנסה חייבת בשנה','الدخل الخاضع سنويًا','Taxable income a year'], f_khDep:['הפקדה בשנה','الإيداع السنوي','Deposit a year'], h_khDep:['התקרה המוכרת לעצמאי: 13,203 ₪ בשנה','السقف المعترف للمستقل: 13,203 ₪ سنويًا','Self-employed deductible cap: 13,203 ₪ a year'],
+  f_khBal:['יתרה קיימת','الرصيد الحالي','Current balance'],
+  r_khEr:['הפקדת המעסיק בחודש','إيداع المشغّل شهريًا','Employer deposit a month'], r_khEe:['הפקדת העובד בחודש','إيداع الموظف شهريًا','Employee deposit a month'], r_khMonthly:['סך ההפקדה בחודש','مجموع الإيداع شهريًا','Total deposit a month'],
+  r_khExMax:['הפקדת מעסיק פטורה ממס, עד','إيداع المشغّل المعفى من الضريبة، حتى','Tax-free employer deposit, up to'], r_khErTax:['חלק מהפקדת המעסיק שחייב במס','جزء إيداع المشغّل الخاضع للضريبة','Taxable part of the employer deposit'],
+  r_khBenefitEmp:['הטבת מס בשנה על הפקדת המעסיק','ميزة ضريبية سنوية على إيداع المشغّل','Yearly tax benefit on the employer deposit'], r_khDed:['ניכוי מוכר בשנה','خصم معترف به سنويًا','Deductible a year'],
+  r_khBenefitSelf:['חיסכון במס בשנה','التوفير الضريبي السنوي','Tax saved a year'], r_khOverCG:['הפקדה מעל תקרת הפטור ממס רווחי הון','إيداع فوق سقف إعفاء أرباح رأس المال','Deposit above the capital gains exemption cap'],
+  r_khPut:['סך ההפקדות','مجموع الإيداعات','Total deposited'], r_khGain:['רווחים','الأرباح','Gains'], r_khBal:['יתרה אחרי {n} שנים','الرصيد بعد {n} سنوات','Balance after {n} years'],
+  r_khCG:['מס רווחי הון שנחסך (25%)','ضريبة أرباح رأس المال الموفّرة (25%)','Capital gains tax saved (25%)'], r_khLiquid:['נזיל בתום התקופה','سائل في نهاية المدة','Liquid at the end'], r_khAfter6:['רק אחרי 6 שנים','بعد 6 سنوات فقط','Only after 6 years'],
+  r_khSub:['הטבת מס בשנה {b} · חיסכון במס רווחי הון {c}','ميزة ضريبية سنوية {b} · توفير ضريبة أرباح {c}','Tax benefit a year {b} · capital gains tax saved {c}'],
+  n_kh:['שכיר: המעסיק מפקיד עד 7.5% והעובד 2.5%, והפקדת המעסיק פטורה ממס עד שכר של 15,712 ₪ בחודש (2026). עצמאי: אפשר לנכות 4.5% מההכנסה עד 13,203 ₪ בשנה, ופטור ממס רווחי הון על הפקדות עד 20,566 ₪ בשנה. הכסף נזיל אחרי 6 שנים (או 3 סמוך לגיל פרישה).','الموظف: المشغّل يودع حتى 7.5% والموظف 2.5%، وإيداع المشغّل معفى حتى راتب 15,712 ₪ شهريًا (2026). المستقل: خصم 4.5% من الدخل حتى 13,203 ₪ سنويًا، وإعفاء من ضريبة الأرباح على إيداعات حتى 20,566 ₪. المال سائل بعد 6 سنوات (أو 3 قرب سن التقاعد).','Employees: the employer deposits up to 7.5% and the employee 2.5%, tax-free up to a salary of 15,712 ₪ a month (2026). Self-employed: deduct 4.5% of income up to 13,203 ₪ a year, with capital gains exemption on deposits up to 20,566 ₪. The money is liquid after 6 years (or 3 near retirement age).'],
+  /* child savings */
+  f_ksAge:['גיל הילד היום','عمر الطفل اليوم','Child age today'], f_ksPar:['הפקדת הורים','إيداع الأهل','Parent deposit'], o_ksPar1:['כן, עוד 58 ₪ מקצבת הילדים','نعم، 58 ₪ إضافية من مخصصات الأولاد','Yes, another 58 ₪ from the child allowance'], o_ksPar0:['לא','لا','No'],
+  f_ksTo:['משיכה בגיל','السحب في سن','Withdraw at age'], o_ks18:['18','18','18'], o_ks21:['21 (עם מענק נוסף)','21 (مع منحة إضافية)','21 (with an extra grant)'],
+  h_ksRet:['פיקדון בבנק: תשואה נמוכה וקבועה; קופת גמל: לפי המסלול','وديعة بنكية: عائد منخفض وثابت؛ صندوق ادخار: حسب المسار','Bank deposit: low fixed return; provident fund: depends on the track'],
+  r_ksAt:['החיסכון בגיל {n}','الادخار في سن {n}','Savings at {n}'], r_ksSub:['הפקדה של {d} בחודש','إيداع {d} شهريًا','A deposit of {d} a month'],
+  r_ksGov:['הפקדות ביטוח לאומי','إيداعات التأمين الوطني','National Insurance deposits'], r_ksPar:['הפקדות הורים','إيداعات الأهل','Parent deposits'], r_ksGrants:['מענקים','المنح','Grants'], r_ksGain:['רווחים','الأرباح','Gains'],
+  n_ks:['ביטוח לאומי מפקיד 58 ₪ בחודש לכל ילד עד גיל 18 (2026), וההורים יכולים להוסיף 58 ₪ מקצבת הילדים. בגיל 18 מתקבל מענק של 500 ₪, ומי שלא מושך עד גיל 21 מקבל מענק נוסף של 500 ₪. הסכומים מתעדכנים כל שנה, והתשואה תלויה במסלול.','يودع التأمين الوطني 58 ₪ شهريًا لكل طفل حتى سن 18 (2026)، ويمكن للأهل إضافة 58 ₪ من مخصصات الأولاد. في سن 18 تُمنح 500 ₪، ومن لا يسحب حتى 21 يحصل على 500 ₪ إضافية. المبالغ تتحدث سنويًا والعائد حسب المسار.','National Insurance deposits 58 ₪ a month per child until 18 (2026), and parents can add 58 ₪ from the child allowance. A 500 ₪ grant comes at 18, and another 500 ₪ at 21 if the money is left in. Amounts are updated yearly and the return depends on the track.'],
+  /* unemployment and maternity */
+  f_bnKind:['איזו קצבה','أي إعانة','Which benefit'], o_bnUn:['דמי אבטלה','إعانة البطالة','Unemployment'], o_bnMat:['דמי לידה','بدل الولادة','Maternity'],
+  f_bnW6:['השכר ב-6 החודשים האחרונים (סה״כ)','الأجر في آخر 6 أشهر (المجموع)','Pay over the last 6 months (total)'], h_bnW6:['ברוטו מבוטח בביטוח לאומי','الإجمالي المؤمّن في التأمين الوطني','Gross pay insured with National Insurance'],
+  f_bnAge:['גיל','العمر','Age'], f_bnDep:['תלויים','المعالون','Dependents'], o_bnDep2:['עד 2','حتى 2','Up to 2'], o_bnDep3:['3 ומעלה','3 فأكثر','3 or more'],
+  f_bnW3:['השכר ב-3 החודשים שלפני הלידה (סה״כ)','الأجر في 3 أشهر قبل الولادة (المجموع)','Pay over the 3 months before birth (total)'], h_bnW3:['ברוטו מבוטח לפני היציאה לחופשה','الإجمالي المؤمّن قبل الإجازة','Insured gross before the leave'],
+  f_bnWk:['תקופת הזכאות','فترة الاستحقاق','Entitlement'], o_bnWk15:['15 שבועות (מלאה)','15 أسبوعًا (كاملة)','15 weeks (full)'], o_bnWk8:['8 שבועות (חלקית)','8 أسابيع (جزئية)','8 weeks (partial)'], h_bnWk:['מלאה אחרי 10 חודשי עבודה מתוך 14','كاملة بعد 10 أشهر عمل من 14','Full after 10 months of work out of 14'],
+  r_bnDaily:['שכר יומי ממוצע','الأجر اليومي المتوسط','Average daily pay'], r_bnDay:['קצבה ליום','الإعانة اليومية','Benefit per day'], r_bnDay2:['קצבה ליום מהיום ה-126','الإعانة اليومية من اليوم 126','Benefit per day from day 126'],
+  r_bnDays:['ימי זכאות','أيام الاستحقاق','Days of entitlement'], r_bnMonth:['קצבה לחודש (ברוטו)','الإعانة الشهرية (إجمالي)','Benefit per month (gross)'], r_bnTotal:['סך הקצבה לכל התקופה','مجموع الإعانة للفترة','Total for the whole period'],
+  r_bnPct:['מתוך השכר היומי','من الأجر اليومي','Of the daily pay'], r_bnMatTotal:['סך דמי הלידה (ברוטו)','مجموع بدل الولادة (إجمالي)','Total maternity pay (gross)'],
+  r_bnMatSub:['{d} ליום · {n} ימים','{d} لليوم · {n} يومًا','{d} a day · {n} days'], r_bnUnSub:['{d} ליום · עד {n} ימי זכאות','{d} لليوم · حتى {n} يوم استحقاق','{d} a day · up to {n} days'],
+  w_bnCap:['השכר גבוה מהתקרה, ולכן הקצבה מוגבלת ל-{m} ליום.','الأجر أعلى من السقف، لذا الإعانة محددة بـ{m} لليوم.','Pay is above the cap, so the benefit is limited to {m} a day.'],
+  n_bnUn:['הערכה לפי כללי 2026: השכר היומי = שכר 6 החודשים האחרונים חלקי 150, והקצבה מחושבת במדרגות (עד גיל 28 בשיעורים נמוכים יותר). תקרה: 550.76 ₪ ליום ב-125 הימים הראשונים ו-367.17 ₪ אחר כך. הקצבה החודשית לפי 25 ימים. מנוכים מס הכנסה ודמי ביטוח, ויש ימי המתנה בתחילת התקופה.','تقدير حسب قواعد 2026: الأجر اليومي = أجر آخر 6 أشهر مقسومًا على 150، وتُحسب الإعانة بشرائح (أقل لمن هم دون 28). السقف: 550.76 ₪ يوميًا لأول 125 يومًا و367.17 ₪ بعدها. الإعانة الشهرية على أساس 25 يومًا. تُخصم ضريبة الدخل ورسوم التأمين، وهناك أيام انتظار.','2026 estimate: daily pay = last 6 months of pay divided by 150, and the benefit is tiered (lower rates under 28). Cap: 550.76 ₪ a day for the first 125 days and 367.17 ₪ after. Monthly figure uses 25 days. Income tax and contributions are deducted, and there are waiting days at the start.'],
+  n_bnMat:['הערכה לפי כללי 2026: דמי לידה = השכר ב-3 החודשים שלפני הלידה חלקי 90, עד 1,752.33 ₪ ליום. זכאות מלאה ל-15 שבועות (105 ימים) למי שעבדה 10 חודשים מתוך 14 שלפני הלידה או 15 מתוך 22, ו-8 שבועות למי שעבדה 6 מתוך 14. אם עדיף, השכר נבדק גם לפי 6 חודשים חלקי 180. מנוכים מס הכנסה ודמי ביטוח.','تقدير حسب قواعد 2026: بدل الولادة = أجر 3 أشهر قبل الولادة مقسومًا على 90، حتى 1,752.33 ₪ يوميًا. استحقاق كامل 15 أسبوعًا (105 أيام) لمن عملت 10 أشهر من 14 أو 15 من 22، و8 أسابيع لمن عملت 6 من 14. إن كان أفضل يُفحص أيضًا 6 أشهر على 180. تُخصم الضرائب والرسوم.','2026 estimate: maternity pay = pay in the 3 months before birth divided by 90, up to 1,752.33 ₪ a day. Full entitlement of 15 weeks (105 days) after working 10 of the last 14 months or 15 of 22, and 8 weeks after 6 of 14. If better, 6 months divided by 180 is checked too. Income tax and contributions are deducted.'],
+  /* mortgage affordability */
+  f_mcInc:['הכנסה נטו של משק הבית בחודש','صافي دخل الأسرة شهريًا','Household net income per month'], f_mcOther:['החזרי הלוואות אחרים בחודש','أقساط قروض أخرى شهريًا','Other loan payments per month'], f_mcEq:['הון עצמי','رأس المال الذاتي','Equity (down payment)'],
+  o_mcFirst:['דירה ראשונה (עד 75% מימון)','شقة أولى (حتى 75% تمويل)','First home (up to 75% financing)'], o_mcUp:['משפרי דיור (עד 70%)','تحسين سكن (حتى 70%)','Upgrading (up to 70%)'], o_mcInv:['דירה להשקעה (עד 50%)','شقة للاستثمار (حتى 50%)','Investment (up to 50%)'],
+  f_mcRate:['ריבית ממוצעת משוערת','الفائدة المتوسطة المقدرة','Estimated average rate'], f_mcPti:['החזר מרבי מההכנסה','أقصى قسط من الدخل','Maximum payment as % of income'], h_mcPti:['בנק ישראל מגביל עד 50%, ובנקים מעדיפים עד 30%-40%','بنك إسرائيل يحدد حتى 50%، والبنوك تفضّل 30%-40%','Bank of Israel caps it at 50%; banks prefer 30%-40%'],
+  r_mcPrice:['מחיר דירה מרבי','أقصى سعر للشقة','Maximum home price'], r_mcSub:['משכנתא עד {l} · החזר {p} בחודש','رهن حتى {l} · قسط {p} شهريًا','Mortgage up to {l} · {p} a month'],
+  r_mcPay:['החזר חודשי מרבי','أقصى قسط شهري','Maximum monthly payment'], r_mcByPay:['משכנתא לפי ההכנסה','الرهن حسب الدخل','Mortgage by income'], r_mcByEq:['משכנתא לפי ההון העצמי ({p} מימון)','الرهن حسب رأس المال ({p} تمويل)','Mortgage by equity ({p} financing)'],
+  r_mcLoan:['משכנתא מרבית','أقصى رهن','Maximum mortgage'], r_mcLimit:['מה מגביל','ما الذي يحدّ','What limits it'], r_mcLimPay:['ההכנסה','الدخل','Income'], r_mcLimEq:['ההון העצמי','رأس المال الذاتي','Equity'],
+  r_mcPm:['החזר חודשי בפועל','القسط الشهري الفعلي','Actual monthly payment'], r_mcLtv:['שיעור מימון','نسبة التمويل','Loan to value'], r_mcPti:['החזרים מתוך ההכנסה','الأقساط من الدخل','Payments as % of income'],
+  w_mcPti:['בנק ישראל לא מאפשר החזר של יותר מ-50% מההכנסה.','بنك إسرائيل لا يسمح بقسط يزيد عن 50% من الدخل.','The Bank of Israel does not allow payments above 50% of income.'], w_mcYrs:['תקופת משכנתא מרבית היא 30 שנה.','أقصى مدة للرهن 30 سنة.','The maximum mortgage term is 30 years.'],
+  n_mc:['לפי כללי בנק ישראל: מימון עד 75% לדירה ראשונה, 70% למשפרי דיור ו-50% לדירה להשקעה, תקופה עד 30 שנה, ויחס החזר להכנסה עד 50%. לא כולל מס רכישה, עו״ד, תיווך והוצאות נוספות שמשולמות מההון העצמי.','حسب قواعد بنك إسرائيل: تمويل حتى 75% لشقة أولى و70% لتحسين السكن و50% للاستثمار، مدة حتى 30 سنة، ونسبة قسط إلى دخل حتى 50%. لا يشمل ضريبة الشراء والمحامي والسمسرة ومصاريف أخرى تُدفع من رأس المال.','Bank of Israel rules: financing up to 75% for a first home, 70% when upgrading and 50% for investment, terms up to 30 years, and payments up to 50% of income. Purchase tax, lawyer, agent and other costs paid from equity are not included.'],
+  /* company car */
+  f_cbPrice:['מחיר המחירון של הרכב','سعر السيارة حسب القائمة','Car list price'], h_cbPrice:['המחיר כשהרכב היה חדש','السعر عندما كانت السيارة جديدة','The price when the car was new'],
+  f_cbKind:['סוג הרכב','نوع السيارة','Car type'], o_cbFuel:['בנזין או דיזל','بنزين أو ديزل','Petrol or diesel'], o_cbHybrid:['היברידי','هجين','Hybrid'], o_cbPlugin:['פלאג-אין','هجين قابل للشحن','Plug-in hybrid'], o_cbEv:['חשמלי','كهربائي','Electric'],
+  f_cbGross:['שכר ברוטו בלי הרכב','الراتب الإجمالي دون السيارة','Gross pay without the car'], f_cbPay:['השתתפות שלך ברכב לחודש','مساهمتك في السيارة شهريًا','Your monthly contribution'], h_cbPay:['סכום שאתה משלם למעסיק על הרכב','مبلغ تدفعه للمشغّل مقابل السيارة','What you pay the employer for the car'],
+  r_cbCost:['הרכב עולה לך בחודש','السيارة تكلّفك شهريًا','The car costs you a month'], r_cbSub:['שווי שימוש {v} בחודש','قيمة الاستخدام {v} شهريًا','Benefit value {v} a month'],
+  r_cbBase:['2.48% ממחיר המחירון','2.48% من سعر القائمة','2.48% of the list price'], r_cbDed:['הפחתה לרכב ירוק','خصم السيارة الخضراء','Green car reduction'], r_cbPay:['השתתפות שלך','مساهمتك','Your contribution'],
+  r_cbVal:['שווי שימוש חודשי','قيمة الاستخدام الشهرية','Monthly benefit value'], r_cbNetNo:['נטו בלי רכב','الصافي دون سيارة','Net without the car'], r_cbNetYes:['נטו עם רכב','الصافي مع السيارة','Net with the car'], r_cbYear:['עלות לשנה','التكلفة السنوية','Cost per year'],
+  w_cbCap:['המחיר גבוה מתקרת המחיר ({c}), ולכן השווי מחושב לפי התקרה.','السعر أعلى من السقف ({c})، لذا تُحسب القيمة حسب السقف.','The price is above the cap ({c}), so the value uses the cap.'],
+  n_cb:['שווי שימוש 2026: 2.48% ממחיר המחירון בחודש, עד תקרת מחיר של 596,860 ₪. הפחתה חודשית: היברידי 580 ₪, פלאג-אין 1,150 ₪, חשמלי 1,380 ₪. השווי מתווסף להכנסה החייבת, ולכן העלות היא כמה הנטו שלך יורד. לבדיקה מדויקת יש סימולטור ברשות המסים.','قيمة الاستخدام 2026: 2.48% من سعر القائمة شهريًا حتى سقف 596,860 ₪. خصم شهري: هجين 580 ₪، قابل للشحن 1,150 ₪، كهربائي 1,380 ₪. القيمة تُضاف إلى الدخل الخاضع، فالتكلفة هي انخفاض صافيك. للتدقيق يوجد محاكي في سلطة الضرائب.','2026 benefit value: 2.48% of the list price a month, up to a price cap of 596,860 ₪. Monthly reduction: hybrid 580 ₪, plug-in 1,150 ₪, electric 1,380 ₪. The value is added to taxable income, so the cost is how much your net pay drops. The Tax Authority has a simulator for exact figures.'],
+  /* electric vs petrol */
+  f_evKm:['נסיעה בשנה','القيادة سنويًا','Driving per year'], f_evFp:['מחיר ליטר בנזין','سعر لتر البنزين','Petrol price per liter'], h_evFp:['אוקטובר 2026: 8.27 ₪ בשירות עצמי','تشرين الأول 2026: 8.27 ₪ خدمة ذاتية','October 2026: 8.27 ₪ self-service'],
+  f_evFc:['צריכת בנזין (ליטר ל-100 ק״מ)','استهلاك البنزين (لتر لكل 100 كم)','Petrol use (liters per 100 km)'], f_evKwh:['מחיר קוט״ש בבית','سعر الكيلوواط ساعة في البيت','Home price per kWh'],
+  f_evEc:['צריכת חשמל (קוט״ש ל-100 ק״מ)','استهلاك الكهرباء (ك.و.س لكل 100 كم)','Electricity use (kWh per 100 km)'], f_evDiff:['הפרש מחיר הרכישה','فرق سعر الشراء','Purchase price difference'], h_evDiff:['כמה החשמלי יקר יותר בקנייה','كم الكهربائية أغلى عند الشراء','How much more the electric car costs to buy'],
+  f_evPub:['טעינה ציבורית','الشحن العام','Public charging'], f_evPubp:['מחיר קוט״ש בטעינה ציבורית','سعر الكيلوواط في الشحن العام','Public charging price per kWh'], f_evMf:['אחזקה בשנה · בנזין','الصيانة السنوية · بنزين','Yearly upkeep · petrol'], f_evMe:['אחזקה בשנה · חשמלי','الصيانة السنوية · كهربائي','Yearly upkeep · electric'],
+  r_evSave:['החשמלי חוסך בשנה','الكهربائية توفّر سنويًا','The electric car saves a year'], r_evMore:['החשמלי יקר יותר בשנה ב','الكهربائية أغلى سنويًا بـ','The electric car costs more a year by'],
+  r_evBe:['הפרש המחיר מחזיר את עצמו תוך {n} שנים','فرق السعر يُسترد خلال {n} سنوات','The price difference pays back in {n} years'], r_evPerMonth:['{m} בחודש','{m} شهريًا','{m} a month'],
+  r_evFuelY:['עלות שנתית · בנזין','التكلفة السنوية · بنزين','Yearly cost · petrol'], r_evElecY:['עלות שנתית · חשמלי','التكلفة السنوية · كهربائي','Yearly cost · electric'], r_evSaveM:['חיסכון בחודש','التوفير الشهري','Saving per month'],
+  r_evKmF:['עלות לק״מ · בנזין','التكلفة لكل كم · بنزين','Cost per km · petrol'], r_evKmE:['עלות לק״מ · חשמלי','التكلفة لكل كم · كهربائي','Cost per km · electric'], r_evBeRow:['החזר הפרש המחיר','استرداد فرق السعر','Payback of the price difference'],
+  r_evYears:['{n} שנים','{n} سنوات','{n} years'], r_ev5:['רווח נקי אחרי 5 שנים','الربح الصافي بعد 5 سنوات','Net gain after 5 years'], r_evYearly:['עלות שנתית','التكلفة السنوية','Yearly cost'], l_evFuel:['בנזין','بنزين','Petrol'], l_evElec:['חשמלי','كهربائي','Electric'],
+  n_ev:['מחיר הבנזין לפי אוקטובר 2026: 8.27 ₪ לליטר בשירות עצמי. תעריף החשמל הביתי מיולי 2026: 63.52 אגורות לקוט״ש כולל מע״מ. טעינה ציבורית יקרה יותר. לא כולל ירידת ערך, ביטוח ואגרות.','سعر البنزين لتشرين الأول 2026: 8.27 ₪ للتر خدمة ذاتية. تعرفة الكهرباء المنزلية منذ تموز 2026: 63.52 أغورة لكل ك.و.س مع الضريبة. الشحن العام أغلى. لا يشمل انخفاض القيمة والتأمين والرسوم.','Petrol price for October 2026: 8.27 ₪ a liter self-service. Home electricity from July 2026: 63.52 agorot per kWh incl. VAT. Public charging costs more. Depreciation, insurance and fees are not included.'],
+  /* appliance */
+  f_apPre:['מכשיר','الجهاز','Appliance'], o_apC:['אחר (להקליד הספק)','آخر (اكتب القدرة)','Other (type the power)'], o_apAc:['מזגן 1 כ״ס (כ-900 וואט)','مكيف 1 حصان (نحو 900 واط)','1 hp air conditioner (about 900 W)'], o_apBoiler:['דוד חשמל (2,500 וואט)','سخان كهربائي (2,500 واط)','Electric water heater (2,500 W)'],
+  o_apHeater:['תנור חימום (2,000 וואט)','مدفأة (2,000 واط)','Space heater (2,000 W)'], o_apDryer:['מייבש כביסה (2,400 וואט)','مجفف ملابس (2,400 واط)','Clothes dryer (2,400 W)'], o_apOven:['תנור אפייה (2,000 וואט)','فرن (2,000 واط)','Oven (2,000 W)'],
+  o_apFridge:['מקרר (כ-150 וואט בממוצע)','ثلاجة (نحو 150 واط بالمتوسط)','Fridge (about 150 W average)'], o_apTv:['טלוויזיה (100 וואט)','تلفاز (100 واط)','TV (100 W)'], o_apPc:['מחשב (250 וואט)','حاسوب (250 واط)','Computer (250 W)'],
+  f_apW:['הספק','القدرة','Power'], f_apH:['שעות שימוש ביום','ساعات الاستخدام يوميًا','Hours of use a day'], f_apD:['ימים בחודש','أيام في الشهر','Days a month'], f_apTar:['מחיר לקוט״ש','السعر لكل ك.و.س','Price per kWh'], h_apTar:['תעריף ביתי מיולי 2026: 0.6352 ₪ כולל מע״מ','التعرفة المنزلية منذ تموز 2026: 0.6352 ₪ مع الضريبة','Home tariff from July 2026: 0.6352 ₪ incl. VAT'], f_apQ:['כמה מכשירים','عدد الأجهزة','How many units'],
+  r_apMonth:['עלות לחודש','التكلفة الشهرية','Cost per month'], r_apSub:['{k} קוט״ש בחודש · {y} בשנה','{k} ك.و.س شهريًا · {y} سنويًا','{k} kWh a month · {y} a year'], r_apHour:['עלות לשעת שימוש','التكلفة لساعة استخدام','Cost per hour of use'],
+  r_apDay:['עלות ליום','التكلفة اليومية','Cost per day'], r_apKwh:['צריכה בחודש','الاستهلاك الشهري','Use per month'], r_apYear:['עלות לשנה','التكلفة السنوية','Cost per year'],
+  n_ap:['צריכה = הספק בוואט × שעות. מזגן ומקרר לא עובדים כל הזמן בהספק מלא, ולכן התוצאה היא הערכה עליונה. תעריף ביתי מיולי 2026: 63.52 אג׳ לקוט״ש כולל מע״מ.','الاستهلاك = القدرة بالواط × الساعات. المكيف والثلاجة لا يعملان دائمًا بكامل القدرة، لذا النتيجة تقدير أعلى. التعرفة المنزلية منذ تموز 2026: 63.52 أغورة لكل ك.و.س مع الضريبة.','Use = power in watts × hours. Air conditioners and fridges do not run at full power all the time, so this is an upper estimate. Home tariff from July 2026: 63.52 agorot per kWh incl. VAT.'],
+  /* unit price */
+  up_def:['מוצר {n}','منتج {n}','Item {n}'], up_name:['שם המוצר','اسم المنتج','Item name'], up_namePh:['למשל המותג או הגודל','مثلًا العلامة أو الحجم','e.g. brand or size'],
+  up_add:['הוספת מוצר','إضافة منتج','Add an item'], up_hint:['לחצו ＋ כדי להוסיף אריזות להשוואה, ✕ כדי להסיר. אפשר לציין מארז (למשל 6 בקבוקים).','اضغط ＋ لإضافة عبوات للمقارنة و✕ للإزالة. يمكن تحديد عبوة متعددة (مثلًا 6 زجاجات).','Tap ＋ to add packs to compare and ✕ to remove one. You can set a multipack (e.g. 6 bottles).'],
+  f_upPrice:['מחיר','السعر','Price'], f_upSize:['גודל','الحجم','Size'], f_upUnit:['יחידה','الوحدة','Unit'], f_upPack:['כמות במארז','العدد في العبوة','Items in the pack'],
+  u_g:['גרם','غرام','grams'], u_kg:['ק״ג','كغ','kg'], u_ml:['מ״ל','مل','ml'], u_l:['ליטר','لتر','liters'], u_unit:['יחידות','وحدات','units'],
+  r_upPerKg:['לק״ג','لكل كغ','per kg'], r_upPerL:['לליטר','لكل لتر','per liter'], r_upPerU:['ליחידה','لكل وحدة','per unit'], r_upNone:['הזינו מחיר וגודל','أدخل السعر والحجم','Enter a price and size'],
+  r_upBest:['הכי משתלם: {x}','الأوفر: {x}','Best value: {x}'], r_upCheaper:['זול ב-{p} מ{x}','أرخص بـ{p} من {x}','{p} cheaper than {x}'],
+  r_upPrice:['מחיר','السعر','Price'], r_upPer:['מחיר ליחידת מידה','السعر لوحدة القياس','Price per measure'], r_upMore:['יקר יותר ב','أغلى بـ','More expensive by'],
+  n_up:['המחיר מחושב לכל קילו, ליטר או יחידה, כולל מארזים, כך שאפשר להשוות אריזות בגדלים שונים.','يُحسب السعر لكل كيلو أو لتر أو وحدة بما في ذلك العبوات المتعددة، لمقارنة أحجام مختلفة.','The price is worked out per kilo, liter or unit, including multipacks, so different sizes can be compared.'],
+  n_upMix:['מוצרים ביחידות שונות (משקל, נפח או יחידות) מושווים רק בתוך אותה קבוצה.','المنتجات بوحدات مختلفة (وزن أو حجم أو وحدات) تُقارن داخل المجموعة نفسها فقط.','Items in different measures (weight, volume or units) are compared only within the same group.'],
+  /* discounts */
+  f_dsMode:['סוג המבצע','نوع العرض','Type of deal'], o_dsPct:['הנחה באחוזים','خصم بالنسبة المئوية','Percent off'], o_dsStack:['הנחה על הנחה','خصم على خصم','Discount on a discount'],
+  o_dsBogo:['קנה X קבל Y (1+1)','اشترِ X واحصل على Y (1+1)','Buy X get Y (1+1)'], o_dsSecond:['השני ב-X% הנחה','الثاني بخصم X%','Second one at X% off'], o_dsNfor:['כמה מוצרים במחיר אחד (3 ב-100)','عدة منتجات بسعر واحد (3 بـ100)','Several for one price (3 for 100)'], o_dsCoupon:['קופון בשקלים','كوبون بمبلغ','Money-off coupon'],
+  f_dsPrice:['מחיר רגיל למוצר','السعر العادي للمنتج','Regular price per item'], f_dsQty:['כמות','الكمية','Quantity'], f_dsPctF:['אחוז הנחה','نسبة الخصم','Discount'], f_dsPct2:['הנחה נוספת','خصم إضافي','Extra discount'],
+  f_dsBuy:['קונים','تشتري','Buy'], f_dsFree:['מקבלים חינם','مجانًا','Get free'], f_dsN:['כמה מוצרים במבצע','كم منتجًا في العرض','How many items in the deal'], f_dsDeal:['מחיר המבצע','سعر العرض','Deal price'],
+  f_dsCoupon:['סכום הקופון','قيمة الكوبون','Coupon amount'], f_dsMin:['מינימום קנייה לקופון','حد أدنى للشراء','Minimum purchase'],
+  r_dsFull:['מחיר בלי מבצע','السعر دون عرض','Price without the deal'], r_dsPay:['משלמים בפועל','تدفع فعليًا','You actually pay'], r_dsSave:['חיסכון','التوفير','You save'], r_dsPct:['הנחה אפקטיבית','الخصم الفعلي','Effective discount'],
+  r_dsUnits:['מוצרים שמקבלים','المنتجات التي تحصل عليها','Items you get'], r_dsEach:['מחיר אמיתי ליחידה','السعر الحقيقي للوحدة','Real price per item'],
+  r_dsSub:['הנחה אמיתית {p} · חיסכון {s}','خصم حقيقي {p} · توفير {s}','Real discount {p} · save {s}'], r_dsBogo:['{b}+{f}','{b}+{f}','{b}+{f}'],
+  w_dsMin:['הקנייה נמוכה ממינימום הקופון ({m}), ולכן הקופון לא חל.','الشراء أقل من الحد الأدنى للكوبون ({m})، فلا ينطبق.','The purchase is below the coupon minimum ({m}), so it does not apply.'],
+  n_ds:['המחיר האמיתי ליחידה עוזר להשוות מבצעים. למשל, 1+1 שווה ל-50% הנחה רק אם באמת צריך את שני המוצרים.','السعر الحقيقي للوحدة يساعد على مقارنة العروض. مثلًا 1+1 يساوي خصم 50% فقط إذا كنت تحتاج المنتجين فعلًا.','The real price per item helps compare deals. For example, 1+1 equals 50% off only if you really need both.'],
+  /* working days */
+  f_wdFrom:['מתאריך','من تاريخ','From'], f_wdTo:['עד תאריך','إلى تاريخ','To'], f_wdWeek:['שבוע עבודה','أسبوع العمل','Work week'], o_wd5:['5 ימים (א׳-ה׳)','5 أيام (الأحد-الخميس)','5 days (Sun-Thu)'], o_wd6:['6 ימים (א׳-ו׳)','6 أيام (الأحد-الجمعة)','6 days (Sun-Fri)'],
+  f_wdHol:['לא לספור חגים','عدم احتساب العطل','Skip holidays'], f_wdEnd:['לכלול את יום הסיום','تضمين يوم النهاية','Include the end date'],
+  r_wdWork:['ימי עבודה','أيام العمل','Working days'], r_wdSub:['{c} ימים בסך הכול · {w} סופי שבוע · {h} חגים','{c} يومًا إجمالًا · {w} عطلة نهاية أسبوع · {h} عطل','{c} days in total · {w} weekend days · {h} holidays'],
+  r_wdCal:['ימים קלנדריים','أيام تقويمية','Calendar days'], r_wdWkend:['ימי סוף שבוע','أيام عطلة الأسبوع','Weekend days'], r_wdHol:['חגים בימי עבודה','عطل في أيام العمل','Holidays on work days'], r_wdWeeks:['שבועות','أسابيع','Weeks'],
+  t_wdHol:['החגים בתקופה','العطل في الفترة','Holidays in the period'], r_wdHolName:['חג','العطلة','Holiday'], r_wdDate:['תאריך','التاريخ','Date'],
+  hol_rh:['ראש השנה','رأس السنة العبرية','Rosh Hashanah'], hol_rh2:['ראש השנה (יום ב׳)','رأس السنة (اليوم الثاني)','Rosh Hashanah (day 2)'], hol_yk:['יום כיפור','يوم الغفران','Yom Kippur'], hol_suk:['סוכות','عيد العرش','Sukkot'],
+  hol_st:['שמחת תורה','فرحة التوراة','Simchat Torah'], hol_pes:['פסח','عيد الفصح العبري','Passover'], hol_pes7:['שביעי של פסח','اليوم السابع من الفصح','Seventh day of Passover'], hol_shav:['שבועות','عيد الأسابيع','Shavuot'], hol_ind:['יום העצמאות','يوم الاستقلال','Independence Day'],
+  n_wd:['ימי מנוחה בישראל שנספרים כחג: ראש השנה (2), יום כיפור, סוכות, שמחת תורה, פסח (ראשון ושביעי), שבועות ויום העצמאות. ערבי חג, חול המועד ובחירות לא נספרים, וכדאי לבדוק את ההסכם במקום העבודה.','أيام الراحة في إسرائيل المحسوبة كعطل: رأس السنة (2)، الغفران، العرش، فرحة التوراة، الفصح (الأول والسابع)، الأسابيع ويوم الاستقلال. عشية الأعياد وأيام منتصف العيد والانتخابات لا تُحتسب، وتحقق من اتفاق العمل.','Israeli rest days counted as holidays: Rosh Hashanah (2), Yom Kippur, Sukkot, Simchat Torah, Passover (first and seventh), Shavuot and Independence Day. Holiday eves, intermediate days and election days are not counted, so check your work agreement.']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -3170,10 +3376,10 @@ META.unix = 1791894003; META.official = true;
 
 const GROUPS = [
   ['g_main',  ['home','assist','settings']],
-  ['g_save',  ['expenses','freedom','networth','debtplan','savegoal','compound','yield','dividends','avgcost','retire','fire']],
-  ['g_work2', ['clients','salary','selfemp','tax','capital','rental','severance','notice','leave']],
-  ['g_loans', ['prime','loan','loancmp','prepay','creditcard','carlease','mortgage','refi','rentbuy','purchasetax','landtax']],
-  ['g_tools', ['convert','vat','percent','inflation','split','breakeven']]
+  ['g_save',  ['expenses','freedom','networth','debtplan','savegoal','compound','yield','dividends','avgcost','retire','fire','mgmtfees','hishtalmut','kidsave']],
+  ['g_work2', ['clients','salary','selfemp','tax','capital','rental','severance','notice','leave','overtime','taxrefund','joboffer','freelance','empcost','carbenefit','benefits']],
+  ['g_loans', ['prime','loan','loancmp','prepay','creditcard','carlease','mortgage','refi','rentbuy','purchasetax','landtax','mortcap','evfuel']],
+  ['g_tools', ['convert','vat','percent','inflation','split','breakeven','unitprice','discount','workdays','appliance']]
 ];
 const TABS = GROUPS.flatMap(g => g[1]);
 
@@ -3593,6 +3799,7 @@ function pointsOf(p){
 }
 
 function fieldHTML(f){
+  if (f.type === 'date') return `<div class="field"${f.when ? ` data-when="${f.when[0]}=${f.when[1]}"` : ''}><label for="${f.id}" data-i="${f.label}"></label><div class="control"><input id="${f.id}" type="date" value="${f.val || ''}"></div></div>`;
   if (f.type === 'html') return `<div class="field wide ${f.cls || ''}" id="${f.id}"${f.when ? ` data-when="${f.when[0]}=${f.when[1]}"` : ''}></div>`;
   const r = fieldHTML0(f);
   if (!(f.type === 'select' || f.type === 'cursel') || !f.id || f.id.indexOf('set_') !== 0) return r;
@@ -3911,6 +4118,114 @@ function percentPanelHTML(){
   </section>`;
 }
 
+/* ---- new tools: 2026 figures, fields and icons (must exist before the screens are built) ---- */
+const IL26 = {
+  minWage: 6443.85, minHour: 35.40, avgWage: 13769,                 // minimum wage from 1.4.2026 (182 h), average wage for benefits
+  hishCap: 15712, hishErMax: 0.075, hishSelfCap: 293397, hishSelfDed: 13203, hishSelfCG: 20566,
+  carPct: 0.0248, carCap: 596860, carDed: {fuel: 0, hybrid: 580, plugin: 1150, ev: 1380},
+  childDep: 58, childGrant18: 500, childGrant21: 500,
+  unBase: 415, unMax1: 550.76, unMax2: 367.17, matMaxDay: 1752.33,
+  fuel95: 8.27, kwh: 0.6352, vat: 0.18
+};
+const isoDay = off => { const d = new Date(); d.setDate(d.getDate() + (off || 0)); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+/* --- fields --- */
+Object.assign(DEFS, {
+  overtime: [
+    SEL('ot_basis','f_otBasis','hour',[['hour','o_otHour'],['month','o_otMonth']],{wide:true}),
+    F('ot_rate','f_otRate','ils',45,{when:['ot_basis','hour']}), F('ot_month','f_otMonth','ils',12000,{when:['ot_basis','month']}),
+    F('ot_reg','f_otReg','',182,{when:['ot_basis','hour'],hint:'h_otReg'}),
+    F('ot_125','f_ot125','',20,{hint:'h_ot125'}), F('ot_150','f_ot150','',6),
+    F('ot_sh','f_otSh','',0,{hint:'h_otSh'}),
+    F('ot_sh175','f_otSh175','',0,{adv:'m_adv'}), F('ot_sh200','f_otSh200','',0,{adv:'m_adv'}), F('ot_pts','f_points','',2.25,{adv:'m_adv'})
+  ],
+  taxrefund: [
+    F('tr_gross','f_trGross','ils',120000,{wide:true,hint:'h_trGross'}), F('tr_paid','f_trPaid','ils',9000,{wide:true,hint:'h_trPaid'}),
+    F('tr_pts','f_points','',2.25,{hint:'h_trPts'}),
+    F('tr_don','f_trDon','ils',0), F('tr_life','f_trLife','ils',0,{adv:'m_adv'}), F('tr_pens','f_trPens','ils',0,{adv:'m_adv'})
+  ],
+  joboffer: [F('jo_pts','f_points','',2.25), {type:'html', id:'jo_box', cls:'lc-wrap'}],
+  freelance: [
+    F('fl_net','f_flNet','cur',15000,{wide:true}), F('fl_exp','f_flExp','cur',2000),
+    F('fl_hpd','f_flHpd','',8), F('fl_bill','f_flBill','%',70,{hint:'h_flBill'}), F('fl_off','f_flOff','',25,{hint:'h_flOff'}),
+    SEL('fl_vat','f_dealer','murshe',[['murshe','o_murshe'],['patur','o_patur']]), F('fl_pts','f_points','',2.25,{adv:'m_adv'})
+  ],
+  empcost: [
+    F('ec_gross','f_ecGross','ils',12000,{wide:true}), F('ec_pens','f_erPens','%',6.5), F('ec_sev','f_erSev','%',8.33),
+    F('ec_hish','f_erStudy','%',0), F('ec_other','f_ecOther','ils',0,{hint:'h_ecOther'}), F('ec_over','f_ecOver','%',0,{adv:'m_adv',hint:'h_ecOver'})
+  ],
+  mgmtfees: [
+    F('mf_bal','f_mfBal','ils',150000), F('mf_dep','f_mfDep','ils',2000), F('mf_yrs','f_term','yrs',25), F('mf_ret','f_mfRet','%',5),
+    {type:'sub',label:'w_mfA'}, F('mf_ad','f_mfDepFee','%',3), F('mf_aa','f_mfAccFee','%',0.3),
+    {type:'sub',label:'w_mfB'}, F('mf_bd','f_mfDepFee','%',1), F('mf_ba','f_mfAccFee','%',0.15)
+  ],
+  hishtalmut: [
+    SEL('kh_type','f_khType','emp',[['emp','o_khEmp'],['self','o_khSelf']],{wide:true}),
+    F('kh_sal','f_khSal','ils',15000,{when:['kh_type','emp']}), F('kh_er','f_khEr','%',7.5,{when:['kh_type','emp']}), F('kh_ee','f_khEe','%',2.5,{when:['kh_type','emp']}),
+    F('kh_inc','f_khInc','ils',200000,{when:['kh_type','self']}), F('kh_dep','f_khDep','ils',13203,{when:['kh_type','self'],hint:'h_khDep'}),
+    F('kh_yrs','f_term','yrs',6), F('kh_ret','f_mfRet','%',5), F('kh_bal','f_khBal','ils',0,{adv:'m_adv'}), F('kh_fee','f_mfAccFee','%',0.5,{adv:'m_adv'})
+  ],
+  kidsave: [
+    F('ks_age','f_ksAge','yrs',0), SEL('ks_par','f_ksPar','1',[['1','o_ksPar1'],['0','o_ksPar0']],{wide:true}),
+    SEL('ks_to','f_ksTo','21',[['18','o_ks18'],['21','o_ks21']]), F('ks_ret','f_mfRet','%',4,{hint:'h_ksRet'}),
+    F('ks_bal','f_khBal','ils',0,{adv:'m_adv'}), F('ks_fee','f_mfAccFee','%',0,{adv:'m_adv'})
+  ],
+  benefits: [
+    SEL('bn_kind','f_bnKind','un',[['un','o_bnUn'],['mat','o_bnMat']],{wide:true}),
+    F('bn_w6','f_bnW6','ils',72000,{wide:true,when:['bn_kind','un'],hint:'h_bnW6'}), F('bn_age','f_bnAge','',35,{when:['bn_kind','un']}),
+    SEL('bn_dep','f_bnDep','2',[['2','o_bnDep2'],['3','o_bnDep3']],{when:['bn_kind','un']}),
+    F('bn_w3','f_bnW3','ils',36000,{wide:true,when:['bn_kind','mat'],hint:'h_bnW3'}), SEL('bn_wk','f_bnWk','15',[['15','o_bnWk15'],['8','o_bnWk8']],{when:['bn_kind','mat'],hint:'h_bnWk'})
+  ],
+  mortcap: [
+    F('mc_inc','f_mcInc','ils',22000,{wide:true}), F('mc_other','f_mcOther','ils',0), F('mc_eq','f_mcEq','ils',500000),
+    SEL('mc_type','f_buyerType','first',[['first','o_mcFirst'],['upgrade','o_mcUp'],['invest','o_mcInv']],{wide:true}),
+    F('mc_rate','f_mcRate','%',4.8), F('mc_yrs','f_term','yrs',30), F('mc_pti','f_mcPti','%',35,{hint:'h_mcPti'})
+  ],
+  carbenefit: [
+    F('cb_price','f_cbPrice','ils',180000,{wide:true,hint:'h_cbPrice'}), SEL('cb_kind','f_cbKind','fuel',[['fuel','o_cbFuel'],['hybrid','o_cbHybrid'],['plugin','o_cbPlugin'],['ev','o_cbEv']],{wide:true}),
+    F('cb_gross','f_cbGross','ils',18000), F('cb_pts','f_points','',2.25), F('cb_pay','f_cbPay','ils',0,{adv:'m_adv',hint:'h_cbPay'})
+  ],
+  evfuel: [
+    F('ev_km','f_evKm','km',15000,{wide:true}), F('ev_fp','f_evFp','ils',IL26.fuel95,{hint:'h_evFp'}), F('ev_fc','f_evFc','',7),
+    F('ev_kwh','f_evKwh','ils',IL26.kwh,{hint:'h_apTar'}), F('ev_ec','f_evEc','',16), F('ev_diff','f_evDiff','ils',20000,{hint:'h_evDiff'}),
+    F('ev_pub','f_evPub','%',20,{adv:'m_adv'}), F('ev_pubp','f_evPubp','ils',1.9,{adv:'m_adv'}), F('ev_mf','f_evMf','ils',3500,{adv:'m_adv'}), F('ev_me','f_evMe','ils',2000,{adv:'m_adv'})
+  ],
+  appliance: [
+    SEL('ap_pre','f_apPre','c',[['c','o_apC'],['900','o_apAc'],['2500','o_apBoiler'],['2000','o_apHeater'],['2400','o_apDryer'],['2000o','o_apOven'],['150','o_apFridge'],['100','o_apTv'],['250','o_apPc']],{wide:true}),
+    F('ap_w','f_apW','W',1000), F('ap_h','f_apH','',4), F('ap_d','f_apD','',30), F('ap_tar','f_apTar','ils',IL26.kwh,{hint:'h_apTar'}), F('ap_q','f_apQ','',1,{adv:'m_adv'})
+  ],
+  unitprice: [{type:'html', id:'up_box', cls:'lc-wrap'}],
+  discount: [
+    SEL('ds_mode','f_dsMode','pct',[['pct','o_dsPct'],['stack','o_dsStack'],['bogo','o_dsBogo'],['second','o_dsSecond'],['nfor','o_dsNfor'],['coupon','o_dsCoupon']],{wide:true}),
+    F('ds_price','f_dsPrice','cur',50), F('ds_qty','f_dsQty','',1,{when:['ds_mode','pct|stack|coupon']}),
+    F('ds_pct','f_dsPctF','%',20,{when:['ds_mode','pct|stack|second']}), F('ds_pct2','f_dsPct2','%',10,{when:['ds_mode','stack']}),
+    F('ds_buy','f_dsBuy','',1,{when:['ds_mode','bogo']}), F('ds_free','f_dsFree','',1,{when:['ds_mode','bogo']}),
+    F('ds_n','f_dsN','',3,{when:['ds_mode','nfor']}), F('ds_deal','f_dsDeal','cur',120,{when:['ds_mode','nfor']}),
+    F('ds_coupon','f_dsCoupon','cur',30,{when:['ds_mode','coupon']}), F('ds_min','f_dsMin','cur',0,{when:['ds_mode','coupon']})
+  ],
+  workdays: [
+    {type:'date', id:'wd_from', label:'f_wdFrom', val: isoDay(0)}, {type:'date', id:'wd_to', label:'f_wdTo', val: isoDay(30)},
+    SEL('wd_week','f_wdWeek','5',[['5','o_wd5'],['6','o_wd6']]), SEL('wd_hol','f_wdHol','1',[['1','o_on'],['0','o_off']]),
+    SEL('wd_end','f_wdEnd','1',[['1','o_yes'],['0','o_no']])
+  ]
+});
+Object.assign(ICON, {
+  overtime: ic('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>'),
+  taxrefund: ic('<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 9h6M9 13h4"/><path d="M15 15l2 2 3-4"/>'),
+  joboffer: ic('<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 12h18"/>'),
+  freelance: ic('<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/><path d="M17 3l1 2"/>'),
+  empcost: ic('<circle cx="9" cy="8" r="3"/><path d="M3 20c.5-3.5 3-5.5 6-5.5s5.5 2 6 5.5"/><path d="M17 9h4M19 7v4"/>'),
+  mgmtfees: ic('<path d="M4 19l5-6 4 3 7-9"/><path d="M15 7h5v5"/><circle cx="7" cy="6" r="2"/>'),
+  hishtalmut: ic('<path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11v5c3 2 7 2 10 0v-5"/>'),
+  kidsave: ic('<circle cx="12" cy="7" r="3"/><path d="M7 21v-5a5 5 0 0 1 10 0v5"/><path d="M10 15h4"/>'),
+  benefits: ic('<path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>'),
+  mortcap: ic('<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M12 13v4M10 15h4"/>'),
+  carbenefit: ic('<path d="M5 16l1.5-5h11L19 16"/><rect x="3" y="16" width="18" height="4" rx="1"/><circle cx="7" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M12 4v4M10 6h4"/>'),
+  evfuel: ic('<path d="M13 3L6 13h5l-1 8 7-10h-5z"/>'),
+  appliance: ic('<rect x="6" y="3" width="12" height="18" rx="2"/><path d="M12 8l-2 4h4l-2 4"/>'),
+  unitprice: ic('<path d="M3 3h2l2 12h11l2-8H7"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/>'),
+  discount: ic('<path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1.5"/><path d="M10 15l5-5"/>'),
+  workdays: ic('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M8 15l2 2 4-4"/>')
+});
 
 /* ================= home + bottom nav + sliders ================= */
 const ICO = {
@@ -6330,6 +6645,293 @@ function calcPrime(){
   };
 }
 Object.assign(CALC, {prime: calcPrime});
+/* ================= new tools (2026 figures) ================= */
+const pvOf = (pm, rate, n) => { const r = rate / 1200; return n <= 0 ? 0 : r === 0 ? pm * n : pm * (1 - Math.pow(1 + r, -n)) / r; };
+const sgnPC = x => (x > 0 ? '+' : '') + PC(x);
+function netOf(g, pts, o){ return salaryCalc(Math.max(0, g), pts, 6, 0, Object.assign({bonus: 0, benefit: 0, erPens: 6.5, erSev: 6, erStudy: 0}, o || {})); }
+
+/* --- overtime and hourly pay --- */
+function calcOvertime(){
+  const basis = $('#ot_basis').value, pts = Math.max(0, v('ot_pts'));
+  const h = basis === 'month' ? Math.max(0, v('ot_month')) / 182 : Math.max(0, v('ot_rate'));
+  const reg = basis === 'month' ? 182 : Math.max(0, v('ot_reg'));
+  const tiers = [['ot_125', 1.25], ['ot_150', 1.5], ['ot_sh', 1.5], ['ot_sh175', 1.75], ['ot_sh200', 2]].map(([id, k]) => ({id, k, hrs: Math.max(0, v(id)), pay: Math.max(0, v(id)) * h * k}));
+  const base = basis === 'month' ? Math.max(0, v('ot_month')) : reg * h;
+  const extra = tiers.reduce((a, x) => a + x.pay, 0), total = base + extra, hours = reg + tiers.reduce((a, x) => a + x.hrs, 0);
+  const net = netOf(total, pts).net;
+  const rows = [[t('r_otHour'), MI(h, 2)], [t('r_otBase'), MI(base)]];
+  tiers.forEach(x => { if (x.hrs > 0) rows.push([t('r_otTier', {p: Math.round(x.k * 100), n: N(x.hrs, 1)}), MI(x.pay)]); });
+  rows.push([t('r_otExtra'), MI(extra), 'key'], [t('r_otTotal'), MI(total), 'key'], [t('r_otHours'), N(hours, 1)], [t('r_otEff'), MI(hours ? total / hours : 0, 2)], [t('r_otNet'), MI(net)]);
+  const warn = h > 0 && h < IL26.minHour ? [t('w_otMin', {m: MI(IL26.minHour, 2)})] : [];
+  return {hero: {label: t('r_otTotal'), value: MI(total), sub: t('r_otSub', {x: MI(extra), n: MI(net)})}, rows, warn, note: t('n_ot')};
+}
+
+/* --- estimated tax refund --- */
+function calcTaxRefund(){
+  const gross = Math.max(0, v('tr_gross')), paid = Math.max(0, v('tr_paid')), pts = Math.max(0, v('tr_pts'));
+  const don = Math.max(0, v('tr_don')), life = Math.max(0, v('tr_life')), pens = Math.max(0, v('tr_pens'));
+  const b = taxByBrackets(gross);
+  const cDon = don >= 200 ? 0.35 * Math.min(don, gross * 0.3) : 0, cLife = 0.25 * life, cPens = 0.35 * Math.min(pens, TAX.pensDepRate * TAX.pensSalaryCap * 12);
+  const cPts = pts * TAX.point, credits = cPts + cDon + cLife + cPens;
+  const due = Math.max(0, b.tax - credits) + b.sur, refund = paid - due;
+  const rows = [[t('r_trBracket'), MI(b.tax)], [t('r_trPts', {n: N(pts, 2)}), MI(-cPts)]];
+  if (cDon) rows.push([t('r_trDon'), MI(-cDon)]);
+  if (cLife) rows.push([t('r_trLife'), MI(-cLife)]);
+  if (cPens) rows.push([t('r_trPens'), MI(-cPens)]);
+  if (b.sur) rows.push([t('r_trSur'), MI(b.sur)]);
+  rows.push([t('r_trDue'), MI(due), 'key'], [t('r_trPaid'), MI(paid)], [t(refund >= 0 ? 'r_trBack' : 'r_trOwe'), MI(Math.abs(refund)), 'key']);
+  const warn = don > 0 && don < 200 ? [t('w_trDonMin')] : [];
+  return {hero: {label: t(refund >= 0 ? 'r_trBack' : 'r_trOwe'), value: MI(Math.abs(refund)), sub: t('r_trSub', {d: MI(due), p: MI(paid)})}, rows, warn, note: t('n_tr')};
+}
+
+/* --- compare job offers --- */
+function joPack(o){
+  const pts = Math.max(0, v('jo_pts')), hish = Math.max(0, +o.hish || 0);
+  const r = salaryCalc(Math.max(0, +o.g || 0), pts, 6, hish > 0 ? 2.5 : 0, {bonus: Math.max(0, +o.bonus || 0), benefit: Math.max(0, +o.car || 0), erPens: Math.max(0, +o.erp || 0), erSev: 6, erStudy: hish});
+  const save = r.pens + r.study + r.erP + r.erS + r.erSt, perks = Math.max(0, +o.carv || 0) + Math.max(0, +o.perk || 0);
+  return {net: r.net, save, perks, total: r.net + save + perks, gross: r.gross};
+}
+function calcJobOffer(){
+  const L = joList().map((o, i) => Object.assign(joPack(o), {name: asEsc(joName(o, i))}));
+  const S = L.slice().sort((a, b) => b.total - a.total), best = S[0], next = S[1];
+  const star = s => (next && s === best ? '★ ' : '') + s.name;
+  return {
+    hero: next && best.total - next.total < 1 ? {label: t('r_joTie'), value: MI(best.total), sub: t('r_joVs', {x: next.name})}
+      : next ? {label: t('r_joBest', {x: best.name}), value: MI(best.total - next.total), sub: t('r_joVs', {x: next.name})} : {label: t('r_joTotalOf', {x: best.name}), value: MI(best.total), sub: t('r_joNet') + ': ' + MI(best.net)},
+    rows: S.map(s => [t('r_joTotalOf', {x: s.name}), MI(s.total), s === best ? 'key' : '']).concat(S.map(s => [t('r_joNetOf', {x: s.name}), MI(s.net)])),
+    note: t('n_jo'),
+    table: {title: t('t_compare'), open: true, head: ['', t('r_joNet'), t('r_joSave'), t('r_joPerks'), t('r_joTotal')], rows: S.map(s => [star(s), MI(s.net), MI(s.save), MI(s.perks), MI(s.total)])}
+  };
+}
+
+/* --- freelancer hourly rate --- */
+function selfNet(profit, pts){
+  const ni = niSelf(profit), taxable = Math.max(0, profit - 0.52 * ni), b = taxByBrackets(taxable);
+  const tax = Math.max(0, b.tax - pts * TAX.point) + b.sur;
+  return {net: profit - ni - tax, ni, tax};
+}
+function calcFreelance(){
+  const want = Math.max(0, v('fl_net')) * 12, exp = Math.max(0, v('fl_exp')) * 12, pts = Math.max(0, v('fl_pts'));
+  const days = Math.max(0, 52 * 5 - 9 - Math.max(0, v('fl_off'))), hpd = Math.max(0, v('fl_hpd')), bill = clamp(v('fl_bill'), 1, 100) / 100;
+  const hrs = days * hpd * bill;
+  let lo = 0, hi = want * 3 + 100000;
+  for (let i = 0; i < 80; i++){ const mid = (lo + hi) / 2; if (selfNet(mid, pts).net < want) lo = mid; else hi = mid; }
+  const profit = (lo + hi) / 2, s = selfNet(profit, pts), rev = profit + exp, rate = hrs > 0 ? rev / hrs : 0;
+  const murshe = $('#fl_vat').value === 'murshe';
+  const rows = [[t('r_flRate'), M(rate)], [t('r_flDay'), M(rate * hpd * bill)], [t('r_flRevM'), M(rev / 12)], [t('r_flRevY'), M(rev), 'key'],
+    [t('r_flHours'), N(hrs, 0)], [t('r_flTaxNi'), M((s.tax + s.ni) / 12)], [t('r_flExp'), M(exp / 12)], [t('r_flNet'), M(s.net / 12)]];
+  if (murshe) rows.splice(1, 0, [t('r_flRateVat'), M(rate * (1 + IL26.vat)), 'key']);
+  return {hero: {label: t('r_flRate'), value: M(rate), sub: t(murshe ? 'r_flSubVat' : 'r_flSub', {v: M(rate * (1 + IL26.vat)), h: N(hrs, 0)})}, rows, note: t('n_fl')};
+}
+
+/* --- employer cost --- */
+function calcEmpCost(){
+  const g = Math.max(0, v('ec_gross'));
+  const r = salaryCalc(g, 2.25, 6, 0, {bonus: 0, benefit: 0, erPens: clamp(v('ec_pens'), 0, 30), erSev: clamp(v('ec_sev'), 0, 30), erStudy: clamp(v('ec_hish'), 0, 30)});
+  const other = Math.max(0, v('ec_other')), over = g * Math.max(0, v('ec_over')) / 100, total = r.employer + other + over;
+  const rows = [[t('r_ecGross'), MI(g)], [t('r_erNi'), MI(r.erNi)], [t('r_erPens'), MI(r.erP)], [t('r_erSev'), MI(r.erS)]];
+  if (r.erSt) rows.push([t('r_erStudy'), MI(r.erSt)]);
+  if (other) rows.push([t('r_ecOther'), MI(other)]);
+  if (over) rows.push([t('r_ecOver'), MI(over)]);
+  rows.push([t('r_ecTotal'), MI(total), 'key'], [t('r_ecYear'), MI(total * 12), 'key'], [t('r_ecRatio'), PC(g ? (total / g - 1) * 100 : NaN)], [t('r_ecNet'), MI(r.net)]);
+  return {hero: {label: t('r_ecTotal'), value: MI(total), sub: t('r_ecSub', {g: MI(g), p: PC(g ? (total / g - 1) * 100 : NaN)})}, rows, note: t('n_ec'),
+    split: {title: t('r_ecTotal'), items: [{name: t('r_ecGross'), v: g, cls: 'c-ink', fmt: MI(g)}, {name: t('r_erNi'), v: r.erNi, cls: 'c-accent', fmt: MI(r.erNi)}, {name: t('l_ecSave'), v: r.erP + r.erS + r.erSt, cls: 'c-warm', fmt: MI(r.erP + r.erS + r.erSt)}, {name: t('r_ecOther'), v: other + over, cls: 'c-soft', fmt: MI(other + over)}]}};
+}
+
+/* --- management fees over the years --- */
+function mfRun(bal, dep, n, ret, fd, fa){
+  const rm = mRate(ret), fm = fa / 100 / 12; let fees = 0;
+  for (let m = 0; m < n; m++){ const d = dep * (1 - fd / 100); fees += dep - d; bal = (bal + d) * (1 + rm); const f = bal * fm; fees += f; bal -= f; }
+  return {bal, fees};
+}
+function calcMgmtFees(){
+  const bal = Math.max(0, v('mf_bal')), dep = Math.max(0, v('mf_dep')), n = Math.max(1, Math.round(v('mf_yrs') * 12)), ret = v('mf_ret');
+  const A = mfRun(bal, dep, n, ret, Math.max(0, v('mf_ad')), Math.max(0, v('mf_aa'))), B = mfRun(bal, dep, n, ret, Math.max(0, v('mf_bd')), Math.max(0, v('mf_ba')));
+  const Z = mfRun(bal, dep, n, ret, 0, 0), diff = B.bal - A.bal;
+  return {hero: {label: t(diff >= 0 ? 'r_mfGain' : 'r_mfLoss'), value: MI(Math.abs(diff)), sub: t('r_mfSub', {n: N(n / 12, 0)})},
+    rows: [[t('r_mfBalA'), MI(A.bal)], [t('r_mfBalB'), MI(B.bal)], [t('r_mfDiff'), MI(diff), 'key'], [t('r_mfFeesA'), MI(A.fees)], [t('r_mfFeesB'), MI(B.fees)], [t('r_mfNoFee'), MI(Z.bal)], [t('r_mfShare'), PC(Z.bal ? (Z.bal - A.bal) / Z.bal * 100 : NaN)]],
+    note: t('n_mf'), warn: (v('mf_ad') > 6 || v('mf_aa') > 0.5) ? [t('w_mfMax')] : []};
+}
+
+/* --- keren hishtalmut --- */
+function calcHishtalmut(){
+  const self = $('#kh_type').value === 'self', yrs = Math.max(1, v('kh_yrs')), n = Math.round(yrs * 12), ret = v('kh_ret'), fee = Math.max(0, v('kh_fee'));
+  let monthly, rows = [], benefit, cgDep;
+  if (!self){
+    const sal = Math.max(0, v('kh_sal')), er = sal * Math.max(0, v('kh_er')) / 100, ee = sal * Math.max(0, v('kh_ee')) / 100;
+    const exMax = IL26.hishCap * IL26.hishErMax, erTax = Math.max(0, er - exMax), mr = marginalRate(sal * 12);
+    monthly = er + ee; benefit = Math.min(er, exMax) * 12 * mr; cgDep = Math.min(monthly, IL26.hishCap * 0.1);
+    rows.push([t('r_khEr'), MI(er)], [t('r_khEe'), MI(ee)], [t('r_khMonthly'), MI(monthly), 'key'], [t('r_khExMax'), MI(exMax)]);
+    if (erTax > 0) rows.push([t('r_khErTax'), MI(erTax)]);
+    rows.push([t('r_khBenefitEmp'), MI(benefit)]);
+  } else {
+    const inc = Math.max(0, v('kh_inc')), dep = Math.max(0, v('kh_dep')), ded = Math.min(dep, IL26.hishSelfCap * 0.045, inc * 0.045), mr = marginalRate(inc);
+    monthly = dep / 12; benefit = ded * mr; cgDep = Math.min(dep, IL26.hishSelfCG) / 12;
+    rows.push([t('r_khMonthly'), MI(monthly), 'key'], [t('r_khDed'), MI(ded)], [t('r_khBenefitSelf'), MI(benefit)]);
+    if (dep > IL26.hishSelfCG) rows.push([t('r_khOverCG'), MI(dep - IL26.hishSelfCG)]);
+  }
+  const rm = mRate(ret), fm = fee / 100 / 12; let bal = Math.max(0, v('kh_bal')), put = bal;
+  for (let m = 0; m < n; m++){ bal = (bal + monthly) * (1 + rm); bal -= bal * fm; put += monthly; }
+  const gain = Math.max(0, bal - put), cgSave = gain * (monthly > 0 ? Math.min(1, cgDep / monthly) : 1) * 0.25;
+  rows.push([t('r_khPut'), MI(put)], [t('r_khGain'), MI(gain)], [t('r_khBal', {n: N(yrs, 0)}), MI(bal), 'key'], [t('r_khCG'), MI(cgSave)], [t('r_khLiquid'), yrs >= 6 ? t('o_yes') : t('r_khAfter6')]);
+  return {hero: {label: t('r_khBal', {n: N(yrs, 0)}), value: MI(bal), sub: t('r_khSub', {b: MI(benefit), c: MI(cgSave)})}, rows, note: t('n_kh')};
+}
+
+/* --- savings for every child --- */
+function calcKidSave(){
+  const age = clamp(v('ks_age'), 0, 18), par = $('#ks_par').value === '1', to = +$('#ks_to').value || 18, ret = v('ks_ret'), fee = Math.max(0, v('ks_fee'));
+  const rm = mRate(ret), fm = fee / 100 / 12, dep = IL26.childDep * (par ? 2 : 1), n = Math.round((18 - age) * 12);
+  let bal = Math.max(0, v('ks_bal')), gov = 0, parent = 0;
+  for (let m = 0; m < n; m++){ bal = (bal + dep) * (1 + rm); bal -= bal * fm; gov += IL26.childDep; if (par) parent += IL26.childDep; }
+  let grants = IL26.childGrant18; bal += IL26.childGrant18;
+  const at18 = bal;
+  if (to === 21){ for (let m = 0; m < 36; m++){ bal *= (1 + rm); bal -= bal * fm; } bal += IL26.childGrant21; grants += IL26.childGrant21; }
+  const gain = Math.max(0, bal - gov - parent - grants - Math.max(0, v('ks_bal')));
+  return {hero: {label: t('r_ksAt', {n: to}), value: MI(bal), sub: t('r_ksSub', {d: MI(dep)})},
+    rows: [[t('r_ksGov'), MI(gov)], [t('r_ksPar'), MI(parent)], [t('r_ksGrants'), MI(grants)], [t('r_ksGain'), MI(gain)], [t('r_ksAt', {n: 18}), MI(at18)], [t('r_ksAt', {n: to}), MI(bal), 'key']],
+    note: t('n_ks')};
+}
+
+/* --- unemployment and maternity benefits --- */
+function unDaily(w, young){
+  const B = IL26.unBase, bands = [[B * 0.5, young ? 0.6 : 0.8], [B * 0.75, young ? 0.4 : 0.5], [B, young ? 0.35 : 0.45], [B * 5, young ? 0.25 : 0.3]];
+  let prev = 0, out = 0; for (const [lim, r] of bands){ const part = Math.max(0, Math.min(w, lim) - prev); out += part * r; prev = lim; }
+  return out;
+}
+function unDays(age, dep3){ return age < 25 ? (dep3 ? 138 : 50) : age < 28 ? (dep3 ? 138 : 67) : age < 35 ? (dep3 ? 138 : 100) : age < 45 ? (dep3 ? 175 : 138) : 175; }
+function calcBenefits(){
+  if ($('#bn_kind').value === 'mat'){
+    const w = Math.max(0, v('bn_w3')) / 90, day = Math.min(w, IL26.matMaxDay), days = +$('#bn_wk').value === 8 ? 56 : 105, total = day * days;
+    return {hero: {label: t('r_bnMatTotal'), value: MI(total), sub: t('r_bnMatSub', {d: MI(day, 2), n: days})},
+      rows: [[t('r_bnDaily'), MI(w, 2)], [t('r_bnDay'), MI(day, 2), 'key'], [t('r_bnDays'), days], [t('r_bnMonth'), MI(day * 30)], [t('r_bnMatTotal'), MI(total), 'key']],
+      warn: w > IL26.matMaxDay ? [t('w_bnCap', {m: MI(IL26.matMaxDay, 2)})] : [], note: t('n_bnMat')};
+  }
+  const age = Math.max(16, v('bn_age')), young = age < 28, w = Math.max(0, v('bn_w6')) / 150, raw = unDaily(w, young);
+  const d1 = Math.min(raw, IL26.unMax1), d2 = Math.min(raw, IL26.unMax2), days = unDays(age, $('#bn_dep').value === '3');
+  const total = d1 * Math.min(days, 125) + d2 * Math.max(0, days - 125);
+  const rows = [[t('r_bnDaily'), MI(w, 2)], [t('r_bnDay'), MI(d1, 2), 'key']];
+  if (days > 125 && d2 < d1) rows.push([t('r_bnDay2'), MI(d2, 2)]);
+  rows.push([t('r_bnMonth'), MI(d1 * 25), 'key'], [t('r_bnDays'), days], [t('r_bnTotal'), MI(total), 'key'], [t('r_bnPct'), PC(w ? raw / w * 100 : NaN)]);
+  return {hero: {label: t('r_bnMonth'), value: MI(d1 * 25), sub: t('r_bnUnSub', {d: MI(d1, 2), n: days})}, rows,
+    warn: raw > IL26.unMax1 ? [t('w_bnCap', {m: MI(IL26.unMax1, 2)})] : [], note: t('n_bnUn')};
+}
+
+/* --- how big a mortgage can I get --- */
+function calcMortCap(){
+  const inc = Math.max(0, v('mc_inc')), other = Math.max(0, v('mc_other')), eq = Math.max(0, v('mc_eq')), rate = Math.max(0, v('mc_rate'));
+  const n = Math.round(clamp(v('mc_yrs'), 1, 30) * 12), pti = clamp(v('mc_pti'), 1, 100), ltv = {first: 0.75, upgrade: 0.7, invest: 0.5}[$('#mc_type').value] || 0.75;
+  const pay = Math.max(0, inc * pti / 100 - other), byPay = pvOf(pay, rate, n), byEq = eq * ltv / (1 - ltv);
+  const loan = Math.min(byPay, byEq), price = loan + eq, pm = pmtOf(loan, rate, n);
+  const warn = [];
+  if (pti > 50) warn.push(t('w_mcPti'));
+  if (v('mc_yrs') > 30) warn.push(t('w_mcYrs'));
+  return {hero: {label: t('r_mcPrice'), value: MI(price), sub: t('r_mcSub', {l: MI(loan), p: MI(pm)})},
+    rows: [[t('r_mcPay'), MI(pay)], [t('r_mcByPay'), MI(byPay)], [t('r_mcByEq', {p: PC(ltv * 100)}), MI(byEq)], [t('r_mcLoan'), MI(loan), 'key'],
+      [t('r_mcLimit'), t(byPay <= byEq ? 'r_mcLimPay' : 'r_mcLimEq')], [t('r_mcPrice'), MI(price), 'key'], [t('r_mcPm'), MI(pm)], [t('r_mcLtv'), PC(price ? loan / price * 100 : NaN)], [t('r_mcPti'), PC(inc ? (pm + other) / inc * 100 : NaN)]],
+    warn, note: t('n_mc')};
+}
+
+/* --- company car benefit --- */
+function calcCarBenefit(){
+  const price = Math.max(0, v('cb_price')), kind = $('#cb_kind').value, g = Math.max(0, v('cb_gross')), pts = Math.max(0, v('cb_pts')), pay = Math.max(0, v('cb_pay'));
+  const base = Math.min(price, IL26.carCap) * IL26.carPct, ded = IL26.carDed[kind] || 0, val = Math.max(0, base - ded - pay);
+  const a = netOf(g, pts), b = netOf(g, pts, {benefit: val}), cost = a.net - b.net + pay;
+  return {hero: {label: t('r_cbCost'), value: MI(cost), sub: t('r_cbSub', {v: MI(val)})},
+    rows: [[t('r_cbBase'), MI(base)], [t('r_cbDed'), MI(-ded)], [t('r_cbPay'), MI(-pay)], [t('r_cbVal'), MI(val), 'key'], [t('r_cbNetNo'), MI(a.net)], [t('r_cbNetYes'), MI(b.net)], [t('r_cbCost'), MI(cost), 'key'], [t('r_cbYear'), MI(cost * 12)]],
+    warn: price > IL26.carCap ? [t('w_cbCap', {c: MI(IL26.carCap)})] : [], note: t('n_cb')};
+}
+
+/* --- electric vs petrol --- */
+function calcEvFuel(){
+  const km = Math.max(0, v('ev_km')), fp = Math.max(0, v('ev_fp')), fc = Math.max(0, v('ev_fc')), kwh = Math.max(0, v('ev_kwh')), ec = Math.max(0, v('ev_ec'));
+  const pub = clamp(v('ev_pub'), 0, 100) / 100, pubp = Math.max(0, v('ev_pubp')), diff = v('ev_diff');
+  const fuel = km / 100 * fc * fp + Math.max(0, v('ev_mf')), elec = km / 100 * ec * ((1 - pub) * kwh + pub * pubp) + Math.max(0, v('ev_me'));
+  const save = fuel - elec, be = save > 0 && diff > 0 ? diff / save : NaN;
+  return {hero: {label: t(save >= 0 ? 'r_evSave' : 'r_evMore'), value: M(Math.abs(save)), sub: isFinite(be) ? t('r_evBe', {n: N(be, 1)}) : t('r_evPerMonth', {m: M(Math.abs(save) / 12)})},
+    rows: [[t('r_evFuelY'), M(fuel)], [t('r_evElecY'), M(elec)], [t('r_evSaveM'), M(save / 12), 'key'], [t('r_evKmF'), M(km ? fuel / km : 0, 2)], [t('r_evKmE'), M(km ? elec / km : 0, 2)], [t('r_evBeRow'), isFinite(be) ? t('r_evYears', {n: N(be, 1)}) : '—'], [t('r_ev5'), M(save * 5 - Math.max(0, diff))]],
+    note: t('n_ev'), split: {title: t('r_evYearly'), items: [{name: t('l_evFuel'), v: fuel, cls: 'c-warm', fmt: M(fuel)}, {name: t('l_evElec'), v: elec, cls: 'c-accent', fmt: M(elec)}]}};
+}
+
+/* --- appliance power cost --- */
+function calcAppliance(){
+  const w = Math.max(0, v('ap_w')), h = clamp(v('ap_h'), 0, 24), d = clamp(v('ap_d'), 0, 31), tar = Math.max(0, v('ap_tar')), q = Math.max(1, v('ap_q'));
+  const kwhM = w / 1000 * h * d * q, cost = kwhM * tar;
+  return {hero: {label: t('r_apMonth'), value: M(cost, 2), sub: t('r_apSub', {k: N(kwhM, 1), y: M(cost * 12)})},
+    rows: [[t('r_apHour'), M(w / 1000 * tar * q, 2)], [t('r_apDay'), M(w / 1000 * h * tar * q, 2)], [t('r_apKwh'), N(kwhM, 1) + ' kWh'], [t('r_apMonth'), M(cost, 2), 'key'], [t('r_apYear'), M(cost * 12), 'key']],
+    note: t('n_ap')};
+}
+
+/* --- unit price at the supermarket --- */
+const UP_DIM = {g: ['w', 1], kg: ['w', 1000], ml: ['v', 1], l: ['v', 1000], u: ['u', 1]};
+function calcUnitPrice(){
+  const L = upList().map((o, i) => { const [dim, k] = UP_DIM[o.u] || UP_DIM.g, base = Math.max(0, +o.q || 0) * k * Math.max(1, +o.n2 || 1), price = Math.max(0, +o.p || 0);
+    const per = base > 0 ? price / base * (dim === 'u' ? 1 : 1000) : NaN; return {name: asEsc(upName(o, i)), dim, per, price, o}; });
+  const unit = d => t(d === 'w' ? 'r_upPerKg' : d === 'v' ? 'r_upPerL' : 'r_upPerU');
+  const dims = ['w', 'v', 'u'].filter(d => L.some(x => x.dim === d && isFinite(x.per)));
+  const bestOf = d => L.filter(x => x.dim === d && isFinite(x.per)).sort((a, b) => a.per - b.per)[0];
+  const main = dims.map(d => ({d, b: bestOf(d), n: L.filter(x => x.dim === d && isFinite(x.per)).length})).sort((a, b) => b.n - a.n)[0];
+  if (!main) return {hero: {label: t('r_upNone'), value: '—'}, rows: [], note: t('n_up')};
+  const rows = [], trows = [];
+  dims.forEach(d => { const b = bestOf(d); L.filter(x => x.dim === d && isFinite(x.per)).sort((a, c) => a.per - c.per).forEach(x => {
+    const more = b.per > 0 ? (x.per / b.per - 1) * 100 : 0;
+    trows.push([(x === b && L.filter(y => y.dim === d).length > 1 ? '★ ' : '') + x.name, M(x.price, 2), M(x.per, 2) + ' ' + unit(d), x === b ? '—' : sgnPC(more)]);
+    rows.push([x.name + ' · ' + unit(d), M(x.per, 2), x === b ? 'key' : '']); }); });
+  const second = L.filter(x => x.dim === main.d && isFinite(x.per) && x !== main.b).sort((a, b) => a.per - b.per)[0];
+  return {hero: {label: t('r_upBest', {x: main.b.name}), value: M(main.b.per, 2), sub: unit(main.d) + (second ? ' · ' + t('r_upCheaper', {p: PC((second.per / main.b.per - 1) * 100), x: second.name}) : '')},
+    rows, note: t('n_up') + (dims.length > 1 ? ' ' + t('n_upMix') : ''),
+    table: {title: t('t_compare'), open: true, head: ['', t('r_upPrice'), t('r_upPer'), t('r_upMore')], rows: trows}};
+}
+
+/* --- discounts and deals --- */
+function calcDiscount(){
+  const mode = $('#ds_mode').value, p = Math.max(0, v('ds_price')), q = Math.max(1, Math.round(v('ds_qty')));
+  let pay = p * q, units = q, label = '';
+  if (mode === 'pct'){ pay = p * q * (1 - clamp(v('ds_pct'), 0, 100) / 100); }
+  else if (mode === 'stack'){ pay = p * q * (1 - clamp(v('ds_pct'), 0, 100) / 100) * (1 - clamp(v('ds_pct2'), 0, 100) / 100); }
+  else if (mode === 'bogo'){ const buy = Math.max(1, Math.round(v('ds_buy'))), free = Math.max(0, Math.round(v('ds_free'))); units = buy + free; pay = p * buy; label = t('r_dsBogo', {b: buy, f: free}); }
+  else if (mode === 'second'){ units = 2; pay = p + p * (1 - clamp(v('ds_pct'), 0, 100) / 100); }
+  else if (mode === 'nfor'){ units = Math.max(1, Math.round(v('ds_n'))); pay = Math.max(0, v('ds_deal')); }
+  else if (mode === 'coupon'){ const c = Math.max(0, v('ds_coupon')), min = Math.max(0, v('ds_min')); pay = p * q >= min ? Math.max(0, p * q - c) : p * q; }
+  const full = p * units, save = full - pay, each = units ? pay / units : 0;
+  const rows = [[t('r_dsFull'), M(full, 2)], [t('r_dsPay'), M(pay, 2), 'key'], [t('r_dsSave'), M(save, 2), 'key'], [t('r_dsPct'), PC(full ? save / full * 100 : NaN)], [t('r_dsUnits'), units], [t('r_dsEach'), M(each, 2)]];
+  const warn = mode === 'coupon' && p * q < Math.max(0, v('ds_min')) ? [t('w_dsMin', {m: M(v('ds_min'), 2)})] : [];
+  return {hero: {label: t('r_dsEach'), value: M(each, 2), sub: t('r_dsSub', {p: PC(full ? save / full * 100 : NaN), s: M(save, 2)}) + (label ? ' · ' + label : '')}, rows, warn, note: t('n_ds')};
+}
+
+/* --- working days between dates (Israel) --- */
+function wdIndep(year){       // Independence Day, moved by the rules for Friday, Saturday and Monday
+  for (let d = new Date(year, 3, 1); d.getMonth() < 6; d.setDate(d.getDate() + 1)){
+    const h = holHeb(d); if (h && h[0] === 'Iyar' && h[1] === 5){ const x = new Date(d), dow = x.getDay();
+      if (dow === 5) x.setDate(x.getDate() - 1); else if (dow === 6) x.setDate(x.getDate() - 2); else if (dow === 1) x.setDate(x.getDate() + 1); return x; }
+  }
+  return null;
+}
+const WD_HOL = [['Tishri', 1, 'hol_rh'], ['Tishri', 2, 'hol_rh2'], ['Tishri', 10, 'hol_yk'], ['Tishri', 15, 'hol_suk'], ['Tishri', 22, 'hol_st'], ['Nisan', 15, 'hol_pes'], ['Nisan', 21, 'hol_pes7'], ['Sivan', 6, 'hol_shav']];
+function wdParse(id){ const s = ($('#' + id) || {}).value || ''; const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s); return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null; }
+function calcWorkDays(){
+  let a = wdParse('wd_from'), b = wdParse('wd_to');
+  if (!a || !b) return {hero: {label: t('r_wdWork'), value: '—'}, rows: [], note: t('n_wd')};
+  if (b < a){ const x = a; a = b; b = x; }
+  const six = $('#wd_week').value === '6', hol = $('#wd_hol').value === '1', incl = $('#wd_end').value === '1';
+  const indep = {}; for (let y = a.getFullYear(); y <= b.getFullYear(); y++){ const d = wdIndep(y); if (d) indep[d.toDateString()] = 1; }
+  let cal = 0, work = 0, wkend = 0; const hols = [];
+  const end = new Date(b); if (!incl) end.setDate(end.getDate() - 1);
+  for (let d = new Date(a); d <= end && cal < 3700; d.setDate(d.getDate() + 1)){
+    cal++; const dow = d.getDay(), isWork = six ? dow !== 6 : dow <= 4;
+    if (!isWork){ wkend++; continue; }
+    let hk = '';
+    if (hol){ const h = holHeb(d); const f = h && WD_HOL.find(x => x[0] === h[0] && x[1] === h[1]); if (f) hk = f[2]; else if (indep[d.toDateString()]) hk = 'hol_ind'; }
+    if (hk){ hols.push([t(hk), d.toLocaleDateString(locOf(), {day: 'numeric', month: 'short', year: 'numeric'})]); continue; }
+    work++;
+  }
+  return {hero: {label: t('r_wdWork'), value: N(work, 0), sub: t('r_wdSub', {c: cal, w: wkend, h: hols.length})},
+    rows: [[t('r_wdCal'), cal], [t('r_wdWork'), work, 'key'], [t('r_wdWkend'), wkend], [t('r_wdHol'), hols.length], [t('r_wdWeeks'), N(cal / 7, 1)]],
+    note: t('n_wd'), table: hols.length ? {title: t('t_wdHol'), open: true, head: [t('r_wdHolName'), t('r_wdDate')], rows: hols} : null};
+}
+
+Object.assign(CALC, {overtime: calcOvertime, taxrefund: calcTaxRefund, joboffer: calcJobOffer, freelance: calcFreelance, empcost: calcEmpCost,
+  mgmtfees: calcMgmtFees, hishtalmut: calcHishtalmut, kidsave: calcKidSave, benefits: calcBenefits, mortcap: calcMortCap, carbenefit: calcCarBenefit,
+  evfuel: calcEvFuel, appliance: calcAppliance, unitprice: calcUnitPrice, discount: calcDiscount, workdays: calcWorkDays});
 
 /* ================= navigation ================= */
 function activate(id, focus){
@@ -7865,8 +8467,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "4.6", "date": "2026-10-14", "notes": {"he": "השוואת הלוואות: לכל הצעה אפשר לבחור ריבית קבועה, פריים ± מרווח, או חישוב הריבית לפי ההחזר החודשי. אימייל: גם גרסאות של אותה תיבה נחסמות שוב.", "ar": "مقارنة القروض: لكل عرض فائدة ثابتة أو البرايم ± هامش أو حساب الفائدة من القسط الشهري. البريد: تُحظر مجددًا نسخ الصندوق نفسه.", "en": "Loan comparison: each offer can use a fixed rate, Prime ± margin, or work out the rate from the monthly payment. Email: variants of the same inbox are blocked again."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.162354';
+var CHANGELOG = [{"v": "5.0", "date": "2026-10-14", "notes": {"he": "16 כלים חדשים לפי נתוני 2026: שעות נוספות, החזר מס, השוואת הצעות עבודה, תעריף לשעה לעצמאים, עלות מעביד, דמי ניהול, קרן השתלמות, חיסכון לכל ילד, דמי אבטלה ולידה, כמה משכנתא אפשר לקבל, שווי רכב, רכב חשמלי מול בנזין, צריכת חשמל, מחיר ליחידה, הנחות ומבצעים וימי עבודה בין תאריכים.", "ar": "16 أداة جديدة حسب بيانات 2026: الساعات الإضافية، استرداد الضريبة، مقارنة عروض العمل، سعر الساعة للمستقل، تكلفة صاحب العمل، رسوم الإدارة، صندوق الاستكمال، ادخار لكل طفل، البطالة والولادة، كم رهنًا يمكن الحصول عليه، قيمة السيارة، كهربائي مقابل بنزين، استهلاك الكهرباء، سعر الوحدة، الخصومات وأيام العمل.", "en": "16 new tools with 2026 figures: overtime, tax refund, job offers, freelance rate, employer cost, management fees, study fund, child savings, unemployment and maternity, mortgage affordability, company car, EV vs petrol, appliance power, unit price, discounts and working days."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.165032';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -8181,7 +8783,22 @@ var PM_KB = [   // [id, calculator, Hebrew terms, Arabic terms, English terms]
   ['brackets', 'tax', 'מדרגות מס|מדרגת מס|מס הכנסה', 'شرائح الضريبة|شريحة ضريبية|ضريبة الدخل', 'tax bracket|income tax|brackets'],
   ['btl', 'salary', 'ביטוח לאומי|מס בריאות', 'التأمين الوطني|ضريبة الصحة', 'national insurance|bituach leumi|health tax'],
   ['pension', 'retire', 'פנסיה|קרן פנסיה|פרישה|קצבה', 'التقاعد|صندوق التقاعد|پنسيا|المعاش', 'pension|retirement|annuity'],
-  ['hishtalmut', 'compound', 'קרן השתלמות|השתלמות', 'صندوق الاستكمال|كيرن هشتلموت', 'keren hishtalmut|study fund|hishtalmut'],
+  ['hishtalmut', 'hishtalmut', 'קרן השתלמות|השתלמות', 'صندوق الاستكمال|كيرن هشتلموت', 'keren hishtalmut|study fund|hishtalmut'],
+  ['overtime', 'overtime', 'שעות נוספות|שכר שעתי|שעה נוספת|125%|150%|שבת', 'ساعات إضافية|أجر الساعة', 'overtime|hourly wage|hourly pay'],
+  ['taxrefund', 'taxrefund', 'החזר מס|החזרי מס|טופס 135|106', 'استرداد الضريبة|إرجاع الضريبة', 'tax refund|tax return|form 135'],
+  ['joboffer', 'joboffer', 'הצעת עבודה|הצעות עבודה|השוואת משכורות|מקום עבודה', 'عرض عمل|مقارنة الرواتب', 'job offer|compare salaries|job offers'],
+  ['freelance', 'freelance', 'כמה לגבות|תעריף לשעה|פרילנסר|מחיר לשעה', 'كم أتقاضى|سعر الساعة|عمل حر', 'hourly rate|freelance rate|how much to charge'],
+  ['empcost', 'empcost', 'עלות מעביד|עלות מעסיק|עלות עובד', 'تكلفة صاحب العمل|تكلفة الموظف', 'employer cost|cost of employee'],
+  ['mgmtfees', 'mgmtfees', 'דמי ניהול|דמי ניהול פנסיה|מהפקדה|מצבירה', 'رسوم الإدارة', 'management fees|pension fees'],
+  ['kidsave', 'kidsave', 'חיסכון לכל ילד|חיסכון לילד|חסכון לילד', 'ادخار لكل طفل|توفير للطفل', 'child savings|savings for every child'],
+  ['benefits', 'benefits', 'דמי אבטלה|אבטלה|דמי לידה|חופשת לידה', 'إعانة البطالة|البطالة|بدل الولادة', 'unemployment benefit|maternity pay|maternity'],
+  ['mortcap', 'mortcap', 'כמה משכנתא|כושר החזר|משכנתא מקסימלית|כמה אפשר לקבל', 'كم رهن عقاري|القدرة على السداد', 'mortgage affordability|how much mortgage|max mortgage'],
+  ['carbenefit', 'carbenefit', 'שווי רכב|שווי שימוש|רכב צמוד|רכב חברה', 'قيمة استخدام السيارة|سيارة الشركة', 'company car|car benefit|car value'],
+  ['evfuel', 'evfuel', 'רכב חשמלי|חשמלי מול בנזין|בנזין|דלק|טעינה', 'سيارة كهربائية|بنزين|وقود', 'electric car|ev vs petrol|fuel cost'],
+  ['appliance', 'appliance', 'צריכת חשמל|חשמל|מזגן|דוד|קוט"ש|וואט', 'استهلاك الكهرباء|مكيف', 'electricity cost|power usage|kwh|appliance'],
+  ['unitprice', 'unitprice', 'מחיר ליחידה|מחיר לקילו|סופר|השוואת מחירים|לליטר', 'سعر الوحدة|سعر الكيلو|سوبرماركت', 'unit price|price per kg|supermarket|compare prices'],
+  ['discount', 'discount', 'הנחה|מבצע|1+1|קופון|השני ב', 'خصم|عرض|كوبون', 'discount|sale|deal|coupon|bogo'],
+  ['workdays', 'workdays', 'ימי עבודה|בין תאריכים|ימי חג|ספירת ימים', 'أيام العمل|بين تاريخين', 'working days|business days|days between dates'],
   ['severance', 'severance', 'פיצויים|פיצויי פיטורים|פיטורים', 'تعويضات|تعويض الفصل|الفصل من العمل', 'severance|dismissal|fired'],
   ['notice', 'notice', 'הודעה מוקדמת|התפטרות', 'الإشعار المسبق|الاستقالة', 'notice period|resignation|resign'],
   ['leave', 'leave', 'חופשה שנתית|ימי חופשה|חופשה', 'الإجازة السنوية|أيام الإجازة|إجازة', 'annual leave|vacation days|holiday pay'],
@@ -9348,6 +9965,65 @@ secStart().then(() => { try { SS.removeItem('fin-justin'); } catch (e) {} }, () 
 /* signing out ends this session's record */
 const _loSec = logoutNow;
 logoutNow = async function(){ clearInterval(SEC.timer); try { if (SEC.col && SEC.sid) await SEC.col.doc('sess-' + SEC.sid).delete(); } catch (e) {} try { SS.removeItem('fin-sid'); SS.removeItem('fin-sst'); } catch (e) {} return _loSec.apply(this, arguments); };
+
+/* ---- job offers and supermarket items: named lists you can add to and remove from ---- */
+const JO_MAX = 8, UP_MAX = 15;
+const JO_F = [['g', 'f_joGross', 'ils'], ['bonus', 'f_joBonus', 'ils'], ['erp', 'f_erPens', '%'], ['hish', 'f_erStudy', '%'], ['car', 'f_joCar', 'ils'], ['carv', 'f_joCarV', 'ils'], ['perk', 'f_joPerk', 'ils']];
+function joList(){ if (!Array.isArray(SET.joOffers) || !SET.joOffers.length) SET.joOffers = [{n: '', g: 18000, bonus: 0, erp: 6.5, hish: 7.5, car: 0, carv: 0, perk: 0}, {n: '', g: 20000, bonus: 0, erp: 6.5, hish: 0, car: 0, carv: 0, perk: 400}]; return SET.joOffers; }
+function joName(o, i){ return String((o && o.n) || '').trim() || t('jo_def', {n: i + 1}); }
+function upList(){ if (!Array.isArray(SET.upItems) || !SET.upItems.length) SET.upItems = [{n: '', p: 12.9, q: 500, u: 'g', n2: 1}, {n: '', p: 21.9, q: 1, u: 'kg', n2: 1}]; return SET.upItems; }
+function upName(o, i){ return String((o && o.n) || '').trim() || t('up_def', {n: i + 1}); }
+var LIST_T = null;
+function listSave(){ clearTimeout(LIST_T); LIST_T = setTimeout(saveSet, 300); }
+function joRender(){
+  const box = $('#jo_box'); if (!box) return;
+  const L = joList();
+  box.innerHTML = L.map((o, i) => `<div class="lc-card">
+      <div class="lc-top"><span class="lc-num" aria-hidden="true">${i + 1}</span><input class="lc-name" type="text" maxlength="30" dir="auto" data-jl="jo" data-li="${i}" data-lk="n" value="${asEsc(o.n || '')}" placeholder="${asEsc(t('jo_def', {n: i + 1}) + ' · ' + t('jo_namePh'))}" aria-label="${asEsc(t('jo_name') + ' ' + (i + 1))}">
+        ${L.length > 1 ? `<button type="button" class="lc-del" data-jdel="jo" data-li="${i}" aria-label="${asEsc(t('lc_del', {x: joName(o, i)}))}">✕</button>` : ''}</div>
+      <div class="fields">${JO_F.map(([k, lab, u]) => `<div class="field"><span class="lc-l" aria-hidden="true">${asEsc(t(lab))}</span><div class="control"><input type="number" inputmode="decimal" step="any" data-jl="jo" data-li="${i}" data-lk="${k}" value="${o[k] == null ? '' : o[k]}" aria-label="${asEsc(t(lab) + ' · ' + joName(o, i))}">${unitHTML(u)}</div></div>`).join('')}</div>
+    </div>`).join('') +
+    (L.length < JO_MAX ? `<button type="button" class="lc-add" data-jadd="jo"><span aria-hidden="true">＋</span> ${asEsc(t('jo_add'))}</button>` : '') + `<p class="fine lc-hint">${asEsc(t('jo_hint'))}</p>`;
+}
+function upRender(){
+  const box = $('#up_box'); if (!box) return;
+  const L = upList(), units = [['g', 'u_g'], ['kg', 'u_kg'], ['ml', 'u_ml'], ['l', 'u_l'], ['u', 'u_unit']];
+  box.innerHTML = L.map((o, i) => `<div class="lc-card">
+      <div class="lc-top"><span class="lc-num" aria-hidden="true">${i + 1}</span><input class="lc-name" type="text" maxlength="30" dir="auto" data-jl="up" data-li="${i}" data-lk="n" value="${asEsc(o.n || '')}" placeholder="${asEsc(t('up_def', {n: i + 1}) + ' · ' + t('up_namePh'))}" aria-label="${asEsc(t('up_name') + ' ' + (i + 1))}">
+        ${L.length > 1 ? `<button type="button" class="lc-del" data-jdel="up" data-li="${i}" aria-label="${asEsc(t('lc_del', {x: upName(o, i)}))}">✕</button>` : ''}</div>
+      <div class="fields up-fields">
+        <div class="field"><span class="lc-l" aria-hidden="true">${asEsc(t('f_upPrice'))}</span><div class="control"><input type="number" inputmode="decimal" step="any" data-jl="up" data-li="${i}" data-lk="p" value="${o.p == null ? '' : o.p}" aria-label="${asEsc(t('f_upPrice') + ' · ' + upName(o, i))}">${unitHTML('cur')}</div></div>
+        <div class="field"><span class="lc-l" aria-hidden="true">${asEsc(t('f_upSize'))}</span><div class="control"><input type="number" inputmode="decimal" step="any" data-jl="up" data-li="${i}" data-lk="q" value="${o.q == null ? '' : o.q}" aria-label="${asEsc(t('f_upSize') + ' · ' + upName(o, i))}"></div></div>
+        <div class="field"><span class="lc-l" aria-hidden="true">${asEsc(t('f_upUnit'))}</span><select data-jl="up" data-li="${i}" data-lk="u" aria-label="${asEsc(t('f_upUnit') + ' · ' + upName(o, i))}">${units.map(([k, l]) => `<option value="${k}"${o.u === k ? ' selected' : ''}>${asEsc(t(l))}</option>`).join('')}</select></div>
+        <div class="field"><span class="lc-l" aria-hidden="true">${asEsc(t('f_upPack'))}</span><div class="control"><input type="number" inputmode="numeric" step="1" min="1" data-jl="up" data-li="${i}" data-lk="n2" value="${o.n2 || 1}" aria-label="${asEsc(t('f_upPack') + ' · ' + upName(o, i))}"></div></div>
+      </div></div>`).join('') +
+    (L.length < UP_MAX ? `<button type="button" class="lc-add" data-jadd="up"><span aria-hidden="true">＋</span> ${asEsc(t('up_add'))}</button>` : '') + `<p class="fine lc-hint">${asEsc(t('up_hint'))}</p>`;
+}
+const LISTS = {jo: [joList, joRender, JO_MAX, () => Object.assign({}, joList()[joList().length - 1] || {}, {n: ''})], up: [upList, upRender, UP_MAX, () => Object.assign({}, upList()[upList().length - 1] || {}, {n: '', p: 0})]};
+function listSet(el){
+  const L = LISTS[el.dataset.jl]; if (!L) return;
+  const o = L[0]()[+el.dataset.li]; if (!o) return;
+  const k = el.dataset.lk; o[k] = k === 'n' || k === 'u' ? String(el.value).slice(0, 30) : (el.value === '' ? 0 : +el.value);
+  listSave();
+}
+document.addEventListener('input', e => { if (e.target.dataset && e.target.dataset.jl) listSet(e.target); }, true);
+document.addEventListener('change', e => { if (e.target.dataset && e.target.dataset.jl && e.target.tagName === 'SELECT') listSet(e.target); }, true);
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-jadd]');
+  if (a){ const L = LISTS[a.dataset.jadd], list = L[0](); if (list.length >= L[2]) return; list.push(L[3]()); saveSet(); L[1](); calc(tab);
+    const ins = $$('.lc-name[data-jl="' + a.dataset.jadd + '"]'), n = ins[ins.length - 1]; if (n){ n.focus(); n.scrollIntoView({block: 'center', behavior: SET.motion === 'reduce' ? 'auto' : 'smooth'}); } return; }
+  const d = e.target.closest('[data-jdel]');
+  if (d){ const L = LISTS[d.dataset.jdel], list = L[0](); if (list.length <= 1) return; list.splice(+d.dataset.li, 1); saveSet(); L[1](); calc(tab); }
+});
+/* appliance presets fill in the power */
+document.addEventListener('change', e => {
+  if (e.target.id !== 'ap_pre') return;
+  const w = parseFloat(e.target.value); const f = $('#ap_w'); if (f && isFinite(w)){ f.value = w; f.dispatchEvent(new Event('input', {bubbles: true})); }
+}, true);
+const _alLists = applyLang;
+applyLang = function(){ const r = _alLists.apply(this, arguments); joRender(); upRender(); return r; };
+joRender(); upRender();
+if (['joboffer', 'unitprice'].includes(tab)) calc(tab);
 
 applyLang(false);
 activate(tab);
