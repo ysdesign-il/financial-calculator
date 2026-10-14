@@ -2,8 +2,11 @@ name: Update rates
 
 on:
   schedule:
-    - cron: '17 */2 * * *'   # every two hours
+    - cron: '*/15 * * * *'   # every 15 minutes (market indices); official data changes only when published
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['scripts/update_rates.py', '.github/workflows/rates.yml']
 
 permissions:
   contents: write
@@ -26,10 +29,11 @@ jobs:
         run: python scripts/update_rates.py
       - name: Commit and publish
         run: |
-          if git diff --quiet -- rates.json; then echo "No changes"; exit 0; fi
           git config user.name "rates-bot"
           git config user.email "rates-bot@users.noreply.github.com"
           git add rates.json
+          [ -f diag.json ] && git add diag.json
+          git diff --cached --quiet && { echo "No changes"; exit 0; }
           git commit -m "Update rates"
           git pull --rebase origin main
           git push origin HEAD:main

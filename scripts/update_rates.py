@@ -5,9 +5,11 @@ Sources (all public, no keys):
   - European Central Bank reference rates via api.frankfurter.dev
   - Crypto prices via api.coinbase.com
   - Consumer price index via api.cbs.gov.il (kept unchanged if it cannot be read)
+  - More official indices via api.cbs.gov.il: residential construction inputs and dwelling prices, with monthly history for linkage
+  - Market indices (TA-35, TA-125, S&P 500, Nasdaq 100, Dow Jones, gold, Brent) via public delayed quotes
 Every value is sanity-checked against the previous file; anything implausible is skipped.
 """
-import json, time, datetime, urllib.request
+import json, time, datetime, urllib.request, os, csv, io, math
 
 PATH = "rates.json"
 UA = {"User-Agent": "financial-calculator-rates/1.0 (+https://github.com)", "Accept": "application/json"}
@@ -36,6 +38,212 @@ def il_date(s):
 
 def plausible(new, old, lo, hi):
     return old is None or (old > 0 and lo <= new / old <= hi)
+
+
+BROWSER = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
+           "Accept": "application/json,text/csv,*/*"}
+
+
+def get_raw(url, headers=None, timeout=30):
+    req = urllib.request.Request(url, headers=headers or UA)
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return r.read().decode("utf-8", "replace")
+
+
+DIAG = {}
+
+
+def diag(k, v):
+    DIAG[k] = v if not isinstance(v, str) else v[:2500]
+
+
+# ---------- official indices (Central Bureau of Statistics) ----------
+def cbs_records(code, start="01-2005"):
+    url = "https://api.cbs.gov.il/index/data/price?id=%s&format=json&download=false&startPeriod=%s&pagesize=1000&lang=en" % (code, start)
+    raw = get_raw(url)
+    data = json.loads(raw)
+    recs, name = [], ""
+
+    def walk(o):
+        nonlocal name
+        if isinstance(o, dict):
+            if not name and isinstance(o.get("name"), str) and ("code" in o or "date" in o):
+                name = o["name"]
+            if "year" in o and "month" in o and ("currBase" in o or "percent" in o):
+                recs.append(o)
+            for v in o.values():
+                walk(v)
+        elif isinstance(o, list):
+            for v in o:
+                walk(v)
+    walk(data)
+    return recs, name, raw
+
+
+def num(x):
+    try:
+        return float(x)
+    except Exception:
+        return None
+
+
+def cbs_series(code, start="01-2005"):
+    recs, name, raw = cbs_records(code, start)
+    rows = {}
+    for r in recs:
+        y, m = int(r["year"]), int(r["month"])
+        cb = r.get("currBase") or {}
+        pb = r.get("prevBase") or {}
+        rows["%04d-%02d" % (y, m)] = {"v": num(cb.get("value")), "b": cb.get("baseDesc") or "", "pv": num(pb.get("value")), "pb": pb.get("baseDesc") or "",
+                                      "pct": num(r.get("percent")), "yoy": num(r.get("percentYear"))}
+    keys = sorted(rows)
+    if not keys:
+        return None, name, raw
+    # chain every month onto the latest base: same base -> ratio of levels; base change -> the published monthly change
+    lv = {keys[-1]: rows[keys[-1]]["v"]}
+    for i in range(len(keys) - 1, 0, -1):
+        a, b = rows[keys[i - 1]], rows[keys[i]]
+        cur = lv[keys[i]]
+        if cur is None:
+            break
+        if a["v"] and b["v"] and a["b"] == b["b"]:
+            lv[keys[i - 1]] = cur * a["v"] / b["v"]
+        elif a["v"] and b["pv"] and b["pb"] == a["b"]:
+            lv[keys[i - 1]] = cur * a["v"] / b["pv"]
+        elif b["pct"] is not None:
+            lv[keys[i - 1]] = cur / (1 + b["pct"] / 100)
+        else:
+            break
+    last = rows[keys[-1]]
+    y = keys[-1][:4]
+    jan_prev = "%d-12" % (int(y) - 1)
+    ytd = (lv[keys[-1]] / lv[jan_prev] - 1) * 100 if jan_prev in lv and lv[jan_prev] else None
+    hist = [[k, round(lv[k], 4)] for k in keys if k in lv and lv[k]]
+    out = {"code": code, "name": name, "m": keys[-1], "v": last["v"], "base": last["b"], "mom": last["pct"], "yoy": last["yoy"],
+           "ytd": round(ytd, 2) if ytd is not None else None, "hist": hist}
+    return out, name, raw
+
+
+def official_indices(prev, log):
+    idx = dict(prev.get("idx", {}))
+    plan = [("cpi", ["120010"], "01-2005"), ("build", ["200010", "200000", "200100"], "01-2005"), ("house", ["40010", "180010", "40000"], "01-2015")]
+    for key, codes, start in plan:
+        done = False
+        for code in codes:
+            try:
+                ser, name, raw = cbs_series(code, start)
+                diag("cbs_%s_%s" % (key, code), {"name": name, "sample": raw[:900], "n": len(ser["hist"]) if ser else 0})
+                if not ser or not ser["v"]:
+                    continue
+                old = idx.get(key) or {}
+                if old.get("v") and old.get("m") == ser["m"] and not plausible(ser["v"], old["v"], 0.9, 1.1):
+                    continue
+                idx[key] = ser
+                log.append("%s %s %s" % (key, code, ser["m"]))
+                done = True
+                break
+            except Exception as e:
+                diag("cbs_%s_%s_err" % (key, code), str(e))
+        if not done:
+            log.append("%s kept" % key)
+    for ch in ["c", "aa"]:
+        try:
+            diag("chapter_" + ch, get_raw("https://api.cbs.gov.il/index/catalog/chapter?id=%s&format=json&download=false&lang=en" % ch)[:2500])
+        except Exception as e:
+            diag("chapter_%s_err" % ch, str(e))
+    return idx
+
+
+# ---------- market indices (delayed public quotes) ----------
+MARKETS = [("ta35", "TA-35", ["TA35.TA", "^TA35.TA"], ["^ta35"]), ("ta125", "TA-125", ["^TA125.TA", "TA125.TA"], ["^ta125"]),
+           ("spx", "S&P 500", ["^GSPC"], ["^spx"]), ("ndx", "Nasdaq 100", ["^NDX"], ["^ndx"]), ("dji", "Dow Jones", ["^DJI"], ["^dji"]),
+           ("gold", "Gold", ["GC=F"], ["xauusd"]), ("brent", "Brent", ["BZ=F"], ["cb.f"])]
+
+
+def yahoo(sym, rng, interval):
+    for host in ("query1", "query2"):
+        try:
+            u = "https://%s.finance.yahoo.com/v8/finance/chart/%s?range=%s&interval=%s&includePrePost=false" % (host, urllib.request.quote(sym), rng, interval)
+            j = json.loads(get_raw(u, BROWSER, 20))
+            r = j["chart"]["result"][0]
+            return r
+        except Exception as e:
+            last = e
+    raise last
+
+
+def closes(r):
+    ts = r.get("timestamp") or []
+    cl = ((r.get("indicators") or {}).get("quote") or [{}])[0].get("close") or []
+    return [(t, c) for t, c in zip(ts, cl) if c is not None]
+
+
+def cagr(series, years):
+    if not series:
+        return None
+    t_end, c_end = series[-1]
+    target = t_end - years * 365.25 * 86400
+    past = [x for x in series if x[0] <= target + 20 * 86400]
+    if not past:
+        return None
+    t0, c0 = past[-1]
+    yrs = (t_end - t0) / (365.25 * 86400)
+    if c0 <= 0 or yrs < years * 0.9:
+        return None
+    return round(((c_end / c0) ** (1 / yrs) - 1) * 100, 2)
+
+
+def market_one(syms):
+    err = None
+    for sym in syms:
+        try:
+            d = yahoo(sym, "5d", "1d")
+            meta = d.get("meta") or {}
+            cs = closes(d)
+            p = num(meta.get("regularMarketPrice")) or (cs[-1][1] if cs else None)
+            if not p:
+                continue
+            day = [c for c in cs if c[0] < (meta.get("regularMarketTime") or 0) - 3600]
+            pc = num(meta.get("previousClose")) or (day[-1][1] if day else (cs[-2][1] if len(cs) > 1 else None))
+            item = {"sym": sym, "p": round(p, 4), "pc": round(pc, 4) if pc else None, "t": int(meta.get("regularMarketTime") or 0), "cur": meta.get("currency") or ""}
+            try:
+                m = closes(yahoo(sym, "10y", "1mo"))
+                if m:
+                    m = m[:-1] + [(item["t"] or m[-1][0], p)]
+                    item["y1"], item["r5"], item["r10"] = cagr(m, 1), cagr(m, 5), cagr(m, 10)
+                    y0 = [c for c in m if datetime.datetime.utcfromtimestamp(c[0]).year < datetime.datetime.utcfromtimestamp(m[-1][0]).year]
+                    if y0:
+                        item["ytd"] = round((p / y0[-1][1] - 1) * 100, 2)
+            except Exception as e:
+                diag("mkt_hist_" + sym, str(e))
+            return item
+        except Exception as e:
+            err = e
+            diag("mkt_" + sym, str(e))
+    if err:
+        raise err
+    return None
+
+
+def markets(prev, log):
+    mk = dict((prev.get("mkt") or {}).get("items", {}))
+    n = 0
+    for key, name, ysyms, ssyms in MARKETS:
+        try:
+            it = market_one(ysyms)
+            if it and plausible(it["p"], (mk.get(key) or {}).get("p"), 0.6, 1.6):
+                it["n"] = name
+                old = mk.get(key) or {}
+                for k in ("y1", "r5", "r10", "ytd"):          # keep long-run figures if this run could not read the history
+                    if it.get(k) is None and old.get(k) is not None:
+                        it[k] = old[k]
+                mk[key] = it
+                n += 1
+        except Exception as e:
+            log.append("%s failed" % key)
+    log.append("markets %d" % n)
+    ts = [v.get("t") or 0 for v in mk.values()]
+    return {"asOf": max(ts) if ts else 0, "items": mk} if mk else prev.get("mkt")
 
 
 def main():
@@ -136,6 +344,21 @@ def main():
     except Exception as e:
         log.append("cpi failed: %s" % e)
     out["macro"] = macro
+
+    try:
+        out["idx"] = official_indices(prev, log)
+    except Exception as e:
+        log.append("indices failed: %s" % e)
+    try:
+        m = markets(prev, log)
+        if m:
+            out["mkt"] = m
+    except Exception as e:
+        log.append("markets failed: %s" % e)
+    if os.environ.get("RATES_DIAG", "1") == "1":
+        DIAG["log"] = log
+        with open("diag.json", "w", encoding="utf-8") as f:
+            json.dump(DIAG, f, indent=1, ensure_ascii=False)
 
     if json.dumps({k: v for k, v in out.items() if k != "updated"}, sort_keys=True) != json.dumps({k: v for k, v in prev.items() if k != "updated"}, sort_keys=True):
         out["updated"] = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
