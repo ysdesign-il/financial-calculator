@@ -980,6 +980,9 @@ a.gold-btn.rc-open{display:inline-flex;align-items:center;justify-content:center
 .se-fuel .field:last-child{grid-column:1 / -1}
 
 .c-car{fill:#8A5CD0;background:#8A5CD0}.donut .c-car{stroke:#8A5CD0}
+.tbl tr.tot th,.tbl tr.tot td{font-weight:700;border-top:2px solid var(--line, #ccc)}
+.tb2-f{margin:8px 4px 0}
+#tb2-salary .tbl th,#tb2-salary .tbl td{padding:8px 5px;font-size:.88rem}#tb2-salary .tbl th[scope=row]{white-space:normal}
 
 </style>
 </head>
@@ -3295,7 +3298,13 @@ Object.assign(T, {
   r_sCarPay:['השתתפות וניכויי רכב','مساهمة وخصومات السيارة','Car contribution and deductions'], r_sCarGil:['גילום מס על הרכב','تجسيم ضريبة السيارة','Car tax gross-up'],
   r_sCarTax:['מס וביטוח נוספים בגלל הרכב','ضريبة وتأمين إضافيان بسبب السيارة','Extra tax and insurance from the car'], r_sCarDrop:['הרכב מוריד מהנטו','السيارة تخفض من الصافي','The car cuts net pay by'],
   r_sCarShare:['ירידה מהנטו באחוזים','نسبة الانخفاض من الصافي','Drop as a share of net'], r_sCarYear:['הרכב מוריד בשנה','السيارة تخفض سنويًا','The car cuts per year'], r_sCarDropS:['הרכב מוריד {x}','السيارة تخفض {x}','The car cuts {x}'],
-  n_sCar:['רכב מהעבודה: שווי השימוש ב-2026 הוא 2.48% ממחיר המחירון בחודש (עד תקרה של 596,860 ₪), פחות הפחתה לרכב היברידי, פלאג-אין או חשמלי ופחות ההשתתפות שלך. השווי לא נכנס לחשבון הבנק, אבל משלמים עליו מס הכנסה, ביטוח לאומי ומס בריאות.','سيارة من العمل: قيمة الاستخدام في 2026 هي 2.48% من سعر القائمة شهريًا (حتى سقف 596,860 ₪)، ناقص خصم السيارة الهجينة أو القابلة للشحن أو الكهربائية وناقص مساهمتك. القيمة لا تدخل حسابك البنكي، لكن تُدفع عليها ضريبة الدخل والتأمين الوطني وضريبة الصحة.','Work car: the 2026 benefit value is 2.48% of the list price a month (up to a price cap of ₪596,860), minus the hybrid, plug-in or electric reduction and minus your contribution. It never reaches your bank account, but you pay income tax, National Insurance and health tax on it.']
+  n_sCar:['רכב מהעבודה: שווי השימוש ב-2026 הוא 2.48% ממחיר המחירון בחודש (עד תקרה של 596,860 ₪), פחות הפחתה לרכב היברידי, פלאג-אין או חשמלי ופחות ההשתתפות שלך. השווי לא נכנס לחשבון הבנק, אבל משלמים עליו מס הכנסה, ביטוח לאומי ומס בריאות.','سيارة من العمل: قيمة الاستخدام في 2026 هي 2.48% من سعر القائمة شهريًا (حتى سقف 596,860 ₪)، ناقص خصم السيارة الهجينة أو القابلة للشحن أو الكهربائية وناقص مساهمتك. القيمة لا تدخل حسابك البنكي، لكن تُدفع عليها ضريبة الدخل والتأمين الوطني وضريبة الصحة.','Work car: the 2026 benefit value is 2.48% of the list price a month (up to a price cap of ₪596,860), minus the hybrid, plug-in or electric reduction and minus your contribution. It never reaches your bank account, but you pay income tax, National Insurance and health tax on it.'],
+  t_sCarBr:['מדרגות המס על שווי הרכב','شرائح الضريبة على قيمة السيارة','Tax brackets on the car benefit'], t_sCarBrG:['מדרגות המס על שווי הרכב והגילום','شرائح الضريبة على قيمة السيارة والتجسيم','Tax brackets on the car benefit and gross-up'],
+  h_brRange:['מדרגה (₪ בחודש)','الشريحة (₪ شهريًا)','Bracket (₪ a month)'], h_brRate:['שיעור','النسبة','Rate'], h_brAmt:['שווי במדרגה','القيمة في الشريحة','Amount in bracket'], h_brTax:['מס','الضريبة','Tax'],
+  r_brUpTo:['עד {b}','حتى {b}','Up to {b}'], r_brFromTo:['{a} עד {b}','{a} حتى {b}','{a} to {b}'], r_brOver:['מעל {a}','فوق {a}','Over {a}'],
+  r_brNi:['ביטוח לאומי ומס בריאות','التأمين الوطني وضريبة الصحة','National Insurance and health tax'], r_brCred:['קיזוז נקודות זיכוי שלא נוצלו','خصم نقاط استحقاق غير مستغلة','Unused credit points offset'], r_brSur:['מס יסף','ضريبة إضافية','Surtax'],
+  r_brTotal:['סך הכול על הרכב','المجموع على السيارة','Total on the car'], r_sCarMarg:['מדרגת המס השולית','الشريحة الضريبية الحدية','Marginal tax bracket'], r_sCarMargV:['מ-{a} ל-{b}','من {a} إلى {b}','{a} to {b}'],
+  n_sCarBr:['השווי נוסף מעל השכר, ולכן הוא ממוסה במדרגות הגבוהות שלך. המדרגות של 2026: 10% עד 7,010 ₪, 14% עד 10,060 ₪, 20% עד 19,000 ₪, 31% עד 25,100 ₪, 35% עד 46,690 ₪ ו-47% מעל.','تُضاف القيمة فوق الراتب، لذلك تُفرض عليها الضريبة في شرائحك الأعلى. شرائح 2026: 10% حتى 7,010 ₪، 14% حتى 10,060 ₪، 20% حتى 19,000 ₪، 31% حتى 25,100 ₪، 35% حتى 46,690 ₪ و47% فوق ذلك.','The benefit sits on top of your pay, so it is taxed at your highest brackets. 2026 brackets: 10% up to ₪7,010, 14% up to ₪10,060, 20% up to ₪19,000, 31% up to ₪25,100, 35% up to ₪46,690 and 47% above.']
 });
 
 const t = (k, p) => {
@@ -4152,6 +4161,7 @@ function panelHTML(id){
       <p class="fine" id="nt-${id}" hidden></p>
       <figure class="chart" id="sp-${id}" hidden><figcaption></figcaption><div class="donutwrap"><div class="donut"></div><div class="legend"></div></div></figure>
       <figure class="chart" id="ch-${id}" hidden><figcaption></figcaption><div class="svgwrap"></div><div class="legend"></div></figure>
+      <details class="sched" id="tb2-${id}" hidden><summary></summary><div class="scroll"></div></details>
       <details class="sched" id="tb-${id}" hidden><summary></summary><div class="scroll"></div></details>
       <details class="adv scn" id="sc-${id}" data-tab="${id}"><summary data-i="sc_title"></summary><div class="scn-b">
         <label class="scn-l" for="scn-in-${id}" data-i="f_scName"></label>
@@ -5205,6 +5215,17 @@ function show(id, res){
       res.table.rows.map(r => `<tr>${r.map((c,i) => i ? `<td>${c}</td>` : `<th scope="row">${c}</th>`).join('')}</tr>`).join('')
     }</tbody></table>`;
   } else tb.hidden = true;
+  const tb2 = $('#tb2-'+id);
+  if (tb2){
+    if (res.table2){
+      tb2.hidden = false;
+      if (res.table2.open && !tb2._init){ tb2.open = true; tb2._init = true; }
+      $('summary', tb2).textContent = res.table2.title;
+      $('.scroll', tb2).innerHTML = `<table class="tbl"><thead><tr>${res.table2.head.map(h => `<th scope="col">${h}</th>`).join('')}</tr></thead><tbody>${
+        res.table2.rows.map(r => `<tr${r.key ? ' class="tot"' : ''}>${r.c.map((c,i) => i ? `<td>${c}</td>` : `<th scope="row">${c}</th>`).join('')}</tr>`).join('')
+      }</tbody></table>${res.table2.foot ? `<p class="fine tb2-f">${res.table2.foot}</p>` : ''}`;
+    } else tb2.hidden = true;
+  }
 }
 
 /* ================= calculators ================= */
@@ -5351,6 +5372,24 @@ function salCar(){
   const base = Math.min(price, IL26.carCap) * IL26.carPct, dd = Math.min(base, IL26.carDed[kind] || 0), val = Math.max(0, base - dd - pay);
   return {price, kind, pay, extra, gil: $('#s_carGil').value === 'y', base, dd, val};
 }
+function carBrackets(tb0, add, r, r0){
+  const A = taxByBrackets(tb0 * 12), B = taxByBrackets((tb0 + add) * 12), rows = [];
+  let sum = 0;
+  B.parts.forEach((p, i) => {
+    const amt = (p.amt - A.parts[i].amt) / 12;
+    if (amt < 0.5) return;
+    const tx = amt * p.rate, a = p.from / 12, b = p.to / 12;
+    sum += tx;
+    rows.push({c: [!a ? t('r_brUpTo', {b: N(b)}) : isFinite(b) ? t('r_brFromTo', {a: N(a), b: N(b)}) : t('r_brOver', {a: N(a)}), PC(p.rate * 100), MI(amt), MI(tx)]});
+  });
+  const sur = (B.sur - A.sur) / 12, cred = (r.tax - r0.tax) - sum - sur, ni = (r.ni + r.health) - (r0.ni + r0.health);
+  if (sur > 0.5) rows.push({c: [t('r_brSur'), PC(TAX.surtaxRate * 100), MI(add), MI(sur)]});
+  if (Math.abs(cred) > 0.5) rows.push({c: [t('r_brCred'), '', '', MI(cred)]});
+  rows.push({c: [t('r_brNi'), PC(add > 0 ? ni / add * 100 : NaN), MI(add), MI(ni)]});
+  const tot = r.tax - r0.tax + ni;
+  rows.push({key: true, c: [t('r_brTotal'), PC(add > 0 ? tot / add * 100 : NaN), MI(add), MI(tot)]});
+  return {rows, m0: marginalRate(tb0 * 12), m1: marginalRate((tb0 + add) * 12)};
+}
 function withCar(g, pts, pens, study, o, car){
   if (!car) return o;
   const oc = Object.assign({}, o, {benefit: o.benefit + car.val, carPay: car.pay + car.extra});
@@ -5396,6 +5435,7 @@ function calcSalary(){
   const r2 = salaryCalc(g + 100, pts, pens, study, oc(g + 100));
   const r0 = car ? salaryCalc(g, pts, pens, study, o) : r, drop = r0.net - r.net;
   const carTax = (r.tax + r.ni + r.health) - (r0.tax + r0.ni + r0.health);
+  const cb = car ? carBrackets(r0.gross + o.benefit, car.val + (r.cash || 0), r, r0) : null;
   const marginal = (1 - (r2.net - r.net) / 100) * 100;
   const rows = [[t('r_grossMonthly'), MI(r.gross)]];
   if (o.bonus > 0) rows.push([t('r_bonusAvg'), MI(r.bonus)]);
@@ -5409,7 +5449,7 @@ function calcSalary(){
   rows.push(
     [t('r_totalDed'), MI(-r.ded), 'key'],
     [t('r_netMonthly'), MI(r.net), 'key'],
-    ...(car ? [[t('r_cbNetNo'), MI(r0.net)], [t('r_sCarTax'), MI(-carTax)], [t('r_sCarDrop'), MI(-drop), 'key'], [t('r_sCarShare'), PC(r0.net > 0 ? drop / r0.net * 100 : NaN)], [t('r_sCarYear'), MI(-drop * 12)]] : []),
+    ...(car ? [[t('r_cbNetNo'), MI(r0.net)], [t('r_sCarMarg'), cb.m0 === cb.m1 ? N(cb.m0 * 100) + '%' : t('r_sCarMargV', {a: N(cb.m0 * 100) + '%', b: N(cb.m1 * 100) + '%'})], [t('r_sCarTax'), MI(-carTax)], [t('r_sCarDrop'), MI(-drop), 'key'], [t('r_sCarShare'), PC(r0.net > 0 ? drop / r0.net * 100 : NaN)], [t('r_sCarYear'), MI(-drop * 12)]] : []),
     ...(() => { const se = typeof seTotals === 'function' ? seTotals() : {total: 0}; return se.total > 0 ? [[t('r_seCar'), MI(-se.car)], [t('r_seOther'), MI(-se.other)], [t('r_seLeft'), MI(r.net - se.total), 'key'], [t('r_seShare'), PC(r.net > 0 ? se.total / r.net * 100 : NaN)]] : []; })(),
     [t('r_dedShare'), PC(r.gross > 0 ? r.ded / r.gross * 100 : NaN)],
     [t('r_points'), ptsTxt('s', pts)],
@@ -5426,6 +5466,7 @@ function calcSalary(){
       ? {label: t('r_netMonthly') + per, value: MI(r.net * k), sub: t('s_fromGross', {g: MI((r.gross) * k)}) + (car ? ' · ' + t('r_sCarDropS', {x: MI(drop * k)}) : '') + (() => { const se = typeof seTotals === 'function' ? seTotals() : {total: 0}; return se.total > 0 ? ' · ' + t('r_seLeftS', {x: MI((r.net - se.total) * k)}) : ''; })()}
       : {label: t('r_grossMonthly') + per, value: MI((r.gross) * k), sub: t('s_toNet', {g: MI(r.net * k)}) + (car ? ' · ' + t('r_sCarDropS', {x: MI(drop * k)}) : '')},
     rows,
+    table2: cb ? {title: t(r.cash > 0 ? 't_sCarBrG' : 't_sCarBr'), open: true, head: [t('h_brRange'), t('h_brRate'), t('h_brAmt'), t('h_brTax')], rows: cb.rows, foot: t('n_sCarBr')} : null,
     table: {title: t('t_payslip'), head: [t('h_item'), t('h_amount'), t('h_pctGross')], rows: payslipRows(r, o)},
     note: t('n_salary2') + ' ' + t('n_points') + (car ? ' ' + t('n_sCar') : ''),
     warn: car && car.price > IL26.carCap ? [t('w_cbCap', {c: MI(IL26.carCap)})] : [],
@@ -8559,8 +8600,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "5.2", "date": "2026-10-14", "notes": {"he": "במחשבון השכר: רכב מהעבודה (רכב צמוד). מזינים מחיר מחירון, סוג רכב, השתתפות וגילום, ורואים את שווי השימוש וכמה הרכב מוריד מהנטו בחודש ובשנה.", "ar": "في حاسبة الراتب: سيارة من العمل (سيارة مرافقة). أدخل سعر القائمة ونوع السيارة والمساهمة والتجسيم، وشاهد قيمة الاستخدام وكم تخفض السيارة من الصافي شهريًا وسنويًا.", "en": "Salary: work car (company car). Enter the list price, car type, your contribution and gross-up, and see the benefit value and how much the car cuts from net pay each month and year."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.172005';
+var CHANGELOG = [{"v": "5.3", "date": "2026-10-14", "notes": {"he": "ברכב מהעבודה במחשבון השכר: טבלת מדרגות המס על שווי הרכב. רואים כמה מהשווי נופל בכל מדרגה, כמה מס משלמים בה, ביטוח לאומי ומס בריאות, ומאיזו מדרגה שולית לאיזו הרכב מעביר אותך.", "ar": "في سيارة العمل بحاسبة الراتب: جدول شرائح الضريبة على قيمة السيارة. ترى كم من القيمة يقع في كل شريحة وكم ضريبة تدفع فيها، والتأمين الوطني وضريبة الصحة، ومن أي شريحة حدية إلى أي شريحة تنقلك السيارة.", "en": "Work car in the salary calculator: a tax bracket table for the car benefit. See how much of it falls in each bracket, the tax there, National Insurance and health tax, and which marginal bracket the car moves you into."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.173614';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
