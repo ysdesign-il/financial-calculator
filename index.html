@@ -658,6 +658,10 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
 .set-cat .set-sec{background:linear-gradient(160deg,var(--g1),var(--g2));border:1px solid var(--line);border-radius:20px;padding:16px 16px 18px;margin:0 0 14px;box-shadow:0 10px 30px var(--shadow)}
 .set-cat .set-sec:last-child{border-bottom:1px solid var(--line)}
 .set-cat .perm{margin:0 0 14px}
+.tx-bar{position:fixed;inset-inline:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 86px);z-index:59;max-width:560px;margin-inline:auto;padding:10px 14px 12px;border-radius:14px;
+  background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.22);font-size:.9rem;overflow:hidden}
+.tx-bar i{position:absolute;inset-inline-start:0;bottom:0;height:3px;width:var(--p);background:var(--gold-ui);transition:width .4s}
+.tx-go{margin-top:8px;display:inline-flex}
 
 </style>
 </head>
@@ -2273,9 +2277,19 @@ Object.assign(T, {
   sc_systemS:['עדכונים, גיבוי, ייבוא ואיפוס','التحديثات، النسخ الاحتياطي، الاستيراد وإعادة الضبط','Updates, backup, import and reset'],
   sc_new:['עדכון זמין','تحديث متاح','Update available']
 });
+Object.assign(T, {
+  h_langFallback:['הממשק מתורגם לכל השפות. בפעם הראשונה שבוחרים שפה חדשה התרגום נטען אוטומטית ונשמר במכשיר, והמספרים, שמות המטבעות וכיוון הכתיבה מותאמים לשפה.','الواجهة مترجمة إلى جميع اللغات. عند اختيار لغة جديدة لأول مرة تُحمَّل الترجمة تلقائيًا وتُحفظ على الجهاز، وتُكيَّف الأرقام وأسماء العملات واتجاه الكتابة مع اللغة.','The interface is translated into every language. The first time you pick a new language the translation loads automatically and is saved on the device; numbers, currency names and text direction follow the language.'],
+  tx_busy:['מתרגם את הממשק ל-{l}… {p}%','جارٍ ترجمة الواجهة إلى {l}… {p}%','Translating the interface into {l}… {p}%'],
+  tx_done:['הממשק מתורגם במלואו ל-{l}','الواجهة مترجمة بالكامل إلى {l}','The interface is fully translated into {l}'],
+  tx_part:['{p}% מהממשק מתורגם ל-{l}.','{p}% من الواجهة مترجمة إلى {l}.','{p}% of the interface is translated into {l}.'],
+  tx_partIn:['השאר מוצג באנגלית עד שהתרגום יושלם.','يُعرض الباقي بالإنجليزية حتى تكتمل الترجمة.','The rest shows in English until the translation is complete.'],
+  tx_partSite:['השאר מוצג באנגלית ויושלם אוטומטית בעדכון הקרוב. להשלמה מיידית: מפתח Gemini בהגדרות ← חיבורים ועוזר AI.','يُعرض الباقي بالإنجليزية ويكتمل تلقائيًا في التحديث القادم. للإكمال فورًا: مفتاح Gemini في الإعدادات ← الاتصالات ومساعد الذكاء الاصطناعي.','The rest shows in English and completes automatically with an upcoming update. To finish now: add a Gemini key in Settings → Connections & AI assistant.'],
+  tx_denied:['כדי לתרגם, אשרו ל-Claude לעבוד בעמוד הזה.','للترجمة، اسمح لـ Claude بالعمل في هذه الصفحة.','To translate, allow Claude to work on this page.'],
+  tx_go:['השלמת התרגום','إكمال الترجمة','Complete translation']
+});
 
 const t = (k, p) => {
-  let s = (T[k] || [k,k,k])[langIdx()];
+  let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
   if (p) for (const x in p) s = s.split('{'+x+'}').join(p[x]);
   return s;
 };
@@ -5199,6 +5213,8 @@ async function tryLive(manual){
   if (typeof stampUpdate === 'function') stampUpdate(ok);
 }
 
+var TX = null, TXL = '';
+txBoot();
 /* ================= init extras ================= */
 const bottomEl = $('#bottom');
 renderBottom(); renderTiles();
@@ -5533,7 +5549,7 @@ function asRender(){
 }
 function asSystem(){
   const names = TABS.filter(id => id !== 'assist' && id !== 'settings').map(id => id + '=' + t('tab_' + id)).join('; ');
-  const L = {he:'Hebrew', ar:'Arabic', en:'English'}[lang] || 'the same language as the user';
+  const L = {he:'Hebrew', ar:'Arabic', en:'English'}[lang] || txEnName(lang);
   return 'You are a friendly personal finance assistant inside a calculator app used mostly in Israel. Answer briefly (max ~120 words) in ' + L + ' unless the user writes in another language. ' +
     'You may explain concepts and guide on which calculator fits. When a calculator below fits, mention it as [[id]] (for example [[mortgage]]). Do not invent numbers or tax rates; say when something should be checked with an accountant or official source. You are not a licensed financial adviser. ' +
     'Calculators: ' + names + '.';
@@ -6068,7 +6084,7 @@ function exResults(id){
   return {main: exClean(r.hero.label) + ': ' + exClean(r.hero.value), rows: (r.rows || []).slice(0, 14).map(x => exClean(x[0]) + ': ' + exClean(x[1])),
           note: exClean(r.note || ''), warn: (r.warn || []).map(exClean).join(' ')};
 }
-function exLangName(){ return {he: 'Hebrew', ar: 'Arabic', en: 'English'}[lang] || ('the language with code ' + lang); }
+function exLangName(){ return {he: 'Hebrew', ar: 'Arabic', en: 'English'}[lang] || (txEnName(lang) + ' (language code ' + lang + ')'); }
 function exSystem(){
   return 'You are a warm personal guide inside an Israeli personal-finance calculator app. Explain things to someone with no financial background, in ' + exLangName() + '. ' +
     'Rules: short, plain sentences; no jargon — when a professional term is unavoidable, explain it in a few words right away; use the person\'s actual numbers from the context; ' +
@@ -6504,11 +6520,11 @@ function gemFail(status, j){
   else if (status === 404) c = 'gk_eModel';
   const e = new Error(c); e.gem = msg.slice(0, 160); e.status = status; return e;
 }
-async function gemCall(model, key, contents){
+async function gemCall(model, key, contents, extra){
   let r;
   try {
     r = await fetch(GEM_BASE + 'models/' + encodeURIComponent(model) + ':generateContent', {
-      method: 'POST', headers: {'Content-Type': 'application/json', 'x-goog-api-key': key}, body: JSON.stringify({contents})});
+      method: 'POST', headers: {'Content-Type': 'application/json', 'x-goog-api-key': key}, body: JSON.stringify(Object.assign({contents}, extra || {}))});
   } catch (e) { throw new Error('blocked'); }
   let j = null; try { j = await r.json(); } catch (e) {}
   if (!r.ok) throw gemFail(r.status, j);
@@ -6517,10 +6533,10 @@ async function gemCall(model, key, contents){
   if (!txt){ const e = new Error('gk_eEmpty'); e.gem = c.finishReason || ((j && j.promptFeedback) || {}).blockReason || ''; throw e; }
   return txt;
 }
-async function gemTry(models, key, contents){
+async function gemTry(models, key, contents, extra){
   let last = null;
   for (const m of [...new Set(models.filter(Boolean))]){
-    try { const txt = await gemCall(m, key, contents); if (SET.gmodel !== m){ SET.gmodel = m; saveSet(); } return txt; }
+    try { const txt = await gemCall(m, key, contents, extra); if (SET.gmodel !== m){ SET.gmodel = m; saveSet(); } return txt; }
     catch (e) { if (GEM_STOP.includes(e.message)) throw e; last = e; }
   }
   throw last || new Error('gk_eOther');
@@ -6622,8 +6638,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "2.5", "date": "2026-10-14", "notes": {"he": "ההגדרות מסודרות עכשיו לפי קטגוריות, בעיצוב חדש וברור יותר.", "ar": "الإعدادات مرتّبة الآن حسب الفئات، بتصميم جديد وأوضح.", "en": "Settings are now organised into categories with a new, clearer design."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.081559';
+var CHANGELOG = [{"v": "2.6", "date": "2026-10-14", "notes": {"he": "כל 80 השפות: הממשק כולו מתורגם, לא רק עברית, ערבית ואנגלית. שפה חדשה מתורגמת אוטומטית בבחירה הראשונה ונשמרת.", "ar": "جميع اللغات الثمانين: الواجهة كلها مترجمة، وليس العبرية والعربية والإنجليزية فقط. تُترجم اللغة الجديدة تلقائيًا عند اختيارها أول مرة وتُحفظ.", "en": "All 80 languages: the whole interface is translated, not just Hebrew, Arabic and English. A new language is translated automatically the first time you pick it, and saved."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.083140';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -6770,6 +6786,153 @@ permRender = function(){ _prSh.apply(this, arguments); shRender(); };
 const _rsSh = renderStamp;
 renderStamp = function(){ _rsSh.apply(this, arguments); shRender(); };
 setOrganize();
+
+/* ---- every language: full interface translation (packs + AI fill-in, cached and shared) ---- */
+var TXJ = {id: 0, busy: false, done: 0, total: 0, err: '', code: ''};
+function txCore(c){ c = c || lang; return c === 'he' || c === 'ar' || c === 'en'; }
+function txHash(s){ s = String(s); let h = 0x811c9dc5; for (let i = 0; i < s.length; i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); }
+function txSrc(){
+  const o = {};
+  for (const k in T){ const v = T[k], en = v && v[2]; if (typeof en === 'string' && /\p{L}/u.test(en)) o[k] = en; }
+  return o;
+}
+function txEnName(c){ try { return new Intl.DisplayNames(['en'], {type: 'language'}).of(c) || c; } catch (e) { return c; } }
+function txNative(c){ const l = LANG_LIST.find(x => x[0] === c); return l ? l[1] : c; }
+function txPhOk(en, tr){ const re = /\{[A-Za-z0-9_]+\}/g, a = (String(en).match(re) || []).sort().join(), b = (String(tr).match(re) || []).sort().join(); return a === b; }
+function txValid(pack, src){
+  const out = Object.create(null); if (!pack || !pack.t) return out;
+  const h = pack.h || {};
+  for (const k in pack.t){ const tr = pack.t[k]; if (src[k] != null && typeof tr === 'string' && tr && h[k] === txHash(src[k]) && txPhOk(src[k], tr)) out[k] = tr; }
+  return out;
+}
+function txPack(tx, src){ const h = {}, t2 = {}; for (const k in tx){ if (src[k] != null){ t2[k] = tx[k]; h[k] = txHash(src[k]); } } return {h, t: t2}; }
+function txCacheGet(c){ try { return JSON.parse(RAWLS.getItem('fin-tx:' + c) || 'null'); } catch (e) { return null; } }
+function txCacheSet(c, tx, src){
+  const val = JSON.stringify(Object.assign(txPack(tx, src), {at: Date.now()}));
+  try { RAWLS.setItem('fin-tx:' + c, val); }
+  catch (e) {                                   // storage full: keep only the language in use
+    try { for (let i = RAWLS.length - 1; i >= 0; i--){ const k = RAWLS.key(i); if (k && k.indexOf('fin-tx:') === 0 && k !== 'fin-tx:' + c) RAWLS.removeItem(k); } RAWLS.setItem('fin-tx:' + c, val); } catch (e2) {}
+  }
+}
+function txBoot(){ if (txCore()) { TX = null; TXL = lang; return; } TX = txValid(txCacheGet(lang), txSrc()); TXL = lang; }
+function txPct(){ if (txCore()) return 100; const src = txSrc(), n = Object.keys(src).length; let have = 0; for (const k in src) if (TX && TX[k] != null) have++; return n ? Math.floor(have * 100 / n) : 100; }
+var txRefT = 0, txRefTimer = null;
+function txRefresh(){
+  const run = () => { txRefT = Date.now(); txRefTimer = null; try { applyLang(true); } catch (e) {} try { rebuildNav(); } catch (e) {} txRender(); };
+  if (Date.now() - txRefT > 1200) run(); else if (!txRefTimer) txRefTimer = setTimeout(run, 1200);
+}
+function txParse(text){ const s = String(text || ''), a = s.indexOf('{'), b = s.lastIndexOf('}'); if (a < 0 || b <= a) return null; try { return JSON.parse(s.slice(a, b + 1)); } catch (e) { return null; } }
+function txPrompt(code, chunk){
+  const L = txEnName(code);
+  return 'You translate the user interface of a personal-finance calculator web app used mainly in Israel.\n' +
+    'Translate every value of the JSON object below from English into ' + L + ' (language code "' + code + '"). Return ONLY a JSON object with exactly the same keys.\n' +
+    'Rules:\n- Natural, concise wording a native speaker expects in a finance app; keep button and menu labels short.\n' +
+    '- Keep placeholders such as {v}, {n}, {e}, {h} exactly as written.\n' +
+    '- Keep emoji, symbols (· → ↗ ✓ ✗ ★ ●), numbers, %, currency codes (ILS, USD, EUR), URLs, and these names unchanged: Gemini, Claude, Google, GitHub, Binance, Coinbase, Blink, inter.il, AI Studio, ECB.\n' +
+    '- Israeli terms: translate the meaning; for official bodies (Bank of Israel, National Insurance / Bituach Leumi, Kol Zchut, Tax Authority, Keren Hishtalmut) use the established name in ' + L + ' if one exists.\n' +
+    '- No explanations, no notes, no markdown.\nJSON:\n' + JSON.stringify(chunk);
+}
+async function txAI(){
+  if (IN_CLAUDE){ try { const sm = await window.claude.use('sample'); if (sm) return {kind: 'claude', sm}; } catch (e) {} }
+  if (gemKey()) return {kind: 'gemini'};
+  return null;
+}
+async function txAsk(ai, code, chunk){
+  const prompt = txPrompt(code, chunk);
+  if (ai.kind === 'claude'){ const r = await ai.sm(prompt, {modelTier: 'default', cache: true}); return txParse(r && r.text); }
+  return txParse(await gemTry([SET.gmodel].concat(GEM_FALLBACK), gemKey(), [{role: 'user', parts: [{text: prompt}]}], {generationConfig: {responseMimeType: 'application/json', temperature: 0.2}}));
+}
+function txChunks(keys, src, max){
+  const out = []; let cur = {}, n = 0;
+  keys.forEach(k => { const len = src[k].length + k.length + 8; if (n && n + len > max){ out.push(cur); cur = {}; n = 0; } cur[k] = src[k]; n += len; });
+  if (n) out.push(cur); return out;
+}
+async function txDb(){ if (!IN_CLAUDE) return null; try { return await window.claude.use('db'); } catch (e) { return null; } }
+async function txStart(manual){
+  const code = lang;
+  if (txCore(code)){ TXJ = {id: TXJ.id + 1, busy: false, done: 0, total: 0, err: '', code}; txRender(); return; }
+  const my = TXJ.id + 1, src = txSrc(), all = Object.keys(src);
+  TXJ = {id: my, busy: true, done: 0, total: all.length, err: '', code};
+  const live = () => TXJ.id === my && lang === code;
+  const tx = Object.assign(Object.create(null), TX || {});
+  const take = pack => { const v = txValid(pack, src); let n = 0; for (const k in v) if (tx[k] == null){ tx[k] = v[k]; n++; } return n; };
+  txRender();
+  // 1) a ready-made pack next to the page (site and app)
+  try { const r = await fetch('lang/' + code + '.json?b=' + APP_BUILD, {cache: 'no-store'}); if (r.ok){ const j = await r.json(); if (take(j) && live()){ TX = tx; txRefresh(); } } } catch (e) {}
+  // 2) the app's shared translations
+  const db = await txDb();
+  if (db){ try { const d = await db.doc('i18n/' + code).get(); if (d && d.exists && take(d.data()) && live()){ TX = tx; txRefresh(); } } catch (e) {} }
+  if (!live()) return;
+  let missing = all.filter(k => tx[k] == null);
+  if (!missing.length){ TX = tx; txCacheSet(code, tx, src); TXJ.busy = false; TXJ.done = all.length; txRefresh(); return; }
+  // 3) fill the rest with AI, visible texts first (automatically once per session, or on request)
+  let tried = ''; try { tried = SS.getItem('fin-tx-try:' + code) || ''; } catch (e) {}
+  if (!manual && tried === String(missing.length)){ TX = tx; TXJ.busy = false; TXJ.err = 'partial'; txRefresh(); return; }
+  try { SS.setItem('fin-tx-try:' + code, String(missing.length)); } catch (e) {}
+  const ai = await txAI();
+  if (!ai){ TX = tx; txCacheSet(code, tx, src); TXJ.busy = false; TXJ.err = 'noai'; txRefresh(); return; }
+  const seen = new Set($$('[data-i]').filter(e => e.offsetParent).map(e => e.dataset.i));
+  missing = missing.filter(k => seen.has(k)).concat(missing.filter(k => !seen.has(k)));
+  const chunks = txChunks(missing, src, ai.kind === 'claude' ? 3000 : 6000);
+  TXJ.done = all.length - missing.length; txRender();
+  let idx = 0, fails = 0, stop = '';
+  const worker = async () => {
+    while (idx < chunks.length && live() && !stop){
+      const ch = chunks[idx++];
+      for (let attempt = 0; attempt < 3 && live() && !stop; attempt++){
+        try {
+          const res = await txAsk(ai, code, ch);
+          if (!res) throw new Error('parse');
+          let got = 0;
+          for (const k in ch){ const tr = res[k]; if (typeof tr === 'string' && tr.trim() && txPhOk(ch[k], tr)){ tx[k] = tr.trim(); got++; } }
+          TXJ.done += got; TX = tx; txRefresh();
+          break;
+        } catch (e) {
+          const c = (e && (e.code || e.message)) || '';
+          if (c === 'not_granted' || GEM_STOP.includes(c)){ stop = c === 'not_granted' ? 'denied' : c; break; }
+          if (c === 'rate_limited' || c === 'gk_eQuota'){ await new Promise(r => setTimeout(r, 15000 * (attempt + 1))); continue; }
+          if (attempt === 2) fails++;
+        }
+      }
+      if (live()) txCacheSet(code, tx, src);
+    }
+  };
+  await Promise.all([worker(), worker(), worker()]);
+  if (!live()) return;
+  TX = tx; txCacheSet(code, tx, src);
+  TXJ.busy = false; TXJ.err = stop || (all.some(k => tx[k] == null) ? 'partial' : '');
+  if (db && PERM === 'owner'){ try { await db.doc('i18n/' + code).set(Object.assign(txPack(tx, src), {at: Date.now(), lang: code})); } catch (e) {} }
+  txRefresh();
+}
+function txRender(){
+  const core = txCore(), pct = txPct(), L = txNative(lang);
+  let st = $('#tx_st');
+  if (!st){ const f = $('#set_lang') && $('#set_lang').closest('.field'); if (f){ st = document.createElement('div'); st.id = 'tx_st'; st.className = 'gk-st'; st.setAttribute('role', 'status'); f.insertAdjacentElement('afterend', st); } }
+  if (st){
+    let cls = '', h = '';
+    if (core) h = '';
+    else if (TXJ.busy && TXJ.code === lang){ cls = 'wait'; h = '<b>🌐 ' + asEsc(t('tx_busy', {l: L, p: Math.min(99, pct)})) + '</b>'; }
+    else if (pct >= 100){ cls = 'ok'; h = '<b>✓ ' + asEsc(t('tx_done', {l: L})) + '</b>'; }
+    else {
+      const why = TXJ.err === 'denied' ? 'tx_denied' : (IN_CLAUDE || gemKey()) ? 'tx_partIn' : 'tx_partSite';
+      cls = 'new'; h = '<b>' + asEsc(t('tx_part', {l: L, p: pct})) + '</b> ' + asEsc(t(why)) + ' <button type="button" class="btn tx-go" id="tx_go">' + asEsc(t('tx_go')) + '</button>';
+    }
+    st.className = 'gk-st ' + cls; st.innerHTML = h;
+  }
+  let bar = $('#tx_bar');
+  const show = !core && TXJ.busy && TXJ.code === lang && TXJ.total > 0 && pct < 100;
+  if (!show){ if (bar) bar.remove(); return; }
+  if (!bar){ bar = document.createElement('div'); bar.id = 'tx_bar'; bar.className = 'tx-bar'; bar.setAttribute('role', 'status'); document.body.appendChild(bar); }
+  bar.innerHTML = '<span>🌐 ' + asEsc(t('tx_busy', {l: L, p: Math.min(99, pct)})) + '</span><i style="--p:' + Math.min(99, pct) + '%"></i>';
+}
+document.addEventListener('click', e => { if (e.target.closest('#tx_go')) txStart(true); });
+const _alTx = applyLang;
+applyLang = function(){
+  if (TXL !== lang){ TX = txCore() ? null : txValid(txCacheGet(lang), txSrc()); TXL = lang; const r = _alTx.apply(this, arguments); txStart(); return r; }
+  return _alTx.apply(this, arguments);
+};
+if (!txCore()) setTimeout(txStart, 900);
+setTimeout(txRender, 0);
 
 applyLang(false);
 activate(tab);

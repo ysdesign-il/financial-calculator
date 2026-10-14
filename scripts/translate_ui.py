@@ -1,0 +1,168 @@
+"""Translate the app's interface texts into every language and write lang/<code>.json packs.
+
+Runs in GitHub Actions. Uses a Gemini key (secret GEMINI_API_KEY) when one is set and the
+free GitHub Models service (the workflow's GITHUB_TOKEN with models: read) otherwise.
+Only missing or changed texts are translated, so every run continues where the last one
+stopped and a new interface text is picked up automatically. Standard library only.
+"""
+import json, os, re, sys, time, urllib.request, urllib.error
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SRC = json.load(open(os.path.join(ROOT, 'i18n', 'source.json'), encoding='utf-8'))
+STR, LANGS = SRC['strings'], SRC['langs']
+TOKEN = os.environ.get('GITHUB_TOKEN', '').strip()
+GKEY = os.environ.get('GEMINI_API_KEY', '').strip()
+DEADLINE = time.time() + float(os.environ.get('MAX_MINUTES', '45')) * 60
+PRIORITY = ['ru', 'am', 'fr', 'es', 'uk', 'de', 'pt-BR', 'it', 'tr', 'fa', 'zh-CN', 'hi', 'ja', 'ko', 'pl', 'ro', 'yi', 'pt-PT', 'nl', 'hu']
+PH = re.compile(r'\{[A-Za-z0-9_]+\}')
+
+def fnv(s):                                   # same hash as the page (UTF-16 code units, FNV-1a 32-bit, base 36)
+    h, data = 0x811c9dc5, s.encode('utf-16-le')
+    for i in range(0, len(data), 2):
+        h ^= data[i] | (data[i + 1] << 8)
+        h = (h * 0x01000193) & 0xffffffff
+    digits, out = '0123456789abcdefghijklmnopqrstuvwxyz', ''
+    while True:
+        h, r = divmod(h, 36); out = digits[r] + out
+        if not h: return out
+
+HASH = {k: fnv(v) for k, v in STR.items()}
+
+def ph_ok(en, tr): return sorted(PH.findall(en)) == sorted(PH.findall(tr))
+
+def prompt(lang, chunk):
+    L = lang['name']
+    return ('You translate the user interface of a personal-finance calculator web app used mainly in Israel.\n'
+            f'Translate every value of the JSON object below from English into {L} (language code "{lang["code"]}"). '
+            'Return ONLY a JSON object with exactly the same keys.\nRules:\n'
+            '- Natural, concise wording a native speaker expects in a finance app; keep button and menu labels short.\n'
+            '- Keep placeholders such as {v}, {n}, {e}, {h} exactly as written.\n'
+            '- Keep emoji, symbols (· → ↗ ✓ ✗ ★ ●), numbers, %, currency codes (ILS, USD, EUR), URLs, and these names unchanged: '
+            'Gemini, Claude, Google, GitHub, Binance, Coinbase, Blink, inter.il, AI Studio, ECB.\n'
+            f'- Israeli terms: translate the meaning; for official bodies (Bank of Israel, National Insurance / Bituach Leumi, Kol Zchut, '
+            f'Tax Authority, Keren Hishtalmut) use the established name in {L} if one exists.\n'
+            '- No explanations, no notes, no markdown.\nJSON:\n' + json.dumps(chunk, ensure_ascii=False))
+
+def parse(text):
+    a, b = text.find('{'), text.rfind('}')
+    if a < 0 or b <= a: return None
+    try: return json.loads(text[a:b + 1])
+    except Exception: return None
+
+def http(url, body=None, headers=None, timeout=180):
+    req = urllib.request.Request(url, data=json.dumps(body).encode() if body is not None else None,
+                                 headers=dict({'Content-Type': 'application/json', 'User-Agent': 'translate-ui'}, **(headers or {})))
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.loads(r.read().decode('utf-8'))
+
+class Exhausted(Exception): pass
+
+class Gemini:
+    name, size = 'gemini', 8000
+    models = ['gemini-flash-latest', 'gemini-3.8-flash', 'gemini-flash-lite-latest']
+    def __init__(self): self.dead = set()
+    def ask(self, text):
+        for m in self.models:
+            if m in self.dead: continue
+            try:
+                j = http(f'https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent',
+                         {'contents': [{'role': 'user', 'parts': [{'text': text}]}],
+                          'generationConfig': {'responseMimeType': 'application/json', 'temperature': 0.2}},
+                         {'x-goog-api-key': GKEY})
+                parts = ((j.get('candidates') or [{}])[0].get('content') or {}).get('parts') or []
+                return ''.join(p.get('text', '') for p in parts if not p.get('thought'))
+            except urllib.error.HTTPError as e:
+                if e.code in (429,): self.dead.add(m); continue
+                if e.code in (400, 401, 403): raise Exhausted('gemini key refused (%s)' % e.code)
+                if e.code in (404,): self.dead.add(m); continue
+                time.sleep(5)
+            except Exception: time.sleep(5)
+        raise Exhausted('gemini quota used up')
+
+HEAVY = {'am','ti','hy','ka','bn','gu','hi','kn','ml','mr','ne','pa','si','ta','te','th','lo','km','my','el','fa','ps','ur','yi','mn','ky','kk','be','bg','mk','ru','sr','uk','zh-CN','zh-TW','ja','ko'}
+
+class GitHubModels:
+    name, size = 'github-models', 3000
+    prefer = ['openai/gpt-4.1-mini', 'openai/gpt-4o-mini', 'openai/gpt-5-mini', 'openai/gpt-4.1', 'openai/gpt-4o',
+              'openai/gpt-4.1-nano', 'deepseek/DeepSeek-V3-0324', 'mistral-ai/mistral-medium-2505',
+              'meta/Llama-4-Maverick-17B-128E-Instruct-FP8']
+    def __init__(self):
+        self.dead = set(); self.models = list(self.prefer)
+        try:
+            cat = http('https://models.github.ai/catalog/models', headers={'Authorization': 'Bearer ' + TOKEN, 'Accept': 'application/vnd.github+json'})
+            ids = [m.get('id') for m in (cat if isinstance(cat, list) else cat.get('models', [])) if m.get('id')]
+            chat = [i for i in ids if any(x in i.lower() for x in ('gpt', 'deepseek-v3', 'mistral-medium', 'llama-4', 'grok'))]
+            self.models = [m for m in self.prefer if m in ids] + [m for m in chat if m not in self.prefer]
+        except Exception as e:
+            print('catalog unavailable:', e)
+    def ask(self, text):
+        for m in self.models:
+            if m in self.dead: continue
+            for attempt in range(2):
+                try:
+                    j = http('https://models.github.ai/inference/chat/completions',
+                             {'model': m, 'temperature': 0.2, 'max_tokens': 4000,
+                              'messages': [{'role': 'system', 'content': 'You are a professional software localizer. Reply with JSON only.'},
+                                           {'role': 'user', 'content': text}]},
+                             {'Authorization': 'Bearer ' + TOKEN})
+                    return (j.get('choices') or [{}])[0].get('message', {}).get('content') or ''
+                except urllib.error.HTTPError as e:
+                    wait = int(e.headers.get('retry-after') or 0) if e.headers else 0
+                    if e.code == 429 and 0 < wait <= 90 and attempt == 0: time.sleep(wait + 1); continue
+                    self.dead.add(m); print(f'  {m}: HTTP {e.code} -> skipped'); break
+                except Exception as e:
+                    print(f'  {m}: {e}'); time.sleep(5)
+        raise Exhausted('GitHub Models limit reached for today')
+
+def load(code):
+    p = os.path.join(ROOT, 'lang', code + '.json')
+    try: d = json.load(open(p, encoding='utf-8'))
+    except Exception: d = {}
+    t, h = d.get('t', {}), d.get('h', {})
+    return {k: v for k, v in t.items() if k in STR and h.get(k) == HASH[k] and isinstance(v, str) and v and ph_ok(STR[k], v)}
+
+def save(code, tx):
+    keys = sorted(k for k in tx if k in STR)
+    d = {'lang': code, 'n': len(STR), 'done': len(keys), 'h': {k: HASH[k] for k in keys}, 't': {k: tx[k] for k in keys}}
+    os.makedirs(os.path.join(ROOT, 'lang'), exist_ok=True)
+    json.dump(d, open(os.path.join(ROOT, 'lang', code + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'), sort_keys=True)
+
+def chunks(keys, size):
+    out, cur, n = [], {}, 0
+    for k in keys:
+        ln = len(STR[k]) + len(k) + 8
+        if n and n + ln > size: out.append(cur); cur, n = {}, 0
+        cur[k] = STR[k]; n += ln
+    if cur: out.append(cur)
+    return out
+
+def main():
+    providers = ([Gemini()] if GKEY else []) + ([GitHubModels()] if TOKEN else [])
+    if not providers: print('No translation service available'); return
+    order = sorted(LANGS, key=lambda l: (PRIORITY.index(l['code']) if l['code'] in PRIORITY else 99))
+    total_new = 0
+    for lang in order:
+        code = lang['code']; tx = load(code)
+        missing = [k for k in STR if k not in tx]
+        if not missing: continue
+        print(f'{code}: {len(tx)}/{len(STR)} done, {len(missing)} to go')
+        for prov in list(providers):
+            size = prov.size // 2 if (code in HEAVY and prov.name == 'github-models') else prov.size
+            for ch in chunks(missing, size):
+                if time.time() > DEADLINE: save(code, tx); print('time limit reached'); return total_new
+                try: res = parse(prov.ask(prompt(lang, ch)))
+                except Exhausted as e:
+                    print(f'  {prov.name}: {e}'); providers.remove(prov); break
+                if not isinstance(res, dict): continue
+                for k, en in ch.items():
+                    tr = res.get(k)
+                    if isinstance(tr, str) and tr.strip() and ph_ok(en, tr): tx[k] = tr.strip(); total_new += 1
+                save(code, tx)
+            missing = [k for k in STR if k not in tx]
+            if not missing: break
+        save(code, tx); print(f'{code}: {len(tx)}/{len(STR)}')
+        if not providers: print('All translation services are at their limit; the next run continues.'); break
+    return total_new
+
+if __name__ == '__main__':
+    print('new translations:', main())
