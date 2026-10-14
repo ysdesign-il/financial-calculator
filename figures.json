@@ -1,0 +1,5 @@
+{
+  "asOf": 0,
+  "note": "Official figure updates for the website. Keys match the app (for example minHour, vat, tr3). Leave v empty to use the built-in 2026 values.",
+  "v": {}
+}
