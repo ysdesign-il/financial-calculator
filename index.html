@@ -666,11 +666,16 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
 .as-eng{display:inline-flex;flex-wrap:wrap}
 .as-eng button{font-size:.85rem;padding:6px 12px}
 .pm-badge{margin-top:10px;opacity:.75}
-.iv-box{width:min(760px,100%);max-height:92vh}
+.iv-box{width:min(820px,100%);height:94vh;max-height:94vh}
 .iv-tabs{display:flex;flex-wrap:wrap;gap:2px}
 .iv-tabs button{font-size:.85rem;padding:7px 12px}
-.iv-frame{flex:1;min-height:420px;height:62vh;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
-.iv-frame iframe{width:100%;height:100%;border:0;display:block}
+.iv-frame{flex:1 1 auto;min-height:0;border-radius:14px;overflow:auto;border:1px solid var(--line);background:var(--surface);direction:ltr;-webkit-overflow-scrolling:touch}
+.iv-wrap{position:relative;overflow:hidden;margin:0 auto}
+.iv-wrap iframe{position:absolute;top:0;left:0;border:0;display:block;transform-origin:0 0}
+.iv-tools{display:flex;align-items:center;gap:6px;justify-content:flex-end}
+.iv-z{appearance:none;font:inherit;font-weight:700;min-width:36px;height:32px;padding:0 10px;border-radius:10px;border:1px solid var(--line);background:var(--g1);color:var(--ink);cursor:pointer}
+.iv-fit{font-weight:600;font-size:.85rem}
+.iv-zv{min-width:44px;text-align:center;font-size:.85rem;color:var(--ink-2)}
 .iv-foot{margin:0}
 .iv-btn{appearance:none;font:inherit;cursor:pointer;background:none}
 .iv-home{appearance:none;font:inherit;font-weight:600;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;margin:12px 0 4px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:linear-gradient(160deg,var(--g1),var(--g2))}
@@ -678,6 +683,13 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
 .iv-dot{width:9px;height:9px;border-radius:50%;background:#2fbf86;box-shadow:0 0 0 0 rgba(47,191,134,.6);animation:ivp 1.8s infinite}
 @keyframes ivp{0%{box-shadow:0 0 0 0 rgba(47,191,134,.6)}70%{box-shadow:0 0 0 8px rgba(47,191,134,0)}100%{box-shadow:0 0 0 0 rgba(47,191,134,0)}}
 :root[data-motion="reduced"] .iv-dot{animation:none}
+@media (max-height:540px){
+  .iv-box{height:100vh;max-height:100vh;border-radius:0;padding:8px 12px;gap:6px}
+  .iv-box #iv_note{display:none}
+  .iv-box .cp-top h3{font-size:1rem;margin:0}
+  .iv-tabs button{padding:5px 10px}
+  .iv-z{height:28px}
+}
 
 </style>
 </head>
@@ -2434,6 +2446,11 @@ Object.assign(T, {
   iv_open:['פתיחה באתר Investing.com','فتح في موقع Investing.com','Open on Investing.com'],
   iv_note:['הנתונים מגיעים ישירות מהווידג׳טים הרשמיים של Investing.com ומתעדכנים בזמן אמת. אם הלוח לא נטען, פתחו אותו באתר Investing.com.','البيانات تأتي مباشرة من الأدوات الرسمية لـ Investing.com وتتحدّث لحظيًا. إذا لم تُحمَّل اللوحة، افتحها في موقع Investing.com.','The data comes straight from Investing.com\'s official widgets and updates live. If the board does not load, open it on Investing.com.'],
   iv_close:['סגירה','إغلاق','Close']
+});
+Object.assign(T, {
+  iv_fit:['התאמה למסך','ملاءمة الشاشة','Fit to screen'],
+  iv_zoomIn:['הגדלה','تكبير','Zoom in'], iv_zoomOut:['הקטנה','تصغير','Zoom out'],
+  iv_note:['הנתונים מגיעים ישירות מהווידג׳טים הרשמיים של Investing.com ומתעדכנים בזמן אמת. הלוח מותאם לרוחב המסך; אפשר להגדיל עם + ולגלול, או לסובב את הטלפון לרוחב.','البيانات تأتي مباشرة من الأدوات الرسمية لـ Investing.com وتتحدّث لحظيًا. اللوحة ملائمة لعرض الشاشة؛ يمكنك التكبير بـ + والتمرير، أو تدوير الهاتف أفقيًا.','The data comes straight from Investing.com\'s official widgets and updates live. The board fits the screen width; zoom with + and scroll, or turn your phone sideways.']
 });
 
 const t = (k, p) => {
@@ -6797,8 +6814,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "2.8.1", "date": "2026-10-14", "notes": {"he": "בדיקת איכות אוטומטית לתרגומים: תרגום שהגיע לטקסט הלא נכון נפסל ומתורגם מחדש.", "ar": "فحص جودة تلقائي للترجمات: الترجمة التي أُلحقت بنص خاطئ تُرفض وتُعاد ترجمتها.", "en": "Automatic quality check for translations: a translation attached to the wrong text is rejected and translated again."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.091630';
+var CHANGELOG = [{"v": "2.8.2", "date": "2026-10-14", "notes": {"he": "לוח Investing.com מתפרס עכשיו על כל המסך ומציג את כל הטבלה, עם כפתורי הגדלה והקטנה.", "ar": "لوحة Investing.com تملأ الشاشة الآن وتعرض الجدول كاملًا، مع أزرار التكبير والتصغير.", "en": "The Investing.com board now fills the screen and shows the whole table, with zoom buttons."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.092026';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -7279,6 +7296,7 @@ function ivEnsure(){
   document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="ivx" hidden><div class="cp-box iv-box" role="dialog" aria-modal="true" aria-labelledby="iv_t">
     <div class="cp-top"><h3 id="iv_t"></h3><button type="button" class="cp-x" id="iv_x">×</button></div>
     <div class="seg iv-tabs" id="iv_tabs" role="tablist"></div>
+    <div class="iv-tools"><button type="button" class="iv-z" data-ivz="-1" id="iv_zm">−</button><span class="iv-zv" id="iv_zv"></span><button type="button" class="iv-z" data-ivz="1" id="iv_zp">+</button><button type="button" class="iv-z iv-fit" data-ivz="0" id="iv_zf"></button></div>
     <div class="iv-frame" id="iv_frame"></div>
     <p class="fine iv-foot"><a class="src-a" id="iv_page" target="_blank" rel="noopener noreferrer"></a></p>
     <p class="fine" id="iv_note"></p></div></div>`);
@@ -7286,7 +7304,9 @@ function ivEnsure(){
   ov.addEventListener('click', e => {
     if (e.target === ov || e.target.closest('#iv_x')) return ivClose();
     const b = e.target.closest('[data-ivt]'); if (b){ IV_CUR = b.dataset.ivt; ivRender(); }
+    const zb = e.target.closest('[data-ivz]'); if (zb) ivZoomStep(+zb.dataset.ivz);
   });
+  window.addEventListener('resize', () => { if (!ov.hidden) ivFit(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !ov.hidden) ivClose(); });
 }
 function ivRender(){
@@ -7298,14 +7318,33 @@ function ivRender(){
   const fr = $('#iv_frame');
   if (fr.dataset.src !== src){
     fr.dataset.src = src;
-    fr.innerHTML = `<iframe src="${src}" title="${asEsc(t('iv_t_' + tab.k))} — Investing.com" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowtransparency="true"></iframe>`;
+    fr.innerHTML = `<div class="iv-wrap"><iframe src="${src}" title="${asEsc(t('iv_t_' + tab.k))} — Investing.com" referrerpolicy="strict-origin-when-cross-origin" allowtransparency="true"></iframe></div>`;
   }
+  $('#iv_zf').textContent = t('iv_fit'); $('#iv_zm').setAttribute('aria-label', t('iv_zoomOut')); $('#iv_zp').setAttribute('aria-label', t('iv_zoomIn'));
+  requestAnimationFrame(ivFit);
   const a = $('#iv_page'); a.href = tab.page; a.textContent = t('iv_open') + ' ↗';
   $('#iv_note').textContent = t('iv_note');
 }
-function ivOpen(k){ ivEnsure(); if (k) IV_CUR = k; ivRender(); $('#ivx').hidden = false; document.body.classList.add('cp-lock'); setTimeout(() => { const x = $('#iv_x'); if (x) x.focus(); }, 30); }
+function ivOpen(k){ ivEnsure(); if (k) IV_CUR = k; $('#ivx').hidden = false; ivRender(); document.body.classList.add('cp-lock'); setTimeout(() => { const x = $('#iv_x'); if (x) x.focus(); }, 30); }
 function ivClose(){ const o = $('#ivx'); if (!o) return; o.hidden = true; document.body.classList.remove('cp-lock'); const f = $('#iv_frame'); if (f){ f.innerHTML = ''; f.dataset.src = ''; } }
 document.addEventListener('click', e => { const b = e.target.closest('[data-ivx]'); if (b){ e.preventDefault(); ivOpen(b.dataset.ivx === 'fx' ? '' : b.dataset.ivx); } });
+
+/* the widgets are wide tables: lay them out at their natural width and scale them to fill the whole frame */
+var IV_VW = {usd: 650, fx: 650, crypto: 600, cal: 650};
+function ivFitZoom(){ const box = $('#iv_frame'); return box ? Math.min(1.3, Math.max(0.35, box.clientWidth / (IV_VW[IV_CUR] || 650))) : 1; }
+function ivZoomNow(){ const z = (SET.ivZoom || {})[IV_CUR]; return z ? Math.min(2.5, Math.max(0.35, z)) : ivFitZoom(); }
+function ivFit(){
+  const box = $('#iv_frame'), wrap = box && $('.iv-wrap', box), fr = wrap && $('iframe', wrap); if (!fr || !box.clientWidth) return;
+  const vw = IV_VW[IV_CUR] || 650, z = ivZoomNow(), H = box.clientHeight, vh = Math.max(320, Math.floor(H / z));
+  fr.style.width = vw + 'px'; fr.style.height = vh + 'px'; fr.style.transform = 'scale(' + z + ')';
+  wrap.style.width = Math.round(vw * z) + 'px'; wrap.style.height = Math.round(vh * z) + 'px';
+  const zv = $('#iv_zv'); if (zv) zv.textContent = Math.round(z * 100) + '%';
+}
+function ivZoomStep(d){
+  SET.ivZoom = Object.assign({}, SET.ivZoom || {});
+  if (!d) delete SET.ivZoom[IV_CUR]; else SET.ivZoom[IV_CUR] = Math.round(ivZoomNow() * (d > 0 ? 1.15 : 1 / 1.15) * 100) / 100;
+  saveSet(); ivFit();
+}
 
 applyLang(false);
 activate(tab);
