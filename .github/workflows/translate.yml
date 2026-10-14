@@ -26,6 +26,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           MAX_MINUTES: '45'
+          PUBLISH: '1'
         run: python scripts/translate_ui.py
       - name: Commit and publish
         run: |
