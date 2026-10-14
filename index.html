@@ -629,6 +629,35 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
 .upd-list li{padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--g1);font-size:.92rem;line-height:1.5}
 .upd-list li b{font-size:1rem}.upd-list li small{color:var(--ink-2);margin-inline-start:6px}
 .upd-tag{display:inline-block;margin-inline-start:6px;padding:1px 8px;border-radius:999px;font-size:.75rem;background:rgba(47,191,134,.15);color:#2fbf86}
+/* settings hub */
+.panel-set{background:none;border:0;box-shadow:none;padding:0}
+.set-hub{display:grid;gap:14px}
+.sh-group{background:linear-gradient(160deg,var(--g1),var(--g2));border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 10px 30px var(--shadow)}
+.sh-row{appearance:none;font:inherit;color:var(--ink);background:none;border:0;width:100%;display:flex;align-items:center;gap:14px;padding:14px 16px;min-height:72px;text-align:start;cursor:pointer;transition:background .15s}
+.sh-row + .sh-row{border-top:1px solid var(--line)}
+.sh-row:hover{background:rgba(127,127,127,.06)}.sh-row:active{background:rgba(127,127,127,.12)}
+.sh-row:focus-visible{outline:2px solid var(--gold-ui);outline-offset:-2px;border-radius:20px}
+.sh-ic{flex:none;width:42px;height:42px;border-radius:13px;display:grid;place-items:center;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 4px 12px rgba(0,0,0,.18)}
+.sh-ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.c-blue{background:linear-gradient(160deg,#6B98FF,#2F5FE0)}.c-violet{background:linear-gradient(160deg,#B08BFF,#6E45E0)}
+.c-gold{background:linear-gradient(160deg,#FFD97A,#E0A93A);color:#3a2604}.c-green{background:linear-gradient(160deg,#4AD69A,#13995F)}
+.c-teal{background:linear-gradient(160deg,#55D0E6,#1A8FAD)}.c-gray{background:linear-gradient(160deg,#94A1BC,#55627E)}
+.sh-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.sh-tx b{font-size:1.03rem;font-weight:650}
+.sh-tx small{color:var(--ink-2);font-size:.86rem;line-height:1.4}
+.sh-badge{flex:none;font-size:.78rem;font-weight:600;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.sh-badge:empty{display:none}
+.sh-badge.on{border:0;padding:0;color:#2fbf86;font-size:.7rem}
+.sh-badge.new{background:rgba(224,169,58,.16);border-color:rgba(224,169,58,.55);color:var(--gold-ui)}
+.sh-chev{flex:none;width:18px;height:18px;fill:none;stroke:var(--ink-2);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.65}
+[dir=rtl] .sh-chev,[dir=rtl] .sc-back svg{transform:scaleX(-1)}
+.sc-head{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin:0 0 16px}
+.sc-back{appearance:none;font:inherit;font-weight:600;color:var(--gold-ui);background:none;border:0;display:inline-flex;align-items:center;gap:2px;padding:6px 2px;cursor:pointer}
+.sc-back svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.sc-t{display:flex;align-items:center;gap:12px;margin:0;font-size:1.4rem;outline:0}
+.set-cat .set-sec{background:linear-gradient(160deg,var(--g1),var(--g2));border:1px solid var(--line);border-radius:20px;padding:16px 16px 18px;margin:0 0 14px;box-shadow:0 10px 30px var(--shadow)}
+.set-cat .set-sec:last-child{border-bottom:1px solid var(--line)}
+.set-cat .perm{margin:0 0 14px}
 
 </style>
 </head>
@@ -2228,6 +2257,22 @@ Object.assign(T, {
   f_autoUpd:['עדכון אוטומטי בפתיחה','تحديث تلقائي عند الفتح','Auto-update on open'],
   h_upd:['הקישור לאפליקציה ולאתר לא משתנה: כל עדכון מגיע לאותו קישור. כשיוצאת גרסה חדשה, היא נטענת לבד בפתיחה, ואם האפליקציה כבר פתוחה תופיע הודעה עם כפתור "עדכן עכשיו".','رابط التطبيق والموقع لا يتغيّر: كل تحديث يصل إلى الرابط نفسه. عند صدور إصدار جديد يُحمَّل تلقائيًا عند الفتح، وإذا كان التطبيق مفتوحًا تظهر رسالة مع زر «حدّث الآن».','The app and site link never changes: every update arrives at the same link. A new version loads by itself on open, and if the app is already open a message with "Update now" appears.']
 });
+Object.assign(T, {
+  set_ai:['עוזר AI','مساعد الذكاء الاصطناعي','AI assistant'],
+  sc_account:['חשבון והרשאות','الحساب والصلاحيات','Account & access'],
+  sc_accountS:['כניסה או הרשמה','تسجيل الدخول أو التسجيل','Sign in or sign up'],
+  sc_display:['תצוגה ושפה','العرض واللغة','Display & language'],
+  sc_displayS:['צבעים, גודל טקסט, שפה, מטבע, מספרים ולשוניות','الألوان، حجم النص، اللغة، العملة، الأرقام والتبويبات','Colours, text size, language, currency, numbers and tabs'],
+  sc_calc:['חישובים ופרופיל','الحسابات والملف الشخصي','Calculations & profile'],
+  sc_calcS:['ברירות מחדל, נקודות זיכוי ומטבע לכל מחשבון','القيم الافتراضية ونقاط الإعفاء وعملة لكل حاسبة','Defaults, tax credit points and a currency per calculator'],
+  sc_conn:['חיבורים ועוזר AI','الاتصالات ومساعد الذكاء الاصطناعي','Connections & AI assistant'],
+  sc_connS:['שערים בזמן אמת, בנק ישראל, קריפטו ומפתח Gemini','أسعار حيّة، بنك إسرائيل، العملات المشفّرة ومفتاح Gemini','Live rates, Bank of Israel, crypto and the Gemini key'],
+  sc_links:['קישורים שימושיים','روابط مفيدة','Useful links'],
+  sc_linksS:['כל זכות, ביטוח לאומי ועוד','«كل زخوت» والتأمين الوطني وغيرها','Kol Zchut, National Insurance and more'],
+  sc_system:['מערכת','النظام','System'],
+  sc_systemS:['עדכונים, גיבוי, ייבוא ואיפוס','التحديثات، النسخ الاحتياطي، الاستيراد وإعادة الضبط','Updates, backup, import and reset'],
+  sc_new:['עדכון זמין','تحديث متاح','Update available']
+});
 
 const t = (k, p) => {
   let s = (T[k] || [k,k,k])[langIdx()];
@@ -3211,7 +3256,7 @@ function accountHTML(){
     ${msg}<p class="fine" data-i="h_account"></p>`;
 }
 function settingsPanelHTML(){
-  const sec = (k, body) => `<div class="set-sec"><div class="sec-h">${sIcon(k)}<h3 class="sec-t" data-i="${k}"></h3></div>${body}</div>`;
+  const sec = (k, body) => `<div class="set-sec" data-sk="${k}"><div class="sec-h">${sIcon(k)}<h3 class="sec-t" data-i="${k}"></h3></div>${body}</div>`;
   const fl = fs => `<div class="fields">${fs.map(fieldHTML).join('')}</div>`;
   const cb = CUR_TABS.map(id => `<div class="field"><label for="set_cb_${id}" data-i="tab_${id}"></label><select id="set_cb_${id}"></select></div>`).join('');
   return `<section class="panel panel-flat panel-set" id="panel-settings" role="tabpanel" aria-labelledby="tab-settings" hidden>
@@ -6253,6 +6298,7 @@ function gsGo(n){
   activate(e.type === 'field' ? e.id : 'settings');
   setTimeout(() => {
     if (!target) return;
+    const scat = target.closest && target.closest('.set-cat'); if (scat && typeof setCat === 'function') setCat(scat.dataset.cat, true);
     let d = target.closest('details'); while (d){ d.open = true; d = d.parentElement && d.parentElement.closest('details'); }
     const box = target.closest('.field') || target.closest('.src-c') || target.closest('.set-sec') || target;
     box.scrollIntoView({block: 'center', behavior: SET.motion === 'reduce' ? 'auto' : 'smooth'});
@@ -6576,8 +6622,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "2.4", "date": "2026-10-14", "notes": {"he": "הוסרה רשימת היסטוריית הגרסאות מההגדרות.", "ar": "أُزيلت قائمة سجل الإصدارات من الإعدادات.", "en": "Removed the version history list from Settings."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.080549';
+var CHANGELOG = [{"v": "2.5", "date": "2026-10-14", "notes": {"he": "ההגדרות מסודרות עכשיו לפי קטגוריות, בעיצוב חדש וברור יותר.", "ar": "الإعدادات مرتّبة الآن حسب الفئات، بتصميم جديد وأوضح.", "en": "Settings are now organised into categories with a new, clearer design."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.081559';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -6607,6 +6653,7 @@ function updRender(){
   const list = $('#upd_hist');
   if (list) list.innerHTML = CHANGELOG.map(e => `<li><b class="num" dir="ltr">${asEsc(e.v)}</b>${e.date ? `<small>${verDate(e.date)}</small>` : ''}${e.v === APP_VER ? `<span class="upd-tag">${t('upd_curTag')}</span>` : ''}<div>${asEsc(verNote(e))}</div></li>`).join('');
   updBanner();
+  if (typeof shRender === 'function') shRender();
 }
 function updApply(){
   const r = UPD.remote; if (!r || !r.build) return;
@@ -6655,6 +6702,74 @@ async function updDbSub(){
 })();
 const _rsUpd = renderStamp;
 renderStamp = function(){ _rsUpd.apply(this, arguments); updRender(); };
+
+/* ---- settings: a clear hub of categories, each opening its own page ---- */
+var SET_CATS = [
+  {id: 'account', c: 'c-blue',   ic: 'set_account', g: 0, secs: ['set_account']},
+  {id: 'display', c: 'c-violet', ic: 'set_look',    g: 1, secs: ['set_look', 'set_lang', 'set_numbers', 'set_tabs']},
+  {id: 'calc',    c: 'c-gold',   ic: 'set_calc',    g: 1, secs: ['set_calc', 'set_profile', 'set_curBy']},
+  {id: 'conn',    c: 'c-green',  ic: 'set_live',    g: 2, secs: ['set_live', 'set_ai']},
+  {id: 'links',   c: 'c-teal',   ic: 'set_links',   g: 2, secs: ['set_links']},
+  {id: 'system',  c: 'c-gray',   ic: 'set_upd',     g: 3, secs: ['set_upd', 'set_data']}
+];
+var SCAT = '';
+function scIcon(k){ return `<svg viewBox="0 0 24 24" aria-hidden="true">${SICO[k] || ''}</svg>`; }
+function setOrganize(){
+  const sp = $('#panel-settings'); if (!sp || $('#set_hub', sp)) return;
+  const perm = $('#perm', sp), groups = [];
+  SET_CATS.forEach(c => { (groups[c.g] = groups[c.g] || []).push(c); });
+  const hub = document.createElement('div'); hub.id = 'set_hub'; hub.className = 'set-hub';
+  hub.innerHTML = groups.map(g => `<div class="sh-group">${g.map(c => `<button type="button" class="sh-row" data-scat="${c.id}">
+      <span class="sh-ic ${c.c}">${scIcon(c.ic)}</span>
+      <span class="sh-tx"><b data-i="sc_${c.id}">${t('sc_' + c.id)}</b><small id="sh_sub_${c.id}"${c.id === 'account' ? '' : ` data-i="sc_${c.id}S"`}>${c.id === 'account' ? '' : t('sc_' + c.id + 'S')}</small></span>
+      <span class="sh-badge" id="sh_b_${c.id}"></span>
+      <svg class="sh-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`).join('')}</div>`).join('');
+  sp.insertBefore(hub, sp.firstChild);
+  SET_CATS.forEach(c => {
+    const page = document.createElement('div'); page.className = 'set-cat'; page.dataset.cat = c.id; page.hidden = true;
+    page.innerHTML = `<div class="sc-head"><button type="button" class="sc-back" data-scat=""><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i="tab_settings">${t('tab_settings')}</span></button>
+      <h3 class="sc-t"><span class="sh-ic ${c.c}">${scIcon(c.ic)}</span><span data-i="sc_${c.id}">${t('sc_' + c.id)}</span></h3></div>`;
+    if (c.id === 'account' && perm) page.appendChild(perm);
+    c.secs.forEach(k => { const s = $(`.set-sec[data-sk="${k}"]`, sp); if (s) page.appendChild(s); });
+    sp.appendChild(page);
+  });
+  const sys = $('.set-cat[data-cat="system"]', sp);
+  $$('.set-sec', sp).forEach(s => { if (!s.closest('.set-cat')) sys.appendChild(s); });   // nothing gets lost
+  shRender();
+}
+function shRender(){
+  const a = $('#sh_sub_account');
+  if (a) a.textContent = (FUSER ? '@' + FUSER : t('sc_accountS')) + ' · ' + t('perm_' + PERM);
+  const ab = $('#sh_b_account'); if (ab){ ab.className = 'sh-badge' + (FUSER ? ' on' : ''); ab.textContent = FUSER ? '●' : ''; }
+  const sb = $('#sh_b_system');
+  if (sb){ const nw = typeof updNewer === 'function' && updNewer(UPD.remote); sb.className = 'sh-badge' + (nw ? ' new' : ''); sb.textContent = nw ? t('sc_new') : 'v' + APP_VER; }
+}
+function setCat(id, noHist){
+  const sp = $('#panel-settings'); if (!sp) return;
+  if (id && !$(`.set-cat[data-cat="${id}"]`, sp)) id = '';
+  const prev = SCAT; SCAT = id;
+  const hub = $('#set_hub', sp); if (hub) hub.hidden = !!id;
+  $$('.set-cat', sp).forEach(p => { p.hidden = p.dataset.cat !== id; });
+  sp.classList.toggle('in-cat', !!id);
+  if (id && !prev && !noHist){ try { history.pushState({scat: id}, ''); } catch (e) {} }
+  if (prev !== id && !noHist) window.scrollTo(0, 0);
+  if (id){ const h = $(`.set-cat[data-cat="${id}"] .sc-t`, sp); if (h){ h.setAttribute('tabindex', '-1'); try { h.focus({preventScroll: true}); } catch (e) {} } }
+}
+function setHub(){ if (history.state && history.state.scat){ try { history.back(); return; } catch (e) {} } setCat('', true); window.scrollTo(0, 0); }
+document.addEventListener('click', e => {
+  const r = e.target.closest('[data-scat]');
+  if (r){ const id = r.dataset.scat; if (id) setCat(id); else setHub(); return; }
+  if (tab === 'settings' && SCAT && e.target.closest('button[data-tab="settings"], #tab-settings')) setHub();
+});
+$('#back').addEventListener('click', e => { if (tab === 'settings' && SCAT){ e.stopImmediatePropagation(); setHub(); } }, true);
+window.addEventListener('popstate', () => { if (SCAT){ setCat('', true); window.scrollTo(0, 0); } });
+const _actSet = activate;
+activate = function(id){ const from = tab; const r = _actSet.apply(this, arguments); if (id === 'settings' && from !== 'settings') setCat('', true); return r; };
+const _prSh = permRender;
+permRender = function(){ _prSh.apply(this, arguments); shRender(); };
+const _rsSh = renderStamp;
+renderStamp = function(){ _rsSh.apply(this, arguments); shRender(); };
+setOrganize();
 
 applyLang(false);
 activate(tab);
