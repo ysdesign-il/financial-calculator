@@ -1237,6 +1237,12 @@ body:not(.own) .own-only{display:none!important}
 .sv-dot.none{background:var(--ink-2)}
 .sv-st.none{color:var(--ink-2)}
 @media (max-width:430px){.sv-seg button{padding:6px 9px}}
+.xai-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:.78rem;color:var(--ink-2)}
+.xai-b{display:inline-flex;align-items:center;gap:4px;font-size:.78rem;font-weight:700;text-decoration:none;color:inherit;border:1px solid var(--gold-ui);border-radius:999px;padding:4px 10px;min-height:30px}
+.ai-m .xai-b{color:var(--ink)}
+.xai-b:focus-visible{outline:2px solid var(--gold-ui);outline-offset:2px}
+.as-engrow select,#as_engsel{font:inherit;font-size:16px;padding:4px 8px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);max-width:100%}
+.as-eng{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 
 </style>
 </head>
@@ -3896,6 +3902,24 @@ Object.assign(T, {
 Object.assign(T, {
   pmx_live:['זה מידע שמשתנה כל הזמן, ואין לי מקור חי ומדויק אליו בתוך האפליקציה. כדי לקבל תשובה עדכנית פתח חיפוש:','هذه معلومة تتغير باستمرار، ولا يوجد لدي مصدر حي دقيق لها داخل التطبيق. للحصول على إجابة محدّثة افتح بحثًا:','This changes all the time, and the app has no exact live source for it. For an up-to-date answer, open a search:']
 });
+Object.assign(T, {
+  f_aiWho:['מי עונה על שאלות חופשיות','من يجيب عن الأسئلة الحرة','Who answers open questions'],
+  h_aiWho:['חישובים, שערים, ריביות, מדדים והגדרות מובנות נענים תמיד מיד בתוך האפליקציה ובדיוק. כל שאלה אחרת נפתחת בשירות שתבחר, בלי חשבון, יחד עם הנתונים מהמסך. השאלה גם מועתקת, למקרה שהשירות לא ממלא אותה לבד.','الحسابات والأسعار والفوائد والمؤشرات والتعريفات المدمجة يُجاب عنها دائمًا فورًا وبدقة داخل التطبيق. أي سؤال آخر يُفتح في الخدمة التي تختارها، دون حساب، مع بيانات الشاشة. ويُنسخ السؤال أيضًا إن لم تملأه الخدمة تلقائيًا.','Calculations, rates, indices and built-in definitions are always answered at once, exactly, inside the app. Any other question opens in the service you choose, with no account, together with this screen\'s numbers. The question is also copied in case the service doesn\'t fill it in.'],
+  o_xPerplexity:['Perplexity (חיפוש באינטרנט עם מקורות)','Perplexity (بحث في الإنترنت مع مصادر)','Perplexity (web search with sources)'],
+  o_xChatgpt:['ChatGPT','ChatGPT','ChatGPT'], o_xCopilot:['Microsoft Copilot','Microsoft Copilot','Microsoft Copilot'],
+  o_xGoogle:['Google AI Mode (חיפוש גוגל עם AI)','Google AI Mode (بحث Google بالذكاء الاصطناعي)','Google AI Mode (Google search with AI)'],
+  o_xDuck:['Duck.ai (פרטי, של DuckDuckGo)','Duck.ai (خاص، من DuckDuckGo)','Duck.ai (private, by DuckDuckGo)'],
+  o_xPersonal:['העוזר האישי בלבד (בתוך האפליקציה)','المساعد الشخصي فقط (داخل التطبيق)','Personal assistant only (inside the app)'],
+  xai_rules:['ענה בעברית, בדיוק על השאלה ובקצרה. אם צריך מידע עדכני, חפש באינטרנט וציין מקורות. ההקשר: ישראל, 2026.','أجب بالعربية، على السؤال بالضبط وباختصار. إذا لزمت معلومات محدّثة فابحث في الإنترنت واذكر المصادر. السياق: إسرائيل، 2026.','Answer in English, exactly what was asked, briefly. If current information is needed, search the web and cite sources. Context: Israel, 2026.'],
+  xai_ctx:['נתונים מהמחשבון שלי (השתמש רק אם רלוונטי):','بيانات من حاسبتي (استخدمها فقط إن كانت ذات صلة):','Numbers from my calculator (use only if relevant):'],
+  xai_opened:['↗ פתחתי את {n} עם השאלה שלך.','↗ فتحت {n} مع سؤالك.','↗ Opened {n} with your question.'],
+  xai_sent:['השאלה גם הועתקה. אם היא לא מופיעה שם, הדבק אותה.','نُسخ السؤال أيضًا. إن لم يظهر هناك، الصقه.','The question was also copied. If it doesn\'t show up there, paste it.'],
+  xai_sentCtx:['נשלחו השאלה והנתונים מהמסך הזה, והכול גם הועתק. אם זה לא מופיע שם, הדבק.','أُرسل السؤال وبيانات هذه الشاشة، ونُسخ كل شيء أيضًا. إن لم يظهر هناك، الصقه.','Your question and this screen\'s numbers were sent, and everything was copied too. If it doesn\'t show up there, paste it.'],
+  xai_openIn:['פתח ב-{n}','افتح في {n}','Open in {n}'],
+  xai_more:['לתשובה מעמיקה יותר:','لإجابة أعمق:','For a deeper answer:'],
+  xai_aboutScreen:['לגבי {n}:','بخصوص {n}:','About {n}:'],
+  xai_note:['שאלות חופשיות נפתחות ב-{n}, בלי חשבון. חישובים ונתונים חיים נענים כאן ובדיוק.','الأسئلة الحرة تُفتح في {n} دون حساب. الحسابات والبيانات الحية يُجاب عنها هنا بدقة.','Open questions open in {n}, no account needed. Calculations and live figures are answered here, exactly.']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -4065,7 +4089,7 @@ const RTL = new Set(['he','ar','fa','ur','yi','ps','sd','ug','ckb','dv']);
 var TOUCHED = [], TILE_F = 'all', MY_HANDLE = '';
 try { MY_HANDLE = LS.getItem('fin-handle') || ''; } catch (e) {}
 const MKT = {boi: 3.25, boiDate: '1.9.2026', boiNext: '21.10.2026', cpi: 1.5, cpiMonth: '08/2026', cpiYtd: 2.1, cpiYtdTo: 8, src: 'built'};
-const SET_DEF = {clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'personal', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -5164,6 +5188,7 @@ function settingsPanelHTML(){
     ${sec('set_tabs', `<div class="fields">${fieldHTML(SEL('set_sort','f_sort','groups',[['groups','o_sortGroups'],['groupsAlpha','o_sortGroupsAlpha'],['alpha','o_sortAlpha']],{wide:true}))}</div><p class="fine" data-i="h_sort"></p><p class="fine" data-i="h_tabs"></p><div id="set_tabs" class="tabs-list"></div>`)}
     ${sec('set_curBy', `<div class="fields">${cb}</div>`)}
     ${sec('set_ai', `<div id="ai_sec"><div class="fields">${[
+        SEL('set_aiEngine','f_aiWho','perplexity',[['perplexity','o_xPerplexity'],['chatgpt','o_xChatgpt'],['copilot','o_xCopilot'],['googleai','o_xGoogle'],['duck','o_xDuck'],['personal','o_xPersonal']],{wide:true, hint:'h_aiWho'}),
         SEL('set_aiNet','f_aiNet','1',[['1','o_on'],['0','o_off']],{wide:true, hint:'h_aiNet'}),
         SEL('set_pmStyle','f_pmStyle','short',[['short','o_pmShort'],['long','o_pmLong']])].map(fieldHTML).join('')}
       <div class="field"><label for="set_pmName" data-i="f_pmName"></label><input id="set_pmName" type="text" maxlength="24" autocomplete="off" class="lookup" dir="auto"></div></div>
@@ -9330,8 +9355,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "7.2", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.010002';
+var CHANGELOG = [{"v": "7.3", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.011735';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -12764,7 +12789,7 @@ document.addEventListener('change', e => { if (e.target && e.target.id === 'set_
 
 /* ================= precise answers: answer exactly what was asked, and look anything else up online ================= */
 const PM_QW = new Set(('מה מהו מהי מי מתי איפה היכן כמה למה מדוע איך כיצד האם זה זו זאת הוא היא הם הן יש אין היה הייתה יהיה תגיד תגידי תסביר הסבר ספר לי לנו בבקשה רוצה רציתי לדעת אפשר צריך ' +
-  'של את על עם עבור כל גם אבל או אם כי אני אתה את מישהו משהו נכון באמת הבדל ההבדל בין לבין ללא בלי versus vs difference between الفرق بين ' +
+  'של את על עם עבור כל גם אבל או אם כי אני אתה את מישהו משהו נכון באמת הבדל ההבדל בין לבין ללא בלי versus vs difference between الفرق بين מחשבים משלמים מקבלים נקבע נקבעת קובעים כדאי להגדיל להקטין לשלם לקבל פועל פועלת משפיע משפיעה ' +
   'what whats who whos when where which why how is are was were the a an of to in on for do does did can could would tell me please about explain know ' +
   'ما ماذا من متى أين كيف لماذا هل هو هي في على عن الى إلى').split(' '));
 function pmFocus(q){ return [...new Set(pmNorm(q).trim().split(' ').filter(w => w && w.length >= 2 && !PM_QW.has(w) && !PM_STOP.has(w)))]; }
@@ -12777,7 +12802,7 @@ function pmKBStrong(q){
   const cands = pmMatchKB(q).slice(0, 3).map(e => { const words = pmTerms(e).join(' ').split(' ').concat(pmNorm(t('kbt_' + e[0])).trim().split(' ')); return {e, cov: focus.filter(w => pmWordHit(w, words))}; }).filter(c => c.cov.length);
   const out = [], got = new Set();
   for (const c of cands){ if (out.length >= 2) break; if (c.cov.some(w => !got.has(w))){ out.push(c.e); c.cov.forEach(w => got.add(w)); } }
-  return got.size / focus.length >= (focus.length >= 4 ? 0.5 : 0.6) ? out : [];
+  return got.size / focus.length >= (focus.length <= 2 ? 1 : focus.length === 3 ? 0.66 : 0.75) ? out : [];      // the key word of the question must be covered
 }
 /* things that change by the hour (weather, news, prices of goods) have no reliable source inside the app: say so and open a real search */
 const pmIsLive = q => /מחר|מחרתיים|תחזית|מזג האוויר|מזג אוויר|חדשות|אתמול|השבוע|כרגע|תוצאת|תוצאות המשחק|כמה עולה|מחיר של|מחירי|weather|forecast|tomorrow|yesterday|news|score|how much does|price of|الطقس|أخبار|غدا|كم سعر/i.test(q);
@@ -12854,6 +12879,147 @@ pmSmart = async function(q, screen){
   }
   return t(SET.aiNet === '0' ? 'pmx_netOff' : 'pmx_offline2') + '\n' + pmSearchLink(raw);
 };
+
+/* ================= outside AI models that need no account: the question (and this screen's numbers) open in that service ================= */
+var XAI = {
+  perplexity: {n: 'Perplexity', max: 650, u: q => 'https://www.perplexity.ai/search?q=' + encodeURIComponent(q)},
+  chatgpt: {n: 'ChatGPT', max: 1100, u: q => 'https://chatgpt.com/?q=' + encodeURIComponent(q)},
+  copilot: {n: 'Copilot', max: 1100, u: q => 'https://copilot.microsoft.com/?q=' + encodeURIComponent(q)},
+  googleai: {n: 'Google AI', max: 220, u: q => 'https://www.google.com/search?udm=50&q=' + encodeURIComponent(q)},
+  duck: {n: 'Duck.ai', max: 900, u: q => 'https://duckduckgo.com/?ia=chat&duckai=1&q=' + encodeURIComponent(q)}
+};
+function xaiEngine(){ const e = SET.aiEngine; return e === 'personal' || XAI[e] ? e : 'perplexity'; }
+const xaiCalc = id => id && !['home', 'settings', 'assist', 'clients'].includes(id) && TABS.includes(id);
+function xaiCtx(id){
+  if (!xaiCalc(id)) return '';
+  const fs = aiFields(id).filter(f => f.shown && f.value !== '' && !(f.type === 'number' && +f.value === 0)).slice(0, 12).map(f => f.label + ': ' + (f.options ? ((f.options.find(o => o[0] === f.value) || [])[1] || f.value) : f.value + (f.unit ? ' ' + f.unit : '')));
+  const r = exResults(id);
+  return t('tab_' + id) + ' — ' + fs.join('; ') + (r ? '. ' + r.main + (r.rows.length ? '; ' + r.rows.slice(0, 4).join('; ') : '') : '');
+}
+function xaiPrompt(key, q, id){
+  const X = XAI[key], rules = t('xai_rules');
+  const ctx = xaiCtx(id), lab = t('xai_ctx'), base = q + '\n\n' + rules;
+  let p = ctx ? q + '\n\n' + lab + ' ' + ctx + '\n\n' + rules : base;
+  if (p.length > X.max){ const room = X.max - base.length - lab.length - 6; p = room > 60 && ctx ? q + '\n\n' + lab + ' ' + ctx.slice(0, room) + '…\n\n' + rules : base; }
+  if (p.length > X.max) p = q.slice(0, X.max);
+  return {short: p, full: q + (xaiCtx(id) ? '\n\n' + t('xai_ctx') + ' ' + xaiCtx(id) : '') + '\n\n' + rules};
+}
+function xaiCopy(txt){ try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).catch(() => {}); } catch (e) {} }
+/* open it now, from the tap itself, so the browser lets the new tab through */
+function xaiOpen(key, q, id){
+  const P = xaiPrompt(key, q, id), url = XAI[key].u(P.short);
+  try { window.open(url, '_blank', 'noopener'); } catch (e) {}
+  xaiCopy(P.full);
+  return url;
+}
+function xaiRow(q, id){
+  const P = k => XAI[k].u(xaiPrompt(k, q, id).short);
+  return `<div class="xai-row"><span>${asEsc(t('xai_more'))}</span>${Object.keys(XAI).map(k => `<a class="xai-b" href="${asEsc(P(k))}" target="_blank" rel="noopener noreferrer" data-xai="${k}" data-q="${asEsc(q)}">${asEsc(XAI[k].n)} ↗</a>`).join('')}</div>`;
+}
+document.addEventListener('click', e => { const a = e.target.closest('a[data-xai]'); if (!a) return; const k = a.dataset.xai; if (XAI[k]) xaiCopy(xaiPrompt(k, a.dataset.q || '', AIX.screen || tab).full); });
+/* what can be answered exactly inside the app, without waiting: calculations, live figures, built-in definitions, your own results */
+function pmLocalSync(raw, screen){
+  raw = String(raw || '').trim(); if (!raw) return null;
+  const n = pmNorm(raw), def = pmIsDef(raw), hasNum = /\d/.test(raw);
+  if (PM_RX.thanks.test(n) && n.trim().split(' ').length <= 4) return t('pm_thanks');
+  if (PM_RX.greet.test(n) && n.trim().split(' ').length <= 3) return t('pm_hello', {n: pmName()});
+  if (PM_RX.help.test(n)) return t('pm_help', {n: pmName()});
+  PMX.fu = false;
+  if (!def || hasNum) for (const sk of PM_SKILLS){ try { const a = sk(n, raw); if (a) return a; } catch (e) {} }
+  if (/^\s*(ו|ומה|ואם|ואז|אז|and|what if|what about|و)/i.test(raw) || raw.split(/\s+/).length <= 4){
+    PMX.fu = true;
+    try { for (const sk of PM_SKILLS.filter(f => f.name === 'loan' || f.name === 'grow')){ const a = sk(n, raw); if (a){ PMX.fu = false; return a; } } } catch (e) {}
+    PMX.fu = false;
+  }
+  if (PM_RX.res.test(n) && (screen || PM_LASTCALC) && !def) return pmResults(screen && !['home', 'settings', 'assist'].includes(screen) ? screen : PM_LASTCALC);
+  const kb = pmKBStrong(raw);
+  if (kb.length){
+    let a = kb.map(pmKB).join('\n\n');
+    if (def){ try { const live = PM_SKILLS.find(f => f.name === 'rates')(n.replace(/מה זה|מהו|מהי/g, ' כמה '), raw); if (live) a += '\n\n' + live.replace(/\n\[\[[^\]]*\]\]/g, ''); } catch (e) {} }
+    return a + (kb[0][1] ? '\n[[' + kb[0][1] + ']]' : '');
+  }
+  if (pmWantsCalc(raw)){ const cs = pmCalcs(raw).slice(0, 3); if (cs.length) return t('pm_calcFit') + '\n' + cs.map(id => '[[' + id + ']] ' + t('d_' + id)).join('\n'); }
+  return null;
+}
+pmSmart = async function(q, screen){
+  const raw = String(q || '').trim(); if (!raw) return '';
+  const loc = pmLocalSync(raw, screen); if (loc) return loc;
+  if (pmIsLive(raw)) return t('pmx_live') + '\n' + pmSearchLink(raw);
+  if (pmOnline()){
+    const w = await pmWebQA(raw);
+    if (w) return w.text + '\n' + t('pmx_wikiSrc') + ' **' + w.title + '** ' + w.url;
+    return t('pmx_noWeb') + '\n' + pmSearchLink(raw);
+  }
+  return t(SET.aiNet === '0' ? 'pmx_netOff' : 'pmx_offline2') + '\n' + pmSearchLink(raw);
+};
+/* links to the outside models show as buttons wherever answers are shown */
+const pmLinkifyX = pmLinkify;
+pmLinkify = function(h){
+  return pmLinkifyX(h).replace(/(https:\/\/(?:www\.perplexity\.ai|chatgpt\.com|copilot\.microsoft\.com|duckduckgo\.com)\/[^\s<"]+|https:\/\/www\.google\.com\/search\?udm=50[^\s<"]+)/g, u => {
+    const k = /perplexity/.test(u) ? 'perplexity' : /chatgpt/.test(u) ? 'chatgpt' : /copilot/.test(u) ? 'copilot' : /duckduckgo/.test(u) ? 'duck' : 'googleai';
+    return `<a class="xai-b" href="${u}" target="_blank" rel="noopener noreferrer">${asEsc(t('xai_openIn', {n: XAI[k].n}))} ↗</a>`;
+  });
+};
+/* the AI sheet: free questions go to the chosen model; exact things stay in the app */
+const aiAskX = aiAsk;
+aiAsk = async function(q, kind){
+  q = String(q || '').trim(); if (!q || AIX.busy) return;
+  const eng = xaiEngine(), id = tab, fill = AIX.fill || kind === 'fill';
+  if (eng === 'personal' || fill || kind === 'explain' || kind === 'impact' || kind === 'improve') return aiAskX.apply(this, arguments);
+  if ((AI_FILL.test(q) && !/[?؟]\s*$/.test(q) && aiChipKeys(id).length > 2)) return aiAskX.apply(this, arguments);
+  const loc = pmLocalSync(q, id);
+  if (loc){ AIX.fill = false; aiLog('user', q); const d = aiLog('ai', '', aiRich(loc)); if (d) d.insertAdjacentHTML('beforeend', xaiRow(q, id)); return; }
+  aiLog('user', q);
+  const url = xaiOpen(eng, q, id);
+  aiLog('ai', '', `<p>${asEsc(t('xai_opened', {n: XAI[eng].n}))}</p><p class="fine">${asEsc(t(xaiCalc(id) ? 'xai_sentCtx' : 'xai_sent'))}</p><p><a class="xai-b" href="${asEsc(url)}" target="_blank" rel="noopener noreferrer">${asEsc(t('xai_openIn', {n: XAI[eng].n}))} ↗</a></p>`);
+};
+/* every answer the app gives itself offers the outside models too */
+const aiLocalX = aiLocal;
+aiLocal = function(id, q, kind, fill, quiet){
+  const before = $('#aix_log') ? $('#aix_log').children.length : 0;
+  const r = aiLocalX.apply(this, arguments);
+  const nq = pmNorm(q), small = (PM_RX.thanks.test(nq) || PM_RX.greet.test(nq)) && nq.trim().split(' ').length <= 4;
+  if (!small && !fill && !(AI_FILL.test(q) && aiChipKeys(id).length > 2)) setTimeout(() => {
+    const log = $('#aix_log'); if (!log) return; const last = log.lastElementChild;
+    if (last && last.classList.contains('ai') && log.children.length > before && !last.querySelector('.xai-row')){
+      const add = () => { if (!last.querySelector('.ex-wait') && !last.querySelector('.xai-row')) last.insertAdjacentHTML('beforeend', xaiRow(kind ? t('xai_aboutScreen', {n: t('tab_' + id)}) + ' ' + q : q, id)); else if (last.querySelector('.ex-wait')) setTimeout(add, 300); };
+      add();
+    }
+  }, 0);
+  return r;
+};
+/* the assistant tab: same rule */
+const asAnswerX = asAnswer;
+asAnswer = async function(q){
+  const eng = xaiEngine();
+  if (eng === 'personal') return asAnswerX.apply(this, arguments);
+  const loc = pmLocalSync(q, PM_LASTCALC); if (loc) return loc;
+  const url = xaiOpen(eng, q, null);
+  return t('xai_opened', {n: XAI[eng].n}) + '\n' + url;
+};
+/* choosing who answers, in the sheet and in the assistant tab */
+function xaiOpts(){ return ['perplexity', 'chatgpt', 'copilot', 'googleai', 'duck', 'personal'].map(k => `<option value="${k}"${xaiEngine() === k ? ' selected' : ''}>${asEsc(t(k === 'personal' ? 'o_xPersonal' : 'o_x' + {perplexity: 'Perplexity', chatgpt: 'Chatgpt', copilot: 'Copilot', googleai: 'Google', duck: 'Duck'}[k]))}</option>`).join(''); }
+aiEngSync = function(){
+  const row = $('.ai-engrow'); if (row) row.hidden = false;
+  const s = $('#aix_eng'); if (s) s.innerHTML = xaiOpts();
+  const l = $('#aix_engl'); if (l) l.textContent = t('f_aiWho');
+  const e = xaiEngine(), now = $('#aix_now'); if (now) now.textContent = '';
+  const n = $('#aix_note'); if (n) n.textContent = e === 'personal' ? t(SET.aiNet === '0' ? 'ai_noteLocalOff' : 'ai_noteLocal2') : t('xai_note', {n: XAI[e].n});
+};
+engRender = function(){
+  const box = $('#as_eng'); if (!box) return;
+  const row = box.closest('.as-engrow'); if (row) row.hidden = false;
+  if (!$('#as_engsel')) box.innerHTML = `<label class="fine" for="as_engsel" id="as_engl"></label><select id="as_engsel"></select>`;
+  $('#as_engl').textContent = t('f_aiWho'); $('#as_engsel').innerHTML = xaiOpts();
+  const now = $('#as_engnow'); if (now) now.textContent = xaiEngine() === 'personal' ? '' : t('xai_note', {n: XAI[xaiEngine()].n});
+};
+document.addEventListener('change', e => {
+  const s = e.target; if (!s || !['aix_eng', 'as_engsel', 'set_aiEngine'].includes(s.id)) return;
+  SET.aiEngine = s.value; saveSet();
+  ['aix_eng', 'as_engsel', 'set_aiEngine'].forEach(x => { const el = $('#' + x); if (el && el !== s) el.value = SET.aiEngine; });
+  try { aiEngSync(); engRender(); } catch (err) {}
+});
+try { if (!XAI[SET.aiEngine] && SET.aiEngine !== 'personal'){ SET.aiEngine = 'perplexity'; } engRender(); } catch (e) {}
 
 applyLang(false);
 activate(tab);
