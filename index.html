@@ -918,6 +918,34 @@ a.gold-btn.rc-open{display:inline-flex;align-items:center;justify-content:center
 .hint.rc-yes{color:#1f9d6b}.hint.rc-no{color:#C9562F}
 #acc_f_rc{padding:12px;border:1px solid var(--line);border-radius:14px}
 
+html.pin-cover body > *:not(#pinlock){visibility:hidden}
+.pinlock{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:24px 16px;overflow:auto;background:radial-gradient(900px 500px at 50% -10%,rgba(79,140,255,.22),transparent 60%),var(--navy,#0B1530);color:#fff}
+.pl-card{width:100%;max-width:340px;text-align:center}
+.pl-ic{font-size:2.2rem;margin-bottom:6px}
+.pl-card h2{margin:0;font-size:1.35rem;color:#fff}
+.pl-who{margin:4px 0 14px;opacity:.75;font-weight:600}
+.pl-sub{margin:0 0 12px;opacity:.85}
+.pl-dots{display:flex;justify-content:center;gap:14px;margin:6px 0 10px;direction:ltr}
+.pl-dots i{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.7)}
+.pl-dots i.on{background:var(--gold-ui,#E0A93A);border-color:var(--gold-ui,#E0A93A)}
+.pl-dots.shake{animation:plShake .35s}
+@keyframes plShake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@media (prefers-reduced-motion:reduce){.pl-dots.shake{animation:none}}
+.pl-st{min-height:1.4em;margin:0 0 8px;font-size:.92rem}
+.pl-st.bad{color:#FF8A7A}.pl-st.wait{opacity:.8}
+.pl-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:6px auto 14px;max-width:290px}
+.pl-k{appearance:none;height:64px;border-radius:50%;aspect-ratio:1;justify-self:center;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#fff;font-family:inherit;font-size:1.6rem;font-weight:600;line-height:1;cursor:pointer;touch-action:manipulation}
+.pl-k:active{background:rgba(255,255,255,.2)}
+.pl-k:focus-visible{outline:3px solid var(--gold-ui,#E0A93A);outline-offset:2px}
+.pl-k.pl-fn{font-size:1.3rem;background:transparent}
+.pl-links{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 16px}
+.pl-links button{background:none;border:0;color:#BFD3FF;font:inherit;font-weight:600;padding:10px 4px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+#pl_rc{text-align:start;background:var(--surface,#fff);color:var(--ink,#111);border-radius:18px;padding:16px}
+#pl_rc .rc-h{color:var(--ink,#111)}
+#pl_rc .pl-sub{opacity:1;color:var(--ink-2,#444)}
+.pin-in{font-family:'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.3em;text-align:center}
+#pl_t:focus{outline:none}
+
 </style>
 </head>
 <body>
@@ -939,6 +967,7 @@ a.gold-btn.rc-open{display:inline-flex;align-items:center;justify-content:center
         <label class="cap" for="cur" data-i="cap_cur"></label>
         <select id="cur" data-ia="aria_cur"></select>
         <button type="button" class="skin-btn" id="skinBtn" data-ia="sk_pick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.7-.8 1.7-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-.9.8-1.7 1.7-1.7H16a5 5 0 0 0 5-5c0-4-4-7.2-9-7.2z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.3" r="1.2"/><circle cx="15" cy="7.6" r="1.2"/></svg></button>
+        <button type="button" class="skin-btn" id="pinBtn" data-ia="pin_lockA" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></button>
         <button type="button" class="refresh-btn" id="gRefresh" data-ia="b_refreshAll"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.5-5.8M20 4v5h-5"/></svg><span id="gStamp"></span></button>
       </div>
     </div>
@@ -2898,7 +2927,53 @@ Object.assign(T, {
   m_closedAdd:['הוספת חשבון חדש למכשיר הזה חסומה. אפשר להיכנס רק לחשבון שכבר נמצא כאן.','إضافة حساب جديد إلى هذا الجهاز محظورة. يمكن الدخول فقط إلى حساب موجود هنا.','Adding a new account to this device is blocked. You can only sign in to an account already here.'],
   pol_closed:['ההרשמה נחסמה','تم حظر التسجيل','Sign-up blocked'],
   pol_opened:['ההרשמה נפתחה','تم فتح التسجيل','Sign-up opened'],
-  pol_fail:['לא הצלחנו לשמור את ההגדרה בענן. נסו שוב.','تعذّر حفظ الإعداد في السحابة. حاول مرة أخرى.','Could not save the setting in the cloud. Try again.']
+  pol_fail:['לא הצלחנו לשמור את ההגדרה בענן. נסו שוב.','تعذّر حفظ الإعداد في السحابة. حاول مرة أخرى.','Could not save the setting in the cloud. Try again.'],
+  pin_title:['🔢 קוד PIN לנעילת האפליקציה','🔢 رمز PIN لقفل التطبيق','🔢 PIN code to lock the app'],
+  pin_pill_on:['✓ פעיל','✓ مفعّل','✓ On'],
+  pin_pill_off:['כבוי','متوقف','Off'],
+  pin_intro:['קוד של 4 עד 6 ספרות שנועל את האפליקציה כשיוצאים ממנה. בזמן הנעילה הנתונים סגורים ומוצפנים עד שמקלידים את הקוד. שכחתם? משחזרים דרך האימייל המאומת.','رمز من 4 إلى 6 أرقام يقفل التطبيق عند الخروج منه. أثناء القفل تبقى البيانات مغلقة ومشفّرة حتى إدخال الرمز. نسيته؟ تستعيده عبر البريد المؤكد.','A 4 to 6 digit code that locks the app when you leave it. While locked, the data stays closed and encrypted until the code is entered. Forgot it? Recover it with your verified email.'],
+  f_pinNew:['קוד PIN חדש (4–6 ספרות)','رمز PIN جديد (4–6 أرقام)','New PIN (4–6 digits)'],
+  f_pinNew2:['הקלידו שוב את הקוד','أعد كتابة الرمز','Type the PIN again'],
+  f_pinCur:['הקוד הנוכחי','الرمز الحالي','Current PIN'],
+  f_pinAfter:['נעילה אוטומטית','القفل التلقائي','Automatic lock'],
+  o_pin0:['מיד כשיוצאים מהאפליקציה','فور الخروج من التطبيق','As soon as you leave the app'],
+  o_pin1:['אחרי דקה מחוץ לאפליקציה','بعد دقيقة خارج التطبيق','After 1 minute away'],
+  o_pin5:['אחרי 5 דקות מחוץ לאפליקציה','بعد 5 دقائق خارج التطبيق','After 5 minutes away'],
+  o_pin15:['אחרי 15 דקות מחוץ לאפליקציה','بعد 15 دقيقة خارج التطبيق','After 15 minutes away'],
+  o_pinM:['רק כשלוחצים "נעילה"','فقط عند الضغط على "قفل"','Only when I tap "Lock"'],
+  pin_on:['הפעלת PIN','تفعيل PIN','Turn on PIN'],
+  pin_bad:['הקוד צריך להיות 4 עד 6 ספרות.','يجب أن يتكوّن الرمز من 4 إلى 6 أرقام.','The PIN must be 4 to 6 digits.'],
+  pin_weak:['הקוד קל מדי לניחוש (כמו 1234 או 0000). בחרו קוד אחר.','الرمز سهل التخمين (مثل 1234 أو 0000). اختر رمزًا آخر.','That PIN is too easy to guess (like 1234 or 0000). Choose another.'],
+  pin_mismatch:['הקודים לא זהים.','الرمزان غير متطابقين.','The PINs do not match.'],
+  pin_set:['קוד ה-PIN הופעל.','تم تفعيل رمز PIN.','The PIN is on.'],
+  pin_status:['ה-PIN פעיל ({n} ספרות).','رمز PIN مفعّل ({n} أرقام).','The PIN is on ({n} digits).'],
+  pin_lockNow:['🔒 נעילה עכשיו','🔒 قفل الآن','🔒 Lock now'],
+  pin_lockA:['נעילת האפליקציה','قفل التطبيق','Lock the app'],
+  pin_change:['החלפת PIN','تغيير PIN','Change PIN'],
+  pin_remove:['הסרת PIN','إزالة PIN','Remove PIN'],
+  pin_save:['שמירה','حفظ','Save'],
+  pin_curWrong:['הקוד הנוכחי שגוי.','الرمز الحالي غير صحيح.','The current PIN is wrong.'],
+  pin_changed:['הקוד הוחלף.','تم تغيير الرمز.','PIN changed.'],
+  pin_removed:['ה-PIN הוסר.','تمت إزالة PIN.','PIN removed.'],
+  pin_afterSaved:['ההגדרה נשמרה.','تم حفظ الإعداد.','Saved.'],
+  pin_rcOk:['שכחתם את הקוד? במסך הנעילה לחצו "שכחתי PIN" ושחזרו עם קוד השחזור מהמייל {m}.','نسيت الرمز؟ في شاشة القفل اضغط "نسيت PIN" واستعده برمز الاستعادة من البريد {m}.','Forgot the PIN? On the lock screen tap "Forgot PIN" and recover it with the recovery key from {m}.'],
+  pin_rcNo:['כדי שאפשר יהיה לשחזר PIN שנשכח, אמתו קודם אימייל (באפשרות שמתחת). בלי אימייל אפשר תמיד להיכנס עם הסיסמה.','لاستعادة PIN منسي، أكّد بريدًا أولًا (في الخيار أدناه). بدون بريد يمكنك دائمًا الدخول بكلمة المرور.','To recover a forgotten PIN, verify an email first (option below). Without one you can always sign in with your password.'],
+  pin_locked:['האפליקציה נעולה','التطبيق مقفل','The app is locked'],
+  pin_enter:['הקלידו את קוד ה-PIN','أدخل رمز PIN','Enter your PIN'],
+  pin_checking:['בודק…','جارٍ التحقق…','Checking…'],
+  pin_wrong:['קוד שגוי. נשארו {n} ניסיונות.','رمز غير صحيح. تبقّى {n} محاولات.','Wrong PIN. {n} tries left.'],
+  pin_tooMany:['יותר מדי ניסיונות. היכנסו עם הסיסמה.','محاولات كثيرة جدًا. سجّل الدخول بكلمة المرور.','Too many tries. Sign in with your password.'],
+  pin_forgot:['שכחתי PIN','نسيت PIN','Forgot PIN'],
+  pin_usePw:['כניסה עם סיסמה','الدخول بكلمة المرور','Sign in with password'],
+  pin_out:['התנתקות','تسجيل الخروج','Sign out'],
+  pin_del:['מחיקת ספרה','حذف رقم','Delete digit'],
+  pin_ok:['אישור','تأكيد','Confirm'],
+  pin_rcTitle:['שחזור PIN דרך האימייל','استعادة PIN عبر البريد','Recover the PIN by email'],
+  pin_rcHint:['הקלידו את קוד השחזור מהמייל {m}, ובחרו PIN חדש.','اكتب رمز الاستعادة من البريد {m} واختر PIN جديدًا.','Type the recovery key from {m} and choose a new PIN.'],
+  pin_rcNone:['לחשבון הזה אין אימייל מאומת לשחזור. היכנסו עם הסיסמה, ואז קבעו PIN חדש בהגדרות.','لا يوجد بريد مؤكد للاستعادة لهذا الحساب. سجّل الدخول بكلمة المرور ثم عيّن PIN جديدًا في الإعدادات.','This account has no verified email for recovery. Sign in with your password, then set a new PIN in Settings.'],
+  pin_rcGo:['שחזור וקביעת PIN חדש','استعادة وتعيين PIN جديد','Recover and set a new PIN'],
+  pin_back:['חזרה','رجوع','Back'],
+  pin_reset:['נקבע PIN חדש והאפליקציה נפתחה.','تم تعيين PIN جديد وفُتح التطبيق.','A new PIN is set and the app is open.']
 });
 
 const t = (k, p) => {
@@ -3967,6 +4042,7 @@ function accountHTML(){
     <div class="btnrow"><button type="button" class="gold-btn" id="mv_open" data-i="mv_tab"></button><button type="button" class="btn" id="acc_out" data-i="b_logout"></button></div>
     <details class="adv"><summary data-i="b_chgPw"></summary><div class="fields">${pwf('acc_cur','f_curPw','current-password')}${pwf('acc_new','f_newPw','new-password')}${pwf('acc_new2','f_newPw2','new-password')}</div>${PWREQ.replace('%ID%', 'acc_new')}
       <div class="btnrow"><button type="button" class="btn" id="acc_chg" data-i="b_chgPw"></button></div></details>
+    <details class="adv rc-d" id="pin_d"><summary><span class="rc-sum"><span data-i="pin_title"></span><span class="rc-pill" id="pin_pill"></span></span></summary><div class="rc-box" id="pin_box"></div></details>
     <details class="adv rc-d" id="rc_d"><summary><span class="rc-sum"><span data-i="rc_title"></span><span class="rc-pill" id="rc_pill"></span></span></summary><div class="rc-box" id="rc_box"></div></details>
     <div class="field wide"><label for="acc_open" id="acc_open_l"></label><select id="acc_open"><option value="0" data-i="o_closed"></option><option value="1" data-i="o_open"></option></select><small class="hint" id="acc_open_h"></small></div>
     <div class="mvx" id="acc_f_mv" hidden></div>
@@ -7692,8 +7768,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "4.0", "date": "2026-10-14", "notes": {"he": "חסימת הרשמה שאי אפשר לעקוף: ב-Claude היא חלה על כל המשתמשים ורק בעל האפליקציה משנה אותה, וגם טלפון חדש ושחזור חסומים. הוסרו הקישורים לבלינק, אינטר, כל זכות וביטוח לאומי.", "ar": "حظر تسجيل لا يمكن تجاوزه: في Claude يسري على جميع المستخدمين ويغيّره مالك التطبيق فقط، ويُحظر أيضًا الهاتف الجديد والاستعادة. أُزيلت روابط Blink وinter.il وكول زخوت والتأمين الوطني.", "en": "A sign-up block that cannot be bypassed: in Claude it applies to all users and only the app owner can change it, and new phone and recovery are blocked too. Removed the Blink, inter.il, Kol Zchut and National Insurance links."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.112514';
+var CHANGELOG = [{"v": "4.1", "date": "2026-10-14", "notes": {"he": "קוד PIN של 4–6 ספרות שנועל את האפליקציה כשיוצאים ממנה, עם שחזור דרך האימייל המאומת.", "ar": "رمز PIN من 4–6 أرقام يقفل التطبيق عند الخروج منه، مع الاستعادة عبر البريد المؤكد.", "en": "A 4–6 digit PIN that locks the app when you leave it, with recovery through your verified email."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.114441';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -8909,6 +8985,256 @@ const _alPol = applyLang;
 applyLang = function(){ const r = _alPol.apply(this, arguments); polSelRender(); return r; };
 Promise.resolve(PERM_P).then(polInit, polInit);
 setTimeout(polSelRender, 0);
+
+/* ---- PIN lock (4–6 digits). Locking closes the open data: the session key is sealed with a public key whose
+   private half only the PIN opens, so nothing readable stays in the tab. Forgot the PIN? The verified email's
+   recovery key opens the account and a new PIN is set. */
+const PL = {buf: '', busy: false, mode: '', unloading: false, locking: false};
+const PIN_TRIES = 5;
+const pinOk = p => /^\d{4,6}$/.test(p);
+const pinWeak = p => /^(\d)\1+$/.test(p) || '01234567890'.includes(p) || '09876543210'.includes(p);
+async function pinAes(pin, salt){ return crypto.subtle.importKey('raw', await pbk('pin:' + pin, salt, 200000, 256), 'AES-GCM', false, ['encrypt', 'decrypt']); }
+async function pinMake(pin, after){
+  const kp = await crypto.subtle.generateKey({name: 'RSA-OAEP', modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: 'SHA-256'}, true, ['encrypt', 'decrypt']);
+  const pub = b64(await crypto.subtle.exportKey('spki', kp.publicKey)), pk = await crypto.subtle.exportKey('pkcs8', kp.privateKey);
+  const sl = rnd(16), iv = rnd(12), ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, await pinAes(pin, sl), pk);
+  return {v: 1, len: pin.length, after: after || '1', pub, s: b64(sl), iv: b64(iv), ct: b64(ct), at: Date.now()};
+}
+async function pinPriv(po, pin){ const pk = await crypto.subtle.decrypt({name: 'AES-GCM', iv: u8(po.iv)}, await pinAes(pin, u8(po.s)), u8(po.ct)); return crypto.subtle.importKey('pkcs8', pk, {name: 'RSA-OAEP', hash: 'SHA-256'}, false, ['decrypt']); }
+async function pinCheck(po, pin){ try { await pinPriv(po, pin); return true; } catch (e) { return false; } }
+async function pinUnwrap(po, pin, wk){ const priv = await pinPriv(po, pin); return b64(await crypto.subtle.decrypt({name: 'RSA-OAEP'}, priv, u8(wk))); }
+function pinSS(){ try { return JSON.parse(SS.getItem('fin-pin') || 'null'); } catch (e) { return null; } }
+function pinRec(){ const r = FUSER ? getAcc(FUSER) : null; return r && r.pin ? r : null; }
+function pinAfterMs(){ const r = pinRec(); if (!r) return null; const a = String(r.pin.after == null ? '1' : r.pin.after); return a === 'm' ? null : a === '0' ? 0 : Number(a) * 60000; }
+function pinCover(){ document.documentElement.classList.add('pin-cover'); }
+async function pinLockNow(){
+  const rec = pinRec(), raw = SS.getItem('fin-ek'); if (!rec || !raw || PL.locking) return;
+  PL.locking = true; pinCover();
+  try { await persistNow0(); } catch (e) {}
+  clearTimeout(MV.timer);
+  let wk = null; try { wk = await rcWrap(rec.pin.pub, raw); } catch (e) {}
+  if (!wk){ PL.locking = false; document.documentElement.classList.remove('pin-cover'); return; }
+  try { SS.setItem('fin-pin', JSON.stringify({n: FUSER, wk, at: Date.now(), tries: 0})); SS.removeItem('fin-hid'); } catch (e) {}
+  clearSession();
+  try { location.reload(); } catch (e) {}
+}
+async function unlockRaw(name, raw){
+  const sfx = ':' + ENC_NAME(name); let map = {};
+  const blob = JSON.parse(RAWLS.getItem(encName(name)) || 'null');
+  if (blob && blob.ct){ const key = await crypto.subtle.importKey('raw', u8(raw), 'AES-GCM', false, ['decrypt']);
+    map = JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name: 'AES-GCM', iv: u8(blob.iv)}, key, u8(blob.ct)))); }
+  Object.keys(map).forEach(k => SS.setItem('w:' + k + sfx, map[k]));
+  SS.setItem('fin-user', name); SS.setItem('fin-ek', raw);
+  SS.removeItem('fin-pin'); SS.removeItem('fin-hid');
+  try { location.reload(); } catch (e) {}
+}
+/* settings */
+function pinSt(k, cls, p){ const el = $('#pin_st'); if (el){ el.className = 'gk-st ' + (cls || ''); el.textContent = k ? t(k, p) : ''; } }
+function pinRender(){
+  const box = $('#pin_box'), pill = $('#pin_pill'); if (!box || !FUSER) return;
+  const rec = getAcc(FUSER) || {}, po = rec.pin, rv = rec.rcv;
+  if (pill){ pill.className = 'rc-pill ' + (po ? 'ok' : ''); pill.textContent = t(po ? 'pin_pill_on' : 'pin_pill_off'); }
+  const pinIn = (id, lab) => `<div class="field"><label for="${id}">${asEsc(t(lab))}</label><input id="${id}" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" class="lookup pin-in" dir="ltr"></div>`;
+  const after = `<div class="field wide"><label for="pin_after">${asEsc(t('f_pinAfter'))}</label><select id="pin_after">${[['0', 'o_pin0'], ['1', 'o_pin1'], ['5', 'o_pin5'], ['15', 'o_pin15'], ['m', 'o_pinM']].map(([v, k]) => `<option value="${v}">${asEsc(t(k))}</option>`).join('')}</select></div>`;
+  const mail = `<p class="fine">${asEsc(rv && rv.ok ? t('pin_rcOk', {m: rcIso(rv.hint)}) : t('pin_rcNo'))}</p>`;
+  let h = `<p class="fine">${asEsc(t('pin_intro'))}</p>`;
+  if (!po){
+    h += `<div class="fields">${pinIn('pin_n1', 'f_pinNew')}${pinIn('pin_n2', 'f_pinNew2')}${after}</div>
+      <div class="btnrow"><button type="button" class="gold-btn" id="pin_on">🔢 ${asEsc(t('pin_on'))}</button></div>${mail}`;
+  } else if (PL.mode === 'chg' || PL.mode === 'rm'){
+    h += `<div class="fields">${pinIn('pin_cur', 'f_pinCur')}${PL.mode === 'chg' ? pinIn('pin_n1', 'f_pinNew') + pinIn('pin_n2', 'f_pinNew2') : ''}</div>
+      <div class="btnrow"><button type="button" class="${PL.mode === 'rm' ? 'btn danger' : 'gold-btn'}" id="pin_save">${asEsc(t(PL.mode === 'rm' ? 'pin_remove' : 'pin_save'))}</button><button type="button" class="btn" id="pin_cancel">${asEsc(t('del_cancel'))}</button></div>`;
+  } else {
+    h += `<p class="gk-st ok"><b>✓</b> ${asEsc(t('pin_status', {n: po.len}))}</p><div class="fields">${after}</div>
+      <div class="btnrow"><button type="button" class="gold-btn" id="pin_lock">${asEsc(t('pin_lockNow'))}</button></div>
+      <div class="btnrow rc-more"><button type="button" class="btn" id="pin_chg">${asEsc(t('pin_change'))}</button><button type="button" class="btn danger" id="pin_rm">${asEsc(t('pin_remove'))}</button></div>${mail}`;
+  }
+  h += `<p class="gk-st" id="pin_st" role="status" aria-live="polite"></p>`;
+  box.innerHTML = h;
+  const sa = $('#pin_after'); if (sa) sa.value = po ? String(po.after == null ? '1' : po.after) : '1';
+  const pb = $('#pinBtn'); if (pb) pb.hidden = !po;
+}
+function pinNewOk(a, b){
+  if (!pinOk(a)) return 'pin_bad';
+  if (pinWeak(a)) return 'pin_weak';
+  if (a !== b) return 'pin_mismatch';
+  return '';
+}
+async function pinEnable(){
+  if (PL.busy) return;
+  const a = ($('#pin_n1') || {}).value || '', b = ($('#pin_n2') || {}).value || '', after = ($('#pin_after') || {}).value || '1';
+  const err = pinNewOk(a, b); if (err) return pinSt(err, 'bad');
+  if (!(window.crypto && crypto.subtle)) return pinSt('m_nocrypto', 'bad');
+  PL.busy = true; pinSt('m_wait', 'wait');
+  try { const rec = getAcc(FUSER); rec.pin = await pinMake(a, after); RAWLS.setItem(accKey(FUSER), JSON.stringify(rec)); persistNow(); }
+  catch (e) { PL.busy = false; return pinSt('m_nocrypto', 'bad'); }
+  PL.busy = false; PL.mode = ''; pinRender(); pinSt('pin_set', 'ok'); toast(t('pin_set'));
+}
+async function pinSave(){
+  if (PL.busy) return;
+  const rec = getAcc(FUSER); if (!rec || !rec.pin) return;
+  const cur = ($('#pin_cur') || {}).value || '';
+  const lk = lockLeft(FUSER); if (lk > 0) return pinSt('m_lock', 'bad', {s: lk});
+  PL.busy = true; pinSt('m_wait', 'wait');
+  const ok = await pinCheck(rec.pin, cur); noteFail(FUSER, ok);
+  if (!ok){ PL.busy = false; return pinSt('pin_curWrong', 'bad'); }
+  if (PL.mode === 'rm'){ delete rec.pin; RAWLS.setItem(accKey(FUSER), JSON.stringify(rec)); persistNow(); PL.busy = false; PL.mode = ''; pinRender(); return pinSt('pin_removed', 'new'); }
+  const a = ($('#pin_n1') || {}).value || '', b = ($('#pin_n2') || {}).value || '';
+  const err = pinNewOk(a, b); if (err){ PL.busy = false; return pinSt(err, 'bad'); }
+  rec.pin = await pinMake(a, rec.pin.after); RAWLS.setItem(accKey(FUSER), JSON.stringify(rec)); persistNow();
+  PL.busy = false; PL.mode = ''; pinRender(); pinSt('pin_changed', 'ok');
+}
+/* lock screen */
+function plEl(){ return $('#pinlock'); }
+function plDots(){
+  const st = pinSS(), r = st && getAcc(st.n), n = (r && r.pin && r.pin.len) || 4, d = $('#pl_dots'); if (!d) return;
+  d.innerHTML = Array.from({length: n}, (_, i) => `<i class="${i < PL.buf.length ? 'on' : ''}"></i>`).join('');
+}
+function plSt(k, cls, p){ const el = $('#pl_st'); if (el){ el.className = 'pl-st ' + (cls || ''); el.textContent = k ? t(k, p) : ''; } }
+function plShow(){
+  const st = pinSS(); if (!st) return;
+  const rec = getAcc(st.n); if (!rec || !rec.pin){ SS.removeItem('fin-pin'); return; }
+  let o = plEl(); if (!o){ o = document.createElement('div'); o.id = 'pinlock'; o.className = 'pinlock'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-labelledby', 'pl_t'); document.body.appendChild(o); }
+  document.documentElement.classList.add('pin-on'); document.body.classList.add('cp-lock');
+  const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'del', '0', 'ok'];
+  o.innerHTML = `<div class="pl-card">
+    <div class="pl-ic" aria-hidden="true">🔒</div><h2 id="pl_t">${asEsc(t('pin_locked'))}</h2>
+    <p class="pl-who">⁨@${asEsc(st.n)}⁩</p>
+    <div id="pl_main"><p class="pl-sub">${asEsc(t('pin_enter'))}</p><div class="pl-dots" id="pl_dots" aria-hidden="true"></div>
+      <p class="pl-st" id="pl_st" role="alert" aria-live="assertive"></p>
+      <div class="pl-pad" dir="ltr">${keys.map(k => k === 'del' ? `<button type="button" class="pl-k pl-fn" data-pk="del" aria-label="${asEsc(t('pin_del'))}">⌫</button>` : k === 'ok' ? `<button type="button" class="pl-k pl-fn" data-pk="ok" aria-label="${asEsc(t('pin_ok'))}">✓</button>` : `<button type="button" class="pl-k" data-pk="${k}">${k}</button>`).join('')}</div>
+      <div class="pl-links"><button type="button" id="pl_forgot">${asEsc(t('pin_forgot'))}</button><button type="button" id="pl_pw">${asEsc(t('pin_usePw'))}</button><button type="button" id="pl_out">${asEsc(t('pin_out'))}</button></div></div>
+    <div id="pl_rc" hidden></div></div>`;
+  PL.buf = ''; plDots();
+  if (st.tries) plSt('pin_wrong', 'bad', {n: PIN_TRIES - st.tries});
+  const h2 = $('#pl_t', o); if (h2){ h2.setAttribute('tabindex', '-1'); try { h2.focus({preventScroll: true}); } catch (e) {} }
+}
+function plHide(){ const o = plEl(); if (o) o.remove(); document.documentElement.classList.remove('pin-on', 'pin-cover'); document.body.classList.remove('cp-lock'); }
+async function plTry(){
+  if (PL.busy) return;
+  const st = pinSS(); if (!st) return plHide();
+  const rec = getAcc(st.n); if (!rec || !rec.pin){ SS.removeItem('fin-pin'); return plHide(); }
+  if (PL.buf.length < 4) return;
+  PL.busy = true; plSt('pin_checking', 'wait');
+  let raw = null; try { raw = await pinUnwrap(rec.pin, PL.buf, st.wk); } catch (e) {}
+  if (raw){ try { await unlockRaw(st.n, raw); return; } catch (e) { raw = null; } }
+  PL.busy = false; PL.buf = ''; plDots();
+  st.tries = (st.tries || 0) + 1;
+  const card = $('.pl-dots'); if (card){ card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake'); }
+  if (st.tries >= PIN_TRIES){
+    SS.removeItem('fin-pin'); plSt('pin_tooMany', 'bad');
+    setTimeout(() => { plHide(); plToLogin(st.n); }, 1600);
+    return;
+  }
+  SS.setItem('fin-pin', JSON.stringify(st)); plSt('pin_wrong', 'bad', {n: PIN_TRIES - st.tries});
+}
+function plKey(k){
+  if (PL.busy) return;
+  const st = pinSS(), r = st && getAcc(st.n), n = (r && r.pin && r.pin.len) || 6;
+  if (k === 'del'){ PL.buf = PL.buf.slice(0, -1); plDots(); return; }
+  if (k === 'ok'){ plTry(); return; }
+  if (!/^\d$/.test(k) || PL.buf.length >= 6) return;
+  PL.buf += k; plDots(); plSt('');
+  if (PL.buf.length >= n) setTimeout(plTry, 120);
+}
+function plToLogin(name){
+  try { SS.removeItem('fin-pin'); } catch (e) {}
+  plHide();
+  const ts = $('#tab-settings'); if (ts) ts.click(); setCat('account');
+  ['in', 'up', 'mv', 'rc'].forEach(k => { const f = $('#acc_f_' + k); if (f) f.hidden = k !== 'in'; });
+  const u = $('#acc_user'); if (u){ u.value = '@' + name; const p = $('#acc_pass'); if (p) p.focus(); }
+}
+function plRcRender(){
+  const st = pinSS(), box = $('#pl_rc'), main = $('#pl_main'); if (!st || !box) return;
+  const rec = getAcc(st.n) || {}, rv = rec.rcv;
+  main.hidden = true; box.hidden = false;
+  const pinIn = (id, lab) => `<div class="field"><label for="${id}">${asEsc(t(lab))}</label><input id="${id}" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" class="lookup pin-in" dir="ltr"></div>`;
+  box.innerHTML = `<h3 class="rc-h">${asEsc(t('pin_rcTitle'))}</h3>` + (!rv ? `<p class="pl-sub">${asEsc(t('pin_rcNone'))}</p>
+      <div class="btnrow"><button type="button" class="gold-btn" id="pl_pw2">${asEsc(t('pin_usePw'))}</button><button type="button" class="btn" id="pl_back">${asEsc(t('pin_back'))}</button></div>`
+    : `<p class="pl-sub">${asEsc(t('pin_rcHint', {m: rcIso(rv.hint)}))}</p>
+      <div class="fields"><div class="field wide"><label for="pl_code">${asEsc(t('f_rcCode'))}</label><input id="pl_code" type="text" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" dir="ltr" class="lookup rc-cin" placeholder="XXXXX-XXXXX-XXXXX-XXXXX"></div>
+      ${pinIn('pl_n1', 'f_pinNew')}${pinIn('pl_n2', 'f_pinNew2')}</div>
+      <div class="btnrow"><button type="button" class="gold-btn" id="pl_rcgo">${asEsc(t('pin_rcGo'))}</button><button type="button" class="btn" id="pl_back">${asEsc(t('pin_back'))}</button></div>
+      <p class="gk-st" id="pl_rst" role="alert" aria-live="polite"></p>`);
+  const c = $('#pl_code'); if (c) c.focus();
+}
+function plRSt(k, cls, p){ const el = $('#pl_rst'); if (el){ el.className = 'gk-st ' + (cls || ''); el.textContent = k ? t(k, p) : ''; } }
+async function plRecover(){
+  if (PL.busy) return;
+  const st = pinSS(); if (!st) return;
+  const rec = getAcc(st.n); if (!rec || !rec.rcv) return;
+  const code = ($('#pl_code') || {}).value || '', a = ($('#pl_n1') || {}).value || '', b = ($('#pl_n2') || {}).value || '';
+  if (rcFmt(code).replace(/-/g, '').length !== 20) return plRSt('rc_codeShort', 'bad');
+  const err = pinNewOk(a, b); if (err) return plRSt(err, 'bad');
+  const lk = lockLeft(st.n); if (lk > 0) return plRSt('m_lock', 'bad', {s: lk});
+  PL.busy = true; plRSt('m_wait', 'wait');
+  let raw = null; try { raw = await rcUnwrap(rec.rcv, code); } catch (e) {}
+  noteFail(st.n, !!raw);
+  if (!raw){ PL.busy = false; return plRSt('rc_codeWrong', 'bad'); }
+  try {
+    rec.pin = await pinMake(a, rec.pin && rec.pin.after);
+    RAWLS.setItem(accKey(st.n), JSON.stringify(rec));
+    SS.setItem('fin-pin-reset', '1');
+    await unlockRaw(st.n, raw);
+  } catch (e) { PL.busy = false; plRSt('rc_stale', 'bad'); }
+}
+document.addEventListener('click', e => {
+  const el = e.target;
+  const k = el.closest('[data-pk]'); if (k && plEl()){ plKey(k.dataset.pk); return; }
+  if (el.closest('#pl_forgot')) return plRcRender();
+  if (el.closest('#pl_back')){ const m = $('#pl_main'), r = $('#pl_rc'); if (m) m.hidden = false; if (r){ r.hidden = true; r.innerHTML = ''; } return; }
+  if (el.closest('#pl_pw') || el.closest('#pl_pw2')){ const st = pinSS(); return plToLogin(st ? st.n : ''); }
+  if (el.closest('#pl_out')){ try { SS.removeItem('fin-pin'); } catch (er) {} plHide(); try { location.reload(); } catch (er) {} return; }
+  if (el.closest('#pl_rcgo')) return void plRecover();
+  if (el.closest('#pinBtn') || el.closest('#pin_lock')) return void pinLockNow();
+  if (el.closest('#pin_on')) return void pinEnable();
+  if (el.closest('#pin_chg')){ PL.mode = 'chg'; pinRender(); const c = $('#pin_cur'); if (c) c.focus(); return; }
+  if (el.closest('#pin_rm')){ PL.mode = 'rm'; pinRender(); const c = $('#pin_cur'); if (c) c.focus(); return; }
+  if (el.closest('#pin_cancel')){ PL.mode = ''; pinRender(); return; }
+  if (el.closest('#pin_save')) return void pinSave();
+});
+document.addEventListener('input', e => {
+  const id = e.target.id;
+  if (e.target.classList && e.target.classList.contains('pin-in')){ const v = e.target.value.replace(/\D/g, '').slice(0, 6); if (v !== e.target.value) e.target.value = v; }
+  if (id === 'pl_code'){ const v = rcFmt(e.target.value); if (v !== e.target.value) e.target.value = v; }
+});
+document.addEventListener('change', e => {
+  if (e.target.id !== 'pin_after') return;
+  const rec = pinRec(); if (!rec) return;
+  rec.pin.after = e.target.value; RAWLS.setItem(accKey(FUSER), JSON.stringify(rec)); persistNow(); pinSt('pin_afterSaved', 'ok');
+});
+document.addEventListener('keydown', e => {
+  if (plEl() && !$('#pl_main').hidden){
+    if (/^\d$/.test(e.key)){ e.preventDefault(); plKey(e.key); }
+    else if (e.key === 'Backspace'){ e.preventDefault(); plKey('del'); }
+    else if (e.key === 'Enter'){ e.preventDefault(); plKey('ok'); }
+    return;
+  }
+  if (e.key === 'Enter' && plEl() && (e.target.id === 'pl_code' || e.target.id === 'pl_n1' || e.target.id === 'pl_n2')){ e.preventDefault(); plRecover(); }
+  if (e.key === 'Enter' && (e.target.id === 'pin_n1' || e.target.id === 'pin_n2' || e.target.id === 'pin_cur')){ e.preventDefault(); if (PL.mode) pinSave(); else pinEnable(); }
+}, true);
+document.addEventListener('toggle', e => { if (e.target && e.target.id === 'pin_d' && e.target.open) pinRender(); }, true);
+const _alPin = applyLang;
+applyLang = function(){ const r = _alPin.apply(this, arguments); pinRender(); if (plEl()){ const rc = $('#pl_rc'); const inRc = rc && !rc.hidden; plShow(); if (inRc) plRcRender(); } return r; };
+/* automatic locking */
+window.addEventListener('pagehide', () => { PL.unloading = true; });
+window.addEventListener('beforeunload', () => { PL.unloading = true; });
+document.addEventListener('visibilitychange', () => {
+  if (!FUSER || PL.unloading) return;
+  const ms = pinAfterMs(); if (ms == null) return;
+  if (document.hidden){ try { SS.setItem('fin-hid', String(Date.now())); } catch (e) {} if (ms === 0) pinLockNow(); }
+  else { const h = +(SS.getItem('fin-hid') || 0); try { SS.removeItem('fin-hid'); } catch (e) {} if (h && Date.now() - h >= ms) pinLockNow(); }
+});
+(function(){
+  if (FUSER){
+    try { SS.removeItem('fin-pin'); } catch (e) {}
+    const ms = pinAfterMs(), h = +(SS.getItem('fin-hid') || 0);
+    if (ms != null && h){ try { SS.removeItem('fin-hid'); } catch (e) {} if (Date.now() - h >= Math.max(ms, 4000)){ pinCover(); pinLockNow(); return; } }
+    const pb = $('#pinBtn'); if (pb) pb.hidden = !pinRec();
+    try { if (SS.getItem('fin-pin-reset')){ SS.removeItem('fin-pin-reset'); setTimeout(() => toast(t('pin_reset')), 700); } } catch (e) {}
+  } else if (pinSS()) plShow();
+})();
+setTimeout(pinRender, 0);
 
 applyLang(false);
 activate(tab);
