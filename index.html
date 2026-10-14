@@ -945,6 +945,9 @@ html.pin-cover body > *:not(#pinlock){visibility:hidden}
 #pl_rc .pl-sub{opacity:1;color:var(--ink-2,#444)}
 .pin-in{font-family:'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.3em;text-align:center}
 #pl_t:focus{outline:none}
+.c-red{background:linear-gradient(160deg,#FF8A7A,#D9483B)}
+.sec-h2{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:2px 0 6px}
+@media (max-width:959px){.rail-ctrls #cur{flex:1 1 0;min-width:0;width:auto}.rail-ctrls .skin-btn{flex:none}}
 
 </style>
 </head>
@@ -2957,7 +2960,13 @@ Object.assign(T, {
   pin_removed:['ה-PIN הוסר.','تمت إزالة PIN.','PIN removed.'],
   pin_afterSaved:['ההגדרה נשמרה.','تم حفظ الإعداد.','Saved.'],
   pin_rcOk:['שכחתם את הקוד? במסך הנעילה לחצו "שכחתי PIN" ושחזרו עם קוד השחזור מהמייל {m}.','نسيت الرمز؟ في شاشة القفل اضغط "نسيت PIN" واستعده برمز الاستعادة من البريد {m}.','Forgot the PIN? On the lock screen tap "Forgot PIN" and recover it with the recovery key from {m}.'],
-  pin_rcNo:['כדי שאפשר יהיה לשחזר PIN שנשכח, אמתו קודם אימייל (באפשרות שמתחת). בלי אימייל אפשר תמיד להיכנס עם הסיסמה.','لاستعادة PIN منسي، أكّد بريدًا أولًا (في الخيار أدناه). بدون بريد يمكنك دائمًا الدخول بكلمة المرور.','To recover a forgotten PIN, verify an email first (option below). Without one you can always sign in with your password.'],
+  pin_rcNo:['כדי שאפשר יהיה לשחזר PIN שנשכח, אמתו קודם אימייל בחשבון והרשאות. בלי אימייל אפשר תמיד להיכנס עם הסיסמה.','لاستعادة PIN منسي، أكّد بريدًا أولًا في الحساب والصلاحيات. بدون بريد يمكنك دائمًا الدخول بكلمة المرور.','To recover a forgotten PIN, verify an email first under Account & access. Without one you can always sign in with your password.'],
+  set_security:['קוד PIN לנעילת האפליקציה','رمز PIN لقفل التطبيق','PIN code to lock the app'],
+  sc_security:['אבטחה','الأمان','Security'],
+  sc_securityS:['קוד PIN לנעילת האפליקציה','رمز PIN لقفل التطبيق','PIN code to lock the app'],
+  sec_needLogin:['קוד PIN נועל את האפליקציה ושומר על הנתונים שלכם. כדי להפעיל אותו, התחברו לחשבון או הירשמו.','رمز PIN يقفل التطبيق ويحمي بياناتك. لتفعيله، سجّل الدخول أو أنشئ حسابًا.','A PIN locks the app and protects your data. To turn it on, sign in or sign up.'],
+  sec_toAcc:['מעבר לחשבון','الانتقال إلى الحساب','Go to account'],
+  sec_toRc:['אימות אימייל','تأكيد البريد','Verify email'],
   pin_locked:['האפליקציה נעולה','التطبيق مقفل','The app is locked'],
   pin_enter:['הקלידו את קוד ה-PIN','أدخل رمز PIN','Enter your PIN'],
   pin_checking:['בודק…','جارٍ التحقق…','Checking…'],
@@ -3461,6 +3470,8 @@ SICO.set_ai = '<path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1
 SICO.set_gkey = SICO.set_gkey || '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/>';
 SICO.set_upd = '<path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/>';
 SICO.set_clock = '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>';
+
+SICO.set_security = '<path d="M12 3l7 3v6c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>';
 function unitHTML(u){
   if (!u) return '';
   if (u === 'cur') return `<span class="u cur">${symOf(cur)}</span>`;
@@ -4042,7 +4053,6 @@ function accountHTML(){
     <div class="btnrow"><button type="button" class="gold-btn" id="mv_open" data-i="mv_tab"></button><button type="button" class="btn" id="acc_out" data-i="b_logout"></button></div>
     <details class="adv"><summary data-i="b_chgPw"></summary><div class="fields">${pwf('acc_cur','f_curPw','current-password')}${pwf('acc_new','f_newPw','new-password')}${pwf('acc_new2','f_newPw2','new-password')}</div>${PWREQ.replace('%ID%', 'acc_new')}
       <div class="btnrow"><button type="button" class="btn" id="acc_chg" data-i="b_chgPw"></button></div></details>
-    <details class="adv rc-d" id="pin_d"><summary><span class="rc-sum"><span data-i="pin_title"></span><span class="rc-pill" id="pin_pill"></span></span></summary><div class="rc-box" id="pin_box"></div></details>
     <details class="adv rc-d" id="rc_d"><summary><span class="rc-sum"><span data-i="rc_title"></span><span class="rc-pill" id="rc_pill"></span></span></summary><div class="rc-box" id="rc_box"></div></details>
     <div class="field wide"><label for="acc_open" id="acc_open_l"></label><select id="acc_open"><option value="0" data-i="o_closed"></option><option value="1" data-i="o_open"></option></select><small class="hint" id="acc_open_h"></small></div>
     <div class="mvx" id="acc_f_mv" hidden></div>
@@ -4060,6 +4070,10 @@ function accountHTML(){
     <div class="mvx" id="acc_f_mv" hidden></div>
     ${msg}<p class="fine" data-i="h_account"></p>`;
 }
+function securityHTML(){
+  if (!FUSER) return `<p class="fine" data-i="sec_needLogin"></p><div class="btnrow"><button type="button" class="gold-btn" data-scat="account" data-i="sec_toAcc"></button></div>`;
+  return `<div class="sec-h2"><span class="rc-pill" id="pin_pill"></span></div><div class="rc-box" id="pin_box"></div>`;
+}
 function settingsPanelHTML(){
   const sec = (k, body) => `<div class="set-sec" data-sk="${k}"><div class="sec-h">${sIcon(k)}<h3 class="sec-t" data-i="${k}"></h3></div>${body}</div>`;
   const fl = fs => `<div class="fields">${fs.map(fieldHTML).join('')}</div>`;
@@ -4067,6 +4081,7 @@ function settingsPanelHTML(){
   return `<section class="panel panel-flat panel-set" id="panel-settings" role="tabpanel" aria-labelledby="tab-settings" hidden>
     <div class="perm" id="perm" role="status"><span class="perm-dot"></span><div><b id="perm_t"></b><small id="perm_s"></small></div></div>
     ${sec('set_account', accountHTML())}
+    ${sec('set_security', securityHTML())}
     ${SETDEFS.slice(0, 2).map(([k, fs]) => sec(k, (k === 'set_look' ? '<div class="skins" id="skins" role="radiogroup" data-ia="f_theme"></div>' : '') + fl(fs))).join('')}
     ${sec('set_clock', '<div class="cstyles" id="cstyles" role="radiogroup" data-ia="set_clock"></div><div class="fields">' + [
       SEL('set_clock24','f_clock24','1',[['1','o_24h'],['0','o_12h']]),
@@ -7768,8 +7783,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "4.1", "date": "2026-10-14", "notes": {"he": "קוד PIN של 4–6 ספרות שנועל את האפליקציה כשיוצאים ממנה, עם שחזור דרך האימייל המאומת.", "ar": "رمز PIN من 4–6 أرقام يقفل التطبيق عند الخروج منه، مع الاستعادة عبر البريد المؤكد.", "en": "A 4–6 digit PIN that locks the app when you leave it, with recovery through your verified email."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.114441';
+var CHANGELOG = [{"v": "4.2", "date": "2026-10-14", "notes": {"he": "תיקייה חדשה בהגדרות: אבטחה, ובה קוד ה-PIN.", "ar": "مجلد جديد في الإعدادات: الأمان، وفيه رمز PIN.", "en": "A new Settings folder, Security, holding the PIN code."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.144815';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -7852,6 +7867,7 @@ renderStamp = function(){ _rsUpd.apply(this, arguments); updRender(); };
 /* ---- settings: a clear hub of categories, each opening its own page ---- */
 var SET_CATS = [
   {id: 'account', c: 'c-blue',   ic: 'set_account', g: 0, secs: ['set_account']},
+  {id: 'security', c: 'c-red',   ic: 'set_security', g: 0, secs: ['set_security']},
   {id: 'display', c: 'c-violet', ic: 'set_look',    g: 1, secs: ['set_look', 'set_clock', 'set_lang', 'set_numbers', 'set_tabs']},
   {id: 'calc',    c: 'c-gold',   ic: 'set_calc',    g: 1, secs: ['set_calc', 'set_profile', 'set_curBy']},
   {id: 'conn',    c: 'c-green',  ic: 'set_live',    g: 2, secs: ['set_live', 'set_ai']},
@@ -7886,6 +7902,7 @@ function shRender(){
   const a = $('#sh_sub_account');
   if (a) a.textContent = (FUSER ? '@' + FUSER : t('sc_accountS')) + ' · ' + t('perm_' + PERM);
   const ab = $('#sh_b_account'); if (ab){ ab.className = 'sh-badge' + (FUSER ? ' on' : ''); ab.textContent = FUSER ? '●' : ''; }
+  const sc = $('#sh_b_security'); if (sc){ const on = typeof pinRec === 'function' && !!pinRec(); sc.className = 'sh-badge' + (on ? ' on' : ''); sc.textContent = on ? '●' : ''; }
   const sb = $('#sh_b_system');
   if (sb){ const nw = typeof updNewer === 'function' && updNewer(UPD.remote); sb.className = 'sh-badge' + (nw ? ' new' : ''); sb.textContent = nw ? t('sc_new') : 'v' + APP_VER; }
 }
@@ -9036,7 +9053,7 @@ function pinRender(){
   if (pill){ pill.className = 'rc-pill ' + (po ? 'ok' : ''); pill.textContent = t(po ? 'pin_pill_on' : 'pin_pill_off'); }
   const pinIn = (id, lab) => `<div class="field"><label for="${id}">${asEsc(t(lab))}</label><input id="${id}" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" class="lookup pin-in" dir="ltr"></div>`;
   const after = `<div class="field wide"><label for="pin_after">${asEsc(t('f_pinAfter'))}</label><select id="pin_after">${[['0', 'o_pin0'], ['1', 'o_pin1'], ['5', 'o_pin5'], ['15', 'o_pin15'], ['m', 'o_pinM']].map(([v, k]) => `<option value="${v}">${asEsc(t(k))}</option>`).join('')}</select></div>`;
-  const mail = `<p class="fine">${asEsc(rv && rv.ok ? t('pin_rcOk', {m: rcIso(rv.hint)}) : t('pin_rcNo'))}</p>`;
+  const mail = rv && rv.ok ? `<p class="fine">${asEsc(t('pin_rcOk', {m: rcIso(rv.hint)}))}</p>` : `<p class="fine">${asEsc(t('pin_rcNo'))}</p><div class="btnrow"><button type="button" class="btn" id="sec_toRc">📧 ${asEsc(t('sec_toRc'))}</button></div>`;
   let h = `<p class="fine">${asEsc(t('pin_intro'))}</p>`;
   if (!po){
     h += `<div class="fields">${pinIn('pin_n1', 'f_pinNew')}${pinIn('pin_n2', 'f_pinNew2')}${after}</div>
@@ -9053,6 +9070,7 @@ function pinRender(){
   box.innerHTML = h;
   const sa = $('#pin_after'); if (sa) sa.value = po ? String(po.after == null ? '1' : po.after) : '1';
   const pb = $('#pinBtn'); if (pb) pb.hidden = !po;
+  if (typeof shRender === 'function') shRender();
 }
 function pinNewOk(a, b){
   if (!pinOk(a)) return 'pin_bad';
@@ -9192,6 +9210,7 @@ document.addEventListener('click', e => {
   if (el.closest('#pin_rm')){ PL.mode = 'rm'; pinRender(); const c = $('#pin_cur'); if (c) c.focus(); return; }
   if (el.closest('#pin_cancel')){ PL.mode = ''; pinRender(); return; }
   if (el.closest('#pin_save')) return void pinSave();
+  if (el.closest('#sec_toRc')){ setCat('account'); const d = $('#rc_d'); if (d){ d.open = true; rcRender(); setTimeout(() => d.scrollIntoView({block: 'start', behavior: SET.motion === 'reduce' ? 'auto' : 'smooth'}), 60); } return; }
 });
 document.addEventListener('input', e => {
   const id = e.target.id;
