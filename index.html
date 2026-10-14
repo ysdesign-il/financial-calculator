@@ -725,6 +725,10 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
 .skin-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .skin-btn:hover{border-color:var(--gold-ui)}
 .sk-box .skins{margin:0;overflow:auto}
+.skins-h{grid-column:1/-1;margin:10px 0 0;font-size:.95rem;font-weight:650;color:var(--ink-2)}
+.skins-h:first-of-type{margin-top:0}
+.skins-now{grid-column:1/-1;margin:0;padding:10px 12px;border-radius:12px;border:1px solid color-mix(in srgb,var(--gold-ui) 55%,transparent);background:color-mix(in srgb,var(--gold-ui) 12%,transparent);font-weight:600}
+.skin-live{font-style:normal;font-size:.72rem;font-weight:700;padding:1px 7px;border-radius:999px;background:var(--gold-ui);color:#140d02;vertical-align:middle}
 
 </style>
 </head>
@@ -2503,6 +2507,24 @@ Object.assign(T, {
   o_th_sys:['לפי המכשיר','حسب الجهاز','Match device'],
   h_theme:['אפשר להחליף ערכת נושא בכל רגע — גם מכפתור הפלטה שבראש המסך.','يمكن تغيير السمة في أي وقت — أيضًا من زر لوحة الألوان أعلى الشاشة.','Switch themes any time — also from the palette button at the top of the screen.']
 });
+Object.assign(T, {
+  sk_main:['ערכות נושא','السمات','Themes'],
+  hol_j:['חגים יהודיים','الأعياد اليهودية','Jewish holidays'], hol_c:['חגים נוצריים','الأعياد المسيحية','Christian holidays'], hol_m:['חגים מוסלמיים','الأعياد الإسلامية','Muslim holidays'],
+  hol_now:['עכשיו פעילה ערכת החג: {n}. אחרי החג חוזרים לערכה שבחרתם.','سمة العيد مفعّلة الآن: {n}. بعد العيد تعود السمة التي اخترتها.','The holiday theme is on now: {n}. After the holiday your own theme comes back.'],
+  hol_live:['פעיל עכשיו','مفعّل الآن','On now'],
+  f_holAuto:['מעבר אוטומטי לערכת חג','التبديل التلقائي إلى سمة العيد','Switch to holiday themes automatically'],
+  o_holAll:['כל החגים','كل الأعياد','All holidays'], o_holJ:['חגים יהודיים','الأعياد اليهودية','Jewish holidays'], o_holC:['חגים נוצריים','الأعياد المسيحية','Christian holidays'], o_holM:['חגים מוסלמיים','الأعياد الإسلامية','Muslim holidays'],
+  h_holAuto:['בימי החג האפליקציה עוברת לערכת החג, ואחריו חוזרת לערכה שבחרתם. התאריכים מחושבים לפי הלוח העברי, ההיג׳רי והגרגוריאני.','في أيام العيد ينتقل التطبيق إلى سمة العيد ثم يعود إلى السمة التي اخترتها. تُحسب التواريخ وفق التقويم العبري والهجري والميلادي.','During a holiday the app switches to its theme, then returns to your own. Dates follow the Hebrew, Hijri and Gregorian calendars.'],
+  sk_roshhashana:['ראש השנה','رأس السنة العبرية','Rosh Hashanah'], sk_roshhashanaS:['רימון ודבש — לשנה טובה ומתוקה','الرمّان والعسل — لسنة طيبة وحلوة','Pomegranate and honey — for a good, sweet year'],
+  sk_hanukkah:['חנוכה','عيد الأنوار (حانوكا)','Hanukkah'], sk_hanukkahS:['כחול ולבן ושמונה נרות דולקים','أزرق وأبيض وثماني شموع مضاءة','Blue and white with eight glowing candles'],
+  sk_passover:['פסח','عيد الفصح اليهودي','Passover'], sk_passoverS:['אביב, מצה ויין','الربيع والفطير والنبيذ','Spring, matzah and wine'],
+  sk_christmas:['חג המולד','عيد الميلاد','Christmas'], sk_christmasS:['ירוק אשוח, אדום, זהב ושלג','أخضر الشجرة والأحمر والذهبي والثلج','Fir green, red, gold and snow'],
+  sk_easter:['פסחא','عيد الفصح (القيامة)','Easter'], sk_easterS:['צבעי אביב רכים של לילך וצהוב','ألوان ربيعية ناعمة من الليلكي والأصفر','Soft spring lilac and yellow'],
+  sk_newyear:['סילבסטר','رأس السنة الميلادية','New Year\'s Eve'], sk_newyearS:['שמפניה, קונפטי ולילה חגיגי','شمبانيا وقصاصات ملوّنة وليلة احتفالية','Champagne, confetti and a festive night'],
+  sk_ramadan:['רמדאן','رمضان','Ramadan'], sk_ramadanS:['לילה כחול, סהר זהוב וכוכבים','ليل أزرق وهلال ذهبي ونجوم','Blue night, a golden crescent and stars'],
+  sk_eidfitr:['עיד אל-פיטר','عيد الفطر','Eid al-Fitr'], sk_eidfitrS:['אמרלד וזהב עם דוגמה גאומטרית','زمرّدي وذهبي بنقشة هندسية','Emerald and gold with a geometric pattern'],
+  sk_eidadha:['עיד אל-אדחא','عيد الأضحى','Eid al-Adha'], sk_eidadhaS:['זהב של זעפרן ושקיעה במדבר','ذهبي الزعفران وغروب الصحراء','Saffron gold and a desert sunset']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -2650,7 +2672,7 @@ const RTL = new Set(['he','ar','fa','ur','yi','ps','sd','ug','ckb','dv']);
 var TOUCHED = [], TILE_F = 'all', MY_HANDLE = '';
 try { MY_HANDLE = LS.getItem('fin-handle') || ''; } catch (e) {}
 const MKT = {boi: 3.25, boiDate: '1.9.2026', boiNext: '21.10.2026', cpi: 1.5, cpiMonth: '08/2026', cpiYtd: 2.1, cpiYtdTo: 8, src: 'built'};
-const SET_DEF = {autoUpd:'1', aiEngine:'auto', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {holAuto:'0', autoUpd:'1', aiEngine:'auto', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -2685,24 +2707,77 @@ const SKINS = {
 };
 const SKIN_PV = {dark: ['#060C1C', '#0A1226', '#0E1830', '#6b4d12', '#F2C45A', '#FFE29A'], light: ['#EDF1F8', '#0A1226', '#FFFFFF', '#6b4d12', '#F2C45A', '#0D9A66']};
 const SKIN_ORDER = ['system', 'dark', 'light', 'telaviv', 'jerusalem', 'banknote', 'deadsea', 'eilat', 'terminal'];
+/* ---- holiday themes (Jewish, Christian, Muslim) and automatic switching during the holiday ---- */
+function mkSkin(o){
+  const L = o.mode === 'light';
+  const t = {'--bg':o.bg,'--surface':o.surface,'--field':o.field || (L ? '#FFFFFF' : o.surface),'--ink':o.ink,'--ink-2':o.ink2,'--line':o.line,
+    '--navy':o.navy,'--hero-bg':o.surface,'--on-navy':o.onNavy,'--on-navy-2':o.onNavy2,'--nav-line':o.navLine || 'rgba(255,255,255,.14)',
+    '--gold-ui':o.acc,'--gold':o.accText || o.acc,'--brass':o.accText || o.acc,'--focus':o.focus || o.accText || o.acc,
+    '--g1':L ? '#FFFFFF' : 'rgba(255,255,255,.055)','--g2':L ? o.bg : 'rgba(255,255,255,.02)','--track':L ? 'rgba(0,0,0,.14)' : 'rgba(255,255,255,.14)','--shadow':L ? 'rgba(0,0,0,.10)' : 'rgba(0,0,0,.38)',
+    '--hero-label':o.ink2,'--hero-val':o.heroVal,'--hero-grad':'linear-gradient(135deg,' + o.heroTint + ',' + o.surface + ' 64%)','--hero-bd':o.heroBd,
+    '--c1':o.c[0],'--c2':o.c[1],'--c3':o.c[2],'--c4':o.c[3],
+    '--sk-rail':o.rail,'--sk-hh':o.hh,'--sk-hh-bd':o.hhBd,'--sk-hh-l':o.hhL,'--sk-hh-v':o.hhV,'--sk-hh-s':o.hhS,'--sk-bottom':o.bottom,'--sk-body':o.body};
+  return {mode: o.mode, group: o.group, pv: [o.bg, o.navy, o.surface, o.hh, o.acc, o.hhV], t};
+}
+const CANDLES = [10, 20, 30, 40, 60, 70, 80, 90].map(x => 'radial-gradient(7px 12px at ' + x + '% 86%,rgba(255,210,122,.95),transparent 75%)').join(',') + ',radial-gradient(8px 14px at 50% 74%,rgba(255,226,150,1),transparent 75%)';
+Object.assign(SKINS, {
+  roshhashana: mkSkin({group:'j', mode:'dark', bg:'#1C070E', surface:'#2B0D17', field:'#230A13', ink:'#FFF1E6', ink2:'#D2A9A3', line:'rgba(255,241,230,.10)', navy:'#15050A', onNavy:'#FFF1E6', onNavy2:'#D2A9A3', acc:'#F4B942', heroVal:'#F4B942', heroTint:'rgba(244,185,66,.20)', heroBd:'rgba(244,185,66,.38)', c:['#F4B942','#E04A5F','#8CCB5E','#F59E6B'],
+    rail:'linear-gradient(180deg,#260A13,#15050A)', hh:'radial-gradient(130px 100px at 86% 18%,rgba(244,185,66,.38),transparent 70%),linear-gradient(140deg,#9E1B32 0%,#6E1024 50%,#3A0814 100%)', hhBd:'rgba(244,185,66,.5)', hhL:'#FFD9C7', hhV:'#FFD36B', hhS:'#E8B3A8', bottom:'rgba(21,5,10,.93)', body:'radial-gradient(900px 480px at 85% -10%,rgba(244,185,66,.14),transparent 60%),radial-gradient(700px 400px at 0% 100%,rgba(179,38,62,.18),transparent 60%),#1C070E'}),
+  hanukkah: mkSkin({group:'j', mode:'dark', bg:'#081333', surface:'#0F1E4A', field:'#0B1840', ink:'#EEF4FF', ink2:'#9FB3DE', line:'rgba(238,244,255,.11)', navy:'#050D26', onNavy:'#EEF4FF', onNavy2:'#9FB3DE', acc:'#9CC8FF', heroVal:'#FFD27A', heroTint:'rgba(156,200,255,.18)', heroBd:'rgba(156,200,255,.38)', c:['#9CC8FF','#FFD27A','#F27D72','#62D2A2'],
+    rail:'linear-gradient(180deg,#0B1A45,#050D26)', hh:CANDLES + ',linear-gradient(135deg,#1B3A8C,#10255E 55%,#0A1840)', hhBd:'rgba(156,200,255,.45)', hhL:'#CFE0FF', hhV:'#F2F6FF', hhS:'#A9BFEA', bottom:'rgba(5,13,38,.93)', body:'radial-gradient(900px 480px at 50% -10%,rgba(156,200,255,.14),transparent 60%),#081333'}),
+  passover: mkSkin({group:'j', mode:'light', bg:'#EEF5E8', surface:'#FFFFFF', ink:'#2B1D16', ink2:'#6A5F52', line:'rgba(43,29,22,.13)', navy:'#5C1428', onNavy:'#FBEFF2', onNavy2:'#E2B9C3', acc:'#E9C46A', accText:'#8C1D3A', heroVal:'#8C1D3A', heroTint:'rgba(140,29,58,.12)', heroBd:'rgba(140,29,58,.32)', c:['#8C1D3A','#C99A2E','#4E8F3A','#2E6FA0'],
+    rail:'linear-gradient(180deg,#6B1830,#4A0F21)', hh:'repeating-linear-gradient(0deg,rgba(120,70,20,.10) 0 2px,transparent 2px 9px),radial-gradient(circle,rgba(120,70,20,.16) 1px,transparent 1.6px) 0 0/14px 14px,linear-gradient(135deg,#F1DFB5,#E4C98E)', hhBd:'rgba(140,29,58,.35)', hhL:'#6B4A1C', hhV:'#5C1428', hhS:'#7A5A2C', bottom:'rgba(74,15,33,.94)', body:'radial-gradient(1000px 520px at 85% -10%,rgba(78,143,58,.16),transparent 60%),#EEF5E8'}),
+  christmas: mkSkin({group:'c', mode:'dark', bg:'#071F15', surface:'#0D2E20', field:'#0A2619', ink:'#F4FAF6', ink2:'#A3C2B1', line:'rgba(244,250,246,.10)', navy:'#04160E', onNavy:'#F4FAF6', onNavy2:'#A3C2B1', acc:'#F2C14E', heroVal:'#F2C14E', heroTint:'rgba(229,72,77,.20)', heroBd:'rgba(242,193,78,.38)', c:['#F2C14E','#E5484D','#5FD08F','#9CC8FF'],
+    rail:'linear-gradient(180deg,#0A2A1C,#04160E)', hh:'radial-gradient(rgba(255,255,255,.55) 1px,transparent 1.7px) 0 0/22px 22px,linear-gradient(140deg,#B3202E 0%,#7A1420 45%,#0D3B26 100%)', hhBd:'rgba(242,193,78,.5)', hhL:'#FFE1DD', hhV:'#FFE7A3', hhS:'#F3C2BD', bottom:'rgba(4,22,14,.93)', body:'radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px) 0 0/26px 26px,radial-gradient(900px 480px at 80% -10%,rgba(229,72,77,.16),transparent 60%),#071F15'}),
+  easter: mkSkin({group:'c', mode:'light', bg:'#F2EEFB', surface:'#FFFFFF', ink:'#241B3A', ink2:'#6A6185', line:'rgba(36,27,58,.12)', navy:'#4B3A86', onNavy:'#F7F4FF', onNavy2:'#CFC6F0', acc:'#F6C945', accText:'#6A45C9', heroVal:'#6A45C9', heroTint:'rgba(106,69,201,.12)', heroBd:'rgba(106,69,201,.30)', c:['#6A45C9','#E8A92A','#3FAE84','#E46A8F'],
+    rail:'linear-gradient(180deg,#56449A,#3E3074)', hh:'radial-gradient(90px 90px at 86% 16%,rgba(246,201,69,.6),transparent 70%),linear-gradient(135deg,#B7A4F2 0%,#8E73E3 45%,#6A45C9 100%)', hhBd:'rgba(246,201,69,.55)', hhL:'#F3EEFF', hhV:'#FFF3B8', hhS:'#E7DEFF', bottom:'rgba(62,48,116,.94)', body:'linear-gradient(180deg,#F2EEFB 0%,#EEF7F2 100%)'}),
+  newyear: mkSkin({group:'c', mode:'dark', bg:'#0B0A14', surface:'#17142A', field:'#120F22', ink:'#F7F3FF', ink2:'#A9A2C8', line:'rgba(247,243,255,.10)', navy:'#07060E', onNavy:'#F7F3FF', onNavy2:'#A9A2C8', acc:'#E8C77A', heroVal:'#E8C77A', heroTint:'rgba(232,199,122,.16)', heroBd:'rgba(232,199,122,.38)', c:['#E8C77A','#8FB8FF','#F28AB2','#7CE0B5'],
+    rail:'linear-gradient(180deg,#120F22,#07060E)', hh:'radial-gradient(circle at 15% 25%,#F28AB2 0 2px,transparent 2.6px),radial-gradient(circle at 35% 70%,#8FB8FF 0 2px,transparent 2.6px),radial-gradient(circle at 58% 28%,#E8C77A 0 2.4px,transparent 3px),radial-gradient(circle at 86% 62%,#7CE0B5 0 2px,transparent 2.6px),radial-gradient(circle at 74% 14%,#F28AB2 0 1.6px,transparent 2.2px),radial-gradient(circle at 26% 48%,#E8C77A 0 1.6px,transparent 2.2px),linear-gradient(135deg,#2A2150,#16122C 60%,#0E0B1D)', hhBd:'rgba(232,199,122,.5)', hhL:'#D9D1F5', hhV:'#F6E2A8', hhS:'#B6AED6', bottom:'rgba(7,6,14,.93)', body:'radial-gradient(900px 480px at 50% -10%,rgba(232,199,122,.12),transparent 60%),#0B0A14'}),
+  ramadan: mkSkin({group:'m', mode:'dark', bg:'#0A0D2A', surface:'#141A45', field:'#0F1438', ink:'#F3F1FF', ink2:'#A7AAD6', line:'rgba(243,241,255,.10)', navy:'#060820', onNavy:'#F3F1FF', onNavy2:'#A7AAD6', acc:'#E9C46A', heroVal:'#E9C46A', heroTint:'rgba(233,196,106,.16)', heroBd:'rgba(233,196,106,.38)', c:['#E9C46A','#7FB2FF','#E57C8E','#5FD3B0'],
+    rail:'linear-gradient(180deg,#0E1338,#060820)', hh:'radial-gradient(circle at 86.5% 19%,#1E2560 0 12px,transparent 12.5px),radial-gradient(circle at 84% 23%,#F5D98C 0 14px,transparent 14.5px),radial-gradient(circle at 62% 16%,rgba(255,255,255,.8) 0 1.2px,transparent 1.8px),radial-gradient(circle at 72% 42%,rgba(255,255,255,.7) 0 1px,transparent 1.6px),radial-gradient(circle at 93% 48%,rgba(255,255,255,.7) 0 1px,transparent 1.6px),radial-gradient(160px 90px at 20% 100%,rgba(233,160,70,.28),transparent 70%),linear-gradient(160deg,#27306E 0%,#141A45 60%,#0B0F2E)', hhBd:'rgba(233,196,106,.5)', hhL:'#D7D9FF', hhV:'#F5D98C', hhS:'#B3B6E0', bottom:'rgba(6,8,32,.93)', body:'radial-gradient(rgba(255,255,255,.08) 1px,transparent 1.6px) 0 0/34px 34px,radial-gradient(900px 480px at 80% -10%,rgba(233,196,106,.10),transparent 60%),#0A0D2A'}),
+  eidfitr: mkSkin({group:'m', mode:'light', bg:'#EAF5EF', surface:'#FFFFFF', ink:'#10281E', ink2:'#4F6D5F', line:'rgba(16,40,30,.12)', navy:'#0B4A35', onNavy:'#EFFAF4', onNavy2:'#A9D6C1', acc:'#E2B84B', accText:'#0E7A55', heroVal:'#0E7A55', heroTint:'rgba(14,122,85,.14)', heroBd:'rgba(14,122,85,.32)', c:['#0E7A55','#D4A53A','#2D79B5','#C2556B'],
+    rail:'linear-gradient(180deg,#0E5A41,#083826)', hh:'conic-gradient(from 45deg,rgba(226,184,75,.20) 25%,transparent 0 50%,rgba(226,184,75,.20) 0 75%,transparent 0) 0 0/26px 26px,linear-gradient(135deg,#118A60,#0B5E43 55%,#073F2D)', hhBd:'rgba(226,184,75,.55)', hhL:'#D2F0E2', hhV:'#F7DE8F', hhS:'#A9D6C1', bottom:'rgba(8,56,38,.94)', body:'radial-gradient(1000px 520px at 85% -10%,rgba(226,184,75,.16),transparent 60%),#EAF5EF'}),
+  eidadha: mkSkin({group:'m', mode:'dark', bg:'#1B130C', surface:'#2A1D12', field:'#22180F', ink:'#FFF4E6', ink2:'#CDB49A', line:'rgba(255,244,230,.10)', navy:'#120C07', onNavy:'#FFF4E6', onNavy2:'#CDB49A', acc:'#F2A93B', heroVal:'#F2C46B', heroTint:'rgba(242,169,59,.18)', heroBd:'rgba(242,169,59,.38)', c:['#F2A93B','#3CC6C0','#E0645A','#9FD36B'],
+    rail:'linear-gradient(180deg,#24180E,#120C07)', hh:'radial-gradient(150px 90px at 14% 14%,rgba(60,198,192,.26),transparent 70%),linear-gradient(170deg,#E08A2E 0%,#A44A2A 45%,#4A2414 100%)', hhBd:'rgba(242,169,59,.5)', hhL:'#FFE2C2', hhV:'#FFF0C9', hhS:'#F0C7A6', bottom:'rgba(18,12,7,.93)', body:'radial-gradient(900px 480px at 50% -10%,rgba(242,169,59,.14),transparent 60%),#1B130C'})
+});
+const SKIN_HOL = {j: ['roshhashana', 'hanukkah', 'passover'], c: ['christmas', 'easter', 'newyear'], m: ['ramadan', 'eidfitr', 'eidadha']};
+function holHeb(d){ try { const p = new Intl.DateTimeFormat('en-u-ca-hebrew', {month: 'long', day: 'numeric'}).formatToParts(d); return [p.find(x => x.type === 'month').value, +p.find(x => x.type === 'day').value]; } catch (e) { return null; } }
+function holIsl(d){ try { const p = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', {month: 'numeric', day: 'numeric'}).formatToParts(d); return [+p.find(x => x.type === 'month').value, +p.find(x => x.type === 'day').value]; } catch (e) { return null; } }
+function easterW(y){ const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451), n = h + l - 7 * m + 114; return new Date(y, Math.floor(n / 31) - 1, n % 31 + 1); }
+function easterO(y){ const a = y % 4, b = y % 7, c = y % 19, d = (19 * c + 15) % 30, e = (2 * a + 4 * b - d + 34) % 7, n = d + e + 114, j = new Date(y, Math.floor(n / 31) - 1, n % 31 + 1); j.setDate(j.getDate() + 13); return j; }
+function holidayNow(d){
+  const pick = SET.holAuto; if (!pick || pick === '0') return '';
+  d = d || new Date();
+  const on = g => pick === 'all' || pick === g, he = holHeb(d), is = holIsl(d), mo = d.getMonth() + 1, da = d.getDate();
+  const inH = segs => he && segs.some(([m, a, b]) => he[0] === m && he[1] >= a && he[1] <= b);
+  const inI = segs => is && segs.some(([m, a, b]) => is[0] === m && is[1] >= a && is[1] <= b);
+  const inG = segs => segs.some(([m, a, b]) => mo === m && da >= a && da <= b);
+  const day = new Date(d.getFullYear(), mo - 1, da), near = e => { const x = (day - e) / 864e5; return x >= -7 && x <= 1; };
+  if (on('jewish')){ if (inH([['Elul', 22, 30], ['Tishri', 1, 3]])) return 'roshhashana'; if (inH([['Kislev', 24, 30], ['Tevet', 1, 3]])) return 'hanukkah'; if (inH([['Nisan', 10, 22]])) return 'passover'; }
+  if (on('muslim')){ if (inI([[9, 1, 30]])) return 'ramadan'; if (inI([[10, 1, 4]])) return 'eidfitr'; if (inI([[12, 8, 13]])) return 'eidadha'; }
+  if (on('christian')){ if (inG([[12, 10, 27], [1, 5, 8]])) return 'christmas'; if (inG([[12, 28, 31], [1, 1, 2]])) return 'newyear'; const y = d.getFullYear(); if (near(easterW(y)) || near(easterO(y))) return 'easter'; }
+  return '';
+}
+var HOL_ACTIVE = '';
 (function skinCss(){
   let css = '';
   for (const k in SKINS){ css += ':root[data-skin="' + k + '"]{' + Object.entries(SKINS[k].t).map(([p, v]) => p + ':' + v).join(';') + '}\n'; }
   const st = document.createElement('style'); st.id = 'skin-css'; st.textContent = css; document.head.appendChild(st);
 })();
 function skinFont(){
-  if (SKINS[SET.theme] && SKINS[SET.theme].mono && !document.getElementById('font-mono')){
+  const eff = HOL_ACTIVE || SET.theme; if (SKINS[eff] && SKINS[eff].mono && !document.getElementById('font-mono')){
     const l = document.createElement('link'); l.id = 'font-mono'; l.rel = 'stylesheet';
     l.href = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap'; document.head.appendChild(l);
   }
 }
 function applyTheme(){
-  const sk = SKINS[SET.theme];
-  const th = sk ? sk.mode : SET.theme === 'system' ? (mq && mq.matches ? 'light' : 'dark') : SET.theme;
+  HOL_ACTIVE = holidayNow();
+  const eff = HOL_ACTIVE || SET.theme, sk = SKINS[eff];
+  const th = sk ? sk.mode : eff === 'system' ? (mq && mq.matches ? 'light' : 'dark') : eff;
   const r = document.documentElement;
   r.dataset.theme = th;
-  if (sk) r.dataset.skin = SET.theme; else delete r.dataset.skin;
-  if (sk && SET.accentFor !== SET.theme){ ['--gold-ui', '--gold', '--brass'].forEach(p => r.style.removeProperty(p)); }
+  if (sk) r.dataset.skin = eff; else delete r.dataset.skin;
+  if (sk && SET.accentFor !== eff){ ['--gold-ui', '--gold', '--brass'].forEach(p => r.style.removeProperty(p)); }
   else {
     const a = AC[SET.accent] || AC.gold, g = th === 'light' ? a[1] : a[0];
     r.style.setProperty('--gold-ui', a[0]); r.style.setProperty('--gold', g); r.style.setProperty('--brass', g);
@@ -3469,7 +3544,8 @@ const USEFUL_LINKS = [
 const PROFK = [['k0','f_k0'],['k12','f_k12'],['k3','f_k3'],['k45','f_k45'],['k617','f_k617'],['k18','f_k18']];
 const SETDEFS = [
   ['set_look', [
-    SEL('set_theme','f_theme','system',[['system','o_th_sys'],['dark','sk_dark'],['light','sk_light'],['telaviv','sk_telaviv'],['jerusalem','sk_jerusalem'],['banknote','sk_banknote'],['deadsea','sk_deadsea'],['eilat','sk_eilat'],['terminal','sk_terminal']],{wide:true, hint:'h_theme'}),
+    SEL('set_theme','f_theme','system',[['system','o_th_sys'],['dark','sk_dark'],['light','sk_light'],['telaviv','sk_telaviv'],['jerusalem','sk_jerusalem'],['banknote','sk_banknote'],['deadsea','sk_deadsea'],['eilat','sk_eilat'],['terminal','sk_terminal'],['roshhashana','sk_roshhashana'],['hanukkah','sk_hanukkah'],['passover','sk_passover'],['christmas','sk_christmas'],['easter','sk_easter'],['newyear','sk_newyear'],['ramadan','sk_ramadan'],['eidfitr','sk_eidfitr'],['eidadha','sk_eidadha']],{wide:true, hint:'h_theme'}),
+    SEL('set_holAuto','f_holAuto','0',[['0','o_off'],['all','o_holAll'],['jewish','o_holJ'],['christian','o_holC'],['muslim','o_holM']],{wide:true, hint:'h_holAuto'}),
     SEL('set_accent','f_accent','gold',[['gold','o_ac_gold'],['blue','o_ac_blue'],['green','o_ac_green'],['violet','o_ac_violet']]),
     SEL('set_size','f_size','m',[['s','o_sz_s'],['m','o_sz_m'],['l','o_sz_l']]),
     SEL('set_contrast','f_contrast','normal',[['normal','o_ct_normal'],['high','o_ct_high']]),
@@ -3581,7 +3657,7 @@ const SMAP = {set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
-  set_dtax:'dtax', set_deptime:'deptime', set_capkind:'capkind', set_remember:'remember', set_rateSrc:'rateSrc', set_gkey:'gkey', set_stale:'stale', set_sort:'sort', set_liveFx:'liveFx', set_fxInt:'fxInt', set_liveFiat:'liveFiat', set_liveCrypto:'liveCrypto', set_boiDb:'boiDb', set_autoRef:'autoRef', set_autoUpd:'autoUpd', set_aiEngine:'aiEngine', set_pmName:'pmName', set_pmStyle:'pmStyle'};
+  set_dtax:'dtax', set_deptime:'deptime', set_capkind:'capkind', set_remember:'remember', set_rateSrc:'rateSrc', set_gkey:'gkey', set_stale:'stale', set_sort:'sort', set_liveFx:'liveFx', set_fxInt:'fxInt', set_liveFiat:'liveFiat', set_liveCrypto:'liveCrypto', set_boiDb:'boiDb', set_autoRef:'autoRef', set_autoUpd:'autoUpd', set_holAuto:'holAuto', set_aiEngine:'aiEngine', set_pmName:'pmName', set_pmStyle:'pmStyle'};
 const DEFKEYS = ['vat','sex','fee','pens','study','erPens','erSev','erStudy','loanRate','invRate','cpi','infl','gainTax','dealer','buyer','dtax','deptime','capkind'];
 function fillCB(){
   CUR_TABS.forEach(id => {
@@ -5501,9 +5577,9 @@ panelsEl.addEventListener('change', e => {
   if (SMAP[id]){
     SET[SMAP[id]] = val;
     const k = SMAP[id];
-    if (k === 'accent') SET.accentFor = SKINS[SET.theme] ? SET.theme : '';
+    if (k === 'accent'){ const eff = (typeof HOL_ACTIVE !== 'undefined' && HOL_ACTIVE) || SET.theme; SET.accentFor = SKINS[eff] ? eff : ''; }
     if (k === 'theme') SET.accentFor = '';
-    if (['theme','accent','contrast','motion','font','sliders'].includes(k)){ applyTheme(); if (typeof skRender === 'function') skRender(); }
+    if (['theme','accent','contrast','motion','font','sliders','holAuto'].includes(k)){ applyTheme(); if (typeof skRender === 'function') skRender(); }
     if (k === 'size') applySize();
     if (DEFKEYS.includes(k)) applyDefaults();
     if (k === 'remember'){ if (val === '1') saveVals(); else { try { LS.removeItem('fin-vals'); } catch(err) {} } }
@@ -6908,8 +6984,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "2.9", "date": "2026-10-14", "notes": {"he": "ערכות נושא: 9 עיצובים שמחליפים בלחיצה — לילה כחול, יום, חוף תל אביב, אבן ירושלמית, שטר כסף, ים המלח, שקיעה באילת ומסוף מסחר. כפתור פלטה בראש המסך.", "ar": "السمات: 9 تصاميم تُبدَّل بنقرة — ليل أزرق، نهار، شاطئ تل أبيب، حجر القدس، ورقة نقدية، البحر الميت، غروب في إيلات وشاشة التداول. زر لوحة الألوان أعلى الشاشة.", "en": "Themes: 9 designs you switch with one tap — Midnight blue, Daylight, Tel Aviv beach, Jerusalem stone, Banknote, Dead Sea, Eilat sunset and Trading terminal. A palette button at the top of the screen."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.092738';
+var CHANGELOG = [{"v": "3.0", "date": "2026-10-14", "notes": {"he": "ערכות לחגים: ראש השנה, חנוכה, פסח, חג המולד, פסחא, סילבסטר, רמדאן, עיד אל-פיטר ועיד אל-אדחא — עם אפשרות למעבר אוטומטי בזמן החג.", "ar": "سمات للأعياد: رأس السنة العبرية، حانوكا، الفصح اليهودي، الميلاد، الفصح، رأس السنة الميلادية، رمضان، عيد الفطر وعيد الأضحى — مع خيار التبديل التلقائي خلال العيد.", "en": "Holiday themes: Rosh Hashanah, Hanukkah, Passover, Christmas, Easter, New Year's Eve, Ramadan, Eid al-Fitr and Eid al-Adha — with an option to switch automatically during the holiday."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.093454';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -7443,17 +7519,20 @@ function ivZoomStep(d){
 /* ---- theme gallery (Settings → Display, and the palette button in the header) ---- */
 function skCard(k){
   const sk = SKINS[k], pv = sk ? sk.pv : SKIN_PV[k] || SKIN_PV.dark;
+  const live = HOL_ACTIVE === k;
   const style = `--pv-bg:${pv[0]};--pv-rail:${pv[1]};--pv-card:${pv[2]};--pv-hh:${sk ? (sk.t['--sk-hh'] || pv[3]) : 'linear-gradient(135deg,#6b4d12,#2a1f08 55%,#171108)'};--pv-acc:${pv[4]};--pv-v:${k === 'light' || k === 'dark' || k === 'system' ? '#FFE29A' : (sk.t['--sk-hh-v'] || pv[5])}`;
   return `<button type="button" class="skin-c" role="radio" data-skin-pick="${k}" aria-checked="${(SET.theme || 'system') === k}">
     <span class="skin-pv${k === 'system' ? ' split' : ''}" style="${style}" aria-hidden="true"><i class="r"></i><span class="h"><b>₪12,480</b></span><span class="c"><i></i><u></u></span><span class="c"><u></u><i></i></span></span>
-    <span class="skin-n">${asEsc(t('sk_' + k))}</span><small>${asEsc(t('sk_' + k + 'S'))}</small></button>`;
+    <span class="skin-n">${asEsc(t('sk_' + k))}${live ? ` <em class="skin-live">${asEsc(t('hol_live'))}</em>` : ''}</span><small>${asEsc(t('sk_' + k + 'S'))}</small></button>`;
 }
 function skRender(){
-  const html = SKIN_ORDER.map(skCard).join('');
+  const grp = (k, ids) => `<h4 class="skins-h">${asEsc(t(k))}</h4>` + ids.map(skCard).join('');
+  const note = HOL_ACTIVE ? `<p class="skins-now">✨ ${asEsc(t('hol_now', {n: t('sk_' + HOL_ACTIVE)}))}</p>` : '';
+  const html = note + grp('sk_main', SKIN_ORDER) + grp('hol_j', SKIN_HOL.j) + grp('hol_c', SKIN_HOL.c) + grp('hol_m', SKIN_HOL.m);
   $$('.skins').forEach(box => { box.innerHTML = html; });
 }
 function skPick(k){
-  if (!SKIN_ORDER.includes(k)) return;
+  if (!SKIN_ORDER.includes(k) && !SKINS[k]) return;
   SET.theme = k; SET.accentFor = ''; saveSet(); applyTheme();
   const s = $('#set_theme'); if (s) s.value = k;
   skRender();
@@ -7482,6 +7561,8 @@ document.addEventListener('keydown', e => {
 const _rsSk = renderStamp;
 renderStamp = function(){ _rsSk.apply(this, arguments); skRender(); };
 skRender();
+
+setInterval(() => { const was = HOL_ACTIVE; applyTheme(); if (was !== HOL_ACTIVE) skRender(); }, 30 * 60000);   // holidays start and end on their own
 
 applyLang(false);
 activate(tab);
