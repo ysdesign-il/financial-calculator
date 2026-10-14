@@ -2,7 +2,7 @@ name: Update rates
 
 on:
   schedule:
-    - cron: '*/15 * * * *'   # every 15 minutes (market indices); official data changes only when published
+    - cron: '7 * * * *'   # hourly; the website also reads market quotes live in the browser
   workflow_dispatch:
   push:
     branches: [main]
@@ -32,7 +32,6 @@ jobs:
           git config user.name "rates-bot"
           git config user.email "rates-bot@users.noreply.github.com"
           git add rates.json
-          [ -f diag.json ] && git add diag.json
           git diff --cached --quiet && { echo "No changes"; exit 0; }
           git commit -m "Update rates"
           git pull --rebase origin main

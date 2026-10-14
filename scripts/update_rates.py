@@ -6,7 +6,7 @@ Sources (all public, no keys):
   - Crypto prices via api.coinbase.com
   - Consumer price index via api.cbs.gov.il (kept unchanged if it cannot be read)
   - More official indices via api.cbs.gov.il: residential construction inputs and dwelling prices, with monthly history for linkage
-  - Market indices (TA-35, TA-125, S&P 500, Nasdaq 100, Dow Jones, gold, Brent) via public delayed quotes
+  - Market indices (TA-35, TA-125, S&P 500, Nasdaq 100, Dow Jones, gold, Brent) via the public CNBC quote feed, with 1/5/10-year anchors
 Every value is sanity-checked against the previous file; anything implausible is skipped.
 """
 import json, time, datetime, urllib.request, os, csv, io, math
@@ -126,7 +126,7 @@ def cbs_series(code, start="01-2005"):
 
 def official_indices(prev, log):
     idx = dict(prev.get("idx", {}))
-    plan = [("cpi", ["120010"], "01-2005"), ("build", ["200010", "200000", "200100"], "01-2005"), ("house", ["40010", "180010", "40000"], "01-2015")]
+    plan = [("cpi", ["120010"], "01-2005"), ("build", ["200010"], "01-2005"), ("house", ["40010"], "01-2015")]
     for key, codes, start in plan:
         done = False
         for code in codes:
@@ -146,120 +146,88 @@ def official_indices(prev, log):
                 diag("cbs_%s_%s_err" % (key, code), str(e))
         if not done:
             log.append("%s kept" % key)
-    for ch in ["c", "aa"]:
-        try:
-            diag("chapter_" + ch, get_raw("https://api.cbs.gov.il/index/catalog/chapter?id=%s&format=json&download=false&lang=en" % ch)[:2500])
-        except Exception as e:
-            diag("chapter_%s_err" % ch, str(e))
     return idx
 
 
-# ---------- market indices (delayed public quotes) ----------
-MARKETS = [("ta35", "TA-35", ["TA35.TA", "^TA35.TA"], ["^ta35"]), ("ta125", "TA-125", ["^TA125.TA", "TA125.TA"], ["^ta125"]),
-           ("spx", "S&P 500", ["^GSPC"], ["^spx"]), ("ndx", "Nasdaq 100", ["^NDX"], ["^ndx"]), ("dji", "Dow Jones", ["^DJI"], ["^dji"]),
-           ("gold", "Gold", ["GC=F"], ["xauusd"]), ("brent", "Brent", ["BZ=F"], ["cb.f"])]
+# ---------- market indices: public quote feed (the same one the website reads live) ----------
+MARKETS = [("ta35", ".TA35", "TA-35"), ("ta125", ".TA125", "TA-125"), ("spx", ".SPX", "S&P 500"), ("ndx", ".NDX", "Nasdaq 100"),
+           ("dji", ".DJI", "Dow Jones"), ("gold", "@GC.1", "Gold"), ("brent", "@LCO.1", "Brent")]
+QUOTE_URL = "https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=%s&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1"
+CHART_URL = "https://ts-api.cnbc.com/harmony/app/charts/10Y.json?symbol=%s"
 
 
-def yahoo(sym, rng, interval):
-    for host in ("query1", "query2"):
-        try:
-            u = "https://%s.finance.yahoo.com/v8/finance/chart/%s?range=%s&interval=%s&includePrePost=false" % (host, urllib.request.quote(sym), rng, interval)
-            j = json.loads(get_raw(u, BROWSER, 20))
-            r = j["chart"]["result"][0]
-            return r
-        except Exception as e:
-            last = e
-    raise last
-
-
-def closes(r):
-    ts = r.get("timestamp") or []
-    cl = ((r.get("indicators") or {}).get("quote") or [{}])[0].get("close") or []
-    return [(t, c) for t, c in zip(ts, cl) if c is not None]
-
-
-def cagr(series, years):
-    if not series:
+def fnum(x):
+    try:
+        return float(str(x).replace(",", "").replace("%", "").replace("+", "").strip())
+    except Exception:
         return None
-    t_end, c_end = series[-1]
-    target = t_end - years * 365.25 * 86400
-    past = [x for x in series if x[0] <= target + 20 * 86400]
-    if not past:
-        return None
-    t0, c0 = past[-1]
-    yrs = (t_end - t0) / (365.25 * 86400)
-    if c0 <= 0 or yrs < years * 0.9:
-        return None
-    return round(((c_end / c0) ** (1 / yrs) - 1) * 100, 2)
 
 
-def market_one(syms):
-    err = None
-    for sym in syms:
-        try:
-            d = yahoo(sym, "5d", "1d")
-            meta = d.get("meta") or {}
-            cs = closes(d)
-            p = num(meta.get("regularMarketPrice")) or (cs[-1][1] if cs else None)
-            if not p:
-                continue
-            day = [c for c in cs if c[0] < (meta.get("regularMarketTime") or 0) - 3600]
-            pc = num(meta.get("previousClose")) or (day[-1][1] if day else (cs[-2][1] if len(cs) > 1 else None))
-            item = {"sym": sym, "p": round(p, 4), "pc": round(pc, 4) if pc else None, "t": int(meta.get("regularMarketTime") or 0), "cur": meta.get("currency") or ""}
-            try:
-                m = closes(yahoo(sym, "10y", "1mo"))
-                if m:
-                    m = m[:-1] + [(item["t"] or m[-1][0], p)]
-                    item["y1"], item["r5"], item["r10"] = cagr(m, 1), cagr(m, 5), cagr(m, 10)
-                    y0 = [c for c in m if datetime.datetime.utcfromtimestamp(c[0]).year < datetime.datetime.utcfromtimestamp(m[-1][0]).year]
-                    if y0:
-                        item["ytd"] = round((p / y0[-1][1] - 1) * 100, 2)
-            except Exception as e:
-                diag("mkt_hist_" + sym, str(e))
-            return item
-        except Exception as e:
-            err = e
-            diag("mkt_" + sym, str(e))
-    if err:
-        raise err
-    return None
+def iso_ts(s):
+    try:
+        s = str(s)
+        if len(s) > 5 and (s[-5] in "+-") and s[-3] != ":":
+            s = s[:-2] + ":" + s[-2:]
+        return int(datetime.datetime.fromisoformat(s).timestamp())
+    except Exception:
+        return 0
+
+
+def anchors(sym):
+    j = json.loads(get_raw(CHART_URL % urllib.request.quote(sym), BROWSER, 25))
+    bars = [(int(b["tradeTimeinMills"]) // 1000, fnum(b["close"])) for b in j["barData"]["priceBars"] if fnum(b.get("close"))]
+    bars.sort()
+    if len(bars) < 30:
+        raise ValueError("short history")
+    now = bars[-1][0]
+
+    def before(sec):
+        c = [b for b in bars if b[0] <= now - sec]
+        return list(c[-1]) if c else None
+    year = datetime.datetime.utcfromtimestamp(now).year
+    ye = [b for b in bars if datetime.datetime.utcfromtimestamp(b[0]).year < year]
+    yr = 365.25 * 86400
+    return {"y1": before(yr), "y5": before(5 * yr), "y10": before(9.9 * yr), "ye": list(ye[-1]) if ye else None}
+
+
+def returns(p, t, a):
+    out = {}
+    for k, yrs in (("y1", 1), ("r5", 5), ("r10", 10)):
+        x = (a or {}).get("y1" if k == "y1" else "y5" if k == "r5" else "y10")
+        if x and x[1] > 0 and p:
+            n = max(0.5, ((t or x[0]) - x[0]) / (365.25 * 86400))
+            out[k] = round(((p / x[1]) ** (1 / n) - 1) * 100, 2) if k != "y1" else round((p / x[1] - 1) * 100, 2)
+    ye = (a or {}).get("ye")
+    if ye and ye[1] > 0 and p:
+        out["ytd"] = round((p / ye[1] - 1) * 100, 2)
+    return out
 
 
 def markets(prev, log):
-    mk = dict((prev.get("mkt") or {}).get("items", {}))
+    old_all = dict((prev.get("mkt") or {}).get("items", {}))
+    mk = dict(old_all)
+    q = json.loads(get_raw(QUOTE_URL % "%7C".join(urllib.request.quote(m[1]) for m in MARKETS), BROWSER, 25))
+    rows = {r.get("symbol"): r for r in q["FormattedQuoteResult"]["FormattedQuote"]}
     n = 0
-    for key, name, ysyms, ssyms in MARKETS:
-        try:
-            it = market_one(ysyms)
-            if it and plausible(it["p"], (mk.get(key) or {}).get("p"), 0.6, 1.6):
-                it["n"] = name
-                old = mk.get(key) or {}
-                for k in ("y1", "r5", "r10", "ytd"):          # keep long-run figures if this run could not read the history
-                    if it.get(k) is None and old.get(k) is not None:
-                        it[k] = old[k]
-                mk[key] = it
-                n += 1
-        except Exception as e:
-            log.append("%s failed" % key)
+    for key, sym, name in MARKETS:
+        r = rows.get(sym) or {}
+        p, pc = fnum(r.get("last")), fnum(r.get("previous_day_closing"))
+        old = old_all.get(key) or {}
+        if not p or not plausible(p, old.get("p"), 0.6, 1.6):
+            continue
+        it = {"n": name, "sym": sym, "p": p, "pc": pc, "chp": fnum(r.get("change_pct")), "t": iso_ts(r.get("last_time")), "cur": r.get("currencyCode") or "",
+              "rt": str(r.get("realTime")) == "true", "a": old.get("a"), "hAt": old.get("hAt", 0)}
+        if not it["a"] or time.time() - (it["hAt"] or 0) > 20 * 3600:     # long-run anchors once a day
+            try:
+                it["a"], it["hAt"] = anchors(sym), int(time.time())
+            except Exception as e:
+                log.append("%s history failed" % key)
+        it.update(returns(p, it["t"], it["a"]))
+        mk[key] = it
+        n += 1
     log.append("markets %d" % n)
     ts = [v.get("t") or 0 for v in mk.values()]
-    return {"asOf": max(ts) if ts else 0, "items": mk} if mk else prev.get("mkt")
-
-
-def probe_sources():
-    hdr = dict(BROWSER, Origin="https://ysdesign-il.github.io")
-    tests = {"cnbc_q": "https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=.SPX%7C%40LCO.1%7CUS10Y&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1",
-             "cnbc_chart": "https://ts-api.cnbc.com/harmony/app/charts/1D.json?symbol=.SPX",
-             "globes": "https://www.globes.co.il/data/webservices/financial.asmx/getInstrument?exchange=tase&symbol=142"}
-    for k, u in tests.items():
-        try:
-            req = urllib.request.Request(u, headers=hdr)
-            with urllib.request.urlopen(req, timeout=20) as r:
-                h = {a: b for a, b in r.headers.items() if a.lower().startswith("access-control") or a.lower() in ("content-type", "cache-control", "vary")}
-                body = r.read().decode("utf-8", "replace")
-            diag("probe_hdr_" + k, {"headers": h, "body": body[:600]})
-        except Exception as e:
-            diag("probe_hdr_%s_err" % k, str(e))
+    return {"asOf": max(ts) if ts else 0, "src": "cnbc", "items": mk} if mk else prev.get("mkt")
 
 
 def main():
@@ -371,11 +339,7 @@ def main():
             out["mkt"] = m
     except Exception as e:
         log.append("markets failed: %s" % e)
-    if os.environ.get("RATES_DIAG", "1") == "1":
-        try:
-            probe_sources()
-        except Exception as e:
-            diag("probe_err", str(e))
+    if os.environ.get("RATES_DIAG", "0") == "1":
         DIAG["log"] = log
         with open("diag.json", "w", encoding="utf-8") as f:
             json.dump(DIAG, f, indent=1, ensure_ascii=False)
