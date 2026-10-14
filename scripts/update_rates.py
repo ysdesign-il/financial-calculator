@@ -230,23 +230,29 @@ def markets(prev, log):
     return {"asOf": max(ts) if ts else 0, "src": "cnbc", "items": mk} if mk else prev.get("mkt")
 
 
-def probe_fx():
-    hdr = dict(BROWSER, Origin="https://ysdesign-il.github.io")
-    try:
-        syms = ["ILS=", "EUR=", "GBP=", "JPY=", "CHF=", "CAD=", "AUD=", "CNY=", "EURILS=", "GBPILS=", "JOD=", "EGP=", "AED=", "SAR=", "TRY=", "INR=", "RUB="]
-        u = QUOTE_URL % "%7C".join(urllib.request.quote(x) for x in syms)
-        j = json.loads(get_raw(u, BROWSER, 20))
-        diag("probe_fx", [{k: x.get(k) for k in ("symbol", "code", "name", "last", "last_time", "realTime", "change_pct")} for x in j["FormattedQuoteResult"]["FormattedQuote"]])
-    except Exception as e:
-        diag("probe_fx_err", str(e))
-    try:
-        req = urllib.request.Request("https://api.coinbase.com/v2/exchange-rates?currency=USD", headers=hdr)
-        with urllib.request.urlopen(req, timeout=20) as r:
-            h = {a: b for a, b in r.headers.items() if a.lower().startswith("access-control") or a.lower() in ("cache-control", "age", "date")}
-            j = json.loads(r.read().decode())
-        diag("probe_coinbase", {"headers": h, "ILS": j["data"]["rates"].get("ILS"), "EUR": j["data"]["rates"].get("EUR")})
-    except Exception as e:
-        diag("probe_coinbase_err", str(e))
+# ---------- live market exchange rates (interbank quotes; the official rate stays in "usd") ----------
+FX_SYMS = {"ILS": ("ILS=", False), "EUR": ("EUR=", True), "GBP": ("GBP=", True), "JPY": ("JPY=", False), "CHF": ("CHF=", False), "CAD": ("CAD=", False),
+           "AUD": ("AUD=", True), "JOD": ("JOD=", False), "AED": ("AED=", False), "SAR": ("SAR=", False), "EGP": ("EGP=", False), "TRY": ("TRY=", False),
+           "CNY": ("CNY=", False), "INR": ("INR=", False)}
+
+
+def live_fx(prev, log):
+    q = json.loads(get_raw(QUOTE_URL % "%7C".join(urllib.request.quote(v[0]) for v in FX_SYMS.values()), BROWSER, 25))
+    rows = {r.get("symbol"): r for r in q["FormattedQuoteResult"]["FormattedQuote"]}
+    base = prev.get("usd") or {}
+    usd, ts = {}, 0
+    for k, (sym, inv) in FX_SYMS.items():
+        r = rows.get(sym) or {}
+        p = fnum(r.get("last"))
+        if not p or p <= 0:
+            continue
+        v = 1 / p if inv else p
+        if base.get(k) and not plausible(v, base[k], 0.8, 1.25):
+            continue
+        usd[k] = round(v, 6)
+        ts = max(ts, iso_ts(r.get("last_time")))
+    log.append("live fx %d" % len(usd))
+    return {"asOf": ts or int(time.time()), "src": "cnbc", "usd": usd} if len(usd) >= 3 else prev.get("live")
 
 
 def main():
@@ -358,8 +364,13 @@ def main():
             out["mkt"] = m
     except Exception as e:
         log.append("markets failed: %s" % e)
-    if os.environ.get("RATES_DIAG", "1") == "1":
-        probe_fx()
+    try:
+        lv = live_fx(out, log)
+        if lv:
+            out["live"] = lv
+    except Exception as e:
+        log.append("live fx failed: %s" % e)
+    if os.environ.get("RATES_DIAG", "0") == "1":
         DIAG["log"] = log
         with open("diag.json", "w", encoding="utf-8") as f:
             json.dump(DIAG, f, indent=1, ensure_ascii=False)
