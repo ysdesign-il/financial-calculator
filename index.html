@@ -979,6 +979,8 @@ a.gold-btn.rc-open{display:inline-flex;align-items:center;justify-content:center
 .se-fuel{grid-template-columns:repeat(2,minmax(0,1fr))}
 .se-fuel .field:last-child{grid-column:1 / -1}
 
+.c-car{fill:#8A5CD0;background:#8A5CD0}.donut .c-car{stroke:#8A5CD0}
+
 </style>
 </head>
 <body>
@@ -3282,7 +3284,18 @@ Object.assign(T, {
   se_custom:['הוצאה אישית','مصروف شخصي','Personal cost'], se_customPh:['שם ההוצאה, למשל ביטוח בריאות','اسم المصروف، مثلًا تأمين صحي','Name, e.g. health insurance'], se_customName:['שם ההוצאה','اسم المصروف','Cost name'],
   se_add:['הוספת הוצאה אישית','إضافة مصروف شخصي','Add a personal cost'], se_sum:['סך ההוצאות בחודש: {x}','مجموع المصاريف شهريًا: {x}','Total costs a month: {x}'],
   r_seCar:['הוצאות רכב ודלק','مصاريف السيارة والوقود','Car and fuel costs'], r_seOther:['נסיעות והוצאות אישיות','المواصلات والمصاريف الشخصية','Travel and personal costs'],
-  r_seLeft:['נשאר בכיס אחרי ההוצאות','يبقى في الجيب بعد المصاريف','Left after costs'], r_seShare:['ההוצאות מתוך הנטו','المصاريف من الصافي','Costs as share of net'], r_seLeftS:['נשאר אחרי הוצאות {x}','يبقى بعد المصاريف {x}','{x} left after costs']
+  r_seLeft:['נשאר בכיס אחרי ההוצאות','يبقى في الجيب بعد المصاريف','Left after costs'], r_seShare:['ההוצאות מתוך הנטו','المصاريف من الصافي','Costs as share of net'], r_seLeftS:['נשאר אחרי הוצאות {x}','يبقى بعد المصاريف {x}','{x} left after costs'],
+  g_salCar:['רכב מהעבודה: כמה הוא מוריד מהנטו','سيارة من العمل: كم تخفض من الصافي','Work car: how much it cuts from net pay'],
+  f_sCar:['יש לך רכב מהעבודה?','هل لديك سيارة من العمل؟','Do you have a work car?'], o_sCarNone:['אין רכב מהעבודה','لا توجد سيارة من العمل','No work car'], o_sCarCo:['כן, רכב צמוד (שווי שימוש)','نعم، سيارة مرافقة (قيمة استخدام)','Yes, a company car (benefit value)'],
+  h_sCar:['שווי השימוש ברכב נוסף לשכר לצורך מס, ולכן הנטו יורד גם אם לא משלמים כלום על הרכב','تُضاف قيمة الاستخدام إلى الراتب لأغراض الضريبة، لذلك ينخفض الصافي حتى لو لم تدفع شيئًا مقابل السيارة','The car benefit is added to your pay for tax, so net pay drops even if you pay nothing for the car'],
+  f_sCarGil:['המעסיק מגלם את המס?','هل يتحمّل المشغّل الضريبة (تجسيم)؟','Does the employer cover the tax?'], o_sCarGilN:['לא, המס עליי','لا، الضريبة عليّ','No, I pay the tax'], o_sCarGilY:['כן, גילום מלא','نعم، تجسيم كامل','Yes, a full gross-up'],
+  h_sCarGil:['בגילום המעסיק מוסיף לתלוש סכום שמכסה את המס על שווי הרכב','في التجسيم يضيف المشغّل إلى القسيمة مبلغًا يغطي ضريبة قيمة السيارة','With a gross-up the employer adds an amount to the payslip that covers the tax on the car'],
+  h_sCarPay:['סכום שמנוכה לך בתלוש על הרכב. הוא מקטין את שווי השימוש','مبلغ يُخصم من قسيمتك مقابل السيارة. يقلل قيمة الاستخدام','What is taken from your pay for the car. It lowers the benefit value'],
+  f_sCarExtra:['ניכויים נוספים על הרכב בחודש','خصومات إضافية على السيارة شهريًا','Other car deductions a month'], h_sCarExtra:['למשל דלק מעל המכסה, כביש 6, דוחות או נסיעות פרטיות שמנוכים מהשכר','مثل الوقود فوق الحصة، شارع 6، المخالفات أو الرحلات الخاصة التي تُخصم من الراتب','For example fuel over the quota, Highway 6, fines or private trips taken from your pay'],
+  r_sCarPay:['השתתפות וניכויי רכב','مساهمة وخصومات السيارة','Car contribution and deductions'], r_sCarGil:['גילום מס על הרכב','تجسيم ضريبة السيارة','Car tax gross-up'],
+  r_sCarTax:['מס וביטוח נוספים בגלל הרכב','ضريبة وتأمين إضافيان بسبب السيارة','Extra tax and insurance from the car'], r_sCarDrop:['הרכב מוריד מהנטו','السيارة تخفض من الصافي','The car cuts net pay by'],
+  r_sCarShare:['ירידה מהנטו באחוזים','نسبة الانخفاض من الصافي','Drop as a share of net'], r_sCarYear:['הרכב מוריד בשנה','السيارة تخفض سنويًا','The car cuts per year'], r_sCarDropS:['הרכב מוריד {x}','السيارة تخفض {x}','The car cuts {x}'],
+  n_sCar:['רכב מהעבודה: שווי השימוש ב-2026 הוא 2.48% ממחיר המחירון בחודש (עד תקרה של 596,860 ₪), פחות הפחתה לרכב היברידי, פלאג-אין או חשמלי ופחות ההשתתפות שלך. השווי לא נכנס לחשבון הבנק, אבל משלמים עליו מס הכנסה, ביטוח לאומי ומס בריאות.','سيارة من العمل: قيمة الاستخدام في 2026 هي 2.48% من سعر القائمة شهريًا (حتى سقف 596,860 ₪)، ناقص خصم السيارة الهجينة أو القابلة للشحن أو الكهربائية وناقص مساهمتك. القيمة لا تدخل حسابك البنكي، لكن تُدفع عليها ضريبة الدخل والتأمين الوطني وضريبة الصحة.','Work car: the 2026 benefit value is 2.48% of the list price a month (up to a price cap of ₪596,860), minus the hybrid, plug-in or electric reduction and minus your contribution. It never reaches your bank account, but you pay income tax, National Insurance and health tax on it.']
 });
 
 const t = (k, p) => {
@@ -3877,6 +3890,12 @@ const DEFS = {
     {id:'s_erPens', label:'f_erPens', unit:'%', val:6.5, adv:'g_benefits'},
     {id:'s_erSev', label:'f_erSev', unit:'%', val:6, adv:'g_benefits'},
     {id:'s_erStudy', label:'f_erStudy', unit:'%', val:0, adv:'g_benefits'},
+    SEL('s_car','f_sCar','none',[['none','o_sCarNone'],['co','o_sCarCo']],{wide:true, adv:'g_salCar', hint:'h_sCar'}),
+    {id:'s_carPrice', label:'f_cbPrice', unit:'ils', val:180000, wide:true, adv:'g_salCar', hint:'h_cbPrice', when:['s_car','co']},
+    SEL('s_carKind','f_cbKind','fuel',[['fuel','o_cbFuel'],['hybrid','o_cbHybrid'],['plugin','o_cbPlugin'],['ev','o_cbEv']],{adv:'g_salCar', when:['s_car','co']}),
+    SEL('s_carGil','f_sCarGil','n',[['n','o_sCarGilN'],['y','o_sCarGilY']],{adv:'g_salCar', hint:'h_sCarGil', when:['s_car','co']}),
+    {id:'s_carPay', label:'f_cbPay', unit:'ils', val:0, adv:'g_salCar', hint:'h_sCarPay', when:['s_car','co']},
+    {id:'s_carExtra', label:'f_sCarExtra', unit:'ils', val:0, adv:'g_salCar', hint:'h_sCarExtra', when:['s_car','co']},
     {type:'html', id:'se_box', cls:'se-box', adv:'g_salExp'}
   ].concat(creditDefs('s')),
   selfemp: [
@@ -5307,7 +5326,7 @@ function niSelf(annual){
   return (low * 0.077 + high * 0.18) * 12;
 }
 function salaryCalc(g, pts, pensPct, studyPct, o){
-  const bonus = o.bonus / 12, base = g + bonus, taxBase = base + o.benefit;
+  const bonus = o.bonus / 12, base = g + bonus, cash = o.cash || 0, carPay = o.carPay || 0, taxBase = base + o.benefit + cash;
   const b = taxByBrackets(taxBase * 12);
   const pens = base * pensPct / 100;
   const qual = Math.min(pens, TAX.pensDepRate * Math.min(base, TAX.pensSalaryCap));
@@ -5318,11 +5337,32 @@ function salaryCalc(g, pts, pensPct, studyPct, o){
   const ni = low * TAX.niLow + high * TAX.niHigh;
   const health = low * TAX.hLow + high * TAX.hHigh;
   const study = base * studyPct / 100;
-  const ded = tax + ni + health + pens + study;
+  const ded = tax + ni + health + pens + study + carPay;
   const erP = base * o.erPens / 100, erS = base * o.erSev / 100, erSt = base * o.erStudy / 100;
   const erNi = low * TAX.erNiLow + high * TAX.erNiHigh;
-  return {gross: base, bonus, net: base - ded, tax, ni, health, pens, study, ded, credits: used / 12,
-          erP, erS, erSt, erNi, employer: base + erP + erS + erSt + erNi};
+  return {gross: base, bonus, net: base + cash - ded, tax, ni, health, pens, study, ded, credits: used / 12, cash, carPay,
+          erP, erS, erSt, erNi, employer: base + cash + erP + erS + erSt + erNi};
+}
+/* --- work car inside the salary --- */
+function salCar(){
+  const sel = document.getElementById('s_car');
+  if (!sel || sel.value !== 'co' || typeof IL26 === 'undefined') return null;
+  const price = Math.max(0, v('s_carPrice')), kind = $('#s_carKind').value, pay = Math.max(0, v('s_carPay')), extra = Math.max(0, v('s_carExtra'));
+  const base = Math.min(price, IL26.carCap) * IL26.carPct, dd = Math.min(base, IL26.carDed[kind] || 0), val = Math.max(0, base - dd - pay);
+  return {price, kind, pay, extra, gil: $('#s_carGil').value === 'y', base, dd, val};
+}
+function withCar(g, pts, pens, study, o, car){
+  if (!car) return o;
+  const oc = Object.assign({}, o, {benefit: o.benefit + car.val, carPay: car.pay + car.extra});
+  if (!car.gil || car.val <= 0) return oc;
+  const want = salaryCalc(g, pts, pens, study, Object.assign({}, o, {carPay: oc.carPay})).net;
+  let lo = 0, hi = car.val * 3 + 100;
+  for (let i = 0; i < 50; i++){
+    const mid = (lo + hi) / 2;
+    if (salaryCalc(g, pts, pens, study, Object.assign({}, oc, {cash: mid})).net < want) lo = mid; else hi = mid;
+  }
+  oc.cash = (lo + hi) / 2;
+  return oc;
 }
 /* --- salary --- */
 function payslipRows(r, o){
@@ -5330,6 +5370,8 @@ function payslipRows(r, o){
   const L = [[t('r_grossMonthly'), r.gross], [t('r_incomeTax'), -r.tax], [t('r_ni'), -r.ni], [t('r_health'), -r.health]];
   if (r.pens > 0) L.push([t('r_pensionRow'), -r.pens]);
   if (r.study > 0) L.push([t('r_studyRow'), -r.study]);
+  if (r.carPay > 0) L.push([t('r_sCarPay'), -r.carPay]);
+  if (r.cash > 0) L.splice(1, 0, [t('r_sCarGil'), r.cash]);
   L.push([t('r_totalDed'), -r.ded], [t('r_netMonthly'), r.net]);
   return L.map(([a, b]) => [a, MI(b), pc(Math.abs(b))]);
 }
@@ -5339,27 +5381,35 @@ function calcSalary(){
   const pts = pointsOf('s'), pens = clamp(v('s_pension'), 0, 30), study = clamp(v('s_study'), 0, 30);
   const o = {bonus: Math.max(0, v('s_bonus')), benefit: Math.max(0, v('s_benefit')),
              erPens: clamp(v('s_erPens'), 0, 30), erSev: clamp(v('s_erSev'), 0, 30), erStudy: clamp(v('s_erStudy'), 0, 30)};
+  const car = salCar();
+  const oc = gg => withCar(gg, pts, pens, study, o, car);
   let g = amt;
   if (mode === 'n2g'){
-    let lo = 0, hi = amt * 4 + 1000;
+    let lo = 0, hi = amt * 4 + 1000 + (car ? car.val * 2 + car.pay + car.extra : 0);
     for (let i = 0; i < 80; i++){
       const mid = (lo + hi) / 2;
-      if (salaryCalc(mid, pts, pens, study, o).net < amt) lo = mid; else hi = mid;
+      if (salaryCalc(mid, pts, pens, study, oc(mid)).net < amt) lo = mid; else hi = mid;
     }
     g = (lo + hi) / 2;
   }
-  const r = salaryCalc(g, pts, pens, study, o);
-  const r2 = salaryCalc(g + 100, pts, pens, study, o);
+  const r = salaryCalc(g, pts, pens, study, oc(g));
+  const r2 = salaryCalc(g + 100, pts, pens, study, oc(g + 100));
+  const r0 = car ? salaryCalc(g, pts, pens, study, o) : r, drop = r0.net - r.net;
+  const carTax = (r.tax + r.ni + r.health) - (r0.tax + r0.ni + r0.health);
   const marginal = (1 - (r2.net - r.net) / 100) * 100;
   const rows = [[t('r_grossMonthly'), MI(r.gross)]];
   if (o.bonus > 0) rows.push([t('r_bonusAvg'), MI(r.bonus)]);
   if (o.benefit > 0) rows.push([t('r_benefitRow'), MI(o.benefit)]);
+  if (car) rows.push([t('r_cbVal'), MI(car.val)]);
+  if (r.cash > 0) rows.push([t('r_sCarGil'), MI(r.cash)]);
   rows.push([t('r_incomeTax'), MI(-r.tax)], [t('r_ni'), MI(-r.ni)], [t('r_health'), MI(-r.health)]);
   if (r.pens > 0) rows.push([t('r_pensionRow'), MI(-r.pens)]);
   if (r.study > 0) rows.push([t('r_studyRow'), MI(-r.study)]);
+  if (r.carPay > 0) rows.push([t('r_sCarPay'), MI(-r.carPay)]);
   rows.push(
     [t('r_totalDed'), MI(-r.ded), 'key'],
     [t('r_netMonthly'), MI(r.net), 'key'],
+    ...(car ? [[t('r_cbNetNo'), MI(r0.net)], [t('r_sCarTax'), MI(-carTax)], [t('r_sCarDrop'), MI(-drop), 'key'], [t('r_sCarShare'), PC(r0.net > 0 ? drop / r0.net * 100 : NaN)], [t('r_sCarYear'), MI(-drop * 12)]] : []),
     ...(() => { const se = typeof seTotals === 'function' ? seTotals() : {total: 0}; return se.total > 0 ? [[t('r_seCar'), MI(-se.car)], [t('r_seOther'), MI(-se.other)], [t('r_seLeft'), MI(r.net - se.total), 'key'], [t('r_seShare'), PC(r.net > 0 ? se.total / r.net * 100 : NaN)]] : []; })(),
     [t('r_dedShare'), PC(r.gross > 0 ? r.ded / r.gross * 100 : NaN)],
     [t('r_points'), ptsTxt('s', pts)],
@@ -5373,18 +5423,20 @@ function calcSalary(){
   const per = k === 12 ? ' ' + t('o_perYear') : '';
   return {
     hero: mode === 'g2n'
-      ? {label: t('r_netMonthly') + per, value: MI(r.net * k), sub: t('s_fromGross', {g: MI((r.gross) * k)}) + (() => { const se = typeof seTotals === 'function' ? seTotals() : {total: 0}; return se.total > 0 ? ' · ' + t('r_seLeftS', {x: MI((r.net - se.total) * k)}) : ''; })()}
-      : {label: t('r_grossMonthly') + per, value: MI((r.gross) * k), sub: t('s_toNet', {g: MI(r.net * k)})},
+      ? {label: t('r_netMonthly') + per, value: MI(r.net * k), sub: t('s_fromGross', {g: MI((r.gross) * k)}) + (car ? ' · ' + t('r_sCarDropS', {x: MI(drop * k)}) : '') + (() => { const se = typeof seTotals === 'function' ? seTotals() : {total: 0}; return se.total > 0 ? ' · ' + t('r_seLeftS', {x: MI((r.net - se.total) * k)}) : ''; })()}
+      : {label: t('r_grossMonthly') + per, value: MI((r.gross) * k), sub: t('s_toNet', {g: MI(r.net * k)}) + (car ? ' · ' + t('r_sCarDropS', {x: MI(drop * k)}) : '')},
     rows,
     table: {title: t('t_payslip'), head: [t('h_item'), t('h_amount'), t('h_pctGross')], rows: payslipRows(r, o)},
-    note: t('n_salary2') + ' ' + t('n_points'),
+    note: t('n_salary2') + ' ' + t('n_points') + (car ? ' ' + t('n_sCar') : ''),
+    warn: car && car.price > IL26.carCap ? [t('w_cbCap', {c: MI(IL26.carCap)})] : [],
     split: {
       title: t('c_split'),
       items: [
         {name: t('l_netPay'),   v: r.net,           cls:'c-ink',    fmt: MI(r.net)},
         {name: t('l_incTax'),   v: r.tax,           cls:'c-accent', fmt: MI(r.tax)},
         {name: t('l_niHealth'), v: r.ni + r.health, cls:'c-warm',   fmt: MI(r.ni + r.health)},
-        {name: t('l_savings'),  v: r.pens + r.study,cls:'c-soft',   fmt: MI(r.pens + r.study)}
+        {name: t('l_savings'),  v: r.pens + r.study,cls:'c-soft',   fmt: MI(r.pens + r.study)},
+        ...(r.carPay > 0 ? [{name: t('r_sCarPay'), v: r.carPay, cls: 'c-car', fmt: MI(r.carPay)}] : [])
       ]
     }
   };
@@ -8507,8 +8559,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "5.1", "date": "2026-10-14", "notes": {"he": "במחשבון השכר: הוצאות מהנטו (רכב, דלק לפי ק״מ, ביטוח, טסט, חניה, כביש 6, תחבורה ציבורית והוצאות אישיות) וכמה נשאר בכיס. החיבורים בזמן אמת מוצגים רק לבעל האפליקציה.", "ar": "في حاسبة الراتب: مصاريف من الصافي (سيارة، وقود حسب الكيلومترات، تأمين، فحص، موقف، الشارع 6، مواصلات ومصاريف شخصية) وكم يبقى. الاتصالات المباشرة تظهر لمالك التطبيق فقط.", "en": "Salary: costs out of net pay (car, fuel by km, insurance, test, parking, Highway 6, transit and your own items) and what is left. Live connections are shown only to the app owner."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.170520';
+var CHANGELOG = [{"v": "5.2", "date": "2026-10-14", "notes": {"he": "במחשבון השכר: רכב מהעבודה (רכב צמוד). מזינים מחיר מחירון, סוג רכב, השתתפות וגילום, ורואים את שווי השימוש וכמה הרכב מוריד מהנטו בחודש ובשנה.", "ar": "في حاسبة الراتب: سيارة من العمل (سيارة مرافقة). أدخل سعر القائمة ونوع السيارة والمساهمة والتجسيم، وشاهد قيمة الاستخدام وكم تخفض السيارة من الصافي شهريًا وسنويًا.", "en": "Salary: work car (company car). Enter the list price, car type, your contribution and gross-up, and see the benefit value and how much the car cuts from net pay each month and year."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.172005';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
