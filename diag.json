@@ -1,0 +1,46 @@
+{
+ "cbs_cpi_120010": {
+  "name": "Consumer Price Index - General",
+  "sample": "{\"month\":[{\"code\":120010,\"name\":\"Consumer Price Index - General\",\"date\":[{\"year\":2026,\"percent\":0.7,\"percentYear\":1.5,\"currBase\":{\"baseDesc\":\"Average 2024\",\"value\":105.8},\"prevBase\":null,\"month\":8,\"monthDesc\":\"August\"},{\"year\":2026,\"percent\":0.3,\"percentYear\":1.5,\"currBase\":{\"baseDesc\":\"Average 2024\",\"value\":105.1},\"prevBase\":null,\"month\":7,\"monthDesc\":\"July\"},{\"year\":2026,\"percent\":0.0,\"percentYear\":1.6,\"currBase\":{\"baseDesc\":\"Average 2024\",\"value\":104.8},\"prevBase\":null,\"month\":6,\"monthDesc\":\"June\"},{\"year\":2026,\"percent\":-0.3,\"percentYear\":1.9,\"currBase\":{\"baseDesc\":\"Average 2024\",\"value\":104.8},\"prevBase\":null,\"month\":5,\"monthDesc\":\"May\"},{\"year\":2026,\"percent\":1.2,\"percentYear\":1.9,\"currBase\":{\"baseDesc\":\"Average 2024\",\"value\":105.1},\"prevBase\":null,\"month\":4,\"monthDesc\":\"April\"},{\"year\":2026,\"percent\":0.4,\"percentYear\":1.9,\"currBase\":{\"baseDesc\":\"Average 2024\",\"value\":103.9},\"prevB",
+  "n": 260
+ },
+ "cbs_build_200010": {
+  "name": "Price index of input in residential building - general",
+  "sample": "{\"month\":[{\"code\":200010,\"name\":\"Price index of input in residential building - general\",\"date\":[{\"year\":2026,\"percent\":0.4,\"percentYear\":3.5,\"currBase\":{\"baseDesc\":\"July 2025\",\"value\":103.9},\"prevBase\":null,\"month\":8,\"monthDesc\":\"August\"},{\"year\":2026,\"percent\":-0.1,\"percentYear\":3.5,\"currBase\":{\"baseDesc\":\"July 2025\",\"value\":103.5},\"prevBase\":null,\"month\":7,\"monthDesc\":\"July\"},{\"year\":2026,\"percent\":0.2,\"percentYear\":3.7,\"currBase\":{\"baseDesc\":\"July 2025\",\"value\":103.6},\"prevBase\":null,\"month\":6,\"monthDesc\":\"June\"},{\"year\":2026,\"percent\":0.6,\"percentYear\":3.5,\"currBase\":{\"baseDesc\":\"July 2025\",\"value\":103.4},\"prevBase\":null,\"month\":5,\"monthDesc\":\"May\"},{\"year\":2026,\"percent\":1.1,\"percentYear\":3.0,\"currBase\":{\"baseDesc\":\"July 2025\",\"value\":102.8},\"prevBase\":null,\"month\":4,\"monthDesc\":\"April\"},{\"year\":2026,\"percent\":0.2,\"percentYear\":2.1,\"currBase\":{\"baseDesc\":\"July 2025\",\"value\":101.7},",
+  "n": 260
+ },
+ "cbs_house_40010": {
+  "name": "Prices of Dwellings",
+  "sample": "{\"month\":[{\"code\":40010,\"name\":\"Prices of Dwellings\",\"date\":[{\"year\":2026,\"percent\":0.2,\"percentYear\":-1.2,\"currBase\":{\"baseDesc\":\"Average 1993\",\"value\":594.8},\"prevBase\":null,\"month\":6,\"monthDesc\":\"June\"},{\"year\":2026,\"percent\":0.1,\"percentYear\":-1.5,\"currBase\":{\"baseDesc\":\"Average 1993\",\"value\":593.6},\"prevBase\":null,\"month\":5,\"monthDesc\":\"May\"},{\"year\":2026,\"percent\":-1.1,\"percentYear\":-2.0,\"currBase\":{\"baseDesc\":\"Average 1993\",\"value\":593.0},\"prevBase\":null,\"month\":4,\"monthDesc\":\"April\"},{\"year\":2026,\"percent\":-0.4,\"percentYear\":-1.3,\"currBase\":{\"baseDesc\":\"Average 1993\",\"value\":599.6},\"prevBase\":null,\"month\":3,\"monthDesc\":\"March\"},{\"year\":2026,\"percent\":0.4,\"percentYear\":-1.1,\"currBase\":{\"baseDesc\":\"Average 1993\",\"value\":602.0},\"prevBase\":null,\"month\":2,\"monthDesc\":\"February\"},{\"year\":2026,\"percent\":-0.1,\"percentYear\":-1.7,\"currBase\":{\"baseDesc\":\"Average 1993\",\"value\":599.6},\"prevBa",
+  "n": 138
+ },
+ "chapter_c": "{\"chapterId\":\"c\",\"chapterName\":null,\"chapterOrder\":null,\"mainCode\":null,\"subject\":[{\"subjectId\":49,\"subjectName\":\"Index of Input in Residential Building (Excl. V.A.T.), by Main Group and Sub-Group\",\"code\":null},{\"subjectId\":50,\"subjectName\":\"Index of Input Prices in Residential Building (Excl. V.A.T.), by Building Stages\",\"code\":null}]}",
+ "chapter_aa": "{\"chapterId\":\"aa\",\"chapterName\":null,\"chapterOrder\":null,\"mainCode\":null,\"subject\":[{\"subjectId\":45,\"subjectName\":\"Dwellings Price Index\",\"code\":null},{\"subjectId\":166,\"subjectName\":\"Index of Prices of Dwellings by District\",\"code\":null},{\"subjectId\":167,\"subjectName\":\"Index of Prices of Newly-built Dwellings\",\"code\":null}]}",
+ "mkt_TA35.TA": "HTTP Error 429: Too Many Requests",
+ "mkt_^TA35.TA": "HTTP Error 429: Too Many Requests",
+ "mkt_^TA125.TA": "HTTP Error 429: Too Many Requests",
+ "mkt_TA125.TA": "HTTP Error 429: Too Many Requests",
+ "mkt_^GSPC": "HTTP Error 429: Too Many Requests",
+ "mkt_^NDX": "HTTP Error 429: Too Many Requests",
+ "mkt_^DJI": "HTTP Error 429: Too Many Requests",
+ "mkt_GC=F": "HTTP Error 429: Too Many Requests",
+ "mkt_BZ=F": "HTTP Error 429: Too Many Requests",
+ "log": [
+  "ecb 2026-10-14",
+  "boi fx 3.0750",
+  "crypto 29",
+  "boi rate 3.25",
+  "cpi 2026-08",
+  "cpi 120010 2026-08",
+  "build 200010 2026-08",
+  "house 40010 2026-06",
+  "ta35 failed",
+  "ta125 failed",
+  "spx failed",
+  "ndx failed",
+  "dji failed",
+  "gold failed",
+  "brent failed",
+  "markets 0"
+ ]
+}
