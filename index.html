@@ -1134,6 +1134,8 @@ body:not(.own) .own-only{display:none!important}
 .dev-row{flex-wrap:wrap}.dev-row input{flex:1 1 100%}.dev-row .gold-btn,.dev-row .mv{flex:1}
 .own-pill{display:inline-flex;align-items:center;margin-inline-start:8px;padding:2px 9px;border-radius:999px;font-size:.72rem;font-weight:700;background:rgba(242,196,90,.18);color:var(--gold-ui);border:1px solid rgba(242,196,90,.45);white-space:nowrap;vertical-align:middle}
 .own-pill-h{margin:4px 0 0;color:var(--gold,#9A6A06)}
+.dev-two{display:grid;grid-template-columns:1fr 2fr;gap:8px;margin-bottom:8px}.dev-f label{display:block;font-size:.8rem;margin-bottom:4px}.dev-f input{width:100%;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink);font:inherit;letter-spacing:.06em}
+@media (max-width:380px){.dev-two{grid-template-columns:1fr}}
 
 </style>
 </head>
@@ -3613,6 +3615,10 @@ Object.assign(T, {
 Object.assign(T, {
   perm_ownerN:['הבעלים: {n}','المالك: {n}','Owner: {n}'], own_pillN:['👑 בעלים: {n} · מצב מפתח','👑 المالك: {n} · وضع المطوّر','👑 Owner: {n} · developer mode'],
   perm_ownerDevS:['מצב מפתח פעיל במכשיר הזה: אתה רואה ומנהל את מקורות הנתונים, החיבורים ונתוני המערכת. בלי הקוד אף אחד לא רואה את זה.','وضع المطوّر مفعّل على هذا الجهاز: ترى وتدير مصادر البيانات والاتصالات وبيانات النظام. بدون الرمز لا يرى أحد ذلك.','Developer mode is on for this device: you see and manage data sources, connections and system figures. Without the code nobody sees any of this.']
+});
+Object.assign(T, {
+  dev_name:['שם הבעלים','اسم المالك','Owner name'], dev_needName:['צריך להקליד גם את שם הבעלים','يجب كتابة اسم المالك أيضًا','Type the owner name too'], dev_needCode:['צריך להקליד גם את קוד המפתח','يجب كتابة رمز المطوّر أيضًا','Type the developer code too'],
+  dev_bad2:['השם או הקוד לא נכונים','الاسم أو الرمز غير صحيح','The name or the code is wrong']
 });
 
 const t = (k, p) => {
@@ -8996,8 +9002,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "6.3", "date": "2026-10-14", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.224207';
+var CHANGELOG = [{"v": "6.4", "date": "2026-10-14", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.224804';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -11289,8 +11295,8 @@ tryLive = function(manual){ return refreshEverything(!!manual); };
 document.addEventListener('click', e => { if (e.target.closest('.rf-btn')) refreshEverything(true); });
 
 /* ================= data sources centre: for the developer only. Every number, where it comes from, when it changed and why it may lag ================= */
-var DEV_HASH = '0a8be6ca6fcadfecd55911539a813806fbce68c862977f7bf479fffeeea14500', DEV_ON = false;
-try { DEV_ON = RAWLS.getItem('fin-dev') === DEV_HASH; } catch (e) {}
+var DEV_TOKEN = '0194ca4ea1c0d4670de2ff16c5cf95180a49832ab1697a53d9d53841f314a10b', DEV_ON = false;
+try { DEV_ON = RAWLS.getItem('fin-dev') === DEV_TOKEN; } catch (e) {}
 var OFFI = {ils: NaN, eur: NaN, at: 0};
 const applyDbRatesSrc = applyDbRates;
 applyDbRates = function(d){ try { if (d && d.usd && +d.usd.ILS > 0 && +d.asOf >= (OFFI.at || 0)){ OFFI = {ils: +d.usd.ILS, eur: +d.usd.EUR > 0 ? +d.usd.ILS / +d.usd.EUR : NaN, at: +d.asOf}; } } catch (e) {} const r = applyDbRatesSrc.apply(this, arguments); try { if (d && META.official && META.unix === +d.asOf) Object.keys(d.usd || {}).forEach(k => { FXSRC[k] = {s: 'boi', at: +d.asOf * 1000}; }); } catch (e) {} return r; };
@@ -11391,38 +11397,47 @@ document.addEventListener('click', e => {
   if (DEV_TAPS.length < 5 || $('#dev_box')) return;
   DEV_TAPS = [];
   const box = e.target.closest('.upd-box') || e.target.parentNode;
-  box.insertAdjacentHTML('beforeend', `<div class="dev-box" id="dev_box"><label for="dev_code">${asEsc(t('dev_code'))}</label><div class="dev-row"><input id="dev_code" type="text" inputmode="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" placeholder="FC-XXXX-XXXX-XXXX"><button type="button" class="mv wide" id="dev_paste">${asEsc(t('dev_paste'))}</button><button type="button" class="gold-btn" id="dev_go">${asEsc(t('dev_go'))}</button></div><small class="hint" id="dev_msg"></small></div>`);
-  setTimeout(() => { const i = $('#dev_code'); if (i) i.focus(); }, 50);
+  box.insertAdjacentHTML('beforeend', `<div class="dev-box" id="dev_box"><div class="dev-two"><div class="dev-f dev-fn"><label for="dev_name">${asEsc(t('dev_name'))}</label><input id="dev_name" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr"></div>
+    <div class="dev-f"><label for="dev_code">${asEsc(t('dev_code'))}</label><input id="dev_code" type="text" inputmode="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" placeholder="FC-XXXX-XXXX-XXXX"></div></div>
+    <div class="dev-row"><button type="button" class="mv wide" id="dev_paste">${asEsc(t('dev_paste'))}</button><button type="button" class="gold-btn" id="dev_go">${asEsc(t('dev_go'))}</button></div><small class="hint" id="dev_msg"></small></div>`);
+  setTimeout(() => { const i = $('#dev_name'); if (i) i.focus(); }, 50);
 });
-async function devTry(raw){
-  const i = $('#dev_code'), m = $('#dev_msg'); if (!i && raw == null) return false;
-  const code = String(raw != null ? raw : i.value || '').replace(/^.*?(FC[-\s]?)/i, 'FC').replace(/[^0-9a-z]/gi, '').toUpperCase();
+/* both the owner's name and the developer code are needed; only a fingerprint of the pair is kept in the app */
+const devNorm = s => String(s || '').replace(/^.*?(FC[-\s]?)/i, 'FC').replace(/[^0-9a-z]/gi, '').toUpperCase();
+const devNameNorm = s => String(s || '').replace(/\s+/g, '').toUpperCase();
+async function devTry(rawName, rawCode, quiet){
+  const ni = $('#dev_name'), ci = $('#dev_code'), m = $('#dev_msg');
+  const name = devNameNorm(rawName != null ? rawName : ni && ni.value), code = devNorm(rawCode != null ? rawCode : ci && ci.value);
+  if (!name || code.length < 14){ if (!quiet && m) m.textContent = t(!name ? 'dev_needName' : 'dev_needCode'); return false; }
   let h = '';
-  try { const b = await pbk(code, new TextEncoder().encode('fincalc-dev-v1'), 150000, 256); h = Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join(''); } catch (e) {}
-  if (h && h === DEV_HASH){ try { RAWLS.setItem('fin-dev', DEV_HASH); } catch (e) {} DEV_ON = true; await devName(code); const b = $('#dev_box'); if (b) b.remove(); liveApply(); devPermSync(); toast(t('dev_onDone')); return true; }
-  if (m) m.textContent = t('dev_bad');
+  try { const b = await pbk(name + ':' + code, new TextEncoder().encode('fincalc-dev-v2'), 150000, 256); h = Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join(''); } catch (e) {}
+  if (h && h === DEV_TOKEN){
+    try { RAWLS.setItem('fin-dev', DEV_TOKEN); RAWLS.setItem('fin-dev-n', name); } catch (e) {}
+    DEV_ON = true; DEV_NAME = name; const b = $('#dev_box'); if (b) b.remove(); liveApply(); devPermSync(); toast(t('dev_onDone')); return true;
+  }
+  if (m) m.textContent = t('dev_bad2');
   return false;
 }
 /* paste the code: a paste button, pasting straight into the field, or opening the site with #dev=CODE */
 document.addEventListener('click', async e => {
   if (!e.target.closest('#dev_paste')) return;
   const i = $('#dev_code'), m = $('#dev_msg');
-  try { const txt = await navigator.clipboard.readText(); if (txt && i){ i.value = txt.trim(); devTry(); return; } } catch (err) {}
+  try { const txt = await navigator.clipboard.readText(); if (txt && i){ const pair = /^\s*([A-Za-z]{2,})\s*[~:]\s*(FC.*)$/i.exec(txt.trim()); if (pair){ const n = $('#dev_name'); if (n) n.value = pair[1]; i.value = pair[2]; } else i.value = txt.trim(); devTry(null, null, true).then(ok => { if (!ok && m) m.textContent = t($('#dev_name') && !$('#dev_name').value ? 'dev_needName' : 'dev_bad2'); }); return; } } catch (err) {}
   if (i){ i.focus(); i.select(); } if (m) m.textContent = t('dev_pasteHint');
 });
-document.addEventListener('paste', e => { if (e.target && e.target.id === 'dev_code') setTimeout(() => devTry(), 30); });
-document.addEventListener('input', e => { if (e.target && e.target.id === 'dev_code' && String(e.target.value).replace(/[^0-9a-z]/gi, '').length >= 14) devTry(); });
+document.addEventListener('paste', e => { if (e.target && (e.target.id === 'dev_code' || e.target.id === 'dev_name')) setTimeout(() => devTry(null, null, true), 30); });
+document.addEventListener('input', e => { if (e.target && (e.target.id === 'dev_code' || e.target.id === 'dev_name')) devTry(null, null, true); });
 async function devFromHash(){
   if (IN_CLAUDE) return;
   const m = /[#&]dev=([^&]+)/i.exec(location.hash || ''); if (!m) return;
-  const code = decodeURIComponent(m[1]);
+  const raw = decodeURIComponent(m[1]), pair = /^([^~:]+)[~:](.+)$/.exec(raw);
   try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
-  if (!(await devTry(code))) toast(t('dev_bad'));
+  if (!pair || !(await devTry(pair[1], pair[2], true))) toast(t('dev_bad2'));
 }
 devFromHash();
 window.addEventListener('hashchange', devFromHash);
 document.addEventListener('click', e => { if (e.target.closest('#dev_go')) devTry(); });
-document.addEventListener('keydown', e => { if (e.target && e.target.id === 'dev_code' && e.key === 'Enter'){ e.preventDefault(); devTry(); } });
+document.addEventListener('keydown', e => { if (e.target && (e.target.id === 'dev_code' || e.target.id === 'dev_name') && e.key === 'Enter'){ e.preventDefault(); devTry(); } });
 /* a quiet shortcut for the developer under the home board */
 const ixBoardSrc = ixBoard;
 ixBoard = function(){ const r = ixBoardSrc.apply(this, arguments); const n = $('#hmx .mkt-note'); if (n && liveOwner() && !$('#src_open')) n.insertAdjacentHTML('beforeend', ` <button type="button" class="fg-x" id="src_open">${asEsc(t('src_open'))}</button>`); return r; };
@@ -11460,16 +11475,8 @@ function ownPill(){
   });
   const hh = $('.home-hello'); if (hh){ let p = $('.own-pill', hh.parentNode); if (own && !p){ p = document.createElement('span'); p.className = 'own-pill own-pill-h'; hh.insertAdjacentElement('afterend', p); } if (p){ if (own) p.textContent = DEV_NAME ? t('own_pillN', {n: DEV_NAME}) : t('own_pillDev'); else p.remove(); } }
 }
-var DEV_NAME_BOX = {"iv":"MX7W0qaYkCrTf/+r","ct":"537AM3eN8Duc8TpRImD82yag+tg="}, DEV_NAME = '';
+var DEV_NAME = '';
 try { if (DEV_ON) DEV_NAME = RAWLS.getItem('fin-dev-n') || ''; } catch (e) {}
-async function devName(code){
-  try {
-    const enc = new TextEncoder(), base = await crypto.subtle.importKey('raw', enc.encode(code), 'PBKDF2', false, ['deriveKey']);
-    const key = await crypto.subtle.deriveKey({name: 'PBKDF2', hash: 'SHA-256', salt: enc.encode('fincalc-dev-name-v1'), iterations: 150000}, base, {name: 'AES-GCM', length: 256}, false, ['decrypt']);
-    DEV_NAME = new TextDecoder().decode(await crypto.subtle.decrypt({name: 'AES-GCM', iv: u8(DEV_NAME_BOX.iv)}, key, u8(DEV_NAME_BOX.ct)));
-    RAWLS.setItem('fin-dev-n', DEV_NAME);
-  } catch (e) { DEV_NAME = ''; }
-}
 function devPermSync(){ try { permRender(); } catch (e) {} try { shRender(); } catch (e) {} ownPill(); }
 Promise.resolve(PERM_P).then(devPermSync, devPermSync);
 document.addEventListener('click', e => { if (e.target.closest('#dev_go, #dev_paste, #dev_off')) setTimeout(devPermSync, 900); });
