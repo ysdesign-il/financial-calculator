@@ -729,6 +729,46 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
 .skins-h:first-of-type{margin-top:0}
 .skins-now{grid-column:1/-1;margin:0;padding:10px 12px;border-radius:12px;border:1px solid color-mix(in srgb,var(--gold-ui) 55%,transparent);background:color-mix(in srgb,var(--gold-ui) 12%,transparent);font-weight:600}
 .skin-live{font-style:normal;font-size:.72rem;font-weight:700;padding:1px 7px;border-radius:999px;background:var(--gold-ui);color:#140d02;vertical-align:middle}
+/* home clock */
+.hclock{margin:2px 0 14px}
+.hclock[hidden]{display:none}
+.ck{color:var(--ink)}
+.ck-tag{font-size:.7rem;font-weight:600;color:var(--ink-2);padding:1px 7px;border-radius:999px;border:1px solid var(--line);margin-inline-end:6px;vertical-align:middle}
+.ck-dates{display:flex;flex-direction:column;gap:5px;font-size:.92rem}
+.ck-dates b{font-weight:600}
+.ck-dig{padding:14px 16px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(160deg,var(--g1),var(--g2))}
+.ck-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.ck-big{font-size:clamp(2.4rem,12vw,3.4rem);font-weight:600;line-height:1;letter-spacing:.01em;font-variant-numeric:tabular-nums;color:var(--gold-ui)}
+.ck-row .ck-wd{font-size:1.05rem;font-weight:600;color:var(--ink-2)}
+.ck-dates-row{flex-direction:row;flex-wrap:wrap;gap:6px 18px;margin-top:10px}
+.ck-analog{display:flex;align-items:center;gap:16px;padding:14px 16px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(160deg,var(--g1),var(--g2))}
+.ck-face{flex:none}
+.ck-rim{fill:var(--surface);stroke:var(--gold-ui);stroke-width:2.2}
+.ck-ticks line{stroke:var(--ink-2);stroke-width:1.6;stroke-linecap:round}
+.ck-h{stroke:var(--ink);stroke-width:4;stroke-linecap:round}
+.ck-m{stroke:var(--ink);stroke-width:2.6;stroke-linecap:round}
+.ck-s{stroke:var(--gold-ui);stroke-width:1.3;stroke-linecap:round}
+.ck-pin{fill:var(--gold-ui)}
+.ck-col{display:flex;flex-direction:column;gap:6px;min-width:0}
+.ck-col > .ck-wd{font-size:1.15rem;font-weight:650}
+.ck-small{color:var(--ink-2);font-size:.85rem;font-variant-numeric:tabular-nums}
+.ck-cal{display:flex;align-items:stretch;gap:14px;padding:12px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(160deg,var(--g1),var(--g2))}
+.ck-page{flex:none;width:108px;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;align-items:center;background:var(--surface);border:1px solid var(--line);box-shadow:0 6px 16px var(--shadow)}
+.ck-page .ck-mo{align-self:stretch;text-align:center;padding:5px 4px;font-size:.78rem;font-weight:700;background:var(--gold-ui);color:#140d02}
+.ck-page .ck-day{font-size:2.6rem;line-height:1.1;font-weight:700;padding-top:4px;font-family:'Frank Ruhl Libre',Georgia,serif}
+.ck-page .ck-wd{font-size:.82rem;color:var(--ink-2);padding-bottom:8px}
+.ck-big2{font-size:1.7rem;font-weight:600;font-variant-numeric:tabular-nums;color:var(--gold-ui);line-height:1}
+.ck-min{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;font-size:.92rem;color:var(--ink-2)}
+.ck-min .ck-tm{font-size:1.15rem;color:var(--ink);font-variant-numeric:tabular-nums}
+/* clock style picker */
+.cstyles{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin:0 0 14px}
+.cs-c{appearance:none;font:inherit;color:var(--ink);text-align:start;cursor:pointer;display:flex;flex-direction:column;gap:6px;padding:8px 8px 10px;border-radius:16px;border:1px solid var(--line);background:var(--g1);position:relative}
+.cs-c[aria-checked="true"]{border-color:var(--gold-ui);box-shadow:0 0 0 2px var(--gold-ui)}
+.cs-c small{color:var(--ink-2);font-size:.78rem}
+.cs-pv{height:104px;border-radius:11px;background:var(--bg);overflow:hidden;display:flex;align-items:center;justify-content:center;padding:6px;pointer-events:none}
+.cs-pv .ck{transform:scale(.46);transform-origin:center;width:217%;flex:none}
+.cs-pv .ck-min{transform:scale(.62);width:160%}
+.cs-off{font-size:2rem;color:var(--ink-2)}
 
 </style>
 </head>
@@ -2525,6 +2565,18 @@ Object.assign(T, {
   sk_eidfitr:['עיד אל-פיטר','عيد الفطر','Eid al-Fitr'], sk_eidfitrS:['אמרלד וזהב עם דוגמה גאומטרית','زمرّدي وذهبي بنقشة هندسية','Emerald and gold with a geometric pattern'],
   sk_eidadha:['עיד אל-אדחא','عيد الأضحى','Eid al-Adha'], sk_eidadhaS:['זהב של זעפרן ושקיעה במדבר','ذهبي الزعفران وغروب الصحراء','Saffron gold and a desert sunset']
 });
+Object.assign(T, {
+  set_clock:['שעון ותאריך','الساعة والتاريخ','Clock and date'],
+  f_clock24:['תצוגת שעה','عرض الوقت','Time format'], o_24h:['24 שעות','24 ساعة','24-hour'], o_12h:['12 שעות (AM/PM)','12 ساعة (ص/م)','12-hour (AM/PM)'],
+  f_clockSec:['שניות','الثواني','Seconds'], f_clockHeb:['תאריך עברי','التاريخ العبري','Hebrew date'], f_clockHijri:['תאריך היג׳רי','التاريخ الهجري','Hijri date'],
+  h_clockHeb:['התאריך העברי מתחלף בחצות, לא בשקיעה.','يتغيّر التاريخ العبري عند منتصف الليل، لا عند الغروب.','The Hebrew date changes at midnight, not at sunset.'],
+  cs_digital:['דיגיטלי','رقمي','Digital'], cs_digitalS:['ספרות גדולות וברורות','أرقام كبيرة وواضحة','Large, clear numerals'],
+  cs_analog:['אנלוגי','عقارب','Analog'], cs_analogS:['שעון מחוגים קלאסי','ساعة عقارب كلاسيكية','A classic face with hands'],
+  cs_calendar:['לוח שנה','تقويم','Calendar'], cs_calendarS:['דף לוח שנה עם היום בגדול','ورقة تقويم مع اليوم بخط كبير','A calendar page with the day up front'],
+  cs_minimal:['מינימלי','بسيط','Minimal'], cs_minimalS:['שורה אחת קטנה ושקטה','سطر واحد صغير وهادئ','One small, quiet line'],
+  cs_off:['בלי שעון','بدون ساعة','No clock'], cs_offS:['מסך הבית בלי שעון ותאריך','الشاشة الرئيسية بلا ساعة وتاريخ','Home screen without the clock'],
+  ck_heb:['עברי','عبري','Hebrew'], ck_hijri:['היג׳רי','هجري','Hijri'], ck_greg:['לועזי','ميلادي','Gregorian']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -2672,7 +2724,7 @@ const RTL = new Set(['he','ar','fa','ur','yi','ps','sd','ug','ckb','dv']);
 var TOUCHED = [], TILE_F = 'all', MY_HANDLE = '';
 try { MY_HANDLE = LS.getItem('fin-handle') || ''; } catch (e) {}
 const MKT = {boi: 3.25, boiDate: '1.9.2026', boiNext: '21.10.2026', cpi: 1.5, cpiMonth: '08/2026', cpiYtd: 2.1, cpiYtdTo: 8, src: 'built'};
-const SET_DEF = {holAuto:'0', autoUpd:'1', aiEngine:'auto', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'auto', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -3010,6 +3062,7 @@ SICO.set_handle = '<circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0
 SICO.set_ai = '<path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/>';
 SICO.set_gkey = SICO.set_gkey || '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/>';
 SICO.set_upd = '<path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/>';
+SICO.set_clock = '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>';
 function unitHTML(u){
   if (!u) return '';
   if (u === 'cur') return `<span class="u cur">${symOf(cur)}</span>`;
@@ -3417,6 +3470,7 @@ function homePanelHTML(){
   return `<section class="panel panel-home" id="panel-home" role="tabpanel" aria-labelledby="tab-home" hidden>
     <h2 class="home-hello" data-i="home_hello"></h2>
     <p class="home-sub" data-i="home_sub"></p>
+    <div class="hclock" id="hclock"></div>
     <p class="home-user" id="homeUser" hidden></p>
     <div class="hhero" id="hh"></div>
     <div id="hrem"></div>
@@ -3613,6 +3667,11 @@ function settingsPanelHTML(){
     <div class="perm" id="perm" role="status"><span class="perm-dot"></span><div><b id="perm_t"></b><small id="perm_s"></small></div></div>
     ${sec('set_account', accountHTML())}
     ${SETDEFS.slice(0, 2).map(([k, fs]) => sec(k, (k === 'set_look' ? '<div class="skins" id="skins" role="radiogroup" data-ia="f_theme"></div>' : '') + fl(fs))).join('')}
+    ${sec('set_clock', '<div class="cstyles" id="cstyles" role="radiogroup" data-ia="set_clock"></div><div class="fields">' + [
+      SEL('set_clock24','f_clock24','1',[['1','o_24h'],['0','o_12h']]),
+      SEL('set_clockSec','f_clockSec','0',[['1','o_on'],['0','o_off']]),
+      SEL('set_clockHeb','f_clockHeb','1',[['1','o_on'],['0','o_off']],{hint:'h_clockHeb'}),
+      SEL('set_clockHijri','f_clockHijri','0',[['1','o_on'],['0','o_off']])].map(fieldHTML).join('') + '</div>')}
     ${sec('set_numbers', fl(SETDEFS[2][1]))}
     ${sec('set_calc', fl(SETDEFS[3][1]))}
     ${sec('set_profile', fl(SETDEFS[4][1]))}
@@ -3657,7 +3716,7 @@ const SMAP = {set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
-  set_dtax:'dtax', set_deptime:'deptime', set_capkind:'capkind', set_remember:'remember', set_rateSrc:'rateSrc', set_gkey:'gkey', set_stale:'stale', set_sort:'sort', set_liveFx:'liveFx', set_fxInt:'fxInt', set_liveFiat:'liveFiat', set_liveCrypto:'liveCrypto', set_boiDb:'boiDb', set_autoRef:'autoRef', set_autoUpd:'autoUpd', set_holAuto:'holAuto', set_aiEngine:'aiEngine', set_pmName:'pmName', set_pmStyle:'pmStyle'};
+  set_dtax:'dtax', set_deptime:'deptime', set_capkind:'capkind', set_remember:'remember', set_rateSrc:'rateSrc', set_gkey:'gkey', set_stale:'stale', set_sort:'sort', set_liveFx:'liveFx', set_fxInt:'fxInt', set_liveFiat:'liveFiat', set_liveCrypto:'liveCrypto', set_boiDb:'boiDb', set_autoRef:'autoRef', set_autoUpd:'autoUpd', set_holAuto:'holAuto', set_clock24:'clock24', set_clockSec:'clockSec', set_clockHeb:'clockHeb', set_clockHijri:'clockHijri', set_aiEngine:'aiEngine', set_pmName:'pmName', set_pmStyle:'pmStyle'};
 const DEFKEYS = ['vat','sex','fee','pens','study','erPens','erSev','erStudy','loanRate','invRate','cpi','infl','gainTax','dealer','buyer','dtax','deptime','capkind'];
 function fillCB(){
   CUR_TABS.forEach(id => {
@@ -6984,8 +7043,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "3.0", "date": "2026-10-14", "notes": {"he": "ערכות לחגים: ראש השנה, חנוכה, פסח, חג המולד, פסחא, סילבסטר, רמדאן, עיד אל-פיטר ועיד אל-אדחא — עם אפשרות למעבר אוטומטי בזמן החג.", "ar": "سمات للأعياد: رأس السنة العبرية، حانوكا، الفصح اليهودي، الميلاد، الفصح، رأس السنة الميلادية، رمضان، عيد الفطر وعيد الأضحى — مع خيار التبديل التلقائي خلال العيد.", "en": "Holiday themes: Rosh Hashanah, Hanukkah, Passover, Christmas, Easter, New Year's Eve, Ramadan, Eid al-Fitr and Eid al-Adha — with an option to switch automatically during the holiday."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.093454';
+var CHANGELOG = [{"v": "3.1", "date": "2026-10-14", "notes": {"he": "שעון עם תאריך לועזי ותאריך עברי במסך הבית, בחמישה סגנונות לבחירה בהגדרות.", "ar": "ساعة مع التاريخ الميلادي والعبري في الشاشة الرئيسية، بخمسة أنماط للاختيار في الإعدادات.", "en": "A clock with the Gregorian and Hebrew dates on the home screen, in five styles to choose from in Settings."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.093920';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -7068,7 +7127,7 @@ renderStamp = function(){ _rsUpd.apply(this, arguments); updRender(); };
 /* ---- settings: a clear hub of categories, each opening its own page ---- */
 var SET_CATS = [
   {id: 'account', c: 'c-blue',   ic: 'set_account', g: 0, secs: ['set_account']},
-  {id: 'display', c: 'c-violet', ic: 'set_look',    g: 1, secs: ['set_look', 'set_lang', 'set_numbers', 'set_tabs']},
+  {id: 'display', c: 'c-violet', ic: 'set_look',    g: 1, secs: ['set_look', 'set_clock', 'set_lang', 'set_numbers', 'set_tabs']},
   {id: 'calc',    c: 'c-gold',   ic: 'set_calc',    g: 1, secs: ['set_calc', 'set_profile', 'set_curBy']},
   {id: 'conn',    c: 'c-green',  ic: 'set_live',    g: 2, secs: ['set_live', 'set_ai']},
   {id: 'links',   c: 'c-teal',   ic: 'set_links',   g: 2, secs: ['set_links']},
@@ -7563,6 +7622,94 @@ renderStamp = function(){ _rsSk.apply(this, arguments); skRender(); };
 skRender();
 
 setInterval(() => { const was = HOL_ACTIVE; applyTheme(); if (was !== HOL_ACTIVE) skRender(); }, 30 * 60000);   // holidays start and end on their own
+
+/* ---- home clock: time, Gregorian date and Hebrew date, in several styles ---- */
+var CLOCK_STYLES = ['digital', 'analog', 'calendar', 'minimal', 'off'];
+function gem(n){
+  const L = [[400, 'ת'], [300, 'ש'], [200, 'ר'], [100, 'ק'], [90, 'צ'], [80, 'פ'], [70, 'ע'], [60, 'ס'], [50, 'נ'], [40, 'מ'], [30, 'ל'], [20, 'כ'], [10, 'י'], [9, 'ט'], [8, 'ח'], [7, 'ז'], [6, 'ו'], [5, 'ה'], [4, 'ד'], [3, 'ג'], [2, 'ב'], [1, 'א']];
+  let x = n % 1000, s = '';
+  for (const [v, c] of L){ while (x >= v){ if (x === 15){ s += 'טו'; x = 0; break; } if (x === 16){ s += 'טז'; x = 0; break; } s += c; x -= v; } }
+  return s.length === 1 ? s + '׳' : s.slice(0, -1) + '״' + s.slice(-1);
+}
+function ckLoc(){ const base = {he: 'he-IL', ar: 'ar', en: 'en-GB'}[lang] || lang; return SET.digits === 'latn' ? base + '-u-nu-latn' : base; }
+function ckHeb(d){
+  try {
+    if (lang === 'he'){ const p = new Intl.DateTimeFormat('he-u-ca-hebrew', {day: 'numeric', month: 'long', year: 'numeric'}).formatToParts(d); const g = k => (p.find(x => x.type === k) || {}).value;
+      return gem(+g('day')) + ' ב' + g('month') + ' ' + gem(+g('year')); }
+    return new Intl.DateTimeFormat(ckLoc().replace(/-u-.*/, '') + '-u-ca-hebrew', {day: 'numeric', month: 'long', year: 'numeric'}).format(d);
+  } catch (e) { return ''; }
+}
+function ckHijri(d){ try { return new Intl.DateTimeFormat(ckLoc().replace(/-u-.*/, '') + '-u-ca-islamic-umalqura', {day: 'numeric', month: 'long', year: 'numeric'}).format(d); } catch (e) { return ''; } }
+function ckTime(d, sec){ return new Intl.DateTimeFormat(ckLoc(), {hour: '2-digit', minute: '2-digit', second: sec ? '2-digit' : undefined, hour12: SET.clock24 === '0'}).format(d); }
+function ckParts(d){
+  const L = ckLoc();
+  return {
+    time: ckTime(d, SET.clockSec === '1'), timeShort: ckTime(d, false),
+    weekday: new Intl.DateTimeFormat(L, {weekday: 'long'}).format(d),
+    greg: new Intl.DateTimeFormat(L, {day: 'numeric', month: 'long', year: 'numeric'}).format(d),
+    gregShort: new Intl.DateTimeFormat(L, {day: 'numeric', month: 'numeric', year: 'numeric'}).format(d),
+    day: new Intl.DateTimeFormat(L, {day: 'numeric'}).format(d), month: new Intl.DateTimeFormat(L, {month: 'long', year: 'numeric'}).format(d),
+    heb: SET.clockHeb !== '0' ? ckHeb(d) : '', hij: SET.clockHijri === '1' ? ckHijri(d) : ''
+  };
+}
+function ckAnalog(size){
+  const ticks = Array.from({length: 12}, (_, i) => `<line x1="50" y1="${i % 3 ? 9 : 7}" x2="50" y2="${i % 3 ? 13 : 16}" transform="rotate(${i * 30} 50 50)"/>`).join('');
+  return `<svg class="ck-face" viewBox="0 0 100 100" width="${size}" height="${size}" aria-hidden="true"><circle class="ck-rim" cx="50" cy="50" r="46"/><g class="ck-ticks">${ticks}</g>
+    <line class="ck-h" x1="50" y1="54" x2="50" y2="28"/><line class="ck-m" x1="50" y1="56" x2="50" y2="17"/><line class="ck-s" x1="50" y1="60" x2="50" y2="13"/><circle class="ck-pin" cx="50" cy="50" r="2.6"/></svg>`;
+}
+function ckDates(p, cls){
+  return `<div class="${cls}"><span class="ck-g"><span class="ck-tag">${asEsc(t('ck_greg'))}</span><b class="ck-greg"></b></span>` +
+    (p.heb ? `<span class="ck-hb"><span class="ck-tag">${asEsc(t('ck_heb'))}</span><b class="ck-heb" lang="${lang === 'he' ? 'he' : lang}"></b></span>` : '') +
+    (p.hij ? `<span class="ck-hj"><span class="ck-tag">${asEsc(t('ck_hijri'))}</span><b class="ck-hij"></b></span>` : '') + '</div>';
+}
+function ckHTML(style, p){
+  if (style === 'analog') return `<div class="ck ck-analog">${ckAnalog(104)}<div class="ck-col"><b class="ck-wd"></b>${ckDates(p, 'ck-dates')}<span class="ck-tm ck-small"></span></div></div>`;
+  if (style === 'calendar') return `<div class="ck ck-cal"><div class="ck-page"><span class="ck-mo"></span><b class="ck-day"></b><span class="ck-wd"></span></div><div class="ck-col"><b class="ck-tm ck-big2"></b>${ckDates(p, 'ck-dates')}</div></div>`;
+  if (style === 'minimal') return `<div class="ck ck-min"><b class="ck-tm"></b><span class="ck-wd"></span><span class="ck-gs"></span>${p.heb ? '<span class="ck-heb"></span>' : ''}${p.hij ? '<span class="ck-hij"></span>' : ''}</div>`;
+  return `<div class="ck ck-dig"><div class="ck-row"><b class="ck-tm ck-big"></b><span class="ck-wd"></span></div>${ckDates(p, 'ck-dates ck-dates-row')}</div>`;
+}
+function ckFill(root, p, d){
+  const set = (sel, v) => $$(sel, root).forEach(e => { if (e.textContent !== v) e.textContent = v; });
+  set('.ck-tm', root.closest && root.closest('.cstyles') ? p.timeShort : p.time); set('.ck-wd', p.weekday); set('.ck-greg', p.greg); set('.ck-gs', p.gregShort);
+  set('.ck-heb', p.heb); set('.ck-hij', p.hij); set('.ck-day', p.day); set('.ck-mo', p.month);
+  const face = $('.ck-face', root);
+  if (face){
+    const h = d.getHours() % 12, m = d.getMinutes(), s = d.getSeconds();
+    $('.ck-h', face).setAttribute('transform', `rotate(${h * 30 + m / 2} 50 50)`);
+    $('.ck-m', face).setAttribute('transform', `rotate(${m * 6 + s / 10} 50 50)`);
+    const sh = $('.ck-s', face); sh.style.display = SET.clockSec === '1' ? '' : 'none'; sh.setAttribute('transform', `rotate(${s * 6} 50 50)`);
+  }
+}
+var CK_KEY = '';
+function clockRender(){
+  const box = $('#hclock'); if (!box) return;
+  const style = CLOCK_STYLES.includes(SET.clockStyle) ? SET.clockStyle : 'digital';
+  box.hidden = style === 'off';
+  const d = new Date(), p = ckParts(d), key = [style, lang, SET.clockHeb, SET.clockHijri, SET.clock24, SET.clockSec, SET.digits].join('|');
+  if (style !== 'off'){ if (CK_KEY !== key){ CK_KEY = key; box.innerHTML = ckHTML(style, p); } ckFill(box, p, d); }
+  csRender();
+}
+function csRender(){
+  const box = $('#cstyles'); if (!box) return;
+  const cur = CLOCK_STYLES.includes(SET.clockStyle) ? SET.clockStyle : 'digital', d = new Date(), p = ckParts(d);
+  const key = cur + '|' + lang + '|' + [SET.clockHeb, SET.clockHijri, SET.clock24, SET.digits].join('');
+  if (box.dataset.k !== key){
+    box.dataset.k = key;
+    box.innerHTML = CLOCK_STYLES.map(s => `<button type="button" class="cs-c" role="radio" data-cstyle="${s}" aria-checked="${s === cur}">
+      <span class="cs-pv" aria-hidden="true">${s === 'off' ? '<span class="cs-off">—</span>' : ckHTML(s, p)}</span>
+      <span class="skin-n">${asEsc(t('cs_' + s))}</span><small>${asEsc(t('cs_' + s + 'S'))}</small></button>`).join('');
+  }
+  $$('.cs-pv', box).forEach(pv => ckFill(pv, p, d));
+}
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-cstyle]'); if (!c) return;
+  SET.clockStyle = c.dataset.cstyle; saveSet(); clockRender();
+});
+document.addEventListener('change', e => { if (/^set_clock|^set_digits$/.test(e.target.id || '')) setTimeout(clockRender, 0); });
+setInterval(() => { if (document.hidden) return; if (tab === 'home') clockRender(); else if (tab === 'settings' && SCAT === 'display') csRender(); }, 1000);
+const _alCk = applyLang;
+applyLang = function(){ const r = _alCk.apply(this, arguments); CK_KEY = ''; const b = $('#cstyles'); if (b) b.dataset.k = ''; clockRender(); return r; };
+clockRender();
 
 applyLang(false);
 activate(tab);
