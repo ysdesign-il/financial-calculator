@@ -1,21 +1,26 @@
 {
- "started": "2026-10-14 10:10:06 UTC",
+ "started": "2026-10-14 11:54:43 UTC",
  "events": [
-  "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
+  "  gemini gemini-flash-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
   "  gemini gemini-3.8-flash: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
-  "published uk",
+  "published ru",
+  "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
+  "published am",
   "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
-  "  gemini gemini-flash-lite-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
+  "published fr",
+  "  gemini gemini-flash-lite-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
   "  gemini: gemini quota used up",
-  "published de"
+  "published es"
  ],
  "langs": {
-  "uk": 1989,
-  "de": 1943
+  "ru": 1995,
+  "am": 1995,
+  "fr": 1995,
+  "es": 1988
  },
- "finished": "2026-10-14 10:10:22 UTC",
+ "finished": "2026-10-14 11:57:47 UTC",
  "coverage": {
-  "am": 1989,
+  "am": 1995,
   "sq": 1933,
   "hy": 1933,
   "az": 1933,
@@ -34,7 +39,7 @@
   "et": 1933,
   "fil": 1933,
   "fi": 1933,
-  "fr": 1989,
+  "fr": 1995,
   "ka": 1933,
   "de": 1943,
   "el": 1933,
@@ -71,13 +76,13 @@
   "pa": 0,
   "ps": 0,
   "ro": 1933,
-  "ru": 1989,
+  "ru": 1995,
   "sr": 0,
   "si": 0,
   "sk": 0,
   "sl": 0,
   "so": 0,
-  "es": 1989,
+  "es": 1988,
   "sw": 0,
   "sv": 0,
   "ta": 0,
@@ -93,5 +98,5 @@
   "yo": 0,
   "zu": 0
  },
- "total": 1989
+ "total": 1995
 }
