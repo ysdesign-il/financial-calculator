@@ -774,6 +774,80 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
 .iv-search .gold-btn{padding:9px 16px}
 .iv-chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
 .iv-chips .as-chip{flex:none}
+/* tools: expenses + clients */
+body[data-tab="expenses"] .ghost-btn,body[data-tab="clients"] .ghost-btn,body[data-tab="expenses"] .ex-btn,body[data-tab="clients"] .ex-btn{display:none}
+.tool-panel{display:block}
+.tool-panel[hidden]{display:none}
+.tool-panel .sec-t{margin:18px 0 10px}
+.ex-month{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 0 12px}
+.ex-month b{font-size:1.1rem}
+.ex-nav{appearance:none;width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--g1);color:var(--ink);font-size:1.3rem;cursor:pointer}
+[dir=rtl] .ex-nav{transform:scaleX(-1)}
+.exp-hero{display:flex;flex-direction:column;gap:2px;padding:16px 18px;border-radius:20px;background:var(--hero-grad);border:1px solid var(--hero-bd)}
+.exp-hero .l{color:var(--hero-label);font-size:.9rem}.exp-hero .v{font-size:clamp(1.9rem,9vw,2.6rem);color:var(--hero-val);line-height:1.15}
+.exp-hero .s{color:var(--ink-2);font-size:.85rem}.exp-hero .up{color:var(--c3)}.exp-hero .down{color:var(--c4)}
+.exp-add{display:flex;flex-direction:column;gap:10px;margin-top:14px;padding:14px;border-radius:18px;border:1px solid var(--line);background:var(--g1)}
+.exp-amt{display:flex;flex-direction:column;gap:4px}.exp-amt label,.exp-f label{font-size:.85rem;color:var(--ink-2);font-weight:600}
+.exp-amt input{font:inherit;font-size:1.8rem;font-weight:600;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--ink);font-variant-numeric:tabular-nums}
+.exp-cats{display:flex;flex-wrap:wrap;gap:6px}
+.exp-cat{appearance:none;font:inherit;font-size:.82rem;display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.exp-cat[aria-checked="true"]{border-color:var(--cc);box-shadow:inset 0 0 0 1.5px var(--cc);background:color-mix(in srgb,var(--cc) 14%,var(--surface))}
+.exp-row{display:flex;gap:10px;flex-wrap:wrap}.exp-f{display:flex;flex-direction:column;gap:4px}.exp-f.grow{flex:1;min-width:150px}
+.exp-f input{font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink)}
+.exp-rec{display:flex;align-items:center;gap:8px;font-size:.9rem}
+.exp-add .gold-btn{align-self:flex-start}
+.exp-msg{margin:0;min-height:1em}
+.exp-chart{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.exp-donut{flex:none;width:150px;height:150px;border-radius:50%;display:grid;place-items:center;margin-inline:auto}
+.exp-donut > div{width:96px;height:96px;border-radius:50%;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.exp-donut b{font-size:.95rem}.exp-donut small{font-size:.7rem;color:var(--ink-2)}
+.exp-bars{flex:1;min-width:240px;display:flex;flex-direction:column;gap:8px}
+.exp-bar{appearance:none;font:inherit;color:var(--ink);text-align:start;cursor:pointer;display:flex;flex-direction:column;gap:4px;padding:8px 10px;border-radius:12px;border:1px solid var(--line);background:var(--g1)}
+.exp-bar.on{border-color:var(--cc);box-shadow:inset 0 0 0 1.5px var(--cc)}
+.eb-h{display:flex;justify-content:space-between;gap:8px;font-size:.92rem}
+.eb-t{height:7px;border-radius:5px;background:var(--track);overflow:hidden;display:block}.eb-t i{display:block;height:100%;border-radius:5px;background:var(--cc)}
+.exp-bar small{color:var(--ink-2);font-size:.75rem}
+.exp-list-h{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.exp-list{display:flex;flex-direction:column;gap:6px}
+.exp-it{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:12px;border:1px solid var(--line);background:var(--g1);border-inline-start:4px solid var(--cc)}
+.ei-ic{font-size:1.2rem}.ei-t{flex:1;min-width:0;display:flex;flex-direction:column}.ei-t b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ei-t small{color:var(--ink-2);font-size:.78rem}
+.ei-a{font-weight:600}
+.ei-del{appearance:none;border:0;background:none;color:var(--ink-2);cursor:pointer;font:inherit;font-size:.85rem;padding:4px 6px;border-radius:8px}
+.ei-del.sure{color:#fff;background:var(--c3)}
+.exp-empty{color:var(--ink-2);padding:10px 2px;margin:0}
+.cl-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media (min-width:640px){.cl-stats{grid-template-columns:repeat(4,1fr)}}
+.cl-stat{padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--g1);display:flex;flex-direction:column}
+.cl-stat b{font-size:1.5rem;color:var(--gold-ui)}.cl-stat small{color:var(--ink-2);font-size:.8rem}
+.cl-stat.bad b{color:var(--c3)}
+.cl-h{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cl-h .gold-btn{padding:8px 14px;margin-top:8px}
+.cl-due{display:flex;flex-direction:column;gap:6px}
+.cl-duty{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:12px;border:1px solid var(--line);background:var(--g1)}
+.cl-duty.late{border-color:color-mix(in srgb,var(--c3) 60%,transparent);background:color-mix(in srgb,var(--c3) 9%,transparent)}
+.cl-chk{appearance:none;flex:none;width:32px;height:32px;border-radius:50%;border:1.5px solid var(--line);background:none;color:var(--ink-2);cursor:pointer;font-weight:700}
+.cl-chk:hover{border-color:var(--c4);color:var(--c4)}
+.cd-t{flex:1;min-width:0;display:flex;flex-direction:column}.cd-t small{color:var(--ink-2);font-size:.8rem}
+.cd-d{font-size:.82rem;font-weight:600;white-space:nowrap}.cl-duty.late .cd-d{color:var(--c3)}
+.cl-q{width:100%;font:inherit;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--ink);margin:4px 0 8px}
+.cl-fs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.cl-fs .as-chip{flex:none}.cl-fs .as-chip.on{border-color:var(--gold-ui);color:var(--gold-ui)}
+.cl-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.cl-card{padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--g1);border-inline-start:4px solid var(--sc)}
+.cc-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.cc-n{display:flex;flex-direction:column}.cc-n small{color:var(--ink-2);font-size:.8rem}
+.cc-st{flex:none;font-size:.75rem;font-weight:600;padding:2px 9px;border-radius:999px;color:var(--sc);border:1px solid color-mix(in srgb,var(--sc) 55%,transparent)}
+.cc-next{margin:6px 0 0;font-size:.85rem}.cc-next.late{color:var(--c3);font-weight:600}
+.cc-notes{margin:6px 0 0;font-size:.85rem;color:var(--ink-2);white-space:pre-line}
+.cc-act{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:8px}
+.cc-b{appearance:none;font:inherit;font-size:.85rem;text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.cc-edit{margin-inline-start:auto}.cc-fee{font-size:.85rem;color:var(--ink-2)}
+.cl-box{width:min(640px,100%)}.cl-form{overflow:auto;display:flex;flex-direction:column;gap:10px}
+.cl-form .fields{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.cl-form textarea{font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink)}
+.cl-th{margin:6px 0 0;font-size:.95rem}
+.cl-tasks{display:flex;flex-direction:column;gap:4px}
+.cl-task{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:10px;background:var(--g1);border:1px solid var(--line)}.cl-task label{flex:1;display:flex;gap:6px;align-items:center}.cl-task small{color:var(--ink-2)}
+.cl-addtask{display:flex;gap:6px;flex-wrap:wrap}.cl-addtask input{font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink)}.cl-addtask input[type=text]{flex:1;min-width:140px}
+.cl-more{margin-top:16px}
 
 </style>
 </head>
@@ -2587,6 +2661,52 @@ Object.assign(T, {
   iv_search:['חיפוש','بحث','Search'],
   ivq_usdils:['דולר/שקל','دولار/شيكل','USD/ILS'], ivq_eurils:['אירו/שקל','يورو/شيكل','EUR/ILS'], ivq_ta35:['ת״א 35','تل أبيب 35','TA-35'], ivq_btc:['ביטקוין','بيتكوين','Bitcoin'], ivq_gold:['זהב','الذهب','Gold'], ivq_spx:['S&P 500','S&P 500','S&P 500'], ivq_ndx:['נאסד״ק 100','ناسداك 100','Nasdaq 100'], ivq_oil:['נפט ברנט','نفط برنت','Brent oil'],
 });
+Object.assign(T, {
+  tab_expenses:['הוצאות חודשיות','المصاريف الشهرية','Monthly expenses'],
+  d_expenses:['רושמים כל הוצאה בשנייה ורואים לאן הולך הכסף בכל חודש, לפי קטגוריות.','سجّل كل مصروف في ثانية وشاهد أين يذهب المال كل شهر حسب الفئات.','Log any expense in a second and see where the money goes each month, by category.'],
+  tab_clients:['ניהול לקוחות לרו״ח','إدارة العملاء للمحاسب','Clients for accountants'],
+  d_clients:['כל הלקוחות במקום אחד: דיווחי מע״מ ומקדמות, משימות, שכר טרחה וקשר מהיר.','كل العملاء في مكان واحد: تقارير ضريبة القيمة المضافة والدفعات المسبقة والمهام والأتعاب والتواصل السريع.','All clients in one place: VAT and advance-tax filings, tasks, fees and quick contact.'],
+  ex_prev:['החודש הקודם','الشهر السابق','Previous month'], ex_next:['החודש הבא','الشهر التالي','Next month'],
+  exp_amount:['סכום','المبلغ','Amount'], exp_cat:['קטגוריה','الفئة','Category'], exp_date:['תאריך','التاريخ','Date'], exp_note:['תיאור (לא חובה)','الوصف (اختياري)','Description (optional)'],
+  exp_rec:['הוצאה קבועה — חוזרת כל חודש','مصروف ثابت — يتكرّر كل شهر','Fixed expense — repeats every month'],
+  exp_add:['הוספת הוצאה','إضافة مصروف','Add expense'], exp_byCat:['לפי קטגוריות','حسب الفئات','By category'], exp_list:['כל ההוצאות בחודש','كل مصاريف الشهر','All expenses this month'],
+  exp_total:['סך ההוצאות בחודש','مجموع مصاريف الشهر','Total spent this month'], exp_count:['{n} הוצאות','{n} مصاريف','{n} expenses'], exp_none:['עוד אין הוצאות בחודש הזה','لا مصاريف في هذا الشهر بعد','No expenses this month yet'],
+  exp_vsPrev:['לעומת החודש הקודם','مقارنة بالشهر السابق','vs. last month'], exp_lastM:['בחודש שעבר','الشهر الماضي','last month'],
+  exp_empty:['עוד אין כאן הוצאות. הוסיפו את הראשונה למעלה.','لا مصاريف هنا بعد. أضف أول مصروف في الأعلى.','No expenses here yet. Add the first one above.'],
+  exp_noneCat:['אין הוצאות בקטגוריה הזו בחודש הזה.','لا مصاريف في هذه الفئة هذا الشهر.','No expenses in this category this month.'],
+  exp_recShort:['קבועה','ثابت','fixed'], exp_del:['מחיקה','حذف','Delete'], exp_sure:['למחוק?','حذف؟','Delete?'],
+  exp_badAmt:['הזינו סכום גדול מאפס.','أدخل مبلغًا أكبر من صفر.','Enter an amount above zero.'], exp_added:['נוספה ✓','تمت الإضافة ✓','Added ✓'],
+  ec_home:['דיור','السكن','Housing'], ec_bills:['חשבונות','الفواتير','Bills'], ec_food:['מזון וסופר','الطعام والسوبرماركت','Food & groceries'], ec_car:['תחבורה ורכב','المواصلات والسيارة','Transport & car'],
+  ec_health:['בריאות','الصحة','Health'], ec_kids:['ילדים וחינוך','الأطفال والتعليم','Kids & education'], ec_comm:['טלפון ואינטרנט','الهاتف والإنترنت','Phone & internet'], ec_insur:['ביטוחים','التأمينات','Insurance'],
+  ec_fun:['בילויים ופנאי','الترفيه','Leisure'], ec_clothes:['ביגוד','الملابس','Clothing'], ec_debt:['הלוואות וחובות','القروض والديون','Loans & debts'], ec_save:['חיסכון והשקעות','الادّخار والاستثمار','Savings & investing'],
+  ec_gifts:['מתנות ותרומות','الهدايا والتبرّعات','Gifts & donations'], ec_other:['אחר','أخرى','Other'],
+  tools_local:['הנתונים נשמרים רק במכשיר הזה, ומוצפנים אם אתם מחוברים לחשבון.','تُحفظ البيانات على هذا الجهاز فقط، وتُشفَّر إذا كنت مسجّلًا في حساب.','Data is saved only on this device, and encrypted when you are signed in.'],
+  cl_upcoming:['דיווחים ומשימות קרובים','التقارير والمهام القريبة','Upcoming filings and tasks'], cl_list:['לקוחות','العملاء','Clients'], cl_new:['+ לקוח חדש','+ عميل جديد','+ New client'],
+  cl_search:['חיפוש לפי שם, טלפון, ת״ז/ח״פ או תגית','ابحث بالاسم أو الهاتف أو الرقم أو الوسم','Search by name, phone, ID or tag'],
+  cl_more:['הגדרות וגיבוי','الإعدادات والنسخ الاحتياطي','Settings and backup'], cl_dueDay:['יום הדיווח בחודש','يوم التقرير في الشهر','Filing day of the month'],
+  h_clDueDay:['ברירת המחדל היא ה-15 בחודש. שנו לפי מה שחל על הלקוחות שלכם.','الافتراضي هو اليوم 15 من الشهر. غيّره حسب ما ينطبق على عملائك.','The default is the 15th. Change it to whatever applies to your clients.'],
+  cl_backup:['גיבוי הלקוחות (JSON)','نسخة احتياطية للعملاء (JSON)','Clients backup (JSON)'],
+  cl_sActive:['לקוחות פעילים','عملاء نشطون','Active clients'], cl_sMonth:['דיווחים החודש','تقارير هذا الشهر','Filings this month'], cl_sLate:['באיחור','متأخرة','Overdue'], cl_sFees:['שכר טרחה חודשי','الأتعاب الشهرية','Monthly fees'],
+  cl_k_vat:['דוח מע״מ','تقرير ضريبة القيمة المضافة','VAT report'], cl_k_adv:['מקדמות מס הכנסה','دفعات ضريبة الدخل المسبقة','Income-tax advances'],
+  cl_markDone:['סימון כבוצע','تحديد كمنجز','Mark as done'], cl_late:['באיחור','متأخر','Overdue'],
+  cl_noDue:['אין דיווחים או משימות ב-30 הימים הקרובים.','لا تقارير أو مهام في الثلاثين يومًا القادمة.','No filings or tasks in the next 30 days.'],
+  cl_emptyAll:['עוד אין לקוחות. הוסיפו את הראשון בכפתור "לקוח חדש".','لا عملاء بعد. أضف أول عميل بزر «عميل جديد».','No clients yet. Add the first one with "New client".'],
+  cl_all:['הכול','الكل','All'], cl_st_active:['פעיל','نشط','Active'], cl_st_docs:['ממתין למסמכים','بانتظار المستندات','Waiting for documents'], cl_st_work:['בטיפול','قيد المعالجة','In progress'], cl_st_done:['לא פעיל','غير نشط','Inactive'],
+  cl_t_patur:['עוסק פטור','مرخّص معفى','Exempt dealer'], cl_t_murshe:['עוסק מורשה','مرخّص مسجَّل','Licensed dealer'], cl_t_ltd:['חברה בע״מ','شركة م.ض','Ltd. company'], cl_t_salaried:['שכיר','أجير','Employee'], cl_t_npo:['עמותה','جمعية','Non-profit'], cl_t_other:['אחר','أخرى','Other'],
+  cl_call:['חיוג','اتصال','Call'], cl_mail:['מייל','بريد','Email'], cl_perM:[' לחודש',' شهريًا',' / month'], cl_edit:['עריכה','تعديل','Edit'],
+  cl_noMatch:['לא נמצאו לקוחות שמתאימים לחיפוש.','لم يُعثر على عملاء يطابقون البحث.','No clients match the search.'],
+  cl_editT:['עריכת לקוח','تعديل العميل','Edit client'], cl_newT:['לקוח חדש','عميل جديد','New client'],
+  cl_name:['שם הלקוח','اسم العميل','Client name'], cl_type:['סוג','النوع','Type'], cl_status:['סטטוס','الحالة','Status'], cl_idn:['ת״ז / ח״פ','رقم الهوية / الشركة','ID / company no.'],
+  cl_fee:['שכר טרחה חודשי','الأتعاب الشهرية','Monthly fee'], cl_phone:['טלפון','الهاتف','Phone'], cl_email:['אימייל','البريد الإلكتروني','Email'],
+  cl_vat:['דיווח מע״מ','تقرير ضريبة القيمة المضافة','VAT filing'], cl_adv:['מקדמות מס הכנסה','دفعات ضريبة الدخل المسبقة','Income-tax advances'],
+  cl_f_m:['חודשי','شهري','Monthly'], cl_f_b:['דו-חודשי','كل شهرين','Every two months'], cl_f_n:['לא רלוונטי','غير ذي صلة','Not relevant'],
+  cl_tags:['תגיות (למשל: מסעדה, שכירות)','وسوم (مثلًا: مطعم، إيجار)','Tags (e.g. restaurant, rental)'], cl_notes:['הערות','ملاحظات','Notes'],
+  cl_tasks:['משימות','المهام','Tasks'], cl_taskPh:['משימה חדשה, למשל: דוח שנתי','مهمة جديدة، مثلًا: التقرير السنوي','New task, e.g. annual report'],
+  cl_save:['שמירה','حفظ','Save'], cl_delete:['מחיקת הלקוח','حذف العميل','Delete client'], cl_sureDel:['למחוק לצמיתות?','حذف نهائيًا؟','Delete for good?'],
+  cl_needName:['צריך שם ללקוח.','يلزم اسم للعميل.','The client needs a name.'],
+  cl_expDone:['הגיבוי מוכן בתיבה והועתק. שמרו אותו במקום בטוח.','النسخة الاحتياطية جاهزة في المربع ونُسخت. احفظها في مكان آمن.','The backup is in the box and copied. Keep it somewhere safe.'],
+  cl_impDone:['יובאו {n} לקוחות.','تم استيراد {n} عملاء.','Imported {n} clients.'], cl_impBad:['הטקסט בתיבה הוא לא גיבוי לקוחות תקין.','النص في المربع ليس نسخة احتياطية صالحة للعملاء.','The text in the box is not a valid clients backup.']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -2605,7 +2725,7 @@ function persistSoon(){ clearTimeout(persistTimer); persistTimer = setTimeout(()
 const LS = FUSER
   ? {getItem: k => SS.getItem(WK(k)), setItem: (k, v) => { SS.setItem(WK(k), v); persistSoon(); }, removeItem: k => { SS.removeItem(WK(k)); persistSoon(); }}
   : {getItem: k => RAWLS.getItem(k), setItem: (k, v) => RAWLS.setItem(k, v), removeItem: k => RAWLS.removeItem(k)};
-const DATA_KEYS = ['fin-set', 'fin-vals', 'fin-scn', 'fin-lang', 'fin-cur', 'fin-tab'];
+const DATA_KEYS = ['fin-set', 'fin-vals', 'fin-scn', 'fin-lang', 'fin-cur', 'fin-tab', 'fin-exp', 'fin-clients'];
 let RATES = {"USD":1,"AED":3.6725,"AFN":64.924614,"ALL":81.907653,"AMD":362.201696,"ANG":1.79,"AOA":928.339731,"ARS":1515.8766,"AUD":1.436501,"AWG":1.79,"AZN":1.699787,"BAM":1.750825,"BBD":2,"BDT":123.198998,"BGN":1.750825,"BHD":0.376,"BIF":3001.103523,"BMD":1,"BND":1.280792,"BOB":11.842148,"BRL":4.989911,"BSD":1,"BTN":95.913362,"BWP":13.974043,"BYN":3.011836,"BZD":2,"CAD":1.427373,"CDF":2312.138431,"CHF":0.834009,"CLF":0.024719,"CLP":977.033618,"CNH":6.694513,"CNY":6.70582,"COP":3198.099135,"CRC":455.303365,"CUP":24,"CVE":98.707321,"CZK":21.829017,"DJF":177.721,"DKK":6.684975,"DOP":60.873077,"DZD":134.631082,"EGP":52.658715,"ERN":15,"ETB":161.476064,"EUR":0.895156,"FJD":2.248408,"FKP":0.75643,"FOK":6.686339,"GBP":0.756615,"GEL":2.596409,"GGP":0.75643,"GHS":11.772815,"GIP":0.75643,"GMD":74.559797,"GNF":8800.490983,"GTQ":7.64477,"GYD":209.038401,"HKD":7.847659,"HNL":26.838812,"HRK":6.744754,"HTG":130.923287,"HUF":326.831837,"IDR":17924.343507,"ILS":3.076893,"IMP":0.75643,"INR":95.90693,"IQD":1508.260905,"IRR":1718298.042257,"ISK":122.079821,"JEP":0.75643,"JMD":158.979857,"JOD":0.709,"JPY":158.544079,"KES":129.690434,"KGS":87.469028,"KHR":4054.023004,"KID":1.43646,"KMF":440.40102,"KRW":1333.744079,"KWD":0.311015,"KYD":0.833333,"KZT":450.740106,"LAK":22218.824732,"LBP":89500,"LKR":330.778402,"LRD":170.808183,"LSL":16.543726,"LYD":6.423041,"MAD":9.71107,"MDL":17.871956,"MGA":4526.158467,"MKD":54.573615,"MMK":2098.574459,"MNT":3603.898415,"MOP":8.083243,"MRU":40.200665,"MUR":47.506193,"MVR":15.441956,"MWK":1742.182803,"MXN":18.293254,"MYR":4.083336,"MZN":63.723629,"NAD":16.543726,"NGN":1331.44261,"NIO":36.792486,"NOK":9.573394,"NPR":153.461379,"NZD":1.788691,"OMR":0.384497,"PAB":1,"PEN":3.434509,"PGK":4.407143,"PHP":62.786942,"PKR":276.919098,"PLN":3.92703,"PYG":5715.389721,"QAR":3.64,"RON":4.772581,"RSD":104.934937,"RUB":84.043643,"RWF":1477.750986,"SAR":3.75,"SBD":7.984757,"SCR":14.458129,"SDG":454.209545,"SEK":10.031647,"SGD":1.280778,"SHP":0.75643,"SLE":24.587682,"SLL":24587.681848,"SOS":571.628492,"SRD":37.649374,"SSP":5751.002658,"STN":21.931976,"SYP":121.714922,"SZL":16.543726,"THB":33.618266,"TJS":9.23153,"TMT":3.499779,"TND":3.006979,"TOP":2.392271,"TRY":49.355625,"TTD":6.785624,"TVD":1.43646,"TWD":31.958914,"TZS":2633.373235,"UAH":44.965677,"UGX":4004.878818,"UYU":40.220831,"UZS":11887.066267,"VES":876.7976,"VND":25897.062624,"VUV":119.457954,"WST":2.749526,"XAF":587.20136,"XCD":2.7,"XCG":1.79,"XDR":0.739486,"XOF":587.20136,"XPF":106.823942,"YER":236.158165,"ZAR":16.544146,"ZMW":20.088454,"ZWG":26.6492,"ZWL":26.6492};
 const META = {live:false, unix:1791849451};
 const PIN = ['ILS','USD','EUR','GBP','JPY','CHF','CAD','AUD','JOD','EGP','AED','SAR','TRY','CNY','INR','RUB'];
@@ -2716,8 +2836,8 @@ META.unix = 1791894003; META.official = true;
 
 const GROUPS = [
   ['g_main',  ['home','assist','settings']],
-  ['g_save',  ['freedom','networth','debtplan','savegoal','compound','yield','dividends','avgcost','retire','fire']],
-  ['g_work2', ['salary','selfemp','tax','capital','rental','severance','notice','leave']],
+  ['g_save',  ['expenses','freedom','networth','debtplan','savegoal','compound','yield','dividends','avgcost','retire','fire']],
+  ['g_work2', ['clients','salary','selfemp','tax','capital','rental','severance','notice','leave']],
   ['g_loans', ['prime','loan','loancmp','prepay','creditcard','carlease','mortgage','refi','rentbuy','purchasetax','landtax']],
   ['g_tools', ['convert','vat','percent','inflation','split','breakeven']]
 ];
@@ -3500,7 +3620,7 @@ function homePanelHTML(){
       <svg viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="40" fill="none" stroke="#F2C45A" stroke-width="3" opacity=".8"/><circle cx="48" cy="48" r="26" fill="none" stroke="#F2C45A" stroke-width="3" opacity=".6"/><circle cx="48" cy="48" r="12" fill="#F2C45A"/><path d="M48 48L86 10M86 10h-12M86 10v12" stroke="#4F8CFF" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
   </section>`;
 }
-const DASH_SKIP = ['home', 'settings', 'assist', 'percent'];
+const DASH_SKIP = ['home', 'settings', 'assist', 'percent', 'expenses', 'clients'];
 function touch(id){
   if (!id || DASH_SKIP.includes(id) || !CALC[id]) return;
   TOUCHED = [id].concat(TOUCHED.filter(x => x !== id)).slice(0, 12);
@@ -3935,6 +4055,255 @@ function resetPanel(id){
 function staleWarn(){
   return SET.stale !== '0' && (Date.now() / 1000 - META.unix) > (META.official ? 4 : 1) * 86400 ? [t('w_stale', {d: dateStr()})] : null;
 }
+/* ================= tools: monthly expenses + client manager for accountants ================= */
+const EXP_CATS = [
+  ['home', '🏠', '#5B8CFF'], ['bills', '💡', '#F5A524'], ['food', '🛒', '#2FD08A'], ['car', '🚗', '#F0705A'],
+  ['health', '💊', '#E46A8F'], ['kids', '🎓', '#A47BFF'], ['comm', '📱', '#38BDF8'], ['insur', '🛡️', '#94A3B8'],
+  ['fun', '🎉', '#FB7185'], ['clothes', '👕', '#C084FC'], ['debt', '💳', '#EF4444'], ['save', '💰', '#22C55E'],
+  ['gifts', '🎁', '#F472B6'], ['other', '📦', '#A3A3A3']
+];
+const CL_TYPES = ['patur', 'murshe', 'ltd', 'salaried', 'npo', 'other'];
+const CL_STATUS = [['active', '#2fbf86'], ['docs', '#F5A524'], ['work', '#5B8CFF'], ['done', '#94A3B8']];
+function toolsLoad(k, def){ try { const v = JSON.parse(LS.getItem(k) || 'null'); return v && typeof v === 'object' ? v : def; } catch (e) { return def; } }
+function toolsSave(k, v){ try { LS.setItem(k, JSON.stringify(v)); } catch (e) {} }
+function tEsc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c])); }
+function tId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+function ymOf(d){ return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); }
+function ymAdd(ym, n){ const [y, m] = ym.split('-').map(Number); return ymOf(new Date(y, m - 1 + n, 1)); }
+function ymLabel(ym){ const [y, m] = ym.split('-').map(Number); try { return new Intl.DateTimeFormat(locOf(), {month: 'long', year: 'numeric'}).format(new Date(y, m - 1, 1)); } catch (e) { return ym; } }
+function dLabel(iso){ const [y, m, d] = iso.split('-').map(Number); try { return new Intl.DateTimeFormat(locOf(), {day: 'numeric', month: 'short'}).format(new Date(y, m - 1, d)); } catch (e) { return iso; } }
+function todayIso(){ const d = new Date(); return ymOf(d) + '-' + String(d.getDate()).padStart(2, '0'); }
+function expCur(){ return baseCur || 'ILS'; }
+
+/* ---------- monthly expenses ---------- */
+var EXP = null, EXP_M = '', EXP_F = '', EXP_CAT = 'food';
+function expData(){ if (!EXP){ EXP = toolsLoad('fin-exp', {items: []}); if (!Array.isArray(EXP.items)) EXP.items = []; } return EXP; }
+function expMonthItems(ym){
+  return expData().items.filter(it => {
+    const m0 = it.date.slice(0, 7);
+    if (!it.rec) return m0 === ym;
+    return m0 <= ym && (!it.end || ym <= it.end);
+  }).map(it => it.rec && it.date.slice(0, 7) !== ym ? Object.assign({}, it, {date: ym + it.date.slice(7), copy: true}) : it);
+}
+function expTotals(ym){
+  const by = {}; let sum = 0;
+  expMonthItems(ym).forEach(it => { by[it.cat] = (by[it.cat] || 0) + it.amt; sum += it.amt; });
+  return {by, sum};
+}
+function expensesPanelHTML(){
+  return `<section class="panel panel-flat tool-panel" id="panel-expenses" role="tabpanel" aria-labelledby="tab-expenses" hidden>
+    <div class="ex-month"><button type="button" class="ex-nav" data-exm="-1" data-ia="ex_prev">‹</button><b id="exp_ml"></b><button type="button" class="ex-nav" data-exm="1" data-ia="ex_next">›</button></div>
+    <div class="exp-hero" id="exp_hero"></div>
+    <form class="exp-add" id="exp_form" autocomplete="off">
+      <div class="exp-amt"><label for="exp_amt" data-i="exp_amount"></label><input id="exp_amt" type="text" inputmode="decimal" placeholder="0" required></div>
+      <div class="exp-cats" id="exp_cats" role="radiogroup" data-ia="exp_cat"></div>
+      <div class="exp-row"><div class="exp-f"><label for="exp_date" data-i="exp_date"></label><input id="exp_date" type="date"></div>
+        <div class="exp-f grow"><label for="exp_note" data-i="exp_note"></label><input id="exp_note" type="text" maxlength="80" dir="auto"></div></div>
+      <label class="exp-rec"><input type="checkbox" id="exp_rec"><span data-i="exp_rec"></span></label>
+      <button type="submit" class="gold-btn" data-i="exp_add"></button>
+      <p class="fine exp-msg" id="exp_msg" role="status" aria-live="polite"></p>
+    </form>
+    <h3 class="sec-t" data-i="exp_byCat"></h3>
+    <div class="exp-chart" id="exp_chart"></div>
+    <div class="exp-list-h"><h3 class="sec-t" data-i="exp_list"></h3><button type="button" class="as-chip" id="exp_clear" hidden></button></div>
+    <div class="exp-list" id="exp_list"></div>
+    <p class="fine" data-i="tools_local"></p>
+  </section>`;
+}
+function expRender(){
+  const box = $('#panel-expenses'); if (!box) return;
+  if (!EXP_M) EXP_M = ymOf(new Date());
+  const c = expCur(), cur = expTotals(EXP_M), prev = expTotals(ymAdd(EXP_M, -1)), items = expMonthItems(EXP_M);
+  $('#exp_ml').textContent = ymLabel(EXP_M);
+  const diff = cur.sum - prev.sum, pct = prev.sum ? diff / prev.sum * 100 : 0;
+  $('#exp_hero').innerHTML = `<span class="l">${tEsc(t('exp_total'))}</span><b class="v num">${M(cur.sum, 0, c)}</b>
+    <span class="s">${items.length ? tEsc(t('exp_count', {n: items.length})) : tEsc(t('exp_none'))}${prev.sum ? ` · <span class="${diff > 0 ? 'up' : 'down'}">${diff > 0 ? '▲' : '▼'} ${M(Math.abs(diff), 0, c)} (${Math.abs(pct).toFixed(0)}%)</span> ${tEsc(t('exp_vsPrev'))}` : ''}</span>`;
+  $('#exp_cats').innerHTML = EXP_CATS.map(([k, ic, col]) => `<button type="button" role="radio" class="exp-cat" data-excat="${k}" aria-checked="${k === EXP_CAT}" style="--cc:${col}"><span aria-hidden="true">${ic}</span>${tEsc(t('ec_' + k))}</button>`).join('');
+  const d = $('#exp_date'); if (d && !d.value) d.value = EXP_M === ymOf(new Date()) ? todayIso() : EXP_M + '-01';
+  // by category: donut + bars
+  const rows = EXP_CATS.filter(([k]) => cur.by[k]).map(([k, ic, col]) => ({k, ic, col, v: cur.by[k], p: cur.sum ? cur.by[k] / cur.sum * 100 : 0})).sort((a, b) => b.v - a.v);
+  let acc = 0;
+  const arcs = rows.map(r => { const a0 = acc; acc += r.p; return `${r.col} ${a0.toFixed(2)}% ${acc.toFixed(2)}%`; }).join(',');
+  $('#exp_chart').innerHTML = rows.length ? `<div class="exp-donut" style="background:conic-gradient(${arcs})" role="img" aria-label="${tEsc(t('exp_byCat'))}"><div><b class="num">${M(cur.sum, 0, c)}</b><small>${tEsc(ymLabel(EXP_M))}</small></div></div>
+    <div class="exp-bars">${rows.map(r => `<button type="button" class="exp-bar${EXP_F === r.k ? ' on' : ''}" data-exf="${r.k}" style="--cc:${r.col}">
+      <span class="eb-h"><span>${r.ic} ${tEsc(t('ec_' + r.k))}</span><b class="num">${M(r.v, 0, c)}</b></span>
+      <span class="eb-t"><i style="width:${Math.max(2, r.p).toFixed(1)}%"></i></span><small>${r.p.toFixed(0)}%${prev.by[r.k] ? ' · ' + tEsc(t('exp_lastM')) + ' ' + M(prev.by[r.k], 0, c) : ''}</small></button>`).join('')}</div>`
+    : `<p class="exp-empty">${tEsc(t('exp_empty'))}</p>`;
+  const list = items.filter(it => !EXP_F || it.cat === EXP_F).sort((a, b) => b.date.localeCompare(a.date) || (b.t || 0) - (a.t || 0));
+  const clr = $('#exp_clear'); clr.hidden = !EXP_F; if (EXP_F) clr.textContent = '✕ ' + t('ec_' + EXP_F);
+  $('#exp_list').innerHTML = list.length ? list.map(it => { const cat = EXP_CATS.find(x => x[0] === it.cat) || EXP_CATS[EXP_CATS.length - 1];
+    return `<div class="exp-it" style="--cc:${cat[2]}"><span class="ei-ic" aria-hidden="true">${cat[1]}</span><span class="ei-t"><b>${tEsc(it.note || t('ec_' + it.cat))}</b><small>${tEsc(dLabel(it.date))} · ${tEsc(t('ec_' + it.cat))}${it.rec ? ' · 🔁 ' + tEsc(t('exp_recShort')) : ''}</small></span>
+      <b class="ei-a num">${M(it.amt, 0, c)}</b><button type="button" class="ei-del" data-exdel="${it.id}" aria-label="${tEsc(t('exp_del'))}">✕</button></div>`; }).join('')
+    : `<p class="exp-empty">${tEsc(EXP_F ? t('exp_noneCat') : t('exp_empty'))}</p>`;
+}
+function expAdd(){
+  const raw = String($('#exp_amt').value || '').replace(/[^\d.,]/g, '').replace(',', '.'), amt = parseFloat(raw);
+  const msg = $('#exp_msg');
+  if (!(amt > 0)){ msg.textContent = t('exp_badAmt'); $('#exp_amt').focus(); return; }
+  const date = $('#exp_date').value || todayIso();
+  expData().items.push({id: tId(), amt: Math.round(amt * 100) / 100, cat: EXP_CAT, date, note: $('#exp_note').value.trim(), rec: $('#exp_rec').checked, t: Date.now()});
+  toolsSave('fin-exp', EXP);
+  EXP_M = date.slice(0, 7);
+  $('#exp_amt').value = ''; $('#exp_note').value = ''; $('#exp_rec').checked = false;
+  msg.textContent = t('exp_added'); setTimeout(() => { if (msg.textContent === t('exp_added')) msg.textContent = ''; }, 2500);
+  expRender(); $('#exp_amt').focus();
+}
+function expDel(id){
+  const it = expData().items.find(x => x.id === id); if (!it) return;
+  if (it.rec && it.date.slice(0, 7) < EXP_M){ it.end = ymAdd(EXP_M, -1); }       // a monthly expense stops from this month on
+  else EXP.items = EXP.items.filter(x => x.id !== id);
+  toolsSave('fin-exp', EXP); expRender();
+}
+
+/* ---------- client manager for accountants ---------- */
+var CL = null, CL_Q = '', CL_FS = '', CL_EDIT = null;
+function clData(){ if (!CL){ CL = toolsLoad('fin-clients', {clients: [], dueDay: 15}); if (!Array.isArray(CL.clients)) CL.clients = []; if (!CL.dueDay) CL.dueDay = 15; } return CL; }
+function clDue(c, kind, now){
+  const freq = c[kind]; if (!freq || freq === 'n') return null;
+  const D = clData().dueDay;
+  for (let i = -1; i < 3; i++){
+    const due = new Date(now.getFullYear(), now.getMonth() + i, D), dm = due.getMonth() + 1;
+    if (freq === 'b' && dm % 2 === 0) continue;                                  // bi-monthly reports are due in odd months
+    const key = kind + ':' + ymOf(due), per = freq === 'b' ? [ymAdd(ymOf(due), -2), ymAdd(ymOf(due), -1)] : [ymAdd(ymOf(due), -1)];
+    if ((c.done || {})[key]) continue;
+    if (i === -1 && c.created && new Date(c.created) > due) continue;              // no back-dated duty for a brand-new client
+    return {kind, key, due, per};
+  }
+  return null;
+}
+function clDuties(now){
+  const out = [];
+  clData().clients.filter(c => c.status !== 'done').forEach(c => {
+    ['vat', 'adv'].forEach(k => { const d = clDue(c, k, now); if (d) out.push(Object.assign({c}, d)); });
+    (c.tasks || []).filter(x => !x.done && x.due).forEach(x => { const [y, m, dd] = x.due.split('-').map(Number); out.push({c, kind: 'task', task: x, due: new Date(y, m - 1, dd), key: 'task:' + x.id}); });
+  });
+  return out.sort((a, b) => a.due - b.due);
+}
+function clientsPanelHTML(){
+  return `<section class="panel panel-flat tool-panel" id="panel-clients" role="tabpanel" aria-labelledby="tab-clients" hidden>
+    <div class="cl-stats" id="cl_stats"></div>
+    <div class="cl-h"><h3 class="sec-t" data-i="cl_upcoming"></h3></div>
+    <div class="cl-due" id="cl_due"></div>
+    <div class="cl-h"><h3 class="sec-t" data-i="cl_list"></h3><button type="button" class="gold-btn" id="cl_new" data-i="cl_new"></button></div>
+    <input id="cl_q" type="search" class="cl-q" autocomplete="off" data-ia="cl_search">
+    <div class="cl-fs" id="cl_fs"></div>
+    <div class="cl-list" id="cl_list"></div>
+    <details class="adv cl-more"><summary data-i="cl_more"></summary>
+      <div class="fields"><div class="field"><label for="cl_dueDay" data-i="cl_dueDay"></label><input id="cl_dueDay" type="number" min="1" max="28" inputmode="numeric"><small class="hint" data-i="h_clDueDay"></small></div></div>
+      <div class="field wide"><label for="cl_json" data-i="cl_backup"></label><textarea id="cl_json" rows="4" class="lookup" spellcheck="false"></textarea></div>
+      <div class="btnrow"><button type="button" class="btn" id="cl_exp" data-i="b_export"></button><button type="button" class="btn" id="cl_imp" data-i="b_import"></button></div>
+      <p class="fine" id="cl_bmsg" role="status"></p>
+    </details>
+    <p class="fine" data-i="tools_local"></p>
+  </section>`;
+}
+function clPhone(p){ const d = String(p || '').replace(/[^\d+]/g, ''); return d.startsWith('0') ? '972' + d.slice(1) : d.replace(/^\+/, ''); }
+function clRender(){
+  const box = $('#panel-clients'); if (!box) return;
+  const now = new Date(), data = clData(), duties = clDuties(now), soon = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 30);
+  const today0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const active = data.clients.filter(c => c.status !== 'done'), fees = active.reduce((s, c) => s + (+c.fee || 0), 0);
+  const late = duties.filter(d => d.due < today0).length, monthDue = duties.filter(d => d.due.getMonth() === now.getMonth() && d.due.getFullYear() === now.getFullYear()).length;
+  $('#cl_stats').innerHTML = [['cl_sActive', active.length, ''], ['cl_sMonth', monthDue, ''], ['cl_sLate', late, late ? 'bad' : ''], ['cl_sFees', M(fees, 0, expCur()), '']]
+    .map(([k, v, cls]) => `<div class="cl-stat ${cls}"><b class="num">${v}</b><small>${tEsc(t(k))}</small></div>`).join('');
+  const up = duties.filter(d => d.due <= soon);
+  $('#cl_due').innerHTML = up.length ? up.map(d => {
+    const lateD = d.due < today0, what = d.kind === 'task' ? d.task.title : t('cl_k_' + d.kind) + ' · ' + d.per.map(ymLabel).join('–');
+    return `<div class="cl-duty${lateD ? ' late' : ''}"><button type="button" class="cl-chk" data-cldone="${d.c.id}|${d.key}" aria-label="${tEsc(t('cl_markDone'))}">✓</button>
+      <span class="cd-t"><b>${tEsc(d.c.name)}</b><small>${tEsc(what)}</small></span><span class="cd-d">${lateD ? tEsc(t('cl_late')) + ' · ' : ''}${tEsc(dLabel(ymOf(d.due) + '-' + String(d.due.getDate()).padStart(2, '0')))}</span></div>`;
+  }).join('') : `<p class="exp-empty">${tEsc(t(data.clients.length ? 'cl_noDue' : 'cl_emptyAll'))}</p>`;
+  $('#cl_fs').innerHTML = [['', 'cl_all']].concat(CL_STATUS.map(([k]) => [k, 'cl_st_' + k])).map(([k, l]) => `<button type="button" class="as-chip${CL_FS === k ? ' on' : ''}" data-clfs="${k}">${tEsc(t(l))}${k ? ' · ' + data.clients.filter(c => c.status === k).length : ''}</button>`).join('');
+  const q = CL_Q.trim().toLowerCase();
+  const list = data.clients.filter(c => (!CL_FS || c.status === CL_FS) && (!q || [c.name, c.phone, c.idn, c.email, c.tags, c.notes].join(' ').toLowerCase().includes(q)))
+    .sort((a, b) => a.name.localeCompare(b.name, lang));
+  const nextOf = c => duties.find(d => d.c === c);
+  $('#cl_list').innerHTML = list.length ? list.map(c => {
+    const st = CL_STATUS.find(x => x[0] === c.status) || CL_STATUS[0], nx = nextOf(c), ph = clPhone(c.phone);
+    return `<div class="cl-card" style="--sc:${st[1]}"><div class="cc-top"><span class="cc-n"><b>${tEsc(c.name)}</b><small>${tEsc(t('cl_t_' + c.type))}${c.idn ? ' · ' + tEsc(c.idn) : ''}</small></span><span class="cc-st">${tEsc(t('cl_st_' + c.status))}</span></div>
+      ${nx ? `<p class="cc-next${nx.due < today0 ? ' late' : ''}">⏰ ${tEsc(nx.kind === 'task' ? nx.task.title : t('cl_k_' + nx.kind))} · ${tEsc(dLabel(ymOf(nx.due) + '-' + String(nx.due.getDate()).padStart(2, '0')))}</p>` : ''}
+      ${c.notes ? `<p class="cc-notes">${tEsc(c.notes)}</p>` : ''}
+      <div class="cc-act">${ph ? `<a class="cc-b" href="tel:${tEsc(c.phone.replace(/[^\d+]/g, ''))}" aria-label="${tEsc(t('cl_call'))}">📞</a><a class="cc-b" href="https://wa.me/${tEsc(ph)}" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>` : ''}${c.email ? `<a class="cc-b" href="mailto:${tEsc(c.email)}" aria-label="${tEsc(t('cl_mail'))}">✉️</a>` : ''}
+        ${c.fee ? `<span class="cc-fee num">${M(+c.fee, 0, expCur())}${tEsc(t('cl_perM'))}</span>` : ''}<button type="button" class="cc-b cc-edit" data-cledit="${c.id}">✏️ ${tEsc(t('cl_edit'))}</button></div></div>`;
+  }).join('') : `<p class="exp-empty">${tEsc(t(data.clients.length ? 'cl_noMatch' : 'cl_emptyAll'))}</p>`;
+  const dd = $('#cl_dueDay'); if (dd && document.activeElement !== dd) dd.value = data.dueDay;
+  const qi = $('#cl_q'); if (qi) qi.placeholder = t('cl_search');
+}
+function clForm(c){
+  CL_EDIT = c ? c.id : null; c = c || {name: '', type: 'murshe', idn: '', phone: '', email: '', vat: 'b', adv: 'm', fee: '', status: 'active', notes: '', tags: '', tasks: []};
+  if (!$('#clx')) document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="clx" hidden><div class="cp-box cl-box" role="dialog" aria-modal="true" aria-labelledby="clf_t"><div class="cp-top"><h3 id="clf_t"></h3><button type="button" class="cp-x" id="clf_x">×</button></div><form id="clf" class="cl-form" autocomplete="off"></form></div></div>`);
+  const opt = (name, vals, cur, pre) => `<select id="clf_${name}">${vals.map(v => `<option value="${v}"${v === cur ? ' selected' : ''}>${tEsc(t(pre + v))}</option>`).join('')}</select>`;
+  const fld = (id, lab, html, wide) => `<div class="field${wide ? ' wide' : ''}"><label for="clf_${id}">${tEsc(t(lab))}</label>${html}</div>`;
+  const inp = (id, v, type, extra) => `<input id="clf_${id}" type="${type || 'text'}" value="${tEsc(v)}" ${extra || ''}>`;
+  $('#clf_t').textContent = t(CL_EDIT ? 'cl_editT' : 'cl_newT');
+  $('#clf').innerHTML = `<div class="fields">
+    ${fld('name', 'cl_name', inp('name', c.name, 'text', 'required maxlength="80" dir="auto"'), true)}
+    ${fld('type', 'cl_type', opt('type', CL_TYPES, c.type, 'cl_t_'))}
+    ${fld('status', 'cl_status', opt('status', CL_STATUS.map(x => x[0]), c.status, 'cl_st_'))}
+    ${fld('idn', 'cl_idn', inp('idn', c.idn, 'text', 'inputmode="numeric" maxlength="12" dir="ltr"'))}
+    ${fld('fee', 'cl_fee', inp('fee', c.fee, 'text', 'inputmode="decimal" dir="ltr"'))}
+    ${fld('phone', 'cl_phone', inp('phone', c.phone, 'tel', 'dir="ltr" maxlength="20"'))}
+    ${fld('email', 'cl_email', inp('email', c.email, 'email', 'dir="ltr" maxlength="80"'))}
+    ${fld('vat', 'cl_vat', opt('vat', ['m', 'b', 'n'], c.vat, 'cl_f_'))}
+    ${fld('adv', 'cl_adv', opt('adv', ['m', 'b', 'n'], c.adv, 'cl_f_'))}
+    ${fld('tags', 'cl_tags', inp('tags', c.tags, 'text', 'maxlength="80" dir="auto"'), true)}
+    ${fld('notes', 'cl_notes', `<textarea id="clf_notes" rows="3" maxlength="600" dir="auto">${tEsc(c.notes)}</textarea>`, true)}</div>
+    <h4 class="cl-th">${tEsc(t('cl_tasks'))}</h4><div class="cl-tasks" id="clf_tasks">${(c.tasks || []).map(x => clTaskRow(x)).join('')}</div>
+    <div class="cl-addtask"><input id="clf_tt" type="text" maxlength="80" dir="auto" placeholder="${tEsc(t('cl_taskPh'))}"><input id="clf_td" type="date"><button type="button" class="btn" id="clf_ta">+</button></div>
+    <div class="btnrow"><button type="submit" class="gold-btn">${tEsc(t('cl_save'))}</button>${CL_EDIT ? `<button type="button" class="btn danger" id="clf_del">${tEsc(t('cl_delete'))}</button>` : ''}</div>
+    <p class="fine" id="clf_msg" role="status"></p>`;
+  $('#clx').hidden = false; document.body.classList.add('cp-lock');
+  setTimeout(() => $('#clf_name').focus(), 40);
+}
+function clTaskRow(x){ return `<div class="cl-task" data-tid="${x.id}"><label><input type="checkbox"${x.done ? ' checked' : ''} data-tdone="${x.id}"> <span>${tEsc(x.title)}</span></label><small>${x.due ? tEsc(dLabel(x.due)) : ''}</small><button type="button" class="ei-del" data-tdel="${x.id}">✕</button></div>`; }
+function clClose(){ const o = $('#clx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); } }
+var CL_TMP_TASKS = null;
+function clSave(){
+  const v = id => ($('#clf_' + id) || {}).value || '', name = v('name').trim();
+  if (!name){ $('#clf_msg').textContent = t('cl_needName'); $('#clf_name').focus(); return; }
+  const data = clData(), old = data.clients.find(c => c.id === CL_EDIT);
+  const tasks = $$('#clf_tasks .cl-task').map(r => { const id = r.dataset.tid, prev = ((old && old.tasks) || []).concat(CL_TMP_TASKS || []).find(x => x.id === id) || {}; return Object.assign({}, prev, {done: $('[data-tdone]', r).checked}); });
+  const c = Object.assign(old || {id: tId(), created: Date.now(), done: {}}, {name, type: v('type'), status: v('status'), idn: v('idn').trim(), fee: v('fee').replace(/[^\d.]/g, ''),
+    phone: v('phone').trim(), email: v('email').trim(), vat: v('vat'), adv: v('adv'), tags: v('tags').trim(), notes: v('notes').trim(), tasks});
+  if (!old) data.clients.push(c);
+  CL_TMP_TASKS = null; toolsSave('fin-clients', data); clClose(); clRender();
+}
+document.addEventListener('click', e => {
+  const el = e.target;
+  // expenses
+  const m = el.closest('[data-exm]'); if (m){ EXP_M = ymAdd(EXP_M || ymOf(new Date()), +m.dataset.exm); const d = $('#exp_date'); if (d) d.value = ''; expRender(); return; }
+  const ec = el.closest('[data-excat]'); if (ec){ EXP_CAT = ec.dataset.excat; $$('#exp_cats [data-excat]').forEach(b => b.setAttribute('aria-checked', b === ec)); return; }
+  const ef = el.closest('[data-exf]'); if (ef){ EXP_F = EXP_F === ef.dataset.exf ? '' : ef.dataset.exf; expRender(); return; }
+  if (el.closest('#exp_clear')){ EXP_F = ''; expRender(); return; }
+  const ed = el.closest('[data-exdel]'); if (ed){ if (ed.dataset.sure){ expDel(ed.dataset.exdel); } else { ed.dataset.sure = '1'; ed.textContent = t('exp_sure'); ed.classList.add('sure'); setTimeout(() => { if (ed.isConnected){ delete ed.dataset.sure; ed.textContent = '✕'; ed.classList.remove('sure'); } }, 2500); } return; }
+  // clients
+  if (el.closest('#cl_new')){ CL_TMP_TASKS = []; clForm(null); return; }
+  const ce = el.closest('[data-cledit]'); if (ce){ CL_TMP_TASKS = []; clForm(clData().clients.find(c => c.id === ce.dataset.cledit)); return; }
+  const cf = el.closest('[data-clfs]'); if (cf){ CL_FS = cf.dataset.clfs; clRender(); return; }
+  const cd = el.closest('[data-cldone]'); if (cd){
+    const [cid, key] = cd.dataset.cldone.split('|'), c = clData().clients.find(x => x.id === cid); if (!c) return;
+    if (key.indexOf('task:') === 0){ const tk = (c.tasks || []).find(x => 'task:' + x.id === key); if (tk) tk.done = true; } else { c.done = c.done || {}; c.done[key] = Date.now(); }
+    toolsSave('fin-clients', CL); clRender(); return; }
+  const ov = $('#clx');
+  if (ov && !ov.hidden){
+    if (el === ov || el.closest('#clf_x')) return clClose();
+    if (el.closest('#clf_ta')){ const tt = $('#clf_tt').value.trim(); if (!tt) return; const x = {id: tId(), title: tt, due: $('#clf_td').value, done: false}; CL_TMP_TASKS.push(x); $('#clf_tasks').insertAdjacentHTML('beforeend', clTaskRow(x)); $('#clf_tt').value = ''; return; }
+    const td = el.closest('[data-tdel]'); if (td){ td.closest('.cl-task').remove(); return; }
+    const dl = el.closest('#clf_del'); if (dl){ if (!dl.dataset.sure){ dl.dataset.sure = '1'; dl.textContent = t('cl_sureDel'); return; } CL.clients = CL.clients.filter(c => c.id !== CL_EDIT); toolsSave('fin-clients', CL); clClose(); clRender(); return; }
+  }
+  if (el.closest('#cl_exp')){ $('#cl_json').value = JSON.stringify(clData(), null, 1); $('#cl_bmsg').textContent = t('cl_expDone'); try { if (navigator.clipboard) navigator.clipboard.writeText($('#cl_json').value).catch(() => {}); } catch (err) {} return; }
+  if (el.closest('#cl_imp')){ try { const d = JSON.parse($('#cl_json').value); if (!d || !Array.isArray(d.clients)) throw 0; CL = d; toolsSave('fin-clients', CL); $('#cl_bmsg').textContent = t('cl_impDone', {n: d.clients.length}); clRender(); } catch (err) { $('#cl_bmsg').textContent = t('cl_impBad'); } return; }
+});
+document.addEventListener('submit', e => {
+  if (e.target.id === 'exp_form'){ e.preventDefault(); expAdd(); }
+  if (e.target.id === 'clf'){ e.preventDefault(); clSave(); }
+});
+document.addEventListener('input', e => { if (e.target.id === 'cl_q'){ CL_Q = e.target.value; clRender(); } });
+document.addEventListener('change', e => { if (e.target.id === 'cl_dueDay'){ const n = Math.min(28, Math.max(1, Math.round(+e.target.value || 15))); clData().dueDay = n; toolsSave('fin-clients', CL); clRender(); } });
+document.addEventListener('keydown', e => { const o = $('#clx'); if (e.key === 'Escape' && o && !o.hidden) clClose(); });
+Object.assign(ICON, {
+  expenses: ic('<rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h4"/><path d="M16 3l-2 3M10 3l2 3"/>'),
+  clients: ic('<circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M15 6h6M15 10h6M17 14h4"/>')
+});
 
 const navEl = $('#nav'), panelsEl = $('#panels');
 function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
@@ -3943,7 +4312,7 @@ function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
   }</div>`
 ).join(''); }
 renderNav();
-panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : panelHTML(id)).join('');
+panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'clients' ? clientsPanelHTML() : panelHTML(id)).join('');
 
 /* ================= language ================= */
 function updateHead(){
@@ -6477,7 +6846,7 @@ cpInit(); cvLiveInit();
 
 /* ---- personal explainer: plain-language explanations of every calculator, field and result ---- */
 var EX = {id: null, hist: [], busy: false, ctl: null}, EX_CACHE = {};
-const EX_SKIP = ['home', 'settings', 'assist'];
+const EX_SKIP = ['home', 'settings', 'assist', 'expenses', 'clients'];
 const exClean = s => String(s == null ? '' : s).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 function exFields(id){
   const p = $('#panel-' + id); if (!p) return [];
@@ -7053,8 +7422,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "3.3", "date": "2026-10-14", "notes": {"he": "טופס המשוב הוסר מהאפליקציה.", "ar": "أُزيل نموذج الملاحظات من التطبيق.", "en": "The feedback form was removed from the app."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.095326';
+var CHANGELOG = [{"v": "3.4", "date": "2026-10-14", "notes": {"he": "שני כלים חדשים: הוצאות חודשיות עם תצוגה לפי קטגוריות, וניהול לקוחות לרואי חשבון עם דיווחי מע״מ ומקדמות, משימות וקשר מהיר.", "ar": "أداتان جديدتان: المصاريف الشهرية مع عرض حسب الفئات، وإدارة العملاء للمحاسبين مع تقارير الضريبة والدفعات المسبقة والمهام والتواصل السريع.", "en": "Two new tools: monthly expenses shown by category, and a client manager for accountants with VAT and advance-tax filings, tasks and quick contact."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.100406';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -7735,6 +8104,15 @@ function ivSearch(q){
   window.open('https://' + ivHost() + '.investing.com/search/?q=' + encodeURIComponent(q), '_blank', 'noopener');
 }
 
+
+/* ---- tools tabs ---- */
+CALC.expenses = () => null; CALC.clients = () => null;
+Object.assign(GS_SYN, {expenses: 'הוצאות תקציב קניות חשבונות budget spending expenses مصاريف ميزانية', clients: 'רואה חשבון רו"ח לקוחות מעמ מקדמות crm accountant clients محاسب عملاء'});
+const _actTools = activate;
+activate = function(id){ const r = _actTools.apply(this, arguments); if (id === 'expenses') expRender(); if (id === 'clients') clRender(); return r; };
+const _alTools = applyLang;
+applyLang = function(){ const r = _alTools.apply(this, arguments); if (tab === 'expenses') expRender(); if (tab === 'clients') clRender(); return r; };
+if (tab === 'expenses') expRender(); if (tab === 'clients') clRender();
 
 applyLang(false);
 activate(tab);
