@@ -903,6 +903,21 @@ body[data-tab="expenses"] .ghost-btn,body[data-tab="clients"] .ghost-btn,body[da
 .btn.del-go{background:#D9483B;border-color:#D9483B;color:#fff;font-weight:700}
 .btn.del-go:disabled{opacity:.45;cursor:not-allowed}
 
+.rc-sum{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rc-cin{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:1rem;letter-spacing:.03em;text-transform:uppercase;text-align:center}
+.rc-box .btnrow .gold-btn{flex:1 1 auto}
+.rc-pill{font-size:.76em;font-weight:600;padding:2px 9px;border-radius:99px;border:1px solid var(--line);opacity:.9}
+.rc-pill.ok{color:#1f9d6b;border-color:rgba(47,191,134,.55);background:rgba(47,191,134,.1)}
+.rc-pill.wait{color:#B7861F;border-color:rgba(224,169,58,.6);background:rgba(224,169,58,.1)}
+.rc-box{margin-top:8px}
+.rc-box .btnrow{flex-wrap:wrap}
+a.gold-btn.rc-open{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+.rc-more{margin-top:10px}
+.rc-link{display:block;margin:10px auto 0;background:none;border:0;padding:8px 4px;color:var(--accent,#4F8CFF);font:inherit;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.rc-h{margin:4px 0 6px;font-size:1.05em}
+.hint.rc-yes{color:#1f9d6b}.hint.rc-no{color:#C9562F}
+#acc_f_rc{padding:12px;border:1px solid var(--line);border-radius:14px}
+
 </style>
 </head>
 <body>
@@ -2830,7 +2845,50 @@ Object.assign(T, {
   del_nameBad:['שם המשתמש לא תואם. הקלידו בדיוק {n}.','اسم المستخدم غير مطابق. اكتب {n} بالضبط.','The username does not match. Type exactly {n}.'],
   del_wait:['מוחק…','جارٍ الحذف…','Deleting…'],
   del_cloudFail:['לא הצלחנו למחוק את הגיבוי בענן, ולכן לא נמחק כלום. בדקו את החיבור ונסו שוב.','تعذّر حذف النسخة الاحتياطية في السحابة، لذلك لم يُحذف شيء. تحقق من الاتصال وحاول مرة أخرى.','The cloud backup could not be deleted, so nothing was deleted. Check the connection and try again.'],
-  del_done:['החשבון ושם המשתמש {n} נמחקו לצמיתות.','تم حذف الحساب واسم المستخدم {n} نهائيًا.','The account and username {n} were permanently deleted.']
+  del_done:['החשבון ושם המשתמש {n} נמחקו לצמיתות.','تم حذف الحساب واسم المستخدم {n} نهائيًا.','The account and username {n} were permanently deleted.'],
+  rc_title:['📧 אימות אימייל ושחזור סיסמה','📧 تأكيد البريد واستعادة كلمة المرور','📧 Email verification and password recovery'],
+  rc_pill_none:['לא מוגדר','غير مُعد','Not set'],
+  rc_pill_wait:['ממתין לאימות','بانتظار التأكيد','Waiting'],
+  rc_pill_ok:['✓ מאומת','✓ مؤكد','✓ Verified'],
+  rc_intro:['אם תשכחו את הסיסמה, אימייל מאומת יאפשר לקבוע סיסמה חדשה בלי לאבד נתונים. אין שרת: אתם שולחים לעצמכם מייל עם קוד שחזור, והאימייל נשמר רק בחשבון שלכם.','إذا نسيت كلمة المرور، يتيح البريد المؤكد تعيين كلمة مرور جديدة دون فقدان البيانات. لا يوجد خادم: ترسل لنفسك رسالة فيها رمز استعادة، ويُحفظ البريد في حسابك فقط.','If you forget your password, a verified email lets you set a new one without losing data. There is no server: you send yourself an email with a recovery key, and the address is stored only in your account.'],
+  rc_mail:['כתובת אימייל','عنوان البريد الإلكتروني','Email address'],
+  rc_mailBad:['כתובת האימייל לא תקינה.','عنوان البريد غير صالح.','The email address is not valid.'],
+  rc_make:['הכנת מייל אימות','تجهيز رسالة التأكيد','Prepare verification email'],
+  rc_making:['מכין קוד שחזור אישי…','جارٍ تجهيز رمز استعادة شخصي…','Preparing a personal recovery key…'],
+  rc_step1:['לחצו "פתיחת המייל" ושלחו את ההודעה לעצמכם. אפשר גם להעתיק אותה ולשלוח ידנית.','اضغط "فتح الرسالة" وأرسلها لنفسك. يمكن أيضًا نسخها وإرسالها يدويًا.','Tap "Open the email" and send it to yourself. You can also copy it and send it manually.'],
+  rc_step2:['כשהמייל מגיע, פתחו אותו והקלידו כאן את קוד השחזור שבתוכו, או לחצו על הקישור שבמייל.','عندما تصل الرسالة، افتحها واكتب هنا رمز الاستعادة الموجود فيها، أو اضغط الرابط في الرسالة.','When the email arrives, open it and type the recovery key from it here, or tap the link in the email.'],
+  rc_open:['פתיחת המייל לשליחה','فتح الرسالة للإرسال','Open the email to send'],
+  rc_copy:['העתקת ההודעה','نسخ الرسالة','Copy the message'],
+  rc_copied:['ההודעה הועתקה. הדביקו אותה במייל חדש לעצמכם.','تم نسخ الرسالة. الصقها في رسالة جديدة لنفسك.','Message copied. Paste it into a new email to yourself.'],
+  rc_sent:['שלחתם? עכשיו פתחו את המייל שהגיע והקלידו את הקוד כאן.','هل أرسلت؟ افتح الآن الرسالة التي وصلت واكتب الرمز هنا.','Sent? Now open the email that arrived and type the key here.'],
+  rc_codeIn:['קוד השחזור מהמייל','رمز الاستعادة من الرسالة','Recovery key from the email'],
+  rc_verify:['אימות','تأكيد','Verify'],
+  rc_pending:['ממתין לאימות: {m}','بانتظار التأكيد: {m}','Waiting for verification: {m}'],
+  rc_ok:['האימייל אומת: {m}. שכחתם סיסמה? במסך הכניסה לחצו "שכחתי סיסמה".','تم تأكيد البريد: {m}. نسيت كلمة المرور؟ اضغط "نسيت كلمة المرور" في شاشة الدخول.','Email verified: {m}. Forgot your password? Tap "Forgot password" on the sign-in screen.'],
+  rc_okNow:['האימייל אומת! מעכשיו אפשר לשחזר סיסמה דרכו.','تم تأكيد البريد! يمكنك الآن استعادة كلمة المرور من خلاله.','Email verified! You can now recover your password with it.'],
+  rc_codeWrong:['הקוד לא נכון. העתיקו אותו מהמייל האחרון שנשלח.','الرمز غير صحيح. انسخه من آخر رسالة أُرسلت.','The key is wrong. Copy it from the latest email you sent.'],
+  rc_codeShort:['קוד השחזור באורך 20 תווים, בצורה XXXXX-XXXXX-XXXXX-XXXXX.','رمز الاستعادة من 20 حرفًا بالشكل XXXXX-XXXXX-XXXXX-XXXXX.','The recovery key has 20 characters, like XXXXX-XXXXX-XXXXX-XXXXX.'],
+  rc_resend:['מייל חדש או החלפת אימייל','رسالة جديدة أو تغيير البريد','New email or change address'],
+  rc_resendHint:['מייל חדש יוצר קוד חדש, והקוד הקודם מפסיק לעבוד.','الرسالة الجديدة تنشئ رمزًا جديدًا ويتوقف الرمز السابق.','A new email creates a new key, and the previous key stops working.'],
+  rc_remove:['הסרת האימייל','إزالة البريد','Remove the email'],
+  rc_removed:['האימייל הוסר. בלי אימייל לא ניתן לשחזר סיסמה שנשכחה.','تمت إزالة البريد. بدون بريد لا يمكن استعادة كلمة مرور منسية.','Email removed. Without it, a forgotten password cannot be recovered.'],
+  rc_subj:['מחשבון פיננסי · קוד שחזור ל-{n}','الحاسبة المالية · رمز استعادة لـ {n}','Financial calculator · recovery key for {n}'],
+  rc_body:['שלום,\n\nזה קוד השחזור של החשבון {n} במחשבון הפיננסי:\n\n{c}\n\nלאימות האימייל: הקלידו את הקוד באפליקציה, בהגדרות ← חשבון והרשאות ← אימות אימייל.\nשכחתם סיסמה? במסך הכניסה לחצו "שכחתי סיסמה", הקלידו את שם המשתמש ואת הקוד, וקבעו סיסמה חדשה. כל הנתונים נשמרים.','مرحبًا،\n\nهذا رمز استعادة الحساب {n} في الحاسبة المالية:\n\n{c}\n\nلتأكيد البريد: اكتب الرمز في التطبيق، في الإعدادات ← الحساب ← تأكيد البريد.\nنسيت كلمة المرور؟ في شاشة الدخول اضغط "نسيت كلمة المرور"، واكتب اسم المستخدم والرمز، ثم عيّن كلمة مرور جديدة. تبقى كل البيانات.','Hello,\n\nThis is the recovery key for the account {n} in the financial calculator:\n\n{c}\n\nTo verify the email: type the key in the app, under Settings → Account → Email verification.\nForgot your password? On the sign-in screen tap "Forgot password", type the username and the key, and choose a new password. All data is kept.'],
+  rc_bodyLink:['או פשוט לחצו על הקישור:','أو اضغط الرابط ببساطة:','Or just tap the link:'],
+  rc_bodyKeep:['שמרו את המייל הזה ואל תעבירו אותו לאף אחד: מי שיש לו את הקוד יכול לקבוע סיסמה חדשה לחשבון.','احتفظ بهذه الرسالة ولا تشاركها مع أحد: من يملك الرمز يمكنه تعيين كلمة مرور جديدة للحساب.','Keep this email and do not share it: anyone with the key can set a new password for the account.'],
+  rc_forgot:['שכחתי סיסמה','نسيت كلمة المرور','Forgot password'],
+  rc_rTitle:['שחזור סיסמה דרך האימייל','استعادة كلمة المرور عبر البريد','Recover the password by email'],
+  rc_rHint:['הקלידו את שם המשתמש ואת קוד השחזור מהמייל, ובחרו סיסמה חדשה. כל הנתונים נשמרים.','اكتب اسم المستخدم ورمز الاستعادة من الرسالة، واختر كلمة مرور جديدة. تبقى كل البيانات.','Type the username and the recovery key from the email, and choose a new password. All data is kept.'],
+  rc_where:['חפשו במייל {m} הודעה בנושא "מחשבון פיננסי · קוד שחזור".','ابحث في البريد {m} عن رسالة بعنوان "الحاسبة المالية · رمز استعادة".','Look in {m} for an email titled "Financial calculator · recovery key".'],
+  rc_none:['לחשבון הזה לא הוגדר אימייל לשחזור, ולכן אי אפשר לשחזר את הסיסמה.','لم يُعد بريد استعادة لهذا الحساب، لذلك لا يمكن استعادة كلمة المرور.','This account has no recovery email, so the password cannot be recovered.'],
+  rc_noAcc:['החשבון לא נמצא במכשיר הזה.','الحساب غير موجود على هذا الجهاز.','The account was not found on this device.'],
+  f_rcCode:['קוד שחזור מהמייל','رمز الاستعادة من الرسالة','Recovery key from the email'],
+  rc_go:['שחזור וקביעת סיסמה חדשה','استعادة وتعيين كلمة مرور جديدة','Recover and set a new password'],
+  rc_back:['חזרה לכניסה','العودة إلى الدخول','Back to sign-in'],
+  rc_stale:['הקוד נכון, אבל לא הצלחנו לפתוח את הנתונים השמורים. שלחו מייל שחזור חדש מהמכשיר שבו אתם מחוברים.','الرمز صحيح لكن تعذّر فتح البيانات المحفوظة. أرسل رسالة استعادة جديدة من الجهاز الذي تسجّل الدخول فيه.','The key is right, but the saved data could not be opened. Send a new recovery email from a device where you are signed in.'],
+  rc_done:['הסיסמה הוחלפה. נכנסים…','تم تغيير كلمة المرور. جارٍ الدخول…','Password changed. Signing in…'],
+  rc_doneIn:['הסיסמה החדשה נקבעה וכל הנתונים נשמרו.','تم تعيين كلمة المرور الجديدة وبقيت كل البيانات.','The new password is set and all data was kept.'],
+  rc_otherUser:['הקישור שייך ל-{n}. התנתקו קודם כדי להשתמש בו.','الرابط يخص {n}. سجّل الخروج أولًا لاستخدامه.','The link belongs to {n}. Sign out first to use it.']
 });
 
 const t = (k, p) => {
@@ -3903,6 +3961,7 @@ function accountHTML(){
     <div class="btnrow"><button type="button" class="gold-btn" id="mv_open" data-i="mv_tab"></button><button type="button" class="btn" id="acc_out" data-i="b_logout"></button></div>
     <details class="adv"><summary data-i="b_chgPw"></summary><div class="fields">${pwf('acc_cur','f_curPw','current-password')}${pwf('acc_new','f_newPw','new-password')}${pwf('acc_new2','f_newPw2','new-password')}</div>${PWREQ.replace('%ID%', 'acc_new')}
       <div class="btnrow"><button type="button" class="btn" id="acc_chg" data-i="b_chgPw"></button></div></details>
+    <details class="adv rc-d" id="rc_d"><summary><span class="rc-sum"><span data-i="rc_title"></span><span class="rc-pill" id="rc_pill"></span></span></summary><div class="rc-box" id="rc_box"></div></details>
     <div class="field wide"><label for="acc_open" data-i="f_openSignup"></label><select id="acc_open"><option value="0" data-i="o_closed"></option><option value="1" data-i="o_open"></option></select><small class="hint" data-i="h_openSignup"></small></div>
     <div class="mvx" id="acc_f_mv" hidden></div>
     ${msg}<p class="fine" data-i="h_account"></p>
@@ -3910,7 +3969,9 @@ function accountHTML(){
   return `<div class="seg acc-seg" role="group"><button type="button" id="acc_tin" class="on" data-i="acc_signin"></button><button type="button" id="acc_tup" data-i="acc_signup"${signupAllowed() ? '' : ' hidden'}></button><button type="button" id="acc_tmv" data-i="mv_tab"></button></div>
     <div id="acc_f_in"><div class="field wide"><label for="acc_user" data-i="f_username"></label><input id="acc_user" type="text" maxlength="21" autocomplete="username" autocapitalize="none" spellcheck="false" dir="auto" class="lookup" placeholder="@"></div>
       ${pwf('acc_pass','f_password','current-password')}
-      <div class="btnrow"><button type="button" class="btn" id="acc_in" data-i="b_login"></button></div></div>
+      <div class="btnrow"><button type="button" class="btn" id="acc_in" data-i="b_login"></button></div>
+      <button type="button" class="rc-link" id="rc_forgot" data-i="rc_forgot"></button></div>
+    <div class="rc-box" id="acc_f_rc" hidden></div>
     <div id="acc_f_up" hidden><div class="field wide"><label for="acc_ruser" data-i="f_username"></label><input id="acc_ruser" type="text" maxlength="21" autocomplete="username" autocapitalize="none" spellcheck="false" dir="auto" class="lookup" placeholder="@"><small class="hint" data-i="hd_rules"></small><small class="hint hd-live" id="acc_hd"></small></div>
       ${pwf('acc_rpass','f_password','new-password')}${pwf('acc_rpass2','f_password2','new-password')}${PWREQ.replace('%ID%', 'acc_rpass')}
       <div class="btnrow"><button type="button" class="btn" id="acc_up" data-i="b_signup"></button></div></div>
@@ -6454,6 +6515,7 @@ async function doChange(){
   const salt = rnd(16); rec.salt = b64(salt); rec.iter = 200000; rec.hash = await hashPw(n1, salt, rec.iter);
   rec.esalt = b64(rnd(16));
   const raw = b64(await pbk(n1, u8(rec.esalt), 200000, 256));
+  if (rec.rcv){ try { rec.rcv.wk = await rcWrap(rec.rcv.pub, raw); } catch (e) {} }
   SS.setItem('fin-ek', raw);
   try { RAWLS.setItem(accKey(FUSER), JSON.stringify(rec)); } catch (e) {}
   await persistNow();
@@ -6482,7 +6544,7 @@ panelsEl.addEventListener('click', e => {
   else if (b.id === 'acc_out') logoutNow();
   else if (b.id === 'acc_tin' || b.id === 'acc_tup' || b.id === 'acc_tmv'){
     const m = {acc_tin: 'in', acc_tup: 'up', acc_tmv: 'mv'}[b.id];
-    ['in', 'up', 'mv'].forEach(k => { const f = $('#acc_f_' + k), tb = $('#acc_t' + k); if (f) f.hidden = k !== m; if (tb) tb.classList.toggle('on', k === m); });
+    ['in', 'up', 'mv', 'rc'].forEach(k => { const f = $('#acc_f_' + k), tb = $('#acc_t' + k); if (f) f.hidden = k !== m; if (tb) tb.classList.toggle('on', k === m); });
     if (m === 'mv'){ MV.mode = 'recv'; mvRender(); }
     accMsg('');
   } else {
@@ -7625,8 +7687,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "3.8", "date": "2026-10-14", "notes": {"he": "מחיקת חשבון ושם משתמש לצמיתות בכפתור נפרד בהגדרות החשבון, עם אישור בסיסמה ובהקלדת שם המשתמש.", "ar": "حذف الحساب واسم المستخدم نهائيًا بزر منفصل في إعدادات الحساب، مع التأكيد بكلمة المرور وكتابة اسم المستخدم.", "en": "Delete the account and username permanently with a separate button in account settings, confirmed by password and typing the username."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.105020';
+var CHANGELOG = [{"v": "3.9", "date": "2026-10-14", "notes": {"he": "אימות אימייל ושחזור סיסמה: שולחים לעצמכם מייל עם קוד שחזור, ואם שוכחים סיסמה קובעים חדשה בלי לאבד נתונים.", "ar": "تأكيد البريد واستعادة كلمة المرور: ترسل لنفسك رسالة فيها رمز استعادة، وإذا نسيت كلمة المرور تعيّن واحدة جديدة دون فقدان البيانات.", "en": "Email verification and password recovery: send yourself an email with a recovery key, and if you forget your password set a new one without losing data."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.111406';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -8549,6 +8611,229 @@ document.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.target.i
 const _alDel = applyLang;
 applyLang = function(){ const r = _alDel.apply(this, arguments); delRender(); return r; };
 try { const gone = SS.getItem('fin-del-ok'); if (gone){ SS.removeItem('fin-del-ok'); setTimeout(() => { const n = '⁨@' + gone + '⁩'; toast(t('del_done', {n})); const m = $('#acc_msg'); if (m){ m.className = 'fine acc-msg ok'; m.textContent = t('del_done', {n}); } }, 700); } } catch (e) {}
+
+/* ---- email verification + password recovery. No server: the user sends the email to themselves.
+   A recovery key goes in the email; it unlocks a private key that can always open the account's data key,
+   so a forgotten password can be replaced without losing data. */
+const RC = {code: '', mail: '', edit: false, busy: false, wt: null};
+function rcNewCode(){ const r = rnd(20); return Array.from(r, x => MV_ABC[x % MV_ABC.length]).join(''); }
+function rcFmt(c){ c = String(c || '').toUpperCase().replace(/[^0-9A-Z]/g, '').slice(0, 20); return c.replace(/(.{5})(?=.)/g, '$1-'); }
+function rcMask(m){ const [u, d] = String(m).split('@'); if (!d || !u) return m; return (u.length <= 2 ? u[0] + '•••' : u[0] + '•••' + u[u.length - 1]) + '@' + d; }
+const rcIso = h => '\u2068' + (h || '') + '\u2069';
+const rcMailOk = m => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(m || '').trim());
+async function rcAes(code, salt){ return crypto.subtle.importKey('raw', await pbk(rcFmt(code).replace(/-/g, ''), salt, 200000, 256), 'AES-GCM', false, ['encrypt', 'decrypt']); }
+async function rcWrap(pubB64, rawB64){ const pub = await crypto.subtle.importKey('spki', u8(pubB64), {name: 'RSA-OAEP', hash: 'SHA-256'}, false, ['encrypt']); return b64(await crypto.subtle.encrypt({name: 'RSA-OAEP'}, pub, u8(rawB64))); }
+async function rcUnwrap(rcv, code){
+  const pk = await crypto.subtle.decrypt({name: 'AES-GCM', iv: u8(rcv.iv)}, await rcAes(code, u8(rcv.s)), u8(rcv.ct));   // a wrong key throws here
+  const priv = await crypto.subtle.importKey('pkcs8', pk, {name: 'RSA-OAEP', hash: 'SHA-256'}, false, ['decrypt']);
+  return b64(await crypto.subtle.decrypt({name: 'RSA-OAEP'}, priv, u8(rcv.wk)));
+}
+async function rcSetup(mail){
+  const rec = getAcc(FUSER), raw = SS.getItem('fin-ek'); if (!rec || !raw) return null;
+  const code = rcNewCode();
+  const kp = await crypto.subtle.generateKey({name: 'RSA-OAEP', modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: 'SHA-256'}, true, ['encrypt', 'decrypt']);
+  const pub = b64(await crypto.subtle.exportKey('spki', kp.publicKey)), pk = await crypto.subtle.exportKey('pkcs8', kp.privateKey);
+  const sl = rnd(16), iv = rnd(12), ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, await rcAes(code, sl), pk);
+  rec.rcv = {v: 1, hint: rcMask(mail), pub, s: b64(sl), iv: b64(iv), ct: b64(ct), wk: await rcWrap(pub, raw), ok: 0, at: Date.now()};
+  RAWLS.setItem(accKey(FUSER), JSON.stringify(rec));
+  SET.rcMail = mail; saveSet(); persistNow();
+  RC.code = code; RC.mail = mail; RC.edit = false;
+  return code;
+}
+function rcLink(name, code){ return IN_CLAUDE ? '' : location.origin + location.pathname + '#rcv=' + encodeURIComponent(name) + '~' + rcFmt(code); }
+function rcMailParts(code){
+  const n = '@' + FUSER, l = rcLink(FUSER, code);
+  return {subj: t('rc_subj', {n}), body: t('rc_body', {n, c: rcFmt(code)}) + (l ? '\n\n' + t('rc_bodyLink') + '\n' + l : '') + '\n\n' + t('rc_bodyKeep')};
+}
+function rcHref(code){ const p = rcMailParts(code); return 'mailto:' + encodeURIComponent(RC.mail) + '?subject=' + encodeURIComponent(p.subj) + '&body=' + encodeURIComponent(p.body); }
+function rcState(){ const r = FUSER ? getAcc(FUSER) : null; return r && r.rcv ? (r.rcv.ok ? 'ok' : 'wait') : 'none'; }
+function rcSt(k, cls, p){ const el = $('#rc_st'); if (el){ el.className = 'gk-st ' + (cls || ''); el.textContent = k ? t(k, p) : ''; } }
+function rcRender(){
+  const pill = $('#rc_pill'), box = $('#rc_box'); if (!box || !FUSER) return;
+  const st = rcState(), rv = (getAcc(FUSER) || {}).rcv || {};
+  if (pill){ pill.className = 'rc-pill ' + st; pill.textContent = t('rc_pill_' + st); }
+  const keep = ($('#rc_mail') || {}).value, keepC = ($('#rc_vcode') || {}).value;
+  let h = `<p class="fine">${asEsc(t('rc_intro'))}</p>`;
+  if (st === 'none' || RC.edit){
+    h += `<div class="fields"><div class="field wide"><label for="rc_mail">${asEsc(t('rc_mail'))}</label><input id="rc_mail" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" dir="ltr" class="lookup" placeholder="name@example.com"></div></div>
+      <div class="btnrow"><button type="button" class="gold-btn" id="rc_make">✉️ ${asEsc(t('rc_make'))}</button>${RC.edit ? `<button type="button" class="btn" id="rc_cancel">${asEsc(t('del_cancel'))}</button>` : ''}</div>`;
+  } else {
+    h += `<p class="gk-st ${st === 'ok' ? 'ok' : 'new'}"><b>${st === 'ok' ? '✓' : '⏳'}</b> ${asEsc(t(st === 'ok' ? 'rc_ok' : 'rc_pending', {m: rcIso(rv.hint)}))}</p>`;
+    if (RC.code){
+      h += `<ol class="mv-steps"><li>${asEsc(t('rc_step1'))}</li><li>${asEsc(t('rc_step2'))}</li></ol>
+        <div class="btnrow"><a class="gold-btn rc-open" id="rc_open" href="${asEsc(rcHref(RC.code))}" target="_blank" rel="noopener">✉️ ${asEsc(t('rc_open'))}</a><button type="button" class="btn" id="rc_copy">📋 ${asEsc(t('rc_copy'))}</button></div>`;
+    } else if (st === 'wait') h += `<p class="fine">${asEsc(t('rc_step2'))}</p>`;
+    if (st === 'wait') h += `<div class="fields"><div class="field wide"><label for="rc_vcode">${asEsc(t('rc_codeIn'))}</label><input id="rc_vcode" type="text" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" dir="ltr" class="lookup rc-cin" placeholder="XXXXX-XXXXX-XXXXX-XXXXX"></div></div>
+      <div class="btnrow"><button type="button" class="gold-btn" id="rc_verify">${asEsc(t('rc_verify'))}</button></div>`;
+    h += `<div class="btnrow rc-more"><button type="button" class="btn" id="rc_resend">↻ ${asEsc(t('rc_resend'))}</button><button type="button" class="btn danger" id="rc_remove">${asEsc(t('rc_remove'))}</button></div><p class="fine">${asEsc(t('rc_resendHint'))}</p>`;
+  }
+  h += `<p class="gk-st" id="rc_st" role="status" aria-live="polite"></p>`;
+  box.innerHTML = h;
+  const mi = $('#rc_mail'); if (mi) mi.value = keep != null ? keep : (SET.rcMail || '');
+  const vi = $('#rc_vcode'); if (vi && keepC) vi.value = keepC;
+}
+async function rcMake(){
+  if (RC.busy) return;
+  const mail = String(($('#rc_mail') || {}).value || '').trim();
+  if (!rcMailOk(mail)) return rcSt('rc_mailBad', 'bad');
+  if (!(window.crypto && crypto.subtle)) return rcSt('m_nocrypto', 'bad');
+  RC.busy = true; rcSt('rc_making', 'wait');
+  try { await rcSetup(mail); } catch (e) { RC.busy = false; return rcSt('m_nocrypto', 'bad'); }
+  RC.busy = false; rcRender();
+  const o = $('#rc_open'); if (o) o.focus();
+}
+async function rcVerify(code, quiet){
+  const rec = getAcc(FUSER); if (!rec || !rec.rcv) return false;
+  const lk = lockLeft(FUSER); if (lk > 0){ rcSt('m_lock', 'bad', {s: lk}); return false; }
+  if (rcFmt(code).replace(/-/g, '').length !== 20){ rcSt('rc_codeShort', 'bad'); return false; }
+  rcSt('m_wait', 'wait');
+  let raw = null; try { raw = await rcUnwrap(rec.rcv, code); } catch (e) {}
+  noteFail(FUSER, !!raw);
+  if (!raw){ rcSt('rc_codeWrong', 'bad'); return false; }
+  rec.rcv.ok = 1; rec.rcv.vat = Date.now(); RAWLS.setItem(accKey(FUSER), JSON.stringify(rec)); persistNow();
+  RC.code = ''; rcRender(); rcSt('rc_okNow', 'ok'); if (!quiet) toast(t('rc_okNow'));
+  return true;
+}
+function rcCopy(){
+  const p = rcMailParts(RC.code), txt = t('rc_mail') + ': ' + RC.mail + '\n' + p.subj + '\n\n' + p.body;
+  const done = () => rcSt('rc_copied', 'ok');
+  try { navigator.clipboard.writeText(txt).then(done, () => { prompt('', txt); }); } catch (e) { try { prompt('', txt); } catch (e2) {} }
+}
+/* forgot password (signed out) */
+function rcRStSet(k, cls, p){ const el = $('#rc_rst'); if (el){ el.className = 'gk-st ' + (cls || ''); el.textContent = k ? t(k, p) : ''; } }
+function rcRRender(pre){
+  const box = $('#acc_f_rc'); if (!box) return;
+  pre = pre || {};
+  const v = id => pre[id] != null ? pre[id] : (($('#' + id) || {}).value || '');
+  const vals = {rc_user: v('rc_user') || (($('#acc_user') || {}).value || ''), rc_code: v('rc_code'), rc_pw1: v('rc_pw1'), rc_pw2: v('rc_pw2')};
+  const pwf = (id, lab) => `<div class="field wide"><label for="${id}">${asEsc(t(lab))}</label><input id="${id}" type="password" autocomplete="new-password" class="lookup"></div>`;
+  box.innerHTML = `<h4 class="rc-h">🔑 ${asEsc(t('rc_rTitle'))}</h4><p class="fine">${asEsc(t('rc_rHint'))}</p>
+    <div class="fields"><div class="field wide"><label for="rc_user">${asEsc(t('f_username'))}</label><input id="rc_user" type="text" maxlength="21" autocomplete="username" autocapitalize="none" spellcheck="false" dir="auto" class="lookup" placeholder="@"><small class="hint" id="rc_where"></small></div>
+      <div class="field wide"><label for="rc_code">${asEsc(t('f_rcCode'))}</label><input id="rc_code" type="text" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" dir="ltr" class="lookup rc-cin" placeholder="XXXXX-XXXXX-XXXXX-XXXXX"></div>
+      ${pwf('rc_pw1', 'f_newPw')}${pwf('rc_pw2', 'f_newPw2')}</div>${PWREQ.replace('%ID%', 'rc_pw1')}
+    <div class="btnrow"><button type="button" class="gold-btn" id="rc_go">${asEsc(t('rc_go'))}</button><button type="button" class="btn" id="rc_back">${asEsc(t('rc_back'))}</button></div>
+    <p class="gk-st" id="rc_rst" role="alert" aria-live="polite"></p>`;
+  Object.keys(vals).forEach(id => { const el = $('#' + id); if (el) el.value = vals[id]; });
+  $$('[data-i]', box).forEach(el => { el.textContent = t(el.dataset.i); });
+  const p1 = $('#rc_pw1'); if (p1) updPwReq(p1);
+  rcWhere();
+}
+function rcShow(pre){
+  ['in', 'up', 'mv', 'rc'].forEach(k => { const f = $('#acc_f_' + k); if (f) f.hidden = k !== 'rc'; });
+  ['tin', 'tup', 'tmv'].forEach(k => { const b = $('#acc_' + k); if (b) b.classList.toggle('on', k === 'tin'); });
+  rcRRender(pre); accMsg('');
+  const box = $('#acc_f_rc'); if (box) box.scrollIntoView({block: 'nearest', behavior: SET.motion === 'reduce' ? 'auto' : 'smooth'});
+}
+async function rcFind(name){
+  let rec = getAcc(name), enc = null;
+  try { enc = rec ? JSON.parse(RAWLS.getItem(encName(name)) || 'null') : null; } catch (e) {}
+  if (!rec && IN_CLAUDE){ const pkg = await mvCloudGet(name); if (pkg){ rec = pkg.rec; enc = pkg.enc; } }
+  return {rec, enc};
+}
+async function rcWhere(){
+  const el = $('#rc_where'), inp = $('#rc_user'); if (!el || !inp) return;
+  const name = hdNorm(inp.value); if (!name){ el.textContent = ''; return; }
+  const {rec} = await rcFind(name);
+  if (hdNorm(($('#rc_user') || {}).value) !== name) return;
+  el.textContent = !rec ? t('rc_noAcc') : rec.rcv ? t('rc_where', {m: rcIso(rec.rcv.hint)}) : t('rc_none');
+  el.className = 'hint ' + (rec && rec.rcv ? 'rc-yes' : 'rc-no');
+}
+async function rcRecover(){
+  if (RC.busy) return;
+  const name = hdNorm(($('#rc_user') || {}).value), code = ($('#rc_code') || {}).value || '', p1 = ($('#rc_pw1') || {}).value || '', p2 = ($('#rc_pw2') || {}).value || '';
+  if (!(window.crypto && crypto.subtle)) return rcRStSet('m_nocrypto', 'bad');
+  if (!name) return rcRStSet('rc_noAcc', 'bad');
+  RC.busy = true; rcRStSet('m_wait', 'wait');
+  try {
+    const {rec, enc} = await rcFind(name);
+    if (!rec) return rcRStSet('rc_noAcc', 'bad');
+    if (!rec.rcv) return rcRStSet('rc_none', 'bad');
+    if (rcFmt(code).replace(/-/g, '').length !== 20) return rcRStSet('rc_codeShort', 'bad');
+    if (!pwOk(p1)) return rcRStSet('m_weak', 'bad');
+    if (p1 !== p2) return rcRStSet('m_mismatch', 'bad');
+    const lk = lockLeft(name); if (lk > 0) return rcRStSet('m_lock', 'bad', {s: lk});
+    let raw = null; try { raw = await rcUnwrap(rec.rcv, code); } catch (e) {}
+    noteFail(name, !!raw);
+    if (!raw) return rcRStSet('rc_codeWrong', 'bad');
+    let map = {};
+    if (enc && enc.ct){
+      try { const key = await crypto.subtle.importKey('raw', u8(raw), 'AES-GCM', false, ['decrypt']);
+        map = JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name: 'AES-GCM', iv: u8(enc.iv)}, key, u8(enc.ct)))); }
+      catch (e) { return rcRStSet('rc_stale', 'bad'); }
+    }
+    const nm = rec.name || name, salt = rnd(16);
+    rec.salt = b64(salt); rec.iter = 200000; rec.hash = await hashPw(p1, salt, rec.iter);
+    rec.esalt = b64(rnd(16));
+    const raw2 = b64(await pbk(p1, u8(rec.esalt), 200000, 256));
+    rec.rcv.wk = await rcWrap(rec.rcv.pub, raw2); rec.rcv.ok = 1; rec.rcv.vat = rec.rcv.vat || Date.now();
+    RAWLS.setItem(accKey(nm), JSON.stringify(rec));
+    await sealMap(nm, raw2, map);
+    try { SS.setItem('fin-rc-ok', '1'); } catch (e) {}
+    rcRStSet('rc_done', 'ok');
+    await unlockSession(nm, p1, rec, {});
+  } finally { RC.busy = false; }
+}
+document.addEventListener('click', e => {
+  const el = e.target;
+  if (el.closest('#rc_forgot')){ rcShow(); const u = $('#rc_user'); if (u && !u.value) u.focus(); else { const c = $('#rc_code'); if (c) c.focus(); } return; }
+  if (el.closest('#rc_back')){ ['in', 'up', 'mv', 'rc'].forEach(k => { const f = $('#acc_f_' + k); if (f) f.hidden = k !== 'in'; }); const u = $('#acc_user'), r = $('#rc_user'); if (u && r && r.value) u.value = r.value; return; }
+  if (el.closest('#rc_go')) return void rcRecover();
+  if (el.closest('#rc_make')) return void rcMake();
+  if (el.closest('#rc_verify')) return void rcVerify(($('#rc_vcode') || {}).value || '');
+  if (el.closest('#rc_copy')) return rcCopy();
+  if (el.closest('#rc_resend')){ RC.edit = true; RC.code = ''; rcRender(); const m = $('#rc_mail'); if (m) m.focus(); return; }
+  if (el.closest('#rc_cancel')){ RC.edit = false; rcRender(); return; }
+  if (el.closest('#rc_open')){ setTimeout(() => rcSt('rc_sent', 'new'), 400); return; }
+  const rm = el.closest('#rc_remove');
+  if (rm){
+    if (!rm.dataset.sure){ rm.dataset.sure = '1'; rm.textContent = t('b_sure'); return; }
+    const rec = getAcc(FUSER); if (rec){ delete rec.rcv; RAWLS.setItem(accKey(FUSER), JSON.stringify(rec)); }
+    delete SET.rcMail; saveSet(); persistNow(); RC.code = ''; RC.edit = false; rcRender(); rcSt('rc_removed', 'new');
+  }
+});
+document.addEventListener('input', e => {
+  const id = e.target.id;
+  if (id === 'rc_code' || id === 'rc_vcode'){ const v = rcFmt(e.target.value); if (v !== e.target.value) e.target.value = v; }
+  if (id === 'rc_user'){ clearTimeout(RC.wt); RC.wt = setTimeout(rcWhere, 350); }
+  if (id === 'rc_mail' || id === 'rc_vcode') rcSt('');
+});
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const id = e.target.id;
+  if (id === 'rc_mail'){ e.preventDefault(); rcMake(); }
+  else if (id === 'rc_vcode'){ e.preventDefault(); rcVerify(e.target.value); }
+  else if (id === 'rc_user' || id === 'rc_code' || id === 'rc_pw1' || id === 'rc_pw2'){ e.preventDefault(); rcRecover(); }
+});
+document.addEventListener('toggle', e => { if (e.target && e.target.id === 'rc_d' && e.target.open) rcRender(); }, true);
+const _alRc = applyLang;
+applyLang = function(){ const r = _alRc.apply(this, arguments); rcRender(); const b = $('#acc_f_rc'); if (b && !b.hidden) rcRRender(); return r; };
+setTimeout(rcRender, 0);
+/* a link from the recovery email: #rcv=<user>~<key> (works on first load and when the app is already open) */
+function rcLinkGrab(){
+  try { const m = /[#&]rcv=([^~&]+)~([0-9A-Za-z-]+)/.exec(location.hash || ''); if (!m) return null;
+    const lk = {n: hdNorm(decodeURIComponent(m[1])), c: rcFmt(m[2])};
+    SS.setItem('fin-rc-link', JSON.stringify(lk)); history.replaceState(null, '', location.pathname + location.search); return lk; } catch (e) { return null; }
+}
+function rcLinkUse(lk, delay){
+  setTimeout(async () => {
+    try { SS.removeItem('fin-rc-link'); } catch (e) {}
+    const st = $('#tab-settings'); if (st) st.click();
+    setCat('account');
+    if (FUSER && FUSER === lk.n){
+      const d = $('#rc_d'); if (d){ d.open = true; rcRender(); }
+      if (rcState() === 'wait') await rcVerify(lk.c); else if (rcState() === 'ok') rcSt('rc_ok', 'ok', {m: rcIso(((getAcc(FUSER) || {}).rcv || {}).hint)});
+      if (d) d.scrollIntoView({block: 'start'});
+    } else if (!FUSER){ rcShow({rc_user: '@' + lk.n, rc_code: lk.c}); const p1 = $('#rc_pw1'); if (p1) p1.focus(); }
+    else toast(t('rc_otherUser', {n: '@' + lk.n}));
+  }, delay);
+}
+(function(){
+  let lk = rcLinkGrab();
+  if (!lk){ try { lk = JSON.parse(SS.getItem('fin-rc-link') || 'null'); } catch (e) {} }
+  if (lk && lk.n) rcLinkUse(lk, 900);
+})();
+window.addEventListener('hashchange', () => { const lk = rcLinkGrab(); if (lk) rcLinkUse(lk, 60); });
+try { if (SS.getItem('fin-rc-ok')){ SS.removeItem('fin-rc-ok'); setTimeout(() => toast(t('rc_doneIn')), 700); } } catch (e) {}
 
 applyLang(false);
 activate(tab);
