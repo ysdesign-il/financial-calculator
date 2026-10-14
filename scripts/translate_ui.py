@@ -15,6 +15,13 @@ GKEY = os.environ.get('GEMINI_API_KEY', '').strip()
 DEADLINE = time.time() + float(os.environ.get('MAX_MINUTES', '45')) * 60
 PRIORITY = ['ru', 'am', 'fr', 'es', 'uk', 'de', 'pt-BR', 'it', 'tr', 'fa', 'zh-CN', 'hi', 'ja', 'ko', 'pl', 'ro', 'yi', 'pt-PT', 'nl', 'hu']
 PH = re.compile(r'\{[A-Za-z0-9_]+\}')
+LOG = {'started': time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime()), 'events': [], 'langs': {}}
+def note(msg):
+    print(msg); LOG['events'].append(msg[:400]) if len(LOG['events']) < 200 else None
+
+def err_body(e):
+    try: return e.read().decode('utf-8', 'replace')[:300]
+    except Exception: return ''
 
 def fnv(s):                                   # same hash as the page (UTF-16 code units, FNV-1a 32-bit, base 36)
     h, data = 0x811c9dc5, s.encode('utf-16-le')
@@ -72,6 +79,7 @@ class Gemini:
                 parts = ((j.get('candidates') or [{}])[0].get('content') or {}).get('parts') or []
                 return ''.join(p.get('text', '') for p in parts if not p.get('thought'))
             except urllib.error.HTTPError as e:
+                note(f'  gemini {m}: HTTP {e.code} {err_body(e)}')
                 if e.code in (429,): self.dead.add(m); continue
                 if e.code in (400, 401, 403): raise Exhausted('gemini key refused (%s)' % e.code)
                 if e.code in (404,): self.dead.add(m); continue
@@ -93,8 +101,11 @@ class GitHubModels:
             ids = [m.get('id') for m in (cat if isinstance(cat, list) else cat.get('models', [])) if m.get('id')]
             chat = [i for i in ids if any(x in i.lower() for x in ('gpt', 'deepseek-v3', 'mistral-medium', 'llama-4', 'grok'))]
             self.models = [m for m in self.prefer if m in ids] + [m for m in chat if m not in self.prefer]
+        except urllib.error.HTTPError as e:
+            note(f'catalog: HTTP {e.code} {err_body(e)}')
         except Exception as e:
-            print('catalog unavailable:', e)
+            note(f'catalog unavailable: {e}')
+        note('models: ' + ', '.join(self.models[:12]))
     def ask(self, text):
         for m in self.models:
             if m in self.dead: continue
@@ -109,9 +120,9 @@ class GitHubModels:
                 except urllib.error.HTTPError as e:
                     wait = int(e.headers.get('retry-after') or 0) if e.headers else 0
                     if e.code == 429 and 0 < wait <= 90 and attempt == 0: time.sleep(wait + 1); continue
-                    self.dead.add(m); print(f'  {m}: HTTP {e.code} -> skipped'); break
+                    self.dead.add(m); note(f'  {m}: HTTP {e.code} {err_body(e)}'); break
                 except Exception as e:
-                    print(f'  {m}: {e}'); time.sleep(5)
+                    note(f'  {m}: {e}'); time.sleep(5)
         raise Exhausted('GitHub Models limit reached for today')
 
 def load(code):
@@ -152,7 +163,7 @@ def main():
                 if time.time() > DEADLINE: save(code, tx); print('time limit reached'); return total_new
                 try: res = parse(prov.ask(prompt(lang, ch)))
                 except Exhausted as e:
-                    print(f'  {prov.name}: {e}'); providers.remove(prov); break
+                    note(f'  {prov.name}: {e}'); providers.remove(prov); break
                 if not isinstance(res, dict): continue
                 for k, en in ch.items():
                     tr = res.get(k)
@@ -160,9 +171,18 @@ def main():
                 save(code, tx)
             missing = [k for k in STR if k not in tx]
             if not missing: break
-        save(code, tx); print(f'{code}: {len(tx)}/{len(STR)}')
+        save(code, tx); print(f'{code}: {len(tx)}/{len(STR)}'); LOG['langs'][code] = len(tx)
         if not providers: print('All translation services are at their limit; the next run continues.'); break
     return total_new
 
 if __name__ == '__main__':
-    print('new translations:', main())
+    try: n = main()
+    finally:
+        LOG['finished'] = time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime())
+        done = {}
+        for l in LANGS:
+            try: done[l['code']] = json.load(open(os.path.join(ROOT, 'lang', l['code'] + '.json'), encoding='utf-8')).get('done', 0)
+            except Exception: done[l['code']] = 0
+        LOG['coverage'] = done; LOG['total'] = len(STR)
+        json.dump(LOG, open(os.path.join(ROOT, 'i18n', 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print('new translations:', n)
