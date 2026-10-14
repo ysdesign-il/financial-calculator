@@ -1,0 +1,41 @@
+name: Translate interface
+on:
+  schedule:
+    - cron: '41 */3 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['i18n/source.json', 'scripts/translate_ui.py']
+permissions:
+  contents: write
+  models: read
+concurrency:
+  group: site-publish
+  cancel-in-progress: false
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Translate missing interface texts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          MAX_MINUTES: '45'
+        run: python scripts/translate_ui.py
+      - name: Commit and publish
+        run: |
+          if [ -z "$(git status --porcelain -- lang)" ]; then echo "No changes"; exit 0; fi
+          git config user.name "translate-bot"
+          git config user.email "translate-bot@users.noreply.github.com"
+          git add lang
+          git commit -m "Update interface translations"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          git push --force origin HEAD:gh-pages
