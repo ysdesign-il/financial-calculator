@@ -2908,7 +2908,11 @@ Object.assign(T, {
   rc_noMailPw:['רק כתובת המייל. האפליקציה לעולם לא תבקש את הסיסמה של חשבון המייל שלכם, ואין להקליד אותה כאן.','عنوان البريد فقط. لن يطلب التطبيق أبدًا كلمة مرور حساب بريدك، فلا تكتبها هنا.','Only the email address. The app will never ask for your email account password, so do not type it here.'],
   rc_newPw:['סיסמה חדשה לאפליקציה','كلمة مرور جديدة للتطبيق','New password for the app'],
   rc_newPw2:['הקלידו שוב את הסיסמה החדשה לאפליקציה','أعد كتابة كلمة مرور التطبيق الجديدة','Type the new app password again'],
-  rc_appPwOnly:['זו הסיסמה של האפליקציה בלבד, לא של המייל. בחרו סיסמה ייחודית שלא משמשת בשום מקום אחר.','هذه كلمة مرور التطبيق فقط وليست كلمة مرور البريد. اختر كلمة مرور فريدة لا تُستخدم في أي مكان آخر.','This is the app password only, not your email password. Choose a unique one not used anywhere else.']
+  rc_appPwOnly:['זו הסיסמה של האפליקציה בלבד, לא של המייל. בחרו סיסמה ייחודית שלא משמשת בשום מקום אחר.','هذه كلمة مرور التطبيق فقط وليست كلمة مرور البريد. اختر كلمة مرور فريدة لا تُستخدم في أي مكان آخر.','This is the app password only, not your email password. Choose a unique one not used anywhere else.'],
+  rc_oneAcc:['כל אימייל יכול להיות משויך לחשבון אחד בלבד.','يمكن ربط كل بريد بحساب واحد فقط.','Each email can belong to one account only.'],
+  rc_checking:['בודק שהאימייל פנוי…','جارٍ التحقق من أن البريد غير مستخدم…','Checking that the email is free…'],
+  rc_mailTaken:['האימייל הזה כבר משויך לחשבון אחר. כל אימייל יכול להיות רק בחשבון אחד, אז בחרו כתובת אחרת.','هذا البريد مرتبط بحساب آخر. يمكن ربط كل بريد بحساب واحد فقط، فاختر عنوانًا آخر.','This email already belongs to another account. Each email can be used by one account only, so choose another address.'],
+  rc_mailCheckFail:['לא הצלחנו לבדוק שהאימייל פנוי. בדקו את החיבור ונסו שוב.','تعذّر التحقق من أن البريد غير مستخدم. تحقق من الاتصال وحاول مرة أخرى.','Could not check that the email is free. Check the connection and try again.']
 });
 
 const t = (k, p) => {
@@ -7471,7 +7475,8 @@ async function hdClaim(name){
     if (hits.docs.some(d => d.id !== HD.uid)) return 'taken';
     const cur = await HD.db.doc('claims/' + HD.uid).get();
     const prev = cur.exists ? (cur.data() || {}).handle : '', at = Date.now();
-    await HD.db.doc('claims/' + HD.uid).set({handle: name, at});
+    const pd = cur.exists ? (cur.data() || {}) : {};
+    await HD.db.doc('claims/' + HD.uid).set(Object.assign({handle: name, at}, pd.handle === name && pd.mh ? {mh: pd.mh, mat: pd.mat || at} : {}));
     const again = await claims.where('handle', '==', name).get();
     const rival = again.docs.find(d => d.id !== HD.uid && (+(d.data() || {}).at < at || (+(d.data() || {}).at === at && d.id < HD.uid)));
     if (rival){ if (prev) await HD.db.doc('claims/' + HD.uid).set({handle: prev, at: Date.now()}); else await HD.db.doc('claims/' + HD.uid).delete(); return 'taken'; }
@@ -7702,8 +7707,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "4.3.1", "date": "2026-10-14", "notes": {"he": "הבהרה באימות האימייל: מקלידים רק את כתובת המייל, והאפליקציה לעולם לא מבקשת את הסיסמה של חשבון המייל.", "ar": "توضيح في تأكيد البريد: تكتب عنوان البريد فقط، ولا يطلب التطبيق أبدًا كلمة مرور حساب البريد.", "en": "Clarified email verification: you type only the email address, and the app never asks for your email account password."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.151631';
+var CHANGELOG = [{"v": "4.4", "date": "2026-10-14", "notes": {"he": "כל אימייל יכול להיות משויך לחשבון אחד בלבד. הבדיקה נעשית בלי לחשוף את הכתובת.", "ar": "يمكن ربط كل بريد بحساب واحد فقط، ويتم التحقق دون كشف العنوان.", "en": "Each email can belong to one account only, checked without revealing the address."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.152407';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -8646,13 +8651,13 @@ async function rcUnwrap(rcv, code){
   const priv = await crypto.subtle.importKey('pkcs8', pk, {name: 'RSA-OAEP', hash: 'SHA-256'}, false, ['decrypt']);
   return b64(await crypto.subtle.decrypt({name: 'RSA-OAEP'}, priv, u8(rcv.wk)));
 }
-async function rcSetup(mail){
+async function rcSetup(mail, mh){
   const rec = getAcc(FUSER), raw = SS.getItem('fin-ek'); if (!rec || !raw) return null;
   const code = rcNewCode();
   const kp = await crypto.subtle.generateKey({name: 'RSA-OAEP', modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: 'SHA-256'}, true, ['encrypt', 'decrypt']);
   const pub = b64(await crypto.subtle.exportKey('spki', kp.publicKey)), pk = await crypto.subtle.exportKey('pkcs8', kp.privateKey);
   const sl = rnd(16), iv = rnd(12), ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, await rcAes(code, sl), pk);
-  rec.rcv = {v: 1, hint: rcMask(mail), pub, s: b64(sl), iv: b64(iv), ct: b64(ct), wk: await rcWrap(pub, raw), ok: 0, at: Date.now()};
+  rec.rcv = {v: 1, hint: rcMask(mail), mh: mh || '', pub, s: b64(sl), iv: b64(iv), ct: b64(ct), wk: await rcWrap(pub, raw), ok: 0, at: Date.now()};
   RAWLS.setItem(accKey(FUSER), JSON.stringify(rec));
   SET.rcMail = mail; saveSet(); persistNow();
   RC.code = code; RC.mail = mail; RC.edit = false;
@@ -8673,7 +8678,7 @@ function rcRender(){
   const keep = ($('#rc_mail') || {}).value, keepC = ($('#rc_vcode') || {}).value;
   let h = `<p class="fine">${asEsc(t('rc_intro'))}</p>`;
   if (st === 'none' || RC.edit){
-    h += `<div class="fields"><div class="field wide"><label for="rc_mail">${asEsc(t('rc_mail'))}</label><input id="rc_mail" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" dir="ltr" class="lookup" placeholder="name@example.com"><small class="hint rc-nopw">🔒 ${asEsc(t('rc_noMailPw'))}</small></div></div>
+    h += `<div class="fields"><div class="field wide"><label for="rc_mail">${asEsc(t('rc_mail'))}</label><input id="rc_mail" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" dir="ltr" class="lookup" placeholder="name@example.com"><small class="hint rc-nopw">🔒 ${asEsc(t('rc_noMailPw'))}</small><small class="hint">${asEsc(t('rc_oneAcc'))}</small></div></div>
       <div class="btnrow"><button type="button" class="gold-btn" id="rc_make">✉️ ${asEsc(t('rc_make'))}</button>${RC.edit ? `<button type="button" class="btn" id="rc_cancel">${asEsc(t('del_cancel'))}</button>` : ''}</div>`;
   } else {
     h += `<p class="gk-st ${st === 'ok' ? 'ok' : 'new'}"><b>${st === 'ok' ? '✓' : '⏳'}</b> ${asEsc(t(st === 'ok' ? 'rc_ok' : 'rc_pending', {m: rcIso(rv.hint)}))}</p>`;
@@ -8695,8 +8700,16 @@ async function rcMake(){
   const mail = String(($('#rc_mail') || {}).value || '').trim();
   if (!rcMailOk(mail)) return rcSt('rc_mailBad', 'bad');
   if (!(window.crypto && crypto.subtle)) return rcSt('m_nocrypto', 'bad');
-  RC.busy = true; rcSt('rc_making', 'wait');
-  try { await rcSetup(mail); } catch (e) { RC.busy = false; return rcSt('m_nocrypto', 'bad'); }
+  RC.busy = true; rcSt('rc_checking', 'wait');
+  let mh = '';
+  try { mh = await rcMailHash(mail); } catch (e) { RC.busy = false; return rcSt('m_nocrypto', 'bad'); }
+  const free = await rcMailFree(mh);
+  if (free !== 'ok'){ RC.busy = false; return rcSt(free === 'taken' ? 'rc_mailTaken' : 'rc_mailCheckFail', 'bad'); }
+  const cl = await rcClaimMail(mh);
+  if (cl === 'taken'){ RC.busy = false; return rcSt('rc_mailTaken', 'bad'); }
+  if (cl === 'err'){ RC.busy = false; return rcSt('rc_mailCheckFail', 'bad'); }
+  rcSt('rc_making', 'wait');
+  try { await rcSetup(mail, mh); } catch (e) { RC.busy = false; return rcSt('m_nocrypto', 'bad'); }
   RC.busy = false; rcRender();
   const o = $('#rc_open'); if (o) o.focus();
 }
@@ -8807,7 +8820,7 @@ document.addEventListener('click', e => {
   if (rm){
     if (!rm.dataset.sure){ rm.dataset.sure = '1'; rm.textContent = t('b_sure'); return; }
     const rec = getAcc(FUSER); if (rec){ delete rec.rcv; RAWLS.setItem(accKey(FUSER), JSON.stringify(rec)); }
-    delete SET.rcMail; saveSet(); persistNow(); RC.code = ''; RC.edit = false; rcRender(); rcSt('rc_removed', 'new');
+    delete SET.rcMail; saveSet(); persistNow(); RC.code = ''; RC.edit = false; rcRender(); rcSt('rc_removed', 'new'); rcUnclaimMail();
   }
 });
 document.addEventListener('input', e => {
@@ -8923,6 +8936,61 @@ setTimeout(polSelRender, 0);
 /* the PIN lock was removed: clear anything it left behind */
 try { ['fin-pin', 'fin-hid', 'fin-pin-reset'].forEach(k => SS.removeItem(k)); } catch (e) {}
 try { for (let i = 0; i < RAWLS.length; i++){ const k = RAWLS.key(i) || ''; if (k.indexOf('fin-acc:') !== 0) continue; const r = JSON.parse(RAWLS.getItem(k) || 'null'); if (r && r.pin){ delete r.pin; RAWLS.setItem(k, JSON.stringify(r)); } } } catch (e) {}
+
+/* ---- one email, one account. Only a slow one-way fingerprint of the address is compared, never the address:
+   on this device against every account, and in Claude against everyone's username record. */
+function rcNorm(m){
+  let [u, d] = String(m || '').trim().toLowerCase().split('@'); if (!u || !d) return String(m || '').trim().toLowerCase();
+  u = u.split('+')[0];
+  if (d === 'gmail.com' || d === 'googlemail.com'){ u = u.replace(/\./g, ''); d = 'gmail.com'; }
+  return u + '@' + d;
+}
+async function rcMailHash(m){ return b64(await pbk(rcNorm(m), new TextEncoder().encode('fincalc-mail-v1'), 150000, 256)); }
+function rcLocalOwner(mh){
+  try { for (let i = 0; i < RAWLS.length; i++){ const k = RAWLS.key(i) || ''; if (k.indexOf('fin-acc:') !== 0) continue;
+    const r = JSON.parse(RAWLS.getItem(k) || 'null'); if (r && r.name !== FUSER && r.rcv && r.rcv.mh && r.rcv.mh === mh) return r.name; } } catch (e) {}
+  return '';
+}
+async function rcMailFree(mh){
+  if (rcLocalOwner(mh)) return 'taken';
+  if (IN_CLAUDE){
+    if (!HD.ready) await hdInit();
+    if (HD.ready){ try { const q = await HD.db.collection('claims').where('mh', '==', mh).get(); if ((q.docs || []).some(d => d.id !== HD.uid)) return 'taken'; } catch (e) { return 'err'; } }
+  }
+  return 'ok';
+}
+async function rcClaimMail(mh){
+  if (!IN_CLAUDE) return 'skip';
+  if (!HD.ready) await hdInit();
+  if (!HD.ready) return 'skip';
+  try {
+    const ref = HD.db.doc('claims/' + HD.uid), cur = await ref.get(), d = cur.exists ? (cur.data() || {}) : null;
+    if (!d || d.handle !== FUSER) return 'skip';
+    const mat = Date.now(); await ref.set(Object.assign({}, d, {mh, mat}));
+    const again = await HD.db.collection('claims').where('mh', '==', mh).get();
+    const rival = (again.docs || []).find(x => x.id !== HD.uid && (+((x.data() || {}).mat) || 0) <= mat);
+    if (rival){ const dd = Object.assign({}, d); delete dd.mh; delete dd.mat; await ref.set(dd); return 'taken'; }
+    return 'ok';
+  } catch (e) { return 'err'; }
+}
+async function rcUnclaimMail(){
+  if (!IN_CLAUDE) return;
+  try { if (!HD.ready) await hdInit(); if (!HD.ready) return;
+    const ref = HD.db.doc('claims/' + HD.uid), cur = await ref.get(); if (!cur.exists) return;
+    const d = Object.assign({}, cur.data() || {}); if (d.handle !== FUSER || !d.mh) return;
+    delete d.mh; delete d.mat; await ref.set(d); } catch (e) {}
+}
+/* accounts that set an email before this change get their fingerprint on the next sign-in */
+if (FUSER) setTimeout(async () => {
+  try {
+    const r = getAcc(FUSER); if (!r || !r.rcv || r.rcv.mh || !SET.rcMail) return;
+    const mh = await rcMailHash(SET.rcMail);
+    if (rcLocalOwner(mh)) return;
+    if ((await rcMailFree(mh)) !== 'ok') return;
+    if ((await rcClaimMail(mh)) === 'taken') return;
+    const r2 = getAcc(FUSER); if (!r2 || !r2.rcv) return; r2.rcv.mh = mh; RAWLS.setItem(accKey(FUSER), JSON.stringify(r2)); persistNow();
+  } catch (e) {}
+}, 3500);
 
 applyLang(false);
 activate(tab);
