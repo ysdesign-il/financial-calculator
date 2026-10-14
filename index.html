@@ -1154,6 +1154,12 @@ body:not(.own) .own-only{display:none!important}
 .ln-form{margin-top:14px;padding:12px;border:1px dashed var(--line);border-radius:14px}
 .ln-f{margin-bottom:10px}.ln-f label{display:block;font-size:.82rem;margin-bottom:5px}
 .ln-f input,.ln-f select{width:100%;padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink);font:inherit}
+.ln-cfg{margin:8px 0 4px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--g1)}
+.ln-cfg label{display:block;font-size:.82rem;font-weight:700;margin-bottom:6px}
+.ln-cfg select{width:100%;padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink);font:inherit}
+.ln-st{cursor:pointer;font:inherit;font-size:.74rem}
+.ln-it.stale .ln-a{opacity:.6}
+.ln-auto{flex-basis:100%;font-size:.74rem;color:#C2412D}
 
 </style>
 </head>
@@ -3648,6 +3654,14 @@ Object.assign(T, {
   ln_add:['הוספה','إضافة','Add'], ln_saveEd:['שמירה','حفظ','Save'], ln_cancel:['ביטול','إلغاء','Cancel'], ln_edit:['עריכה','تعديل','Edit'], ln_del:['מחיקה','حذف','Delete'], ln_sure:['למחוק?','حذف؟','Delete?'], ln_up:['למעלה','لأعلى','Up'], ln_down:['למטה','لأسفل','Down'],
   ln_needN:['צריך שם לקישור','يلزم اسم للرابط','The link needs a name'], ln_badU:['הכתובת לא תקינה. צריך כתובת אתר, למשל https://example.com','العنوان غير صالح. يلزم عنوان موقع مثل https://example.com','That address is not valid. Use a web address such as https://example.com'],
   ln_saved:['הקישורים נשמרו','تم حفظ الروابط','Links saved'], ln_fail:['השמירה נכשלה. נסו שוב.','فشل الحفظ. حاول مجددًا.','Saving failed. Try again.']
+});
+Object.assign(T, {
+  ln_delMode:['מחיקת קישורים לא עדכניים','حذف الروابط غير المحدّثة','Deleting links that are not current'],
+  ln_del_manual:['ידני: אני מוחק','يدوي: أحذف بنفسي','Manual: I delete them'], ln_del_auto0:['אוטומטי: מיד','تلقائي: فورًا','Automatic: right away'], ln_del_auto1:['אוטומטי: אחרי יום','تلقائي: بعد يوم','Automatic: after a day'], ln_del_auto7:['אוטומטי: אחרי שבוע','تلقائي: بعد أسبوع','Automatic: after a week'],
+  ln_delHint:['רק קישורים שסומנו "לא עדכני" נמחקים. קישור חי אי אפשר למחוק, ומשתמשים רואים רק קישורים חיים.','تُحذف فقط الروابط المعلّمة "غير محدّث". لا يمكن حذف رابط مباشر، والمستخدمون يرون الروابط المباشرة فقط.','Only links marked "not current" are deleted. A live link cannot be deleted, and people only see live links.'],
+  ln_stTip:['החלפה בין חי ללא עדכני','التبديل بين مباشر وغير محدّث','Switch between live and not current'],
+  ln_toLive:['הקישור חי ומופיע שוב','الرابط مباشر ويظهر مجددًا','The link is live and shows again'], ln_toStale:['הקישור סומן לא עדכני והוסתר מהמשתמשים','عُلّم الرابط غير محدّث وأُخفي عن المستخدمين','The link is marked not current and hidden from people'],
+  ln_autoIn:['יימחק אוטומטית ב-{t}','سيُحذف تلقائيًا في {t}','Deletes automatically at {t}'], ln_autoNow:['נמחק אוטומטית עכשיו','يُحذف تلقائيًا الآن','Deleting automatically now'], ln_autoDone:['נמחקו אוטומטית {n} קישורים לא עדכניים','حُذفت تلقائيًا {n} روابط غير محدّثة','{n} links that were not current were deleted automatically']
 });
 
 const t = (k, p) => {
@@ -9033,8 +9047,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "6.5", "date": "2026-10-14", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.225808';
+var CHANGELOG = [{"v": "6.6", "date": "2026-10-14", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.230816';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -11518,14 +11532,16 @@ const _alOwn = applyLang;
 applyLang = function(){ const r = _alOwn.apply(this, arguments); devPermSync(); return r; };
 
 /* ================= links: only the developer adds them; each one is either for you alone or for everyone ================= */
-var LN = {pub: [], me: [], edit: null, uid: null, db: null, sure: null};
+var LN = {pub: [], me: [], edit: null, uid: null, db: null, sure: null, cfg: {del: 'manual'}};
 function lnUrl(u){
   let x = String(u || '').trim(); if (!x) return '';
   if (!/^[a-z][a-z0-9+.-]*:/i.test(x)) x = 'https://' + x;
   try { const p = new URL(x); return /^https?:$/.test(p.protocol) && p.hostname.includes('.') ? p.href : ''; } catch (e) { return ''; }
 }
 function lnHost(u){ try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return ''; } }
-function lnClean(list){ return (Array.isArray(list) ? list : []).map(x => ({id: String(x && x.id || '').slice(0, 24) || Math.random().toString(36).slice(2, 10), n: String(x && x.n || '').slice(0, 40), u: lnUrl(x && x.u), d: String(x && x.d || '').slice(0, 90)})).filter(x => x.n && x.u).slice(0, 60); }
+function lnClean(list){ return (Array.isArray(list) ? list : []).map(x => ({id: String(x && x.id || '').slice(0, 24) || Math.random().toString(36).slice(2, 10), n: String(x && x.n || '').slice(0, 40), u: lnUrl(x && x.u), d: String(x && x.d || '').slice(0, 90), st: x && x.st === 'stale' ? 'stale' : 'live', sa: +(x && x.sa) || 0})).filter(x => x.n && x.u).slice(0, 60); }
+const lnLive = list => list.filter(x => x.st !== 'stale');
+var LN_DEL = {manual: 0, auto0: 0, auto1: 86400000, auto7: 7 * 86400000};
 async function lnDb(){
   if (!IN_CLAUDE) return null; if (LN.db) return LN.db;
   try { const db = await window.claude.use('db'); if (!db) return null; LN.db = db; try { const u = await window.claude.use('user'); LN.uid = u ? await u.id() : null; } catch (e) {} return db; } catch (e) { return null; }
@@ -11542,38 +11558,41 @@ async function lnLoad(){
 }
 async function lnLoadMe(){
   if (!liveOwner()){ LN.me = []; return; }
-  if (IN_CLAUDE){ const db = await lnDb(); if (db && LN.uid){ try { const d = await db.collection('data/users/' + LN.uid).doc('devlinks').get(); LN.me = lnClean(d && d.exists ? (d.data() || {}).items : []); } catch (e) {} } }
-  else { try { LN.me = lnClean(JSON.parse(RAWLS.getItem('fin-links-me') || '[]')); } catch (e) { LN.me = []; } }
-  lnRender();
+  if (IN_CLAUDE){ const db = await lnDb(); if (db && LN.uid){ try { const d = await db.collection('data/users/' + LN.uid).doc('devlinks').get(); const x = d && d.exists ? (d.data() || {}) : {}; LN.me = lnClean(x.items); if (x.cfg && LN_DEL[x.cfg.del] != null) LN.cfg = {del: x.cfg.del}; } catch (e) {} } }
+  else { try { LN.me = lnClean(JSON.parse(RAWLS.getItem('fin-links-me') || '[]')); } catch (e) { LN.me = []; } try { const c = JSON.parse(RAWLS.getItem('fin-links-cfg') || 'null'); if (c && LN_DEL[c.del] != null) LN.cfg = {del: c.del}; } catch (e) {} }
+  lnRender(); lnAuto();
 }
 async function lnSave(which){
   const items = lnClean(which === 'pub' ? LN.pub : LN.me);
   if (IN_CLAUDE){
     const db = await lnDb(); if (!db) throw new Error('db');
     if (which === 'pub') await db.doc('links/app').set({items, at: Date.now()});
-    else { if (!LN.uid) throw new Error('uid'); await db.collection('data/users/' + LN.uid).doc('devlinks').set({items, at: Date.now()}); }
+    else { if (!LN.uid) throw new Error('uid'); await db.collection('data/users/' + LN.uid).doc('devlinks').set({items, cfg: LN.cfg, at: Date.now()}); }
   } else {
     if (which === 'pub') throw new Error('site');
-    RAWLS.setItem('fin-links-me', JSON.stringify(items));
+    RAWLS.setItem('fin-links-me', JSON.stringify(items)); RAWLS.setItem('fin-links-cfg', JSON.stringify(LN.cfg));
   }
 }
 function lnLabel(){
-  const own = liveOwner(), k = own ? 'sc_conn' : LN.pub.length ? 'sc_connLn' : 'sc_connAi';
+  const own = liveOwner(), pubN = lnLive(LN.pub).length, k = own ? 'sc_conn' : pubN ? 'sc_connLn' : 'sc_connAi';
   $$('[data-i="sc_conn"], [data-i="sc_connAi"], [data-i="sc_connLn"]').forEach(el => { el.dataset.i = k; el.textContent = t(k); });
-  const sub = $('#sh_sub_conn'); if (sub && !own){ sub.dataset.i = LN.pub.length ? 'sc_connLnS' : 'sc_connAiS'; sub.textContent = t(sub.dataset.i); }
+  const sub = $('#sh_sub_conn'); if (sub && !own){ sub.dataset.i = pubN ? 'sc_connLnS' : 'sc_connAiS'; sub.textContent = t(sub.dataset.i); }
 }
 function lnRender(){
   const box = $('#ln_box'); if (!box) return;
   const own = liveOwner(), sec = box.closest('.set-sec');
-  const show = own || LN.pub.length > 0;
+  const pubShown = own ? LN.pub : lnLive(LN.pub), show = own || pubShown.length > 0;
   if (sec){ if (sec.hidden === show) GS_IDX = null; sec.hidden = !show; if (!show) sec.dataset.own = '1'; else delete sec.dataset.own; }
   if (!show){ box.innerHTML = ''; return; }
-  const item = (x, which) => `<div class="ln-it" data-lnid="${asEsc(x.id)}" data-lnw="${which}"><a class="ln-a" href="${asEsc(x.u)}" target="_blank" rel="noopener noreferrer"><span class="ln-av" aria-hidden="true">${asEsc((x.n.trim()[0] || '?').toUpperCase())}</span><span class="ln-tx"><b>${asEsc(x.n)}</b><small dir="ltr">${asEsc(lnHost(x.u))}</small>${x.d ? `<span class="ln-d">${asEsc(x.d)}</span>` : ''}</span>${own && which === 'me' ? `<span class="ln-tag">${asEsc(t('ln_meTag'))}</span>` : ''}<span class="ln-go" aria-hidden="true">↗</span></a>
-    ${own ? `<div class="ln-ed"><button type="button" class="ln-b" data-lna="up" aria-label="${asEsc(t('ln_up'))}">↑</button><button type="button" class="ln-b" data-lna="down" aria-label="${asEsc(t('ln_down'))}">↓</button><button type="button" class="ln-b" data-lna="edit">${asEsc(t('ln_edit'))}</button><button type="button" class="ln-b ln-del" data-lna="del">${asEsc(LN.sure === which + x.id ? t('ln_sure') : t('ln_del'))}</button></div>` : ''}</div>`;
+  const autoTxt = x => { const d = LN_DEL[LN.cfg.del]; if (!/^auto/.test(LN.cfg.del) || x.st !== 'stale') return ''; const left = (x.sa || Date.now()) + d - Date.now(); return left <= 0 ? t('ln_autoNow') : t('ln_autoIn', {t: srcWhen((x.sa || Date.now()) + d)}); };
+  const item = (x, which) => `<div class="ln-it${x.st === 'stale' ? ' stale' : ''}" data-lnid="${asEsc(x.id)}" data-lnw="${which}"><a class="ln-a" href="${asEsc(x.u)}" target="_blank" rel="noopener noreferrer"><span class="ln-av" aria-hidden="true">${asEsc((x.n.trim()[0] || '?').toUpperCase())}</span><span class="ln-tx"><b>${asEsc(x.n)}</b><small dir="ltr">${asEsc(lnHost(x.u))}</small>${x.d ? `<span class="ln-d">${asEsc(x.d)}</span>` : ''}</span>${own && which === 'me' ? `<span class="ln-tag">${asEsc(t('ln_meTag'))}</span>` : ''}<span class="ln-go" aria-hidden="true">↗</span></a>
+    ${own ? `<div class="ln-ed"><button type="button" class="src-st s-${x.st === 'stale' ? 'stale' : 'live'} ln-st" data-lna="st" aria-pressed="${x.st !== 'stale'}" title="${asEsc(t('ln_stTip'))}">${asEsc(t(x.st === 'stale' ? 'src_s_stale' : 'src_s_live'))} ⇄</button><button type="button" class="ln-b" data-lna="up" aria-label="${asEsc(t('ln_up'))}">↑</button><button type="button" class="ln-b" data-lna="down" aria-label="${asEsc(t('ln_down'))}">↓</button><button type="button" class="ln-b" data-lna="edit">${asEsc(t('ln_edit'))}</button>${x.st === 'stale' ? `<button type="button" class="ln-b ln-del" data-lna="del">${asEsc(LN.sure === which + x.id ? t('ln_sure') : t('ln_del'))}</button>` : ''}${autoTxt(x) ? `<small class="ln-auto">${asEsc(autoTxt(x))}</small>` : ''}</div>` : ''}</div>`;
   let h = '';
-  if (own) h += `<p class="fine">${asEsc(t('ln_intro'))}</p>`;
+  if (own){
+    h += `<p class="fine">${asEsc(t('ln_intro'))}</p><div class="ln-cfg"><label for="ln_del">${asEsc(t('ln_delMode'))}</label><select id="ln_del">${Object.keys(LN_DEL).map(k => `<option value="${k}"${LN.cfg.del === k ? ' selected' : ''}>${asEsc(t('ln_del_' + k))}</option>`).join('')}</select><small class="hint">${asEsc(t('ln_delHint'))}</small></div>`;
+  }
   if (own && LN.me.length) h += `<h4 class="ln-h">${asEsc(t('ln_hMe'))}</h4><div class="ln-list">${LN.me.map(x => item(x, 'me')).join('')}</div>`;
-  if (LN.pub.length) h += (own ? `<h4 class="ln-h">${asEsc(t('ln_hPub'))}</h4>` : '') + `<div class="ln-list">${LN.pub.map(x => item(x, 'pub')).join('')}</div>`;
+  if (pubShown.length) h += (own ? `<h4 class="ln-h">${asEsc(t('ln_hPub'))}</h4>` : '') + `<div class="ln-list">${pubShown.map(x => item(x, 'pub')).join('')}</div>`;
   if (own){
     const e = LN.edit || {n: '', u: '', d: '', w: 'me'};
     h += `<div class="ln-form"><h4 class="ln-h">${asEsc(t(LN.edit && LN.edit.id ? 'ln_editT' : 'ln_addT'))}</h4>
@@ -11591,14 +11610,16 @@ document.addEventListener('click', async e => {
     const it = b.closest('.ln-it'), id = it.dataset.lnid, which = it.dataset.lnw, list = which === 'pub' ? LN.pub : LN.me, i = list.findIndex(x => x.id === id); if (i < 0) return;
     const a = b.dataset.lna;
     if (a === 'edit'){ LN.edit = Object.assign({w: which}, list[i]); lnRender(); const n = $('#ln_n'); if (n){ n.focus(); n.scrollIntoView({block: 'center'}); } return; }
+    if (a === 'del' && list[i].st !== 'stale') return;                 // only links that are not live can be deleted
     if (a === 'del' && LN.sure !== which + id){ LN.sure = which + id; lnRender(); return; }
     const before = JSON.stringify(list);
-    if (a === 'del'){ list.splice(i, 1); LN.sure = null; }
+    if (a === 'st'){ const x = list[i]; if (x.st === 'stale'){ x.st = 'live'; x.sa = 0; } else { x.st = 'stale'; x.sa = Date.now(); } LN.sure = null; }
+    else if (a === 'del'){ list.splice(i, 1); LN.sure = null; }
     else if (a === 'up' && i > 0){ [list[i - 1], list[i]] = [list[i], list[i - 1]]; }
     else if (a === 'down' && i < list.length - 1){ [list[i + 1], list[i]] = [list[i], list[i + 1]]; }
     lnRender();
-    try { await lnSave(which); toast(t('ln_saved')); } catch (err) { if (which === 'pub') LN.pub = JSON.parse(before); else LN.me = JSON.parse(before); lnRender(); toast(t('ln_fail')); }
-    lnLabel();
+    try { await lnSave(which); toast(t(a === 'st' ? (list[i] && list[i].st === 'stale' ? 'ln_toStale' : 'ln_toLive') : 'ln_saved')); } catch (err) { if (which === 'pub') LN.pub = JSON.parse(before); else LN.me = JSON.parse(before); lnRender(); toast(t('ln_fail')); }
+    lnLabel(); if (a === 'st') lnAuto();
     return;
   }
   if (e.target.closest('#ln_cancel')){ LN.edit = null; lnRender(); return; }
@@ -11609,7 +11630,7 @@ document.addEventListener('click', async e => {
     const old = LN.edit && LN.edit.id ? LN.edit : null, id = old ? old.id : Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
     const snapPub = JSON.stringify(LN.pub), snapMe = JSON.stringify(LN.me);
     if (old){ const ol = old.w === 'pub' ? LN.pub : LN.me, oi = ol.findIndex(x => x.id === old.id); if (oi >= 0) ol.splice(oi, 1); }
-    const list = w === 'pub' ? LN.pub : LN.me, rec = {id, n, u, d};
+    const list = w === 'pub' ? LN.pub : LN.me, rec = {id, n, u, d, st: old ? old.st || 'live' : 'live', sa: old ? old.sa || 0 : 0};
     if (old && old.w === w){ const pos = (JSON.parse(w === 'pub' ? snapPub : snapMe)).findIndex(x => x.id === old.id); list.splice(Math.max(0, pos), 0, rec); } else list.push(rec);
     try { await lnSave(w); if (old && old.w !== w) await lnSave(old.w); LN.edit = null; lnRender(); lnLabel(); toast(t('ln_saved')); }
     catch (err) { LN.pub = JSON.parse(snapPub); LN.me = JSON.parse(snapMe); lnRender(); const mm = $('#ln_msg'); if (mm) mm.textContent = t('ln_fail'); }
@@ -11622,6 +11643,33 @@ const _alLn = applyLang;
 applyLang = function(){ const r = _alLn.apply(this, arguments); lnRender(); lnLabel(); return r; };
 setTimeout(lnLoad, 600);
 Promise.resolve(PERM_P).then(() => { LN_OWN = null; liveApply(); });
+
+/* deleting links that are not live: by hand, or automatically after the delay you pick */
+document.addEventListener('change', async e => {
+  if (!e.target || e.target.id !== 'ln_del' || !liveOwner()) return;
+  const prev = LN.cfg.del; LN.cfg = {del: LN_DEL[e.target.value] != null ? e.target.value : 'manual'};
+  try { await lnSave('me'); toast(t('ln_saved')); } catch (err) { LN.cfg = {del: prev}; toast(t('ln_fail')); }
+  lnRender(); lnAuto();
+});
+var LN_AUTO_BUSY = false;
+async function lnAuto(){
+  if (LN_AUTO_BUSY || !liveOwner() || !/^auto/.test(LN.cfg.del)) return;
+  LN_AUTO_BUSY = true;
+  try {
+    const d = LN_DEL[LN.cfg.del], now = Date.now(), gone = x => x.st === 'stale' && now - (x.sa || now) >= d;
+    for (const which of ['me', 'pub']){
+      if (which === 'pub' && !IN_CLAUDE) continue;
+      const list = which === 'pub' ? LN.pub : LN.me, keep = list.filter(x => !gone(x));
+      if (keep.length !== list.length){
+        const before = list.slice();
+        if (which === 'pub') LN.pub = keep; else LN.me = keep;
+        try { await lnSave(which); toast(t('ln_autoDone', {n: before.length - keep.length})); } catch (err) { if (which === 'pub') LN.pub = before; else LN.me = before; }
+      }
+    }
+  } finally { LN_AUTO_BUSY = false; }
+  lnRender(); lnLabel();
+}
+setInterval(() => { if (!document.hidden) lnAuto(); }, 10 * 60000);
 
 applyLang(false);
 activate(tab);
