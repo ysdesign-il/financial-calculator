@@ -666,6 +666,18 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
 .as-eng{display:inline-flex;flex-wrap:wrap}
 .as-eng button{font-size:.85rem;padding:6px 12px}
 .pm-badge{margin-top:10px;opacity:.75}
+.iv-box{width:min(760px,100%);max-height:92vh}
+.iv-tabs{display:flex;flex-wrap:wrap;gap:2px}
+.iv-tabs button{font-size:.85rem;padding:7px 12px}
+.iv-frame{flex:1;min-height:420px;height:62vh;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.iv-frame iframe{width:100%;height:100%;border:0;display:block}
+.iv-foot{margin:0}
+.iv-btn{appearance:none;font:inherit;cursor:pointer;background:none}
+.iv-home{appearance:none;font:inherit;font-weight:600;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;margin:12px 0 4px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:linear-gradient(160deg,var(--g1),var(--g2))}
+.iv-home:hover{border-color:var(--gold-ui)}
+.iv-dot{width:9px;height:9px;border-radius:50%;background:#2fbf86;box-shadow:0 0 0 0 rgba(47,191,134,.6);animation:ivp 1.8s infinite}
+@keyframes ivp{0%{box-shadow:0 0 0 0 rgba(47,191,134,.6)}70%{box-shadow:0 0 0 8px rgba(47,191,134,0)}100%{box-shadow:0 0 0 0 rgba(47,191,134,0)}}
+:root[data-motion="reduced"] .iv-dot{animation:none}
 
 </style>
 </head>
@@ -2411,6 +2423,18 @@ Object.assign(T, {
   as_noai:['כדי להשתמש ב-Gemini כאן, הזינו מפתח חינמי בהגדרות ← חיבורים ועוזר AI, או עברו למודל האישי שעובד בלי מפתח.','لاستخدام Gemini هنا، أدخل مفتاحًا مجانيًا في الإعدادات ← الاتصالات ومساعد الذكاء الاصطناعي، أو انتقل إلى النموذج الشخصي الذي يعمل دون مفتاح.','To use Gemini here, add a free key in Settings → Connections & AI assistant, or switch to the personal model, which needs no key.'],
   sc_connS:['שערים בזמן אמת, בנק ישראל, קריפטו, ובחירת מודל AI','أسعار حيّة، بنك إسرائيل، العملات المشفّرة، واختيار نموذج الذكاء الاصطناعي','Live rates, Bank of Israel, crypto and choosing the AI model']
 });
+Object.assign(T, {
+  iv_title:['Investing.com — בזמן אמת','Investing.com — لحظيًا','Investing.com — live'],
+  iv_btn:['לוח חי','لوحة حيّة','Live board'],
+  iv_home:['שערים חיים מ-Investing.com','أسعار حيّة من Investing.com','Live rates from Investing.com'],
+  iv_t_usd:['דולר מול כל המטבעות','الدولار مقابل كل العملات','Dollar vs every currency'],
+  iv_t_fx:['מטבעות עיקריים','العملات الرئيسية','Major pairs'],
+  iv_t_crypto:['קריפטו','العملات المشفّرة','Crypto'],
+  iv_t_cal:['לוח כלכלי','الأجندة الاقتصادية','Economic calendar'],
+  iv_open:['פתיחה באתר Investing.com','فتح في موقع Investing.com','Open on Investing.com'],
+  iv_note:['הנתונים מגיעים ישירות מהווידג׳טים הרשמיים של Investing.com ומתעדכנים בזמן אמת. אם הלוח לא נטען, פתחו אותו באתר Investing.com.','البيانات تأتي مباشرة من الأدوات الرسمية لـ Investing.com وتتحدّث لحظيًا. إذا لم تُحمَّل اللوحة، افتحها في موقع Investing.com.','The data comes straight from Investing.com\'s official widgets and updates live. If the board does not load, open it on Investing.com.'],
+  iv_close:['סגירה','إغلاق','Close']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -3218,6 +3242,7 @@ function homePanelHTML(){
       <label class="mk-sw"><input type="checkbox" id="fx_live"><span class="mk-knob" aria-hidden="true"></span><span data-i="fx_live"></span></label></div>
     <p class="mk-st" id="fx_st" aria-live="polite"></p>
     <div class="mkt" id="hm"></div>
+    <button type="button" class="iv-home" data-ivx="fx"><span class="iv-dot" aria-hidden="true"></span><span data-i="iv_home"></span></button>
     <p class="fine mkt-note" id="hm_n"></p>
     <h3 class="sec-t" data-i="home_popular"></h3>
     <div class="tchips" id="tchips"></div>
@@ -3427,7 +3452,7 @@ function settingsPanelHTML(){
       <h4 class="conn-t" data-i="pl_t"></h4>
       <div class="src-list" id="set_platforms">${PLATFORMS.map(([n, d, u]) => `<div class="src-c">
         <div class="src-h"><b>${n}</b></div><div class="src-s" data-i="${d}"></div>
-        <div class="src-l"><a class="src-a" href="${u}" target="_blank" rel="noopener noreferrer"><span data-i="ln_site"></span> ↗</a></div></div>`).join('')}</div>
+        <div class="src-l">${d === 'pl_investing' ? '<button type="button" class="src-a iv-btn" data-ivx="fx"><span data-i="iv_btn"></span></button>' : ''}<a class="src-a" href="${u}" target="_blank" rel="noopener noreferrer"><span data-i="ln_site"></span> ↗</a></div></div>`).join('')}</div>
       <p class="fine" data-i="h_liveNoAcc"></p>`)}
     ${sec('set_links', `<div class="src-list" id="set_links_l">${USEFUL_LINKS.map(([n, d, ls]) => `<div class="src-c">
       <div class="src-h"><b data-i="${n}"></b></div><div class="src-s" data-i="${d}"></div>
@@ -6772,8 +6797,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "2.7", "date": "2026-10-14", "notes": {"he": "מודל AI אישי שעובד במכשיר בלי מפתח ובלי אינטרנט, עם בחירה בינו לבין Gemini; קישור ל-Investing.com בחיבורים בזמן אמת.", "ar": "نموذج ذكاء اصطناعي شخصي يعمل على الجهاز دون مفتاح ودون إنترنت، مع الاختيار بينه وبين Gemini؛ ورابط إلى Investing.com في الاتصالات الحية.", "en": "A personal AI model that runs on the device with no key and no internet, with a choice between it and Gemini; plus an Investing.com link in live connections."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.085209';
+var CHANGELOG = [{"v": "2.8", "date": "2026-10-14", "notes": {"he": "Investing.com בזמן אמת: לוח חי עם הדולר מול כל המטבעות, מטבעות עיקריים, קריפטו ולוח אירועים כלכליים.", "ar": "Investing.com لحظيًا: لوحة حيّة للدولار مقابل كل العملات، والعملات الرئيسية، والعملات المشفّرة، والأجندة الاقتصادية.", "en": "Investing.com in real time: a live board with the dollar against every currency, major pairs, crypto and the economic calendar."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.091326';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -7230,6 +7255,49 @@ const _rsPm = renderStamp;
 renderStamp = function(){ _rsPm.apply(this, arguments); engRender(); };
 setTimeout(engRender, 1500);
 engRender();
+
+/* ---- Investing.com in real time: the official embeddable widgets (Investing.com has no public data API) ---- */
+var IV_TABS = [
+  {k: 'usd', w: 'https://www.widgets.investing.com/single-currency-crosses?theme={th}&hideTitle=true', page: 'https://il.investing.com/currencies/usd-ils'},
+  {k: 'fx', w: 'https://www.widgets.investing.com/live-currency-cross-rates?theme={th}&hideTitle=true', page: 'https://il.investing.com/currencies/streaming-forex-rates-majors'},
+  {k: 'crypto', w: 'https://www.widgets.investing.com/crypto-currency-rates?theme={th}&hideTitle=true', page: 'https://il.investing.com/crypto/'},
+  {k: 'cal', w: 'https://sslecal2.investing.com?columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&calType=day', page: 'https://il.investing.com/economic-calendar/'}
+];
+var IV_CUR = 'usd';
+function ivTheme(){ return document.documentElement.dataset.theme === 'light' ? 'lightTheme' : 'darkTheme'; }
+function ivLang(){ return {he: 17, ar: 3, en: 1, ru: 7, fr: 5, es: 4, de: 8, it: 9, tr: 10, ja: 11, 'zh-CN': 12, pt: 13, 'pt-BR': 13, pl: 25, ko: 18}[lang] || 1; }
+function ivEnsure(){
+  if ($('#ivx')) return;
+  document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="ivx" hidden><div class="cp-box iv-box" role="dialog" aria-modal="true" aria-labelledby="iv_t">
+    <div class="cp-top"><h3 id="iv_t"></h3><button type="button" class="cp-x" id="iv_x">×</button></div>
+    <div class="seg iv-tabs" id="iv_tabs" role="tablist"></div>
+    <div class="iv-frame" id="iv_frame"></div>
+    <p class="fine iv-foot"><a class="src-a" id="iv_page" target="_blank" rel="noopener noreferrer"></a></p>
+    <p class="fine" id="iv_note"></p></div></div>`);
+  const ov = $('#ivx');
+  ov.addEventListener('click', e => {
+    if (e.target === ov || e.target.closest('#iv_x')) return ivClose();
+    const b = e.target.closest('[data-ivt]'); if (b){ IV_CUR = b.dataset.ivt; ivRender(); }
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !ov.hidden) ivClose(); });
+}
+function ivRender(){
+  const tab = IV_TABS.find(x => x.k === IV_CUR) || IV_TABS[0];
+  $('#iv_t').textContent = t('iv_title');
+  $('#iv_x').setAttribute('aria-label', t('iv_close'));
+  $('#iv_tabs').innerHTML = IV_TABS.map(x => `<button type="button" role="tab" data-ivt="${x.k}" aria-pressed="${x.k === tab.k}" aria-selected="${x.k === tab.k}">${asEsc(t('iv_t_' + x.k))}</button>`).join('');
+  const src = tab.w.replace('{th}', ivTheme()).replace('{lg}', ivLang());
+  const fr = $('#iv_frame');
+  if (fr.dataset.src !== src){
+    fr.dataset.src = src;
+    fr.innerHTML = `<iframe src="${src}" title="${asEsc(t('iv_t_' + tab.k))} — Investing.com" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowtransparency="true"></iframe>`;
+  }
+  const a = $('#iv_page'); a.href = tab.page; a.textContent = t('iv_open') + ' ↗';
+  $('#iv_note').textContent = t('iv_note');
+}
+function ivOpen(k){ ivEnsure(); if (k) IV_CUR = k; ivRender(); $('#ivx').hidden = false; document.body.classList.add('cp-lock'); setTimeout(() => { const x = $('#iv_x'); if (x) x.focus(); }, 30); }
+function ivClose(){ const o = $('#ivx'); if (!o) return; o.hidden = true; document.body.classList.remove('cp-lock'); const f = $('#iv_frame'); if (f){ f.innerHTML = ''; f.dataset.src = ''; } }
+document.addEventListener('click', e => { const b = e.target.closest('[data-ivx]'); if (b){ e.preventDefault(); ivOpen(b.dataset.ivx === 'fx' ? '' : b.dataset.ivx); } });
 
 applyLang(false);
 activate(tab);
