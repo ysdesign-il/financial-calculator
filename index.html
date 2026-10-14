@@ -875,11 +875,14 @@ body[data-tab="expenses"] .ghost-btn,body[data-tab="clients"] .ghost-btn,body[da
 .exp-budf{display:flex;flex-direction:column;gap:6px;overflow:auto}
 .exp-budr{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 8px;border-radius:10px;border:1px solid var(--line);background:var(--g1)}
 .exp-budr input{width:110px;font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--field);color:var(--ink)}
-.mv{margin-top:12px}
-.mv textarea{width:100%;font:inherit;font-size:.8rem;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink);margin:6px 0}
+.mvx{margin-top:12px}
+.mvx textarea{width:100%;font:inherit;font-size:.8rem;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink);margin:6px 0}
 .mv-pick{cursor:pointer}
 .mv-found.ok{color:var(--c4);font-weight:600}
 .mv-show{width:100%;font-size:.75rem;margin-top:6px}
+.acc-seg{flex-wrap:wrap}
+.mv-h{margin:4px 0 2px;font-size:1rem}
+#acc_f_mv{margin-top:6px}
 
 </style>
 </head>
@@ -2773,6 +2776,7 @@ Object.assign(T, {
   mv_cloudOff:['הגיבוי בענן לא זמין כרגע — אפשר להשתמש בקוד ההעברה.','النسخ السحابي غير متاح الآن — يمكنك استخدام رمز النقل.','Cloud backup is not available right now — use the transfer code.'],
   mv_siteOnly:['באתר אין גיבוי בענן, ולכן מעבירים את החשבון עם קוד העברה מוצפן.','لا توجد نسخ سحابي في الموقع، لذلك يُنقل الحساب برمز نقل مشفّر.','The website has no cloud backup, so the account moves with an encrypted transfer code.']
 });
+Object.assign(T, {mv_tab:['📲 טלפון חדש','📲 هاتف جديد','📲 New phone']});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -3841,31 +3845,31 @@ function accountHTML(){
   const msg = '<p class="fine acc-msg" id="acc_msg" role="alert" aria-live="polite"></p>';
   const pwf = (id, lab, ac) => `<div class="field wide"><label for="${id}" data-i="${lab}"></label><input id="${id}" type="password" autocomplete="${ac}" class="lookup"></div>`;
   if (FUSER) return `<p class="acc-who"><span data-i="l_loggedAs"></span> <b id="acc_name"></b></p>
-    <div class="btnrow"><button type="button" class="btn" id="acc_out" data-i="b_logout"></button><button type="button" class="btn" id="acc_del" data-i="b_delProfile"></button></div>
+    <div class="btnrow"><button type="button" class="gold-btn" id="mv_open" data-i="mv_tab"></button><button type="button" class="btn" id="acc_out" data-i="b_logout"></button><button type="button" class="btn" id="acc_del" data-i="b_delProfile"></button></div>
     <details class="adv"><summary data-i="b_chgPw"></summary><div class="fields">${pwf('acc_cur','f_curPw','current-password')}${pwf('acc_new','f_newPw','new-password')}${pwf('acc_new2','f_newPw2','new-password')}</div>${PWREQ.replace('%ID%', 'acc_new')}
       <div class="btnrow"><button type="button" class="btn" id="acc_chg" data-i="b_chgPw"></button></div></details>
     <div class="field wide"><label for="acc_open" data-i="f_openSignup"></label><select id="acc_open"><option value="0" data-i="o_closed"></option><option value="1" data-i="o_open"></option></select><small class="hint" data-i="h_openSignup"></small></div>
-    <details class="adv mv" id="mv_out"><summary data-i="mv_title"></summary>
+    <details class="adv mvx" id="mv_out"><summary data-i="mv_title"></summary>
       <p class="gk-st" id="mv_cloud" role="status"></p>
       <p class="fine" data-i="mv_hint"></p>
       <div class="btnrow"><button type="button" class="gold-btn" id="mv_share" data-i="mv_share"></button><button type="button" class="btn" id="mv_copy" data-i="mv_copy"></button><button type="button" class="btn" id="mv_file" data-i="mv_file"></button></div>
       <p class="gk-st" id="mv_st" role="status" aria-live="polite"></p></details>
     ${msg}<p class="fine" data-i="h_account"></p>`;
-  return `<div class="seg acc-seg" role="group"><button type="button" id="acc_tin" class="on" data-i="acc_signin"></button><button type="button" id="acc_tup" data-i="acc_signup"${signupAllowed() ? '' : ' hidden'}></button></div>
+  return `<div class="seg acc-seg" role="group"><button type="button" id="acc_tin" class="on" data-i="acc_signin"></button><button type="button" id="acc_tup" data-i="acc_signup"${signupAllowed() ? '' : ' hidden'}></button><button type="button" id="acc_tmv" data-i="mv_tab"></button></div>
     <div id="acc_f_in"><div class="field wide"><label for="acc_user" data-i="f_username"></label><input id="acc_user" type="text" maxlength="21" autocomplete="username" autocapitalize="none" spellcheck="false" dir="auto" class="lookup" placeholder="@"></div>
       ${pwf('acc_pass','f_password','current-password')}
       <div class="btnrow"><button type="button" class="btn" id="acc_in" data-i="b_login"></button></div></div>
     <div id="acc_f_up" hidden><div class="field wide"><label for="acc_ruser" data-i="f_username"></label><input id="acc_ruser" type="text" maxlength="21" autocomplete="username" autocapitalize="none" spellcheck="false" dir="auto" class="lookup" placeholder="@"><small class="hint" data-i="hd_rules"></small><small class="hint hd-live" id="acc_hd"></small></div>
       ${pwf('acc_rpass','f_password','new-password')}${pwf('acc_rpass2','f_password2','new-password')}${PWREQ.replace('%ID%', 'acc_rpass')}
       <div class="btnrow"><button type="button" class="btn" id="acc_up" data-i="b_signup"></button></div></div>
-    <details class="adv mv" id="mv_in"><summary data-i="mv_restoreT"></summary>
+    <div class="mvx" id="acc_f_mv" hidden><h4 class="mv-h" data-i="mv_restoreT"></h4>
       <p class="fine" data-i="mv_restoreHint"></p>
       <textarea id="mv_txt" rows="3" class="lookup" spellcheck="false" dir="ltr" placeholder="FINCALC1:…"></textarea>
       <div class="btnrow"><label class="btn mv-pick"><input type="file" id="mv_pick" accept=".txt,.json,text/plain" hidden><span data-i="mv_pick"></span></label></div>
       <p class="fine mv-found" id="mv_found"></p>
       <div class="field wide"><label for="mv_pw" data-i="f_password"></label><input id="mv_pw" type="password" autocomplete="current-password" class="lookup"></div>
       <div class="btnrow"><button type="button" class="gold-btn" id="mv_go" data-i="mv_go"></button></div>
-      <p class="gk-st" id="mv_st2" role="status" aria-live="polite"></p></details>
+      <p class="gk-st" id="mv_st2" role="status" aria-live="polite"></p></div>
     ${msg}<p class="fine" data-i="h_account"></p>`;
 }
 function settingsPanelHTML(){
@@ -6426,14 +6430,15 @@ async function logoutNow(){ try { await persistNow(); } catch (e) {} clearSessio
 document.addEventListener('visibilitychange', () => { if (document.hidden) persistNow(); });
 window.addEventListener('pagehide', () => { persistNow(); });
 panelsEl.addEventListener('click', e => {
-  const b = e.target.closest('#acc_in, #acc_out, #acc_del, #acc_up, #acc_chg, #acc_tin, #acc_tup'); if (!b) return;
+  const b = e.target.closest('#acc_in, #acc_out, #acc_del, #acc_up, #acc_chg, #acc_tin, #acc_tup, #acc_tmv'); if (!b) return;
   if (b.id === 'acc_in') doLogin();
   else if (b.id === 'acc_up') doSignup();
   else if (b.id === 'acc_chg') doChange();
   else if (b.id === 'acc_out') logoutNow();
-  else if (b.id === 'acc_tin' || b.id === 'acc_tup'){
-    const m = {acc_tin: 'in', acc_tup: 'up'}[b.id];
-    ['in', 'up'].forEach(k => { $('#acc_f_' + k).hidden = k !== m; $('#acc_t' + k).classList.toggle('on', k === m); });
+  else if (b.id === 'acc_tin' || b.id === 'acc_tup' || b.id === 'acc_tmv'){
+    const m = {acc_tin: 'in', acc_tup: 'up', acc_tmv: 'mv'}[b.id];
+    ['in', 'up', 'mv'].forEach(k => { const f = $('#acc_f_' + k), tb = $('#acc_t' + k); if (f) f.hidden = k !== m; if (tb) tb.classList.toggle('on', k === m); });
+    if (m === 'mv') setTimeout(() => { const x = $('#mv_txt'); if (x) x.focus(); }, 30);
     accMsg('');
   } else {
     if (!b.dataset.sure){ b.dataset.sure = '1'; b.textContent = t('b_sure'); return; }
@@ -7575,8 +7580,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "3.6", "date": "2026-10-14", "notes": {"he": "מעבר לטלפון חדש עם אותו שם משתמש וסיסמה וכל הנתונים: קוד העברה מוצפן, ובתוך Claude גיבוי אוטומטי בענן.", "ar": "الانتقال إلى هاتف جديد بنفس اسم المستخدم وكلمة المرور وكل البيانات: رمز نقل مشفّر، وداخل Claude نسخ احتياطي تلقائي في السحابة.", "en": "Move to a new phone with the same username, password and all your data: an encrypted transfer code, plus automatic cloud backup inside Claude."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.101946';
+var CHANGELOG = [{"v": "3.6.1", "date": "2026-10-14", "notes": {"he": "מעבר לטלפון חדש נמצא עכשיו בשורה העליונה של החשבון, ליד כניסה והרשמה.", "ar": "الانتقال إلى هاتف جديد أصبح في الصف العلوي للحساب بجانب الدخول والتسجيل.", "en": "Moving to a new phone is now in the account's top row, next to sign in and sign up."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.103022';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -8348,6 +8353,7 @@ async function mvGo(){
   if (r === 'bad') mvSt('mv_st2', 'm_bad', 'bad'); else if (r === 'lock') mvSt('mv_st2', 'm_lock', 'bad', {s: lockLeft(pkg.name)});
 }
 document.addEventListener('click', e => {
+  if (e.target.closest('#mv_open')){ const d = $('#mv_out'); if (d){ d.open = true; d.scrollIntoView({block: 'start', behavior: SET.motion === 'reduce' ? 'auto' : 'smooth'}); } return; }
   if (e.target.closest('#mv_share')) mvShare(); else if (e.target.closest('#mv_copy')) mvCopy(); else if (e.target.closest('#mv_file')) mvFile(); else if (e.target.closest('#mv_go')) mvGo();
 });
 document.addEventListener('input', e => { if (e.target.id === 'mv_txt') mvFound(); });

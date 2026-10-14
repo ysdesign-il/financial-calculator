@@ -1368,6 +1368,7 @@
 "mv_share": "Share transfer code",
 "mv_shared": "Sent. On the new phone: Settings → Account & access → \"I moved to a new phone\".",
 "mv_siteOnly": "The website has no cloud backup, so the account moves with an encrypted transfer code.",
+"mv_tab": "📲 New phone",
 "mv_title": "Move to a new phone",
 "n_be": "Fixed costs and variable cost per unit are assumed constant. Tax is excluded.",
 "n_capital": "Rates: securities gains 25% (30% for a substantial shareholder), dividends 25%/30%, deposit interest 15% and other interest 25%. Surtax: 3% on total income above ₪721,560 plus 2% on its capital part. Foreign withholding and other offsets are not included.",
