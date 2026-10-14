@@ -662,6 +662,10 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
   background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.22);font-size:.9rem;overflow:hidden}
 .tx-bar i{position:absolute;inset-inline-start:0;bottom:0;height:3px;width:var(--p);background:var(--gold-ui);transition:width .4s}
 .tx-go{margin-top:8px;display:inline-flex}
+.as-engrow{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:10px 0 4px}
+.as-eng{display:inline-flex;flex-wrap:wrap}
+.as-eng button{font-size:.85rem;padding:6px 12px}
+.pm-badge{margin-top:10px;opacity:.75}
 
 </style>
 </head>
@@ -2283,9 +2287,129 @@ Object.assign(T, {
   tx_done:['הממשק מתורגם במלואו ל-{l}','الواجهة مترجمة بالكامل إلى {l}','The interface is fully translated into {l}'],
   tx_part:['{p}% מהממשק מתורגם ל-{l}.','{p}% من الواجهة مترجمة إلى {l}.','{p}% of the interface is translated into {l}.'],
   tx_partIn:['השאר מוצג באנגלית עד שהתרגום יושלם.','يُعرض الباقي بالإنجليزية حتى تكتمل الترجمة.','The rest shows in English until the translation is complete.'],
-  tx_partSite:['השאר מוצג באנגלית ויושלם אוטומטית בעדכון הקרוב. להשלמה מיידית: מפתח Gemini בהגדרות ← חיבורים ועוזר AI.','يُعرض الباقي بالإنجليزية ويكتمل تلقائيًا في التحديث القادم. للإكمال فورًا: مفتاح Gemini في الإعدادات ← الاتصالات ومساعد الذكاء الاصطناعي.','The rest shows in English and completes automatically with an upcoming update. To finish now: add a Gemini key in Settings → Connections & AI assistant.'],
+  tx_partSite:['השאר מוצג באנגלית. כדי להשלים עכשיו, הוסיפו מפתח Gemini בהגדרות ← חיבורים ועוזר AI.','يُعرض الباقي بالإنجليزية. لإكماله الآن أضف مفتاح Gemini في الإعدادات ← الاتصالات ومساعد الذكاء الاصطناعي.','The rest shows in English. To finish now, add a Gemini key in Settings → Connections & AI assistant.'],
   tx_denied:['כדי לתרגם, אשרו ל-Claude לעבוד בעמוד הזה.','للترجمة، اسمح لـ Claude بالعمل في هذه الصفحة.','To translate, allow Claude to work on this page.'],
   tx_go:['השלמת התרגום','إكمال الترجمة','Complete translation']
+});
+/* personal model: built-in financial knowledge (titles + short explanations) */
+Object.assign(T, {
+  kbt_prime:['ריבית פריים','سعر البرايم','Prime rate'],
+  kb_prime:['ריבית הבסיס שהבנקים בישראל גובים על הלוואות. היא תמיד ריבית בנק ישראל ועוד 1.5%, ולכן כשבנק ישראל משנה ריבית — הפריים וכל הלוואה שצמודה אליו משתנים מיד.','سعر الفائدة الأساسي الذي تتقاضاه البنوك في إسرائيل على القروض. وهو دائمًا فائدة بنك إسرائيل زائد 1.5%، لذلك عندما يغيّر بنك إسرائيل الفائدة يتغيّر البرايم وكل قرض مرتبط به فورًا.','The base rate Israeli banks charge on loans. It is always the Bank of Israel rate plus 1.5%, so when the Bank of Israel changes its rate, prime and every loan tied to it change right away.'],
+  kbt_boi:['ריבית בנק ישראל','فائدة بنك إسرائيل','Bank of Israel rate'],
+  kb_boi:['הריבית שבנק ישראל קובע כשמונה פעמים בשנה כדי לרסן או לעודד את המשק. היא משפיעה על הפריים, על המשכנתאות ועל הריבית שמקבלים בפיקדונות.','الفائدة التي يحدّدها بنك إسرائيل نحو ثماني مرات في السنة لكبح الاقتصاد أو تحفيزه. وهي تؤثّر في البرايم والرهون العقارية وفائدة الودائع.','The rate the Bank of Israel sets about eight times a year to cool or boost the economy. It drives prime, mortgages and the interest you earn on deposits.'],
+  kbt_cpi:['מדד המחירים לצרכן','مؤشر أسعار المستهلك','Consumer price index'],
+  kb_cpi:['מדד שהלמ״ס מפרסמת בכל חודש ומודד את שינוי המחירים של סל מוצרים ושירותים. הלוואות וחסכונות "צמודי מדד" מתעדכנים לפיו.','مؤشر تنشره دائرة الإحصاء المركزية كل شهر ويقيس تغيّر أسعار سلة من السلع والخدمات. القروض والمدخرات «المرتبطة بالمؤشر» تتحدّث وفقه.','A monthly index from the Central Bureau of Statistics that tracks prices of a basket of goods and services. "CPI-linked" loans and savings are updated by it.'],
+  kbt_infl:['אינפלציה','التضخم','Inflation'],
+  kb_infl:['עליית מחירים כללית לאורך זמן. באינפלציה של 3% בשנה, 100 ₪ יקנו בעוד שנה בערך מה ש-97 ₪ קונים היום — ולכן כסף שלא מושקע מאבד מערכו.','ارتفاع عام في الأسعار مع الوقت. مع تضخم 3% سنويًا، تشتري 100 ₪ بعد سنة تقريبًا ما تشتريه 97 ₪ اليوم — لذلك يفقد المال غير المستثمَر قيمته.','A general rise in prices over time. With 3% inflation, ₪100 buys next year roughly what ₪97 buys today — so money that is not invested loses value.'],
+  kbt_vat:['מע״מ','ضريبة القيمة المضافة','VAT'],
+  kb_vat:['מס ערך מוסף שנוסף לרוב המוצרים והשירותים. בישראל הוא 18% (מינואר 2025): מחיר כולל מע״מ = מחיר × 1.18, ומחיר לפני מע״מ = מחיר ÷ 1.18.','ضريبة تُضاف إلى معظم السلع والخدمات. في إسرائيل نسبتها 18% (منذ يناير 2025): السعر شامل الضريبة = السعر × 1.18، والسعر قبلها = السعر ÷ 1.18.','A tax added to most goods and services. In Israel it is 18% (since January 2025): price with VAT = price × 1.18, price before VAT = price ÷ 1.18.'],
+  kbt_points:['נקודות זיכוי','نقاط الإعفاء الضريبي','Tax credit points'],
+  kb_points:['נקודות שמקטינות את מס ההכנסה החודשי. לכל נקודה ערך קבוע שמתעדכן מדי שנה, ומקבלים אותן על תושבות, מין, ילדים, תואר, שירות צבאי, מילואים ועוד. את הנתונים שלכם אפשר להזין בפרופיל האישי בהגדרות.','نقاط تقلّل ضريبة الدخل الشهرية. لكل نقطة قيمة ثابتة تُحدَّث سنويًا، وتُمنح على الإقامة والجنس والأولاد والشهادة والخدمة العسكرية والاحتياط وغيرها. يمكن إدخال بياناتك في الملف الشخصي في الإعدادات.','Points that lower your monthly income tax. Each point has a fixed value updated every year, given for residency, gender, children, a degree, army and reserve service and more. Enter yours in the personal profile in Settings.'],
+  kbt_reserve:['נקודות זיכוי למילואים','نقاط إعفاء لجنود الاحتياط','Reserve-duty credit points'],
+  kb_reserve:['משרתי מילואים פעילים יכולים לקבל נקודות זיכוי נוספות לפי מספר ימי השירות בשנה הקודמת. הזינו את הימים בפרופיל האישי בהגדרות, והחישוב יכלול אותן.','يمكن لجنود الاحتياط الفاعلين الحصول على نقاط إعفاء إضافية حسب عدد أيام الخدمة في السنة السابقة. أدخل الأيام في الملف الشخصي في الإعدادات وسيشملها الحساب.','Active reservists can get extra credit points based on the days they served the previous year. Enter the days in the personal profile in Settings and the calculation includes them.'],
+  kbt_gross:['ברוטו ונטו','الإجمالي والصافي','Gross and net'],
+  kb_gross:['ברוטו הוא השכר לפני ניכויים. נטו הוא מה שנכנס לחשבון אחרי מס הכנסה, ביטוח לאומי, מס בריאות והפרשה לפנסיה.','الإجمالي هو الراتب قبل الاقتطاعات. الصافي هو ما يصل إلى الحساب بعد ضريبة الدخل والتأمين الوطني وضريبة الصحة واقتطاع التقاعد.','Gross is pay before deductions. Net is what reaches your account after income tax, National Insurance, health tax and the pension contribution.'],
+  kbt_brackets:['מדרגות מס הכנסה','شرائح ضريبة الدخل','Income tax brackets'],
+  kb_brackets:['מס הכנסה בישראל מדורג: כל חלק מההכנסה ממוסה בשיעור של המדרגה שלו. עלייה למדרגה גבוהה יותר מעלה את המס רק על החלק שמעליה, לא על כל השכר.','ضريبة الدخل في إسرائيل تصاعدية: كل جزء من الدخل يُفرض عليه معدّل شريحته. الانتقال إلى شريحة أعلى يرفع الضريبة على الجزء الذي فوقها فقط، لا على كل الراتب.','Israeli income tax is progressive: each slice of income is taxed at its own bracket rate. Moving into a higher bracket only raises tax on the part above it, not on your whole salary.'],
+  kbt_btl:['ביטוח לאומי ומס בריאות','التأمين الوطني وضريبة الصحة','National Insurance and health tax'],
+  kb_btl:['ניכויים מהשכר שמממנים קצבאות (אבטלה, לידה, נכות, זקנה ועוד) ואת מערכת הבריאות. השיעור נמוך על החלק הראשון של השכר וגבוה יותר מעליו.','اقتطاعات من الراتب تموّل المخصّصات (البطالة والولادة والإعاقة والشيخوخة وغيرها) وجهاز الصحة. النسبة منخفضة على الجزء الأول من الراتب وأعلى فوقه.','Payroll deductions that fund benefits (unemployment, maternity, disability, old age and more) and the health system. The rate is low on the first part of your pay and higher above it.'],
+  kbt_pension:['פנסיה','التقاعد (الپنسيا)','Pension'],
+  kb_pension:['חיסכון חובה לגיל פרישה: העובד והמעסיק מפרישים כל חודש אחוזים מהשכר (כולל רכיב פיצויים), והכסף מושקע עד הפרישה. דמי ניהול נמוכים משפיעים מאוד על הסכום הסופי.','ادّخار إلزامي لسن التقاعد: يقتطع العامل وصاحب العمل كل شهر نسبًا من الراتب (بما فيها مركّب التعويضات)، ويُستثمر المال حتى التقاعد. رسوم الإدارة المنخفضة تؤثّر كثيرًا في المبلغ النهائي.','Mandatory retirement savings: you and your employer put a share of your salary in every month (including a severance part), and it is invested until retirement. Low management fees make a big difference to the final amount.'],
+  kbt_hishtalmut:['קרן השתלמות','صندوق الاستكمال (كيرن هشتلموت)','Keren Hishtalmut (study fund)'],
+  kb_hishtalmut:['חיסכון לטווח בינוני שהמעסיק מפקיד אליו, שבדרך כלל נזיל אחרי 6 שנים. עד תקרה מסוימת הרווחים בו פטורים ממס רווח הון — ולכן זה אחד החסכונות המשתלמים.','ادّخار متوسط الأمد يودع فيه صاحب العمل، ويصبح عادةً متاحًا بعد 6 سنوات. حتى سقف معيّن تُعفى أرباحه من ضريبة الأرباح الرأسمالية — لذلك هو من أكثر الادّخارات جدوى.','A medium-term savings fund your employer pays into, usually available after 6 years. Up to a ceiling its gains are free of capital gains tax — one of the most worthwhile savings.'],
+  kbt_severance:['פיצויי פיטורים','تعويضات الفصل','Severance pay'],
+  kb_severance:['בדרך כלל משכורת חודשית אחת על כל שנת עבודה, לעובד שפוטר ובמקרים מסוימים גם למי שהתפטר. חלק מהפיצויים פטור ממס עד תקרה.','عادةً راتب شهري واحد عن كل سنة عمل، للعامل المفصول وفي حالات معيّنة لمن استقال أيضًا. جزء من التعويضات معفى من الضريبة حتى سقف معيّن.','Usually one month\'s salary per year worked, for an employee who was dismissed and in some cases one who resigned. Part of it is tax-free up to a ceiling.'],
+  kbt_notice:['הודעה מוקדמת','الإشعار المسبق','Notice period'],
+  kb_notice:['התקופה שבה מי שמסיים את העבודה (עובד או מעסיק) צריך להודיע מראש. האורך תלוי בוותק ובסוג השכר — חודשי או שעתי.','المدة التي يجب فيها على من ينهي العمل (العامل أو صاحب العمل) أن يُبلغ مسبقًا. تعتمد على الأقدمية ونوع الأجر — شهري أو بالساعة.','How far in advance whoever ends the employment (employee or employer) must give notice. It depends on seniority and on monthly versus hourly pay.'],
+  kbt_leave:['חופשה שנתית','الإجازة السنوية','Annual leave'],
+  kb_leave:['ימי חופשה בתשלום שנצברים לפי ותק והיקף משרה. ימים שלא נוצלו נפדים בכסף בסיום העבודה.','أيام إجازة مدفوعة تتراكم حسب الأقدمية ونطاق الوظيفة. الأيام غير المستغلّة تُستبدل بالمال عند انتهاء العمل.','Paid days off that build up with seniority and job scope. Unused days are paid out when the job ends.'],
+  kbt_capgain:['מס רווח הון','ضريبة الأرباح الرأسمالية','Capital gains tax'],
+  kb_capgain:['מס על הרווח הריאלי ממכירת מניות, קרנות, קריפטו ונכסים אחרים — בדרך כלל 25%. אפשר לקזז הפסדים מול רווחים באותה שנה.','ضريبة على الربح الحقيقي من بيع الأسهم والصناديق والعملات المشفّرة وأصول أخرى — عادةً 25%. يمكن خصم الخسائر من الأرباح في السنة نفسها.','Tax on the real gain from selling shares, funds, crypto and other assets — usually 25%. Losses can be offset against gains in the same year.'],
+  kbt_div:['דיבידנד','الأرباح الموزّعة','Dividend'],
+  kb_div:['חלק מהרווח שחברה מחלקת לבעלי המניות. בישראל הוא ממוסה בדרך כלל ב-25%, ובעל מניות מהותי משלם 30%.','جزء من ربح الشركة يُوزَّع على المساهمين. في إسرائيل يُفرض عليه عادةً 25%، ويدفع المساهم الجوهري 30%.','Part of a company\'s profit paid out to shareholders. In Israel it is usually taxed at 25%, and 30% for a major shareholder.'],
+  kbt_compound:['ריבית דריבית','الفائدة المركّبة','Compound interest'],
+  kb_compound:['כשהרווח מצטרף לקרן ומתחיל להרוויח בעצמו. ככל שהזמן ארוך יותר האפקט גדל — ולכן להתחיל לחסוך מוקדם משנה הרבה יותר מסכום ההפקדה.','عندما يُضاف الربح إلى رأس المال ويبدأ يربح بدوره. كلما طالت المدة كبر الأثر — لذلك البدء المبكر بالادّخار أهم بكثير من مقدار الإيداع.','When earnings are added to the principal and start earning too. The longer the time, the bigger the effect — so starting early matters far more than the deposit size.'],
+  kbt_mortgage:['משכנתא','الرهن العقاري','Mortgage'],
+  kb_mortgage:['הלוואה לדירה שהדירה עצמה משמשת בטוחה לה. בישראל היא בנויה בדרך כלל מכמה מסלולים, ולכל מסלול ריבית והצמדה משלו.','قرض لشراء شقة تكون الشقة نفسها ضمانًا له. في إسرائيل يتكوّن عادةً من عدة مسارات، لكل منها فائدة وربط خاص بها.','A home loan secured by the home itself. In Israel it is usually built from several tracks, each with its own rate and linkage.'],
+  kbt_tracks:['מסלולי משכנתא','مسارات الرهن العقاري','Mortgage tracks'],
+  kb_tracks:['המסלולים העיקריים: פריים (ריבית משתנה עם הפריים), קבועה לא צמודה, קבועה צמודה למדד, ומשתנה כל חמש שנים. שילוב נכון מאזן בין יציבות בתשלום לבין עלות.','المسارات الرئيسية: البرايم (فائدة متغيّرة مع البرايم)، ثابتة غير مرتبطة، ثابتة مرتبطة بالمؤشر، ومتغيّرة كل خمس سنوات. المزج الصحيح يوازن بين ثبات الدفعة والتكلفة.','The main tracks: prime (floats with prime), fixed unlinked, fixed CPI-linked, and variable every five years. A good mix balances a stable payment against total cost.'],
+  kbt_spitzer:['לוח שפיצר','جدول شبيتسر (دفعات متساوية)','Spitzer (equal payments)'],
+  kb_spitzer:['שיטת החזר שבה התשלום החודשי קבוע. בהתחלה רוב התשלום הוא ריבית, ובהמשך רובו מקטין את הקרן.','طريقة سداد تكون فيها الدفعة الشهرية ثابتة. في البداية معظم الدفعة فائدة، ولاحقًا معظمها يقلّل أصل الدين.','A repayment method with a fixed monthly payment. At first most of it is interest; later most of it reduces the principal.'],
+  kbt_equal:['קרן שווה','أصل متساوٍ','Equal principal'],
+  kb_equal:['שיטת החזר שבה מחזירים כל חודש אותו חלק מהקרן ועוד ריבית. התשלום גבוה בהתחלה ויורד עם הזמן, וסך הריבית נמוך יותר מבשפיצר.','طريقة سداد تُعاد فيها كل شهر الحصة نفسها من أصل الدين مع الفائدة. الدفعة مرتفعة في البداية وتنخفض مع الوقت، ومجموع الفائدة أقل من شبيتسر.','Each month you repay the same share of principal plus interest. Payments start high and fall over time, and total interest is lower than with Spitzer.'],
+  kbt_linked:['הצמדה למדד','الربط بالمؤشر','CPI linkage'],
+  kb_linked:['בהלוואה צמודה, יתרת החוב מתעדכנת לפי מדד המחירים. כשיש אינפלציה, החוב והתשלום גדלים גם אם הריבית קבועה.','في القرض المرتبط بالمؤشر يتحدّث رصيد الدين وفق مؤشر الأسعار. مع التضخم يكبر الدين والدفعة حتى لو كانت الفائدة ثابتة.','In a CPI-linked loan the balance is updated by the price index. With inflation, the debt and the payment grow even if the rate is fixed.'],
+  kbt_refi:['מחזור משכנתא','إعادة تمويل الرهن','Mortgage refinancing'],
+  kb_refi:['החלפת המשכנתא הקיימת בחדשה בתנאים טובים יותר. כדאי להשוות את החיסכון בריבית מול עמלת הפירעון המוקדם והעלויות.','استبدال الرهن الحالي برهن جديد بشروط أفضل. يُستحسن مقارنة التوفير في الفائدة برسوم السداد المبكر والتكاليف.','Replacing your current mortgage with a new one on better terms. Compare the interest saved with the early-repayment fee and costs.'],
+  kbt_prepay:['עמלת פירעון מוקדם','رسوم السداد المبكر','Early repayment fee'],
+  kb_prepay:['עמלה שהבנק עשוי לגבות כשמחזירים הלוואה לפני הזמן, בעיקר במסלולים בריבית קבועה כשהריבית בשוק ירדה מאז שלקחתם אותה.','رسوم قد يتقاضاها البنك عند سداد القرض قبل موعده، خاصة في المسارات ذات الفائدة الثابتة إذا انخفضت فائدة السوق منذ أخذه.','A fee the bank may charge when you repay a loan early, mainly on fixed-rate tracks when market rates have fallen since you took it.'],
+  kbt_purchase:['מס רכישה','ضريبة الشراء','Purchase tax'],
+  kb_purchase:['מס שמשלמים בקניית דירה או נכס. לדירה יחידה יש מדרגות מקלות, ולמשקיעים ולדירה נוספת השיעור גבוה יותר.','ضريبة تُدفع عند شراء شقة أو عقار. للشقة الوحيدة شرائح مخفّفة، وللمستثمرين وللشقة الإضافية نسبة أعلى.','Tax paid when buying a home or property. A sole home has lenient brackets; investors and additional homes pay more.'],
+  kbt_betterment:['מס שבח','ضريبة التحسين','Land appreciation tax'],
+  kb_betterment:['מס על הרווח במכירת דירה או מקרקעין. מוכרי דירת מגורים יחידה יכולים לקבל פטור בתנאים מסוימים.','ضريبة على الربح من بيع شقة أو عقار. يمكن لبائعي شقة السكن الوحيدة الحصول على إعفاء بشروط معيّنة.','Tax on the gain from selling a home or land. Sellers of a sole residence can be exempt under certain conditions.'],
+  kbt_effective:['ריבית אפקטיבית','الفائدة الفعلية','Effective interest rate'],
+  kb_effective:['העלות האמיתית של ההלוואה בשנה, כולל עמלות ותדירות התשלומים. זו הדרך הנכונה להשוות בין הצעות של בנקים שונים.','التكلفة الحقيقية للقرض سنويًا، بما فيها الرسوم وتكرار الدفعات. وهي الطريقة الصحيحة للمقارنة بين عروض البنوك.','The true yearly cost of a loan, including fees and payment frequency. It is the right way to compare offers from different banks.'],
+  kbt_credit:['תשלומים וקרדיט','التقسيط والائتمان','Instalments and credit'],
+  kb_credit:['עסקת קרדיט או תשלומים עם ריבית מוסיפה עלות לרכישה. בדקו את הריבית האפקטיבית ואת הסכום הכולל שתשלמו לפני שמאשרים.','صفقة الائتمان أو التقسيط بفائدة تضيف تكلفة إلى الشراء. تحقّق من الفائدة الفعلية والمبلغ الإجمالي قبل الموافقة.','A credit or instalment deal with interest adds cost to a purchase. Check the effective rate and the total you will pay before agreeing.'],
+  kbt_emergency:['קרן חירום','صندوق الطوارئ','Emergency fund'],
+  kb_emergency:['כסף נזיל לשעת חירום, בדרך כלל 3–6 חודשי הוצאות. הוא מאפשר להתמודד עם אובדן הכנסה או הוצאה פתאומית בלי להיכנס לחובות.','مال سائل لحالات الطوارئ، عادةً مصاريف 3–6 أشهر. يتيح مواجهة فقدان الدخل أو نفقة مفاجئة دون الوقوع في الديون.','Cash set aside for emergencies, usually 3–6 months of expenses, so a lost income or a sudden bill does not push you into debt.'],
+  kbt_networth:['שווי נקי','صافي الثروة','Net worth'],
+  kb_networth:['כל הנכסים שלכם (חיסכון, השקעות, דירה) פחות כל ההתחייבויות (משכנתא, הלוואות). זה המדד הטוב ביותר למצב הכלכלי ולהתקדמות לאורך זמן.','كل أصولك (المدخرات والاستثمارات والشقة) ناقص كل الالتزامات (الرهن والقروض). هذا أفضل مقياس للوضع المالي وللتقدّم مع الوقت.','Everything you own (savings, investments, home) minus everything you owe (mortgage, loans). The best measure of your finances and progress over time.'],
+  kbt_fire:['FIRE — עצמאות כלכלית','FIRE — الاستقلال المالي','FIRE — financial independence'],
+  kb_fire:['שיטה של חיסכון והשקעה מוגברים כדי להגיע לעצמאות כלכלית ופרישה מוקדמת. כלל אצבע נפוץ: לצבור פי 25 מההוצאה השנתית ("כלל 4%").','أسلوب ادّخار واستثمار مكثّف للوصول إلى الاستقلال المالي والتقاعد المبكر. قاعدة شائعة: جمع 25 ضعف المصروف السنوي («قاعدة 4%»).','Saving and investing hard to reach financial independence and retire early. A common rule of thumb: build 25 times your yearly spending (the "4% rule").'],
+  kbt_avgcost:['מחיר ממוצע','متوسط التكلفة','Average cost'],
+  kb_avgcost:['כשקונים נכס בכמה פעמים ובמחירים שונים, המחיר הממוצע הוא סך ההשקעה חלקי מספר היחידות. השקעה קבועה כל חודש מפזרת את סיכון התזמון.','عند شراء أصل على عدة دفعات وبأسعار مختلفة، متوسط التكلفة هو مجموع الاستثمار مقسومًا على عدد الوحدات. الاستثمار الثابت شهريًا يوزّع مخاطر التوقيت.','When you buy an asset in several rounds at different prices, the average cost is total invested divided by units. Investing a fixed amount monthly spreads timing risk.'],
+  kbt_yield:['תשואה','العائد','Return'],
+  kb_yield:['הרווח מהשקעה באחוזים לתקופה. תשואה שנתית ממוצעת מאפשרת להשוות בין השקעות שנמשכו פרקי זמן שונים.','ربح الاستثمار كنسبة مئوية لفترة. العائد السنوي المتوسط يتيح المقارنة بين استثمارات امتدت فترات مختلفة.','The gain from an investment as a percentage over a period. An average yearly return lets you compare investments held for different lengths of time.'],
+  kbt_rate:['שער יציג','السعر التمثيلي','Representative exchange rate'],
+  kb_rate:['שער החליפין הרשמי שבנק ישראל מפרסם בכל יום עסקים. בנקים, צ׳יינג׳ים וחברות אשראי מוסיפים עליו מרווח, ולכן השער בפועל שונה מעט.','سعر الصرف الرسمي الذي ينشره بنك إسرائيل كل يوم عمل. تضيف البنوك ومحلات الصرافة وشركات الائتمان هامشًا عليه، لذلك يختلف السعر الفعلي قليلًا.','The official exchange rate the Bank of Israel publishes every business day. Banks, exchange offices and card companies add a margin, so the rate you get differs a little.'],
+  kbt_crypto:['מטבעות קריפטו','العملات المشفّرة','Cryptocurrency'],
+  kb_crypto:['מטבעות דיגיטליים כמו ביטקוין, שמחירם משתנה מאוד. בישראל רווח ממכירה או המרה שלהם חייב במס רווח הון.','عملات رقمية مثل البيتكوين، أسعارها شديدة التقلّب. في إسرائيل يخضع الربح من بيعها أو تحويلها لضريبة الأرباح الرأسمالية.','Digital currencies like Bitcoin whose prices swing widely. In Israel, gains from selling or swapping them are subject to capital gains tax.'],
+  kbt_selfemp:['עוסק פטור ועוסק מורשה','المرخّص المعفى والمرخّص المسجَّل','Exempt vs licensed dealer'],
+  kb_selfemp:['עוסק פטור לא גובה מע״מ ומחזור ההכנסות שלו מוגבל לתקרה שנתית; עוסק מורשה גובה מע״מ ומקזז את המע״מ על הוצאות. שניהם משלמים בעצמם מס הכנסה וביטוח לאומי.','المرخّص المعفى لا يجبي ضريبة القيمة المضافة ودخله محدود بسقف سنوي؛ المرخّص المسجَّل يجبيها ويخصم ضريبة المصاريف. كلاهما يدفع بنفسه ضريبة الدخل والتأمين الوطني.','An exempt dealer charges no VAT and has a yearly turnover cap; a licensed dealer charges VAT and offsets VAT on expenses. Both pay their own income tax and National Insurance.'],
+  kbt_rentbuy:['לשכור או לקנות','الاستئجار أم الشراء','Rent or buy'],
+  kb_rentbuy:['השוואה בין שכירות והשקעת ההון העצמי לבין קנייה עם משכנתא. התשובה תלויה בריבית, בתשואה האלטרנטיבית על הכסף ובעליית מחירי הדיור.','مقارنة بين الاستئجار واستثمار رأس المال الذاتي وبين الشراء برهن عقاري. الجواب يعتمد على الفائدة والعائد البديل على المال وارتفاع أسعار السكن.','Comparing renting and investing your equity with buying on a mortgage. The answer depends on interest rates, the alternative return on your money and house-price growth.'],
+  kbt_breakeven:['נקודת איזון','نقطة التعادل','Break-even point'],
+  kb_breakeven:['הכמות או ההכנסה שבה העסק מכסה בדיוק את כל העלויות. מעליה מתחילים להרוויח.','الكمية أو الإيراد الذي يغطي عنده العمل كل التكاليف تمامًا. فوقه يبدأ الربح.','The volume or revenue at which a business exactly covers all its costs. Above it, you start making a profit.'],
+  kbt_lease:['ליסינג','التأجير التمويلي (ليسينغ)','Car leasing'],
+  kb_lease:['השכרת רכב לתקופה קבועה בתשלום חודשי. השוו את העלות הכוללת, כולל מקדמה ותשלום בסוף התקופה, מול קנייה במזומן או במימון.','استئجار سيارة لمدة ثابتة بدفعة شهرية. قارن التكلفة الكاملة، بما فيها الدفعة الأولى ودفعة نهاية المدة، مع الشراء نقدًا أو بالتمويل.','Renting a car for a fixed term with a monthly payment. Compare the full cost, including any down payment and end-of-term payment, with buying in cash or on finance.'],
+  kbt_debt:['תוכנית לסגירת חובות','خطة سداد الديون','Debt payoff plan'],
+  kb_debt:['שתי שיטות נפוצות: "כדור שלג" — סוגרים קודם את החוב הקטן לתחושת התקדמות; "מפולת" — סוגרים קודם את החוב בריבית הגבוהה, מה שחוסך יותר ריבית.','طريقتان شائعتان: «كرة الثلج» — سداد أصغر دين أولًا للشعور بالتقدّم؛ «الانهيار» — سداد الدين الأعلى فائدة أولًا، ما يوفّر فائدة أكثر.','Two common methods: the "snowball" pays the smallest debt first for momentum; the "avalanche" pays the highest-interest debt first, saving more interest.'],
+  kbt_rental:['מס על הכנסה משכירות','ضريبة دخل الإيجار','Tax on rental income'],
+  kb_rental:['על שכירות למגורים יש שלוש אפשרויות: פטור עד תקרה חודשית, מסלול של 10% על ההכנסה ברוטו, או מס רגיל לפי המדרגות עם ניכוי הוצאות. המחשבון משווה ביניהן.','لإيجار السكن ثلاثة خيارات: إعفاء حتى سقف شهري، أو مسار 10% على الدخل الإجمالي، أو ضريبة عادية حسب الشرائح مع خصم المصاريف. الحاسبة تقارن بينها.','Residential rent has three options: exemption up to a monthly ceiling, a 10% track on gross income, or regular bracket tax with expenses deducted. The calculator compares them.'],
+  kbt_savegoal:['יעד חיסכון','هدف الادّخار','Savings goal'],
+  kb_savegoal:['סכום שרוצים להגיע אליו עד תאריך מסוים. המחשבון מראה כמה להפקיד כל חודש, בהתחשב בתשואה ובאינפלציה.','مبلغ تريد الوصول إليه بحلول تاريخ معيّن. تُظهر الحاسبة كم تودع كل شهر مع مراعاة العائد والتضخم.','An amount you want to reach by a certain date. The calculator shows how much to put aside each month, allowing for returns and inflation.'],
+
+  pm_defName:['העוזר האישי','المساعد الشخصي','Personal assistant'],
+  pm_hello:['שלום! אני {n}, המודל האישי של האפליקציה. אני עובד כאן במכשיר — בלי אינטרנט ובלי מפתח. שאלו אותי מה זה מונח פיננסי, איזה מחשבון מתאים, או בקשו "תסביר את התוצאות".','مرحبًا! أنا {n}، النموذج الشخصي للتطبيق. أعمل هنا على الجهاز — دون إنترنت ودون مفتاح. اسألني عن معنى مصطلح مالي، أو أي حاسبة تناسبك، أو اطلب «اشرح النتائج».','Hi! I\'m {n}, the app\'s personal model. I run right here on your device — no internet, no key. Ask me what a financial term means, which calculator fits, or say "explain my results".'],
+  pm_help:['אני {n}. אני יודע להסביר מונחים כמו פריים, מדד, נקודות זיכוי, מסלולי משכנתא ומס רווח הון; להמליץ על המחשבון המתאים; ולהסביר את התוצאות של המחשבון האחרון שפתחתם.','أنا {n}. أستطيع شرح مصطلحات مثل البرايم والمؤشر ونقاط الإعفاء ومسارات الرهن وضريبة الأرباح الرأسمالية؛ واقتراح الحاسبة المناسبة؛ وشرح نتائج آخر حاسبة فتحتها.','I\'m {n}. I can explain terms like prime, CPI, credit points, mortgage tracks and capital gains tax; suggest the right calculator; and explain the results of the last calculator you opened.'],
+  pm_thanks:['בשמחה! אם יש עוד שאלה, אני כאן.','بكل سرور! إذا كان لديك سؤال آخر فأنا هنا.','You\'re welcome! I\'m here if you have another question.'],
+  pm_calcFit:['המחשבון שמתאים לזה:','الحاسبة المناسبة لذلك:','The calculator for this:'],
+  pm_alsoCalc:['אפשר גם לבדוק ב:','يمكنك أيضًا التحقق في:','You can also check:'],
+  pm_unknown:['לא מצאתי תשובה מדויקת לשאלה הזו. נסו לנסח עם מונח או נושא, למשל:','لم أجد إجابة دقيقة لهذا السؤال. جرّب الصياغة بمصطلح أو موضوع، مثلًا:','I couldn\'t find an exact answer to that. Try asking with a term or topic, for example:'],
+  pm_ex1:['מה זה ריבית פריים?','ما هو سعر البرايم؟','What is the prime rate?'],
+  pm_ex2:['איך מחשבים מס רכישה?','كيف تُحسب ضريبة الشراء؟','How is purchase tax calculated?'],
+  pm_ex3:['תסביר את התוצאות שלי','اشرح نتائجي','Explain my results'],
+  pm_resIntro:['זה מה שיצא במחשבון {c}:','هذا ما خرج في حاسبة {c}:','Here is what {c} shows:'],
+  pm_noRes:['עדיין אין לי תוצאות להסביר. פתחו מחשבון, הזינו את הנתונים שלכם, וחזרו לשאול "תסביר את התוצאות".','لا توجد نتائج لأشرحها بعد. افتح حاسبة وأدخل بياناتك، ثم عد واسأل «اشرح النتائج».','There are no results to explain yet. Open a calculator, enter your numbers, then come back and ask "explain my results".'],
+  pm_now:['כרגע: {v}','الآن: {v}','now: {v}'],
+  pm_tip:['זה הסבר כללי ולא ייעוץ אישי. בהחלטות גדולות כדאי להתייעץ עם רואה חשבון או יועץ פיננסי.','هذا شرح عام وليس استشارة شخصية. في القرارات الكبيرة يُستحسن استشارة محاسب أو مستشار مالي.','This is general information, not personal advice. For big decisions, check with an accountant or financial adviser.'],
+  pm_badge:['ענה: {n} · במכשיר, בלי מפתח','أجاب: {n} · على الجهاز، دون مفتاح','Answered by {n} · on this device, no key'],
+  f_aiEngine:['מי עונה בעוזר','من يجيب في المساعد','Who answers'],
+  o_aiAuto:['אוטומטי — הטוב ביותר שזמין','تلقائي — الأفضل المتاح','Automatic — best available'],
+  o_aiPersonal:['המודל האישי (במכשיר, בלי מפתח)','النموذج الشخصي (على الجهاز، دون مفتاح)','Personal model (on device, no key)'],
+  o_aiGemini:['Gemini (מפתח חינמי)','Gemini (مفتاح مجاني)','Gemini (free key)'],
+  o_aiClaude:['Claude (בתוך Claude)','Claude (داخل Claude)','Claude (inside Claude)'],
+  h_aiEngine:['המודל האישי עובד תמיד, גם בלי אינטרנט, ומסביר מונחים, מחשבונים ותוצאות. Gemini ו-Claude עונים גם על שאלות פתוחות.','النموذج الشخصي يعمل دائمًا، حتى دون إنترنت، ويشرح المصطلحات والحاسبات والنتائج. Gemini وClaude يجيبان أيضًا عن الأسئلة المفتوحة.','The personal model always works, even offline, and explains terms, calculators and results. Gemini and Claude also handle open questions.'],
+  f_pmName:['שם המודל האישי','اسم النموذج الشخصي','Personal model name'],
+  f_pmStyle:['סגנון התשובות','أسلوب الإجابات','Answer style'],
+  o_pmShort:['קצר וברור','قصير وواضح','Short and clear'],
+  o_pmLong:['מפורט','مفصّل','Detailed'],
+  as_engNow:['עונה עכשיו: {n}','يجيب الآن: {n}','Answering now: {n}'],
+  eng_claude:['Claude','Claude','Claude'], eng_gemini:['Gemini','Gemini','Gemini'], eng_auto:['אוטומטי','تلقائي','Auto'], eng_personal:['אישי','شخصي','Personal'],
+  pl_investing:['שערים חיים של מדדים, מניות, מטבעות וקריפטו, לוח אירועים כלכליים וחדשות שוק.','أسعار حيّة للمؤشرات والأسهم والعملات والعملات المشفّرة، وأجندة اقتصادية وأخبار السوق.','Live quotes for indices, stocks, currencies and crypto, an economic calendar and market news.'],
+  as_noai:['כדי להשתמש ב-Gemini כאן, הזינו מפתח חינמי בהגדרות ← חיבורים ועוזר AI, או עברו למודל האישי שעובד בלי מפתח.','لاستخدام Gemini هنا، أدخل مفتاحًا مجانيًا في الإعدادات ← الاتصالات ومساعد الذكاء الاصطناعي، أو انتقل إلى النموذج الشخصي الذي يعمل دون مفتاح.','To use Gemini here, add a free key in Settings → Connections & AI assistant, or switch to the personal model, which needs no key.'],
+  sc_connS:['שערים בזמן אמת, בנק ישראל, קריפטו, ובחירת מודל AI','أسعار حيّة، بنك إسرائيل، العملات المشفّرة، واختيار نموذج الذكاء الاصطناعي','Live rates, Bank of Israel, crypto and choosing the AI model']
 });
 
 const t = (k, p) => {
@@ -2434,7 +2558,7 @@ const RTL = new Set(['he','ar','fa','ur','yi','ps','sd','ug','ckb','dv']);
 var TOUCHED = [], TILE_F = 'all', MY_HANDLE = '';
 try { MY_HANDLE = LS.getItem('fin-handle') || ''; } catch (e) {}
 const MKT = {boi: 3.25, boiDate: '1.9.2026', boiNext: '21.10.2026', cpi: 1.5, cpiMonth: '08/2026', cpiYtd: 2.1, cpiYtdTo: 8, src: 'built'};
-const SET_DEF = {autoUpd:'1', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {autoUpd:'1', aiEngine:'auto', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -3187,6 +3311,7 @@ function assistPanelHTML(){
   return `<section class="panel" id="panel-assist" role="tabpanel" aria-labelledby="tab-assist" hidden>
     <div class="as-box"><input id="as_q" type="search" autocomplete="off" data-ia="as_ph" aria-label="search">
       <button type="button" class="gold-btn" id="as_ask" data-i="as_ask"></button></div>
+    <div class="as-engrow"><div class="seg as-eng" id="as_eng" role="group" data-ia="f_aiEngine"></div><span class="fine" id="as_engnow"></span></div>
     <div class="as-chips" id="as_chips"></div>
     <div class="tiles" id="as_res"></div>
     <div class="as-log" id="as_log" aria-live="polite"></div>
@@ -3200,7 +3325,8 @@ const CUR_TABS = ['vat','loan','mortgage','compound','yield','dividends','capita
 const NUMF = (id, label, unit, hint) => ({id, label, unit, val:'', wide:false, hint});
 const PLATFORMS = [
   ['Blink · בלינק', 'pl_blink', 'https://www.heyblink.com'],
-  ['inter.il', 'pl_inter', 'https://www.inter.il']
+  ['inter.il', 'pl_inter', 'https://www.inter.il'],
+  ['Investing.com', 'pl_investing', 'https://il.investing.com/']
 ];
 const USEFUL_LINKS = [
   ['ln_kz', 'ln_kzD', [['ln_site', 'https://www.kolzchut.org.il/he/'], ['ln_kzRes', encodeURI('https://www.kolzchut.org.il/he/נקודות_זיכוי_ממס_הכנסה_ללוחמי_מילואים')]]],
@@ -3282,7 +3408,11 @@ function settingsPanelHTML(){
     ${sec('set_profile', fl(SETDEFS[4][1]))}
     ${sec('set_tabs', `<div class="fields">${fieldHTML(SEL('set_sort','f_sort','groups',[['groups','o_sortGroups'],['alpha','o_sortAlpha']],{wide:true}))}</div><p class="fine" data-i="h_sort"></p><p class="fine" data-i="h_tabs"></p><div id="set_tabs" class="tabs-list"></div>`)}
     ${sec('set_curBy', `<div class="fields">${cb}</div>`)}
-    ${sec('set_ai', `<div id="ai_sec"><div class="field wide"><label for="set_gkey" data-i="f_gkeyFree"></label><input id="set_gkey" type="password" autocomplete="off" spellcheck="false" class="lookup" dir="ltr" placeholder="AIza…"><small class="hint" data-i="h_gkeyFree"></small></div>
+    ${sec('set_ai', `<div id="ai_sec"><div class="fields">${[
+        SEL('set_aiEngine','f_aiEngine','auto',[['auto','o_aiAuto'],['personal','o_aiPersonal'],['gemini','o_aiGemini'],['claude','o_aiClaude']],{wide:true, hint:'h_aiEngine'}),
+        SEL('set_pmStyle','f_pmStyle','short',[['short','o_pmShort'],['long','o_pmLong']])].map(fieldHTML).join('')}
+      <div class="field"><label for="set_pmName" data-i="f_pmName"></label><input id="set_pmName" type="text" maxlength="24" autocomplete="off" class="lookup" dir="auto"></div></div>
+      <div class="field wide"><label for="set_gkey" data-i="f_gkeyFree"></label><input id="set_gkey" type="password" autocomplete="off" spellcheck="false" class="lookup" dir="ltr" placeholder="AIza…"><small class="hint" data-i="h_gkeyFree"></small></div>
       <div class="btnrow"><button type="button" class="gold-btn" id="gk_ok" data-i="gk_ok"></button><button type="button" class="btn" id="gk_del" data-i="gk_del"></button></div>
       <p class="gk-st" id="gk_st" role="status" aria-live="polite"></p>
       <p class="fine"><a class="src-a" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer"><span data-i="ln_gkey"></span> ↗</a></p></div>`)}
@@ -3317,7 +3447,7 @@ const SMAP = {set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
-  set_dtax:'dtax', set_deptime:'deptime', set_capkind:'capkind', set_remember:'remember', set_rateSrc:'rateSrc', set_gkey:'gkey', set_stale:'stale', set_sort:'sort', set_liveFx:'liveFx', set_fxInt:'fxInt', set_liveFiat:'liveFiat', set_liveCrypto:'liveCrypto', set_boiDb:'boiDb', set_autoRef:'autoRef', set_autoUpd:'autoUpd'};
+  set_dtax:'dtax', set_deptime:'deptime', set_capkind:'capkind', set_remember:'remember', set_rateSrc:'rateSrc', set_gkey:'gkey', set_stale:'stale', set_sort:'sort', set_liveFx:'liveFx', set_fxInt:'fxInt', set_liveFiat:'liveFiat', set_liveCrypto:'liveCrypto', set_boiDb:'boiDb', set_autoRef:'autoRef', set_autoUpd:'autoUpd', set_aiEngine:'aiEngine', set_pmName:'pmName', set_pmStyle:'pmStyle'};
 const DEFKEYS = ['vat','sex','fee','pens','study','erPens','erSev','erStudy','loanRate','invRate','cpi','infl','gainTax','dealer','buyer','dtax','deptime','capkind'];
 function fillCB(){
   CUR_TABS.forEach(id => {
@@ -5570,6 +5700,9 @@ async function asAnswer(q){
   const hist = src.slice(-8).map(m => ({role: m.role === 'ai' ? 'assistant' : 'user', content: m.text}));
   while (hist.length && hist[0].role !== 'user') hist.shift();
   const p = asProv(), model = asModel();
+  const eng = aiPick();
+  if (eng === 'personal') return pmAnswer(q);
+  if (eng === 'gemini'){ if (!gemKey()) throw new Error('noai'); return gemChat(hist.map((m, i) => i === 0 ? {role: 'user', content: asSystem() + '\n\nUser: ' + m.content} : m)); }
   try {
     if (p === 'gemini'){
       if (!(SET.gkey || '').trim()) throw new Error('nokey');
@@ -5596,7 +5729,7 @@ async function asAnswer(q){
   const sm = window.claude && window.claude.use ? await window.claude.use('sample') : null;
   if (!sm){
     if ((SET.gkey || '').trim()) return gemChat(hist.map((m, i) => i === 0 ? {role: 'user', content: asSystem() + '\n\nUser: ' + m.content} : m));
-    throw new Error('noai');
+    return pmAnswer(q);
   }
   const out = await sm(hist.map((m, i) => i === 0 ? {role:'user', content: asSystem() + '\n\nUser: ' + m.content} : m), {modelTier: model, cache:false});
   return (out && out.text || '').trim();
@@ -6152,10 +6285,11 @@ async function exRun(kind, extra){
   if (key && EX_CACHE[key]){ out.innerHTML = exFmt(EX_CACHE[key]); EX.hist.push({role: 'user', content: prompt}, {role: 'assistant', content: EX_CACHE[key]}); return; }
   out.innerHTML = `<p class="ex-wait">${t('as_think')}</p>`;
   EX.busy = true; $('#ex_send').disabled = true;
+  const eng = aiPick();
   let sm = null;
-  try { sm = window.claude && typeof window.claude.use === 'function' ? await window.claude.use('sample') : null; } catch (e) { sm = null; }
-  if (!sm && !(SET.gkey || '').trim()){ out.innerHTML = exOffline(id, kind, extra); EX.busy = false; $('#ex_send').disabled = false; return; }
-  if (!sm) sm = async (m) => ({text: await gemChat(m)});
+  if (eng === 'claude'){ try { sm = window.claude && typeof window.claude.use === 'function' ? await window.claude.use('sample') : null; } catch (e) { sm = null; } }
+  if (!sm && (eng === 'gemini' || eng === 'claude') && gemKey()) sm = async (m) => ({text: await gemChat(m)});
+  if (!sm){ out.innerHTML = exLocal(id, kind, extra); EX.busy = false; $('#ex_send').disabled = false; body.scrollTop = body.scrollHeight; return; }
   const msgs = EX.hist.concat([{role: 'user', content: (EX.hist.length ? '' : exSystem() + '\n\n') + prompt}]);
   EX.ctl = new AbortController();
   try {
@@ -6169,7 +6303,7 @@ async function exRun(kind, extra){
     const c = e && e.code;
     const ge = aiErrText(e);
     if (ge){ out.innerHTML = `<p class="ex-err">${asEsc(ge)}</p>`; return; }
-    out.innerHTML = `<p class="ex-err">${t(c === 'not_granted' ? 'ex_denied' : c === 'rate_limited' ? 'ex_busy' : (e && e.message === 'badkey') ? 'as_badkey' : 'as_err', {e: c || (e && e.message) || ''})}</p>` + (c === 'not_granted' ? exOffline(id, kind, extra) : '');
+    out.innerHTML = `<p class="ex-err">${t(c === 'not_granted' ? 'ex_denied' : c === 'rate_limited' ? 'ex_busy' : (e && e.message === 'badkey') ? 'as_badkey' : 'as_err', {e: c || (e && e.message) || ''})}</p>` + (c === 'not_granted' ? exLocal(id, kind, extra) : '');
   } finally { EX.busy = false; const s = $('#ex_send'); if (s) s.disabled = false; }
 }
 function exOffline(id, kind, extra){
@@ -6638,8 +6772,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "2.6", "date": "2026-10-14", "notes": {"he": "כל 80 השפות: הממשק כולו מתורגם, לא רק עברית, ערבית ואנגלית. שפה חדשה מתורגמת אוטומטית בבחירה הראשונה ונשמרת.", "ar": "جميع اللغات الثمانين: الواجهة كلها مترجمة، وليس العبرية والعربية والإنجليزية فقط. تُترجم اللغة الجديدة تلقائيًا عند اختيارها أول مرة وتُحفظ.", "en": "All 80 languages: the whole interface is translated, not just Hebrew, Arabic and English. A new language is translated automatically the first time you pick it, and saved."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.083140';
+var CHANGELOG = [{"v": "2.7", "date": "2026-10-14", "notes": {"he": "מודל AI אישי שעובד במכשיר בלי מפתח ובלי אינטרנט, עם בחירה בינו לבין Gemini; קישור ל-Investing.com בחיבורים בזמן אמת.", "ar": "نموذج ذكاء اصطناعي شخصي يعمل على الجهاز دون مفتاح ودون إنترنت، مع الاختيار بينه وبين Gemini؛ ورابط إلى Investing.com في الاتصالات الحية.", "en": "A personal AI model that runs on the device with no key and no internet, with a choice between it and Gemini; plus an Investing.com link in live connections."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.085209';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -6933,6 +7067,169 @@ applyLang = function(){
 };
 if (!txCore()) setTimeout(txStart, 900);
 setTimeout(txRender, 0);
+
+/* ---- the personal model: a built-in assistant that runs on the device, with no key and no internet ---- */
+var PM_KB = [   // [id, calculator, Hebrew terms, Arabic terms, English terms]
+  ['prime', 'prime', 'פריים|ריבית פריים', 'برايم|البرايم|الفائدة الأساسية', 'prime|prime rate'],
+  ['boi', 'prime', 'ריבית בנק ישראל|בנק ישראל|ריבית הבנק המרכזי', 'فائدة بنك إسرائيل|بنك إسرائيل|البنك المركزي', 'bank of israel|interest rate decision|central bank'],
+  ['cpi', 'inflation', 'מדד המחירים|מדד המחירים לצרכן|המדד|מדד', 'مؤشر أسعار المستهلك|مؤشر الأسعار|مؤشر المستهلك|المؤشر', 'cpi|consumer price index|price index'],
+  ['infl', 'inflation', 'אינפלציה|יוקר המחיה|שחיקת כסף', 'تضخم|التضخم|غلاء المعيشة', 'inflation|cost of living'],
+  ['vat', 'vat', 'מעמ|מע״מ|מס ערך מוסף', 'ضريبة القيمة المضافة|القيمة المضافة|الضريبة المضافة', 'vat|value added tax'],
+  ['points', 'salary', 'נקודות זיכוי|נקודת זיכוי|נקודות', 'نقاط الإعفاء|نقاط الائتمان|نقطة إعفاء', 'credit points|tax credit|credit point'],
+  ['reserve', 'salary', 'מילואים|מילואימניק|ימי מילואים', 'الاحتياط|خدمة الاحتياط|جنود الاحتياط', 'reserve duty|reservist|reserves'],
+  ['gross', 'salary', 'ברוטו|נטו|שכר נטו|תלוש', 'الإجمالي|الصافي|الراتب الصافي|قسيمة الراتب', 'gross|net pay|take home|payslip'],
+  ['brackets', 'tax', 'מדרגות מס|מדרגת מס|מס הכנסה', 'شرائح الضريبة|شريحة ضريبية|ضريبة الدخل', 'tax bracket|income tax|brackets'],
+  ['btl', 'salary', 'ביטוח לאומי|מס בריאות', 'التأمين الوطني|ضريبة الصحة', 'national insurance|bituach leumi|health tax'],
+  ['pension', 'retire', 'פנסיה|קרן פנסיה|פרישה|קצבה', 'التقاعد|صندوق التقاعد|پنسيا|المعاش', 'pension|retirement|annuity'],
+  ['hishtalmut', 'compound', 'קרן השתלמות|השתלמות', 'صندوق الاستكمال|كيرن هشتلموت', 'keren hishtalmut|study fund|hishtalmut'],
+  ['severance', 'severance', 'פיצויים|פיצויי פיטורים|פיטורים', 'تعويضات|تعويض الفصل|الفصل من العمل', 'severance|dismissal|fired'],
+  ['notice', 'notice', 'הודעה מוקדמת|התפטרות', 'الإشعار المسبق|الاستقالة', 'notice period|resignation|resign'],
+  ['leave', 'leave', 'חופשה שנתית|ימי חופשה|חופשה', 'الإجازة السنوية|أيام الإجازة|إجازة', 'annual leave|vacation days|holiday pay'],
+  ['capgain', 'capital', 'מס רווח הון|רווח הון|מס על מניות', 'ضريبة الأرباح الرأسمالية|الأرباح الرأسمالية|ضريبة الأسهم', 'capital gains|capital gains tax|tax on shares'],
+  ['div', 'dividends', 'דיבידנד|דיבידנדים', 'أرباح موزعة|توزيعات الأرباح|الأرباح الموزّعة', 'dividend|dividends'],
+  ['compound', 'compound', 'ריבית דריבית|ריבית מצטברת', 'الفائدة المركبة|الفائدة المركّبة', 'compound interest|compounding'],
+  ['mortgage', 'mortgage', 'משכנתא|משכנתה|הלוואה לדירה', 'رهن عقاري|الرهن العقاري|قرض سكن|المشكنتا', 'mortgage|home loan'],
+  ['tracks', 'mortgage', 'מסלולי משכנתא|מסלול משכנתא|תמהיל|מסלולים', 'مسارات الرهن|مسار القرض|المسارات', 'mortgage tracks|mortgage mix|loan tracks'],
+  ['spitzer', 'loan', 'שפיצר|לוח שפיצר|החזר קבוע', 'شبيتسر|دفعات متساوية|جدول السداد', 'spitzer|amortization|fixed payment'],
+  ['equal', 'loan', 'קרן שווה|קרן שוה', 'أصل متساو|أصل متساوٍ', 'equal principal'],
+  ['linked', 'mortgage', 'הצמדה|צמוד מדד|צמודה למדד|צמוד', 'الربط بالمؤشر|مرتبط بالمؤشر|ربط', 'cpi linked|index linked|linkage'],
+  ['refi', 'refi', 'מחזור משכנתא|מחזור|מיחזור', 'إعادة تمويل|إعادة التمويل', 'refinance|refinancing|refi'],
+  ['prepay', 'prepay', 'פירעון מוקדם|עמלת פירעון|לסגור הלוואה', 'السداد المبكر|رسوم السداد', 'early repayment|prepayment|pay off early'],
+  ['purchase', 'purchasetax', 'מס רכישה|קניית דירה|רכישת דירה', 'ضريبة الشراء|شراء شقة', 'purchase tax|buying a home|stamp duty'],
+  ['betterment', 'landtax', 'מס שבח|שבח|מכירת דירה', 'ضريبة التحسين|بيع شقة', 'land appreciation|betterment tax|selling a home'],
+  ['effective', 'loancmp', 'ריבית אפקטיבית|עלות אמיתית|השוואת הלוואות', 'الفائدة الفعلية|مقارنة القروض', 'effective rate|apr|compare loans'],
+  ['credit', 'creditcard', 'תשלומים|קרדיט|כרטיס אשראי|אשראי', 'التقسيط|بطاقة الائتمان|الائتمان', 'instalments|installments|credit card'],
+  ['emergency', 'savegoal', 'קרן חירום|כרית ביטחון|חיסכון לחירום', 'صندوق الطوارئ|مدخرات الطوارئ', 'emergency fund|rainy day'],
+  ['networth', 'networth', 'שווי נקי|הון עצמי|נכסים והתחייבויות', 'صافي الثروة|الأصول والالتزامات', 'net worth|assets and liabilities'],
+  ['fire', 'fire', 'fire|פרישה מוקדמת|עצמאות כלכלית|כלל 4', 'الاستقلال المالي|التقاعد المبكر', 'fire|early retirement|financial independence|4% rule'],
+  ['avgcost', 'avgcost', 'מחיר ממוצע|ממוצע קנייה|השקעה חודשית', 'متوسط التكلفة|متوسط السعر', 'average cost|dollar cost averaging|dca'],
+  ['yield', 'yield', 'תשואה|תשואה שנתית|רווח מהשקעה', 'العائد|العائد السنوي', 'return|yield|annual return'],
+  ['rate', 'convert', 'שער יציג|שער דולר|שער חליפין|דולר|יורו', 'السعر التمثيلي|سعر الصرف|الدولار|اليورو', 'exchange rate|representative rate|dollar|euro'],
+  ['crypto', 'convert', 'קריפטו|ביטקוין|מטבע דיגיטלי', 'العملات المشفرة|بيتكوين|عملة رقمية', 'crypto|bitcoin|cryptocurrency'],
+  ['selfemp', 'selfemp', 'עוסק פטור|עוסק מורשה|עצמאי|עצמאים', 'مرخص معفى|مرخص مسجل|مستقل|العمل الحر', 'exempt dealer|licensed dealer|self employed|freelancer'],
+  ['rentbuy', 'rentbuy', 'לשכור או לקנות|שכירות או קנייה|לקנות דירה', 'الاستئجار أم الشراء|إيجار أو شراء', 'rent or buy|renting vs buying'],
+  ['breakeven', 'breakeven', 'נקודת איזון|איזון', 'نقطة التعادل|التعادل', 'break even|breakeven'],
+  ['lease', 'carlease', 'ליסינג|ליסינג פרטי|רכב', 'ليسينغ|تأجير السيارة|سيارة', 'lease|car lease|leasing'],
+  ['debt', 'debtplan', 'סגירת חובות|חובות|כדור שלג|חוב', 'سداد الديون|الديون|كرة الثلج', 'debt payoff|debts|snowball|avalanche'],
+  ['rental', 'rental', 'הכנסה משכירות|מס על שכירות|שכר דירה', 'دخل الإيجار|ضريبة الإيجار', 'rental income|rent tax|landlord'],
+  ['savegoal', 'savegoal', 'יעד חיסכון|לחסוך|חיסכון', 'هدف الادخار|الادخار|ادخار', 'savings goal|save for|saving']
+];
+var PM_STOP = new Set('מה איך כמה האם של את על עם זה זו אני לי יש אין או גם כל מי למה אם רוצה צריך לחשב חישוב מחשבון תגיד תסביר הסבר בבקשה ما كيف كم هل من في على مع هذا هذه أنا لي أريد احسب حاسبة اشرح what how much many the is are a an of to for my i me do does can calculate calculator explain please about tell'.split(' '));
+var PM_RX = {
+  greet: /(^| )(היי|הי|שלום|בוקר טוב|ערב טוב|hello|hi|hey|مرحبا|اهلا|أهلا|السلام عليكم|صباح الخير)( |$)/,
+  thanks: /(^| )(תודה|תודה רבה|thanks|thank you|شكرا|شكرًا)( |$)/,
+  help: /(מה אתה יודע|מה אתה יכול|במה אתה|עזרה|מי אתה|help|what can you|who are you|ماذا تستطيع|ماذا يمكنك|مساعدة|من أنت)/,
+  res: /(תוצא|יצא לי|מה יצא|explain my|my result|results?( |$)|نتيج|اشرح)/
+};
+var PM_LASTCALC = '';
+function pmName(){ return String(SET.pmName || '').trim() || t('pm_defName'); }
+function pmNorm(s){ return ' ' + String(s || '').toLowerCase().replace(/[֑-ׇً-ٰٟ]/g, '').replace(/[״"׳'`]/g, '').replace(/[^\p{L}\p{N}%]+/gu, ' ').replace(/(^|\s)(وال|بال|فال|كال|لل|ال)(?=\p{L}{2})/gu, '$1').replace(/[أإآ]/g, 'ا').replace(/ة(?=\s|$)/g, 'ه').trim() + ' '; }
+function pmEsc(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+function pmTerms(e){
+  const all = (e[2] + '|' + e[3] + '|' + e[4]).split('|').concat([t('kbt_' + e[0])]);
+  return [...new Set(all.map(x => pmNorm(x).trim()).filter(x => x.length >= 3 || /^[a-z]{2,}$/.test(x) && x.length >= 3))];
+}
+function pmMatchKB(q){
+  const n = pmNorm(q), out = [];
+  PM_KB.forEach(e => {
+    let sc = 0;
+    pmTerms(e).forEach(term => {
+      const re = new RegExp('(?:^|\\s)(?:[ובהלמשכד]{1,3}|و|ف|ب|ل|ك|ال|وال|بال|لل|فال)?' + pmEsc(term), 'u');
+      if (re.test(n)) sc = Math.max(sc, term.length + (term.includes(' ') ? 6 : 0));
+    });
+    if (sc) out.push([sc, e]);
+  });
+  return out.sort((a, b) => b[0] - a[0]).map(x => x[1]);
+}
+function pmCalcs(q){
+  const words = pmNorm(q).trim().split(' ').filter(w => w.length >= 3 && !PM_STOP.has(w));
+  if (!words.length) return [];
+  const forms = w => { const f = [w]; if (/^[ובהלמשכ]/.test(w) && w.length >= 4) f.push(w.slice(1)); if (/^(ال|وال|بال)/.test(w) && w.length >= 5) f.push(w.replace(/^(وال|بال|ال)/, '')); return f; };
+  const res = [];
+  TABS.filter(id => !['home', 'settings', 'assist'].includes(id)).forEach(id => {
+    const text = pmNorm(all3('tab_' + id) + ' ' + all3('d_' + id) + ' ' + (GS_SYN[id] || '') + ' ' + t('tab_' + id) + ' ' + t('d_' + id));
+    const title = pmNorm(all3('tab_' + id) + ' ' + t('tab_' + id));
+    let sc = 0;
+    words.forEach(w => { const f = forms(w); if (f.some(x => title.includes(' ' + x) || title.includes(x + ' '))) sc += 3; else if (f.some(x => text.includes(x))) sc += 1; });
+    if (sc) res.push([sc, id]);
+  });
+  return res.sort((a, b) => b[0] - a[0]).filter((x, i, a) => x[0] >= Math.max(2, a[0][0] - 1)).map(x => x[1]);
+}
+function pmKB(e){ return '**' + t('kbt_' + e[0]) + '**\n' + t('kb_' + e[0]); }
+function pmResults(id){
+  const r = exResults(id); if (!r) return t('pm_noRes');
+  const long = SET.pmStyle === 'long';
+  let s = t('pm_resIntro', {c: t('tab_' + id)}) + '\n**' + r.main + '**';
+  r.rows.slice(0, long ? 12 : 5).forEach(x => { s += '\n- ' + x; });
+  if (r.note) s += '\n\n' + r.note;
+  if (r.warn) s += '\n⚠️ ' + r.warn;
+  const kb = PM_KB.filter(e => e[1] === id).slice(0, long ? 2 : 1);
+  if (kb.length) s += '\n\n' + kb.map(pmKB).join('\n\n');
+  if (long) s += '\n\n' + t('pm_tip');
+  return s + '\n[[' + id + ']]';
+}
+function pmAnswer(q){
+  const n = pmNorm(q), long = SET.pmStyle === 'long', nm = pmName();
+  if (PM_RX.thanks.test(n) && n.trim().split(' ').length <= 4) return t('pm_thanks');
+  if (PM_RX.greet.test(n) && n.trim().split(' ').length <= 3) return t('pm_hello', {n: nm});
+  if (PM_RX.help.test(n)) return t('pm_help', {n: nm});
+  const kb = pmMatchKB(q), calcs = pmCalcs(q);
+  if (PM_RX.res.test(n) && kb.length === 0){ const id = calcs[0] || PM_LASTCALC; return id ? pmResults(id) : t('pm_noRes'); }
+  const out = [];
+  kb.slice(0, long ? 3 : 2).forEach(e => out.push(pmKB(e) + (e[1] ? '\n[[' + e[1] + ']]' : '')));
+  const cs = calcs.filter(id => !kb.some(e => e[1] === id)).slice(0, long ? 3 : kb.length ? 1 : 2);
+  if (cs.length) out.push((kb.length ? t('pm_alsoCalc') : t('pm_calcFit')) + '\n' + cs.map(id => '[[' + id + ']] ' + t('d_' + id)).join('\n'));
+  if (!out.length) return t('pm_unknown') + '\n- ' + t('pm_ex1') + '\n- ' + t('pm_ex2') + '\n- ' + t('pm_ex3');
+  if (long) out.push(t('pm_tip'));
+  return out.join('\n\n');
+}
+function exLocal(id, kind, extra){
+  const note = '<p class="fine pm-badge">' + asEsc(t('pm_badge', {n: pmName()})) + '</p>';
+  if (kind === 'q') return exFmt(pmAnswer(extra).replace(/\[\[([a-z0-9]+)\]\]/g, (_, c) => TABS.includes(c) ? t('tab_' + c) + ' ←' : '')) + note;
+  const fs = exFields(id);
+  if (kind === 'field'){
+    const f = fs.find(x => x.label === extra) || {label: extra, value: '', hint: ''};
+    const kb = pmMatchKB(f.label + ' ' + f.hint)[0];
+    let s = '**' + f.label + '**' + (f.value ? ' — ' + t('pm_now', {v: f.value}) : '') + (f.hint ? '\n' + f.hint : '');
+    if (kb) s += '\n\n' + pmKB(kb);
+    return exFmt(s) + note;
+  }
+  if (kind === 'row'){
+    const r = exResults(id), row = r && r.rows.find(x => x.indexOf(extra) === 0);
+    const kb = pmMatchKB(extra)[0];
+    return exFmt('**' + (row || extra) + '**' + (r && r.note ? '\n\n' + r.note : '') + (kb ? '\n\n' + pmKB(kb) : '')) + note;
+  }
+  const withHint = fs.filter(f => f.hint).map(f => '- **' + f.label + '**: ' + f.hint).join('\n');
+  return exFmt(t('d_' + id) + (withHint ? '\n\n' + withHint : '') + '\n\n' + pmResults(id).replace(/\n?\[\[[a-z0-9]+\]\]/g, '')) + note;
+}
+function aiPick(){
+  const e = SET.aiEngine || 'auto';
+  if (e === 'personal') return 'personal';
+  if (e === 'gemini') return 'gemini';
+  if (e === 'claude') return AI_CLAUDE ? 'claude' : gemKey() ? 'gemini' : 'personal';
+  return AI_CLAUDE ? 'claude' : gemKey() ? 'gemini' : 'personal';
+}
+function engRender(){
+  const box = $('#as_eng'); if (!box) return;
+  const opts = ['auto', 'personal', 'gemini'].concat(AI_CLAUDE ? ['claude'] : []);
+  const cur = opts.includes(SET.aiEngine) ? SET.aiEngine : 'auto';
+  box.innerHTML = opts.map(o => `<button type="button" data-eng="${o}" aria-pressed="${o === cur}">${asEsc(o === 'personal' ? pmName() : t('eng_' + o))}</button>`).join('');
+  const now = $('#as_engnow'), pk = aiPick();
+  if (now) now.textContent = t('as_engNow', {n: pk === 'personal' ? pmName() : pk === 'gemini' ? 'Gemini' : 'Claude'});
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('#as_eng [data-eng]'); if (!b) return;
+  SET.aiEngine = b.dataset.eng; saveSet();
+  const s = $('#set_aiEngine'); if (s) s.value = SET.aiEngine;
+  engRender();
+});
+document.addEventListener('change', e => { if (['set_aiEngine', 'set_pmName', 'set_pmStyle'].includes(e.target.id)) setTimeout(engRender, 0); });
+const _actPm = activate;
+activate = function(id){ if (!['home', 'settings', 'assist'].includes(id)) PM_LASTCALC = id; const r = _actPm.apply(this, arguments); if (id === 'assist') engRender(); return r; };
+const _rsPm = renderStamp;
+renderStamp = function(){ _rsPm.apply(this, arguments); engRender(); };
+setTimeout(engRender, 1500);
+engRender();
 
 applyLang(false);
 activate(tab);
