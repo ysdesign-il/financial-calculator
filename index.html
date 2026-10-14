@@ -1234,6 +1234,9 @@ body:not(.own) .own-only{display:none!important}
 .ai-ask{display:flex;gap:6px}
 .ai-ask input{flex:1;min-width:0;font:inherit;font-size:16px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
 .ai-note{margin:0}
+.sv-dot.none{background:var(--ink-2)}
+.sv-st.none{color:var(--ink-2)}
+@media (max-width:430px){.sv-seg button{padding:6px 9px}}
 
 </style>
 </head>
@@ -3840,6 +3843,50 @@ Object.assign(T, {
   gk_eInP:['בתוך Claude אין גישה ל-Google, ולכן Gemini עובד רק באתר. כאן עונה Claude (אחרי שתאשר) או המודל המובנה.','داخل Claude لا يوجد وصول إلى Google، لذا يعمل Gemini فقط في الموقع. هنا يجيب Claude (بعد موافقتك) أو النموذج المدمج.','Inside Claude, Google can\'t be reached, so Gemini works only on the website. Here Claude answers (once you allow it) or the built-in model does.'],
   gk_inClaude:['בתוך Claude עונה Claude (אחרי שתאשר) או המודל המובנה, בלי מפתח. מפתח Gemini עובד באתר.','داخل Claude يجيب Claude (بعد موافقتك) أو النموذج المدمج، دون مفتاح. مفتاح Gemini يعمل في الموقع.','Inside Claude, Claude answers (once you allow it) or the built-in model does, with no key. A Gemini key works on the website.']
 });
+Object.assign(T, {
+  sv_none:['ללא','بدون','None'], o_saveNone:['ללא שמירה','بدون حفظ','No saving'],
+  sv_stNone:['ללא שמירה: שום דבר לא נשמר במכשיר.','بدون حفظ: لا يُحفظ أي شيء على الجهاز.','No saving: nothing is kept on this device.'],
+  sv_stNoneDirty:['ללא שמירה: השינויים שלך יימחקו כשתסגור או תרענן.','بدون حفظ: ستُحذف تغييراتك عند الإغلاق أو التحديث.','No saving: your changes go away when you close or refresh.'],
+  sv_toNone:['ללא שמירה: מעכשיו שום שינוי לא נשמר. מה שכבר שמור נשאר, ואפשר למחוק אותו ב"נקה הכל".','بدون حفظ: من الآن لا يُحفظ أي تغيير. ما حُفظ سابقًا يبقى، ويمكن حذفه عبر "مسح الكل".','No saving: from now on nothing is saved. What was already saved stays, and "Clear all" deletes it.']
+});
+Object.assign(T, {
+  /* the upgraded personal AI */
+  f_aiNet:['חיבור לאינטרנט לעוזר האישי','اتصال المساعد الشخصي بالإنترنت','Let the personal AI go online'],
+  h_aiNet:['כשהעוזר לא יודע תשובה הוא בודק בוויקיפדיה, ונעזר בנתונים החיים של האפליקציה. נשלחת רק השאלה עצמה. בלי חיבור הוא עונה רק מהידע המובנה.','عندما لا يعرف المساعد الإجابة يبحث في ويكيبيديا ويستعين ببيانات التطبيق الحية. يُرسل السؤال فقط. دون اتصال يجيب من المعرفة المدمجة فقط.','When the assistant doesn\'t know, it looks the question up on Wikipedia and uses the app\'s live data. Only the question is sent. Without it, it answers from built-in knowledge only.'],
+  sc_connAiS:['העוזר האישי: שם, סגנון וחיבור לאינטרנט','المساعد الشخصي: الاسم والأسلوب والاتصال بالإنترنت','Personal AI: name, style and going online'],
+  ai_noteLocal2:['העוזר האישי של האפליקציה: מחשב ועונה כאן במכשיר, משתמש בנתונים החיים, ובודק בוויקיפדיה רק כשהוא לא יודע. אפשר לכבות את החיבור בהגדרות.','المساعد الشخصي للتطبيق: يحسب ويجيب هنا على الجهاز، يستخدم البيانات الحية، ويبحث في ويكيبيديا فقط عندما لا يعرف. يمكن إيقاف الاتصال في الإعدادات.','The app\'s personal AI: it calculates and answers here on your device, uses live data, and checks Wikipedia only when it doesn\'t know. You can turn going online off in Settings.'],
+  ai_noteLocalOff:['העוזר האישי עובד עכשיו בלי אינטרנט: עונה מהידע המובנה ומהנתונים שבאפליקציה.','المساعد الشخصي يعمل الآن دون إنترنت: يجيب من المعرفة المدمجة وبيانات التطبيق.','The personal AI is offline now: it answers from built-in knowledge and the app\'s data.'],
+  pm_hello:['שלום! אני {n}, ה-AI האישי של האפליקציה. אפשר לשאול אותי על מונחים, על שער הדולר והריביות עכשיו, לבקש חישוב מהיר ("החזר על הלוואה של 100 אלף ל-5 שנים ב-5%", "כמה נטו מ-15,000", "18% מ-2,500"), או לשאול כל שאלה, ואם לא אדע אבדוק באינטרנט.','مرحبًا! أنا {n}، الذكاء الاصطناعي الشخصي للتطبيق. اسألني عن المصطلحات، عن سعر الدولار والفوائد الآن، اطلب حسابًا سريعًا ("قسط قرض 100 ألف لخمس سنوات بـ5%"، "كم الصافي من 15,000"، "18% من 2,500")، أو أي سؤال، وإن لم أعرف سأبحث في الإنترنت.','Hi! I\'m {n}, the app\'s personal AI. Ask me about terms, today\'s dollar and interest rates, a quick calculation ("payment on a 100k loan for 5 years at 5%", "net from 15,000", "18% of 2,500"), or anything else, and if I don\'t know I\'ll look it up online.'],
+  pm_openWith:['פתח {n} עם המספרים','افتح {n} بالأرقام','Open {n} with these numbers'],
+  pm_badge2:['ענה: {n} · AI אישי','أجاب: {n} · ذكاء شخصي','Answered by {n} · personal AI'],
+  pmx_arith:['התוצאה: **{v}**','النتيجة: **{v}**','Result: **{v}**'],
+  pmx_pct:['**{p}%** מתוך {b} = **{v}**','**{p}%** من {b} = **{v}**','**{p}%** of {b} = **{v}**'],
+  pmx_vatRate:['שיעור המע״מ כרגע: **{r}%**.','نسبة ضريبة القيمة المضافة حاليًا: **{r}%**.','VAT is **{r}%** right now.'],
+  pmx_vatIn:['{x} ₪ לפני מע״מ = **{g} ₪** כולל מע״מ ({r}%). המע״מ: {v} ₪.','{x} ₪ قبل الضريبة = **{g} ₪** شاملة الضريبة ({r}%). الضريبة: {v} ₪.','₪{x} before VAT = **₪{g}** with VAT ({r}%). VAT: ₪{v}.'],
+  pmx_vatOut:['מתוך {x} ₪ כולל מע״מ: **{n} ₪** לפני מע״מ, והמע״מ {v} ₪ ({r}%).','من {x} ₪ شاملة الضريبة: **{n} ₪** قبل الضريبة، والضريبة {v} ₪ ({r}%).','Out of ₪{x} including VAT: **₪{n}** before VAT, and the VAT is ₪{v} ({r}%).'],
+  pmx_rate:['1 {c} = **{v} ₪** ({s}, {t}).','1 {c} = **{v} ₪** ({s}، {t}).','1 {c} = **₪{v}** ({s}, {t}).'],
+  pmx_rateOff:['השער היציג של בנק ישראל: {v} ₪.','السعر الرسمي لبنك إسرائيل: {v} ₪.','Bank of Israel official rate: ₪{v}.'],
+  pmx_fx:['{a} {f} = **{v} {to}** (שער {r}, {s}, {t}).','{a} {f} = **{v} {to}** (سعر {r}، {s}، {t}).','{a} {f} = **{v} {to}** (rate {r}, {s}, {t}).'],
+  pmx_srcLive:['שער שוק חי','سعر سوق مباشر','live market rate'], pmx_srcMkt:['שער שוק אחרון שנשמר','آخر سعر سوق محفوظ','last saved market rate'], pmx_srcOff:['שער יציג','السعر الرسمي','official rate'], pmx_srcSnap:['עותק שמור','نسخة محفوظة','saved copy'],
+  pmx_prime:['ריבית הפריים עכשיו: **{p}** (ריבית בנק ישראל {b} + 1.5%). ההחלטה האחרונה: {d}. הבאה: {x}.','فائدة البرايم الآن: **{p}** (فائدة بنك إسرائيل {b} + 1.5%). آخر قرار: {d}. القادم: {x}.','Prime is **{p}** now (Bank of Israel {b} + 1.5%). Last decision: {d}. Next: {x}.'],
+  pmx_boi:['ריבית בנק ישראל: **{b}**. ההחלטה האחרונה: {d}. הבאה: {x}.','فائدة بنك إسرائيل: **{b}**. آخر قرار: {d}. القادم: {x}.','Bank of Israel rate: **{b}**. Last decision: {d}. Next: {x}.'],
+  pmx_idx:['**{n}**: {v} נקודות ({m}). בחודש האחרון {mm}, ב-12 חודשים {y}.','**{n}**: {v} نقطة ({m}). في الشهر الأخير {mm}، وخلال 12 شهرًا {y}.','**{n}**: {v} points ({m}). Last month {mm}, over 12 months {y}.'],
+  pmx_ytd:['מתחילת השנה: {v}.','منذ بداية السنة: {v}.','Since the start of the year: {v}.'],
+  pmx_mkt:['**{n}**: {v} ({c} היום, {t}). מתחילת השנה: {y}.','**{n}**: {v} ({c} اليوم، {t}). منذ بداية السنة: {y}.','**{n}**: {v} ({c} today, {t}). Year to date: {y}.'],
+  pmx_loanNeed:['כדי לחשב החזר אני צריך סכום ותקופה, למשל: "הלוואה של 100 אלף ל-5 שנים ב-5%".','لحساب القسط أحتاج المبلغ والمدة، مثل: "قرض 100 ألف لخمس سنوات بـ5%".','To work out the payment I need an amount and a period, like "a 100k loan for 5 years at 5%".'],
+  pmx_loan:['הלוואה של **{a} ₪** ל-{y} בריבית {r}%:\n- החזר חודשי: **{p} ₪** (שפיצר)\n- סך הריבית: {i} ₪\n- סך התשלומים: {tot} ₪','قرض **{a} ₪** لمدة {y} بفائدة {r}%:\n- القسط الشهري: **{p} ₪**\n- مجموع الفائدة: {i} ₪\n- مجموع الدفعات: {tot} ₪','A **₪{a}** loan over {y} at {r}%:\n- Monthly payment: **₪{p}** (fixed)\n- Total interest: ₪{i}\n- Total paid: ₪{tot}'],
+  pmx_loanAsm:['לא ציינת ריבית, אז חישבתי לפי הפריים של היום ({p}).','لم تذكر فائدة، فحسبت حسب البرايم اليوم ({p}).','You didn\'t give a rate, so I used today\'s prime ({p}).'],
+  pmx_follow:['אפשר לשאול המשך, למשל "ול-10 שנים?" או "וב-4%?".','يمكنك المتابعة، مثل "ولعشر سنوات؟" أو "وبـ4%؟".','You can follow up, like "and for 10 years?" or "and at 4%?".'],
+  pmx_growNeed:['כדי לחשב צבירה אני צריך סכום (או הפקדה חודשית) ומספר שנים, למשל: "חוסך 1,000 בחודש ל-20 שנה ב-6%".','لحساب التراكم أحتاج مبلغًا (أو إيداعًا شهريًا) وعدد سنوات، مثل: "أدخر 1,000 شهريًا لعشرين سنة بـ6%".','To work out growth I need an amount (or a monthly deposit) and years, like "saving 1,000 a month for 20 years at 6%".'],
+  pmx_grow:['סכום התחלתי {a} ₪, הפקדה חודשית {mo} ₪, {y} שנים בתשואה {r}% בשנה:\n- בסוף: **{v} ₪**\n- הפקדת: {put} ₪\n- רווח: {g} ₪','مبلغ ابتدائي {a} ₪، إيداع شهري {mo} ₪، {y} سنوات بعائد {r}% سنويًا:\n- في النهاية: **{v} ₪**\n- أودعت: {put} ₪\n- الربح: {g} ₪','Starting ₪{a}, ₪{mo} a month, {y} years at {r}% a year:\n- At the end: **₪{v}**\n- You put in: ₪{put}\n- Gain: ₪{g}'],
+  pmx_growAsm:['לא ציינת תשואה, אז חישבתי לפי 5% בשנה.','لم تذكر عائدًا، فحسبت حسب 5% سنويًا.','You didn\'t give a return, so I used 5% a year.'],
+  pmx_g2n:['מ-{g} ₪ ברוטו נשארים בערך **{n} ₪ נטו** בחודש:\n- מס הכנסה: {tx} ₪\n- ביטוח לאומי ובריאות: {ni} ₪\n- פנסיה (6%): {p} ₪','من {g} ₪ إجمالي يبقى تقريبًا **{n} ₪ صافي** شهريًا:\n- ضريبة الدخل: {tx} ₪\n- التأمين الوطني والصحة: {ni} ₪\n- التقاعد (6%): {p} ₪','From ₪{g} gross you keep about **₪{n} net** a month:\n- Income tax: ₪{tx}\n- National Insurance and health: ₪{ni}\n- Pension (6%): ₪{p}'],
+  pmx_n2g:['כדי לקבל {n} ₪ נטו צריך בערך **{g} ₪ ברוטו** בחודש.','للحصول على {n} ₪ صافي تحتاج تقريبًا **{g} ₪ إجمالي** شهريًا.','To take home ₪{n} net you need about **₪{g} gross** a month.'],
+  pmx_salAsm:['לפי 2.25 נקודות זיכוי ופנסיה 6%. בחישוב המלא אפשר להוסיף ילדים, תואר ועוד.','حسب 2.25 نقطة خصم وتقاعد 6%. في الحساب الكامل يمكن إضافة الأولاد والشهادة وغيرها.','Based on 2.25 credit points and a 6% pension. The full calculator adds children, degrees and more.'],
+  pmx_wiki:['מצאתי באינטרנט, **{n}**:','وجدت في الإنترنت، **{n}**:','Found online, **{n}**:'],
+  pmx_wikiSrc:['מקור:','المصدر:','Source:'], pmx_wikiLink:['ויקיפדיה','ويكيبيديا','Wikipedia'],
+  pmx_offline:['אין כרגע חיבור לאינטרנט, ולכן עניתי רק מהידע המובנה.','لا يوجد اتصال بالإنترنت الآن، لذا أجبت من المعرفة المدمجة فقط.','There\'s no internet connection right now, so I answered from built-in knowledge only.']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -3866,10 +3913,10 @@ const DATA_KEYS = ['fin-set', 'fin-vals', 'fin-scn', 'fin-lang', 'fin-cur', 'fin
 const SAVE_KEYS = ['fin-vals', 'fin-scn', 'fin-exp', 'fin-clients'];
 const LS_RAW = {getItem: LS.getItem, setItem: LS.setItem, removeItem: LS.removeItem};
 const SV = {mode: 'auto', pend: new Map(), at: 0, direct: false, key: 'fin-pend' + (FUSER ? ':' + ENC_NAME(FUSER) : '')};
-try { const s0 = JSON.parse(LS_RAW.getItem('fin-set') || 'null'); if (s0 && s0.saveMode === 'manual') SV.mode = 'manual'; } catch (e) {}
+try { const s0 = JSON.parse(LS_RAW.getItem('fin-set') || 'null'); if (s0 && (s0.saveMode === 'manual' || s0.saveMode === 'none')) SV.mode = s0.saveMode; } catch (e) {}
 try { if (SV.mode === 'manual'){ const p0 = JSON.parse(SS.getItem(SV.key) || '[]'); if (Array.isArray(p0)) p0.forEach(x => { if (Array.isArray(x) && SAVE_KEYS.includes(x[0])) SV.pend.set(x[0], x[1] == null ? null : String(x[1])); }); } else SS.removeItem(SV.key); } catch (e) {}
-const svHold = k => SV.mode === 'manual' && SAVE_KEYS.includes(k) && !LIVE_APPLYING && !SV.direct;
-function svKeep(){ try { if (SV.pend.size) SS.setItem(SV.key, JSON.stringify([...SV.pend])); else SS.removeItem(SV.key); } catch (e) {} try { if (typeof svUi === 'function') svUi(); } catch (e) {} }
+const svHold = k => SV.mode !== 'auto' && SAVE_KEYS.includes(k) && !LIVE_APPLYING && !SV.direct;
+function svKeep(){ try { if (SV.pend.size && SV.mode === 'manual') SS.setItem(SV.key, JSON.stringify([...SV.pend])); else SS.removeItem(SV.key); } catch (e) {} try { if (typeof svUi === 'function') svUi(); } catch (e) {} }
 LS.getItem = k => SV.pend.has(k) ? SV.pend.get(k) : LS_RAW.getItem(k);
 LS.setItem = (k, v) => {
   if (svHold(k)){ v = String(v); if (LS_RAW.getItem(k) === v) SV.pend.delete(k); else SV.pend.set(k, v); svKeep(); return; }
@@ -4009,7 +4056,7 @@ const RTL = new Set(['he','ar','fa','ur','yi','ps','sd','ug','ckb','dv']);
 var TOUCHED = [], TILE_F = 'all', MY_HANDLE = '';
 try { MY_HANDLE = LS.getItem('fin-handle') || ''; } catch (e) {}
 const MKT = {boi: 3.25, boiDate: '1.9.2026', boiNext: '21.10.2026', cpi: 1.5, cpiMonth: '08/2026', cpiYtd: 2.1, cpiYtdTo: 8, src: 'built'};
-const SET_DEF = {clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'auto', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'personal', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -5039,7 +5086,7 @@ const SETDEFS = [
   ]],
   ['set_calc', [
     SEL('set_start','f_start','home',[['home','o_start_home'],['last','o_start_last']].concat(TABS.filter(x => x !== 'home' && x !== 'settings').map(x => [x, 'tab_' + x])),{wide:true}),
-    SEL('set_saveMode','f_saveMode','auto',[['auto','o_saveAuto'],['manual','o_saveManual']],{wide:true}),
+    SEL('set_saveMode','f_saveMode','auto',[['auto','o_saveAuto'],['manual','o_saveManual'],['none','o_saveNone']],{wide:true}),
     SEL('set_vat','f_vatDef','18',[['18','o_vp18'],['17','o_vp17'],['0','o_vp0'],['16','o_vp16'],['14','o_vp14'],['15','o_vp15'],['5','o_vp5'],['19','o_vp19'],['20','o_vp20']],{wide:true}),
     SEL('set_dealer','f_dealer','murshe',[['murshe','o_murshe'],['patur','o_patur']],{wide:true}),
     SEL('set_buyer','f_buyerType','first',[['first','o_bt_first'],['upg','o_bt_upg'],['inv','o_bt_inv']],{wide:true}),
@@ -5108,13 +5155,13 @@ function settingsPanelHTML(){
     ${sec('set_tabs', `<div class="fields">${fieldHTML(SEL('set_sort','f_sort','groups',[['groups','o_sortGroups'],['groupsAlpha','o_sortGroupsAlpha'],['alpha','o_sortAlpha']],{wide:true}))}</div><p class="fine" data-i="h_sort"></p><p class="fine" data-i="h_tabs"></p><div id="set_tabs" class="tabs-list"></div>`)}
     ${sec('set_curBy', `<div class="fields">${cb}</div>`)}
     ${sec('set_ai', `<div id="ai_sec"><div class="fields">${[
-        SEL('set_aiEngine','f_aiEngine','auto',[['auto','o_aiAuto'],['personal','o_aiPersonal'],['claude','o_aiClaude'],['gemini','o_aiGemini']],{wide:true, hint:'h_aiEngine'}),
+        SEL('set_aiNet','f_aiNet','1',[['1','o_on'],['0','o_off']],{wide:true, hint:'h_aiNet'}),
         SEL('set_pmStyle','f_pmStyle','short',[['short','o_pmShort'],['long','o_pmLong']])].map(fieldHTML).join('')}
       <div class="field"><label for="set_pmName" data-i="f_pmName"></label><input id="set_pmName" type="text" maxlength="24" autocomplete="off" class="lookup" dir="auto"></div></div>
-      <div class="field wide"><label for="set_gkey" data-i="f_gkeyFree"></label><input id="set_gkey" type="password" autocomplete="off" spellcheck="false" class="lookup" dir="ltr" placeholder="AIza…"><small class="hint" data-i="h_gkeyFree"></small></div>
+      <div id="gk_wrap" hidden><div class="field wide"><label for="set_gkey" data-i="f_gkeyFree"></label><input id="set_gkey" type="password" autocomplete="off" spellcheck="false" class="lookup" dir="ltr" placeholder="AIza…"><small class="hint" data-i="h_gkeyFree"></small></div>
       <div class="btnrow"><button type="button" class="gold-btn" id="gk_ok" data-i="gk_ok"></button><button type="button" class="btn" id="gk_del" data-i="gk_del"></button></div>
       <p class="gk-st" id="gk_st" role="status" aria-live="polite"></p>
-      <p class="fine"><a class="src-a" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer"><span data-i="ln_gkey"></span> ↗</a></p></div>`)}
+      <p class="fine"><a class="src-a" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer"><span data-i="ln_gkey"></span> ↗</a></p></div></div>`)}
     ${sec('set_links', '<div id="ln_box" class="ln-box"></div>')}
     ${sec('set_src', '<div id="src_box" class="src-box"></div>')}
     ${sec('set_live', `<div class="conn-all"><button type="button" class="gold-btn" id="src_all" data-i="b_connAll"></button><p class="fine" data-i="h_connAll"></p></div>
@@ -5141,7 +5188,7 @@ const SMAP = {set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
-  set_dtax:'dtax', set_deptime:'deptime', set_capkind:'capkind', set_remember:'remember', set_saveMode:'saveMode', set_rateSrc:'rateSrc', set_gkey:'gkey', set_stale:'stale', set_sort:'sort', set_liveFx:'liveFx', set_fxInt:'fxInt', set_liveFiat:'liveFiat', set_liveCrypto:'liveCrypto', set_boiDb:'boiDb', set_autoRef:'autoRef', set_autoUpd:'autoUpd', set_holAuto:'holAuto', set_clock24:'clock24', set_clockSec:'clockSec', set_clockHeb:'clockHeb', set_clockHijri:'clockHijri', set_aiEngine:'aiEngine', set_pmName:'pmName', set_pmStyle:'pmStyle'};
+  set_dtax:'dtax', set_deptime:'deptime', set_capkind:'capkind', set_remember:'remember', set_saveMode:'saveMode', set_aiNet:'aiNet', set_rateSrc:'rateSrc', set_gkey:'gkey', set_stale:'stale', set_sort:'sort', set_liveFx:'liveFx', set_fxInt:'fxInt', set_liveFiat:'liveFiat', set_liveCrypto:'liveCrypto', set_boiDb:'boiDb', set_autoRef:'autoRef', set_autoUpd:'autoUpd', set_holAuto:'holAuto', set_clock24:'clock24', set_clockSec:'clockSec', set_clockHeb:'clockHeb', set_clockHijri:'clockHijri', set_aiEngine:'aiEngine', set_pmName:'pmName', set_pmStyle:'pmStyle'};
 const DEFKEYS = ['vat','sex','fee','pens','study','erPens','erSev','erStudy','loanRate','invRate','cpi','infl','gainTax','dealer','buyer','dtax','deptime','capkind'];
 function fillCB(){
   CUR_TABS.forEach(id => {
@@ -8154,8 +8201,8 @@ function asEsc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&
 function asRender(){
   const log = $('#as_log'); if (!log) return;
   log.innerHTML = asHist.map(m => {
-    let h = asEsc(m.text).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
-    if (m.role === 'ai') h = h.replace(/\[\[([a-z0-9]+)\]\]/g, (_, id) => TABS.includes(id) && id !== 'assist' ? `<button type="button" class="as-go" data-go="${id}">${t('tab_' + id)}</button>` : '');
+    let h = asEsc(m.text).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>'); if (typeof pmLinkify === 'function') h = pmLinkify(h);
+    if (m.role === 'ai') h = h.replace(/\[\[([a-z0-9]+)(?:\|([^\]]*))?\]\]/g, (_, id, f) => TABS.includes(id) && id !== 'assist' ? `<button type="button" class="as-go" data-go="${id}"${f ? ` data-aifill="${f}"` : ''}>${f ? t('pm_openWith', {n: t('tab_' + id)}) : t('tab_' + id)}</button>` : '');
     return `<div class="as-m ${m.role}">${h}</div>`;
   }).join('');
   log.scrollTop = log.scrollHeight; window.scrollTo(0, document.body.scrollHeight);
@@ -8184,7 +8231,7 @@ async function asAnswer(q){
   while (hist.length && hist[0].role !== 'user') hist.shift();
   const p = asProv(), model = asModel();
   const eng = aiPick();
-  if (eng === 'personal') return pmAnswer(q);
+  if (eng === 'personal') return await pmSmart(q);
   if (eng === 'claude'){
     try { return await claudeAsk(hist.map((m, i) => i === 0 ? {role: 'user', content: asSystem() + '\n\nUser: ' + m.content} : m), {modelTier: 'default', cache: false}); }
     catch (e) { if (e && e.code === 'not_granted') return t('ai_denied') + '\n\n' + pmAnswer(q); throw e; }
@@ -8778,6 +8825,7 @@ async function exRun(kind, extra){
   let sm = null;
   if (!sm && eng === 'claude') sm = (m, o) => CAI.fn(m, o).catch(e => { if (e && e.code === 'not_granted'){ CAI.denied = true; try { engRender(); aiFabSync(); } catch (x) {} } throw e; });
   if (!sm && eng === 'gemini' && gemKey()) sm = async (m) => ({text: await gemChat(m)});
+  if (!sm && kind === 'q'){ try { const a = await pmSmart(extra); out.innerHTML = aiRich(a) + '<p class="fine pm-badge">' + asEsc(t('pm_badge2', {n: pmName()})) + '</p>'; } catch (e) { out.innerHTML = exLocal(id, kind, extra); } EX.busy = false; $('#ex_send').disabled = false; body.scrollTop = body.scrollHeight; return; }
   if (!sm){ out.innerHTML = exLocal(id, kind, extra); EX.busy = false; $('#ex_send').disabled = false; body.scrollTop = body.scrollHeight; return; }
   const msgs = EX.hist.concat([{role: 'user', content: (EX.hist.length ? '' : exSystem() + '\n\n') + prompt}]);
   EX.ctl = new AbortController();
@@ -9273,8 +9321,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "7.0", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.002927';
+var CHANGELOG = [{"v": "7.1", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.004749';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -12077,7 +12125,8 @@ const SV_NAMES = {'fin-vals': 'sv_k_vals', 'fin-scn': 'sv_k_scn', 'fin-exp': 'sv
 const SV_IC = {
   auto: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4"/></svg>',
   hand: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></svg>',
-  bin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>'
+  bin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>',
+  none: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M6.5 6.5l11 11"/></svg>'
 };
 var SVU = {sure: '', sureT: null, open: null};
 function svKind(id){
@@ -12088,16 +12137,16 @@ function svKind(id){
 }
 function svTime(ms){ try { return new Intl.DateTimeFormat(locOf(), {hour: '2-digit', minute: '2-digit'}).format(new Date(ms)); } catch (e) { return ''; } }
 function svBarHtml(){
-  const man = SV.mode === 'manual', dirty = man && SV.pend.size > 0, E = asEsc;
+  const man = SV.mode === 'manual', none = SV.mode === 'none', dirty = man && SV.pend.size > 0, E = asEsc;
   const what = [...SV.pend.keys()].map(k => t(SV_NAMES[k] || 'sv_k_vals')).filter((x, i, a) => a.indexOf(x) === i).join(', ');
   const st = dirty ? `<span class="sv-dot" aria-hidden="true"></span>${E(t('sv_stDirty', {w: what}))}`
-    : man ? E(t('sv_stClean')) : SV.at ? E(t('sv_stAutoAt', {t: svTime(SV.at)})) : E(t('sv_stAuto'));
+    : none ? `<span class="sv-dot none" aria-hidden="true"></span>${E(t(SV.pend.size ? 'sv_stNoneDirty' : 'sv_stNone'))}` : man ? E(t('sv_stClean')) : SV.at ? E(t('sv_stAutoAt', {t: svTime(SV.at)})) : E(t('sv_stAuto'));
   return `<div class="sv-row"><div class="sv-seg" role="radiogroup" aria-label="${E(t('sv_mode'))}">
-      <button type="button" role="radio" aria-checked="${!man}" data-sv="auto">${SV_IC.auto}<span>${E(t('sv_auto'))}</span></button><button type="button" role="radio" aria-checked="${man}" data-sv="manual">${SV_IC.hand}<span>${E(t('sv_manual'))}</span></button></div>
+      <button type="button" role="radio" aria-checked="${!man && !none}" data-sv="auto">${SV_IC.auto}<span>${E(t('sv_auto'))}</span></button><button type="button" role="radio" aria-checked="${man}" data-sv="manual">${SV_IC.hand}<span>${E(t('sv_manual'))}</span></button><button type="button" role="radio" aria-checked="${none}" data-sv="none">${SV_IC.none}<span>${E(t('sv_none'))}</span></button></div>
     <span class="sv-gap"></span>
     ${man ? `<button type="button" class="sv-save${dirty ? ' dirty' : ''}" data-sv="save"${dirty ? '' : ' disabled'}>${E(t('sv_save'))}</button>` : ''}
     <button type="button" class="sv-clear" data-sv="clear">${SV_IC.bin}<span>${E(t('sv_clear'))}</span></button></div>
-    <div class="sv-st${dirty ? ' dirty' : ''}" role="status">${st}${dirty ? ` <button type="button" class="sv-link${SVU.sure === 'discard' ? ' sure' : ''}" data-sv="discard">${E(t(SVU.sure === 'discard' ? 'sv_discardSure' : 'sv_discard'))}</button>` : ''}</div>`;
+    <div class="sv-st${dirty ? ' dirty' : ''}${none ? ' none' : ''}" role="status">${st}${dirty ? ` <button type="button" class="sv-link${SVU.sure === 'discard' ? ' sure' : ''}" data-sv="discard">${E(t(SVU.sure === 'discard' ? 'sv_discardSure' : 'sv_discard'))}</button>` : ''}</div>`;
 }
 function svInject(){
   $$('section.panel[id^="panel-"]').forEach(p => {
@@ -12112,12 +12161,12 @@ function svUi(){
   const s = $('#set_saveMode'); if (s && s.value !== SV.mode) s.value = SV.mode;
 }
 function svMode(m, quiet){
-  m = m === 'manual' ? 'manual' : 'auto';
+  m = m === 'manual' || m === 'none' ? m : 'auto';
   const prev = SV.mode; SV.mode = m; SET.saveMode = m; SET.remember = '1';
   try { saveSet(); } catch (e) {}
-  if (prev === 'manual' && m === 'auto') svSave(true);                // switching to automatic keeps what was waiting
+  if (prev !== 'auto' && m === 'auto') svSave(true);                  // switching to automatic keeps what was waiting
   svKeep();
-  if (!quiet && prev !== m) toast(t(m === 'auto' ? 'sv_toAuto' : 'sv_toManual'));
+  if (!quiet && prev !== m) toast(t(m === 'auto' ? 'sv_toAuto' : m === 'none' ? 'sv_toNone' : 'sv_toManual'));
 }
 function svSave(quiet){
   try { clearTimeout(svT); saveVals(); } catch (e) {}                 // take the last keystrokes too
@@ -12210,7 +12259,7 @@ document.addEventListener('click', e => {
   if (e.target.closest('#svx_x') || e.target.id === 'svx'){ svClose(); return; }
   const b = e.target.closest('.svbar [data-sv]'); if (!b) return;
   const a = b.dataset.sv;
-  if (a === 'auto' || a === 'manual') svMode(a);
+  if (a === 'auto' || a === 'manual' || a === 'none') svMode(a);
   else if (a === 'save') svSave();
   else if (a === 'clear') svOpen(b.closest('.svbar').dataset.svp);
   else if (a === 'discard'){ if (SVU.sure !== 'discard'){ svSure('discard'); svUi(); return; } SVU.sure = ''; svDiscard(); }
@@ -12218,8 +12267,8 @@ document.addEventListener('click', e => {
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && SVU.open){ e.preventDefault(); svClose(); return; }
-  if ((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey) && !e.altKey){ e.preventDefault(); if (SV.mode === 'manual') svSave(); else toast(t('sv_stAuto')); svUi(); }
-  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight'){ const r = e.target.closest && e.target.closest('.sv-seg [role=radio]'); if (r){ e.preventDefault(); svMode(SV.mode === 'auto' ? 'manual' : 'auto'); svUi(); const n = $(`#panel-${tab} .sv-seg [aria-checked="true"]`); if (n) n.focus(); } }
+  if ((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey) && !e.altKey){ e.preventDefault(); if (SV.mode === 'manual') svSave(); else toast(t(SV.mode === 'none' ? 'sv_stNone' : 'sv_stAuto')); svUi(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight'){ const r = e.target.closest && e.target.closest('.sv-seg [role=radio]'); if (r){ e.preventDefault(); const M = ['auto', 'manual', 'none'], i = M.indexOf(SV.mode), rtl = document.documentElement.dir === 'rtl'; svMode(M[(i + ((e.key === 'ArrowLeft') === rtl ? 1 : 2)) % 3]); svUi(); const n = $(`#panel-${tab} .sv-seg [aria-checked="true"]`); if (n) n.focus(); } }
 });
 document.addEventListener('change', e => { if (e.target && e.target.id === 'set_saveMode'){ svMode(e.target.value); svUi(); } });
 window.addEventListener('beforeunload', e => { if (SV.mode === 'manual' && SV.pend.size){ e.preventDefault(); e.returnValue = ''; } });
@@ -12248,11 +12297,7 @@ async function claudeAsk(input, opts){
   catch (e) { if (e && e.code === 'not_granted'){ CAI.denied = true; try { engRender(); aiFabSync(); } catch (x) {} } throw e; }
 }
 function aiCodeText(c){ return t(c === 'rate_limited' ? 'ai_busy' : c === 'not_granted' || c === 'sampling_disabled' ? 'ai_denied' : c === 'session_expired' ? 'ai_signin' : c === 'refused' ? 'ai_refused' : 'as_err', {e: c}); }
-(async () => {
-  if (!IN_CLAUDE) return;
-  try { const s = await window.claude.use('sample'); if (s){ CAI.fn = s; try { const L = await s.limits(); CAI.tools = !!(L && L.tools); } catch (e) {} } } catch (e) {}
-  try { engRender(); aiFabSync(); } catch (e) {}
-})();
+/* Claude is not used: the app's own personal AI answers everywhere */
 /* what the AI can see on the current screen: fields with their ids, values and options, and the results */
 function aiFields(id){
   const p = $('#panel-' + id); if (!p) return [];
@@ -12406,7 +12451,8 @@ function aiOpen(){
   setTimeout(() => { const q = $('#aix_q'); if (q) q.focus({preventScroll: true}); }, 60);
 }
 function aiClose(){ if (AIX.ctl) try { AIX.ctl.abort(); } catch (e) {} const o = $('#aix'); if (o) o.hidden = true; document.body.classList.remove('cp-lock'); AIX.open = false; AIX.fill = false; if (AIX.opener && AIX.opener.focus) try { AIX.opener.focus(); } catch (e) {} }
-function aiRich(s){ return exFmt(s).replace(/\[\[([a-z0-9]+)\]\]/g, (_, c) => TABS.includes(c) && c !== 'assist' ? `<button type="button" class="as-go" data-aigo="${c}">${asEsc(t('tab_' + c))}</button>` : ''); }
+function pmLinkify(h){ return h.replace(/(https:\/\/[a-z]{2,3}\.wikipedia\.org\/[^\s<"]+)/g, u => `<a class="src-a" href="${u}" target="_blank" rel="noopener noreferrer">${asEsc(t('pmx_wikiLink'))} ↗</a>`); }
+function aiRich(s){ return pmLinkify(exFmt(s)).replace(/\[\[([a-z0-9]+)(?:\|([^\]]*))?\]\]/g, (_, c, f) => TABS.includes(c) && c !== 'assist' ? `<button type="button" class="as-go" data-aigo="${c}"${f ? ` data-aifill="${f}"` : ''}>${asEsc(f ? t('pm_openWith', {n: t('tab_' + c)}) : t('tab_' + c))}</button>` : ''); }
 function aiLog(role, text, html){
   const log = $('#aix_log'); if (!log) return null;
   const d = document.createElement('div'); d.className = 'ai-m ' + role;
@@ -12503,7 +12549,8 @@ function aiLocal(id, q, kind, fill, quiet){
   if (fill || (AI_ACT.test(q) && /\d|אחד|שניים|שתיים|שלוש/.test(q) && aiChipKeys(id).length > 2)){ aiPropose(id, aiParseFill(q, id)); return; }
   if (id === 'home' && /סכם|סיכום|summary|ملخص|לחשב|חישבתי/.test(q)){ const L = aiMine(); aiLog('ai', L.length ? t('ai_mine') + '\n' + L.map(x => '- ' + x).join('\n') : t('ai_mineNone')); return; }
   if (id === 'expenses' && /הוצא|נתח|ניתוח|expens|مصار|حلل/.test(q)){ const s = aiExpSummary(); aiLog('ai', s ? s.replace(/^Expenses in/, t('ai_expIn')).replace('By category:', t('ai_expBy')) : t('ai_expNone')); return; }
-  aiLog('ai', pmAnswer(q));
+  const out = aiLog('ai', '', `<p class="ex-wait">${asEsc(t('as_think'))}</p>`);
+  pmSmart(q, id).then(a => { out.innerHTML = aiRich(a); const l = $('#aix_log'); if (l) l.scrollTop = 1e9; }, () => { out.innerHTML = aiRich(pmAnswer(q)); });
 }
 /* the button on every screen */
 function aiFabSync(){
@@ -12536,6 +12583,172 @@ activate = function(id){ const r = _actAi.apply(this, arguments); try { aiFabSyn
 const _alAi = applyLang;
 applyLang = function(){ const r = _alAi.apply(this, arguments); try { aiFabSync(); if (AIX.open) aiOpenFor(AIX.screen || tab, true); } catch (e) {} return r; };
 aiFabSync();
+
+/* ================= the personal AI, upgraded: live data from the app, quick calculations, follow-ups, and online lookups ================= */
+aiPick = function(){ return 'personal'; };                                 // one engine: the app's own
+var PMX = {last: null, wiki: {}};
+const pmOnline = () => SET.aiNet !== '0' && navigator.onLine !== false && !IN_CLAUDE;
+const PM_CUR = {'דולר': 'USD', 'דולרים': 'USD', 'dollar': 'USD', 'dollars': 'USD', 'usd': 'USD', 'יורו': 'EUR', 'euro': 'EUR', 'euros': 'EUR', 'eur': 'EUR', 'שקל': 'ILS', 'שקלים': 'ILS', 'שח': 'ILS', 'ils': 'ILS', 'nis': 'ILS', 'shekel': 'ILS', 'shekels': 'ILS',
+  'לישט': 'GBP', 'פאונד': 'GBP', 'פאונדים': 'GBP', 'gbp': 'GBP', 'pound': 'GBP', 'pounds': 'GBP', 'ין': 'JPY', 'yen': 'JPY', 'jpy': 'JPY', 'פרנק': 'CHF', 'chf': 'CHF', 'דינר': 'JOD', 'jod': 'JOD', 'ביטקוין': 'BTC', 'bitcoin': 'BTC', 'btc': 'BTC',
+  'אתריום': 'ETH', 'איתריום': 'ETH', 'ethereum': 'ETH', 'eth': 'ETH', 'רובל': 'RUB', 'rub': 'RUB', 'דירהם': 'AED', 'aed': 'AED', 'יואן': 'CNY', 'cny': 'CNY', 'רופי': 'INR', 'inr': 'INR', 'cad': 'CAD', 'aud': 'AUD', 'try': 'TRY', 'egp': 'EGP',
+  'دولار': 'USD', 'يورو': 'EUR', 'شيكل': 'ILS', 'جنيه': 'GBP', 'دينار': 'JOD', 'بيتكوين': 'BTC'};
+const PM_SYM = {'$': 'USD', '€': 'EUR', '₪': 'ILS', '£': 'GBP', '¥': 'JPY'};
+function pmNums(raw){          // every number in the text, with thousands/millions words and %
+  const out = [], re = /(\d[\d,]*(?:\.\d+)?)\s*(אלף|אלפים|ק|k|K|מיליון|מליון|מיל|m|M|ألف|مليون)?\s*(%|אחוז|אחוזים|٪)?/g; let m;
+  while ((m = re.exec(raw))){ let n = parseFloat(m[1].replace(/,/g, '')); const u = m[2] || ''; if (/אלף|אלפים|^ק$|k|ألف/i.test(u)) n *= 1000; else if (u) n *= 1e6; out.push({n, pct: !!m[3], at: m.index, end: m.index + m[0].length}); }
+  return out;
+}
+function pmArith(raw){          // a small, safe calculator: + - * / ( ) and %, only when the message is an expression
+  const e = String(raw).replace(/^\s*(כמה\s+זה|כמה\s+יוצא|כמה\s+יוצאים|כמה|מה\s+זה|תחשב(?:\s+לי)?|חשב(?:\s+לי)?|calculate|what\s+is|what's|كم\s+يساوي|كم|احسب)\s*/i, '').replace(/[=?؟\s]+$/, '');
+  if (!/^[\d.,\s+\-*/×÷xX()%]+$/.test(e)) return null;
+  const s = e.replace(/[×xX]/g, '*').replace(/÷/g, '/').replace(/,/g, '').trim();
+  if (!/\d\s*[+\-*/]\s*[\d(]/.test(s)) return null;
+  const tk = s.match(/\d+(?:\.\d+)?|[+\-*/()%]/g); if (!tk || tk.length > 60) return null;
+  let i = 0;
+  const peek = () => tk[i], next = () => tk[i++];
+  function expr(){ let v = term(); while (peek() === '+' || peek() === '-'){ const o = next(), r = term(); v = o === '+' ? v + r : v - r; } return v; }
+  function term(){ let v = fac(); while (peek() === '*' || peek() === '/'){ const o = next(), r = fac(); v = o === '*' ? v * r : v / r; } return v; }
+  function fac(){ let v; const c = next(); if (c === '-') return -fac(); if (c === '('){ v = expr(); if (next() !== ')') throw 0; } else if (/^\d/.test(c || '')) v = parseFloat(c); else throw 0; if (peek() === '%'){ next(); v /= 100; } return v; }
+  try { const v = expr(); return i === tk.length && isFinite(v) ? v : null; } catch (e) { return null; }
+}
+const pmF = (x, d) => N(x, null, d == null ? 2 : d);
+function pmCurOf(raw, n){
+  const found = []; const nt = pmNorm(raw).trim().split(' ');
+  nt.forEach((w, i) => { const two = w + ' ' + (nt[i + 1] || ''); const c = PM_CUR[two] || aiForms(w).map(f => PM_CUR[f]).find(Boolean) || (/^[a-z]{3}$/.test(w) && RATES[w.toUpperCase()] && !PM_STOP.has(w) ? w.toUpperCase() : null); if (c && RATES[c] && !found.includes(c)) found.push(c); });
+  Object.keys(PM_SYM).forEach(s => { if (raw.includes(s) && !found.includes(PM_SYM[s])) found.unshift(PM_SYM[s]); });
+  return found;
+}
+function pmLiveTime(){ try { return typeof rfDataTime === 'function' ? rfDataTime() : ''; } catch (e) { return ''; } }
+function pmRateSrc(){ return META.live ? t('pmx_srcLive') : META.mkt ? t('pmx_srcMkt') : META.official ? t('pmx_srcOff') : t('pmx_srcSnap'); }
+/* each skill returns text (with [[calculator]] or [[calculator|field=value;…]] links) or null */
+const PM_SKILLS = [
+  function arith(q, raw){ if (/הלוואה|משכנתא|loan|mortgage|מע"?מ|vat|אחוז מ|% מ/i.test(raw)) return null; const v = pmArith(raw); return v == null ? null : t('pmx_arith', {v: pmF(v, 6)}); },
+  function percentOf(q, raw){
+    const m = raw.match(/(\d[\d,]*(?:\.\d+)?)\s*(?:%|אחוז(?:ים)?|٪)\s*(?:מ-?|מתוך|of|من)\s*-?\s*(\d[\d,]*(?:\.\d+)?)/i); if (!m) return null;
+    const p = parseFloat(m[1].replace(/,/g, '')), b = parseFloat(m[2].replace(/,/g, '')), v = p / 100 * b;
+    PMX.last = {k: 'pct', p, b};
+    return t('pmx_pct', {p: pmF(p), b: pmF(b), v: pmF(v)}) + '\n[[percent|pa_x=' + p + ';pa_y=' + b + ']]';
+  },
+  function vat(q, raw){
+    if (!/מע"?מ|מעמ|vat|ضريبة القيمة/i.test(raw)) return null;
+    const ns = pmNums(raw).filter(x => !x.pct); if (!ns.length) return t('pmx_vatRate', {r: pmF(vatPct(), 1)}) + '\n[[vat]]';
+    const x = ns[0].n, r = vatPct() / 100, out = /בלי|ללא|לפני|מתוך|כולל|לחלץ|without|incl|extract|net|بدون/i.test(raw);
+    if (out){ const net = x / (1 + r); return t('pmx_vatOut', {x: pmF(x), n: pmF(net), v: pmF(x - net), r: pmF(r * 100, 1)}) + '\n[[vat|v_mode=extract;v_amount=' + x + ']]'; }
+    return t('pmx_vatIn', {x: pmF(x), g: pmF(x * (1 + r)), v: pmF(x * r), r: pmF(r * 100, 1)}) + '\n[[vat|v_mode=add;v_amount=' + x + ']]';
+  },
+  function loan(q, raw){
+    const n = pmNorm(raw), isL = /הלוואה|הלוואת|משכנתא|משכנתה|loan|mortgage|قرض|רכב בתשלומים/.test(n);
+    const fu = PMX.fu && PMX.last && PMX.last.k === 'loan';                 // a follow-up, like: and for 10 years?
+    let L = isL ? null : fu ? Object.assign({}, PMX.last) : null;
+    if (!isL && !L) return null;
+    const ns = pmNums(raw), yrsM = raw.match(/(\d+(?:\.\d+)?)\s*(שנים|שנה|years?|سنوات|سنة)/i), moM = raw.match(/(\d+)\s*(חודשים|חודש|תשלומים|months?|أشهر)/i);
+    const pct = ns.find(x => x.pct), amt = ns.filter(x => !x.pct && !(yrsM && raw.slice(x.at, x.end).includes(yrsM[1]) && x.at === yrsM.index) && !(moM && x.at === moM.index)).sort((a, b) => b.n - a.n)[0];
+    if (!isL && !(pct || yrsM || moM || amt)) return null;
+    L = L || {k: 'loan'};
+    if (amt && amt.n >= 500) L.amt = amt.n; if (pct) L.rate = pct.n; if (yrsM) L.n = Math.round(parseFloat(yrsM[1]) * 12); else if (moM) L.n = +moM[1];
+    if (/פריים|prime/.test(n) && !pct){ const mg = raw.match(/פריים\s*([+\-−])\s*(\d+(?:\.\d+)?)/); L.rate = MKT.boi + PRIME_SPREAD + (mg ? (mg[1] === '+' ? 1 : -1) * parseFloat(mg[2]) : 0); L.prime = true; }
+    if (!L.amt || !L.n){ PMX.last = L; return t('pmx_loanNeed'); }
+    const rateGiven = L.rate != null, rate = rateGiven ? L.rate : MKT.boi + PRIME_SPREAD, pm = pmtOf(L.amt, rate, L.n), tot = pm * L.n;
+    PMX.last = Object.assign(L, {rate});
+    return t('pmx_loan', {a: pmF(L.amt, 0), y: fmtDur(L.n), r: pmF(rate, 2), p: pmF(pm), i: pmF(tot - L.amt, 0), tot: pmF(tot, 0)}) + (rateGiven ? '' : '\n' + t('pmx_loanAsm', {p: PC(rate)})) + '\n' + t('pmx_follow') + '\n[[loan|l_amount=' + L.amt + ';l_rate=' + Math.round(rate * 1e4) / 1e4 + ';l_years=' + Math.round(L.n / 12 * 100) / 100 + ']]';
+  },
+  function grow(q, raw){
+    const n = pmNorm(raw), isG = /חיסכון|לחסוך|חוסך|ריבית דריבית|להשקיע|השקעה|אשקיע|יהיה לי|יצטבר|compound|invest|save|saving|ادخار|استثمار/.test(n);
+    const fu = PMX.fu && PMX.last && PMX.last.k === 'grow';
+    let G = isG ? null : fu ? Object.assign({}, PMX.last) : null;
+    if (!isG && !G) return null;
+    const ns = pmNums(raw), yrsM = raw.match(/(\d+(?:\.\d+)?)\s*(שנים|שנה|years?|سنوات|سنة)/i), pct = ns.find(x => x.pct);
+    const vals = ns.filter(x => !x.pct && !(yrsM && x.at === yrsM.index));
+    if (!isG && !(pct || yrsM || vals.length)) return null;
+    G = G || {k: 'grow', p0: 0, mo: 0};
+    const monthly = /בחודש|לחודש|חודשי|a month|monthly|شهري/.test(n);
+    if (vals.length){ if (monthly){ G.mo = vals[vals.length - 1].n; if (vals.length > 1) G.p0 = vals[0].n; } else G.p0 = vals[0].n; }
+    if (pct) G.rate = pct.n; if (yrsM) G.y = parseFloat(yrsM[1]);
+    if (!(G.p0 || G.mo) || !G.y){ PMX.last = G; return t('pmx_growNeed'); }
+    const rate = G.rate != null ? G.rate : 5, rm = Math.pow(1 + rate / 100, 1 / 12) - 1, m = Math.round(G.y * 12);
+    const fv = G.p0 * Math.pow(1 + rm, m) + (rm ? G.mo * (Math.pow(1 + rm, m) - 1) / rm : G.mo * m), put = G.p0 + G.mo * m;
+    PMX.last = Object.assign(G, {rate});
+    return t('pmx_grow', {a: pmF(G.p0, 0), mo: pmF(G.mo, 0), y: pmF(G.y, 1), r: pmF(rate, 2), v: pmF(fv, 0), put: pmF(put, 0), g: pmF(fv - put, 0)}) + (G.rate == null ? '\n' + t('pmx_growAsm') : '') + '\n' + t('pmx_follow') + '\n[[compound|c_mode=final;c_init=' + G.p0 + ';c_monthly=' + G.mo + ';c_rate=' + rate + ';c_years=' + G.y + ']]';
+  },
+  function salary(q, raw){
+    const n = pmNorm(raw); if (!/נטו|ברוטו|משכורת|net|gross|صافي|إجمالي/.test(n) || /הלווא|משכנת|loan/.test(n)) return null;
+    const ns = pmNums(raw).filter(x => !x.pct && x.n >= 1000); if (!ns.length) return null;
+    const x = ns[0].n, near = raw.slice(ns[0].end, ns[0].end + 14) + ' | ' + raw.slice(Math.max(0, ns[0].at - 10), ns[0].at);    // the word next to the number says what it is
+    const tagNet = /^[\s₪שח"׳'-]*(נטו|net|صافي)/i.test(raw.slice(ns[0].end)) || /(נטו|net|صافي)[\s:-]*$/i.test(raw.slice(0, ns[0].at)), tagGross = /^[\s₪שח"׳'-]*(ברוטו|gross|إجمالي)/i.test(raw.slice(ns[0].end)) || /(ברוטו|gross|إجمالي)[\s:-]*$/i.test(raw.slice(0, ns[0].at));
+    const wantGross = tagNet ? true : tagGross ? false : /כמה ברוטו|ברוטו כדי|ברוטו בשביל|how much gross|gross to get|كم إجمالي/.test(n);
+    const pts = 2.25, opts = {bonus: 0, benefit: 0, erPens: 6.5, erSev: 6, erStudy: 0};
+    if (wantGross){ let lo = 0, hi = x * 4 + 1000; for (let i = 0; i < 80; i++){ const mid = (lo + hi) / 2; if (salaryCalc(mid, pts, 6, 0, opts).net < x) lo = mid; else hi = mid; } const g = (lo + hi) / 2;
+      return t('pmx_n2g', {n: pmF(x, 0), g: pmF(g, 0)}) + '\n' + t('pmx_salAsm') + '\n[[salary|s_mode=n2g;s_per=m;s_amount=' + x + ']]'; }
+    const r = salaryCalc(x, pts, 6, 0, opts);
+    return t('pmx_g2n', {g: pmF(x, 0), n: pmF(r.net, 0), tx: pmF(r.tax, 0), ni: pmF(r.ni + r.health, 0), p: pmF(r.pens, 0)}) + '\n' + t('pmx_salAsm') + '\n[[salary|s_mode=g2n;s_per=m;s_amount=' + x + ']]';
+  },
+  function rates(q, raw){
+    const n = pmNorm(raw);
+    if (/פריים|prime|برايم/.test(n) && !/הלווא|משכנת|loan/.test(n)) return t('pmx_prime', {p: PC(MKT.boi + PRIME_SPREAD), b: PC(MKT.boi), d: MKT.boiDate || '—', x: MKT.boiNext || '—'}) + '\n[[prime]]';
+    if (/ריבית בנק ישראל|ריבית בנק|ריבית הבסיס|boi rate|bank of israel|فائدة بنك/.test(n)) return t('pmx_boi', {b: PC(MKT.boi), d: MKT.boiDate || '—', x: MKT.boiNext || '—'}) + '\n[[prime]]';
+    if (/תשומות|בנייה|construction/.test(n) && /מדד|index|مؤشر/.test(n)){ const d = IX.idx.build; if (d) return t('pmx_idx', {n: ixName('build'), v: pmF(+d.v, 1), m: lkLabel(d.m), mm: sgnPC(+d.mom), y: sgnPC(+d.yoy)}) + '\n[[cpilink]]'; }
+    if (/מדד|אינפלצי|יוקר המחיה|cpi|inflation|تضخم|مؤشر الأسعار/.test(n) && !/מחשבון/.test(n)){ const d = IX.idx.cpi; if (d) return t('pmx_idx', {n: ixName('cpi'), v: pmF(+d.v, 1), m: lkLabel(d.m), mm: sgnPC(+d.mom), y: sgnPC(+d.yoy)}) + (isFinite(+MKT.cpiYtd) ? '\n' + t('pmx_ytd', {v: sgnPC(+MKT.cpiYtd)}) : '') + '\n[[inflation]]'; }
+    const mk = [['ta35', /תא ?35|תל אביב 35|ta ?35/], ['ta125', /תא ?125|תל אביב 125|ta ?125/], ['spx', /s ?p ?500|אס אנד פי|sp500/], ['ndx', /נאסדק|nasdaq/], ['dji', /דאו|dow/], ['gold', /זהב|gold|ذهب/], ['brent', /נפט|ברנט|oil|brent|نفط/]];
+    for (const [k, re] of mk){ if (re.test(n) && IX.mkt[k] && /מדד|מחיר|שער|כמה|עומד|price|index|level|سعر|كم/.test(n + ' מחיר')){ const d = IX.mkt[k]; return t('pmx_mkt', {n: ixName(k), v: (k === 'gold' || k === 'brent' ? '$' : '') + pmF(d.p, d.p >= 1000 ? 0 : 2), c: sgnPC(+d.chp), t: ixDay(d.t), y: isFinite(+d.ytd) ? sgnPC(+d.ytd) : '—'}); } }
+    return null;
+  },
+  function currency(q, raw){
+    const cs = pmCurOf(raw); if (!cs.length) return null;
+    const ns = pmNums(raw).filter(x => !x.pct);
+    if (!ns.length){
+      if (!/שער|כמה|מה|rate|price|سعر|كم/i.test(raw)) return null;
+      const c = cs.find(x => x !== 'ILS') || 'USD', v = RATES.ILS / RATES[c];
+      return t('pmx_rate', {c: curName(c), v: pmF(v, CRYPTO[c] ? 0 : 4), s: pmRateSrc(), t: pmLiveTime()}) + (c === 'USD' && isFinite(OFFI.ils) && Math.abs(OFFI.ils - v) > 0.0005 ? '\n' + t('pmx_rateOff', {v: pmF(OFFI.ils, 4)}) : '') + '\n[[convert|x_amount=1;x_from=' + c + ';x_to=ILS]]';
+    }
+    const amt = ns[0].n, from = cs[0], to = cs[1] || (from === 'ILS' ? 'USD' : 'ILS'), v = amt * RATES[to] / RATES[from];
+    PMX.last = {k: 'fx', amt, from, to};
+    return t('pmx_fx', {a: pmF(amt), f: from, v: pmF(v, CRYPTO[to] ? 8 : 2), to, r: pmF(RATES[to] / RATES[from], 4), s: pmRateSrc(), t: pmLiveTime()}) + '\n[[convert|x_amount=' + amt + ';x_from=' + from + ';x_to=' + to + ']]';
+  }
+];
+function pmHas(q){ const n = pmNorm(q); return PM_RX.thanks.test(n) || PM_RX.greet.test(n) || PM_RX.help.test(n) || pmMatchKB(q).length > 0 || pmCalcs(q).length > 0; }
+async function pmWiki(q){
+  const L = ['he', 'ar', 'en'].includes(lang) ? lang : 'he';
+  const term = String(q).replace(/^\s*(מה\s+זה|מה\s+זאת|מהו|מהי|מה\s+הם|מה\s+הן|מה\s+פירוש|מה\s+המשמעות\s+של|מי\s+זה|מי\s+היה|תסביר(?:\s+לי)?(?:\s+מה\s+זה)?|הסבר(?:\s+לי)?|ספר\s+לי\s+על|what\s+is|what\s+are|who\s+is|who\s+was|explain|tell\s+me\s+about|ما\s+هو|ما\s+هي|من\s+هو|اشرح)\s*/i, '').replace(/[?؟!.]+\s*$/, '').trim();
+  if (!term || term.length > 80) return null;
+  const key = L + '|' + term; if (key in PMX.wiki) return PMX.wiki[key];
+  const url = 'https://' + L + '.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&generator=search&gsrlimit=1&gsrsearch=' + encodeURIComponent(term) + '&prop=extracts%7Cinfo&exintro=1&explaintext=1&exsentences=3&inprop=url';
+  let res = null;
+  try {
+    const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 7000);
+    const r = await fetch(url, {signal: ctl.signal, credentials: 'omit', referrerPolicy: 'no-referrer'}); clearTimeout(to);
+    if (r.ok){ const j = await r.json(), pages = Object.values(((j || {}).query || {}).pages || {}); const p = pages.sort((a, b) => (a.index || 0) - (b.index || 0))[0];
+      if (p && String(p.extract || '').trim().length >= 40) res = {title: p.title, text: String(p.extract).replace(/\s*\([^)]{0,80}\)/, '').trim().slice(0, 700), url: p.fullurl || ('https://' + L + '.wikipedia.org/wiki/' + encodeURIComponent(p.title))}; }
+  } catch (e) {}
+  PMX.wiki[key] = res; return res;
+}
+async function pmSmart(q, screen){
+  const raw = String(q || '').trim(); if (!raw) return '';
+  PMX.fu = false;
+  for (const sk of PM_SKILLS){ try { const a = sk(pmNorm(raw), raw); if (a) return a; } catch (e) {} }
+  if (/^\s*(ו|ומה|ואם|ואז|אז|and|what if|what about|و)/i.test(raw) || raw.split(/\s+/).length <= 4){       // a short follow-up to the last calculation
+    PMX.fu = true;
+    try { for (const sk of PM_SKILLS.filter(f => f.name === 'loan' || f.name === 'grow')){ const a = sk(pmNorm(raw), raw); if (a){ PMX.fu = false; return a; } } } catch (e) {}
+    PMX.fu = false;
+  }
+  if (pmHas(raw)) return pmAnswer(raw);
+  if (pmOnline()){
+    const w = await pmWiki(raw);
+    if (w) return t('pmx_wiki', {n: w.title}) + '\n' + w.text + '\n' + t('pmx_wikiSrc') + ' ' + w.url;
+  }
+  return pmAnswer(raw) + (pmOnline() || SET.aiNet === '0' ? '' : '\n\n' + t('pmx_offline'));
+}
+/* "open the calculator with these numbers" */
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-aifill]'); if (!b) return;
+  const id = b.dataset.aigo || b.dataset.go, ch = String(b.dataset.aifill).split(';').map(x => x.split('=')).filter(x => x[0] && x.length === 2).map(([k, v]) => ({id: k, value: v}));
+  setTimeout(() => { const r = aiApply(id, ch); if (AIX.open && r.applied.length) aiAfterApply(id, r); }, 150);       // the link itself opens the calculator
+}, true);
+/* the AI sheet and the assistant tab no longer show an engine choice */
+const aiEngSyncOld = aiEngSync;
+aiEngSync = function(){ const row = $('.ai-engrow'); if (row) row.hidden = true; const n = $('#aix_note'); if (n) n.textContent = t(SET.aiNet === '0' ? 'ai_noteLocalOff' : 'ai_noteLocal2'); };
+engRender = function(){ const r = $('.as-engrow'); if (r) r.hidden = true; };
+engRender();
+document.addEventListener('change', e => { if (e.target && e.target.id === 'set_aiNet'){ SET.aiNet = e.target.value === '0' ? '0' : '1'; saveSet(); } });
 
 applyLang(false);
 activate(tab);
