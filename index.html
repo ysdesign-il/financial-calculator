@@ -1243,6 +1243,13 @@ body:not(.own) .own-only{display:none!important}
 .xai-b:focus-visible{outline:2px solid var(--gold-ui);outline-offset:2px}
 .as-engrow select,#as_engsel{font:inherit;font-size:16px;padding:4px 8px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);max-width:100%}
 .as-eng{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+/* 7.4: on phones the icon sits beside the label, so the number gets the full width of the box */
+@media (max-width:600px){
+  .fields > .field.ic-field:not(.wide){display:block;position:relative}
+  .fields > .field.ic-field:not(.wide) > .fi{position:absolute;top:0;inset-inline-start:0;width:24px;height:24px;margin:0;border-radius:8px}
+  .fields > .field.ic-field:not(.wide) > .fi svg{width:14px;height:14px}
+  .fields > .field.ic-field:not(.wide) > .fb > label{display:block;padding-inline-start:30px;min-height:24px}
+}
 
 </style>
 </head>
@@ -3920,6 +3927,126 @@ Object.assign(T, {
   xai_aboutScreen:['לגבי {n}:','بخصوص {n}:','About {n}:'],
   xai_note:['שאלות חופשיות נפתחות ב-{n}, בלי חשבון. חישובים ונתונים חיים נענים כאן ובדיוק.','الأسئلة الحرة تُفتح في {n} دون حساب. الحسابات والبيانات الحية يُجاب عنها هنا بدقة.','Open questions open in {n}, no account needed. Calculations and live figures are answered here, exactly.']
 });
+/* 7.4: clearer wording, nothing listed twice, more options */
+Object.assign(T, {
+f_startAmt:['סכום התחלתי','المبلغ الأولي','Starting amount'],
+r_nwDebtRatio:['יחס חובות לנכסים','نسبة الديون إلى الأصول','Debt-to-assets ratio'],
+r_daUpB:['עלייה נדרשת כדי לחזור לאיזון (לפני הקנייה)','الارتفاع اللازم للعودة إلى التعادل (قبل الشراء)','Rise needed to break even (before buying)'],
+r_daUpA:['עלייה נדרשת כדי לחזור לאיזון (אחרי הקנייה)','الارتفاع اللازم للعودة إلى التعادل (بعد الشراء)','Rise needed to break even (after buying)'],
+r_fiCoastN:['הון שמספיק כבר היום, בלי הפקדות נוספות, לחופש בגיל {a} (Coast)','رأس المال الكافي اليوم دون إيداعات إضافية للحرية في سن {a} (Coast)','Enough today, with no more deposits, to be free at {a} (Coast)'],
+r_fiCoastHave:['כבר יש לכם את הסכום הזה?','هل لديك هذا المبلغ بالفعل؟','Do you already have it?'],
+r_fiNumNom:['הון נדרש ביום החופש (בכסף של אז)','رأس المال المطلوب يوم الحرية (بأموال ذلك الوقت)','Capital needed on the day (in money of then)'],
+r_rtNeedNom:['הכנסה נדרשת בחודש הראשון לפרישה (בכסף של אז)','الدخل المطلوب في أول شهر من التقاعد (بأموال ذلك الوقت)','Income needed in the first month of retirement (in money of then)'],
+r_mfNoFee:['יתרה בסוף · בלי דמי ניהול','الرصيد في النهاية · دون رسوم','Ending balance · no fees'],
+r_khExMax:['תקרת הפקדת מעסיק פטורה ממס בחודש','سقف إيداع المشغّل المعفى من الضريبة شهريًا','Monthly cap on the tax-free employer deposit'],
+r_marginal:['מכל שקל נוסף בברוטו יורדים','يُقتطع من كل شيكل إجمالي إضافي','Taken from each extra gross shekel'],
+r_bnPct:['הקצבה כאחוז מהשכר היומי','المخصص كنسبة من الأجر اليومي','Benefit as a share of daily pay'],
+r_ppRetA:['הרווח מפירעון מוקדם (= ריבית ההלוואה שנחסכת)','العائد من السداد المبكر (= فائدة القرض الموفّرة)','Return on prepaying (= the loan interest saved)'],
+r_mTotInt:['סך הריבית וההצמדה','إجمالي الفائدة والربط','Total interest and indexation'],
+r_ptIfAdd:['להשוואה: מס רכישה על דירה נוספת','للمقارنة: ضريبة الشراء على شقة إضافية','For comparison: purchase tax on an additional home'],
+r_ptIfSingle:['להשוואה: מס רכישה על דירה יחידה','للمقارنة: ضريبة الشراء على شقة وحيدة','For comparison: purchase tax on a single home'],
+r_evBeRow:['זמן להחזר הפרש המחיר','مدة استرداد فرق السعر','Time to recover the price difference'],
+r_beRevRow:['הכנסות בנקודת האיזון','الإيرادات عند نقطة التعادل','Revenue at break-even'],
+r_sgInterest:['רווחים מהתשואה','الأرباح من العائد','Investment gains'],
+r_ear:['ריבית שנתית בפועל (כולל ריבית דריבית)','الفائدة السنوية الفعلية (مع الفائدة المركبة)','Actual yearly rate (with compounding)'],
+r_apr:['עלות שנתית אמיתית (כולל עמלות)','التكلفة السنوية الحقيقية (شاملة العمولات)','True yearly cost (including fees)'],
+r_prEffA:['ריבית שנתית בפועל (אפקטיבית)','الفائدة السنوية الفعلية','Actual yearly rate (effective)'],
+r_cpTaxTot:['סך המס לתשלום','إجمالي الضريبة المستحقة','Total tax to pay'],
+r_cpTaxBase:['מס רווחי הון','ضريبة الأرباح الرأسمالية','Capital gains tax'],
+r_rentBestH:['מס בשנה במסלול המשתלם ({x})','الضريبة السنوية في المسار الأوفر ({x})','Yearly tax on the cheapest track ({x})'],
+r_rentTaxM:['מס בחודש','الضريبة شهريًا','Tax per month'],
+r_rentSaveVs:['חיסכון לעומת {x}','التوفير مقارنة بـ{x}','Saving vs {x}'],
+r_rentNoEx:['מסלול פטור — השכירות מעל התקרה','مسار الإعفاء — الإيجار فوق السقف','Exemption track — rent above the cap'],
+r_netRentM:['שכירות נטו בחודש','الإيجار الصافي شهريًا','Rent after tax per month'],
+r_sPensRow:['הפקדה לפנסיה','إيداع التقاعد','Pension deposit'],
+f_ptOther:['עלויות נוספות (שמאי, משכנתא, הובלה)','تكاليف إضافية (مثمّن، رهن، نقل)','Other costs (appraiser, mortgage, moving)'],
+h_ptOther:['סכום חד-פעמי שמתווסף לעלות הכוללת','مبلغ لمرة واحدة يُضاف إلى التكلفة الإجمالية','One-off amount added to the total cost'],
+r_ptOther:['עלויות נוספות','تكاليف إضافية','Other costs'],
+f_ppAfter:['אחרי הפירעון','بعد السداد','After prepaying'],
+o_ppReduce:['להקטין את ההחזר החודשי','تخفيض القسط الشهري','Lower the monthly payment'],
+o_ppShort:['לקצר את התקופה','تقصير المدة','Shorten the term'],
+f_ppFee:['עמלת פירעון מוקדם','عمولة السداد المبكر','Early-repayment fee'],
+h_ppFee:['יורדת מהסכום הפנוי, כך שפחות כסף מקטין את ההלוואה','تُخصم من المبلغ المتاح فيقل ما يُسدَّد من القرض','Comes out of the available cash, so less goes to the loan'],
+r_ppShorter:['ההלוואה מסתיימת מוקדם יותר ב','ينتهي القرض أبكر بـ','The loan ends earlier by'],
+r_ppEnd:['זמן עד סיום ההלוואה','المدة حتى نهاية القرض','Time until the loan ends'],
+r_ppFeeRow:['עמלת פירעון מוקדם','عمولة السداد المبكر','Early-repayment fee'],
+r_ppPre:['סכום שנפרע בפועל','المبلغ المسدَّد فعليًا','Amount actually repaid'],
+n_ppShort:['בקיצור תקופה ההחזר נשאר כמו היום, ומהחודש שההלוואה נגמרת כל ההחזר מושקע.','عند تقصير المدة يبقى القسط كما هو، ومن الشهر الذي ينتهي فيه القرض يُستثمر القسط كله.','When shortening, the payment stays the same; once the loan ends, the whole payment is invested.'],
+n_pp:['פירעון מוקדם הוא תשואה בטוחה בגובה ריבית ההלוואה. השקעה כוללת סיכון ותשואה אינה מובטחת. עמלת פירעון אפשר להוסיף באפשרויות המתקדמות; הצמדה לא נכללת.','السداد المبكر عائد مضمون بقدر فائدة القرض. الاستثمار فيه مخاطرة والعائد غير مضمون. يمكن إضافة عمولة السداد في الخيارات المتقدمة؛ الربط غير مشمول.','Prepaying is a safe return equal to the loan rate. Investing carries risk and returns are not guaranteed. A prepayment fee can be added under advanced options; indexation is not included.'],
+h_sgTax:['מס רווחי הון שמשלמים בסוף על הרווח (בדרך כלל 25%)','ضريبة الأرباح الرأسمالية على الربح في النهاية (عادة 25%)','Capital gains tax paid on the gain at the end (usually 25%)'],
+r_sgFeeRow:['דמי ניהול ששולמו','رسوم الإدارة المدفوعة','Management fees paid'],
+r_sgTaxRow:['מס על הרווח','الضريبة على الربح','Tax on the gain'],
+r_sgNet:['סכום נטו בסוף אחרי מס','المبلغ الصافي في النهاية بعد الضريبة','Net amount at the end after tax'],
+f_rtCoef:['מקדם המרה לקצבה','معامل التحويل إلى معاش','Annuity conversion factor'],
+h_rtCoef:['המספר שבו מחלקים את הצבירה כדי לקבל קצבה חודשית. בקרנות פנסיה בדרך כלל 190–220. 0 = לא להציג','الرقم الذي يُقسم عليه الرصيد للحصول على معاش شهري؛ في صناديق التقاعد عادة 190–220. 0 = عدم العرض','The number the balance is divided by to get a monthly pension, usually 190–220 in pension funds. 0 = hide'],
+r_rtCoef:['קצבה חודשית לפי מקדם {c} (בכסף של היום)','المعاش الشهري حسب المعامل {c} (بأموال اليوم)',"Monthly pension at factor {c} (in today's money)"],
+f_ccExtra:['תוספת חודשית מעל המינימום','مبلغ شهري إضافي فوق الحد الأدنى','Extra each month above the minimum'],
+h_ccExtra:['רואים כמה תוספת קטנה מקצרת את החוב וחוסכת ריבית','ترى كم يقصّر مبلغ صغير إضافي الدين ويوفّر الفائدة','See how a small extra shortens the debt and saves interest'],
+r_ccNoExtra:['בלי התוספת: זמן לסגירה','دون الإضافة: مدة السداد','Without the extra: time to clear'],
+r_ccExtraSaves:['התוספת חוסכת בריבית','الإضافة توفّر من الفائدة','The extra saves in interest'],
+f_daFee:['עמלת קנייה','عمولة الشراء','Purchase commission'],
+h_daFee:['העמלה נכנסת לעלות ולכן גם לממוצע','تدخل العمولة في التكلفة وبالتالي في المتوسط','The commission is part of the cost, so of the average too'],
+f_daTgt:['מחיר ממוצע רצוי','متوسط السعر المطلوب','Target average price'],
+h_daTgt:['כמה יחידות לקנות במחיר הקנייה כדי להגיע לממוצע הזה. 0 = לא לחשב','كم وحدة تشتري بسعر الشراء للوصول إلى هذا المتوسط. 0 = بلا حساب','How many units to buy at the purchase price to reach this average. 0 = skip'],
+r_daFeeRow:['עמלת קנייה','عمولة الشراء','Purchase commission'],
+r_daTgtU:['יחידות לקנות כדי להגיע לממוצע {x}','الوحدات اللازمة للوصول إلى متوسط {x}','Units to buy to reach an average of {x}'],
+r_daTgtC:['עלות הקנייה הזו','تكلفة هذا الشراء','Cost of that purchase'],
+w_daTgt:['אי אפשר להגיע לממוצע {x} בקנייה במחיר {p}: הממוצע הרצוי צריך להיות בין מחיר הקנייה לממוצע הנוכחי.','لا يمكن الوصول إلى متوسط {x} بالشراء بسعر {p}: يجب أن يكون المتوسط المطلوب بين سعر الشراء والمتوسط الحالي.',"An average of {x} can't be reached buying at {p}: the target must lie between the purchase price and the current average."],
+f_beTax:['מס על הרווח','الضريبة على الربح','Tax on profit'],
+h_beTax:['כשממלאים, יעד הרווח נחשב אחרי מס','عند التعبئة يُحسب هدف الربح بعد الضريبة','When set, the profit target is after tax'],
+r_beUnitsTN:['יחידות ליעד הרווח (אחרי מס)','الوحدات لهدف الربح (بعد الضريبة)','Units for the profit target (after tax)'],
+r_beProfitNet:['רווח בפועל אחרי מס','الربح الفعلي بعد الضريبة','Actual profit after tax'],
+f_nwWd:['שיעור משיכה להכנסה פסיבית','معدل السحب للدخل السلبي','Withdrawal rate for passive income'],
+h_nwWd:['כמה אחוז מההשקעות אפשר למשוך בשנה. מקובל 3%–4%','كم بالمئة من الاستثمارات يمكن سحبها سنويًا؛ الشائع 3%–4%','How much of the investments you can take each year; 3%–4% is common'],
+r_nwPassiveN:['הכנסה פסיבית משוערת מהשקעות ({p} בשנה)','دخل سلبي تقريبي من الاستثمارات ({p} سنويًا)','Estimated passive income from investments ({p} a year)'],
+f_fiOther:['הכנסה קבועה אחרת (שכירות, קצבה)','دخل ثابت آخر (إيجار، معاش)','Other steady income (rent, pension)'],
+h_fiOther:['בחודש. מורידה את ההוצאות שההון צריך לכסות','شهريًا. يقلّل المصاريف التي يجب أن يغطيها رأس المال','Per month. Lowers the expenses the capital has to cover'],
+f_fiCAge:['גיל החופש בחישוב Coast','سن الحرية في حساب Coast','Freedom age for Coast'],
+f_flBuf:['מרווח ביטחון','هامش أمان','Safety margin'],
+h_flBuf:['תוספת לתעריף לחודשים חלשים ולתשלומים שלא נגבו','إضافة إلى السعر للأشهر الضعيفة والمدفوعات غير المحصّلة','Added to the rate for slow months and unpaid invoices'],
+r_flRateMin:['תעריף מינימלי (בלי מרווח)','الحد الأدنى للسعر (دون هامش)','Minimum rate (no margin)'],
+f_evHz:['אופק השוואה','أفق المقارنة','Comparison horizon'],
+r_evHzRow:['רווח נקי אחרי {n} שנים','الربح الصافي بعد {n} سنوات','Net gain after {n} years'],
+f_apSb:['צריכה במצב המתנה','الاستهلاك في وضع الاستعداد','Standby power'],
+h_apSb:['וואט בשעות שהמכשיר כבוי אבל מחובר','واط في الساعات التي يكون فيها الجهاز مطفأً لكن موصولًا','Watts during the hours it is off but plugged in'],
+r_apSbRow:['מתוכם מצב המתנה בחודש','منها وضع الاستعداد شهريًا','Of which standby, per month'],
+f_wdOff:['ימי חופשה בתקופה','أيام إجازة في الفترة','Days off in the period'],
+h_wdOff:['ימים שלא עובדים בהם (חופשה, מחלה) יורדים מימי העבודה','أيام لا تعمل فيها (إجازة، مرض) تُطرح من أيام العمل',"Days you won't work (vacation, sick) are subtracted"],
+f_wdHrs:['שעות עבודה ביום','ساعات العمل في اليوم','Hours per day'],
+h_wdHrs:['0 = לפי 42 שעות בשבוע','0 = حسب 42 ساعة أسبوعيًا','0 = based on 42 hours a week'],
+r_wdOffRow:['ימי חופשה שהורדו','أيام الإجازة المطروحة','Days off subtracted'],
+r_wdHrs:['שעות עבודה ({h} ביום)','ساعات العمل ({h} يوميًا)','Working hours ({h} a day)'],
+r_joDNet:['הפרש בנטו לחודש ({x} לעומת {y})','الفرق في الصافي شهريًا ({x} مقابل {y})','Net pay difference per month ({x} vs {y})'],
+r_joDSave:['הפרש בחיסכון לחודש','الفرق في الادخار شهريًا','Savings difference per month'],
+r_joDPerk:['הפרש ברכב ובהטבות לחודש','الفرق في السيارة والمزايا شهريًا','Car and perks difference per month'],
+r_joDYear:['יתרון בשנה','الأفضلية في السنة','Advantage per year'],
+r_upSaveVs:['חיסכון {u} לעומת {x}','التوفير {u} مقارنة بـ{x}','Saving {u} vs {x}'],
+r_upWorst:['הכי יקר: {x}, יקר יותר ב','الأغلى: {x}، أغلى بـ','Most expensive: {x}, dearer by'],
+n_lc2:['ריבית נקובה – הריבית שהבנק מציג. עלות שנתית אמיתית – כוללת גם עמלות ותשלומים חודשיים, ולכן היא המחיר האמיתי של ההלוואה (מה שנקרא גם ריבית אפקטיבית). כשהסכום והתקופה זהים, משווים לפי העלות הכוללת; אחרת לפי העלות השנתית האמיתית. מניחים לוח שפיצר בלי הצמדה.','الفائدة المعلنة هي ما يعرضه البنك. التكلفة السنوية الحقيقية تشمل العمولات والدفعات الشهرية أيضًا، فهي السعر الحقيقي للقرض (ما يسمى أيضًا الفائدة الفعلية). عند تساوي المبلغ والمدة تتم المقارنة حسب التكلفة الإجمالية، وإلا حسب التكلفة السنوية الحقيقية. نفترض أقساطًا متساوية دون ربط.','Stated rate is what the bank quotes. True yearly cost also includes fees and monthly charges, so it is the real price of the loan (also called the effective rate). With the same amount and term, offers are ranked by total cost; otherwise by true yearly cost. Assumes an annuity schedule with no indexation.'],
+n_lcStar:['* ריבית שחושבה מתוך ההחזר החודשי שהזנתם.','* فائدة محسوبة من القسط الشهري الذي أدخلته.','* Rate worked out from the monthly payment you entered.'],
+n_lcAdd:['הוסיפו הצעה נוספת כדי להשוות.','أضف عرضًا آخر للمقارنة.','Add another offer to compare.'],
+w_lcUnfair:['להצעות יש סכום או תקופה שונים, ולכן הדירוג לפי העלות השנתית האמיתית. הלוואה קצרה יותר עולה פחות בסך הכל, אבל ההחזר החודשי שלה גבוה יותר.','للعروض مبالغ أو مدد مختلفة، لذا الترتيب حسب التكلفة السنوية الحقيقية. القرض الأقصر يكلّف أقل إجمالًا لكن قسطه الشهري أعلى.','The offers differ in amount or term, so they are ranked by true yearly cost. A shorter loan costs less in total but has a higher monthly payment.'],
+h_lcNom:['ריבית נקובה','الفائدة المعلنة','Stated rate'],
+h_lcTrue:['עלות שנתית אמיתית (כולל עמלות)','التكلفة السنوية الحقيقية (شاملة العمولات)','True yearly cost (incl. fees)'],
+r_lcApr:['עלות שנתית אמיתית (כולל עמלות)','التكلفة السنوية الحقيقية (شاملة العمولات)','True yearly cost (incl. fees)'],
+h_lcFees:['עמלות','العمولات','Fees'],
+r_lcMoOne:['החזר חודשי','القسط الشهري','Monthly payment'],
+r_lcTotLess:['העלות הכוללת ב{x} נמוכה ב','التكلفة الإجمالية في {x} أقل بـ','Total cost with {x} is lower by'],
+r_lcTotMore:['העלות הכוללת ב{x} גבוהה ב','التكلفة الإجمالية في {x} أعلى بـ','Total cost with {x} is higher by'],
+r_lcMoLess:['ההחזר החודשי ב{x} נמוך ב','القسط الشهري في {x} أقل بـ','Monthly payment with {x} is lower by'],
+r_lcMoMore:['ההחזר החודשי ב{x} גבוה ב','القسط الشهري في {x} أعلى بـ','Monthly payment with {x} is higher by'],
+r_lcIntLess:['הריבית הכוללת ב{x} נמוכה ב','الفائدة الإجمالية في {x} أقل بـ','Total interest with {x} is lower by'],
+r_lcIntMore:['הריבית הכוללת ב{x} גבוהה ב','الفائدة الإجمالية في {x} أعلى بـ','Total interest with {x} is higher by'],
+r_lcFeeLess:['העמלות ב{x} נמוכות ב','العمولات في {x} أقل بـ','Fees with {x} are lower by'],
+r_lcFeeMore:['העמלות ב{x} גבוהות ב','العمولات في {x} أعلى بـ','Fees with {x} are higher by'],
+r_lcWorst:['הכי יקרה: {x}, יקרה יותר ב','الأغلى: {x}، أغلى بـ','Most expensive: {x}, dearer by'],
+r_lcWorstApr:['הכי יקרה: {x}, עלות שנתית גבוהה ב','الأغلى: {x}، تكلفة سنوية أعلى بـ','Most expensive: {x}, yearly cost higher by'],
+r_lcAprOther:['העלות השנתית האמיתית הנמוכה ביותר: {x}','أدنى تكلفة سنوية حقيقية: {x}','Lowest true yearly cost: {x}'],
+r_lcVsTot:['בעלות הכוללת, לעומת {x}','في التكلفة الإجمالية مقارنة بـ{x}','In total cost, vs {x}'],
+r_lcBestApr:['הכי משתלמת: {x}, עלות שנתית נמוכה ב','الأوفر: {x}، تكلفة سنوية أقل بـ','Best deal: {x}, yearly cost lower by'],
+r_lcVsApr:['לעומת {x}, כולל עמלות','مقارنة بـ{x}، شاملة العمولات','vs {x}, fees included'],
+w_lcAprDiff:['שימו לב: לפי העלות השנתית האמיתית {x} זולה יותר, כי ב{y} משלמים יותר עמלות מראש. אם יש לכם שימוש טוב לכסף עכשיו, {x} עדיפה.','انتبه: حسب التكلفة السنوية الحقيقية {x} أرخص، لأن في {y} تُدفع عمولات أكثر مقدمًا. إن كان للمال استخدام جيد الآن فـ{x} أفضل.','Note: by true yearly cost {x} is cheaper, because {y} charges more fees up front. If you have a good use for the money now, {x} is the better pick.']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -4614,7 +4741,7 @@ const DEFS = {
   ],
   compound: [
     SEL('c_mode','f_cMode','final',[['final','o_cm_final'],['dep','o_cm_dep'],['years','o_cm_years']],{wide:true}),
-    {id:'c_init',   label:'f_start',   unit:'cur', val:10000},
+    {id:'c_init',   label:'f_startAmt',   unit:'cur', val:10000},
     {id:'c_monthly',label:'f_monthly', unit:'cur', val:1000, hint:'h_endMonth', when:['c_mode','final|years']},
     {id:'c_goal',   label:'f_goal',    unit:'cur', val:1000000, when:['c_mode','dep|years']},
     SEL('c_bench','f_bench','manual',BENCH,{hint:'h_bench'}),
@@ -4630,7 +4757,7 @@ const DEFS = {
   ],
   yield: [
     SEL('y_mode','f_yMode','rate',[['rate','o_ym_rate'],['end','o_ym_end'],['years','o_ym_years']],{wide:true}),
-    {id:'y_start', label:'f_start', unit:'cur', val:10000},
+    {id:'y_start', label:'f_startAmt', unit:'cur', val:10000},
     {id:'y_end',   label:'f_end',   unit:'cur', val:15000, when:['y_mode','rate|years']},
     SEL('y_bench','f_bench','manual',BENCH,{hint:'h_bench', when:['y_mode','end|years']}),
     {id:'y_rate',  label:'f_yRate', unit:'%', val:7, when:['y_mode','end|years']},
@@ -4671,7 +4798,8 @@ Object.assign(DEFS, {
   ],
   purchasetax: [
     SEL('pt_kind','f_ptKind','single',[['single','o_ptSingle'],['add','o_ptAdd'],['oleh','o_ptOleh']],{wide:true}),
-    F('pt_price','f_ptPrice','ils',2500000,{wide:true}), F('pt_lawyer','f_ptLawyer','%',0.5), F('pt_agent','f_ptAgent','%',2)
+    F('pt_price','f_ptPrice','ils',2500000,{wide:true}), F('pt_lawyer','f_ptLawyer','%',0.5), F('pt_agent','f_ptAgent','%',2),
+    F('pt_other','f_ptOther','ils',0,{adv:'m_adv',hint:'h_ptOther'})
   ],
   landtax: [
     F('lt_sell','f_ltSell','ils',3000000,{wide:true}), F('lt_buy','f_ltBuy','ils',1500000), F('lt_bexp','f_ltBexp','ils',50000,{hint:'h_ltBexp'}),
@@ -4689,24 +4817,27 @@ Object.assign(DEFS, {
   ],
   prepay: [
     F('pp_bal','f_ppBal','cur',400000), F('pp_rate','f_ppRate','%',5), F('pp_yrs','f_rfLeft','yrs',15), F('pp_lump','f_ppLump','cur',100000),
-    F('pp_ret','f_ppRet','%',7), F('pp_tax','f_ppTax','%',25)
+    F('pp_ret','f_ppRet','%',7), F('pp_tax','f_ppTax','%',25),
+    SEL('pp_after','f_ppAfter','reduce',[['reduce','o_ppReduce'],['short','o_ppShort']],{wide:true,adv:'m_adv'}), F('pp_fee','f_ppFee','cur',0,{adv:'m_adv',hint:'h_ppFee'})
   ],
   savegoal: [
     SEL('sg_mode','f_sgMode','dep',[['dep','o_sgDep'],['time','o_sgTime']],{wide:true}),
     F('sg_goal','f_sgGoal','cur',500000,{wide:true}), F('sg_now','f_sgNow','cur',20000), F('sg_rate','f_yieldYr','%',5),
     F('sg_years','f_term','yrs',10,{when:['sg_mode','dep']}), F('sg_dep','f_sgDepIn','cur',2000,{when:['sg_mode','time']}),
-    F('sg_infl','f_inflation','%',2,{adv:'m_adv'})
+    F('sg_infl','f_inflation','%',2,{adv:'m_adv'}), F('sg_tax','f_taxGain','%',0,{adv:'m_adv',hint:'h_sgTax'}), F('sg_fee','f_mfAccFee','%',0,{adv:'m_adv'})
   ],
   retire: [
     F('rt_age','f_rtAge','',35), F('rt_ret','f_rtRet','',67), F('rt_life','f_rtLife','',90),
     F('rt_have','f_rtHave','cur',100000), F('rt_dep','f_rtDep','cur',2500), F('rt_need','f_rtNeed','cur',12000,{wide:true,hint:'h_rtNeed'}),
-    F('rt_other','f_rtOther','cur',0,{hint:'h_rtOther'}), SEL('rt_bench','f_bench','manual',BENCH,{hint:'h_bench'}), F('rt_r1','f_rtR1','%',5), F('rt_r2','f_rtR2','%',3), F('rt_infl','f_inflation','%',2.5)
+    F('rt_other','f_rtOther','cur',0,{hint:'h_rtOther'}), SEL('rt_bench','f_bench','manual',BENCH,{hint:'h_bench'}), F('rt_r1','f_rtR1','%',5), F('rt_r2','f_rtR2','%',3), F('rt_infl','f_inflation','%',2.5),
+    F('rt_fee','f_mfAccFee','%',0,{adv:'m_adv'}), F('rt_coef','f_rtCoef','',200,{adv:'m_adv',hint:'h_rtCoef'})
   ],
   creditcard: [
     F('cc_bal','f_ccBal','cur',10000,{wide:true}), F('cc_apr','f_ccApr','%',15),
     SEL('cc_mode','f_ccMode','min',[['min','o_ccMin'],['fix','o_ccFix']]),
     F('cc_minPct','f_ccMinPct','%',3,{when:['cc_mode','min']}), F('cc_floor','f_ccFloor','cur',100,{when:['cc_mode','min']}),
-    F('cc_pay','f_ccPay','cur',500,{when:['cc_mode','fix']})
+    F('cc_pay','f_ccPay','cur',500,{when:['cc_mode','fix']}),
+    F('cc_extra','f_ccExtra','cur',0,{when:['cc_mode','min'],hint:'h_ccExtra'})
   ],
   rentbuy: [
     F('rb_price','f_ptPrice','cur',2500000,{wide:true}), F('rb_down','f_down','cur',700000), F('rb_rate','f_rate','%',4.5), F('rb_yrs','f_term','yrs',25),
@@ -4719,10 +4850,12 @@ Object.assign(DEFS, {
     F('cl_opp','f_clOpp','%',3,{adv:'m_adv'})
   ],
   avgcost: [
-    F('da_sh','f_daSh','',100), F('da_avg','f_daAvg','cur',50), F('da_buy','f_daBuy','cur',5000), F('da_pr','f_daPr','cur',40), F('da_cur','f_daCur','cur',42)
+    F('da_sh','f_daSh','',100), F('da_avg','f_daAvg','cur',50), F('da_buy','f_daBuy','cur',5000), F('da_pr','f_daPr','cur',40), F('da_cur','f_daCur','cur',42),
+    F('da_fee','f_daFee','cur',0,{adv:'m_adv',hint:'h_daFee'}), F('da_tgt','f_daTgt','cur',0,{adv:'m_adv',hint:'h_daTgt'})
   ],
   breakeven: [
-    F('be_fix','f_beFix','cur',20000,{wide:true}), F('be_price','f_bePrice','cur',100), F('be_var','f_beVar','cur',40), F('be_target','f_beTarget','cur',5000), F('be_units','f_beUnits','',500)
+    F('be_fix','f_beFix','cur',20000,{wide:true}), F('be_price','f_bePrice','cur',100), F('be_var','f_beVar','cur',40), F('be_target','f_beTarget','cur',5000), F('be_units','f_beUnits','',500),
+    F('be_tax','f_beTax','%',0,{adv:'m_adv',hint:'h_beTax'})
   ],
   split: [
     SEL('sp_mode','f_spMode','eq',[['eq','o_spEq'],['inc','o_spInc'],['pct','o_spPct'],['sh','o_spSh'],['ex','o_spEx'],['paid','o_spPaid']],{wide:true}),
@@ -4751,11 +4884,13 @@ Object.assign(DEFS, {
   networth: [
     {type:'sub',label:'w_assets'}, F('nw_cash','f_nwCash','cur',20000), F('nw_inv','f_nwInv','cur',50000), F('nw_pen','f_nwPen','cur',150000), F('nw_prop','f_nwProp','cur',0), F('nw_oa','f_nwOa','cur',0),
     {type:'sub',label:'w_liab'}, F('nw_mort','f_nwMort','cur',0), F('nw_loan','f_nwLoan','cur',30000), F('nw_card','f_nwCard','cur',5000), F('nw_ol','f_nwOl','cur',0),
-    {type:'sub',label:'w_monthly'}, F('nw_inc','f_frInc','cur',15000), F('nw_exp','f_frExp','cur',11000)
+    {type:'sub',label:'w_monthly'}, F('nw_inc','f_frInc','cur',15000), F('nw_exp','f_frExp','cur',11000),
+    F('nw_wd','f_nwWd','%',4,{adv:'m_adv',hint:'h_nwWd'})
   ],
   fire: [
     F('fi_age','f_rtAge','',35), F('fi_exp','f_fiExp','cur',10000,{wide:true}), F('fi_have','f_rtHave','cur',100000), F('fi_dep','f_rtDep','cur',3000),
-    F('fi_ret','f_rtR1','%',6), F('fi_infl','f_inflation','%',2.5), F('fi_wd','f_fiWd','%',4,{hint:'h_fiWd'})
+    F('fi_ret','f_rtR1','%',6), F('fi_infl','f_inflation','%',2.5), F('fi_wd','f_fiWd','%',4,{hint:'h_fiWd'}),
+    F('fi_other','f_fiOther','cur',0,{adv:'m_adv',hint:'h_fiOther'}), F('fi_cAge','f_fiCAge','',65,{adv:'m_adv'})
   ]
 ,
   inflation: [
@@ -4871,7 +5006,8 @@ Object.assign(DEFS, {
   freelance: [
     F('fl_net','f_flNet','cur',15000,{wide:true}), F('fl_exp','f_flExp','cur',2000),
     F('fl_hpd','f_flHpd','',8), F('fl_bill','f_flBill','%',70,{hint:'h_flBill'}), F('fl_off','f_flOff','',25,{hint:'h_flOff'}),
-    SEL('fl_vat','f_dealer','murshe',[['murshe','o_murshe'],['patur','o_patur']]), F('fl_pts','f_points','',2.25,{adv:'m_adv'})
+    SEL('fl_vat','f_dealer','murshe',[['murshe','o_murshe'],['patur','o_patur']]), F('fl_pts','f_points','',2.25,{adv:'m_adv'}),
+    F('fl_buf','f_flBuf','%',0,{adv:'m_adv',hint:'h_flBuf'})
   ],
   empcost: [
     F('ec_gross','f_ecGross','ils',12000,{wide:true}), F('ec_pens','f_erPens','%',6.5), F('ec_sev','f_erSev','%',8.33),
@@ -4911,11 +5047,11 @@ Object.assign(DEFS, {
   evfuel: [
     F('ev_km','f_evKm','km',15000,{wide:true}), F('ev_fp','f_evFp','ils',IL26.fuel95,{hint:'h_evFp'}), F('ev_fc','f_evFc','',7),
     F('ev_kwh','f_evKwh','ils',IL26.kwh,{hint:'h_apTar'}), F('ev_ec','f_evEc','',16), F('ev_diff','f_evDiff','ils',20000,{hint:'h_evDiff'}),
-    F('ev_pub','f_evPub','%',20,{adv:'m_adv'}), F('ev_pubp','f_evPubp','ils',1.9,{adv:'m_adv'}), F('ev_mf','f_evMf','ils',3500,{adv:'m_adv'}), F('ev_me','f_evMe','ils',2000,{adv:'m_adv'})
+    F('ev_pub','f_evPub','%',20,{adv:'m_adv'}), F('ev_pubp','f_evPubp','ils',1.9,{adv:'m_adv'}), F('ev_mf','f_evMf','ils',3500,{adv:'m_adv'}), F('ev_me','f_evMe','ils',2000,{adv:'m_adv'}), F('ev_hz','f_evHz','yrs',5,{adv:'m_adv'})
   ],
   appliance: [
     SEL('ap_pre','f_apPre','c',[['c','o_apC'],['900','o_apAc'],['2500','o_apBoiler'],['2000','o_apHeater'],['2400','o_apDryer'],['2000o','o_apOven'],['150','o_apFridge'],['100','o_apTv'],['250','o_apPc']],{wide:true}),
-    F('ap_w','f_apW','W',1000), F('ap_h','f_apH','',4), F('ap_d','f_apD','',30), F('ap_tar','f_apTar','ils',IL26.kwh,{hint:'h_apTar'}), F('ap_q','f_apQ','',1,{adv:'m_adv'})
+    F('ap_w','f_apW','W',1000), F('ap_h','f_apH','',4), F('ap_d','f_apD','',30), F('ap_tar','f_apTar','ils',IL26.kwh,{hint:'h_apTar'}), F('ap_q','f_apQ','',1,{adv:'m_adv'}), F('ap_sb','f_apSb','W',0,{adv:'m_adv',hint:'h_apSb'})
   ],
   unitprice: [{type:'html', id:'up_box', cls:'lc-wrap'}],
   discount: [
@@ -4929,7 +5065,8 @@ Object.assign(DEFS, {
   workdays: [
     {type:'date', id:'wd_from', label:'f_wdFrom', val: isoDay(0)}, {type:'date', id:'wd_to', label:'f_wdTo', val: isoDay(30)},
     SEL('wd_week','f_wdWeek','5',[['5','o_wd5'],['6','o_wd6']]), SEL('wd_hol','f_wdHol','1',[['1','o_on'],['0','o_off']]),
-    SEL('wd_end','f_wdEnd','1',[['1','o_yes'],['0','o_no']])
+    SEL('wd_end','f_wdEnd','1',[['1','o_yes'],['0','o_no']]),
+    F('wd_off','f_wdOff','',0,{adv:'m_adv',hint:'h_wdOff'}), F('wd_hrs','f_wdHrs','',0,{adv:'m_adv',hint:'h_wdHrs'})
   ]
 });
 Object.assign(ICON, {
@@ -5355,24 +5492,14 @@ function toast(msg){
   el.textContent = msg; el.hidden = false; clearTimeout(toastT);
   toastT = setTimeout(() => { el.hidden = true; }, 3200);
 }
-Object.assign(T, {st_saved:['הקובץ נשמר','تم حفظ الملف','File saved']});
-/* inside Claude a page may not download by itself: the viewer is asked to confirm the save. On the website a plain download works. */
-async function fileSave(data, name, mime){
-  if (window.claude && typeof window.claude.use === 'function'){
-    try { const d = await window.claude.use('downloads'); if (!d) return 'fail'; await d.save({filename: name, data}); return 'saved'; }
-    catch (e) { return e && e.code === 'declined' ? 'declined' : 'fail'; }
-  }
+function deliver(text, name, mime){
   try {
-    const url = URL.createObjectURL(new Blob([data], {type: mime}));
+    const url = URL.createObjectURL(new Blob([text], {type: mime}));
     const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 2000);
-    return 'saved';
-  } catch (e) { return 'fail'; }
-}
-async function deliver(text, name, mime){
-  const r = await fileSave(text, name, mime);
-  if (r === 'saved') toast(t('st_saved'));
-  else if (r === 'fail'){ copyText(text); toast(t('st_copied')); }
+  } catch(e) {}
+  copyText(text);
+  toast(t('st_dl'));
 }
 function doAction(act, id){
   const rows = resultRows(id);
@@ -6198,13 +6325,11 @@ function calcTaxTab(){
   if (pensCred > 0) rows.push([t('r_pensCred'), MI(-pensCred)]);
   if (donCred > 0) rows.push([t('r_donCred'), MI(-donCred)]);
   if (locCred > 0) rows.push([t('r_locCred'), MI(-locCred)]);
-  rows.push(
-    [t('r_credApplied'), MI(-used)],
-    [t('r_taxPayable'), MI(payable), 'key'],
-    [t('r_effRate'), PC(eff)],
-    [t('r_margRate'), PC(marg)],
-    [t('r_perMonth'), MI(payable / 12)],
-    [t('r_afterTax'), MI(earned - payable)]);
+  if (credits - ptsCred > 0.5) rows.push([t('r_credApplied'), MI(-used)]);
+  if (monthly) rows.push([t('r_taxPayable'), MI(payable), 'key']);
+  rows.push([t('r_effRate'), PC(eff)], [t('r_margRate'), PC(marg)]);
+  if (!monthly) rows.push([t('r_perMonth'), MI(payable / 12)]);
+  rows.push([t('r_afterTax'), MI(earned - payable)]);
   const parts = b.parts.filter(p => p.amt > 0);
   const tableRows = parts.map(p => [`${N(p.from)} – ${isFinite(p.to) ? N(p.to) : '∞'}`, PC(p.rate * 100), MI(p.amt), MI(p.tax)]);
   if (sr.s3 > 0) tableRows.push([`${t('r_surtax')} ${N(TAX.surtaxFrom)}+`, PC(TAX.surtaxRate * 100), MI(income + cap - TAX.surtaxFrom), MI(sr.s3)]);
@@ -6258,7 +6383,7 @@ function calcSelfemp(){
     [t('r_taxableSelf'), MI(taxable)],
     [t('r_points'), ptsTxt('e', pts)],
     [t('r_taxSelf'), MI(-tax)]);
-  if (pens > 0) rows.push([t('r_pensionRow'), MI(-pens)]);
+  if (pens > 0) rows.push([t('r_sPensRow'), MI(-pens)]);
   rows.push(
     [t('r_netSelfY'), MI(net), 'key'],
     [t('r_netSelfM'), MI(net / 12), 'key'],
@@ -6297,18 +6422,18 @@ function calcRental(){
   opts.push([t('r_track10'), t10]);
   if (exemptAvail) opts.push([t('r_trackExempt'), tExempt]);
   const best = opts.reduce((a, b) => b[1] < a[1] ? b : a);
+  const second = opts.filter(o => o !== best).sort((a, b) => a[1] - b[1])[0];
   const rows = [
     [t('r_rentYear'), MI(yr)],
     [t('r_exemptCeil'), MI(E1)],
     [t('r_points'), ptsTxt('r', pts)],
-    [t('r_trackExempt'), exemptAvail ? MI(tExempt) : t('r_na')],
-    [t('r_track10'), MI(t10)],
-    [t('r_trackReg'), MI(tReg)],
-    [t('r_best'), best[0], 'key'],
-    [t('r_netRent'), MI(yr - best[1]), 'key']
+    [t('r_rentTaxM'), MI(best[1] / 12)]
   ];
+  if (second) rows.push([t('r_rentSaveVs', {x: second[0]}), MI(second[1] - best[1]), 'key']);
+  if (!exemptAvail) rows.push([t('r_rentNoEx'), t('r_na')]);
+  rows.push([t('r_netRent'), MI(yr - best[1]), 'key'], [t('r_netRentM'), MI((yr - best[1]) / 12)]);
   return {
-    hero: {label: t('r_best') + ': ' + best[0], value: MI(best[1]), sub: t('r_netRent') + ': ' + MI(yr - best[1])},
+    hero: {label: t('r_rentBestH', {x: best[0]}), value: MI(best[1]), sub: t('r_netRent') + ': ' + MI(yr - best[1])},
     rows, note: t('n_rental') + ' ' + t('n_points'),
     chart: {
       title: t('r_best'), unit: '', fmt: x => MI(x),
@@ -6349,11 +6474,11 @@ function calcCapital(){
     if (cpi > 0) rows.push([t('r_inflPart'), M(-infl)], [t('r_realGain'), M(real)]);
     if (lossUsed > 0) rows.push([t('r_lossUsed'), M(-lossUsed)]);
   }
-  rows.push([t('r_taxableGain'), M(taxable)], [t('r_taxRate'), PC(rate * 100)], [t('r_taxAmt'), M(tax)]);
-  if (sur > 0) rows.push([t('r_surCapTax'), M(sur)]);
+  rows.push([t('r_taxableGain'), M(taxable)], [t('r_taxRate'), PC(rate * 100)]);
+  if (sur > 0) rows.push([t('r_cpTaxBase'), M(tax)], [t('r_surCapTax'), M(sur)]);
   rows.push([t('r_netProceeds'), M(proceeds), 'key'], [t('r_effTax'), PC(isGain ? (nom > 0 ? totalTax / nom * 100 : NaN) : (sell > 0 ? totalTax / sell * 100 : NaN))]);
   return {
-    hero: {label: t('r_taxAmt'), value: M(totalTax), sub: t('r_netProceeds') + ': ' + M(proceeds)},
+    hero: {label: t('r_cpTaxTot'), value: M(totalTax), sub: t('r_netProceeds') + ': ' + M(proceeds)},
     rows, note: t('n_capital'),
     split: {
       title: t('r_netProceeds'),
@@ -6425,7 +6550,8 @@ function calcLoan(){
   const apr = (Math.pow(1 + (lo + hi) / 2, 12) - 1) * 100;
   const first = sim[0] ? sim[0].pay : 0, last = sim.length ? sim[sim.length - 1].pay : 0;
   const peak = sim.reduce((a, c) => Math.max(a, c.pay), 0);
-  const rows = [[t('r_firstPay'), M(first, 2)]];
+  const grp0 = type === 'annuity' && !has && cpi === 0 && grace === 0;
+  const rows = [[t(grp0 ? 'r_monthly' : 'r_firstPay'), M(first, 2)]];
   if (Math.abs(last - first) > 0.01) rows.push([t('r_lastPay'), M(last, 2)]);
   if (peak - first > 0.01 && peak - last > 0.01) rows.push([t('r_peakPay'), M(peak, 2)]);
   rows.push([t('r_loanAmt'), M(amt)], [t('r_totInt'), M(totalInt)]);
@@ -6787,17 +6913,17 @@ function calcPurchaseTax(){
   const r = bracketTax(price, PT_BR[kind]);
   const vat = 1 + vatPct() / 100;
   const lawyer = price * Math.max(0, v('pt_lawyer')) / 100 * vat, agent = price * Math.max(0, v('pt_agent')) / 100 * vat;
-  const costs = lawyer + agent;
+  const extra = Math.max(0, v('pt_other')), costs = lawyer + agent + extra;
   const other = kind === 'single' ? bracketTax(price, PT_BR.add).tot : bracketTax(price, PT_BR.single).tot;
   const edge = [0].concat(PT_BR[kind].map(b => b[0]));
   return {
     hero: {label: t('r_ptTax'), value: MI(r.tot), sub: t('r_ptEff', {n: PC(price > 0 ? r.tot / price * 100 : NaN)})},
     rows: [
       [t('r_ptPrice'), MI(price)], [t('r_ptTax'), MI(r.tot), 'key'], [t('r_ptEffRow'), PC(price > 0 ? r.tot / price * 100 : NaN)],
-      [t('r_ptLawyer'), MI(lawyer)], [t('r_ptAgent'), MI(agent)], [t('r_ptCosts'), MI(r.tot + costs), 'key'],
+      [t('r_ptLawyer'), MI(lawyer)], [t('r_ptAgent'), MI(agent)]].concat(extra > 0 ? [[t('r_ptOther'), MI(extra)]] : []).concat([[t('r_ptCosts'), MI(r.tot + costs), 'key'],
       [t('r_ptAll'), MI(price + r.tot + costs), 'key'],
       [kind === 'single' ? t('r_ptIfAdd') : t('r_ptIfSingle'), MI(other)]
-    ],
+    ]),
     warn: kind === 'oleh' ? [t('w_ptOleh')] : [],
     note: t('n_pt'),
     table: {
@@ -6889,74 +7015,107 @@ function loanCmpSide(o){
 }
 function calcLoanCmp(){
   const L = lcList().map((o, i) => Object.assign(loanCmpSide(o), {name: asEsc(lcName(o, i))}));
-  const S = L.slice().sort((a, b) => a.total - b.total), best = S[0], next = S[1];
+  /* same amount and same term → the total cost decides; otherwise the true annual cost (fees included) does */
+  const fair = L.every(s => s.n === L[0].n && Math.abs(s.amt - L[0].amt) < 0.5);
+  const rank = s => fair ? s.total : (isFinite(s.apr) ? s.apr : Infinity);
+  const S = L.slice().sort((a, b) => rank(a) - rank(b) || a.total - b.total), best = S[0], next = S[1], worst = S[S.length - 1];
+  const mo = s => s.pm + s.mf, fees = s => s.up + s.mf * s.n;
   const star = s => (next && s === best ? '★ ' : '') + s.name;
+  const mark = s => s.rt === 'prime' ? ' (P)' : s.rt === 'pmt' ? ' *' : '';
+  const note = t('n_lc2') + (L.some(s => s.rt === 'pmt') ? ' ' + t('n_lcStar') : '') + (L.some(s => s.rt === 'prime') ? ' ' + t('n_lcPrime', {p: PC(lcPrime())}) : '');
+  const warn = L.filter(s => s.low).map(s => t('w_lcLow', {x: s.name}));
+  if (next && !fair) warn.push(t('w_lcUnfair'));
+  const table = {title: t('t_compare'), open: true, head: ['', t('r_lcTotal'), t('h_lcTrue'), t('r_lcPmt'), t('h_lcNom'), t('r_lcInt'), t('h_lcFees')],
+    rows: S.map(s => [star(s), M(s.total), PC(s.apr), M(mo(s)), PC(s.rate) + mark(s), M(s.int), M(fees(s))])};
+  if (!next) return {hero: {label: t('r_lcTotalOf', {x: best.name}), value: M(best.total), sub: t('h_lcTrue') + ': ' + PC(best.apr)},
+    rows: [[t('r_lcMoOne'), M(mo(best))], [t('r_lcInt'), M(best.int)], [t('h_lcFees'), M(fees(best))]], note: note + ' ' + t('n_lcAdd'), warn, table};
+  const cmp = (d, less, more, f) => Math.abs(d) >= 0.5 ? [[t(d < 0 ? less : more, {x: best.name, y: next.name}), f(Math.abs(d))]] : [];
+  const rows = []
+    .concat(fair ? [] : cmp(best.total - next.total, 'r_lcTotLess', 'r_lcTotMore', x => M(x)))
+    .concat(cmp(mo(best) - mo(next), 'r_lcMoLess', 'r_lcMoMore', x => M(x)))
+    .concat(cmp(best.int - next.int, 'r_lcIntLess', 'r_lcIntMore', x => M(x)))
+    .concat(cmp(fees(best) - fees(next), 'r_lcFeeLess', 'r_lcFeeMore', x => M(x)));
+  if (S.length > 2 && worst !== next) rows.push(fair ? [t('r_lcWorst', {x: worst.name}), M(worst.total - best.total)] : [t('r_lcWorstApr', {x: worst.name}), PC(worst.apr - best.apr)]);
+  if (fair){ const lo = L.slice().sort((a, b) => a.apr - b.apr)[0]; if (lo !== best && isFinite(lo.apr) && lo.apr < best.apr - 0.005) warn.push(t('w_lcAprDiff', {x: lo.name, y: best.name})); }
   return {
-    hero: next ? {label: t('r_lcBestN', {x: best.name}), value: M(next.total - best.total), sub: t('r_lcVs', {x: next.name, r: PC(best.apr)})}
-      : {label: t('r_lcTotalOf', {x: best.name}), value: M(best.total), sub: t('r_lcApr') + ': ' + PC(best.apr)},
-    rows: (next ? [[t('r_lcBestN', {x: best.name}), M(next.total - best.total), 'key']] : [])
-      .concat(S.filter(s => s.rt !== 'fix').map(s => [t(s.rt === 'pmt' ? 'r_lcRateCalcOf' : 'r_lcRatePrimeOf', {x: s.name}), PC(s.rate), 'key']))
-      .concat(S.map(s => [t('r_lcAprOf', {x: s.name}), PC(s.apr)])),
-    note: t('n_lc') + (L.some(s => s.rt === 'prime') ? ' ' + t('n_lcPrime', {p: PC(lcPrime())}) : ''),
-    warn: L.filter(s => s.low).map(s => t('w_lcLow', {x: s.name})),
-    table: {
-      title: t('t_compare'), open: true, head: ['', t('r_lcRate'), t('r_lcPmt'), t('r_lcInt'), t('r_lcUp'), t('r_lcTotal'), t('r_lcApr')],
-      rows: S.map(s => [star(s), PC(s.rate) + (s.rt === 'prime' ? ' (P)' : s.rt === 'pmt' ? ' *' : ''), M(s.pm + s.mf), M(s.int), M(s.up), M(s.total), PC(s.apr)])
-    }
+    hero: fair ? {label: t('r_lcBestN', {x: best.name}), value: M(next.total - best.total), sub: t('r_lcVsTot', {x: next.name})}
+      : {label: t('r_lcBestApr', {x: best.name}), value: PC(next.apr - best.apr), sub: t('r_lcVsApr', {x: next.name})},
+    rows, note, warn, table
   };
 }
 
 /* --- prepay vs invest --- */
 function calcPrepay(){
   const bal = Math.max(0, v('pp_bal')), rate = Math.max(0, v('pp_rate')), n = Math.max(1, Math.round(v('pp_yrs') * 12));
-  const lump = clamp(v('pp_lump'), 0, bal), ret = v('pp_ret'), tax = clamp(v('pp_tax'), 0, 60) / 100;
-  const p0 = pmtOf(bal, rate, n), p1 = pmtOf(bal - lump, rate, n), save = p0 - p1;
-  const rm = mRate(ret);
-  const fvA = fvAnn(save, rm, n), gainA = fvA - save * n, aftA = fvA - Math.max(0, gainA) * tax;
+  const fee = Math.max(0, v('pp_fee')), lump = clamp(v('pp_lump'), 0, bal + fee), pre = Math.min(bal, Math.max(0, lump - fee));
+  const ret = v('pp_ret'), tax = clamp(v('pp_tax'), 0, 60) / 100, short = ($('#pp_after') || {}).value === 'short';
+  const p0 = pmtOf(bal, rate, n), p1 = short ? p0 : pmtOf(bal - pre, rate, n), r = rate / 1200, rm = mRate(ret);
+  /* A: prepay, invest whatever the loan no longer takes each month */
+  let b = bal - pre, wA = 0, put = 0, paid = 0, end = 0;
+  for (let m = 1; m <= n; m++){
+    let pay = 0;
+    if (b > 1e-6){ const it = b * r; pay = Math.min(p1, b + it); b = b + it - pay; if (b <= 1e-6){ b = 0; end = m; } }
+    const freed = p0 - pay; paid += pay; wA = wA * (1 + rm) + freed; put += freed;
+  }
+  if (!end) end = n;
+  const aftA = wA - Math.max(0, wA - put) * tax;
   const fvB = lump * Math.pow(1 + rm, n), aftB = fvB - Math.max(0, fvB - lump) * tax;
-  const diff = aftA - aftB;
+  const diff = aftA - aftB, intSaved = p0 * n - paid;
   const retB = lump > 0 ? (Math.pow(aftB / lump, 12 / n) - 1) * 100 : NaN;
+  const rows = [[t('r_ppPmt0'), M(p0)]];
+  if (short) rows.push([t('r_ppShorter'), fmtDur(Math.max(0, n - end))], [t('r_ppEnd'), fmtDur(end)]);
+  else rows.push([t('r_ppPmt1'), M(p1)], [t('r_ppSave'), M(p0 - p1)]);
+  if (fee > 0) rows.push([t('r_ppFeeRow'), M(fee)], [t('r_ppPre'), M(pre)]);
+  rows.push([t('r_ppIntSaved'), M(intSaved)],
+    [t('r_ppFinA'), M(aftA)], [t('r_ppFinB'), M(aftB)], [t('r_ppDiff'), M(diff), 'key'],
+    [t('r_ppRetB'), PC(retB)], [t('r_ppRetA'), PC(rate)]);
   return {
     hero: {label: diff >= 0 ? t('r_ppA') : t('r_ppB'), value: M(Math.abs(diff)), sub: t('r_ppSub')},
-    rows: [
-      [t('r_ppPmt0'), M(p0)], [t('r_ppPmt1'), M(p1)], [t('r_ppSave'), M(save)], [t('r_ppIntSaved'), M(save * n)],
-      [t('r_ppFinA'), M(aftA)], [t('r_ppFinB'), M(aftB)], [t('r_ppDiff'), M(diff), 'key'],
-      [t('r_ppRetB'), PC(retB)], [t('r_ppRetA'), PC(rate)]
-    ],
-    note: t('n_pp')
+    rows, note: t('n_pp') + (short ? ' ' + t('n_ppShort') : '')
   };
 }
 
 /* --- savings goal --- */
 function calcSaveGoal(){
   const mode = $('#sg_mode').value, goal = Math.max(0, v('sg_goal')), now = Math.max(0, v('sg_now')), rate = v('sg_rate'), infl = Math.max(0, v('sg_infl'));
-  const rm = mRate(rate);
+  const tax = clamp(v('sg_tax'), 0, 60) / 100, fee = clamp(v('sg_fee'), 0, 10) / 1200;
+  const rm = mRate(rate), g = (1 + rm) * (1 - fee);
+  const run = (dep, n) => { let b = now, f = 0; for (let m = 1; m <= n; m++){ const gr = b * (1 + rm); f += gr * fee; b = gr * (1 - fee) + dep; } const total = now + dep * n, tx = Math.max(0, b - total) * tax; return {b, f, total, tx, net: b - tx}; };
   let n, dep;
   if (mode === 'dep'){
     n = Math.max(1, Math.round(v('sg_years') * 12));
-    const g = Math.pow(1 + rm, n);
-    dep = Math.max(0, rm === 0 ? (goal - now) / n : (goal - now * g) * rm / (g - 1));
+    if (!tax && !fee){ const G = Math.pow(1 + rm, n); dep = Math.max(0, rm === 0 ? (goal - now) / n : (goal - now * G) * rm / (G - 1)); }
+    else if (run(0, n).net >= goal) dep = 0;
+    else { let lo = 0, hi = Math.max(1, goal); while (run(hi, n).net < goal && hi < 1e12) hi *= 2; for (let i = 0; i < 100; i++){ const mid = (lo + hi) / 2; if (run(mid, n).net < goal) lo = mid; else hi = mid; } dep = hi; }
   } else {
     dep = Math.max(0, v('sg_dep'));
     if (now >= goal) n = 0;
-    else if (rm === 0) n = dep > 0 ? Math.ceil((goal - now) / dep) : NaN;
-    else if (dep <= 0 && now <= 0) n = NaN;
-    else n = Math.min(1200, Math.ceil(Math.log((goal * rm + dep) / (now * rm + dep)) / Math.log(1 + rm)));
+    else if (!tax && !fee){
+      if (rm === 0) n = dep > 0 ? Math.ceil((goal - now) / dep) : NaN;
+      else if (dep <= 0 && now <= 0) n = NaN;
+      else n = Math.min(1200, Math.ceil(Math.log((goal * rm + dep) / (now * rm + dep)) / Math.log(1 + rm)));
+    } else {
+      let b = now, put = now; n = NaN;
+      for (let m = 1; m <= 1200; m++){ b = b * g + dep; put += dep; if (b - Math.max(0, b - put) * tax >= goal){ n = m; break; } }
+    }
   }
   if (!isFinite(n)) return {hero: {label: t('r_sgDep'), value: '—'}, rows: [], note: t('n_sg')};
   let b = now; const Y = [];
   for (let m = 1; m <= n; m++){
-    b = b * (1 + rm) + dep;
+    b = b * g + dep;
     if (m % 12 === 0 || m === n) Y.push({y: Math.ceil(m / 12), bal: b, dep: now + dep * m});
   }
-  const total = now + dep * n;
+  const R = run(dep, n), total = R.total;
   const real = goal / Math.pow(1 + infl / 100, n / 12);
+  const rows = [
+    [t('r_sgDep'), M(dep)], [t('r_sgTime'), fmtDur(n)], [t('r_sgDeposited'), M(total)], [t('r_sgInterest'), M(Math.max(0, R.b - total))]];
+  if (fee > 0) rows.push([t('r_sgFeeRow'), M(R.f)]);
+  rows.push([t('r_sgFinal'), M(R.b), tax > 0 ? '' : 'key']);
+  if (tax > 0) rows.push([t('r_sgTaxRow'), M(-R.tx)], [t('r_sgNet'), M(R.net), 'key']);
+  rows.push([t('r_sgReal'), M(real)]);
   return {
     hero: mode === 'dep' ? {label: t('r_sgDep'), value: M(dep), sub: t('r_sgTotal', {n: M(total)})} : {label: t('r_sgTime'), value: fmtDur(n), sub: t('r_sgTotal', {n: M(total)})},
-    rows: [
-      [t('r_sgDep'), M(dep)], [t('r_sgTime'), fmtDur(n)], [t('r_sgDeposited'), M(total)], [t('r_sgInterest'), M(Math.max(0, b - total))],
-      [t('r_sgFinal'), M(b), 'key'], [t('r_sgReal'), M(real)]
-    ],
+    rows,
     note: t('n_sg'),
     chart: {title: t('c_growth'), unit: t('w_year'), fmt: x => M(x),
       layers: [{name: t('l_deposits'), cls:'c-ink', values: Y.map(y => y.dep)}, {name: t('l_interest'), cls:'c-accent', values: Y.map(y => Math.max(0, y.bal - y.dep))}],
@@ -6971,7 +7130,8 @@ function calcRetire(){
   const have = Math.max(0, v('rt_have')), dep = Math.max(0, v('rt_dep')), r1 = v('rt_r1'), r2 = v('rt_r2');
   const need = Math.max(0, v('rt_need')), other = Math.max(0, v('rt_other')), infl = Math.max(0, v('rt_infl'));
   const y = ret - age, n = Math.round(y * 12), m = Math.round((life - ret) * 12);
-  const rm = mRate(r1);
+  const rfee = clamp(v('rt_fee'), 0, 10) / 1200, coef = Math.max(0, v('rt_coef'));
+  const rm = (1 + mRate(r1)) * (1 - rfee) - 1;
   const fv = have * Math.pow(1 + rm, n) + fvAnn(dep, rm, n);
   const f = Math.pow(1 + infl / 100, y);
   const gapM = Math.max(0, need - other);
@@ -6989,7 +7149,7 @@ function calcRetire(){
       [t('r_rtYears'), N(y, 1)], [t('r_rtFv'), M(fv)], [t('r_rtNeedCap'), M(K)], [t('r_rtGap'), M(lack), 'key'],
       [t('r_rtExtra'), M(extra), 'key'], [t('r_rtSust'), M(sust + other)], [t('r_rtNeedNom'), M(needNom)],
       [t('r_rtDur'), N(life - ret, 1)]
-    ],
+    ].concat(coef > 0 ? [[t('r_rtCoef', {c: N(coef, null, 1)}), M(fv / coef / f + other), 'key']] : []),
     warn: lack > 0 ? [t('w_rtLack')] : [],
     warnOk: lack <= 0,
     note: t('n_rt')
@@ -6997,29 +7157,35 @@ function calcRetire(){
 }
 
 /* --- credit card --- */
-function calcCredit(){
-  const bal0 = Math.max(0, v('cc_bal')), apr = Math.max(0, v('cc_apr')), mode = $('#cc_mode').value;
-  const pct = Math.max(0, v('cc_minPct')) / 100, floor = Math.max(0, v('cc_floor')), fix = Math.max(0, v('cc_pay'));
-  let bal = bal0, m = 0, paid = 0, int = 0, stuck = false;
-  const Y = [];
+function ccSim(bal0, apr, mode, pct, floor, fix, extra){
+  let bal = bal0, m = 0, paid = 0, int = 0, stuck = false; const Y = [];
   while (bal > 0.005 && m < 1200){
     m++;
     const i = bal * apr / 1200;
-    let pay = mode === 'min' ? Math.max(floor, bal * pct + i) : fix;
+    let pay = (mode === 'min' ? Math.max(floor, bal * pct + i) : fix) + extra;
     pay = Math.min(pay, bal + i);
     if (pay <= i + 0.005 && bal + i > pay){ stuck = true; break; }
     int += i; bal = bal + i - pay; paid += pay;
     if (m % 12 === 0) Y.push([m / 12, M(Math.max(0, bal))]);
   }
-  if (stuck) return {hero: {label: t('r_ccMonths'), value: '—'}, rows: [[t('r_ccMonths'), '—']], warn: [t('w_ccStuck')], note: t('n_cc')};
+  return {m, paid, int, stuck, Y};
+}
+function calcCredit(){
+  const bal0 = Math.max(0, v('cc_bal')), apr = Math.max(0, v('cc_apr')), mode = $('#cc_mode').value;
+  const pct = Math.max(0, v('cc_minPct')) / 100, floor = Math.max(0, v('cc_floor')), fix = Math.max(0, v('cc_pay'));
+  const extra = mode === 'min' ? Math.max(0, v('cc_extra')) : 0;
+  const R = ccSim(bal0, apr, mode, pct, floor, fix, extra), m = R.m, paid = R.paid, int = R.int;
+  if (R.stuck) return {hero: {label: t('r_ccMonths'), value: '—'}, rows: [[t('r_ccMonths'), '—']], warn: [t('w_ccStuck')], note: t('n_cc')};
+  const rows = [[t('r_ccMonths'), fmtDur(m)], [t('r_ccPaid'), M(paid)], [t('r_ccInt'), M(int), 'key'], [t('r_ccShare'), PC(paid > 0 ? int / paid * 100 : NaN)]];
+  if (extra > 0){ const B = ccSim(bal0, apr, mode, pct, floor, fix, 0); if (!B.stuck) rows.push([t('r_ccNoExtra'), fmtDur(B.m)], [t('r_ccExtraSaves'), M(B.int - int), 'key']); }
   return {
     hero: {label: t('r_ccMonths'), value: fmtDur(m), sub: t('r_ccIntLine', {n: M(int)})},
-    rows: [[t('r_ccMonths'), fmtDur(m)], [t('r_ccPaid'), M(paid)], [t('r_ccInt'), M(int), 'key'], [t('r_ccShare'), PC(paid > 0 ? int / paid * 100 : NaN)]],
+    rows,
     warn: m >= 1200 ? [t('w_ccLong')] : [],
     note: t('n_cc'),
     split: {title: t('r_ccPaid'), items: [
       {name: t('r_ccPrincipal'), v: bal0, cls:'c-ink', fmt: M(bal0)}, {name: t('r_ccInt'), v: int, cls:'c-warm', fmt: M(int)}]},
-    table: Y.length ? {title: t('t_yearly'), head: [t('w_year'), t('h_balance')], rows: Y} : undefined
+    table: R.Y.length ? {title: t('t_yearly'), head: [t('w_year'), t('h_balance')], rows: R.Y} : undefined
   };
 }
 
@@ -7080,35 +7246,41 @@ function calcCar(){
 /* --- average cost --- */
 function calcAvgCost(){
   const sh = Math.max(0, v('da_sh')), avg = Math.max(0, v('da_avg')), buy = Math.max(0, v('da_buy')), pr = Math.max(0.0001, v('da_pr')), cur_ = Math.max(0, v('da_cur'));
-  const ns = buy / pr, tot = sh + ns, newAvg = tot > 0 ? (sh * avg + buy) / tot : 0;
-  const invested = sh * avg + buy;
+  const fee = Math.max(0, v('da_fee')), tgt = Math.max(0, v('da_tgt'));
+  const ns = buy / pr, tot = sh + ns;
+  const invested = sh * avg + buy + (buy > 0 ? fee : 0), newAvg = tot > 0 ? invested / tot : 0;
   const plBefore = sh * (cur_ - avg), plAfter = tot * cur_ - invested;
-  return {
-    hero: {label: t('r_daAvg'), value: M(newAvg, 2), sub: t('r_daOld', {n: M(avg, 2)})},
-    rows: [
-      [t('r_daNew'), N(ns, 3)], [t('r_daTot'), N(tot, 3)], [t('r_daAvg'), M(newAvg, 2), 'key'], [t('r_daInv'), M(invested)],
-      [t('r_daPlB'), M(plBefore)], [t('r_daPlA'), M(plAfter), 'key'],
-      [t('r_daUpB'), PC(cur_ > 0 && avg > 0 ? (avg / cur_ - 1) * 100 : NaN)], [t('r_daUpA'), PC(cur_ > 0 && newAvg > 0 ? (newAvg / cur_ - 1) * 100 : NaN)]
-    ],
-    note: t('n_da')
-  };
+  const rows = [
+    [t('r_daNew'), N(ns, 3)], [t('r_daTot'), N(tot, 3)], [t('r_daAvg'), M(newAvg, 2), 'key'], [t('r_daInv'), M(invested)]];
+  if (fee > 0 && buy > 0) rows.push([t('r_daFeeRow'), M(fee)]);
+  rows.push([t('r_daPlB'), M(plBefore)], [t('r_daPlA'), M(plAfter), 'key'],
+    [t('r_daUpB'), PC(cur_ > 0 && avg > 0 ? (avg / cur_ - 1) * 100 : NaN)], [t('r_daUpA'), PC(cur_ > 0 && newAvg > 0 ? (newAvg / cur_ - 1) * 100 : NaN)]);
+  const warn = [];
+  if (tgt > 0){
+    const x = Math.abs(tgt - pr) > 1e-9 ? sh * (avg - tgt) / (tgt - pr) : NaN;   // units to buy at this price so the average becomes the target
+    if (isFinite(x) && x >= 0){ rows.push([t('r_daTgtU', {x: M(tgt, 2)}), N(x, 2), 'key'], [t('r_daTgtC'), M(x * pr)]); }
+    else warn.push(t('w_daTgt', {x: M(tgt, 2), p: M(pr, 2)}));
+  }
+  return {hero: {label: t('r_daAvg'), value: M(newAvg, 2), sub: t('r_daOld', {n: M(avg, 2)})}, rows, warn, note: t('n_da')};
 }
 
 /* --- break-even --- */
 function calcBreakEven(){
   const fix = Math.max(0, v('be_fix')), price = Math.max(0, v('be_price')), vc = Math.max(0, v('be_var')), tg = Math.max(0, v('be_target')), cu = Math.max(0, v('be_units'));
+  const tax = clamp(v('be_tax'), 0, 90) / 100;
   const cm = price - vc;
   if (cm <= 0) return {hero: {label: t('r_beUnits'), value: '—'}, rows: [], warn: [t('w_beCm')], note: t('n_be')};
-  const u = fix / cm, ut = (fix + tg) / cm, profit = cu * cm - fix;
+  const u = fix / cm, ut = (fix + tg / (1 - tax)) / cm, profit = cu * cm - fix, net = profit > 0 ? profit * (1 - tax) : profit;
   const tbl = [0.5, 1, 1.5, 2].map(k => [N(u * k, 0), M(u * k * price), M(u * k * cm - fix)]);
+  const rows = [
+    [t('r_beCm'), M(cm, 2)], [t('r_beCmPct'), PC(price > 0 ? cm / price * 100 : NaN)], [t('r_beUnits'), N(Math.ceil(u)), 'key'],
+    [t('r_beRevRow'), M(u * price)], [t(tax > 0 ? 'r_beUnitsTN' : 'r_beUnitsT'), N(Math.ceil(ut)), 'key'], [t('r_beRevT'), M(ut * price)],
+    [t('r_beProfit'), M(profit)]];
+  if (tax > 0) rows.push([t('r_beProfitNet'), M(net)]);
+  rows.push([t('r_beMos'), PC(cu > 0 ? (cu - u) / cu * 100 : NaN)]);
   return {
     hero: {label: t('r_beUnits'), value: N(Math.ceil(u)), sub: t('r_beRev', {n: M(u * price)})},
-    rows: [
-      [t('r_beCm'), M(cm, 2)], [t('r_beCmPct'), PC(price > 0 ? cm / price * 100 : NaN)], [t('r_beUnits'), N(Math.ceil(u)), 'key'],
-      [t('r_beRev'), M(u * price)], [t('r_beUnitsT'), N(Math.ceil(ut)), 'key'], [t('r_beRevT'), M(ut * price)],
-      [t('r_beProfit'), M(profit)], [t('r_beMos'), PC(cu > 0 ? (cu - u) / cu * 100 : NaN)]
-    ],
-    note: t('n_be'),
+    rows, note: t('n_be'),
     table: {title: t('t_beTable'), head: [t('h_units'), t('h_revenue'), t('h_profit')], rows: tbl}
   };
 }
@@ -7178,7 +7350,7 @@ function calcNetWorth(){
   const inc = g('nw_inc'), exp = g('nw_exp'), save = inc - exp;
   const liquid = A.cash + A.inv, bad = Lb.loan + Lb.card + Lb.oth;
   const runway = exp > 0 ? A.cash / exp : NaN;
-  const passive = A.inv * 0.04 / 12;
+  const wdr = clamp(v('nw_wd') || 4, 0.5, 10), passive = A.inv * wdr / 100 / 12;
   const stage = nw < 0 ? 0 : bad > 0 ? 1 : (exp > 0 && A.cash < exp * 3) ? 2 : (exp > 0 && passive < exp) ? 3 : 4;
   return {
     hero: {label: t('r_nwNet'), value: M(nw), sub: t('r_nwStage', {s: t(STAGE_KEYS[stage])})},
@@ -7186,7 +7358,7 @@ function calcNetWorth(){
       [t('r_nwAssets'), M(ta)], [t('r_nwLiab'), M(tl)], [t('r_nwNet'), M(nw), 'key'],
       [t('r_nwLiquid'), M(liquid - bad)], [t('r_nwDebtRatio'), PC(ta > 0 ? tl / ta * 100 : NaN)],
       [t('r_nwSave'), M(save)], [t('r_nwSaveRate'), PC(inc > 0 ? save / inc * 100 : NaN)],
-      [t('r_nwRunway'), isFinite(runway) ? N(runway, 1) : '—'], [t('r_nwPassive'), M(passive)],
+      [t('r_nwRunway'), isFinite(runway) ? N(runway, 1) : '—'], [t('r_nwPassiveN', {p: PC(wdr)}), M(passive)],
       [t('r_nwStageRow'), t(STAGE_KEYS[stage]), 'key']
     ],
     warn: nw < 0 ? [t('w_nwMinus')] : [], warnOk: false,
@@ -7241,23 +7413,24 @@ function calcDebtPlan(){
 function calcFire(){
   const age = v('fi_age'), exp = Math.max(0, v('fi_exp')), have = Math.max(0, v('fi_have')), dep = Math.max(0, v('fi_dep'));
   const r = v('fi_ret'), infl = Math.max(0, v('fi_infl')), wd = Math.max(0.5, v('fi_wd'));
+  const oth = Math.min(exp, Math.max(0, v('fi_other'))), cover = exp - oth;
   const rm = mRate(r), im = mRate(infl);
-  const todayNum = exp * 12 / (wd / 100);
+  const todayNum = cover * 12 / (wd / 100);
   let bal = have, m = 0, reached = bal >= todayNum;
   while (!reached && m < 1200){
     m++; bal = bal * (1 + rm) + dep * Math.pow(1 + im, 0);
     if (bal >= todayNum * Math.pow(1 + im, m / 12)) reached = true;
   }
   const yrs = m / 12, target = todayNum * Math.pow(1 + im, yrs);
-  const coastAt = 65, cy = Math.max(0, coastAt - age);
+  const coastAt = clamp(v('fi_cAge') || 65, 30, 90), cy = Math.max(0, coastAt - age);
   const coast = todayNum * Math.pow(1 + im, cy) / Math.pow(1 + rm, cy * 12);
-  const alt = [3, 3.5, 4, 5].map(w => [PC(w), M(exp * 12 / (w / 100))]);
+  const alt = [3, 3.5, 4, 5].map(w => [PC(w), M(cover * 12 / (w / 100))]);
   return {
     hero: reached ? {label: t('r_fiYears'), value: fmtDur(m), sub: t('r_fiAge', {a: N(age + yrs, 1)})} : {label: t('r_fiYears'), value: '—', sub: t('w_fiFar')},
     rows: [
-      [t('r_fiNum'), M(todayNum), 'key'], [t('r_fiNumNom'), reached ? M(target) : '—'], [t('r_fiIncome'), M(exp)],
+      [t('r_fiNum'), M(todayNum), 'key'], [t('r_fiNumNom'), reached ? M(target) : '—'], [t('r_fiIncome'), M(cover)],
       [t('r_fiYears'), reached ? fmtDur(m) : '—', 'key'], [t('r_fiProgress'), PC(todayNum > 0 ? Math.min(100, have / todayNum * 100) : NaN)],
-      [t('r_fiCoast'), M(coast)], [t('r_fiCoastHave'), have >= coast ? t('o_yes') : t('o_no')]
+      [t('r_fiCoastN', {a: N(coastAt)}), M(coast)], [t('r_fiCoastHave'), have >= coast ? t('o_yes') : t('o_no')]
     ],
     warn: reached ? [] : [t('w_fiFar')],
     note: t('n_fi'),
@@ -7513,6 +7686,7 @@ function joPack(o){
   const save = r.pens + r.study + r.erP + r.erS + r.erSt, perks = Math.max(0, +o.carv || 0) + Math.max(0, +o.perk || 0);
   return {net: r.net, save, perks, total: r.net + save + perks, gross: r.gross};
 }
+const sgM = x => (x > 0.5 ? '+' : x < -0.5 ? '−' : '') + MI(Math.abs(x));
 function calcJobOffer(){
   const L = joList().map((o, i) => Object.assign(joPack(o), {name: asEsc(joName(o, i))}));
   const S = L.slice().sort((a, b) => b.total - a.total), best = S[0], next = S[1];
@@ -7520,9 +7694,10 @@ function calcJobOffer(){
   return {
     hero: next && best.total - next.total < 1 ? {label: t('r_joTie'), value: MI(best.total), sub: t('r_joVs', {x: next.name})}
       : next ? {label: t('r_joBest', {x: best.name}), value: MI(best.total - next.total), sub: t('r_joVs', {x: next.name})} : {label: t('r_joTotalOf', {x: best.name}), value: MI(best.total), sub: t('r_joNet') + ': ' + MI(best.net)},
-    rows: S.map(s => [t('r_joTotalOf', {x: s.name}), MI(s.total), s === best ? 'key' : '']).concat(S.map(s => [t('r_joNetOf', {x: s.name}), MI(s.net)])),
+    rows: next ? [[t('r_joDNet', {x: best.name, y: next.name}), sgM(best.net - next.net)], [t('r_joDSave'), sgM(best.save - next.save)], [t('r_joDPerk'), sgM(best.perks - next.perks)], [t('r_joDYear'), sgM((best.total - next.total) * 12), 'key']]
+      : [[t('r_joNet'), MI(best.net)], [t('r_joSave'), MI(best.save)], [t('r_joPerks'), MI(best.perks)]],
     note: t('n_jo'),
-    table: {title: t('t_compare'), open: true, head: ['', t('r_joNet'), t('r_joSave'), t('r_joPerks'), t('r_joTotal')], rows: S.map(s => [star(s), MI(s.net), MI(s.save), MI(s.perks), MI(s.total)])}
+    table: next && {title: t('t_compare'), open: true, head: ['', t('r_joTotal'), t('r_joNet'), t('r_joSave'), t('r_joPerks')], rows: S.map(s => [star(s), MI(s.total), MI(s.net), MI(s.save), MI(s.perks)])}
   };
 }
 
@@ -7538,11 +7713,13 @@ function calcFreelance(){
   const hrs = days * hpd * bill;
   let lo = 0, hi = want * 3 + 100000;
   for (let i = 0; i < 80; i++){ const mid = (lo + hi) / 2; if (selfNet(mid, pts).net < want) lo = mid; else hi = mid; }
-  const profit = (lo + hi) / 2, s = selfNet(profit, pts), rev = profit + exp, rate = hrs > 0 ? rev / hrs : 0;
+  const buf = clamp(v('fl_buf'), 0, 200) / 100, profit = (lo + hi) / 2, s = selfNet(profit, pts), rev0 = profit + exp, rate0 = hrs > 0 ? rev0 / hrs : 0;
+  const rev = rev0 * (1 + buf), rate = rate0 * (1 + buf);
   const murshe = $('#fl_vat').value === 'murshe';
   const rows = [[t('r_flRate'), M(rate)], [t('r_flDay'), M(rate * hpd * bill)], [t('r_flRevM'), M(rev / 12)], [t('r_flRevY'), M(rev), 'key'],
     [t('r_flHours'), N(hrs, 0)], [t('r_flTaxNi'), M((s.tax + s.ni) / 12)], [t('r_flExp'), M(exp / 12)], [t('r_flNet'), M(s.net / 12)]];
   if (murshe) rows.splice(1, 0, [t('r_flRateVat'), M(rate * (1 + IL26.vat)), 'key']);
+  if (buf > 0) rows.splice(murshe ? 2 : 1, 0, [t('r_flRateMin'), M(rate0)]);
   return {hero: {label: t('r_flRate'), value: M(rate), sub: t(murshe ? 'r_flSubVat' : 'r_flSub', {v: M(rate * (1 + IL26.vat)), h: N(hrs, 0)})}, rows, note: t('n_fl')};
 }
 
@@ -7671,19 +7848,21 @@ function calcEvFuel(){
   const km = Math.max(0, v('ev_km')), fp = Math.max(0, v('ev_fp')), fc = Math.max(0, v('ev_fc')), kwh = Math.max(0, v('ev_kwh')), ec = Math.max(0, v('ev_ec'));
   const pub = clamp(v('ev_pub'), 0, 100) / 100, pubp = Math.max(0, v('ev_pubp')), diff = v('ev_diff');
   const fuel = km / 100 * fc * fp + Math.max(0, v('ev_mf')), elec = km / 100 * ec * ((1 - pub) * kwh + pub * pubp) + Math.max(0, v('ev_me'));
-  const save = fuel - elec, be = save > 0 && diff > 0 ? diff / save : NaN;
+  const save = fuel - elec, be = save > 0 && diff > 0 ? diff / save : NaN, hz = clamp(v('ev_hz') || 5, 1, 30);
   return {hero: {label: t(save >= 0 ? 'r_evSave' : 'r_evMore'), value: M(Math.abs(save)), sub: isFinite(be) ? t('r_evBe', {n: N(be, 1)}) : t('r_evPerMonth', {m: M(Math.abs(save) / 12)})},
-    rows: [[t('r_evFuelY'), M(fuel)], [t('r_evElecY'), M(elec)], [t('r_evSaveM'), M(save / 12), 'key'], [t('r_evKmF'), M(km ? fuel / km : 0, 2)], [t('r_evKmE'), M(km ? elec / km : 0, 2)], [t('r_evBeRow'), isFinite(be) ? t('r_evYears', {n: N(be, 1)}) : '—'], [t('r_ev5'), M(save * 5 - Math.max(0, diff))]],
+    rows: [[t('r_evFuelY'), M(fuel)], [t('r_evElecY'), M(elec)], [t('r_evSaveM'), M(save / 12), 'key'], [t('r_evKmF'), M(km ? fuel / km : 0, 2)], [t('r_evKmE'), M(km ? elec / km : 0, 2)], [t('r_evBeRow'), isFinite(be) ? t('r_evYears', {n: N(be, 1)}) : '—'], [t('r_evHzRow', {n: N(hz, null, 1)}), M(save * hz - Math.max(0, diff))]],
     note: t('n_ev'), split: {title: t('r_evYearly'), items: [{name: t('l_evFuel'), v: fuel, cls: 'c-warm', fmt: M(fuel)}, {name: t('l_evElec'), v: elec, cls: 'c-accent', fmt: M(elec)}]}};
 }
 
 /* --- appliance power cost --- */
 function calcAppliance(){
   const w = Math.max(0, v('ap_w')), h = clamp(v('ap_h'), 0, 24), d = clamp(v('ap_d'), 0, 31), tar = Math.max(0, v('ap_tar')), q = Math.max(1, v('ap_q'));
-  const kwhM = w / 1000 * h * d * q, cost = kwhM * tar;
-  return {hero: {label: t('r_apMonth'), value: M(cost, 2), sub: t('r_apSub', {k: N(kwhM, 1), y: M(cost * 12)})},
-    rows: [[t('r_apHour'), M(w / 1000 * tar * q, 2)], [t('r_apDay'), M(w / 1000 * h * tar * q, 2)], [t('r_apKwh'), N(kwhM, 1) + ' kWh'], [t('r_apMonth'), M(cost, 2), 'key'], [t('r_apYear'), M(cost * 12), 'key']],
-    note: t('n_ap')};
+  const sb = Math.max(0, v('ap_sb')), kwhSb = sb / 1000 * (24 - h) * d * q;
+  const kwhM = w / 1000 * h * d * q + kwhSb, cost = kwhM * tar;
+  const rows = [[t('r_apHour'), M(w / 1000 * tar * q, 2)], [t('r_apDay'), M((w / 1000 * h + sb / 1000 * (24 - h)) * tar * q, 2)], [t('r_apKwh'), N(kwhM, 1) + ' kWh']];
+  if (sb > 0) rows.push([t('r_apSbRow'), M(kwhSb * tar, 2)]);
+  rows.push([t('r_apMonth'), M(cost, 2), 'key'], [t('r_apYear'), M(cost * 12), 'key']);
+  return {hero: {label: t('r_apMonth'), value: M(cost, 2), sub: t('r_apSub', {k: N(kwhM, 1), y: M(cost * 12)})}, rows, note: t('n_ap')};
 }
 
 /* --- unit price at the supermarket --- */
@@ -7700,7 +7879,9 @@ function calcUnitPrice(){
   dims.forEach(d => { const b = bestOf(d); L.filter(x => x.dim === d && isFinite(x.per)).sort((a, c) => a.per - c.per).forEach(x => {
     const more = b.per > 0 ? (x.per / b.per - 1) * 100 : 0;
     trows.push([(x === b && L.filter(y => y.dim === d).length > 1 ? '★ ' : '') + x.name, M(x.price, 2), M(x.per, 2) + ' ' + unit(d), x === b ? '—' : sgnPC(more)]);
-    rows.push([x.name + ' · ' + unit(d), M(x.per, 2), x === b ? 'key' : '']); }); });
+  }); const D = L.filter(x => x.dim === d && isFinite(x.per)).sort((a, c) => a.per - c.per);
+    if (D.length > 1){ rows.push([t('r_upSaveVs', {u: unit(d), x: D[1].name}), M(D[1].per - D[0].per, 2), 'key']); if (D.length > 2) rows.push([t('r_upWorst', {x: D[D.length - 1].name}), sgnPC((D[D.length - 1].per / D[0].per - 1) * 100)]); }
+  });
   const second = L.filter(x => x.dim === main.d && isFinite(x.per) && x !== main.b).sort((a, b) => a.per - b.per)[0];
   return {hero: {label: t('r_upBest', {x: main.b.name}), value: M(main.b.per, 2), sub: unit(main.d) + (second ? ' · ' + t('r_upCheaper', {p: PC((second.per / main.b.per - 1) * 100), x: second.name}) : '')},
     rows, note: t('n_up') + (dims.length > 1 ? ' ' + t('n_upMix') : ''),
@@ -7749,8 +7930,12 @@ function calcWorkDays(){
     if (hk){ hols.push([t(hk), d.toLocaleDateString(locOf(), {day: 'numeric', month: 'short', year: 'numeric'})]); continue; }
     work++;
   }
-  return {hero: {label: t('r_wdWork'), value: N(work, 0), sub: t('r_wdSub', {c: cal, w: wkend, h: hols.length})},
-    rows: [[t('r_wdCal'), cal], [t('r_wdWork'), work, 'key'], [t('r_wdWkend'), wkend], [t('r_wdHol'), hols.length], [t('r_wdWeeks'), N(cal / 7, 1)]],
+  const off = Math.min(work, Math.max(0, Math.round(v('wd_off')))), net = work - off, hpd = Math.max(0, v('wd_hrs')) || (six ? 7 : 8.4);
+  const rows = [[t('r_wdCal'), cal], [t('r_wdWork'), net, 'key'], [t('r_wdWkend'), wkend], [t('r_wdHol'), hols.length]];
+  if (off > 0) rows.push([t('r_wdOffRow'), off]);
+  rows.push([t('r_wdHrs', {h: N(hpd, null, 1)}), N(net * hpd, 1)], [t('r_wdWeeks'), N(cal / 7, 1)]);
+  return {hero: {label: t('r_wdWork'), value: N(net, 0), sub: t('r_wdSub', {c: cal, w: wkend, h: hols.length})},
+    rows,
     note: t('n_wd'), table: hols.length ? {title: t('t_wdHol'), open: true, head: [t('r_wdHolName'), t('r_wdDate')], rows: hols} : null};
 }
 
@@ -9365,8 +9550,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "7.3", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.011735';
+var CHANGELOG = [{"v": "7.4", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.020216';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -10184,10 +10369,10 @@ async function mvCopy(){
   try { await navigator.clipboard.writeText(MV.pkg); mvSt('mv_copied', 'ok'); }
   catch (e) { const ta = document.createElement('textarea'); ta.value = MV.pkg; ta.readOnly = true; ta.className = 'lookup mv-show'; $('#mv_st').after(ta); ta.select(); mvSt('mv_selectCopy', 'new'); }
 }
-async function mvFile(){
+function mvFile(){
   if (!MV.pkg) return;
-  const r = await fileSave(MV.pkg, 'fincalc-' + (FUSER.replace(/[^\w.-]/g, '') || 'data') + '.txt', 'text/plain');
-  if (r === 'saved') mvSt('mv_fileOk', 'ok'); else if (r === 'fail') mvCopy();
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([MV.pkg], {type: 'text/plain'})); a.download = 'fincalc-' + FUSER.replace(/[^\w.-]/g, '') + '.txt';
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); mvSt('mv_fileOk', 'ok');
 }
 async function mvGo(){
   if (!(window.crypto && crypto.subtle)) return mvSt('m_nocrypto', 'bad');
@@ -11390,7 +11575,7 @@ applyLang = function(){ const r = _alFg.apply(this, arguments); fgRender(); lvRe
 figApply(true);
 
 /* ================= live indices: official price indices and market indices, used across the app and editable ================= */
-var IX_BUILT = {"idx":{"cpi":{"code":"120010","name":"Consumer Price Index - General","m":"2026-08","v":105.8,"base":"Average 2024","mom":0.7,"yoy":1.5,"ytd":2.12,"hist":[["2005-01",70.6175],["2005-02",70.7588],["2005-03",70.6175],["2005-04",71.1119],["2005-05",71.3237],["2005-06",71.3943],["2005-07",72.1711],["2005-08",72.3124],["2005-09",72.383],["2005-10",72.9479],["2005-11",72.8773],["2005-12",72.7361],["2006-01",72.5242],["2006-02",72.9479],["2006-03",73.1598],["2006-04",73.7953],["2006-05",73.7953],["2006-06",73.8659],["2006-07",73.9366],["2006-08",73.9366],["2006-09",73.301],["2006-10",72.8067],["2006-11",72.6654],["2006-12",72.6654],["2007-01",72.5928],["2007-02",72.3728],["2007-03",72.5195],["2007-04",72.8861],["2007-05",72.8861],["2007-06",73.3994],["2007-07",74.206],["2007-08",74.7192],["2007-09",74.3526],["2007-10",74.4259],["2007-11",74.7192],["2007-12",75.1592],["2008-01",75.1592],["2008-02",75.0125],["2008-03",75.2325],["2008-04",76.3324],["2008-05",76.8457],["2008-06",76.919],["2008-07",77.7989],["2008-08",78.4589],["2008-09",78.4589],["2008-10",78.5322],["2008-11",78.0922],["2008-12",78.0189],["2009-01",77.6288],["2009-02",77.5517],["2009-03",77.9372],["2009-04",78.7081],["2009-05",79.0164],["2009-06",79.7102],["2009-07",80.5582],["2009-08",80.9436],["2009-09",80.7124],["2009-10",80.8666],["2009-11",81.0978],["2009-12",81.0978],["2010-01",80.5582],["2010-02",80.3269],["2010-03",80.404],["2010-04",81.0978],["2010-05",81.4062],["2010-06",81.6375],["2010-07",82.0229],["2010-08",82.4083],["2010-09",82.6396],["2010-10",82.8709],["2010-11",82.948],["2010-12",83.2563],["2011-01",83.4228],["2011-02",83.6682],["2011-03",83.8318],["2011-04",84.3225],["2011-05",84.7314],["2011-06",85.0586],["2011-07",84.8132],["2011-08",85.2222],["2011-09",85.0586],["2011-10",85.1404],["2011-11",85.0586],["2011-12",85.0586],["2012-01",85.0586],["2012-02",85.0586],["2012-03",85.3857],["2012-04",86.1218],["2012-05",86.1218],["2012-06",85.8764],["2012-07",85.9582],["2012-08",86.8579],["2012-09",86.8579],["2012-10",86.6943],["2012-11",86.2854],["2012-12",86.449],["2013-01",86.2761],["2013-02",86.2761],["2013-03",86.4481],["2013-04",86.7922],["2013-05",86.8782],["2013-06",87.5663],["2013-07",87.8244],["2013-08",87.9964],["2013-09",87.9964],["2013-10",88.2545],["2013-11",87.9104],["2013-12",87.9964],["2014-01",87.4803],["2014-02",87.3083],["2014-03",87.5663],["2014-04",87.6523],["2014-05",87.7384],["2014-06",87.9964],["2014-07",88.0824],["2014-08",87.9964],["2014-09",87.7384],["2014-10",87.9964],["2014-11",87.8244],["2014-12",87.8244],["2015-01",87.034],["2015-02",86.4198],["2015-03",86.683],["2015-04",87.2094],["2015-05",87.3849],["2015-06",87.6481],["2015-07",87.8236],["2015-08",87.6481],["2015-09",87.2972],["2015-10",87.3849],["2015-11",87.034],["2015-12",86.9462],["2016-01",86.5076],["2016-02",86.2443],["2016-03",86.0689],["2016-04",86.4198],["2016-05",86.683],["2016-06",86.9462],["2016-07",87.2972],["2016-08",87.034],["2016-09",86.9462],["2016-10",87.1217],["2016-11",86.7708],["2016-12",86.7708],["2017-01",86.5972],["2017-02",86.5972],["2017-03",86.8575],["2017-04",87.0311],["2017-05",87.3782],["2017-06",86.7708],["2017-07",86.684],["2017-08",86.9443],["2017-09",87.0311],["2017-10",87.2914],["2017-11",87.0311],["2017-12",87.1178],["2018-01",86.684],["2018-02",86.7708],["2018-03",87.0311],["2018-04",87.3782],["2018-05",87.812],["2018-06",87.8988],["2018-07",87.8988],["2018-08",87.9855],["2018-09",88.0723],["2018-10",88.3326],["2018-11",88.0723],["2018-12",87.812],["2019-01",87.7242],["2019-02",87.8118],["2019-03",88.25],["2019-04",88.5129],["2019-05",89.1264],["2019-06",88.6006],["2019-07",88.3377],["2019-08",88.5129],["2019-09",88.3377],["2019-10",88.6882],["2019-11",88.3377],["2019-12",88.3377],["2020-01",87.9871],["2020-02",87.8995],["2020-03",88.25],["2020-04",87.9871],["2020-05",87.7242],["2020-06",87.6366],["2020-07",87.8118],["2020-08",87.8118],["2020-09",87.7242],["2020-10",87.9871],["2020-11",87.8118],["2020-12",87.7242],["2021-01",87.6365],["2021-02",87.9002],["2021-03",88.4276],["2021-04",88.6913],["2021-05",89.0429],["2021-06",89.1308],["2021-07",89.4824],["2021-08",89.7461],["2021-09",89.9219],["2021-10",90.0098],["2021-11",89.9219],["2021-12",90.1856],["2022-01",90.3614],["2022-02",90.9767],["2022-03",91.5041],["2022-04",92.2073],["2022-05",92.7347],["2022-06",93.0863],["2022-07",94.1411],["2022-08",93.8774],["2022-09",94.0532],["2022-10",94.5806],["2022-11",94.6685],["2022-12",94.9322],["2023-01",95.217],["2023-02",95.6824],["2023-03",96.0547],["2023-04",96.7993],["2023-05",96.9854],["2023-06",96.9854],["2023-07",97.2647],["2023-08",97.73],["2023-09",97.637],["2023-10",98.1023],["2023-11",97.8231],["2023-12",97.73],["2024-01",97.73],["2024-02",98.1023],["2024-03",98.6608],["2024-04",99.4985],["2024-05",99.6846],["2024-06",99.7777],["2024-07",100.3362],["2024-08",101.2669],["2024-09",101.0808],["2024-10",101.5462],["2024-11",101.1739],["2024-12",100.8946],["2025-01",101.5],["2025-02",101.5],["2025-03",102.0],["2025-04",103.1],["2025-05",102.8],["2025-06",103.1],["2025-07",103.5],["2025-08",104.2],["2025-09",103.6],["2025-10",104.1],["2025-11",103.6],["2025-12",103.6],["2026-01",103.3],["2026-02",103.5],["2026-03",103.9],["2026-04",105.1],["2026-05",104.8],["2026-06",104.8],["2026-07",105.1],["2026-08",105.8]]},"build":{"code":"200010","name":"Price index of input in residential building - general","m":"2026-08","v":103.9,"base":"July 2025","mom":0.4,"yoy":3.5,"ytd":2.67,"hist":[["2005-01",56.8937],["2005-02",56.9482],["2005-03",57.1117],["2005-04",57.2752],["2005-05",57.3842],["2005-06",57.6566],["2005-07",59.2915],["2005-08",60.8719],["2005-09",61.0354],["2005-10",60.7084],["2005-11",60.1635],["2005-12",59.782],["2006-01",60.4904],["2006-02",60.7084],["2006-03",61.0354],["2006-04",61.4714],["2006-05",61.8528],["2006-06",62.4523],["2006-07",62.9972],["2006-08",63.4332],["2006-09",63.7057],["2006-10",63.4877],["2006-11",63.4877],["2006-12",63.3242],["2007-01",63.9237],["2007-02",64.0327],["2007-03",64.1962],["2007-04",64.1962],["2007-05",64.0872],["2007-06",64.5231],["2007-07",65.2316],["2007-08",65.3951],["2007-09",65.4496],["2007-10",65.3406],["2007-11",65.2861],["2007-12",65.2861],["2008-01",65.5585],["2008-02",65.2861],["2008-03",65.4496],["2008-04",66.3215],["2008-05",67.3569],["2008-06",68.0654],["2008-07",69.1553],["2008-08",69.2643],["2008-09",68.8283],["2008-10",67.6839],["2008-11",67.5204],["2008-12",67.4114],["2009-01",67.0844],["2009-02",67.0844],["2009-03",67.0844],["2009-04",67.1389],["2009-05",67.1389],["2009-06",67.1934],["2009-07",67.4114],["2009-08",67.3569],["2009-09",67.3569],["2009-10",67.1934],["2009-11",67.3024],["2009-12",67.4114],["2010-01",67.6294],["2010-02",67.9564],["2010-03",68.3923],["2010-04",68.9918],["2010-05",69.1553],["2010-06",68.9918],["2010-07",68.9373],["2010-08",69.2643],["2010-09",69.3733],["2010-10",69.4278],["2010-11",69.6457],["2010-12",70.0272],["2011-01",70.4632],["2011-02",70.8991],["2011-03",70.8991],["2011-04",70.8991],["2011-05",71.4441],["2011-06",71.9346],["2011-07",72.0981],["2011-08",72.3143],["2011-09",72.5306],["2011-10",72.6027],["2011-11",72.7469],["2011-12",72.6748],["2012-01",72.8911],["2012-02",73.2516],["2012-03",73.4679],["2012-04",73.9726],["2012-05",74.0447],["2012-06",74.261],["2012-07",74.4773],["2012-08",74.7657],["2012-09",74.7657],["2012-10",74.7657],["2012-11",74.982],["2012-12",75.0541],["2013-01",75.4146],["2013-02",75.5588],["2013-03",75.5588],["2013-04",75.4146],["2013-05",75.6309],["2013-06",75.7751],["2013-07",75.7751],["2013-08",75.8472],["2013-09",75.9913],["2013-10",76.0634],["2013-11",76.1355],["2013-12",76.1355],["2014-01",76.3518],["2014-02",76.3518],["2014-03",76.2797],["2014-04",76.3518],["2014-05",76.4239],["2014-06",76.3518],["2014-07",76.2797],["2014-08",76.3518],["2014-09",76.2797],["2014-10",76.496],["2014-11",76.6402],["2014-12",76.7123],["2015-01",76.7844],["2015-02",76.7123],["2015-03",76.8565],["2015-04",76.8565],["2015-05",76.8565],["2015-06",76.8565],["2015-07",76.9286],["2015-08",77.0728],["2015-09",77.1449],["2015-10",77.217],["2015-11",77.1449],["2015-12",77.4333],["2016-01",77.6496],["2016-02",77.5054],["2016-03",77.5054],["2016-04",77.7217],["2016-05",77.8659],["2016-06",77.938],["2016-07",78.2264],["2016-08",78.2264],["2016-09",78.4427],["2016-10",78.4427],["2016-11",78.5869],["2016-12",78.5869],["2017-01",78.5869],["2017-02",78.7311],["2017-03",78.7311],["2017-04",78.8753],["2017-05",78.8753],["2017-06",79.0195],["2017-07",79.1637],["2017-08",79.5242],["2017-09",79.6683],["2017-10",79.8125],["2017-11",79.8846],["2017-12",80.1009],["2018-01",80.5335],["2018-02",80.7498],["2018-03",80.8219],["2018-04",81.0382],["2018-05",81.1103],["2018-06",81.1824],["2018-07",81.3987],["2018-08",81.5429],["2018-09",81.5429],["2018-10",81.615],["2018-11",81.615],["2018-12",81.6871],["2019-01",82.1918],["2019-02",82.2639],["2019-03",82.2639],["2019-04",82.336],["2019-05",82.4081],["2019-06",82.4081],["2019-07",82.4081],["2019-08",82.4802],["2019-09",82.4802],["2019-10",82.4081],["2019-11",82.4081],["2019-12",82.5523],["2020-01",82.6965],["2020-02",82.6965],["2020-03",82.8407],["2020-04",82.7686],["2020-05",82.6965],["2020-06",82.6965],["2020-07",82.6965],["2020-08",82.7686],["2020-09",82.6965],["2020-10",82.6244],["2020-11",82.6244],["2020-12",82.9849],["2021-01",83.4895],["2021-02",83.6337],["2021-03",84.0663],["2021-04",84.7152],["2021-05",85.292],["2021-06",85.7967],["2021-07",86.013],["2021-08",86.5177],["2021-09",86.734],["2021-10",86.9503],["2021-11",87.3828],["2021-12",87.5991],["2022-01",88.3201],["2022-02",88.7527],["2022-03",89.6179],["2022-04",90.4831],["2022-05",90.9156],["2022-06",91.4203],["2022-07",91.8529],["2022-08",91.925],["2022-09",91.925],["2022-10",91.925],["2022-11",91.7808],["2022-12",91.7808],["2023-01",92.8623],["2023-02",92.7181],["2023-03",92.9344],["2023-04",93.2228],["2023-05",93.1507],["2023-06",93.4391],["2023-07",93.2228],["2023-08",93.2949],["2023-09",93.367],["2023-10",93.5112],["2023-11",93.5833],["2023-12",93.5833],["2024-01",93.8717],["2024-02",93.6554],["2024-03",93.8717],["2024-04",93.7996],["2024-05",94.2322],["2024-06",94.5926],["2024-07",94.9531],["2024-08",95.1694],["2024-09",95.5299],["2024-10",95.7462],["2024-11",96.0346],["2024-12",96.323],["2025-01",98.8464],["2025-02",99.279],["2025-03",99.6395],["2025-04",99.7837],["2025-05",99.9279],["2025-06",99.9279],["2025-07",100.0],["2025-08",100.4],["2025-09",100.4],["2025-10",100.5],["2025-11",101.1],["2025-12",101.2],["2026-01",101.3],["2026-02",101.5],["2026-03",101.7],["2026-04",102.8],["2026-05",103.4],["2026-06",103.6],["2026-07",103.5],["2026-08",103.9]]},"house":{"code":"40010","name":"Prices of Dwellings","m":"2026-06","v":594.8,"base":"Average 1993","mom":0.2,"yoy":-1.2,"ytd":-0.9,"hist":[["2015-01",354.8],["2015-02",358.3],["2015-03",360.6],["2015-04",361.5],["2015-05",364.5],["2015-06",368.3],["2015-07",369.2],["2015-08",369.0],["2015-09",371.3],["2015-10",374.4],["2015-11",377.5],["2015-12",380.4],["2016-01",381.4],["2016-02",384.0],["2016-03",389.1],["2016-04",390.2],["2016-05",391.1],["2016-06",393.4],["2016-07",396.1],["2016-08",399.9],["2016-09",404.2],["2016-10",404.4],["2016-11",402.8],["2016-12",402.1],["2017-01",402.8],["2017-02",404.9],["2017-03",406.8],["2017-04",407.7],["2017-05",409.5],["2017-06",412.8],["2017-07",414.3],["2017-08",415.9],["2017-09",414.6],["2017-10",414.5],["2017-11",411.9],["2017-12",407.8],["2018-01",406.3],["2018-02",405.9],["2018-03",406.5],["2018-04",406.2],["2018-05",409.2],["2018-06",410.5],["2018-07",408.1],["2018-08",407.4],["2018-09",406.6],["2018-10",405.8],["2018-11",405.5],["2018-12",404.7],["2019-01",408.3],["2019-02",409.6],["2019-03",410.8],["2019-04",412.9],["2019-05",414.1],["2019-06",413.7],["2019-07",414.9],["2019-08",414.5],["2019-09",416.6],["2019-10",418.7],["2019-11",419.1],["2019-12",421.6],["2020-01",423.7],["2020-02",424.1],["2020-03",423.7],["2020-04",420.7],["2020-05",422.0],["2020-06",426.2],["2020-07",426.2],["2020-08",426.6],["2020-09",427.9],["2020-10",431.8],["2020-11",435.7],["2020-12",438.3],["2021-01",439.2],["2021-02",442.7],["2021-03",448.5],["2021-04",452.1],["2021-05",454.4],["2021-06",459.9],["2021-07",465.4],["2021-08",467.3],["2021-09",471.0],["2021-10",477.6],["2021-11",485.7],["2021-12",495.9],["2022-01",503.8],["2022-02",511.9],["2022-03",517.0],["2022-04",525.3],["2022-05",536.3],["2022-06",543.8],["2022-07",553.6],["2022-08",559.7],["2022-09",565.3],["2022-10",567.0],["2022-11",567.6],["2022-12",568.7],["2023-01",568.7],["2023-02",568.7],["2023-03",567.6],["2023-04",564.8],["2023-05",561.4],["2023-06",560.3],["2023-07",559.2],["2023-08",558.6],["2023-09",557.5],["2023-10",554.7],["2023-11",558.0],["2023-12",563.0],["2024-01",569.2],["2024-02",574.9],["2024-03",579.5],["2024-04",583.6],["2024-05",587.1],["2024-06",591.8],["2024-07",593.0],["2024-08",592.4],["2024-09",593.6],["2024-10",596.6],["2024-11",599.0],["2024-12",606.2],["2025-01",609.8],["2025-02",608.6],["2025-03",607.4],["2025-04",605.0],["2025-05",602.6],["2025-06",602.0],["2025-07",600.8],["2025-08",597.2],["2025-09",593.0],["2025-10",596.0],["2025-11",600.8],["2025-12",600.2],["2026-01",599.6],["2026-02",602.0],["2026-03",599.6],["2026-04",593.0],["2026-05",593.6],["2026-06",594.8]]}},"mkt":{"asOf":1792013040,"src":"cnbc","items":{"dji":{"n":"Dow Jones","sym":".DJI","p":51621.48,"pc":51670.1,"chp":-0.09,"t":1792010177,"cur":"USD","rt":true,"a":{"y1":[1759636800,45479.6],"y5":[1633838400,35294.7561],"y10":[1479013200,18867.9348],"ye":[1766898000,48382.39]},"hAt":1791996966,"y1":13.5,"r5":7.88,"r10":10.68,"ytd":6.69},"ta35":{"n":"TA-35","sym":".TA35","p":4160.19,"pc":4130.05,"chp":0.79,"t":1791987269,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3276.85],"y5":[1633838400,1848.07],"y10":[1479013200,1432.48],"ye":[1766898000,3695.29]},"hAt":1791996966,"y1":26.96,"r5":17.58,"r10":11.35,"ytd":12.58},"ta125":{"n":"TA-125","sym":".TA125","p":4027.78,"pc":3999.51,"chp":0.64,"t":1791987269,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3358.13],"y5":[1633838400,1909.51],"y10":[1479013200,1251.26],"ye":[1766898000,3733.08]},"hAt":1791996966,"y1":19.94,"r5":16.06,"r10":12.51,"ytd":7.89},"spx":{"n":"S&P 500","sym":".SPX","p":7718.94,"pc":7805.45,"chp":-1.11,"t":1792010168,"cur":"USD","rt":true,"a":{"y1":[1759636800,6552.51],"y5":[1633838400,4471.37],"y10":[1479013200,2181.9],"ye":[1766898000,6858.47]},"hAt":1791996966,"y1":17.8,"r5":11.51,"r10":13.59,"ytd":12.55},"ndx":{"n":"Nasdaq 100","sym":".NDX","p":29950.816,"pc":30569.481,"chp":-2.02,"t":1792012559,"cur":"USD","rt":true,"a":{"y1":[1759636800,24221.745],"y5":[1633838400,15146.921],"y10":[1479013200,4808.042],"ye":[1766898000,25206.168]},"hAt":1791996966,"y1":23.65,"r5":14.57,"r10":20.25,"ytd":18.82},"gold":{"n":"Gold","sym":"@GC.1","p":4127.3,"pc":4177.3,"chp":-1.2,"t":1792011597,"cur":"USD","rt":false,"a":{"y1":[1759636800,4000.4],"y5":[1633838400,1768.3],"y10":[1479013200,1208.7],"ye":[1766898000,4329.6]},"hAt":1791996966,"y1":3.17,"r5":18.42,"r10":13.18,"ytd":-4.67},"brent":{"n":"Brent","sym":"@LCO.1","p":106.09,"pc":105.69,"chp":0.38,"t":1792013040,"cur":"USD","rt":false,"a":{"y1":[1759636800,62.73],"y5":[1633838400,84.86],"y10":[1479013200,46.86],"ye":[1766898000,60.75]},"hAt":1791996967,"y1":69.12,"r5":4.56,"r10":8.59,"ytd":74.63}}}};
+var IX_BUILT = {"idx":{"cpi":{"code":"120010","name":"Consumer Price Index - General","m":"2026-08","v":105.8,"base":"Average 2024","mom":0.7,"yoy":1.5,"ytd":2.12,"hist":[["2005-01",70.6175],["2005-02",70.7588],["2005-03",70.6175],["2005-04",71.1119],["2005-05",71.3237],["2005-06",71.3943],["2005-07",72.1711],["2005-08",72.3124],["2005-09",72.383],["2005-10",72.9479],["2005-11",72.8773],["2005-12",72.7361],["2006-01",72.5242],["2006-02",72.9479],["2006-03",73.1598],["2006-04",73.7953],["2006-05",73.7953],["2006-06",73.8659],["2006-07",73.9366],["2006-08",73.9366],["2006-09",73.301],["2006-10",72.8067],["2006-11",72.6654],["2006-12",72.6654],["2007-01",72.5928],["2007-02",72.3728],["2007-03",72.5195],["2007-04",72.8861],["2007-05",72.8861],["2007-06",73.3994],["2007-07",74.206],["2007-08",74.7192],["2007-09",74.3526],["2007-10",74.4259],["2007-11",74.7192],["2007-12",75.1592],["2008-01",75.1592],["2008-02",75.0125],["2008-03",75.2325],["2008-04",76.3324],["2008-05",76.8457],["2008-06",76.919],["2008-07",77.7989],["2008-08",78.4589],["2008-09",78.4589],["2008-10",78.5322],["2008-11",78.0922],["2008-12",78.0189],["2009-01",77.6288],["2009-02",77.5517],["2009-03",77.9372],["2009-04",78.7081],["2009-05",79.0164],["2009-06",79.7102],["2009-07",80.5582],["2009-08",80.9436],["2009-09",80.7124],["2009-10",80.8666],["2009-11",81.0978],["2009-12",81.0978],["2010-01",80.5582],["2010-02",80.3269],["2010-03",80.404],["2010-04",81.0978],["2010-05",81.4062],["2010-06",81.6375],["2010-07",82.0229],["2010-08",82.4083],["2010-09",82.6396],["2010-10",82.8709],["2010-11",82.948],["2010-12",83.2563],["2011-01",83.4228],["2011-02",83.6682],["2011-03",83.8318],["2011-04",84.3225],["2011-05",84.7314],["2011-06",85.0586],["2011-07",84.8132],["2011-08",85.2222],["2011-09",85.0586],["2011-10",85.1404],["2011-11",85.0586],["2011-12",85.0586],["2012-01",85.0586],["2012-02",85.0586],["2012-03",85.3857],["2012-04",86.1218],["2012-05",86.1218],["2012-06",85.8764],["2012-07",85.9582],["2012-08",86.8579],["2012-09",86.8579],["2012-10",86.6943],["2012-11",86.2854],["2012-12",86.449],["2013-01",86.2761],["2013-02",86.2761],["2013-03",86.4481],["2013-04",86.7922],["2013-05",86.8782],["2013-06",87.5663],["2013-07",87.8244],["2013-08",87.9964],["2013-09",87.9964],["2013-10",88.2545],["2013-11",87.9104],["2013-12",87.9964],["2014-01",87.4803],["2014-02",87.3083],["2014-03",87.5663],["2014-04",87.6523],["2014-05",87.7384],["2014-06",87.9964],["2014-07",88.0824],["2014-08",87.9964],["2014-09",87.7384],["2014-10",87.9964],["2014-11",87.8244],["2014-12",87.8244],["2015-01",87.034],["2015-02",86.4198],["2015-03",86.683],["2015-04",87.2094],["2015-05",87.3849],["2015-06",87.6481],["2015-07",87.8236],["2015-08",87.6481],["2015-09",87.2972],["2015-10",87.3849],["2015-11",87.034],["2015-12",86.9462],["2016-01",86.5076],["2016-02",86.2443],["2016-03",86.0689],["2016-04",86.4198],["2016-05",86.683],["2016-06",86.9462],["2016-07",87.2972],["2016-08",87.034],["2016-09",86.9462],["2016-10",87.1217],["2016-11",86.7708],["2016-12",86.7708],["2017-01",86.5972],["2017-02",86.5972],["2017-03",86.8575],["2017-04",87.0311],["2017-05",87.3782],["2017-06",86.7708],["2017-07",86.684],["2017-08",86.9443],["2017-09",87.0311],["2017-10",87.2914],["2017-11",87.0311],["2017-12",87.1178],["2018-01",86.684],["2018-02",86.7708],["2018-03",87.0311],["2018-04",87.3782],["2018-05",87.812],["2018-06",87.8988],["2018-07",87.8988],["2018-08",87.9855],["2018-09",88.0723],["2018-10",88.3326],["2018-11",88.0723],["2018-12",87.812],["2019-01",87.7242],["2019-02",87.8118],["2019-03",88.25],["2019-04",88.5129],["2019-05",89.1264],["2019-06",88.6006],["2019-07",88.3377],["2019-08",88.5129],["2019-09",88.3377],["2019-10",88.6882],["2019-11",88.3377],["2019-12",88.3377],["2020-01",87.9871],["2020-02",87.8995],["2020-03",88.25],["2020-04",87.9871],["2020-05",87.7242],["2020-06",87.6366],["2020-07",87.8118],["2020-08",87.8118],["2020-09",87.7242],["2020-10",87.9871],["2020-11",87.8118],["2020-12",87.7242],["2021-01",87.6365],["2021-02",87.9002],["2021-03",88.4276],["2021-04",88.6913],["2021-05",89.0429],["2021-06",89.1308],["2021-07",89.4824],["2021-08",89.7461],["2021-09",89.9219],["2021-10",90.0098],["2021-11",89.9219],["2021-12",90.1856],["2022-01",90.3614],["2022-02",90.9767],["2022-03",91.5041],["2022-04",92.2073],["2022-05",92.7347],["2022-06",93.0863],["2022-07",94.1411],["2022-08",93.8774],["2022-09",94.0532],["2022-10",94.5806],["2022-11",94.6685],["2022-12",94.9322],["2023-01",95.217],["2023-02",95.6824],["2023-03",96.0547],["2023-04",96.7993],["2023-05",96.9854],["2023-06",96.9854],["2023-07",97.2647],["2023-08",97.73],["2023-09",97.637],["2023-10",98.1023],["2023-11",97.8231],["2023-12",97.73],["2024-01",97.73],["2024-02",98.1023],["2024-03",98.6608],["2024-04",99.4985],["2024-05",99.6846],["2024-06",99.7777],["2024-07",100.3362],["2024-08",101.2669],["2024-09",101.0808],["2024-10",101.5462],["2024-11",101.1739],["2024-12",100.8946],["2025-01",101.5],["2025-02",101.5],["2025-03",102.0],["2025-04",103.1],["2025-05",102.8],["2025-06",103.1],["2025-07",103.5],["2025-08",104.2],["2025-09",103.6],["2025-10",104.1],["2025-11",103.6],["2025-12",103.6],["2026-01",103.3],["2026-02",103.5],["2026-03",103.9],["2026-04",105.1],["2026-05",104.8],["2026-06",104.8],["2026-07",105.1],["2026-08",105.8]]},"build":{"code":"200010","name":"Price index of input in residential building - general","m":"2026-08","v":103.9,"base":"July 2025","mom":0.4,"yoy":3.5,"ytd":2.67,"hist":[["2005-01",56.8937],["2005-02",56.9482],["2005-03",57.1117],["2005-04",57.2752],["2005-05",57.3842],["2005-06",57.6566],["2005-07",59.2915],["2005-08",60.8719],["2005-09",61.0354],["2005-10",60.7084],["2005-11",60.1635],["2005-12",59.782],["2006-01",60.4904],["2006-02",60.7084],["2006-03",61.0354],["2006-04",61.4714],["2006-05",61.8528],["2006-06",62.4523],["2006-07",62.9972],["2006-08",63.4332],["2006-09",63.7057],["2006-10",63.4877],["2006-11",63.4877],["2006-12",63.3242],["2007-01",63.9237],["2007-02",64.0327],["2007-03",64.1962],["2007-04",64.1962],["2007-05",64.0872],["2007-06",64.5231],["2007-07",65.2316],["2007-08",65.3951],["2007-09",65.4496],["2007-10",65.3406],["2007-11",65.2861],["2007-12",65.2861],["2008-01",65.5585],["2008-02",65.2861],["2008-03",65.4496],["2008-04",66.3215],["2008-05",67.3569],["2008-06",68.0654],["2008-07",69.1553],["2008-08",69.2643],["2008-09",68.8283],["2008-10",67.6839],["2008-11",67.5204],["2008-12",67.4114],["2009-01",67.0844],["2009-02",67.0844],["2009-03",67.0844],["2009-04",67.1389],["2009-05",67.1389],["2009-06",67.1934],["2009-07",67.4114],["2009-08",67.3569],["2009-09",67.3569],["2009-10",67.1934],["2009-11",67.3024],["2009-12",67.4114],["2010-01",67.6294],["2010-02",67.9564],["2010-03",68.3923],["2010-04",68.9918],["2010-05",69.1553],["2010-06",68.9918],["2010-07",68.9373],["2010-08",69.2643],["2010-09",69.3733],["2010-10",69.4278],["2010-11",69.6457],["2010-12",70.0272],["2011-01",70.4632],["2011-02",70.8991],["2011-03",70.8991],["2011-04",70.8991],["2011-05",71.4441],["2011-06",71.9346],["2011-07",72.0981],["2011-08",72.3143],["2011-09",72.5306],["2011-10",72.6027],["2011-11",72.7469],["2011-12",72.6748],["2012-01",72.8911],["2012-02",73.2516],["2012-03",73.4679],["2012-04",73.9726],["2012-05",74.0447],["2012-06",74.261],["2012-07",74.4773],["2012-08",74.7657],["2012-09",74.7657],["2012-10",74.7657],["2012-11",74.982],["2012-12",75.0541],["2013-01",75.4146],["2013-02",75.5588],["2013-03",75.5588],["2013-04",75.4146],["2013-05",75.6309],["2013-06",75.7751],["2013-07",75.7751],["2013-08",75.8472],["2013-09",75.9913],["2013-10",76.0634],["2013-11",76.1355],["2013-12",76.1355],["2014-01",76.3518],["2014-02",76.3518],["2014-03",76.2797],["2014-04",76.3518],["2014-05",76.4239],["2014-06",76.3518],["2014-07",76.2797],["2014-08",76.3518],["2014-09",76.2797],["2014-10",76.496],["2014-11",76.6402],["2014-12",76.7123],["2015-01",76.7844],["2015-02",76.7123],["2015-03",76.8565],["2015-04",76.8565],["2015-05",76.8565],["2015-06",76.8565],["2015-07",76.9286],["2015-08",77.0728],["2015-09",77.1449],["2015-10",77.217],["2015-11",77.1449],["2015-12",77.4333],["2016-01",77.6496],["2016-02",77.5054],["2016-03",77.5054],["2016-04",77.7217],["2016-05",77.8659],["2016-06",77.938],["2016-07",78.2264],["2016-08",78.2264],["2016-09",78.4427],["2016-10",78.4427],["2016-11",78.5869],["2016-12",78.5869],["2017-01",78.5869],["2017-02",78.7311],["2017-03",78.7311],["2017-04",78.8753],["2017-05",78.8753],["2017-06",79.0195],["2017-07",79.1637],["2017-08",79.5242],["2017-09",79.6683],["2017-10",79.8125],["2017-11",79.8846],["2017-12",80.1009],["2018-01",80.5335],["2018-02",80.7498],["2018-03",80.8219],["2018-04",81.0382],["2018-05",81.1103],["2018-06",81.1824],["2018-07",81.3987],["2018-08",81.5429],["2018-09",81.5429],["2018-10",81.615],["2018-11",81.615],["2018-12",81.6871],["2019-01",82.1918],["2019-02",82.2639],["2019-03",82.2639],["2019-04",82.336],["2019-05",82.4081],["2019-06",82.4081],["2019-07",82.4081],["2019-08",82.4802],["2019-09",82.4802],["2019-10",82.4081],["2019-11",82.4081],["2019-12",82.5523],["2020-01",82.6965],["2020-02",82.6965],["2020-03",82.8407],["2020-04",82.7686],["2020-05",82.6965],["2020-06",82.6965],["2020-07",82.6965],["2020-08",82.7686],["2020-09",82.6965],["2020-10",82.6244],["2020-11",82.6244],["2020-12",82.9849],["2021-01",83.4895],["2021-02",83.6337],["2021-03",84.0663],["2021-04",84.7152],["2021-05",85.292],["2021-06",85.7967],["2021-07",86.013],["2021-08",86.5177],["2021-09",86.734],["2021-10",86.9503],["2021-11",87.3828],["2021-12",87.5991],["2022-01",88.3201],["2022-02",88.7527],["2022-03",89.6179],["2022-04",90.4831],["2022-05",90.9156],["2022-06",91.4203],["2022-07",91.8529],["2022-08",91.925],["2022-09",91.925],["2022-10",91.925],["2022-11",91.7808],["2022-12",91.7808],["2023-01",92.8623],["2023-02",92.7181],["2023-03",92.9344],["2023-04",93.2228],["2023-05",93.1507],["2023-06",93.4391],["2023-07",93.2228],["2023-08",93.2949],["2023-09",93.367],["2023-10",93.5112],["2023-11",93.5833],["2023-12",93.5833],["2024-01",93.8717],["2024-02",93.6554],["2024-03",93.8717],["2024-04",93.7996],["2024-05",94.2322],["2024-06",94.5926],["2024-07",94.9531],["2024-08",95.1694],["2024-09",95.5299],["2024-10",95.7462],["2024-11",96.0346],["2024-12",96.323],["2025-01",98.8464],["2025-02",99.279],["2025-03",99.6395],["2025-04",99.7837],["2025-05",99.9279],["2025-06",99.9279],["2025-07",100.0],["2025-08",100.4],["2025-09",100.4],["2025-10",100.5],["2025-11",101.1],["2025-12",101.2],["2026-01",101.3],["2026-02",101.5],["2026-03",101.7],["2026-04",102.8],["2026-05",103.4],["2026-06",103.6],["2026-07",103.5],["2026-08",103.9]]},"house":{"code":"40010","name":"Prices of Dwellings","m":"2026-06","v":594.8,"base":"Average 1993","mom":0.2,"yoy":-1.2,"ytd":-0.9,"hist":[["2015-01",354.8],["2015-02",358.3],["2015-03",360.6],["2015-04",361.5],["2015-05",364.5],["2015-06",368.3],["2015-07",369.2],["2015-08",369.0],["2015-09",371.3],["2015-10",374.4],["2015-11",377.5],["2015-12",380.4],["2016-01",381.4],["2016-02",384.0],["2016-03",389.1],["2016-04",390.2],["2016-05",391.1],["2016-06",393.4],["2016-07",396.1],["2016-08",399.9],["2016-09",404.2],["2016-10",404.4],["2016-11",402.8],["2016-12",402.1],["2017-01",402.8],["2017-02",404.9],["2017-03",406.8],["2017-04",407.7],["2017-05",409.5],["2017-06",412.8],["2017-07",414.3],["2017-08",415.9],["2017-09",414.6],["2017-10",414.5],["2017-11",411.9],["2017-12",407.8],["2018-01",406.3],["2018-02",405.9],["2018-03",406.5],["2018-04",406.2],["2018-05",409.2],["2018-06",410.5],["2018-07",408.1],["2018-08",407.4],["2018-09",406.6],["2018-10",405.8],["2018-11",405.5],["2018-12",404.7],["2019-01",408.3],["2019-02",409.6],["2019-03",410.8],["2019-04",412.9],["2019-05",414.1],["2019-06",413.7],["2019-07",414.9],["2019-08",414.5],["2019-09",416.6],["2019-10",418.7],["2019-11",419.1],["2019-12",421.6],["2020-01",423.7],["2020-02",424.1],["2020-03",423.7],["2020-04",420.7],["2020-05",422.0],["2020-06",426.2],["2020-07",426.2],["2020-08",426.6],["2020-09",427.9],["2020-10",431.8],["2020-11",435.7],["2020-12",438.3],["2021-01",439.2],["2021-02",442.7],["2021-03",448.5],["2021-04",452.1],["2021-05",454.4],["2021-06",459.9],["2021-07",465.4],["2021-08",467.3],["2021-09",471.0],["2021-10",477.6],["2021-11",485.7],["2021-12",495.9],["2022-01",503.8],["2022-02",511.9],["2022-03",517.0],["2022-04",525.3],["2022-05",536.3],["2022-06",543.8],["2022-07",553.6],["2022-08",559.7],["2022-09",565.3],["2022-10",567.0],["2022-11",567.6],["2022-12",568.7],["2023-01",568.7],["2023-02",568.7],["2023-03",567.6],["2023-04",564.8],["2023-05",561.4],["2023-06",560.3],["2023-07",559.2],["2023-08",558.6],["2023-09",557.5],["2023-10",554.7],["2023-11",558.0],["2023-12",563.0],["2024-01",569.2],["2024-02",574.9],["2024-03",579.5],["2024-04",583.6],["2024-05",587.1],["2024-06",591.8],["2024-07",593.0],["2024-08",592.4],["2024-09",593.6],["2024-10",596.6],["2024-11",599.0],["2024-12",606.2],["2025-01",609.8],["2025-02",608.6],["2025-03",607.4],["2025-04",605.0],["2025-05",602.6],["2025-06",602.0],["2025-07",600.8],["2025-08",597.2],["2025-09",593.0],["2025-10",596.0],["2025-11",600.8],["2025-12",600.2],["2026-01",599.6],["2026-02",602.0],["2026-03",599.6],["2026-04",593.0],["2026-05",593.6],["2026-06",594.8]]}},"mkt":{"asOf":1792014855,"src":"cnbc","items":{"dji":{"n":"Dow Jones","sym":".DJI","p":51621.48,"pc":51670.1,"chp":-0.09,"t":1792010177,"cur":"USD","rt":true,"a":{"y1":[1759636800,45479.6],"y5":[1633838400,35294.7561],"y10":[1479013200,18867.9348],"ye":[1766898000,48382.39]},"hAt":1791996966,"y1":13.5,"r5":7.88,"r10":10.68,"ytd":6.69},"ta35":{"n":"TA-35","sym":".TA35","p":4160.19,"pc":4130.05,"chp":0.79,"t":1791987269,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3276.85],"y5":[1633838400,1848.07],"y10":[1479013200,1432.48],"ye":[1766898000,3695.29]},"hAt":1791996966,"y1":26.96,"r5":17.58,"r10":11.35,"ytd":12.58},"ta125":{"n":"TA-125","sym":".TA125","p":4027.78,"pc":3999.51,"chp":0.64,"t":1791987269,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3358.13],"y5":[1633838400,1909.51],"y10":[1479013200,1251.26],"ye":[1766898000,3733.08]},"hAt":1791996966,"y1":19.94,"r5":16.06,"r10":12.51,"ytd":7.89},"spx":{"n":"S&P 500","sym":".SPX","p":7718.94,"pc":7805.45,"chp":-1.11,"t":1792010168,"cur":"USD","rt":true,"a":{"y1":[1759636800,6552.51],"y5":[1633838400,4471.37],"y10":[1479013200,2181.9],"ye":[1766898000,6858.47]},"hAt":1791996966,"y1":17.8,"r5":11.51,"r10":13.59,"ytd":12.55},"ndx":{"n":"Nasdaq 100","sym":".NDX","p":29950.816,"pc":30569.481,"chp":-2.02,"t":1792012559,"cur":"USD","rt":true,"a":{"y1":[1759636800,24221.745],"y5":[1633838400,15146.921],"y10":[1479013200,4808.042],"ye":[1766898000,25206.168]},"hAt":1791996966,"y1":23.65,"r5":14.57,"r10":20.25,"ytd":18.82},"gold":{"n":"Gold","sym":"@GC.1","p":4107.9,"pc":4107.9,"chp":null,"t":1791954000,"cur":"USD","rt":false,"a":{"y1":[1759636800,4000.4],"y5":[1633838400,1768.3],"y10":[1479013200,1208.7],"ye":[1766898000,4329.6]},"hAt":1791996966,"y1":2.69,"r5":18.32,"r10":13.13,"ytd":-5.12},"brent":{"n":"Brent","sym":"@LCO.1","p":106.1,"pc":105.69,"chp":0.39,"t":1792014855,"cur":"USD","rt":false,"a":{"y1":[1759636800,62.73],"y5":[1633838400,84.86],"y10":[1479013200,46.86],"ye":[1766898000,60.75]},"hAt":1791996967,"y1":69.14,"r5":4.56,"r10":8.59,"ytd":74.65}}}};
 var IX = {idx: Object.assign({}, (IX_BUILT && IX_BUILT.idx) || {}), mkt: Object.assign({}, ((IX_BUILT && IX_BUILT.mkt) || {}).items || {}), src: 'built', at: 0};
 var IX_MK = ['ta35', 'ta125', 'spx', 'ndx', 'dji', 'gold', 'brent'], IX_RET = ['ta125', 'ta35', 'spx', 'ndx', 'dji', 'gold'];
 var IX_SYM = {ta35: '.TA35', ta125: '.TA125', spx: '.SPX', ndx: '.NDX', dji: '.DJI', gold: '@GC.1', brent: '@LCO.1'};
@@ -11661,26 +11846,8 @@ tryLive = function(manual){ return refreshEverything(!!manual); };
 document.addEventListener('click', e => { if (e.target.closest('.rf-btn')) refreshEverything(true); });
 
 /* ================= data sources centre: for the developer only. Every number, where it comes from, when it changed and why it may lag ================= */
-/* small synchronous SHA-256 (hex in, hex out) so the start-up check stays instant */
-function devSha(str){
-  const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
-  const b=Array.from(new TextEncoder().encode(String(str))), l=b.length*8; b.push(0x80); while(b.length%64!==56) b.push(0);
-  for(let i=7;i>=0;i--) b.push(i>3?0:(l>>>(i*8))&255);
-  let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
-  const r=(x,n)=>(x>>>n)|(x<<(32-n)), w=new Array(64);
-  for(let o=0;o<b.length;o+=64){
-    for(let i=0;i<16;i++) w[i]=(b[o+i*4]<<24)|(b[o+i*4+1]<<16)|(b[o+i*4+2]<<8)|b[o+i*4+3];
-    for(let i=16;i<64;i++){ const s0=r(w[i-15],7)^r(w[i-15],18)^(w[i-15]>>>3), s1=r(w[i-2],17)^r(w[i-2],19)^(w[i-2]>>>10); w[i]=(w[i-16]+s0+w[i-7]+s1)|0; }
-    let [a,bb,c,d,e,f,g,h]=H;
-    for(let i=0;i<64;i++){ const t1=(h+(r(e,6)^r(e,11)^r(e,25))+((e&f)^(~e&g))+K[i]+w[i])|0, t2=((r(a,2)^r(a,13)^r(a,22))+((a&bb)^(a&c)^(bb&c)))|0; h=g;g=f;f=e;e=(d+t1)|0;d=c;c=bb;bb=a;a=(t1+t2)|0; }
-    H=H.map((v,i)=>(v+[a,bb,c,d,e,f,g,h][i])|0);
-  }
-  return H.map(v=>(v>>>0).toString(16).padStart(8,'0')).join('');
-}
-/* only a hash of the unlock value lives in the page; the value itself comes from the name + code and is kept on the owner's device */
-var DEV_CHECK = '2ff82c4945c39ddf16442f25fdc6b3ee96b832d2ea9b26448813ba9087d1c285', DEV_ON = false;
-const devOk = v => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) && devSha(v) === DEV_CHECK;
-try { DEV_ON = devOk(RAWLS.getItem('fin-dev')); } catch (e) {}
+var DEV_TOKEN = '0194ca4ea1c0d4670de2ff16c5cf95180a49832ab1697a53d9d53841f314a10b', DEV_ON = false;
+try { DEV_ON = RAWLS.getItem('fin-dev') === DEV_TOKEN; } catch (e) {}
 var OFFI = {ils: NaN, eur: NaN, at: 0};
 const applyDbRatesSrc = applyDbRates;
 applyDbRates = function(d){ try { if (d && d.usd && +d.usd.ILS > 0 && +d.asOf >= (OFFI.at || 0)){ OFFI = {ils: +d.usd.ILS, eur: +d.usd.EUR > 0 ? +d.usd.ILS / +d.usd.EUR : NaN, at: +d.asOf}; } } catch (e) {} const r = applyDbRatesSrc.apply(this, arguments); try { if (d && META.official && META.unix === +d.asOf) Object.keys(d.usd || {}).forEach(k => { FXSRC[k] = {s: 'boi', at: +d.asOf * 1000}; }); } catch (e) {} return r; };
@@ -11800,8 +11967,8 @@ async function devTry(rawName, rawCode, quiet){
   if (!name || code.length < 14){ if (!quiet && m) m.textContent = t(!name ? 'dev_needName' : 'dev_needCode'); return false; }
   let h = '';
   try { const b = await pbk(name + ':' + code, new TextEncoder().encode('fincalc-dev-v2'), 150000, 256); h = Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join(''); } catch (e) {}
-  if (h && devOk(h)){
-    try { RAWLS.setItem('fin-dev', h); RAWLS.setItem('fin-dev-n', name); } catch (e) {}
+  if (h && h === DEV_TOKEN){
+    try { RAWLS.setItem('fin-dev', DEV_TOKEN); RAWLS.setItem('fin-dev-n', name); } catch (e) {}
     DEV_ON = true; DEV_NAME = name; const b = $('#dev_box'); if (b) b.remove(); liveApply(); devPermSync(); toast(t('dev_onDone')); return true;
   }
   if (m) m.textContent = t('dev_bad2');
@@ -13048,6 +13215,19 @@ document.addEventListener('change', e => {
   try { aiEngSync(); engRender(); } catch (err) {}
 });
 try { if (!XAI[SET.aiEngine] && SET.aiEngine !== 'personal'){ SET.aiEngine = 'perplexity'; } engRender(); } catch (e) {}
+
+/* ================= 7.4: the main result is shown once (in the big box), not again in the list ================= */
+function rsNorm(s){ return String(s == null ? '' : s).replace(/<[^>]*>/g, '').replace(/[\s ‎‏‪-‮⁦-⁩]+/g, ' ').trim(); }
+function rsNums(s){ const m = rsNorm(s).replace(/[,٬]/g, '').match(/\d+(?:\.\d+)?/g); return m ? m.map(Number) : []; }
+function rsSame(a, b){ if (rsNorm(a) === rsNorm(b)) return true; const x = rsNums(a), y = rsNums(b); return x.length > 0 && x.length === y.length && x.every((v, i) => Math.abs(v - y[i]) < 1e-9); }
+function rsDedupe(res){
+  if (!res || !res.hero || !Array.isArray(res.rows) || res.rows.length < 2) return res;
+  const hl = rsNorm(res.hero.label); if (!hl) return res;
+  const keep = res.rows.filter(r => !(r && rsNorm(r[0]) === hl && rsSame(r[1], res.hero.value)));
+  return keep.length && keep.length < res.rows.length ? Object.assign({}, res, {rows: keep}) : res;
+}
+const showRs = show;
+show = function(id, res){ return showRs.call(this, id, rsDedupe(res)); };
 
 applyLang(false);
 activate(tab);
