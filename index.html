@@ -952,6 +952,9 @@ a.gold-btn.rc-open{display:inline-flex;align-items:center;justify-content:center
 .sec-c span{min-width:0}
 .sec-mini{flex:none !important;width:auto !important;white-space:nowrap}
 .sec-c span{flex:1 1 auto}
+.lc-rt{display:flex;margin:0 0 8px}
+.lc-rt button{flex:1;font-size:.82rem;padding:8px 6px}
+.lc-calc{margin:0 0 8px;padding:8px 10px;border-radius:10px;background:rgba(47,191,134,.1);color:#1f9d6b;font-weight:700;font-size:.9rem}
 
 </style>
 </head>
@@ -2915,7 +2918,7 @@ Object.assign(T, {
   rc_newPw:['סיסמה חדשה לאפליקציה','كلمة مرور جديدة للتطبيق','New password for the app'],
   rc_newPw2:['הקלידו שוב את הסיסמה החדשה לאפליקציה','أعد كتابة كلمة مرور التطبيق الجديدة','Type the new app password again'],
   rc_appPwOnly:['זו הסיסמה של האפליקציה בלבד, לא של המייל. בחרו סיסמה ייחודית שלא משמשת בשום מקום אחר.','هذه كلمة مرور التطبيق فقط وليست كلمة مرور البريد. اختر كلمة مرور فريدة لا تُستخدم في أي مكان آخر.','This is the app password only, not your email password. Choose a unique one not used anywhere else.'],
-  rc_oneAcc:['כל כתובת אימייל יכולה להיות משויכת לחשבון אחד בלבד, בלי הבדל בין אותיות גדולות לקטנות.','يمكن ربط كل عنوان بريد بحساب واحد فقط، دون فرق بين الأحرف الكبيرة والصغيرة.','Each email address can belong to one account only, regardless of upper or lower case.'],
+  rc_oneAcc:['כל אימייל יכול להיות משויך לחשבון אחד בלבד. גם גרסאות של אותה תיבה, כמו אותיות גדולות, נקודות ב-Gmail או תוספת +, נחשבות לאותו אימייל.','يمكن ربط كل بريد بحساب واحد فقط. وتُعدّ نسخ الصندوق نفسه، مثل الأحرف الكبيرة أو النقاط في Gmail أو إضافة +، البريد نفسه.','Each email can belong to one account only. Variants of the same inbox, such as capitals, Gmail dots or a +tag, count as the same email.'],
   rc_checking:['בודק שהאימייל פנוי…','جارٍ التحقق من أن البريد غير مستخدم…','Checking that the email is free…'],
   rc_mailTaken:['האימייל הזה כבר משויך לחשבון אחר. כל אימייל יכול להיות רק בחשבון אחד, אז בחרו כתובת אחרת.','هذا البريد مرتبط بحساب آخر. يمكن ربط كل بريد بحساب واحد فقط، فاختر عنوانًا آخر.','This email already belongs to another account. Each email can be used by one account only, so choose another address.'],
   rc_mailCheckFail:['לא הצלחנו לבדוק שהאימייל פנוי. בדקו את החיבור ונסו שוב.','تعذّر التحقق من أن البريد غير مستخدم. تحقق من الاتصال وحاول مرة أخرى.','Could not check that the email is free. Check the connection and try again.'],
@@ -3022,7 +3025,21 @@ Object.assign(T, {
   dev_computer:['מחשב','حاسوب','Computer'],
   sec_alert1:['מישהו ניסה להיכנס לחשבון שלך: ניסיון שגוי אחד.','حاول أحدهم الدخول إلى حسابك: محاولة خاطئة واحدة.','Someone tried to get into your account: one failed attempt.'],
   sec_f241:['מישהו ניסה להיכנס לחשבון: ניסיון שגוי אחד ב-24 השעות האחרונות, {w}.','حاول أحدهم الدخول إلى الحساب: محاولة خاطئة واحدة خلال 24 ساعة، {w}.','Someone tried to get into the account: one failed attempt in the last 24 hours, {w}.'],
-  sec_cFails1:['ניסיון כניסה שגוי אחד ב-24 השעות האחרונות','محاولة دخول خاطئة واحدة خلال آخر 24 ساعة','One failed sign-in attempt in the last 24 hours']
+  sec_cFails1:['ניסיון כניסה שגוי אחד ב-24 השעות האחרונות','محاولة دخول خاطئة واحدة خلال آخر 24 ساعة','One failed sign-in attempt in the last 24 hours'],
+  lc_rt:['סוג הריבית','نوع الفائدة','Rate type'],
+  lc_rtFix:['ריבית קבועה','فائدة ثابتة','Fixed rate'],
+  lc_rtPrime:['פריים ±','البرايم ±','Prime ±'],
+  lc_rtPmt:['לפי החזר חודשי','حسب القسط الشهري','By monthly payment'],
+  f_lcMargin:['מרווח מהפריים','الهامش عن البرايم','Margin over Prime'],
+  f_lcPay:['ההחזר החודשי שהבנק הציע','القسط الشهري الذي عرضه البنك','Monthly payment the bank offered'],
+  lc_primeIs:['פריים היום {p} ← הריבית בהצעה {r}','البرايم اليوم {p} ← فائدة العرض {r}','Prime today {p} → offer rate {r}'],
+  lc_rateIs:['הריבית השנתית לפי ההחזר: {r}','الفائدة السنوية حسب القسط: {r}','Annual rate implied by the payment: {r}'],
+  lc_pmtLow:['ההחזר נמוך מדי כדי להחזיר את ההלוואה בתקופה הזו.','القسط منخفض جدًا لسداد القرض في هذه المدة.','The payment is too low to repay the loan in this term.'],
+  r_lcRate:['ריבית שנתית','الفائدة السنوية','Annual rate'],
+  r_lcRateCalcOf:['ריבית מחושבת לפי ההחזר · {x}','الفائدة المحسوبة من القسط · {x}','Rate implied by the payment · {x}'],
+  r_lcRatePrimeOf:['ריבית לפי פריים · {x}','الفائدة حسب البرايم · {x}','Prime-based rate · {x}'],
+  n_lcPrime:['בהצעות לפי פריים החישוב מניח שהפריים נשאר כמו היום ({p}). בפועל הוא משתנה עם ריבית בנק ישראל.','في عروض البرايم يفترض الحساب بقاء البرايم كما هو اليوم ({p})، وفي الواقع يتغيّر مع فائدة بنك إسرائيل.','Prime-based offers assume Prime stays at today\'s {p}; in practice it moves with the Bank of Israel rate.'],
+  w_lcLow:['{x}: ההחזר החודשי לא מספיק כדי להחזיר את ההלוואה בתקופה שנבחרה.','{x}: القسط الشهري لا يكفي لسداد القرض في المدة المختارة.','{x}: the monthly payment is not enough to repay the loan in the chosen term.']
 });
 
 const t = (k, p) => {
@@ -5719,12 +5736,21 @@ function aprOf(net, pay, n){
   return (Math.pow(1 + (lo + hi) / 2, 12) - 1) * 100;
 }
 /* any number of named offers (a bank name instead of "offer A/B") */
+function lcRateFromPmt(amt, n, pm){       // the annual rate that makes this monthly payment repay the loan
+  if (!(amt > 0) || !(pm > 0) || pm * n <= amt) return 0;
+  let lo = 0, hi = 300;
+  for (let k = 0; k < 80; k++){ const mid = (lo + hi) / 2; if (pmtOf(amt, mid, n) > pm) hi = mid; else lo = mid; }
+  return (lo + hi) / 2;
+}
 function loanCmpSide(o){
-  const amt = Math.max(0, +o.amt || 0), rate = Math.max(0, +o.rate || 0), n = Math.max(1, Math.round((+o.yrs || 0) * 12) || 1);
+  const amt = Math.max(0, +o.amt || 0), n = Math.max(1, Math.round((+o.yrs || 0) * 12) || 1), rt = o.rt || 'fix';
   const up = Math.max(0, +o.fee || 0) + amt * Math.max(0, +o.pct || 0) / 100, mf = Math.max(0, +o.mon || 0);
-  const pm = pmtOf(amt, rate, n);
+  let rate = Math.max(0, +o.rate || 0), pm, low = false;
+  if (rt === 'prime') rate = Math.max(0, lcPrime() + (+o.mg || 0));
+  if (rt === 'pmt'){ pm = Math.max(0, +o.pay || 0); low = pm * n < amt; rate = lcRateFromPmt(amt, n, pm); }
+  else pm = pmtOf(amt, rate, n);
   const total = (pm + mf) * n + up;
-  return {amt, n, pm, mf, up, total, int: pm * n - amt, apr: amt - up > 0 ? aprOf(amt - up, pm + mf, n) : NaN};
+  return {amt, n, pm, mf, up, total, rate, rt, low, int: pm * n - amt, apr: amt - up > 0 ? aprOf(amt - up, pm + mf, n) : NaN};
 }
 function calcLoanCmp(){
   const L = lcList().map((o, i) => Object.assign(loanCmpSide(o), {name: asEsc(lcName(o, i))}));
@@ -5733,11 +5759,14 @@ function calcLoanCmp(){
   return {
     hero: next ? {label: t('r_lcBestN', {x: best.name}), value: M(next.total - best.total), sub: t('r_lcVs', {x: next.name, r: PC(best.apr)})}
       : {label: t('r_lcTotalOf', {x: best.name}), value: M(best.total), sub: t('r_lcApr') + ': ' + PC(best.apr)},
-    rows: (next ? [[t('r_lcBestN', {x: best.name}), M(next.total - best.total), 'key']] : []).concat(S.map(s => [t('r_lcAprOf', {x: s.name}), PC(s.apr)])),
-    note: t('n_lc'),
+    rows: (next ? [[t('r_lcBestN', {x: best.name}), M(next.total - best.total), 'key']] : [])
+      .concat(S.filter(s => s.rt !== 'fix').map(s => [t(s.rt === 'pmt' ? 'r_lcRateCalcOf' : 'r_lcRatePrimeOf', {x: s.name}), PC(s.rate), 'key']))
+      .concat(S.map(s => [t('r_lcAprOf', {x: s.name}), PC(s.apr)])),
+    note: t('n_lc') + (L.some(s => s.rt === 'prime') ? ' ' + t('n_lcPrime', {p: PC(lcPrime())}) : ''),
+    warn: L.filter(s => s.low).map(s => t('w_lcLow', {x: s.name})),
     table: {
-      title: t('t_compare'), open: true, head: ['', t('r_lcPmt'), t('r_lcInt'), t('r_lcUp'), t('r_lcTotal'), t('r_lcApr')],
-      rows: S.map(s => [star(s), M(s.pm + s.mf), M(s.int), M(s.up), M(s.total), PC(s.apr)])
+      title: t('t_compare'), open: true, head: ['', t('r_lcRate'), t('r_lcPmt'), t('r_lcInt'), t('r_lcUp'), t('r_lcTotal'), t('r_lcApr')],
+      rows: S.map(s => [star(s), PC(s.rate) + (s.rt === 'prime' ? ' (P)' : s.rt === 'pmt' ? ' *' : ''), M(s.pm + s.mf), M(s.int), M(s.up), M(s.total), PC(s.apr)])
     }
   };
 }
@@ -7836,8 +7865,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "4.5", "date": "2026-10-14", "notes": {"he": "קטגוריית אבטחה חיה: מכשירים מחוברים, ניסיונות כניסה וניתוק מכשירים, בלי מעקב. השוואת הלוואות עם כמה הצעות שרוצים ושם לכל אחת, חלוקת הוצאות עם 6 דרכים והתחשבנות, מיון א׳ ב׳ בתוך קטגוריות. הוסרו Investing ו-Claude מהעוזר, ואימייל נחסם רק כשהוא זהה בדיוק.", "ar": "قسم أمان مباشر: الأجهزة المتصلة ومحاولات الدخول وفصل الأجهزة دون تتبّع. مقارنة قروض بعدد غير محدود من العروض وباسم لكل عرض، تقسيم مصاريف بست طرق وتسوية، وترتيب أبجدي داخل الفئات. أُزيل Investing وClaude من المساعد، ويُحظر البريد فقط عند التطابق التام.", "en": "A live Security section: signed-in devices, sign-in attempts and signing devices out, with no tracking. Loan comparison with as many named offers as you like, bill splitting with six methods and settle-up, A–Z sorting inside categories. Removed Investing and Claude from the assistant; an email is blocked only when it is exactly the same."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.161109';
+var CHANGELOG = [{"v": "4.6", "date": "2026-10-14", "notes": {"he": "השוואת הלוואות: לכל הצעה אפשר לבחור ריבית קבועה, פריים ± מרווח, או חישוב הריבית לפי ההחזר החודשי. אימייל: גם גרסאות של אותה תיבה נחסמות שוב.", "ar": "مقارنة القروض: لكل عرض فائدة ثابتة أو البرايم ± هامش أو حساب الفائدة من القسط الشهري. البريد: تُحظر مجددًا نسخ الصندوق نفسه.", "en": "Loan comparison: each offer can use a fixed rate, Prime ± margin, or work out the rate from the monthly payment. Email: variants of the same inbox are blocked again."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.162354';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -8706,7 +8735,7 @@ async function rcSetup(mail, mh){
   const kp = await crypto.subtle.generateKey({name: 'RSA-OAEP', modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: 'SHA-256'}, true, ['encrypt', 'decrypt']);
   const pub = b64(await crypto.subtle.exportKey('spki', kp.publicKey)), pk = await crypto.subtle.exportKey('pkcs8', kp.privateKey);
   const sl = rnd(16), iv = rnd(12), ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, await rcAes(code, sl), pk);
-  rec.rcv = {v: 1, hint: rcMask(mail), mh: mh || '', mhv: 2, pub, s: b64(sl), iv: b64(iv), ct: b64(ct), wk: await rcWrap(pub, raw), ok: 0, at: Date.now()};
+  rec.rcv = {v: 1, hint: rcMask(mail), mh: mh || '', mhv: 3, pub, s: b64(sl), iv: b64(iv), ct: b64(ct), wk: await rcWrap(pub, raw), ok: 0, at: Date.now()};
   RAWLS.setItem(accKey(FUSER), JSON.stringify(rec));
   SET.rcMail = mail; saveSet(); persistNow(); secLog(FUSER, 'mail');
   RC.code = code; RC.mail = mail; RC.edit = false;
@@ -8989,9 +9018,14 @@ try { for (let i = 0; i < RAWLS.length; i++){ const k = RAWLS.key(i) || ''; if (
 
 /* ---- one email, one account. Only a slow one-way fingerprint of the address is compared, never the address:
    on this device against every account, and in Claude against everyone's username record. */
-/* the exact address, ignoring only upper/lower case: dots and +tags make a different address */
-function rcNorm(m){ return String(m || '').trim().toLowerCase(); }
-async function rcMailHash(m){ return b64(await pbk(rcNorm(m), new TextEncoder().encode('fincalc-mail-v2'), 150000, 256)); }
+/* one inbox = one address: case, Gmail dots and +tags do not make a different email */
+function rcNorm(m){
+  let [u, d] = String(m || '').trim().toLowerCase().split('@'); if (!u || !d) return String(m || '').trim().toLowerCase();
+  u = u.split('+')[0];
+  if (d === 'gmail.com' || d === 'googlemail.com'){ u = u.replace(/\./g, ''); d = 'gmail.com'; }
+  return u + '@' + d;
+}
+async function rcMailHash(m){ return b64(await pbk(rcNorm(m), new TextEncoder().encode('fincalc-mail-v3'), 150000, 256)); }
 function rcLocalOwner(mh){
   try { for (let i = 0; i < RAWLS.length; i++){ const k = RAWLS.key(i) || ''; if (k.indexOf('fin-acc:') !== 0) continue;
     const r = JSON.parse(RAWLS.getItem(k) || 'null'); if (r && r.name !== FUSER && r.rcv && r.rcv.mh && r.rcv.mh === mh) return r.name; } } catch (e) {}
@@ -9029,18 +9063,27 @@ async function rcUnclaimMail(){
 /* accounts that set an email before this change get their fingerprint on the next sign-in */
 if (FUSER) setTimeout(async () => {
   try {
-    const r = getAcc(FUSER); if (!r || !r.rcv || (r.rcv.mh && r.rcv.mhv === 2) || !SET.rcMail) return;
+    const r = getAcc(FUSER); if (!r || !r.rcv || (r.rcv.mh && r.rcv.mhv === 3) || !SET.rcMail) return;
     const mh = await rcMailHash(SET.rcMail);
     if (rcLocalOwner(mh)) return;
     if ((await rcMailFree(mh)) !== 'ok') return;
     if ((await rcClaimMail(mh)) === 'taken') return;
-    const r2 = getAcc(FUSER); if (!r2 || !r2.rcv) return; r2.rcv.mh = mh; r2.rcv.mhv = 2; RAWLS.setItem(accKey(FUSER), JSON.stringify(r2)); persistNow();
+    const r2 = getAcc(FUSER); if (!r2 || !r2.rcv) return; r2.rcv.mh = mh; r2.rcv.mhv = 3; RAWLS.setItem(accKey(FUSER), JSON.stringify(r2)); persistNow();
   } catch (e) {}
 }, 3500);
 
 /* ---- loan comparison: add as many offers as you like, remove them, and name each one ---- */
 const LC_MAX = 12;
 const LC_F = [['amt', 'f_loanAmt', 'cur'], ['rate', 'f_rate', '%'], ['yrs', 'f_term', 'yrs'], ['fee', 'f_lcFee', 'cur'], ['pct', 'f_lcPct', '%'], ['mon', 'f_lcMon', 'cur']];
+const LC_RT = [['fix', 'lc_rtFix'], ['prime', 'lc_rtPrime'], ['pmt', 'lc_rtPmt']];
+function lcPrime(){ return (isFinite(+MKT.boi) ? +MKT.boi : 0) + PRIME_SPREAD; }
+function lcFields(o){ const rt = o.rt || 'fix'; return LC_F.map(f => f[0] !== 'rate' ? f : rt === 'prime' ? ['mg', 'f_lcMargin', '%'] : rt === 'pmt' ? ['pay', 'f_lcPay', 'cur'] : f); }
+function lcCalcTxt(o){
+  const rt = o.rt || 'fix'; if (rt === 'fix') return '';
+  const s = loanCmpSide(o);
+  if (rt === 'prime') return t('lc_primeIs', {p: PC(lcPrime()), r: PC(s.rate)});
+  return s.low ? t('lc_pmtLow') : t('lc_rateIs', {r: PC(s.rate)});
+}
 function lcSeed(){
   let a = {n: '', amt: 200000, rate: 5.5, yrs: 5, fee: 0, pct: 0, mon: 0}, b = {n: '', amt: 200000, rate: 4.9, yrs: 5, fee: 1500, pct: 0.5, mon: 10};
   try { const o = JSON.parse(LS.getItem('fin-vals') || 'null');     // keep what was typed in the old two-offer form
@@ -9059,7 +9102,9 @@ function lcRender(){
   box.innerHTML = L.map((o, i) => `<div class="lc-card" data-lci="${i}">
       <div class="lc-top"><span class="lc-num" aria-hidden="true">${i + 1}</span><input class="lc-name" type="text" maxlength="30" dir="auto" data-lci="${i}" data-lck="n" value="${asEsc(o.n || '')}" placeholder="${asEsc(t('lc_def', {n: i + 1}) + ' · ' + t('lc_namePh'))}" aria-label="${asEsc(t('lc_name') + ' ' + (i + 1))}">
         ${L.length > 1 ? `<button type="button" class="lc-del" data-lcdel="${i}" aria-label="${asEsc(t('lc_del', {x: lcName(o, i)}))}">✕</button>` : ''}</div>
-      <div class="fields">${LC_F.map(([k, lab, u]) => `<div class="field"><span class="lc-l" aria-hidden="true">${asEsc(t(lab))}</span><div class="control"><input type="number" inputmode="decimal" step="any" data-lci="${i}" data-lck="${k}" value="${o[k] == null ? '' : o[k]}" aria-label="${asEsc(t(lab) + ' · ' + lcName(o, i))}">${unitHTML(u)}</div></div>`).join('')}</div>
+      <div class="seg lc-rt" role="group" aria-label="${asEsc(t('lc_rt'))}">${LC_RT.map(([k, l]) => `<button type="button" data-lcrt="${k}" data-lci="${i}" aria-pressed="${(o.rt || 'fix') === k}">${asEsc(t(l))}</button>`).join('')}</div>
+      <p class="lc-calc" data-lcc="${i}"${(o.rt || 'fix') === 'fix' ? ' hidden' : ''}>${asEsc(lcCalcTxt(o))}</p>
+      <div class="fields">${lcFields(o).map(([k, lab, u]) => `<div class="field"><span class="lc-l" aria-hidden="true">${asEsc(t(lab))}</span><div class="control"><input type="number" inputmode="decimal" step="any" data-lci="${i}" data-lck="${k}" value="${o[k] == null ? '' : o[k]}" aria-label="${asEsc(t(lab) + ' · ' + lcName(o, i))}">${unitHTML(u)}</div></div>`).join('')}</div>
     </div>`).join('') +
     (L.length < LC_MAX ? `<button type="button" class="lc-add" id="lc_add"><span aria-hidden="true">＋</span> ${asEsc(t('lc_add'))}</button>` : `<p class="fine">${asEsc(t('lc_max', {n: LC_MAX}))}</p>`) +
     `<p class="fine lc-hint">${asEsc(t('lc_hint'))}</p>`;
@@ -9069,6 +9114,7 @@ document.addEventListener('input', e => {
   const el = e.target; if (!el.dataset || el.dataset.lck == null || !el.closest('#lc_box')) return;
   const L = lcList(), o = L[+el.dataset.lci]; if (!o) return;
   o[el.dataset.lck] = el.dataset.lck === 'n' ? el.value.slice(0, 30) : (el.value === '' ? 0 : +el.value);
+  const c = $(`#lc_box [data-lcc="${el.dataset.lci}"]`); if (c && !c.hidden) c.textContent = lcCalcTxt(o);
   lcSave();
 }, true);
 document.addEventListener('click', e => {
@@ -9077,6 +9123,17 @@ document.addEventListener('click', e => {
     const last = L[L.length - 1] || {}; L.push(Object.assign({}, last, {n: ''}));
     saveSet(); lcRender(); calc(tab);
     const ins = $$('#lc_box .lc-name'), n = ins[ins.length - 1]; if (n){ n.focus(); n.scrollIntoView({block: 'center', behavior: SET.motion === 'reduce' ? 'auto' : 'smooth'}); }
+    return;
+  }
+  const rb = e.target.closest('[data-lcrt]');
+  if (rb){
+    const o = lcList()[+rb.dataset.lci], rt = rb.dataset.lcrt; if (!o || (o.rt || 'fix') === rt) return;
+    const cur = loanCmpSide(o);                       // keep the same rate when switching type
+    if (rt === 'prime' && o.mg == null) o.mg = Math.round((cur.rate - lcPrime()) * 100) / 100;
+    if (rt === 'pmt' && !o.pay) o.pay = Math.round(cur.pm);
+    if (rt === 'fix' && o.rt) o.rate = Math.round(cur.rate * 100) / 100;
+    o.rt = rt; saveSet(); lcRender(); calc(tab);
+    const b = $(`#lc_box [data-lcrt="${rt}"][data-lci="${rb.dataset.lci}"]`); if (b) b.focus();
     return;
   }
   const d = e.target.closest('[data-lcdel]');
