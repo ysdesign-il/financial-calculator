@@ -247,27 +247,19 @@ def markets(prev, log):
 
 
 def probe_sources():
-    try:
-        u = "https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=.SPX%7C.NDX%7C.DJI%7C.TA35%7C.TA125%7C.TA90%7C%40GC.1%7C%40LCO.1%7C.IXIC%7CUS10Y&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1"
-        j = json.loads(get_raw(u, BROWSER, 20))
-        q = j["FormattedQuoteResult"]["FormattedQuote"]
-        diag("probe_cnbc", [{k: x.get(k) for k in ("symbol", "code", "name", "last", "change_pct", "previous_day_closing", "last_time", "realTime", "currencyCode", "curmktstatus")} for x in q])
-    except Exception as e:
-        diag("probe_cnbc_err", str(e))
-    for sym in (".SPX", ".TA35", "@GC.1"):
-        for rng in ("10Y", "5Y", "1Y"):
-            try:
-                raw = get_raw("https://ts-api.cnbc.com/harmony/app/charts/%s.json?symbol=%s" % (rng, urllib.request.quote(sym)), BROWSER, 20)
-                diag("probe_chart_%s_%s" % (sym, rng), raw[:700] + " ... len=%d" % len(raw))
-                break
-            except Exception as e:
-                diag("probe_chart_%s_%s_err" % (sym, rng), str(e))
-    for sym in ("142", "137"):
+    hdr = dict(BROWSER, Origin="https://ysdesign-il.github.io")
+    tests = {"cnbc_q": "https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=.SPX%7C%40LCO.1%7CUS10Y&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1",
+             "cnbc_chart": "https://ts-api.cnbc.com/harmony/app/charts/1D.json?symbol=.SPX",
+             "globes": "https://www.globes.co.il/data/webservices/financial.asmx/getInstrument?exchange=tase&symbol=142"}
+    for k, u in tests.items():
         try:
-            raw = get_raw("https://www.globes.co.il/data/webservices/financial.asmx/getInstrument?exchange=tase&symbol=" + sym, BROWSER, 20)
-            diag("probe_globes_" + sym, raw[1100:3600])
+            req = urllib.request.Request(u, headers=hdr)
+            with urllib.request.urlopen(req, timeout=20) as r:
+                h = {a: b for a, b in r.headers.items() if a.lower().startswith("access-control") or a.lower() in ("content-type", "cache-control", "vary")}
+                body = r.read().decode("utf-8", "replace")
+            diag("probe_hdr_" + k, {"headers": h, "body": body[:600]})
         except Exception as e:
-            diag("probe_globes_%s_err" % sym, str(e))
+            diag("probe_hdr_%s_err" % k, str(e))
 
 
 def main():
