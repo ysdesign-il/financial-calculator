@@ -690,6 +690,41 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
   .iv-tabs button{padding:5px 10px}
   .iv-z{height:28px}
 }
+/* themes: chrome that was hard-coded follows the active theme */
+:root[data-skin] body{background:var(--sk-body);background-attachment:fixed}
+:root[data-skin] .rail{background:var(--sk-rail)}
+:root[data-skin] .bottom{background:var(--sk-bottom)}
+:root[data-skin] .hhero{background:var(--sk-hh);border-color:var(--sk-hh-bd)}
+:root[data-skin] .hhero .l{color:var(--sk-hh-l)}
+:root[data-skin] .hhero .v{color:var(--sk-hh-v)}
+:root[data-skin] .hhero .s{color:var(--sk-hh-s)}
+:root[data-skin] .gold-btn{background:linear-gradient(180deg,color-mix(in srgb,var(--gold-ui) 68%,#fff),var(--gold-ui));box-shadow:0 6px 18px color-mix(in srgb,var(--gold-ui) 32%,transparent);color:#140d02}
+:root[data-skin="jerusalem"] :is(#page-title,.sec-t,.sc-t,.home-hello,.sh-tx b,h2,h3){font-family:'Frank Ruhl Libre',Georgia,serif;font-weight:700;letter-spacing:.005em}
+:root[data-skin="banknote"] .hhero .v{letter-spacing:.02em;text-shadow:0 1px 0 rgba(0,0,0,.25)}
+:root[data-skin="terminal"] :is(.num,.hhero .v,.mk b,dd,.hero .v,.hero b,input,select,#gStamp,.upd-row b){font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+:root[data-skin="terminal"] :is(.sh-group,.set-cat .set-sec,.panel-flat,.inputs,.chart,.hero,.hhero,.tile,.mk,.gk-st,.field input,.field select,.btn,.gold-btn,.bottom){border-radius:4px}
+:root[data-skin="terminal"] .hhero{box-shadow:inset 0 0 0 1px rgba(255,176,0,.25)}
+:root[data-skin="eilat"] .hhero{box-shadow:0 18px 44px rgba(194,69,110,.35)}
+/* theme gallery */
+.skins{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;margin:0 0 16px}
+.skin-c{appearance:none;font:inherit;color:var(--ink);text-align:start;cursor:pointer;display:flex;flex-direction:column;gap:6px;padding:8px 8px 10px;border-radius:16px;border:1px solid var(--line);background:var(--g1);position:relative}
+.skin-c[aria-checked="true"]{border-color:var(--gold-ui);box-shadow:0 0 0 2px var(--gold-ui)}
+.skin-c[aria-checked="true"]::after{content:"✓";position:absolute;top:12px;inset-inline-end:12px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;font-weight:700;background:var(--gold-ui);color:#140d02}
+.skin-c:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.skin-pv{display:grid;grid-template-columns:22% 1fr;grid-template-rows:auto auto 1fr;gap:5px;height:92px;padding:6px;border-radius:11px;background:var(--pv-bg);overflow:hidden;direction:ltr}
+.skin-pv .r{grid-row:1/4;border-radius:6px;background:var(--pv-rail)}
+.skin-pv .h{border-radius:7px;background:var(--pv-hh);padding:5px 7px;display:flex;align-items:flex-end;min-height:34px}
+.skin-pv .h b{font:600 .78rem/1 'Frank Ruhl Libre',Georgia,serif;color:var(--pv-v)}
+.skin-pv .c{border-radius:6px;background:var(--pv-card);display:flex;align-items:center;gap:4px;padding:0 6px;min-height:20px}
+.skin-pv .c i{height:5px;border-radius:3px;background:var(--pv-acc);width:38%}
+.skin-pv .c u{height:4px;border-radius:3px;background:color-mix(in srgb,var(--pv-v) 35%,transparent);width:30%;text-decoration:none}
+.skin-pv.split{background:linear-gradient(90deg,#EDF1F8 50%,#060C1C 50%)}
+.skin-n{font-weight:650;font-size:.95rem;line-height:1.2}
+.skin-c small{color:var(--ink-2);font-size:.78rem;line-height:1.35}
+.skin-btn{appearance:none;width:38px;height:38px;flex:none;border-radius:12px;border:1px solid var(--nav-line);background:rgba(255,255,255,.06);color:var(--on-navy);display:grid;place-items:center;cursor:pointer}
+.skin-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.skin-btn:hover{border-color:var(--gold-ui)}
+.sk-box .skins{margin:0;overflow:auto}
 
 </style>
 </head>
@@ -711,6 +746,7 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
         </div>
         <label class="cap" for="cur" data-i="cap_cur"></label>
         <select id="cur" data-ia="aria_cur"></select>
+        <button type="button" class="skin-btn" id="skinBtn" data-ia="sk_pick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.7-.8 1.7-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-.9.8-1.7 1.7-1.7H16a5 5 0 0 0 5-5c0-4-4-7.2-9-7.2z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.3" r="1.2"/><circle cx="15" cy="7.6" r="1.2"/></svg></button>
         <button type="button" class="refresh-btn" id="gRefresh" data-ia="b_refreshAll"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.5-5.8M20 4v5h-5"/></svg><span id="gStamp"></span></button>
       </div>
     </div>
@@ -2452,6 +2488,21 @@ Object.assign(T, {
   iv_zoomIn:['הגדלה','تكبير','Zoom in'], iv_zoomOut:['הקטנה','تصغير','Zoom out'],
   iv_note:['הנתונים מגיעים ישירות מהווידג׳טים הרשמיים של Investing.com ומתעדכנים בזמן אמת. הלוח מותאם לרוחב המסך; אפשר להגדיל עם + ולגלול, או לסובב את הטלפון לרוחב.','البيانات تأتي مباشرة من الأدوات الرسمية لـ Investing.com وتتحدّث لحظيًا. اللوحة ملائمة لعرض الشاشة؛ يمكنك التكبير بـ + والتمرير، أو تدوير الهاتف أفقيًا.','The data comes straight from Investing.com\'s official widgets and updates live. The board fits the screen width; zoom with + and scroll, or turn your phone sideways.']
 });
+Object.assign(T, {
+  sk_pick:['ערכת נושא','السمة','Theme'],
+  sk_title:['בחירת ערכת נושא','اختيار السمة','Choose a theme'],
+  sk_system:['לפי המכשיר','حسب الجهاز','Match device'], sk_systemS:['כהה או בהיר, לפי הגדרת הטלפון','داكن أو فاتح حسب إعداد الهاتف','Dark or light, following your phone'],
+  sk_dark:['לילה כחול','ليل أزرق','Midnight blue'], sk_darkS:['כחול עמוק וזהב — המראה הקלאסי','أزرق عميق وذهبي — المظهر الكلاسيكي','Deep blue and gold — the classic look'],
+  sk_light:['יום','نهار','Daylight'], sk_lightS:['בהיר, נקי ורגוע','فاتح ونظيف وهادئ','Bright, clean and calm'],
+  sk_telaviv:['חוף תל אביב','شاطئ تل أبيب','Tel Aviv beach'], sk_telavivS:['כחול ים, חול חם ושמש','أزرق البحر ورمل دافئ وشمس','Sea blue, warm sand and sun'],
+  sk_jerusalem:['אבן ירושלמית','حجر القدس','Jerusalem stone'], sk_jerusalemS:['אבן, עלי זית וכותרות בכתב מסורתי','حجر وزيتون وعناوين بخط تقليدي','Stone, olive leaves and classic serif headings'],
+  sk_banknote:['שטר כסף','ورقة نقدية','Banknote'], sk_banknoteS:['נייר שטרות ירקרק עם דוגמת גיליוש','ورق نقدي مخضرّ بنقشة الزخرفة الأمنية','Green banknote paper with a guilloche pattern'],
+  sk_deadsea:['ים המלח','البحر الميت','Dead Sea'], sk_deadseaS:['טורקיז מינרלי ולבן של מלח על רקע כהה','فيروزي معدني وأبيض الملح على خلفية داكنة','Mineral turquoise and salt white on dark'],
+  sk_eilat:['שקיעה באילת','غروب في إيلات','Eilat sunset'], sk_eilatS:['סגול של לילה וזוהר כתום-ורוד','بنفسجي الليل وتوهّج برتقالي وردي','Night purple with an orange-pink glow'],
+  sk_terminal:['מסוף מסחר','شاشة التداول','Trading terminal'], sk_terminalS:['שחור וענבר, ספרות כמו במסך מסחר','أسود وكهرماني، أرقام كشاشة تداول','Black and amber, numbers like a trading screen'],
+  o_th_sys:['לפי המכשיר','حسب الجهاز','Match device'],
+  h_theme:['אפשר להחליף ערכת נושא בכל רגע — גם מכפתור הפלטה שבראש המסך.','يمكن تغيير السمة في أي وقت — أيضًا من زر لوحة الألوان أعلى الشاشة.','Switch themes any time — also from the palette button at the top of the screen.']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -2611,13 +2662,54 @@ try { const sv = JSON.parse(LS.getItem('fin-set') || '{}'); Object.assign(SET, s
 const saveSet = () => { try { LS.setItem('fin-set', JSON.stringify(SET)); } catch(e) {} };
 const mq = window.matchMedia ? matchMedia('(prefers-color-scheme: light)') : null;
 const AC = {gold:['#F2C45A','#9A6A06'], blue:['#6FA8FF','#2A5FD6'], green:['#46E3A4','#0D8A5B'], violet:['#B79CFF','#6B46D6']};
+/* ---- themes: each one is a complete look (palette, chrome, home card), switchable at any time ---- */
+const SKINS = {
+  telaviv: {mode: 'light', pv: ['#E8F3F6', '#0A4F6E', '#FFFFFF', '#0B6E96', '#FFB23F', '#0B7CC2'],
+    t: {'--bg':'#E8F3F6','--surface':'#FFFFFF','--field':'#FFFFFF','--ink':'#0A2A3B','--ink-2':'#4E6B79','--line':'rgba(10,42,59,.13)','--navy':'#0A4F6E','--hero-bg':'#0A4F6E','--on-navy':'#F2FBFF','--on-navy-2':'#A8D3E2','--nav-line':'rgba(255,255,255,.16)','--gold-ui':'#FFB23F','--gold':'#A35F00','--brass':'#A35F00','--focus':'#0B7CC2','--g1':'#FFFFFF','--g2':'#F2F9FB','--track':'rgba(10,42,59,.16)','--shadow':'rgba(10,60,90,.12)','--hero-label':'#2E5C70','--hero-val':'#0B7CC2','--hero-grad':'linear-gradient(135deg,rgba(11,124,194,.16),#FFFFFF 65%)','--hero-bd':'rgba(11,124,194,.35)','--c1':'#0B7CC2','--c2':'#F0A030','--c3':'#E0604A','--c4':'#1AA37A',
+       '--sk-rail':'linear-gradient(180deg,#0B5A7C,#083F58)','--sk-hh':'linear-gradient(135deg,#0B6E96 0%,#0A4F6E 55%,#083A52 100%)','--sk-hh-bd':'rgba(255,178,63,.5)','--sk-hh-l':'#CDEBF5','--sk-hh-v':'#FFD27A','--sk-hh-s':'#A8D3E2','--sk-bottom':'rgba(8,63,88,.94)','--sk-body':'linear-gradient(180deg,#E8F3F6 0%,#EEF3EE 55%,#F5EEDF 100%)'}},
+  jerusalem: {mode: 'light', serif: true, pv: ['#EEE7D8', '#39352A', '#FBF8F1', '#5B6B3A', '#D1AE55', '#4E6A2B'],
+    t: {'--bg':'#EEE7D8','--surface':'#FBF8F1','--field':'#FFFDF8','--ink':'#2A2318','--ink-2':'#6D6150','--line':'rgba(42,35,24,.14)','--navy':'#39352A','--hero-bg':'#39352A','--on-navy':'#F5EFE0','--on-navy-2':'#C9BEA5','--nav-line':'rgba(245,239,224,.14)','--gold-ui':'#D1AE55','--gold':'#7A5A10','--brass':'#7A5A10','--focus':'#4E6A2B','--g1':'#FDFBF6','--g2':'#F4EDDF','--track':'rgba(42,35,24,.16)','--shadow':'rgba(60,45,20,.12)','--hero-label':'#4E5A35','--hero-val':'#4E6A2B','--hero-grad':'linear-gradient(135deg,rgba(78,106,43,.16),#FBF8F1 65%)','--hero-bd':'rgba(78,106,43,.38)','--c1':'#4E6A2B','--c2':'#C08A2A','--c3':'#B4553A','--c4':'#2F7D6A',
+       '--sk-rail':'linear-gradient(180deg,#433E31,#2F2B21)','--sk-hh':'linear-gradient(135deg,#5B6B3A,#3A4426 60%,#2B321C)','--sk-hh-bd':'rgba(209,174,85,.55)','--sk-hh-l':'#E3DCC2','--sk-hh-v':'#F3D98E','--sk-hh-s':'#CFC6A6','--sk-bottom':'rgba(47,43,33,.94)','--sk-body':'radial-gradient(1100px 560px at 85% -10%,rgba(209,174,85,.18),transparent 60%),#EEE7D8'}},
+  banknote: {mode: 'light', pv: ['#E4EFE6', '#123A2B', '#F7FBF7', '#1B5A40', '#D9B95E', '#13704B'],
+    t: {'--bg':'#E4EFE6','--surface':'#F7FBF7','--field':'#FFFFFF','--ink':'#0F2A1F','--ink-2':'#4C6A5B','--line':'rgba(15,42,31,.14)','--navy':'#123A2B','--hero-bg':'#123A2B','--on-navy':'#EAF6EE','--on-navy-2':'#A9CBB8','--nav-line':'rgba(234,246,238,.15)','--gold-ui':'#D9B95E','--gold':'#6E5A10','--brass':'#6E5A10','--focus':'#13704B','--g1':'#FBFEFA','--g2':'#EDF5EE','--track':'rgba(15,42,31,.16)','--shadow':'rgba(15,60,40,.12)','--hero-label':'#2E5A46','--hero-val':'#13704B','--hero-grad':'linear-gradient(135deg,rgba(19,112,75,.16),#F7FBF7 65%)','--hero-bd':'rgba(19,112,75,.38)','--c1':'#13704B','--c2':'#C69A2E','--c3':'#B85A43','--c4':'#2D6FA3',
+       '--sk-rail':'linear-gradient(180deg,#154532,#0F3125)','--sk-hh':'repeating-radial-gradient(circle at 100% 0,rgba(217,185,94,.13) 0 1px,transparent 1px 7px),linear-gradient(135deg,#1B5A40,#123A2B 60%,#0D2A1F)','--sk-hh-bd':'rgba(217,185,94,.55)','--sk-hh-l':'#CFE6D7','--sk-hh-v':'#F0DC98','--sk-hh-s':'#A9CBB8','--sk-bottom':'rgba(15,49,37,.94)','--sk-body':'repeating-radial-gradient(circle at 0 0,rgba(19,112,75,.05) 0 1px,transparent 1px 11px),repeating-radial-gradient(circle at 100% 100%,rgba(19,112,75,.05) 0 1px,transparent 1px 11px),#E4EFE6'}},
+  deadsea: {mode: 'dark', pv: ['#05181A', '#041315', '#0B2A2D', '#0F4D4A', '#5EDFCB', '#F3EAD6'],
+    t: {'--bg':'#05181A','--surface':'#0B2A2D','--field':'#082124','--ink':'#E6F5F2','--ink-2':'#8DB3AD','--line':'rgba(230,245,242,.10)','--navy':'#041315','--hero-bg':'#0B2A2D','--on-navy':'#E6F5F2','--on-navy-2':'#8DB3AD','--nav-line':'rgba(230,245,242,.10)','--gold-ui':'#5EDFCB','--gold':'#5EDFCB','--brass':'#5EDFCB','--focus':'#5EDFCB','--g1':'rgba(230,245,242,.055)','--g2':'rgba(230,245,242,.02)','--track':'rgba(230,245,242,.14)','--shadow':'rgba(0,0,0,.35)','--hero-label':'#BFE3DC','--hero-val':'#F3EAD6','--hero-grad':'linear-gradient(135deg,rgba(94,223,203,.20),rgba(11,42,45,.92) 62%)','--hero-bd':'rgba(94,223,203,.35)','--c1':'#5EDFCB','--c2':'#F2C46B','--c3':'#F07A68','--c4':'#7FB8FF',
+       '--sk-rail':'linear-gradient(180deg,#07211F,#041315)','--sk-hh':'linear-gradient(135deg,#0F4D4A,#0A2F31 55%,#061C1E)','--sk-hh-bd':'rgba(94,223,203,.45)','--sk-hh-l':'#BFE3DC','--sk-hh-v':'#F3EAD6','--sk-hh-s':'#8DB3AD','--sk-bottom':'rgba(4,22,24,.92)','--sk-body':'radial-gradient(1100px 560px at 80% -10%,rgba(94,223,203,.12),transparent 60%),radial-gradient(800px 500px at 0% 100%,rgba(243,234,214,.05),transparent 60%),#05181A'}},
+  eilat: {mode: 'dark', pv: ['#160B20', '#110718', '#22132F', '#C2456E', '#FF9F6E', '#FFD38A'],
+    t: {'--bg':'#160B20','--surface':'#22132F','--field':'#1B0F27','--ink':'#FBEFF3','--ink-2':'#B89DB5','--line':'rgba(251,239,243,.10)','--navy':'#110718','--hero-bg':'#22132F','--on-navy':'#FBEFF3','--on-navy-2':'#B89DB5','--nav-line':'rgba(251,239,243,.10)','--gold-ui':'#FF9F6E','--gold':'#FF9F6E','--brass':'#FF9F6E','--focus':'#FFB38A','--g1':'rgba(251,239,243,.055)','--g2':'rgba(251,239,243,.02)','--track':'rgba(251,239,243,.14)','--shadow':'rgba(0,0,0,.4)','--hero-label':'#F2C7B6','--hero-val':'#FFD38A','--hero-grad':'linear-gradient(135deg,rgba(255,120,92,.26),rgba(34,19,47,.92) 62%)','--hero-bd':'rgba(255,159,110,.40)','--c1':'#FF9F6E','--c2':'#FFD38A','--c3':'#FF6B8B','--c4':'#8FD3FF',
+       '--sk-rail':'linear-gradient(180deg,#1E0F2B,#110718)','--sk-hh':'linear-gradient(160deg,#FF7A59 0%,#C2456E 38%,#4A1D5C 78%,#2A1238 100%)','--sk-hh-bd':'rgba(255,159,110,.5)','--sk-hh-l':'#FFE3D6','--sk-hh-v':'#FFF1C9','--sk-hh-s':'#F6C9C9','--sk-bottom':'rgba(17,7,24,.92)','--sk-body':'radial-gradient(900px 420px at 50% -8%,rgba(255,122,89,.20),transparent 62%),radial-gradient(800px 500px at 100% 0%,rgba(194,69,110,.14),transparent 60%),#160B20'}},
+  terminal: {mode: 'dark', mono: true, pv: ['#000000', '#000000', '#0C0A06', '#0C0A06', '#FFB000', '#FFB000'],
+    t: {'--bg':'#000000','--surface':'#0C0A06','--field':'#070603','--ink':'#FFC247','--ink-2':'#B88B2C','--line':'rgba(255,176,0,.20)','--navy':'#000000','--hero-bg':'#0C0A06','--on-navy':'#FFC247','--on-navy-2':'#B88B2C','--nav-line':'rgba(255,176,0,.22)','--gold-ui':'#FFB000','--gold':'#FFB000','--brass':'#FFB000','--focus':'#FFB000','--g1':'rgba(255,176,0,.04)','--g2':'rgba(255,176,0,.015)','--track':'rgba(255,176,0,.22)','--shadow':'rgba(0,0,0,.6)','--hero-label':'#B88B2C','--hero-val':'#FFB000','--hero-grad':'linear-gradient(135deg,rgba(255,176,0,.10),#0C0A06 62%)','--hero-bd':'rgba(255,176,0,.45)','--c1':'#FFB000','--c2':'#3FD3FF','--c3':'#FF5A4E','--c4':'#4CE07A',
+       '--sk-rail':'#000000','--sk-hh':'#0C0A06','--sk-hh-bd':'rgba(255,176,0,.55)','--sk-hh-l':'#B88B2C','--sk-hh-v':'#FFB000','--sk-hh-s':'#B88B2C','--sk-bottom':'rgba(0,0,0,.95)','--sk-body':'#000000'}}
+};
+const SKIN_PV = {dark: ['#060C1C', '#0A1226', '#0E1830', '#6b4d12', '#F2C45A', '#FFE29A'], light: ['#EDF1F8', '#0A1226', '#FFFFFF', '#6b4d12', '#F2C45A', '#0D9A66']};
+const SKIN_ORDER = ['system', 'dark', 'light', 'telaviv', 'jerusalem', 'banknote', 'deadsea', 'eilat', 'terminal'];
+(function skinCss(){
+  let css = '';
+  for (const k in SKINS){ css += ':root[data-skin="' + k + '"]{' + Object.entries(SKINS[k].t).map(([p, v]) => p + ':' + v).join(';') + '}\n'; }
+  const st = document.createElement('style'); st.id = 'skin-css'; st.textContent = css; document.head.appendChild(st);
+})();
+function skinFont(){
+  if (SKINS[SET.theme] && SKINS[SET.theme].mono && !document.getElementById('font-mono')){
+    const l = document.createElement('link'); l.id = 'font-mono'; l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap'; document.head.appendChild(l);
+  }
+}
 function applyTheme(){
-  const th = SET.theme === 'system' ? (mq && mq.matches ? 'light' : 'dark') : SET.theme;
+  const sk = SKINS[SET.theme];
+  const th = sk ? sk.mode : SET.theme === 'system' ? (mq && mq.matches ? 'light' : 'dark') : SET.theme;
   const r = document.documentElement;
   r.dataset.theme = th;
-  const a = AC[SET.accent] || AC.gold, g = th === 'light' ? a[1] : a[0];
-  r.style.setProperty('--gold-ui', a[0]); r.style.setProperty('--gold', g); r.style.setProperty('--brass', g);
+  if (sk) r.dataset.skin = SET.theme; else delete r.dataset.skin;
+  if (sk && SET.accentFor !== SET.theme){ ['--gold-ui', '--gold', '--brass'].forEach(p => r.style.removeProperty(p)); }
+  else {
+    const a = AC[SET.accent] || AC.gold, g = th === 'light' ? a[1] : a[0];
+    r.style.setProperty('--gold-ui', a[0]); r.style.setProperty('--gold', g); r.style.setProperty('--brass', g);
+  }
   r.dataset.contrast = SET.contrast; r.dataset.motion = SET.motion; r.dataset.font = SET.font; r.dataset.sliders = SET.sliders;
+  skinFont();
+  const mc = document.querySelector('meta[name="theme-color"]'); if (mc) mc.content = sk ? sk.t['--navy'] : '#0A1226';
 }
 function applySize(){ document.documentElement.style.fontSize = {s:'14px', m:'16px', l:'18px'}[SET.size] || '16px'; }
 applyTheme(); applySize();
@@ -3377,7 +3469,7 @@ const USEFUL_LINKS = [
 const PROFK = [['k0','f_k0'],['k12','f_k12'],['k3','f_k3'],['k45','f_k45'],['k617','f_k617'],['k18','f_k18']];
 const SETDEFS = [
   ['set_look', [
-    SEL('set_theme','f_theme','system',[['system','o_th_sys'],['dark','o_th_dark'],['light','o_th_light']],{wide:true, hint:'h_theme'}),
+    SEL('set_theme','f_theme','system',[['system','o_th_sys'],['dark','sk_dark'],['light','sk_light'],['telaviv','sk_telaviv'],['jerusalem','sk_jerusalem'],['banknote','sk_banknote'],['deadsea','sk_deadsea'],['eilat','sk_eilat'],['terminal','sk_terminal']],{wide:true, hint:'h_theme'}),
     SEL('set_accent','f_accent','gold',[['gold','o_ac_gold'],['blue','o_ac_blue'],['green','o_ac_green'],['violet','o_ac_violet']]),
     SEL('set_size','f_size','m',[['s','o_sz_s'],['m','o_sz_m'],['l','o_sz_l']]),
     SEL('set_contrast','f_contrast','normal',[['normal','o_ct_normal'],['high','o_ct_high']]),
@@ -3444,7 +3536,7 @@ function settingsPanelHTML(){
   return `<section class="panel panel-flat panel-set" id="panel-settings" role="tabpanel" aria-labelledby="tab-settings" hidden>
     <div class="perm" id="perm" role="status"><span class="perm-dot"></span><div><b id="perm_t"></b><small id="perm_s"></small></div></div>
     ${sec('set_account', accountHTML())}
-    ${SETDEFS.slice(0, 2).map(([k, fs]) => sec(k, fl(fs))).join('')}
+    ${SETDEFS.slice(0, 2).map(([k, fs]) => sec(k, (k === 'set_look' ? '<div class="skins" id="skins" role="radiogroup" data-ia="f_theme"></div>' : '') + fl(fs))).join('')}
     ${sec('set_numbers', fl(SETDEFS[2][1]))}
     ${sec('set_calc', fl(SETDEFS[3][1]))}
     ${sec('set_profile', fl(SETDEFS[4][1]))}
@@ -5409,7 +5501,9 @@ panelsEl.addEventListener('change', e => {
   if (SMAP[id]){
     SET[SMAP[id]] = val;
     const k = SMAP[id];
-    if (['theme','accent','contrast','motion','font','sliders'].includes(k)) applyTheme();
+    if (k === 'accent') SET.accentFor = SKINS[SET.theme] ? SET.theme : '';
+    if (k === 'theme') SET.accentFor = '';
+    if (['theme','accent','contrast','motion','font','sliders'].includes(k)){ applyTheme(); if (typeof skRender === 'function') skRender(); }
     if (k === 'size') applySize();
     if (DEFKEYS.includes(k)) applyDefaults();
     if (k === 'remember'){ if (val === '1') saveVals(); else { try { LS.removeItem('fin-vals'); } catch(err) {} } }
@@ -6814,8 +6908,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "2.8.2", "date": "2026-10-14", "notes": {"he": "לוח Investing.com מתפרס עכשיו על כל המסך ומציג את כל הטבלה, עם כפתורי הגדלה והקטנה.", "ar": "لوحة Investing.com تملأ الشاشة الآن وتعرض الجدول كاملًا، مع أزرار التكبير والتصغير.", "en": "The Investing.com board now fills the screen and shows the whole table, with zoom buttons."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.092026';
+var CHANGELOG = [{"v": "2.9", "date": "2026-10-14", "notes": {"he": "ערכות נושא: 9 עיצובים שמחליפים בלחיצה — לילה כחול, יום, חוף תל אביב, אבן ירושלמית, שטר כסף, ים המלח, שקיעה באילת ומסוף מסחר. כפתור פלטה בראש המסך.", "ar": "السمات: 9 تصاميم تُبدَّل بنقرة — ليل أزرق، نهار، شاطئ تل أبيب، حجر القدس، ورقة نقدية، البحر الميت، غروب في إيلات وشاشة التداول. زر لوحة الألوان أعلى الشاشة.", "en": "Themes: 9 designs you switch with one tap — Midnight blue, Daylight, Tel Aviv beach, Jerusalem stone, Banknote, Dead Sea, Eilat sunset and Trading terminal. A palette button at the top of the screen."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.092738';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -7345,6 +7439,49 @@ function ivZoomStep(d){
   if (!d) delete SET.ivZoom[IV_CUR]; else SET.ivZoom[IV_CUR] = Math.round(ivZoomNow() * (d > 0 ? 1.15 : 1 / 1.15) * 100) / 100;
   saveSet(); ivFit();
 }
+
+/* ---- theme gallery (Settings → Display, and the palette button in the header) ---- */
+function skCard(k){
+  const sk = SKINS[k], pv = sk ? sk.pv : SKIN_PV[k] || SKIN_PV.dark;
+  const style = `--pv-bg:${pv[0]};--pv-rail:${pv[1]};--pv-card:${pv[2]};--pv-hh:${sk ? (sk.t['--sk-hh'] || pv[3]) : 'linear-gradient(135deg,#6b4d12,#2a1f08 55%,#171108)'};--pv-acc:${pv[4]};--pv-v:${k === 'light' || k === 'dark' || k === 'system' ? '#FFE29A' : (sk.t['--sk-hh-v'] || pv[5])}`;
+  return `<button type="button" class="skin-c" role="radio" data-skin-pick="${k}" aria-checked="${(SET.theme || 'system') === k}">
+    <span class="skin-pv${k === 'system' ? ' split' : ''}" style="${style}" aria-hidden="true"><i class="r"></i><span class="h"><b>₪12,480</b></span><span class="c"><i></i><u></u></span><span class="c"><u></u><i></i></span></span>
+    <span class="skin-n">${asEsc(t('sk_' + k))}</span><small>${asEsc(t('sk_' + k + 'S'))}</small></button>`;
+}
+function skRender(){
+  const html = SKIN_ORDER.map(skCard).join('');
+  $$('.skins').forEach(box => { box.innerHTML = html; });
+}
+function skPick(k){
+  if (!SKIN_ORDER.includes(k)) return;
+  SET.theme = k; SET.accentFor = ''; saveSet(); applyTheme();
+  const s = $('#set_theme'); if (s) s.value = k;
+  skRender();
+  try { calc(tab); } catch (e) {}
+}
+function skOpen(){
+  if (!$('#skx')) document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="skx" hidden><div class="cp-box sk-box" role="dialog" aria-modal="true" aria-labelledby="sk_t">
+    <div class="cp-top"><h3 id="sk_t"></h3><button type="button" class="cp-x" id="sk_x">×</button></div>
+    <div class="skins" role="radiogroup"></div><p class="fine" id="sk_h"></p></div></div>`);
+  $('#sk_t').textContent = t('sk_title'); $('#sk_h').textContent = t('h_theme');
+  skRender(); $('#skx').hidden = false; document.body.classList.add('cp-lock');
+  setTimeout(() => { const c = $('#skx .skin-c[aria-checked="true"]') || $('#skx .skin-c'); if (c) c.focus(); }, 30);
+}
+function skClose(){ const o = $('#skx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); const b = $('#skinBtn'); if (b) b.focus(); } }
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-skin-pick]'); if (c){ skPick(c.dataset.skinPick); return; }
+  if (e.target.closest('#skinBtn')){ skOpen(); return; }
+  const o = $('#skx'); if (o && !o.hidden && (e.target === o || e.target.closest('#sk_x'))) skClose();
+});
+document.addEventListener('keydown', e => {
+  const o = $('#skx'); if (e.key === 'Escape' && o && !o.hidden) skClose();
+  const c = e.target.closest && e.target.closest('.skin-c'); if (!c || !['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'].includes(e.key)) return;
+  const rtl = document.documentElement.dir === 'rtl', all = $$('.skin-c', c.parentElement), i = all.indexOf(c), fw = e.key === 'ArrowDown' || (e.key === 'ArrowLeft' ? rtl : e.key === 'ArrowRight' ? !rtl : false);
+  const n = all[(i + (fw ? 1 : -1) + all.length) % all.length]; if (n){ e.preventDefault(); n.focus(); }
+});
+const _rsSk = renderStamp;
+renderStamp = function(){ _rsSk.apply(this, arguments); skRender(); };
+skRender();
 
 applyLang(false);
 activate(tab);
