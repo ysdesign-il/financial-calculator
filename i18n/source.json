@@ -681,6 +681,8 @@
 "dev_off": "Leave developer mode",
 "dev_offDone": "Developer mode is off",
 "dev_onDone": "Developer mode is on for this device",
+"dev_paste": "Paste",
+"dev_pasteHint": "Long-press the field and choose \"Paste\".",
 "dev_phone": "Phone",
 "dev_tablet": "Tablet",
 "ec_bills": "Bills",
