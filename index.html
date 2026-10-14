@@ -1030,6 +1030,7 @@ a.gold-btn.rc-open{display:inline-flex;align-items:center;justify-content:center
 .lk-c label{display:block;font-size:.85rem;margin-bottom:6px}
 .lk-c select{width:100%}
 .lk-h{margin:6px 2px 0}
+body:not(.own) .own-only{display:none!important}
 
 </style>
 </head>
@@ -3406,11 +3407,11 @@ Object.assign(T, {
   tab_cpilink:['הצמדה למדד','الربط بالمؤشر','Index linkage'],
   d_cpilink:['כמה שווה היום סכום שהוצמד למדד המחירים לצרכן או למדד תשומות הבנייה, לפי המדדים הרשמיים.','كم يساوي اليوم مبلغ مربوط بمؤشر أسعار المستهلك أو مؤشر مدخلات البناء، حسب المؤشرات الرسمية.','What an amount linked to the consumer price index or the construction input index is worth today, using the official indices.'],
   f_lkIdx:['מדד ההצמדה','مؤشر الربط','Linked to'], o_lkCpi:['מדד המחירים לצרכן','مؤشر أسعار المستهلك','Consumer price index'], o_lkBuild:['מדד תשומות הבנייה למגורים','مؤشر مدخلات البناء السكني','Residential construction input index'],
-  f_lkSrc:['מקור המדדים','مصدر المؤشرات','Index values'], o_lkAuto:['רשמי וחי (הלמ"ס)','رسمي ومباشر (دائرة الإحصاء)','Official and live (CBS)'], o_lkManual:['אני מזין ידנית','أُدخلها يدويًا','I type them in'],
+  f_lkSrc:['מקור המדדים','مصدر المؤشرات','Index values'], o_lkAuto:['המדדים הרשמיים','المؤشرات الرسمية','The official indices'], o_lkManual:['אני מזין ידנית','أُدخلها يدويًا','I type them in'],
   f_lkFrom:['מדד בסיס (חודש)','مؤشر الأساس (الشهر)','Base index (month)'], f_lkTo:['מדד קובע (חודש)','المؤشر المحدِّد (الشهر)','Current index (month)'],
   h_lkMonth:['בחוזים נהוג "המדד הידוע": מדד החודש הקודם, שמתפרסם ב-15 לחודש.','في العقود يُستخدم عادةً "المؤشر المعروف": مؤشر الشهر السابق الذي يُنشر في 15 من الشهر.','Contracts usually use the "known index": last month\'s index, published on the 15th.'],
   f_lkV1:['מדד בסיס (נקודות)','مؤشر الأساس (نقاط)','Base index (points)'], f_lkV2:['מדד קובע (נקודות)','المؤشر المحدِّد (نقاط)','Current index (points)'],
-  f_lkFut:['תחזית קדימה','توقع للأمام','Look ahead'], h_lkFut:['כמה הסכום יהיה אם המדד ימשיך לעלות כמו ב-12 החודשים האחרונים. את קצב העלייה אפשר לשנות בהגדרות.','كم سيصبح المبلغ إذا استمر المؤشر في الارتفاع كما في آخر 12 شهرًا. يمكن تغيير الوتيرة في الإعدادات.','What the amount becomes if the index keeps rising as in the last 12 months. You can change the pace in settings.'],
+  f_lkFut:['תחזית קדימה','توقع للأمام','Look ahead'], h_lkFut:['כמה הסכום יהיה אם המדד ימשיך לעלות כמו ב-12 החודשים האחרונים.','كم سيصبح المبلغ إذا استمر المؤشر في الارتفاع كما في آخر 12 شهرًا.','What the amount becomes if the index keeps rising as in the last 12 months.'],
   r_lkVal:['הסכום אחרי הצמדה','المبلغ بعد الربط','Amount after linkage'], r_lkIdx:['המדד','المؤشر','Index'], r_lkFrom:['מדד בסיס','مؤشر الأساس','Base index'], r_lkTo:['מדד קובע','المؤشر المحدِّد','Current index'],
   r_lkCh:['שינוי במדד','التغيّر في المؤشر','Index change'], r_lkDiff:['תוספת ההצמדה','إضافة الربط','Linkage added'], r_lkMonths:['חודשים','الأشهر','Months'], r_lkAnn:['קצב שנתי ממוצע','الوتيرة السنوية المتوسطة','Average yearly pace'],
   r_lkFut:['בעוד {n} שנים, בקצב {r} בשנה','بعد {n} سنوات، بوتيرة {r} سنويًا','In {n} years at {r} a year'],
@@ -3420,7 +3421,7 @@ Object.assign(T, {
   n_lkCpi:['מדד המחירים לצרכן הכללי של הלמ"ס, משורשר לבסיס האחרון.','مؤشر أسعار المستهلك العام من دائرة الإحصاء، مسلسل إلى الأساس الأخير.','The CBS general consumer price index, chained to the latest base.'],
   n_lkBuild:['מדד תשומות הבנייה למגורים של הלמ"ס, משורשר לבסיס האחרון. משמש בדרך כלל בתשלומים לקבלן על דירה חדשה.','مؤشر مدخلات البناء السكني من دائرة الإحصاء، مسلسل إلى الأساس الأخير. يُستخدم عادة في دفعات المقاول عن شقة جديدة.','The CBS residential construction input index, chained to the latest base. Usually used for payments to a developer on a new home.'],
   n_lk:['ההצמדה מחושבת לפי יחס המדדים. בחוזה מחייב כדאי לבדוק גם במחשבון ההצמדה של הלמ"ס.','يُحسب الربط بنسبة المؤشرين. في عقد ملزم يُفضّل التحقق أيضًا في حاسبة الربط لدى دائرة الإحصاء.','Linkage uses the ratio of the two index values. For a binding contract, check the CBS linkage calculator too.'],
-  f_bench:['תשואה לפי מדד','العائد حسب مؤشر','Return from an index'], h_bench:['תשואה שנתית ממוצעת של המדד ב-10 השנים האחרונות, בלי דיבידנדים. מתעדכן חי, ואפשר לשנות בהגדרות.','متوسط العائد السنوي للمؤشر في آخر 10 سنوات، دون أرباح موزعة. يتحدث مباشرة ويمكن تعديله في الإعدادات.','The index\'s average yearly return over the last 10 years, without dividends. Updates live and can be changed in settings.'],
+  f_bench:['תשואה לפי מדד','العائد حسب مؤشر','Return from an index'], h_bench:['התשואה השנתית הממוצעת של המדד ב-10 השנים האחרונות, בלי דיבידנדים.','متوسط العائد السنوي للمؤشر في آخر 10 سنوات، دون أرباح موزعة.','The index\'s average yearly return over the last 10 years, without dividends.'],
   o_bManual:['ידני (אני מזין)','يدوي (أُدخله)','Manual (I type it)'], o_bTa125:['ת"א 125','تل أبيب 125','TA-125'], o_bTa35:['ת"א 35','تل أبيب 35','TA-35'], o_bSpx:['S&P 500','S&P 500','S&P 500'], o_bNdx:['נאסד"ק 100','ناسداك 100','Nasdaq 100'], o_bDji:['דאו ג\'ונס','داو جونز','Dow Jones'], o_bGold:['זהב','الذهب','Gold'],
   ix_benchNote:['התשואה לפי {n}: {r} בשנה בממוצע ב-10 השנים האחרונות (בשנה האחרונה {y1}). תשואת עבר אינה מבטיחה תשואה בעתיד.','العائد حسب {n}: {r} سنويًا في المتوسط خلال آخر 10 سنوات (في السنة الأخيرة {y1}). عائد الماضي لا يضمن عائد المستقبل.','Return from {n}: {r} a year on average over the last 10 years (last year {y1}). Past returns do not promise future ones.'],
   ix_benchMine:['(לפי הערך ששינית בהגדרות)','(حسب القيمة التي عدّلتها في الإعدادات)','(using the value you changed in settings)'],
@@ -3430,6 +3431,7 @@ Object.assign(T, {
   ix_yoy:['12 חודשים {v}','12 شهرًا {v}','12 months {v}'], ix_ytd:['מתחילת השנה {v}','منذ بداية العام {v}','Year to date {v}'], ix_prov:['זמני','مؤقت','provisional'],
   ix_rt:['חי','مباشر','live'], ix_snap:['עדכון אחרון','آخر تحديث','last update'], ix_delay:['באיחור','متأخر','delayed'],
   ix_note:['מדדי המחירים מהלמ"ס ומתעדכנים כשהם מתפרסמים. הבורסות מתעדכנות חי כשהמסך פתוח (ת"א והסחורות באיחור של כ-15 דקות). לחיצה על מדד פותחת את המחשבון שלו.','مؤشرات الأسعار من دائرة الإحصاء وتتحدث عند نشرها. البورصات تتحدث مباشرة عندما تكون الشاشة مفتوحة (تل أبيب والسلع بتأخير نحو 15 دقيقة). النقر على مؤشر يفتح حاسبته.','Price indices come from the CBS and update when published. Markets update live while the screen is open (Tel Aviv and commodities about 15 minutes late). Tap an index to open its calculator.'],
+  ix_tap:['לחיצה על מדד פותחת את המחשבון שלו.','النقر على مؤشر يفتح حاسبته.','Tap an index to open its calculator.'],
   ix_edit:['עריכת המדדים לחישובים שלך','تعديل المؤشرات لحساباتك','Edit the indices for your calculations'],
   fg_g_idx:['מדדי מחירים','مؤشرات الأسعار','Price indices'], fg_g_mk:['בורסות: תשואה לחישובים','البورصات: العائد للحسابات','Markets: return for calculations'],
   fg_cpiLvl:['מדד המחירים לצרכן האחרון','آخر مؤشر لأسعار المستهلك','Latest consumer price index'], fg_buildLvl:['מדד תשומות הבנייה האחרון','آخر مؤشر لمدخلات البناء','Latest construction input index'],
@@ -8813,8 +8815,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "5.5", "date": "2026-10-14", "notes": {"he": "מדדים אמיתיים בזמן אמת בכל האפליקציה: מדד המחירים לצרכן, מדד תשומות הבנייה ומדד מחירי הדירות מהלמ\"ס, ות\"א 35, ת\"א 125, S&P 500, נאסד\"ק 100, דאו ג'ונס, זהב ונפט – חי במסך הבית. מחשבון חדש: הצמדה למדד. בריבית דריבית, תשואה ופרישה אפשר לבחור תשואה לפי מדד. כל מדד ניתן לעריכה בהגדרות.", "ar": "مؤشرات حقيقية في الوقت الفعلي في كل التطبيق: مؤشر أسعار المستهلك ومؤشر مدخلات البناء ومؤشر أسعار المساكن من دائرة الإحصاء، وتل أبيب 35 وتل أبيب 125 وS&P 500 وناسداك 100 وداو جونز والذهب والنفط – مباشرة في الشاشة الرئيسية. حاسبة جديدة: الربط بالمؤشر. في الفائدة المركبة والعائد والتقاعد يمكن اختيار عائد حسب مؤشر. كل مؤشر قابل للتعديل في الإعدادات.", "en": "Real indices in real time across the app: the CBS consumer price, construction input and home price indices, plus TA-35, TA-125, S&P 500, Nasdaq 100, Dow Jones, gold and oil, live on the home screen. New calculator: index linkage. Compound interest, yield and retirement can take an index's return. Every index can be edited in settings."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.200714';
+var CHANGELOG = [{"v": "5.6", "date": "2026-10-14", "notes": {"he": "כל החיבורים בזמן אמת עובדים מאחורי הקלעים: למשתמשים אין יותר מתגים, מקורות, סטטוס חיבור או עריכת נתוני מערכת – הם רואים רק תוצאות מדויקות לפי הנתונים הרשמיים. ניהול החיבורים והנתונים נשאר רק אצל בעל האפליקציה.", "ar": "كل الاتصالات المباشرة تعمل خلف الكواليس: لم يعد لدى المستخدمين مفاتيح أو مصادر أو حالة اتصال أو تعديل لبيانات النظام – يرون فقط نتائج دقيقة حسب البيانات الرسمية. إدارة الاتصالات والبيانات تبقى لمالك التطبيق فقط.", "en": "All live connections now run behind the scenes: people no longer see switches, sources, connection status or system-figure editing, only accurate results from the official data. Managing connections and data stays with the app owner."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.202349';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -10376,9 +10378,19 @@ if (['joboffer', 'unitprice'].includes(tab)) calc(tab);
 
 /* ---- live connections are shown only to the app owner (checked by claude.ai, never trusted from the page) ---- */
 function liveOwner(){ return IN_CLAUDE && PERM === 'owner'; }
+/* everything about where the data comes from stays behind the scenes: only the owner (inside Claude) sees and manages it */
+var OWN_SECS = ['set_live', 'set_figs', 'set_sync'], OWN_LAST = null;
 function liveApply(){
-  const own = liveOwner(), sec = $('#panel-settings .set-sec[data-sk="set_live"]');
-  if (sec){ sec.dataset.own = '1'; if (sec.hidden === own) GS_IDX = null; sec.hidden = !own; }
+  const own = liveOwner();
+  OWN_SECS.forEach(k => { const sec = $(`#panel-settings .set-sec[data-sk="${k}"]`); if (sec){ sec.dataset.own = '1'; if (sec.hidden === own) GS_IDX = null; sec.hidden = !own; } });
+  document.body.classList.toggle('own', own);
+  ['#gRefresh', '.mk-sw', '#fx_st', '#hm_n'].forEach(sel => $$(sel).forEach(el => el.classList.add('own-only')));
+  const xr = $('#x_refresh'); if (xr && xr.closest('.field')) xr.closest('.field').classList.add('own-only');
+  if (!own){                                                   // people always get the official, live data, with no switches to turn it off
+    ['liveFx', 'liveFiat', 'liveCrypto', 'boiDb', 'src_boiFx', 'src_boiInt', 'src_cpi', 'src_ecb', 'src_binance'].forEach(k => { if (SET[k] === '0') SET[k] = '1'; });
+    if (!(+SET.autoRef > 0)) SET.autoRef = '5';
+  }
+  if (OWN_LAST !== own){ OWN_LAST = own; if (typeof figApply === 'function') try { figApply(true); } catch (e) {} if (typeof ixBoard === 'function' && tab === 'home') try { ixBoard(); } catch (e) {} }
   $$('[data-i="sc_conn"], [data-i="sc_connAi"]').forEach(el => { el.dataset.i = own ? 'sc_conn' : 'sc_connAi'; el.textContent = t(el.dataset.i); });
   const sub = $('#sh_sub_conn'); if (sub){ sub.dataset.i = own ? 'sc_connS' : 'sc_connAiS'; sub.textContent = t(sub.dataset.i); }
 }
@@ -10643,7 +10655,7 @@ fgAdd('cpi', 'market', 'p', () => MKT.cpi, v => { MKT.cpi = v; });
 var FG_GROUPS = ['tax', 'ni', 'work', 'car', 'market'];
 const fgR = x => Math.round(x * 1e6) / 1e6;
 FG_LIST.forEach(f => { FG_BUILT[f.id] = FG_OFF[f.id] = fgR(f.get()); });
-function fgOv(){ return SET.figOv && typeof SET.figOv === 'object' ? SET.figOv : {}; }
+function fgOv(){ return liveOwner() && SET.figOv && typeof SET.figOv === 'object' ? SET.figOv : {}; }
 function fgOvCount(){ const o = fgOv(); return Object.keys(o).filter(k => FG_BY[k] && isFinite(+o[k])).length; }
 function figApply(recalc){
   const ov = fgOv();
@@ -10888,14 +10900,14 @@ function ixBoard(){
     const meta = asEsc(lkLabel(d.m)) + ' · ' + asEsc(t('ix_yoy', {v: ixSg(+d.yoy)})) + (k === 'house' ? ' · ' + asEsc(t('ix_prov')) : '');
     h += card(k, N(+d.v, 1), ixCh(+d.mom), meta, go);
   });
-  h += `</div><h4 class="ix-g">${asEsc(t('ix_gMkt'))}${IXL.ok ? ` <span class="lv-pill on"><i></i>${asEsc(t('lv_live'))}</span>` : ''}</h4><div class="mkt">`;
+  h += `</div><h4 class="ix-g">${asEsc(t('ix_gMkt'))}${IXL.ok && liveOwner() ? ` <span class="lv-pill on"><i></i>${asEsc(t('lv_live'))}</span>` : ''}</h4><div class="mkt">`;
   IX_MK.forEach(k => {
     const d = IX.mkt[k]; if (!d || !(d.p > 0)) return;
     const val = (k === 'gold' || k === 'brent' ? '$' : '') + N(d.p, null, d.p >= 1000 ? 0 : 2);
-    const meta = asEsc(ixDay(d.t)) + ' · ' + asEsc(t(!d.live ? 'ix_snap' : d.rt ? 'ix_rt' : 'ix_delay')) + (isFinite(+d.ytd) ? ' · ' + asEsc(t('ix_ytd', {v: ixSg(+d.ytd)})) : '');
+    const meta = asEsc(ixDay(d.t)) + (liveOwner() ? ' · ' + asEsc(t(!d.live ? 'ix_snap' : d.rt ? 'ix_rt' : 'ix_delay')) : '') + (isFinite(+d.ytd) ? ' · ' + asEsc(t('ix_ytd', {v: ixSg(+d.ytd)})) : '');
     h += card(k, val, ixCh(+d.chp), meta, IX_RET.includes(k) ? 'compound:' + k : 'none');
   });
-  h += `</div><p class="fine mkt-note">${asEsc(t('ix_note'))} <button type="button" class="fg-x" id="ix_edit">${asEsc(t('ix_edit'))}</button></p>`;
+  h += liveOwner() ? `</div><p class="fine mkt-note">${asEsc(t('ix_note'))} <button type="button" class="fg-x" id="ix_edit">${asEsc(t('ix_edit'))}</button></p>` : `</div><p class="fine mkt-note">${asEsc(t('ix_tap'))}</p>`;
   ext.innerHTML = h;
 }
 const renderMarketIx = renderMarket;
@@ -10944,6 +10956,18 @@ const _alIx = applyLang;
 applyLang = function(){ const r = _alIx.apply(this, arguments); if (tab === 'home') try { ixBoard(); } catch (e) {} return r; };
 try { if (tab === 'home') ixBoard(); } catch (e) {}
 ixOfficial(true);
+/* people see results, not plumbing: no "live/snapshot" wording and no source switches outside the owner's view */
+const renderMarketOwn = renderMarket;
+renderMarket = function(){
+  const r = renderMarketOwn.apply(this, arguments);
+  if (!liveOwner()){ const pre = t('mk_liveAt', {t: ''}).trim(); $$('#hm .mk small').forEach(el => { const s = el.textContent; if (pre && s.indexOf(pre) === 0) el.textContent = s.slice(pre.length).trim(); }); }
+  return r;
+};
+const showOwn = show;
+show = function(id, res){
+  if (res && id === 'convert' && !liveOwner() && Array.isArray(res.rows)){ const k = t('r_rateSrc'); res = Object.assign({}, res, {rows: res.rows.filter(x => x[0] !== k)}); }
+  return showOwn.call(this, id, res);
+};
 
 applyLang(false);
 activate(tab);
