@@ -875,6 +875,11 @@ body[data-tab="expenses"] .ghost-btn,body[data-tab="clients"] .ghost-btn,body[da
 .exp-budf{display:flex;flex-direction:column;gap:6px;overflow:auto}
 .exp-budr{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 8px;border-radius:10px;border:1px solid var(--line);background:var(--g1)}
 .exp-budr input{width:110px;font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--field);color:var(--ink)}
+.mv{margin-top:12px}
+.mv textarea{width:100%;font:inherit;font-size:.8rem;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink);margin:6px 0}
+.mv-pick{cursor:pointer}
+.mv-found.ok{color:var(--c4);font-weight:600}
+.mv-show{width:100%;font-size:.75rem;margin-top:6px}
 
 </style>
 </head>
@@ -2748,6 +2753,26 @@ Object.assign(T, {
   exp_budOf:['{p}% מתקציב של {b}','{p}% من ميزانية {b}','{p}% of a {b} budget'], exp_budOver:['חריגה: {p}% מתקציב של {b}','تجاوز: {p}% من ميزانية {b}','Over: {p}% of a {b} budget'],
   exp_budHint:['תקציב חודשי לכל קטגוריה, ב-{c}. השאירו ריק בלי תקציב. בפילוח לפי קטגוריה תראו כמה ניצלתם, ואדום כשעוברים.','ميزانية شهرية لكل فئة بـ {c}. اترك الحقل فارغًا بلا ميزانية. في التوزيع حسب الفئة سترى نسبة الاستخدام، وبالأحمر عند التجاوز.','A monthly budget per category, in {c}. Leave empty for none. The category breakdown shows how much you used, in red when you go over.']
 });
+Object.assign(T, {
+  mv_title:['מעבר לטלפון חדש','الانتقال إلى هاتف جديد','Move to a new phone'],
+  mv_hint:['יוצרים קוד העברה מוצפן עם כל הנתונים, שולחים אותו לעצמכם (וואטסאפ, מייל או דרייב), ובטלפון החדש בוחרים "עברתי לטלפון חדש", מדביקים ונכנסים עם אותו שם משתמש וסיסמה. בלי הסיסמה אי אפשר לפתוח את הקוד — ובכל זאת שמרו אותו לעצמכם.','أنشئ رمز نقل مشفّرًا بكل البيانات، وأرسله لنفسك (واتساب أو بريد أو درايف)، وعلى الهاتف الجديد اختر «انتقلت إلى هاتف جديد» والصقه وادخل بنفس اسم المستخدم وكلمة المرور. لا يمكن فتح الرمز دون كلمة المرور — ومع ذلك احتفظ به لنفسك.','Create an encrypted transfer code with all your data, send it to yourself (WhatsApp, email or Drive), and on the new phone choose "I moved to a new phone", paste it and sign in with the same username and password. Without the password the code cannot be opened — still, keep it to yourself.'],
+  mv_share:['שיתוף קוד ההעברה','مشاركة رمز النقل','Share transfer code'], mv_copy:['העתקה','نسخ','Copy'], mv_file:['הורדה כקובץ','تنزيل كملف','Download as file'],
+  mv_shared:['הקוד נשלח. בטלפון החדש: הגדרות ← חשבון והרשאות ← "עברתי לטלפון חדש".','تم الإرسال. على الهاتف الجديد: الإعدادات ← الحساب والصلاحيات ← «انتقلت إلى هاتف جديد».','Sent. On the new phone: Settings → Account & access → "I moved to a new phone".'],
+  mv_copied:['הקוד הועתק. הדביקו אותו בהודעה לעצמכם ופתחו אותו בטלפון החדש.','نُسخ الرمز. الصقه في رسالة لنفسك وافتحه على الهاتف الجديد.','Code copied. Paste it in a message to yourself and open it on the new phone.'],
+  mv_selectCopy:['סמנו את הקוד בתיבה והעתיקו אותו.','حدّد الرمز في المربع وانسخه.','Select the code in the box and copy it.'],
+  mv_fileOk:['הקובץ ירד. העבירו אותו לטלפון החדש.','تم تنزيل الملف. انقله إلى الهاتف الجديد.','The file was downloaded. Move it to the new phone.'],
+  mv_fileIn:['בתוך Claude אי אפשר להוריד קבצים — השתמשו בשיתוף או בהעתקה.','لا يمكن تنزيل الملفات داخل Claude — استخدم المشاركة أو النسخ.','Files cannot be downloaded inside Claude — use Share or Copy.'],
+  mv_err:['לא הצלחנו להכין את קוד ההעברה. התחברו מחדש ונסו שוב.','تعذّر تجهيز رمز النقل. سجّل الدخول من جديد وحاول مرة أخرى.','Could not prepare the transfer code. Sign in again and retry.'],
+  mv_restoreT:['עברתי לטלפון חדש — שחזור החשבון','انتقلت إلى هاتف جديد — استعادة الحساب','I moved to a new phone — restore my account'],
+  mv_restoreHint:['הדביקו את קוד ההעברה מהטלפון הקודם או בחרו את הקובץ, והזינו את אותה סיסמה. כל הנתונים יחזרו, ותהיו מחוברים עם אותו שם משתמש. בתוך Claude אפשר פשוט להתחבר — החשבון נמצא בענן.','الصق رمز النقل من الهاتف السابق أو اختر الملف، وأدخل كلمة المرور نفسها. ستعود كل البيانات وستكون مسجّلًا بنفس اسم المستخدم. داخل Claude يكفي تسجيل الدخول — الحساب في السحابة.','Paste the transfer code from your old phone or pick the file, and enter the same password. All your data comes back and you are signed in with the same username. Inside Claude, just sign in — the account is in the cloud.'],
+  mv_pick:['בחירת קובץ','اختيار ملف','Choose file'], mv_go:['שחזור והתחברות','استعادة وتسجيل الدخول','Restore and sign in'],
+  mv_found:['נמצא החשבון {n}, מגובה מ-{d}. הזינו את הסיסמה שלו.','تم العثور على الحساب {n}، نسخة من {d}. أدخل كلمة مروره.','Found account {n}, backed up {d}. Enter its password.'],
+  mv_notPkg:['זה לא קוד העברה תקין. הוא מתחיל ב-FINCALC1.','هذا ليس رمز نقل صالحًا. يبدأ بـ FINCALC1.','This is not a valid transfer code. It starts with FINCALC1.'],
+  mv_cloudOn:['גיבוי אוטומטי בענן פעיל','النسخ التلقائي في السحابة مفعّل','Automatic cloud backup is on'],
+  mv_cloudS:['בטלפון חדש פשוט פותחים את האפליקציה ב-Claude ונכנסים עם אותו שם משתמש וסיסמה. הנתונים נשמרים מוצפנים ורק אתם יכולים לפתוח אותם.','على الهاتف الجديد افتح التطبيق في Claude وادخل بنفس اسم المستخدم وكلمة المرور. تُحفظ البيانات مشفّرة ولا يفتحها غيرك.','On a new phone, open the app in Claude and sign in with the same username and password. Data is stored encrypted and only you can open it.'],
+  mv_cloudOff:['הגיבוי בענן לא זמין כרגע — אפשר להשתמש בקוד ההעברה.','النسخ السحابي غير متاح الآن — يمكنك استخدام رمز النقل.','Cloud backup is not available right now — use the transfer code.'],
+  mv_siteOnly:['באתר אין גיבוי בענן, ולכן מעבירים את החשבון עם קוד העברה מוצפן.','لا توجد نسخ سحابي في الموقع، لذلك يُنقل الحساب برمز نقل مشفّر.','The website has no cloud backup, so the account moves with an encrypted transfer code.']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -3820,6 +3845,11 @@ function accountHTML(){
     <details class="adv"><summary data-i="b_chgPw"></summary><div class="fields">${pwf('acc_cur','f_curPw','current-password')}${pwf('acc_new','f_newPw','new-password')}${pwf('acc_new2','f_newPw2','new-password')}</div>${PWREQ.replace('%ID%', 'acc_new')}
       <div class="btnrow"><button type="button" class="btn" id="acc_chg" data-i="b_chgPw"></button></div></details>
     <div class="field wide"><label for="acc_open" data-i="f_openSignup"></label><select id="acc_open"><option value="0" data-i="o_closed"></option><option value="1" data-i="o_open"></option></select><small class="hint" data-i="h_openSignup"></small></div>
+    <details class="adv mv" id="mv_out"><summary data-i="mv_title"></summary>
+      <p class="gk-st" id="mv_cloud" role="status"></p>
+      <p class="fine" data-i="mv_hint"></p>
+      <div class="btnrow"><button type="button" class="gold-btn" id="mv_share" data-i="mv_share"></button><button type="button" class="btn" id="mv_copy" data-i="mv_copy"></button><button type="button" class="btn" id="mv_file" data-i="mv_file"></button></div>
+      <p class="gk-st" id="mv_st" role="status" aria-live="polite"></p></details>
     ${msg}<p class="fine" data-i="h_account"></p>`;
   return `<div class="seg acc-seg" role="group"><button type="button" id="acc_tin" class="on" data-i="acc_signin"></button><button type="button" id="acc_tup" data-i="acc_signup"${signupAllowed() ? '' : ' hidden'}></button></div>
     <div id="acc_f_in"><div class="field wide"><label for="acc_user" data-i="f_username"></label><input id="acc_user" type="text" maxlength="21" autocomplete="username" autocapitalize="none" spellcheck="false" dir="auto" class="lookup" placeholder="@"></div>
@@ -3828,6 +3858,14 @@ function accountHTML(){
     <div id="acc_f_up" hidden><div class="field wide"><label for="acc_ruser" data-i="f_username"></label><input id="acc_ruser" type="text" maxlength="21" autocomplete="username" autocapitalize="none" spellcheck="false" dir="auto" class="lookup" placeholder="@"><small class="hint" data-i="hd_rules"></small><small class="hint hd-live" id="acc_hd"></small></div>
       ${pwf('acc_rpass','f_password','new-password')}${pwf('acc_rpass2','f_password2','new-password')}${PWREQ.replace('%ID%', 'acc_rpass')}
       <div class="btnrow"><button type="button" class="btn" id="acc_up" data-i="b_signup"></button></div></div>
+    <details class="adv mv" id="mv_in"><summary data-i="mv_restoreT"></summary>
+      <p class="fine" data-i="mv_restoreHint"></p>
+      <textarea id="mv_txt" rows="3" class="lookup" spellcheck="false" dir="ltr" placeholder="FINCALC1:…"></textarea>
+      <div class="btnrow"><label class="btn mv-pick"><input type="file" id="mv_pick" accept=".txt,.json,text/plain" hidden><span data-i="mv_pick"></span></label></div>
+      <p class="fine mv-found" id="mv_found"></p>
+      <div class="field wide"><label for="mv_pw" data-i="f_password"></label><input id="mv_pw" type="password" autocomplete="current-password" class="lookup"></div>
+      <div class="btnrow"><button type="button" class="gold-btn" id="mv_go" data-i="mv_go"></button></div>
+      <p class="gk-st" id="mv_st2" role="status" aria-live="polite"></p></details>
     ${msg}<p class="fine" data-i="h_account"></p>`;
 }
 function settingsPanelHTML(){
@@ -7537,8 +7575,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "3.5", "date": "2026-10-14", "notes": {"he": "הוצאות חודשיות: כפתור + צף, עריכת הוצאות, מטבע ומדינה לכל הוצאה עם המרה אוטומטית, עיר/אזור, אמצעי תשלום, תקציב לכל קטגוריה, הכנסה חודשית ופילוח גם לפי אמצעי תשלום ומדינה.", "ar": "المصاريف الشهرية: زر + عائم، تعديل المصاريف، عملة ودولة لكل مصروف مع تحويل تلقائي، المدينة/المنطقة، وسيلة الدفع، ميزانية لكل فئة، الدخل الشهري، والتوزيع أيضًا حسب وسيلة الدفع والدولة.", "en": "Monthly expenses: a floating + button, editing, a currency and country per expense with automatic conversion, city/region, payment method, a budget per category, monthly income, and breakdowns by payment method and country."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.101145';
+var CHANGELOG = [{"v": "3.6", "date": "2026-10-14", "notes": {"he": "מעבר לטלפון חדש עם אותו שם משתמש וסיסמה וכל הנתונים: קוד העברה מוצפן, ובתוך Claude גיבוי אוטומטי בענן.", "ar": "الانتقال إلى هاتف جديد بنفس اسم المستخدم وكلمة المرور وكل البيانات: رمز نقل مشفّر، وداخل Claude نسخ احتياطي تلقائي في السحابة.", "en": "Move to a new phone with the same username, password and all your data: an encrypted transfer code, plus automatic cloud backup inside Claude."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.101946';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -8228,6 +8266,107 @@ activate = function(id){ const r = _actTools.apply(this, arguments); if (id === 
 const _alTools = applyLang;
 applyLang = function(){ const r = _alTools.apply(this, arguments); if (tab === 'expenses') expRender(); if (tab === 'clients') clRender(); return r; };
 if (tab === 'expenses') expRender(); if (tab === 'clients') clRender();
+
+/* ---- move to a new phone: same username and password, all data comes along (always encrypted) ---- */
+const persistNow0 = persistNow;
+var MV = {db: null, uid: null, ok: null, last: '', timer: null};
+async function mvPackage(){
+  await persistNow0();
+  const name = FUSER, rec = getAcc(name), enc = RAWLS.getItem(encName(name)); if (!rec || !enc) return null;
+  return 'FINCALC1:' + btoa(unescape(encodeURIComponent(JSON.stringify({v: 1, name, rec, enc: JSON.parse(enc), at: Date.now()}))));
+}
+function mvParse(txt){
+  const m = String(txt || '').match(/FINCALC1:([A-Za-z0-9+/=]+)/); if (!m) return null;
+  try { const o = JSON.parse(decodeURIComponent(escape(atob(m[1])))); return o && o.v === 1 && o.name && o.rec && o.rec.hash && o.enc && o.enc.ct ? o : null; } catch (e) { return null; }
+}
+async function mvRestore(pkg, pw){
+  const lk = lockLeft(pkg.name); if (lk > 0) return 'lock';
+  let ok = false; try { ok = (await hashPw(pw, u8(pkg.rec.salt), pkg.rec.iter || 200000)) === pkg.rec.hash; } catch (e) {}
+  noteFail(pkg.name, ok); if (!ok) return 'bad';
+  RAWLS.setItem(accKey(pkg.name), JSON.stringify(pkg.rec)); RAWLS.setItem(encName(pkg.name), JSON.stringify(pkg.enc));
+  await unlockSession(pkg.name, pw, pkg.rec, {});
+  return 'ok';
+}
+async function mvCloudInit(){
+  if (MV.ok !== null) return MV.ok;
+  MV.ok = false;
+  if (!IN_CLAUDE) return false;
+  try {
+    const [db, u] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+    const id = u ? await u.id() : null;
+    if (db && id){ MV.db = db; MV.uid = id; MV.ok = true; }
+  } catch (e) {}
+  return MV.ok;
+}
+function mvDoc(name){ return MV.db.collection('data/users/' + MV.uid).doc('acc-' + txHash(String(name).toLowerCase())); }
+async function mvCloudSave(){
+  if (!FUSER || !(await mvCloudInit())) return;
+  const pkg = await mvPackage(); if (!pkg || pkg === MV.last) return;
+  try { await mvDoc(FUSER).set({p: pkg, at: Date.now()}); MV.last = pkg; mvCloudRender('ok'); } catch (e) { mvCloudRender('fail'); }
+}
+persistNow = async function(){ await persistNow0.apply(this, arguments); if (FUSER && IN_CLAUDE){ clearTimeout(MV.timer); MV.timer = setTimeout(mvCloudSave, 20000); } };
+async function mvCloudGet(name){ if (!(await mvCloudInit())) return null; try { const d = await mvDoc(name).get(); return d && d.exists ? mvParse((d.data() || {}).p) : null; } catch (e) { return null; } }
+function mvCloudRender(st){
+  const el = $('#mv_cloud'); if (!el) return;
+  if (!IN_CLAUDE){ el.className = 'gk-st'; el.textContent = t('mv_siteOnly'); return; }
+  if (st === 'ok' || (st == null && MV.ok)){ el.className = 'gk-st ok'; el.innerHTML = '<b>☁️ ' + asEsc(t('mv_cloudOn')) + '</b> ' + asEsc(t('mv_cloudS')); }
+  else if (st === 'fail' || MV.ok === false){ el.className = 'gk-st'; el.textContent = t('mv_cloudOff'); }
+}
+function mvSt(id, k, cls, p){ const el = $('#' + id); if (el){ el.className = 'gk-st ' + (cls || ''); el.textContent = k ? t(k, p) : ''; } }
+async function mvShare(){
+  const pkg = await mvPackage(); if (!pkg) return mvSt('mv_st', 'mv_err', 'bad');
+  const fname = 'fincalc-' + FUSER.replace(/[^\w.-]/g, '') + '.txt';
+  try {
+    const file = typeof File === 'function' ? new File([pkg], fname, {type: 'text/plain'}) : null;
+    if (file && navigator.canShare && navigator.canShare({files: [file]})){ await navigator.share({files: [file], title: t('mv_title')}); return mvSt('mv_st', 'mv_shared', 'ok'); }
+    if (navigator.share){ await navigator.share({title: t('mv_title'), text: pkg}); return mvSt('mv_st', 'mv_shared', 'ok'); }
+  } catch (e) { if (e && e.name === 'AbortError') return; }
+  mvCopy(pkg);
+}
+async function mvCopy(pkg){
+  pkg = pkg || await mvPackage(); if (!pkg) return mvSt('mv_st', 'mv_err', 'bad');
+  try { await navigator.clipboard.writeText(pkg); mvSt('mv_st', 'mv_copied', 'ok'); }
+  catch (e) { const ta = document.createElement('textarea'); ta.value = pkg; ta.readOnly = true; ta.className = 'lookup mv-show'; const st = $('#mv_st'); st.after(ta); ta.select(); mvSt('mv_st', 'mv_selectCopy', 'new'); }
+}
+async function mvFile(){
+  const pkg = await mvPackage(); if (!pkg) return mvSt('mv_st', 'mv_err', 'bad');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([pkg], {type: 'text/plain'})); a.download = 'fincalc-' + FUSER.replace(/[^\w.-]/g, '') + '.txt';
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  mvSt('mv_st', IN_CLAUDE ? 'mv_fileIn' : 'mv_fileOk', IN_CLAUDE ? 'new' : 'ok');
+}
+function mvFound(){
+  const pkg = mvParse(($('#mv_txt') || {}).value), el = $('#mv_found'); if (!el) return pkg;
+  el.textContent = pkg ? t('mv_found', {n: '@' + pkg.name, d: new Intl.DateTimeFormat(locOf(), {dateStyle: 'medium', timeStyle: 'short'}).format(new Date(pkg.at || Date.now()))}) : (($('#mv_txt') || {}).value ? t('mv_notPkg') : '');
+  el.classList.toggle('ok', !!pkg);
+  return pkg;
+}
+async function mvGo(){
+  const pkg = mvFound(); if (!pkg) return mvSt('mv_st2', 'mv_notPkg', 'bad');
+  if (!(window.crypto && crypto.subtle)) return mvSt('mv_st2', 'm_nocrypto', 'bad');
+  mvSt('mv_st2', 'm_wait', 'wait');
+  const r = await mvRestore(pkg, $('#mv_pw').value);
+  if (r === 'bad') mvSt('mv_st2', 'm_bad', 'bad'); else if (r === 'lock') mvSt('mv_st2', 'm_lock', 'bad', {s: lockLeft(pkg.name)});
+}
+document.addEventListener('click', e => {
+  if (e.target.closest('#mv_share')) mvShare(); else if (e.target.closest('#mv_copy')) mvCopy(); else if (e.target.closest('#mv_file')) mvFile(); else if (e.target.closest('#mv_go')) mvGo();
+});
+document.addEventListener('input', e => { if (e.target.id === 'mv_txt') mvFound(); });
+document.addEventListener('change', e => {
+  if (e.target.id !== 'mv_pick' || !e.target.files || !e.target.files[0]) return;
+  const r = new FileReader(); r.onload = () => { $('#mv_txt').value = String(r.result || ''); mvFound(); const p = $('#mv_pw'); if (p) p.focus(); }; r.readAsText(e.target.files[0]);
+});
+/* inside Claude: signing in on a new phone finds the account in the cloud by itself */
+const doLogin0 = doLogin;
+doLogin = async function(){
+  const name = hdNorm(($('#acc_user') || {}).value);
+  if (name && !getAcc(name) && IN_CLAUDE && window.crypto && crypto.subtle){
+    accMsg('m_wait', null, true);
+    const pkg = await mvCloudGet(name);
+    if (pkg){ const r = await mvRestore(pkg, $('#acc_pass').value); if (r === 'bad') return accMsg('m_bad'); if (r === 'lock') return accMsg('m_lock', {s: lockLeft(name)}); return; }
+  }
+  return doLogin0.apply(this, arguments);
+};
+if (FUSER && IN_CLAUDE) setTimeout(async () => { await mvCloudInit(); mvCloudRender(); mvCloudSave(); }, 2500); else setTimeout(() => mvCloudRender(), 0);
 
 applyLang(false);
 activate(tab);
