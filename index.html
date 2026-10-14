@@ -921,6 +921,7 @@ a.gold-btn.rc-open{display:inline-flex;align-items:center;justify-content:center
 @media (max-width:959px){.rail-ctrls #cur{flex:1 1 0;min-width:0;width:auto}.rail-ctrls .skin-btn{flex:none}}
 .acc-warn{margin:4px 0 12px;padding:10px 12px;border:1.5px solid rgba(229,83,75,.65);border-radius:12px;background:rgba(229,83,75,.09);color:#FF8A7A;font-weight:700;line-height:1.5}
 :root[data-theme="light"] .acc-warn{color:#C0392B;background:rgba(192,57,43,.07);border-color:rgba(192,57,43,.55)}
+.hint.rc-nopw{display:block;margin-top:6px;color:#1f9d6b;font-weight:600}
 
 </style>
 </head>
@@ -2903,7 +2904,11 @@ Object.assign(T, {
   pol_closed:['ההרשמה נחסמה','تم حظر التسجيل','Sign-up blocked'],
   pol_opened:['ההרשמה נפתחה','تم فتح التسجيل','Sign-up opened'],
   pol_fail:['לא הצלחנו לשמור את ההגדרה בענן. נסו שוב.','تعذّر حفظ الإعداد في السحابة. حاول مرة أخرى.','Could not save the setting in the cloud. Try again.'],
-  acc_uniqWarn:['נא לבחור שם משתמש וסיסמה ייחודיים לאפליקציה הזו בלבד! אל תשתמשו בסיסמה של המייל, הבנק או כל שירות אחר.','يرجى اختيار اسم مستخدم وكلمة مرور خاصّين بهذا التطبيق فقط! لا تستخدم كلمة مرور البريد أو البنك أو أي خدمة أخرى.','Please choose a username and password unique to this app only! Do not reuse the password of your email, bank or any other service.']
+  acc_uniqWarn:['נא לבחור שם משתמש וסיסמה ייחודיים לאפליקציה הזו בלבד! אל תשתמשו בסיסמה של המייל, הבנק או כל שירות אחר.','يرجى اختيار اسم مستخدم وكلمة مرور خاصّين بهذا التطبيق فقط! لا تستخدم كلمة مرور البريد أو البنك أو أي خدمة أخرى.','Please choose a username and password unique to this app only! Do not reuse the password of your email, bank or any other service.'],
+  rc_noMailPw:['רק כתובת המייל. האפליקציה לעולם לא תבקש את הסיסמה של חשבון המייל שלכם, ואין להקליד אותה כאן.','عنوان البريد فقط. لن يطلب التطبيق أبدًا كلمة مرور حساب بريدك، فلا تكتبها هنا.','Only the email address. The app will never ask for your email account password, so do not type it here.'],
+  rc_newPw:['סיסמה חדשה לאפליקציה','كلمة مرور جديدة للتطبيق','New password for the app'],
+  rc_newPw2:['הקלידו שוב את הסיסמה החדשה לאפליקציה','أعد كتابة كلمة مرور التطبيق الجديدة','Type the new app password again'],
+  rc_appPwOnly:['זו הסיסמה של האפליקציה בלבד, לא של המייל. בחרו סיסמה ייחודית שלא משמשת בשום מקום אחר.','هذه كلمة مرور التطبيق فقط وليست كلمة مرور البريد. اختر كلمة مرور فريدة لا تُستخدم في أي مكان آخر.','This is the app password only, not your email password. Choose a unique one not used anywhere else.']
 });
 
 const t = (k, p) => {
@@ -7697,8 +7702,8 @@ setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "4.3", "date": "2026-10-14", "notes": {"he": "קוד ה-PIN ותיקיית האבטחה הוסרו, ובהרשמה מופיעה אזהרה באדום לבחור שם משתמש וסיסמה ייחודיים לאפליקציה בלבד.", "ar": "أُزيل رمز PIN ومجلد الأمان، ويظهر عند التسجيل تنبيه أحمر لاختيار اسم مستخدم وكلمة مرور خاصّين بالتطبيق فقط.", "en": "The PIN code and the Security folder were removed, and sign-up now shows a red warning to use a username and password unique to this app."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.150416';
+var CHANGELOG = [{"v": "4.3.1", "date": "2026-10-14", "notes": {"he": "הבהרה באימות האימייל: מקלידים רק את כתובת המייל, והאפליקציה לעולם לא מבקשת את הסיסמה של חשבון המייל.", "ar": "توضيح في تأكيد البريد: تكتب عنوان البريد فقط، ولا يطلب التطبيق أبدًا كلمة مرور حساب البريد.", "en": "Clarified email verification: you type only the email address, and the app never asks for your email account password."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.151631';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -8668,7 +8673,7 @@ function rcRender(){
   const keep = ($('#rc_mail') || {}).value, keepC = ($('#rc_vcode') || {}).value;
   let h = `<p class="fine">${asEsc(t('rc_intro'))}</p>`;
   if (st === 'none' || RC.edit){
-    h += `<div class="fields"><div class="field wide"><label for="rc_mail">${asEsc(t('rc_mail'))}</label><input id="rc_mail" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" dir="ltr" class="lookup" placeholder="name@example.com"></div></div>
+    h += `<div class="fields"><div class="field wide"><label for="rc_mail">${asEsc(t('rc_mail'))}</label><input id="rc_mail" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" dir="ltr" class="lookup" placeholder="name@example.com"><small class="hint rc-nopw">🔒 ${asEsc(t('rc_noMailPw'))}</small></div></div>
       <div class="btnrow"><button type="button" class="gold-btn" id="rc_make">✉️ ${asEsc(t('rc_make'))}</button>${RC.edit ? `<button type="button" class="btn" id="rc_cancel">${asEsc(t('del_cancel'))}</button>` : ''}</div>`;
   } else {
     h += `<p class="gk-st ${st === 'ok' ? 'ok' : 'new'}"><b>${st === 'ok' ? '✓' : '⏳'}</b> ${asEsc(t(st === 'ok' ? 'rc_ok' : 'rc_pending', {m: rcIso(rv.hint)}))}</p>`;
@@ -8723,7 +8728,7 @@ function rcRRender(pre){
   box.innerHTML = `<h4 class="rc-h">🔑 ${asEsc(t('rc_rTitle'))}</h4><p class="fine">${asEsc(t('rc_rHint'))}</p>
     <div class="fields"><div class="field wide"><label for="rc_user">${asEsc(t('f_username'))}</label><input id="rc_user" type="text" maxlength="21" autocomplete="username" autocapitalize="none" spellcheck="false" dir="auto" class="lookup" placeholder="@"><small class="hint" id="rc_where"></small></div>
       <div class="field wide"><label for="rc_code">${asEsc(t('f_rcCode'))}</label><input id="rc_code" type="text" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" dir="ltr" class="lookup rc-cin" placeholder="XXXXX-XXXXX-XXXXX-XXXXX"></div>
-      ${pwf('rc_pw1', 'f_newPw')}${pwf('rc_pw2', 'f_newPw2')}</div>${PWREQ.replace('%ID%', 'rc_pw1')}
+      ${pwf('rc_pw1', 'rc_newPw')}${pwf('rc_pw2', 'rc_newPw2')}<small class="hint rc-nopw">🔒 ${asEsc(t('rc_appPwOnly'))}</small></div>${PWREQ.replace('%ID%', 'rc_pw1')}
     <div class="btnrow"><button type="button" class="gold-btn" id="rc_go">${asEsc(t('rc_go'))}</button><button type="button" class="btn" id="rc_back">${asEsc(t('rc_back'))}</button></div>
     <p class="gk-st" id="rc_rst" role="alert" aria-live="polite"></p>`;
   Object.keys(vals).forEach(id => { const el = $('#' + id); if (el) el.value = vals[id]; });
