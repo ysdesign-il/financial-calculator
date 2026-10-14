@@ -1132,6 +1132,8 @@ body:not(.own) .own-only{display:none!important}
 .dev-row{display:flex;gap:8px}
 .dev-row input{flex:1;min-width:0;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink);font:inherit;letter-spacing:.08em}
 .dev-row{flex-wrap:wrap}.dev-row input{flex:1 1 100%}.dev-row .gold-btn,.dev-row .mv{flex:1}
+.own-pill{display:inline-flex;align-items:center;margin-inline-start:8px;padding:2px 9px;border-radius:999px;font-size:.72rem;font-weight:700;background:rgba(242,196,90,.18);color:var(--gold-ui);border:1px solid rgba(242,196,90,.45);white-space:nowrap;vertical-align:middle}
+.own-pill-h{margin:4px 0 0;color:var(--gold,#9A6A06)}
 
 </style>
 </head>
@@ -3603,6 +3605,10 @@ Object.assign(T, {
 });
 Object.assign(T, {
   dev_paste:['הדבקה','لصق','Paste'], dev_pasteHint:['לחצו לחיצה ארוכה בשדה ובחרו "הדבקה".','اضغط مطولًا في الحقل واختر "لصق".','Long-press the field and choose "Paste".']
+});
+Object.assign(T, {
+  perm_ownerDevS:['מצב מפתח פעיל במכשיר הזה: אתה רואה ומנהל את מקורות הנתונים, החיבורים ונתוני המערכת. באתר אין עריכה משותפת, ולכן שינויים נשמרים במכשיר הזה. עדכון לכל המשתמשים נעשה מהאפליקציה בתוך Claude.','وضع المطوّر مفعّل على هذا الجهاز: ترى وتدير مصادر البيانات والاتصالات وبيانات النظام. لا يوجد تعديل مشترك في الموقع، لذا تُحفظ التغييرات على هذا الجهاز. التحديث لكل المستخدمين يتم من التطبيق داخل Claude.','Developer mode is on for this device: you see and manage data sources, connections and system figures. The website has no shared editing, so changes stay on this device. Updates for everyone are made from the app inside Claude.'],
+  own_pill:['👑 בעלים','👑 المالك','👑 Owner'], own_pillDev:['👑 בעלים · מצב מפתח','👑 المالك · وضع المطوّر','👑 Owner · developer mode']
 });
 
 const t = (k, p) => {
@@ -8986,8 +8992,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "6.1", "date": "2026-10-14", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.222614';
+var CHANGELOG = [{"v": "6.2", "date": "2026-10-14", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.223300';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -11423,6 +11429,32 @@ try { if (tab === 'home') ixBoard(); } catch (e) {}
 const verNoteOwn = verNote;
 verNote = function(e){ return liveOwner() ? verNoteOwn(e) : ''; };
 try { updRender(); } catch (e) {}
+/* developer mode on the website shows you as the owner, everywhere the app names its owner */
+const permRenderDev = permRender;
+permRender = function(){
+  if (!IN_CLAUDE && PERM !== 'wait') PERM = DEV_ON ? 'owner' : 'local';
+  const r = permRenderDev.apply(this, arguments);
+  if (!IN_CLAUDE && DEV_ON){ const s = $('#perm_s'); if (s) s.textContent = t('perm_ownerDevS'); }
+  ownPill();
+  return r;
+};
+function ownPill(){
+  const own = liveOwner();
+  $$('.brand').forEach(b => {
+    let p = $('.own-pill', b);
+    if (own && !p){ p = document.createElement('span'); p.className = 'own-pill'; b.appendChild(p); }
+    if (p){ if (own) p.textContent = t(!IN_CLAUDE && DEV_ON ? 'own_pillDev' : 'own_pill'); else p.remove(); }
+  });
+  const hh = $('.home-hello'); if (hh){ let p = $('.own-pill', hh.parentNode); if (own && !p){ p = document.createElement('span'); p.className = 'own-pill own-pill-h'; hh.insertAdjacentElement('afterend', p); } if (p){ if (own) p.textContent = t(!IN_CLAUDE && DEV_ON ? 'own_pillDev' : 'own_pill'); else p.remove(); } }
+}
+function devPermSync(){ try { permRender(); } catch (e) {} try { shRender(); } catch (e) {} ownPill(); }
+Promise.resolve(PERM_P).then(devPermSync, devPermSync);
+document.addEventListener('click', e => { if (e.target.closest('#dev_go, #dev_paste, #dev_off')) setTimeout(devPermSync, 900); });
+document.addEventListener('paste', e => { if (e.target && e.target.id === 'dev_code') setTimeout(devPermSync, 900); });
+window.addEventListener('hashchange', () => setTimeout(devPermSync, 900));
+setTimeout(devPermSync, 1200);
+const _alOwn = applyLang;
+applyLang = function(){ const r = _alOwn.apply(this, arguments); devPermSync(); return r; };
 
 applyLang(false);
 activate(tab);
