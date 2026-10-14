@@ -246,6 +246,24 @@ def markets(prev, log):
     return {"asOf": max(ts) if ts else 0, "items": mk} if mk else prev.get("mkt")
 
 
+def probe_sources():
+    tests = {
+        "stooq_q": "https://stooq.com/q/l/?s=%5Espx+%5Endx+%5Edji+%5Eta35+%5Eta125+xauusd+cb.f&f=sd2t2ohlcp&h&e=csv",
+        "stooq_h": "https://stooq.com/q/d/l/?s=%5Espx&i=m",
+        "cnbc": "https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=.SPX%7C.NDX%7C.DJI%7C.TA35%7C.TA125%7C%40GC.1%7C%40LCO.1&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1",
+        "fred_spx": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=SP500",
+        "fred_ndx": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQ100",
+        "yahoo_spark": "https://query1.finance.yahoo.com/v7/finance/spark?symbols=%5EGSPC,TA35.TA&range=5d&interval=1d",
+        "tase_ta35": "https://api.tase.co.il/api/index/details?lang=1&oId=142",
+        "globes": "https://www.globes.co.il/data/webservices/financial.asmx/getInstrument?exchange=tase&symbol=142",
+    }
+    for k, u in tests.items():
+        try:
+            diag("probe_" + k, get_raw(u, BROWSER, 20)[:1500])
+        except Exception as e:
+            diag("probe_%s_err" % k, str(e))
+
+
 def main():
     prev = json.load(open(PATH, encoding="utf-8"))
     out = json.loads(json.dumps(prev))
@@ -356,6 +374,10 @@ def main():
     except Exception as e:
         log.append("markets failed: %s" % e)
     if os.environ.get("RATES_DIAG", "1") == "1":
+        try:
+            probe_sources()
+        except Exception as e:
+            diag("probe_err", str(e))
         DIAG["log"] = log
         with open("diag.json", "w", encoding="utf-8") as f:
             json.dump(DIAG, f, indent=1, ensure_ascii=False)
