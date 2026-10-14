@@ -247,21 +247,27 @@ def markets(prev, log):
 
 
 def probe_sources():
-    tests = {
-        "stooq_q": "https://stooq.com/q/l/?s=%5Espx+%5Endx+%5Edji+%5Eta35+%5Eta125+xauusd+cb.f&f=sd2t2ohlcp&h&e=csv",
-        "stooq_h": "https://stooq.com/q/d/l/?s=%5Espx&i=m",
-        "cnbc": "https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=.SPX%7C.NDX%7C.DJI%7C.TA35%7C.TA125%7C%40GC.1%7C%40LCO.1&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1",
-        "fred_spx": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=SP500",
-        "fred_ndx": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQ100",
-        "yahoo_spark": "https://query1.finance.yahoo.com/v7/finance/spark?symbols=%5EGSPC,TA35.TA&range=5d&interval=1d",
-        "tase_ta35": "https://api.tase.co.il/api/index/details?lang=1&oId=142",
-        "globes": "https://www.globes.co.il/data/webservices/financial.asmx/getInstrument?exchange=tase&symbol=142",
-    }
-    for k, u in tests.items():
+    try:
+        u = "https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=.SPX%7C.NDX%7C.DJI%7C.TA35%7C.TA125%7C.TA90%7C%40GC.1%7C%40LCO.1%7C.IXIC%7CUS10Y&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1"
+        j = json.loads(get_raw(u, BROWSER, 20))
+        q = j["FormattedQuoteResult"]["FormattedQuote"]
+        diag("probe_cnbc", [{k: x.get(k) for k in ("symbol", "code", "name", "last", "change_pct", "previous_day_closing", "last_time", "realTime", "currencyCode", "curmktstatus")} for x in q])
+    except Exception as e:
+        diag("probe_cnbc_err", str(e))
+    for sym in (".SPX", ".TA35", "@GC.1"):
+        for rng in ("10Y", "5Y", "1Y"):
+            try:
+                raw = get_raw("https://ts-api.cnbc.com/harmony/app/charts/%s.json?symbol=%s" % (rng, urllib.request.quote(sym)), BROWSER, 20)
+                diag("probe_chart_%s_%s" % (sym, rng), raw[:700] + " ... len=%d" % len(raw))
+                break
+            except Exception as e:
+                diag("probe_chart_%s_%s_err" % (sym, rng), str(e))
+    for sym in ("142", "137"):
         try:
-            diag("probe_" + k, get_raw(u, BROWSER, 20)[:1500])
+            raw = get_raw("https://www.globes.co.il/data/webservices/financial.asmx/getInstrument?exchange=tase&symbol=" + sym, BROWSER, 20)
+            diag("probe_globes_" + sym, raw[1100:3600])
         except Exception as e:
-            diag("probe_%s_err" % k, str(e))
+            diag("probe_globes_%s_err" % sym, str(e))
 
 
 def main():
