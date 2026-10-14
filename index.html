@@ -1131,6 +1131,7 @@ body:not(.own) .own-only{display:none!important}
 .dev-box label{display:block;font-size:.85rem;margin-bottom:6px}
 .dev-row{display:flex;gap:8px}
 .dev-row input{flex:1;min-width:0;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink);font:inherit;letter-spacing:.08em}
+.dev-row{flex-wrap:wrap}.dev-row input{flex:1 1 100%}.dev-row .gold-btn,.dev-row .mv{flex:1}
 
 </style>
 </head>
@@ -3599,6 +3600,9 @@ Object.assign(T, {
   src_open:['מקורות ועיכובים (למפתח)','المصادر والتأخيرات (للمطوّر)','Sources and delays (developer)'],
   dev_code:['קוד מפתח','رمز المطوّر','Developer code'], dev_go:['כניסה','دخول','Enter'], dev_bad:['הקוד לא נכון','الرمز غير صحيح','Wrong code'],
   dev_onDone:['מצב מפתח הופעל במכשיר הזה','تم تفعيل وضع المطوّر على هذا الجهاز','Developer mode is on for this device'], dev_off:['יציאה ממצב מפתח','الخروج من وضع المطوّر','Leave developer mode'], dev_offDone:['מצב מפתח כבוי','تم إيقاف وضع المطوّر','Developer mode is off']
+});
+Object.assign(T, {
+  dev_paste:['הדבקה','لصق','Paste'], dev_pasteHint:['לחצו לחיצה ארוכה בשדה ובחרו "הדבקה".','اضغط مطولًا في الحقل واختر "لصق".','Long-press the field and choose "Paste".']
 });
 
 const t = (k, p) => {
@@ -8982,8 +8986,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "6.0", "date": "2026-10-14", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.222220';
+var CHANGELOG = [{"v": "6.1", "date": "2026-10-14", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.222614';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -11377,17 +11381,36 @@ document.addEventListener('click', e => {
   if (DEV_TAPS.length < 5 || $('#dev_box')) return;
   DEV_TAPS = [];
   const box = e.target.closest('.upd-box') || e.target.parentNode;
-  box.insertAdjacentHTML('beforeend', `<div class="dev-box" id="dev_box"><label for="dev_code">${asEsc(t('dev_code'))}</label><div class="dev-row"><input id="dev_code" type="password" autocomplete="off" autocapitalize="characters" spellcheck="false" dir="ltr"><button type="button" class="gold-btn" id="dev_go">${asEsc(t('dev_go'))}</button></div><small class="hint" id="dev_msg"></small></div>`);
+  box.insertAdjacentHTML('beforeend', `<div class="dev-box" id="dev_box"><label for="dev_code">${asEsc(t('dev_code'))}</label><div class="dev-row"><input id="dev_code" type="text" inputmode="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" placeholder="FC-XXXX-XXXX-XXXX"><button type="button" class="mv wide" id="dev_paste">${asEsc(t('dev_paste'))}</button><button type="button" class="gold-btn" id="dev_go">${asEsc(t('dev_go'))}</button></div><small class="hint" id="dev_msg"></small></div>`);
   setTimeout(() => { const i = $('#dev_code'); if (i) i.focus(); }, 50);
 });
-async function devTry(){
-  const i = $('#dev_code'), m = $('#dev_msg'); if (!i) return;
-  const code = String(i.value || '').replace(/[^0-9a-z]/gi, '').toUpperCase();
+async function devTry(raw){
+  const i = $('#dev_code'), m = $('#dev_msg'); if (!i && raw == null) return false;
+  const code = String(raw != null ? raw : i.value || '').replace(/^.*?(FC[-\s]?)/i, 'FC').replace(/[^0-9a-z]/gi, '').toUpperCase();
   let h = '';
   try { const b = await pbk(code, new TextEncoder().encode('fincalc-dev-v1'), 150000, 256); h = Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join(''); } catch (e) {}
-  if (h && h === DEV_HASH){ try { RAWLS.setItem('fin-dev', DEV_HASH); } catch (e) {} DEV_ON = true; const b = $('#dev_box'); if (b) b.remove(); liveApply(); toast(t('dev_onDone')); }
-  else if (m) m.textContent = t('dev_bad');
+  if (h && h === DEV_HASH){ try { RAWLS.setItem('fin-dev', DEV_HASH); } catch (e) {} DEV_ON = true; const b = $('#dev_box'); if (b) b.remove(); liveApply(); toast(t('dev_onDone')); return true; }
+  if (m) m.textContent = t('dev_bad');
+  return false;
 }
+/* paste the code: a paste button, pasting straight into the field, or opening the site with #dev=CODE */
+document.addEventListener('click', async e => {
+  if (!e.target.closest('#dev_paste')) return;
+  const i = $('#dev_code'), m = $('#dev_msg');
+  try { const txt = await navigator.clipboard.readText(); if (txt && i){ i.value = txt.trim(); devTry(); return; } } catch (err) {}
+  if (i){ i.focus(); i.select(); } if (m) m.textContent = t('dev_pasteHint');
+});
+document.addEventListener('paste', e => { if (e.target && e.target.id === 'dev_code') setTimeout(() => devTry(), 30); });
+document.addEventListener('input', e => { if (e.target && e.target.id === 'dev_code' && String(e.target.value).replace(/[^0-9a-z]/gi, '').length >= 14) devTry(); });
+async function devFromHash(){
+  if (IN_CLAUDE) return;
+  const m = /[#&]dev=([^&]+)/i.exec(location.hash || ''); if (!m) return;
+  const code = decodeURIComponent(m[1]);
+  try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+  if (!(await devTry(code))) toast(t('dev_bad'));
+}
+devFromHash();
+window.addEventListener('hashchange', devFromHash);
 document.addEventListener('click', e => { if (e.target.closest('#dev_go')) devTry(); });
 document.addEventListener('keydown', e => { if (e.target && e.target.id === 'dev_code' && e.key === 'Enter'){ e.preventDefault(); devTry(); } });
 /* a quiet shortcut for the developer under the home board */
