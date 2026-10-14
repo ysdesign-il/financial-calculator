@@ -618,6 +618,18 @@ body[data-tab="home"] .ex-btn,body[data-tab="settings"] .ex-btn,body[data-tab="a
 .gk-st.bad{border-color:rgba(229,83,75,.5)}.gk-st.bad b{color:#e5534b}
 .gk-st.wait{opacity:.8}
 
+.upd-bar{position:fixed;inset-inline:12px;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:60;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;
+  background:var(--surface);color:var(--ink);border:1px solid rgba(224,169,58,.55);box-shadow:0 10px 30px rgba(0,0,0,.18);max-width:560px;margin-inline:auto;font-size:.95rem}
+.upd-bar span{flex:1;line-height:1.4}.upd-bar .gold-btn{padding:8px 14px;flex:none}
+.upd-x{appearance:none;border:0;background:transparent;color:var(--ink);font-size:1.3rem;line-height:1;cursor:pointer;padding:4px 6px;opacity:.7}
+.upd-row{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
+.gk-st.new{border-color:rgba(224,169,58,.6)}.gk-st.new b{color:#E0A93A}
+.upd-hist{margin:6px 0 8px}.upd-hist summary{cursor:pointer;font-weight:600;padding:6px 0}
+.upd-list{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:8px}
+.upd-list li{padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--g1);font-size:.92rem;line-height:1.5}
+.upd-list li b{font-size:1rem}.upd-list li small{color:var(--ink-2);margin-inline-start:6px}
+.upd-tag{display:inline-block;margin-inline-start:6px;padding:1px 8px;border-radius:999px;font-size:.75rem;background:rgba(47,191,134,.15);color:#2fbf86}
+
 </style>
 </head>
 <body>
@@ -2199,6 +2211,23 @@ Object.assign(T, {
   gk_eEmpty:['Gemini החזיר תשובה ריקה. נסו לנסח את השאלה אחרת.','أعاد Gemini إجابة فارغة. جرّب صياغة السؤال بشكل آخر.','Gemini returned an empty answer. Try rephrasing the question.'],
   gk_eOther:['Google החזיר שגיאה. נסו שוב בעוד רגע.','أعادت Google خطأ. حاول مرة أخرى بعد قليل.','Google returned an error. Try again in a moment.']
 });
+Object.assign(T, {
+  set_upd:['עדכונים וגרסאות','التحديثات والإصدارات','Updates & versions'],
+  upd_mine:['הגרסה שלך:','إصدارك:','Your version:'],
+  upd_chk:['בדיקת עדכונים','فحص التحديثات','Check for updates'],
+  upd_go:['עדכן עכשיו','حدّث الآن','Update now'],
+  upd_close:['סגירה','إغلاق','Close'],
+  upd_wait:['בודק אם יש גרסה חדשה…','جارٍ التحقق من وجود إصدار جديد…','Checking for a new version…'],
+  upd_newT:['גרסה {v} זמינה:','الإصدار {v} متاح:','Version {v} is available:'],
+  upd_doneT:['עודכן לגרסה {v}:','تم التحديث إلى الإصدار {v}:','Updated to version {v}:'],
+  upd_latest:['יש לך את הגרסה האחרונה','لديك أحدث إصدار','You have the latest version'],
+  upd_na:['לא ניתן לבדוק עדכונים כרגע. בדקו את החיבור לאינטרנט ונסו שוב.','تعذّر التحقق من التحديثات الآن. تحقّق من الإنترنت وحاول مجددًا.','Cannot check for updates right now. Check your connection and try again.'],
+  upd_naIn:['באפליקציה ב-Claude העדכונים נטענים אוטומטית בפתיחה. אם מופיעה גרסה ישנה, סגרו ופתחו אותה מחדש.','في التطبيق داخل Claude تُحمَّل التحديثات تلقائيًا عند الفتح. إذا ظهر إصدار قديم، أغلقه وافتحه من جديد.','Inside Claude, updates load automatically when the app opens. If you see an old version, close and reopen it.'],
+  upd_hist:['היסטוריית גרסאות','سجل الإصدارات','Version history'],
+  upd_curTag:['הגרסה שלך','إصدارك','Your version'],
+  f_autoUpd:['עדכון אוטומטי בפתיחה','تحديث تلقائي عند الفتح','Auto-update on open'],
+  h_upd:['הקישור לאפליקציה ולאתר לא משתנה: כל עדכון מגיע לאותו קישור. כשיוצאת גרסה חדשה, היא נטענת לבד בפתיחה, ואם האפליקציה כבר פתוחה תופיע הודעה עם כפתור "עדכן עכשיו".','رابط التطبيق والموقع لا يتغيّر: كل تحديث يصل إلى الرابط نفسه. عند صدور إصدار جديد يُحمَّل تلقائيًا عند الفتح، وإذا كان التطبيق مفتوحًا تظهر رسالة مع زر «حدّث الآن».','The app and site link never changes: every update arrives at the same link. A new version loads by itself on open, and if the app is already open a message with "Update now" appears.']
+});
 
 const t = (k, p) => {
   let s = (T[k] || [k,k,k])[langIdx()];
@@ -2346,7 +2375,7 @@ const RTL = new Set(['he','ar','fa','ur','yi','ps','sd','ug','ckb','dv']);
 var TOUCHED = [], TILE_F = 'all', MY_HANDLE = '';
 try { MY_HANDLE = LS.getItem('fin-handle') || ''; } catch (e) {}
 const MKT = {boi: 3.25, boiDate: '1.9.2026', boiNext: '21.10.2026', cpi: 1.5, cpiMonth: '08/2026', cpiYtd: 2.1, cpiYtdTo: 8, src: 'built'};
-const SET_DEF = {liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {autoUpd:'1', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -2589,6 +2618,7 @@ SICO.set_links = '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 
 SICO.set_handle = '<circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/>';
 SICO.set_ai = '<path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/>';
 SICO.set_gkey = SICO.set_gkey || '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/>';
+SICO.set_upd = '<path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/>';
 function unitHTML(u){
   if (!u) return '';
   if (u === 'cur') return `<span class="u cur">${symOf(cur)}</span>`;
@@ -3213,6 +3243,12 @@ function settingsPanelHTML(){
     ${sec('set_links', `<div class="src-list" id="set_links_l">${USEFUL_LINKS.map(([n, d, ls]) => `<div class="src-c">
       <div class="src-h"><b data-i="${n}"></b></div><div class="src-s" data-i="${d}"></div>
       <div class="src-l">${ls.map(([k, u]) => `<a class="src-a" href="${u}" target="_blank" rel="noopener noreferrer"><span data-i="${k}"></span> ↗</a>`).join('')}</div></div>`).join('')}</div>`)}
+    ${sec('set_upd', `<div class="upd-box"><div class="upd-row"><span data-i="upd_mine"></span> <b class="num" id="upd_cur" dir="ltr"></b></div>
+      <p class="gk-st" id="upd_st" role="status" aria-live="polite"></p>
+      <div class="btnrow"><button type="button" class="gold-btn" id="upd_chk" data-i="upd_chk"></button><button type="button" class="btn" id="upd_now" data-i="upd_go"></button></div>
+      <div class="fields">${fieldHTML(SEL('set_autoUpd','f_autoUpd','1',[['1','o_on'],['0','o_off']],{wide:true}))}</div>
+      <details class="upd-hist"><summary data-i="upd_hist"></summary><ol class="upd-list" id="upd_hist"></ol></details>
+      <p class="fine" data-i="h_upd"></p></div>`)}
     ${sec('set_data', `<div class="field wide"><label for="set_json" data-i="f_export"></label><textarea id="set_json" class="lookup" rows="4" spellcheck="false"></textarea></div>
       <div class="btnrow"><button type="button" class="btn" id="set_export" data-i="b_export"></button><button type="button" class="btn" id="set_import" data-i="b_import"></button></div>
       <div class="btnrow"><button type="button" class="btn" id="set_resetcalcs" data-i="b_resetCalcs"></button><button type="button" class="btn" id="set_reset" data-i="b_reset"></button><button type="button" class="btn danger" id="set_clear" data-i="b_clearAll"></button></div>
@@ -3223,7 +3259,7 @@ const SMAP = {set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
-  set_dtax:'dtax', set_deptime:'deptime', set_capkind:'capkind', set_remember:'remember', set_rateSrc:'rateSrc', set_gkey:'gkey', set_stale:'stale', set_sort:'sort', set_liveFx:'liveFx', set_fxInt:'fxInt', set_liveFiat:'liveFiat', set_liveCrypto:'liveCrypto', set_boiDb:'boiDb', set_autoRef:'autoRef'};
+  set_dtax:'dtax', set_deptime:'deptime', set_capkind:'capkind', set_remember:'remember', set_rateSrc:'rateSrc', set_gkey:'gkey', set_stale:'stale', set_sort:'sort', set_liveFx:'liveFx', set_fxInt:'fxInt', set_liveFiat:'liveFiat', set_liveCrypto:'liveCrypto', set_boiDb:'boiDb', set_autoRef:'autoRef', set_autoUpd:'autoUpd'};
 const DEFKEYS = ['vat','sex','fee','pens','study','erPens','erSev','erStudy','loanRate','invRate','cpi','infl','gainTax','dealer','buyer','dtax','deptime','capkind'];
 function fillCB(){
   CUR_TABS.forEach(id => {
@@ -6539,6 +6575,87 @@ async function siteRates(){
 }
 setTimeout(siteRates, 1200);
 setInterval(() => { if (!document.hidden) siteRates(); }, 30 * 60000);
+
+/* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
+var CHANGELOG = [{"v": "2.3", "date": "2026-10-14", "notes": {"he": "מספר גרסה לכל עדכון, היסטוריית גרסאות, ובדיקת עדכונים אוטומטית — הקישור נשאר אותו קישור.", "ar": "رقم إصدار لكل تحديث، وسجل الإصدارات، وفحص تلقائي للتحديثات — الرابط يبقى نفسه.", "en": "A version number for every update, version history, and automatic update checks — the link stays the same."}}, {"v": "2.2", "date": "2026-10-14", "notes": {"he": "תיקון העוזר עם Gemini וכפתור \"אישור ובדיקת המפתח\" עם הודעות שגיאה ברורות.", "ar": "إصلاح المساعد مع Gemini وزر \"تأكيد المفتاح وفحصه\" مع رسائل خطأ واضحة.", "en": "Gemini assistant fix and an \"Approve & test key\" button with clear error messages."}}, {"v": "2.1", "date": "2026-10-14", "notes": {"he": "האתר ב-GitHub: נתוני בנק ישראל, ריבית ומדד מתעדכנים לבד כל שעתיים; עוזר AI עם מפתח Gemini חינמי.", "ar": "الموقع على GitHub: بيانات بنك إسرائيل والفائدة والمؤشر تتحدّث تلقائيًا كل ساعتين؛ مساعد ذكاء اصطناعي بمفتاح Gemini مجاني.", "en": "GitHub site: Bank of Israel rates, interest and CPI update by themselves every two hours; AI assistant with a free Gemini key."}}, {"v": "2.0", "notes": {"he": "שם משתמש @ ייחודי, סיסמה והרשמה, ותג הרשאות שמראה שרק הבעלים יכול לשנות.", "ar": "اسم مستخدم @ فريد، وكلمة مرور وتسجيل، وشارة صلاحيات تُظهر أن المالك وحده يمكنه التغيير.", "en": "Unique @username, password and sign-up, and a permission badge showing only the owner can make changes."}}, {"v": "1.9", "notes": {"he": "חיפוש בכל האפליקציה, וחיבורים ל-Binance ול-Blink ול-inter.il.", "ar": "بحث في كل التطبيق، واتصالات مع Binance وBlink وinter.il.", "en": "App-wide search, plus Binance, Blink and inter.il connections."}}, {"v": "1.8", "notes": {"he": "עוזר שמסביר כל שדה ותוצאה בשפה פשוטה, נקודות זכות למילואים, וקישורים לכל זכות ולביטוח לאומי.", "ar": "مساعد يشرح كل حقل ونتيجة بلغة بسيطة، ونقاط استحقاق لخدمة الاحتياط، وروابط لـ«كل زخوت» والتأمين الوطني.", "en": "An assistant that explains every field and result simply, reserve-duty credit points, and links to Kol Zchut and National Insurance."}}, {"v": "1.7", "notes": {"he": "ממיר מטבעות עם כל המטבעות והקריפטו, חיפוש מטבע, וחיבור בלחיצה אחת בלי חשבון.", "ar": "محوّل عملات بكل العملات والعملات المشفّرة، وبحث عن العملة، واتصال بنقرة واحدة دون حساب.", "en": "Currency converter with every currency and crypto, currency search, and one-tap connection with no account."}}, {"v": "1.6", "notes": {"he": "קטגוריות מאוחדות ומסודרות, וקישורים בהגדרות לכל מקורות הנתונים בזמן אמת.", "ar": "فئات موحّدة ومرتّبة، وروابط في الإعدادات لكل مصادر البيانات الحية.", "en": "Merged, tidier categories and links in Settings to every live data source."}}, {"v": "1.5", "notes": {"he": "מחשבון ריבית ופריים מלא, וריבית בנק ישראל ומדד המחירים מתעדכנים אוטומטית.", "ar": "حاسبة كاملة للفائدة والبرايم، وفائدة بنك إسرائيل ومؤشر الأسعار يتحدّثان تلقائيًا.", "en": "Full interest and prime calculator; Bank of Israel rate and CPI update automatically."}}, {"v": "1.4", "notes": {"he": "שערים חיים שמתעדכנים כל שנייה, והגדרות לכל החיבורים בזמן אמת.", "ar": "أسعار حيّة تتحدّث كل ثانية، وإعدادات لكل الاتصالات الحية.", "en": "Live rates every second and settings for every live connection."}}, {"v": "1.3", "notes": {"he": "שערים רשמיים של בנק ישראל והבנק המרכזי האירופי, ומחשבון אינפלציה.", "ar": "أسعار رسمية من بنك إسرائيل والبنك المركزي الأوروبي، وحاسبة التضخّم.", "en": "Official Bank of Israel and ECB rates, and an inflation calculator."}}, {"v": "1.2", "notes": {"he": "מסך בית חי עם נתוני שוק אמיתיים.", "ar": "شاشة رئيسية حيّة ببيانات سوق حقيقية.", "en": "Live home screen with real market data."}}, {"v": "1.1", "notes": {"he": "עוזר AI אישי וחיפוש.", "ar": "مساعد ذكاء اصطناعي شخصي وبحث.", "en": "Personal AI assistant and search."}}, {"v": "1.0", "notes": {"he": "המחשבון הפיננסי: שכר, מס, משכנתא, הלוואות, חיסכון ועוד — בעברית, ערבית ואנגלית.", "ar": "الحاسبة المالية: الراتب، الضريبة، الرهن العقاري، القروض، الادخار وغيرها — بالعبرية والعربية والإنجليزية.", "en": "The financial calculator: salary, tax, mortgage, loans, savings and more — in Hebrew, Arabic and English."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261014.080404';
+var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
+var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
+function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
+function verDate(d){ const m = String(d || '').match(/^(\d{4})-(\d\d)-(\d\d)/); return m ? +m[3] + '.' + +m[2] + '.' + m[1] : ''; }
+function updNewer(r){ return !!(r && r.build && String(r.build) > APP_BUILD); }
+function updBanner(){
+  let b = $('#upd_bar');
+  const r = UPD.remote, show = updNewer(r) && UPD.hide !== r.build;
+  if (!show && !UPD.whatsNew){ if (b) b.remove(); return; }
+  if (!b){ b = document.createElement('div'); b.id = 'upd_bar'; b.className = 'upd-bar'; b.setAttribute('role', 'status'); document.body.appendChild(b); }
+  b.innerHTML = show
+    ? `<span><b>${asEsc(t('upd_newT', {v: r.v || ''}))}</b> ${asEsc(verNote(r))}</span><button type="button" class="gold-btn" id="upd_go2">${t('upd_go')}</button><button type="button" class="upd-x" id="upd_x" aria-label="${t('upd_close')}">×</button>`
+    : `<span><b>${asEsc(t('upd_doneT', {v: APP_VER}))}</b> ${asEsc(verNote(CHANGELOG[0]))}</span><button type="button" class="upd-x" id="upd_x" aria-label="${t('upd_close')}">×</button>`;
+}
+function updRender(){
+  const cur = $('#upd_cur'); if (cur) cur.textContent = APP_VER + (CHANGELOG[0].date ? ' · ' + verDate(CHANGELOG[0].date) : '');
+  const st = $('#upd_st');
+  if (st){
+    let cls = '', h = '';
+    if (UPD.st === 'wait'){ cls = 'wait'; h = t('upd_wait'); }
+    else if (updNewer(UPD.remote)){ cls = 'new'; h = '<b>' + asEsc(t('upd_newT', {v: UPD.remote.v || ''})) + '</b> ' + asEsc(verNote(UPD.remote)); }
+    else if (UPD.st === 'ok'){ cls = 'ok'; h = '<b>✓ ' + t('upd_latest') + '</b>'; }
+    else if (UPD.st === 'na') h = t(IN_CLAUDE ? 'upd_naIn' : 'upd_na');
+    st.className = 'gk-st ' + cls; st.innerHTML = h;
+  }
+  const now = $('#upd_now'); if (now) now.style.display = updNewer(UPD.remote) ? '' : 'none';
+  const list = $('#upd_hist');
+  if (list) list.innerHTML = CHANGELOG.map(e => `<li><b class="num" dir="ltr">${asEsc(e.v)}</b>${e.date ? `<small>${verDate(e.date)}</small>` : ''}${e.v === APP_VER ? `<span class="upd-tag">${t('upd_curTag')}</span>` : ''}<div>${asEsc(verNote(e))}</div></li>`).join('');
+  updBanner();
+}
+function updApply(){
+  const r = UPD.remote; if (!r || !r.build) return;
+  try { SS.setItem('fin-upd-try', String(r.build)); } catch (e) {}
+  if (IN_CLAUDE) location.reload();
+  else location.replace(location.pathname + '?v=' + encodeURIComponent(r.build) + location.hash);
+}
+function updMaybeAuto(r){
+  if (!updNewer(r) || SET.autoUpd === '0' || UPD.touched) return;
+  let tried = ''; try { tried = SS.getItem('fin-upd-try') || ''; } catch (e) {}
+  if (tried !== String(r.build)) updApply();          // once per version, so a stale cache can never loop
+}
+async function updCheck(manual){
+  if (manual){ UPD.st = 'wait'; updRender(); }
+  let r = null;
+  if (!IN_CLAUDE && /^https?:$/.test(location.protocol)){
+    try { const x = await fetch('version.json?t=' + Date.now(), {cache: 'no-store'}); if (x.ok) r = await x.json(); } catch (e) {}
+  }
+  if (!r && UPD.dbv) r = UPD.dbv;
+  if (r && r.build){ UPD.remote = r; UPD.st = 'ok'; }
+  else if (manual || UPD.st === 'wait') UPD.st = 'na';
+  updRender();
+  return r;
+}
+async function updDbSub(){
+  if (!IN_CLAUDE) return;
+  try {
+    const db = await window.claude.use('db'); if (!db) return;
+    db.doc('rates/app').onSnapshot(s => { UPD.dbv = s && s.exists ? s.data() : null; updCheck(false).then(updMaybeAuto); }, () => {});
+  } catch (e) {}
+}
+(function updStart(){
+  try { if (/[?&]v=/.test(location.search)) history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
+  let seen = ''; try { seen = RAWLS.getItem('fin-ver') || ''; RAWLS.setItem('fin-ver', APP_BUILD); } catch (e) {}
+  if (seen && seen < APP_BUILD){ UPD.whatsNew = true; setTimeout(() => { UPD.whatsNew = false; updBanner(); }, 15000); }
+  ['pointerdown', 'keydown', 'input'].forEach(ev => document.addEventListener(ev, () => { UPD.touched = true; }, {once: true, capture: true}));
+  document.addEventListener('click', e => {
+    if (e.target.closest('#upd_go2, #upd_now')) updApply();
+    else if (e.target.closest('#upd_chk')) updCheck(true);
+    else if (e.target.closest('#upd_x')){ if (updNewer(UPD.remote)) UPD.hide = UPD.remote.build; UPD.whatsNew = false; updBanner(); }
+  });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) updCheck(false); });
+  setInterval(() => { if (!document.hidden) updCheck(false); }, 10 * 60000);
+  updRender();
+  setTimeout(() => { updCheck(false).then(updMaybeAuto); updDbSub(); }, 400);
+})();
+const _rsUpd = renderStamp;
+renderStamp = function(){ _rsUpd.apply(this, arguments); updRender(); };
 
 applyLang(false);
 activate(tab);
