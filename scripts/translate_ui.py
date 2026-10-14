@@ -58,9 +58,15 @@ def parse(text):
 
 def http(url, body=None, headers=None, timeout=180):
     req = urllib.request.Request(url, data=json.dumps(body).encode() if body is not None else None,
-                                 headers=dict({'Content-Type': 'application/json', 'User-Agent': 'translate-ui'}, **(headers or {})))
+                                 headers=dict({'Content-Type': 'application/json', 'Accept': 'application/json',
+                                               'User-Agent': 'translate-ui'}, **(headers or {})))
     with urllib.request.urlopen(req, timeout=timeout) as r:
-        return json.loads(r.read().decode('utf-8'))
+        raw = r.read()
+        if (r.headers.get('Content-Encoding') or '').lower() == 'gzip':
+            import gzip; raw = gzip.decompress(raw)
+        try: return json.loads(raw.decode('utf-8'))
+        except ValueError:
+            raise ValueError(f'non-JSON reply {r.status} {r.headers.get("Content-Type")} {r.geturl()} {raw[:200]!r}')
 
 class Exhausted(Exception): pass
 
