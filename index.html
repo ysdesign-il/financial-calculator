@@ -1791,6 +1791,30 @@ button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
 .cty-offer{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:-4px 0 6px}
 .cty-offer .mv{min-height:34px}
 
+/* ================= 8.5: a coin for every currency ================= */
+.cur-coin{display:inline-grid;place-items:center;flex:none;width:26px;height:26px;border-radius:50%;vertical-align:middle;margin-inline-end:6px;position:relative;overflow:hidden;
+  background:conic-gradient(from 210deg,#FFF1C2,#D9A441,#8A5A14,#E9C26A,#FFF1C2);box-shadow:0 2px 6px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.55)}
+.cur-coin i{font-style:normal;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;overflow:hidden;font-size:22px;line-height:1;background:#fff;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.cur-coin::after{content:"";position:absolute;inset:-40%;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.8) 50%,transparent 60%);transform:translateX(-120%);animation:coinShine 5s ease-in-out infinite;pointer-events:none}
+@keyframes coinShine{0%,72%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.cur-coin.crypto{background:conic-gradient(from 210deg,#FFD39A,#F7931A,#B35C00,#F7931A,#FFD39A)}
+.cur-coin.crypto i{background:radial-gradient(circle at 35% 30%,#3a2a12,#120c05);color:#FFC46B;font-size:13px;font-weight:800}
+.cur-coin.big{width:48px;height:48px;box-shadow:0 6px 16px rgba(0,0,0,.35),inset 0 0 0 2px rgba(255,255,255,.55)}
+.cur-coin.big i{width:40px;height:40px;font-size:44px}
+.cur-coin.big.crypto i{font-size:24px}
+.cur-coin.spin{animation:coinFlip .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes coinFlip{from{transform:rotateY(180deg) scale(.7)}to{transform:none}}
+.coin-pair{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.coin-pair b{color:var(--hero-label,var(--ink-2));font-weight:400;font-size:1.2rem}
+.coin-pair .cur-coin:last-child{animation:coinFlip .7s cubic-bezier(.2,.8,.2,1)}
+.mk .mk-l .cur-coin{width:22px;height:22px;margin-inline-end:6px}
+.mk .mk-l .cur-coin i{width:17px;height:17px;font-size:19px}
+.mk .mk-l .cur-coin.crypto i{font-size:11px}
+.rail-ctrls .coin-pick{align-self:center}
+.ledger .row dt .cur-coin{width:20px;height:20px;margin-inline-end:6px}.ledger .row dt .cur-coin i{width:15px;height:15px;font-size:17px}
+@media (prefers-reduced-motion:reduce){.cur-coin::after,.cur-coin.spin,.coin-pair .cur-coin:last-child{animation:none}}
+:root[data-motion="reduced"] .cur-coin::after{animation:none}
+
 </style>
 </head>
 <body>
@@ -5072,6 +5096,129 @@ Object.assign(T, {
   ah_what:['**מה יש באפליקציה:** עשרות מחשבונים פיננסיים לישראל: שכר ותלוש מלא, מס, משכנתא והלוואות, חיסכון וריבית דריבית, פנסיה, השקעות, מטבעות ושערים חיים, נדל״ן ועוד. יש גם תיקיית שמורים, שיתוף ו-PDF, 14 עיצובים, ערכות נושא לחגים, שלוש שפות, והעוזר הזה. לחצו על מחשבון בבית, או שאלו אותי איזה מחשבון מתאים לכם.','**ما في التطبيق:** عشرات الحاسبات المالية لإسرائيل: الراتب وقسيمة كاملة، الضريبة، الرهن والقروض، الادخار والفائدة المركبة، التقاعد، الاستثمار، العملات والأسعار المباشرة، العقارات وغيرها. وفيه أيضًا مجلد المحفوظات والمشاركة وPDF و14 تصميمًا وسمات الأعياد وثلاث لغات وهذا المساعد.','**What\'s in the app:** dozens of financial calculators for Israel: salary and the full payslip, tax, mortgage and loans, savings and compound interest, pension, investments, currencies and live rates, real estate and more. There\'s also a Saved folder, sharing and PDF, 14 designs, holiday themes, three languages and this assistant. Tap a calculator on Home, or ask me which one fits you.'],
   ah_ai:['**ה-AI:** בתוך Claude העוזר הוא Claude עצמו, מודל AI אמיתי. הוא רואה את המסך ואת המספרים שלכם, ויכול גם למלא שדות. באתר אפשר לחבר מפתח Gemini חינמי: הגדרות ← עוזר AI. בלי חיבור עונה המודל האישי של האפליקציה, שעובד גם בלי אינטרנט.','**الذكاء الاصطناعي:** داخل Claude المساعد هو Claude نفسه، نموذج حقيقي يرى الشاشة وأرقامكم ويمكنه ملء الحقول. في الموقع يمكن ربط مفتاح Gemini مجاني من الإعدادات. بدون ربط يجيب النموذج الشخصي للتطبيق، ويعمل حتى بلا إنترنت.','**The AI:** inside Claude the assistant is Claude itself, a real AI model that sees your screen and numbers and can fill in fields. On the website you can connect a free Gemini key in Settings. Without one, the app\'s own personal model answers, offline too.']
 });
+Object.assign(T, {
+  /* 8.5: loans by monthly payment, prime + margin */
+  f_lMode:['מה לחשב','ماذا نحسب','What to work out'],
+  o_lmPay:['החזר חודשי לפי סכום','القسط الشهري حسب المبلغ','Monthly payment from the amount'],
+  o_lmAmount:['כמה אפשר ללוות לפי החזר חודשי','كم يمكن الاقتراض حسب القسط','How much I can borrow for a monthly payment'],
+  o_lmTerm:['כמה זמן ייקח לפי החזר חודשי','كم سيستغرق حسب القسط','How long it takes with a monthly payment'],
+  h_lMode:['אפשר להתחיל מהסכום, או מההחזר החודשי שנוח לכם.','يمكن البدء من المبلغ أو من القسط الشهري المريح لكم.','Start from the amount, or from the monthly payment that suits you.'],
+  f_lPay:['החזר חודשי','القسط الشهري','Monthly payment'],
+  h_lPay:['כמה אתם רוצים או יכולים להחזיר בכל חודש.','كم تريدون أو تستطيعون سداده كل شهر.','How much you want or can repay each month.'],
+  f_lRateType:['סוג הריבית','نوع الفائدة','Interest type'],
+  o_lrFixed:['ריבית קבועה (אחוז אחד)','فائدة ثابتة (نسبة واحدة)','Fixed rate (one number)'],
+  o_lrPrime:['פריים + מרווח הבנק','برايم + هامش البنك','Prime + bank margin'],
+  h_lRateType:['ברוב ההלוואות בבנק: פריים פלוס או מינוס מרווח שהבנק נותן לכם.','في معظم القروض البنكية: برايم زائد أو ناقص هامش يمنحه البنك.','Most bank loans: prime plus or minus a margin the bank gives you.'],
+  f_lBoi:['ריבית בנק ישראל','فائدة بنك إسرائيل','Bank of Israel rate'],
+  h_lBoi:['מתעדכנת אוטומטית מבנק ישראל. אפשר לשנות כדי לבדוק תרחיש.','تتحدث تلقائيًا من بنك إسرائيل. يمكن تغييرها لفحص سيناريو.','Updates automatically from the Bank of Israel. Change it to try a scenario.'],
+  f_lSpread:['מרווח הפריים','هامش البرايم','Prime spread'],
+  h_lSpread:['הפריים בישראל = ריבית בנק ישראל + 1.5%. כמעט תמיד 1.5.','البرايم في إسرائيل = فائدة بنك إسرائيل + 1.5%. دائمًا تقريبًا 1.5.','Prime in Israel = the Bank of Israel rate + 1.5%. Almost always 1.5.'],
+  f_lMargin:['מרווח הבנק (± לפריים)','هامش البنك (± على البرايم)','Bank margin (± prime)'],
+  h_lMargin:['מה שהבנק נתן לכם: למשל פריים מינוס 0.5 → ‎-0.5, פריים פלוס 1 → 1.','ما منحه البنك: مثلًا برايم ناقص 0.5 → ‎-0.5، برايم زائد 1 → 1.','What the bank offered: e.g. prime minus 0.5 → -0.5, prime plus 1 → 1.'],
+  r_lBoi:['ריבית בנק ישראל','فائدة بنك إسرائيل','Bank of Israel rate'],
+  r_lSpread:['מרווח הפריים','هامش البرايم','Prime spread'],
+  r_lPrime:['= ריבית הפריים','= فائدة البرايم','= Prime rate'],
+  r_lMargin:['מרווח הבנק שלכם','هامش بنككم','Your bank margin'],
+  r_lYour:['= הריבית שלכם','= فائدتكم','= Your rate'],
+  r_lIntBoi:['מתוך הריבית: בגלל ריבית בנק ישראל','من الفائدة: بسبب فائدة بنك إسرائيل','Of the interest: from the Bank of Israel rate'],
+  r_lIntSpread:['מתוך הריבית: בגלל מרווח הפריים','من الفائدة: بسبب هامش البرايم','Of the interest: from the prime spread'],
+  r_lIntMargin:['מתוך הריבית: בגלל מרווח הבנק','من الفائدة: بسبب هامش البنك','Of the interest: from the bank margin'],
+  r_lCanBorrow:['אפשר ללוות','يمكن اقتراض','You can borrow'],
+  r_lCanSub:['בהחזר של {p} בחודש, ל-{y} שנים, בריבית {r}','بقسط {p} شهريًا، لمدة {y} سنة، بفائدة {r}','With {p} a month, over {y} years, at {r}'],
+  r_lTerm:['זמן ההחזר','مدة السداد','Time to repay'],
+  r_lTermSub:['בהחזר של {p} בחודש על {a}','بقسط {p} شهريًا على {a}','Paying {p} a month on {a}'],
+  w_lPayLow:['ההחזר החודשי נמוך מדי: הוא לא מכסה אפילו את הריבית. צריך יותר מ-{m}.','القسط منخفض جدًا ولا يغطي حتى الفائدة. يلزم أكثر من {m}.','The monthly payment is too low: it does not even cover the interest. It needs more than {m}.'],
+  n_lMode:['החישוב לפי שפיצר, קרן שווה או בלון, כפי שבחרתם בשיטת ההחזר.','الحساب حسب سبيتسر أو أصل متساوٍ أو بالون، كما اخترتم.','Calculated by the repayment method you chose (Spitzer, equal principal or balloon).'],
+  n_lPrime:['פריים = ריבית בנק ישראל + מרווח הפריים. הריבית שלכם = פריים + מרווח הבנק. כשבנק ישראל משנה ריבית, ההחזר בהלוואת פריים משתנה.','البرايم = فائدة بنك إسرائيل + هامش البرايم. فائدتكم = البرايم + هامش البنك. عندما يغيّر بنك إسرائيل الفائدة يتغير قسط قرض البرايم.','Prime = the Bank of Israel rate + the prime spread. Your rate = prime + the bank margin. When the Bank of Israel changes its rate, a prime loan\'s payment changes.'],
+  cur_allNow:['כל האפליקציה עכשיו ב-{c}','كل التطبيق الآن بـ {c}','The whole app is now in {c}'],
+  /* 8.5: more live sources and instruments */
+  src_p_fx_frankfurter:['Frankfurter – הבנק המרכזי האירופי (יומי)','Frankfurter – البنك المركزي الأوروبي (يومي)','Frankfurter – European Central Bank (daily)'],
+  src_p_fx_erapi:['ExchangeRate-API (כל שעה)','ExchangeRate-API (كل ساعة)','ExchangeRate-API (hourly)'],
+  src_p_fx_fawaz:['Currency API – jsDelivr (יומי, 300+ מטבעות)','Currency API – jsDelivr (يومي، 300+ عملة)','Currency API – jsDelivr (daily, 300+ currencies)'],
+  src_p_fx_cbx:['Coinbase – שערי מטבעות (כל דקה)','Coinbase – أسعار العملات (كل دقيقة)','Coinbase – currency rates (every minute)'],
+  src_p_cr_coingecko:['CoinGecko (כל דקה, 29 מטבעות)','CoinGecko (كل دقيقة، 29 عملة)','CoinGecko (every minute, 29 coins)'],
+  src_p_cr_kraken:['Kraken – בורסה (כל 30 שניות)','Kraken – بورصة (كل 30 ثانية)','Kraken – exchange (every 30 seconds)'],
+  src_p_cr_bitstamp:['Bitstamp – בורסה (כל 30 שניות)','Bitstamp – بورصة (كل 30 ثانية)','Bitstamp – exchange (every 30 seconds)'],
+  src_p_mkt_goldapi:['חי (CNBC) + מתכות מ-Gold API','مباشر (CNBC) + معادن من Gold API','Live (CNBC) + metals from Gold API'],
+  ix_gMkt:['בורסות ומדדים','البورصات والمؤشرات','Stock markets and indices'],
+  ix_gCom:['סחורות ומתכות','السلع والمعادن','Commodities and metals'],
+  ix_ixic:['נאסד״ק קומפוזיט','ناسداك المركّب','Nasdaq Composite'], ix_rut:['ראסל 2000','راسل 2000','Russell 2000'], ix_vix:['VIX – מדד הפחד','VIX – مؤشر الخوف','VIX – fear index'],
+  ix_ftse:['פוטסי 100 (לונדון)','فوتسي 100 (لندن)','FTSE 100 (London)'], ix_dax:['DAX (פרנקפורט)','داكس (فرانكفورت)','DAX (Frankfurt)'], ix_stoxx:['יורו סטוקס 50','يورو ستوكس 50','Euro Stoxx 50'],
+  ix_nikkei:['ניקיי 225 (טוקיו)','نيكاي 225 (طوكيو)','Nikkei 225 (Tokyo)'], ix_silver:['כסף (אונקיה)','فضة (أونصة)','Silver (ounce)'], ix_platinum:['פלטינה (אונקיה)','بلاتين (أونصة)','Platinum (ounce)'],
+  ix_copper:['נחושת (ליברה)','نحاس (رطل)','Copper (pound)'], ix_wti:['נפט WTI (חבית)','نفط WTI (برميل)','WTI crude (barrel)'], ix_natgas:['גז טבעי','غاز طبيعي','Natural gas'],
+  /* 8.5: developer code reaches everyone */
+  dcx_got:['התקבל עדכון מהמפתח.','وصل تحديث من المطوّر.','An update from the developer arrived.'],
+  dcx_okApp:['פורסם לכל מי שמשתמש באפליקציה ב-Claude. לאתר: פרסמו גם מהאתר, או הוסיפו טוקן GitHub.','نُشر لكل مستخدمي التطبيق في Claude. للموقع: انشروا من الموقع أيضًا أو أضيفوا رمز GitHub.','Published to everyone using the app in Claude. For the website, publish from the website too, or add a GitHub token.'],
+  dcx_okBoth:['פורסם לכולם: באפליקציה מיד, ובאתר תוך כדקה.','نُشر للجميع: في التطبيق فورًا وفي الموقع خلال دقيقة تقريبًا.','Published to everyone: in the app at once, on the website within about a minute.'],
+  dcx_fail:['הפרסום נכשל ({e}).','فشل النشر ({e}).','Publishing failed ({e}).'],
+  /* 8.5: insurance comparison */
+  tab_insurance:['השוואת ביטוחים','مقارنة التأمينات','Insurance comparison'],
+  d_insurance:['השוואה בין הצעות ביטוח מכל הסוגים: עלות לאורך השנים, השתתפות עצמית, סכום ביטוח ועלות לכל 1,000 ₪ כיסוי.','مقارنة عروض التأمين بكل أنواعها: التكلفة عبر السنين، المشاركة الذاتية، مبلغ التأمين والتكلفة لكل 1,000 ₪ تغطية.','Compare insurance offers of every kind: cost over the years, deductibles, cover amount and cost per ₪1,000 of cover.'],
+  f_insKind:['סוג הביטוח','نوع التأمين','Type of insurance'],
+  h_insKind:['ההסברים בסוף מותאמים לסוג שבחרתם.','الشرح في الأسفل يتلاءم مع النوع المختار.','The notes at the end match the type you choose.'],
+  o_ins_life:['חיים (ריסק)','حياة (مخاطر)','Life (term)'], o_ins_mortlife:['חיים למשכנתא','حياة للرهن العقاري','Mortgage life'], o_ins_mortprop:['מבנה למשכנתא','مبنى للرهن العقاري','Mortgage property'],
+  o_ins_health:['בריאות פרטי','صحة خاصة','Private health'], o_ins_critical:['מחלות קשות','أمراض خطيرة','Critical illness'], o_ins_disability:['אובדן כושר עבודה','فقدان القدرة على العمل','Disability (loss of income)'],
+  o_ins_ltc:['סיעודי','تمريضي','Long-term care'], o_ins_accident:['תאונות אישיות','حوادث شخصية','Personal accident'], o_ins_carcomp:['רכב מקיף','سيارة شامل','Car comprehensive'],
+  o_ins_car3rd:['רכב צד ג׳','سيارة طرف ثالث','Car third party'], o_ins_carmand:['רכב חובה','سيارة إلزامي','Car compulsory'], o_ins_homestruct:['דירה – מבנה','شقة – مبنى','Home – structure'],
+  o_ins_homecontent:['דירה – תכולה','شقة – محتويات','Home – contents'], o_ins_travel:['נסיעות לחו״ל','سفر للخارج','Travel'], o_ins_dental:['שיניים','أسنان','Dental'],
+  o_ins_pet:['חיות מחמד','حيوانات أليفة','Pet'], o_ins_business:['עסק','مصلحة تجارية','Business'],
+  f_insN:['כמה הצעות','كم عرضًا','How many offers'],
+  f_insYears:['תקופת ההשוואה','فترة المقارنة','Compare over'],
+  h_insYears:['לביטוחי חיים, בריאות וסיעוד כדאי 10–20 שנים. לרכב ודירה מספיקה שנה.','لتأمين الحياة والصحة والتمريض يُفضّل 10–20 سنة. للسيارة والشقة تكفي سنة.','For life, health and care use 10–20 years. For car and home one year is enough.'],
+  f_insBy:['לפי מה לדרג','الترتيب حسب','Rank by'],
+  o_insByTotal:['העלות הכוללת','التكلفة الإجمالية','Total cost'], o_insByCover:['עלות לכל 1,000 ₪ כיסוי','التكلفة لكل 1,000 ₪ تغطية','Cost per ₪1,000 of cover'],
+  f_insClaims:['תביעות צפויות בשנה','مطالبات متوقعة سنويًا','Expected claims a year'],
+  h_insClaims:['לחישוב ההשתתפות העצמית: למשל 0.2 = תביעה אחת בחמש שנים. 0 = בלי.','لحساب المشاركة الذاتية: مثلًا 0.2 = مطالبة كل خمس سنوات. 0 = بدون.','For the deductibles: e.g. 0.2 = one claim in five years. 0 = none.'],
+  f_insIdx:['הצמדה למדד בשנה','الربط بالمؤشر سنويًا','Index linking a year'],
+  h_insIdx:['רוב הפרמיות צמודות למדד. אפשר להכניס את האינפלציה הצפויה.','معظم الأقساط مربوطة بالمؤشر. أدخلوا التضخم المتوقع.','Most premiums are index-linked. Enter the expected inflation.'],
+  h_insP:['כמה משלמים בחודש לפי ההצעה.','كم تدفعون شهريًا حسب العرض.','The monthly premium in the offer.'],
+  h_insG:['פרמיה "משתנה" עולה עם הגיל, בדרך כלל 3%–8% בשנה. בפרמיה קבועה: 0.','القسط "المتغير" يرتفع مع العمر، عادة 3%–8% سنويًا. في الثابت: 0.','A "variable" premium rises with age, usually 3%–8% a year. Fixed premium: 0.'],
+  h_insD:['כמה משלמים מכיסכם בכל תביעה.','كم تدفعون من جيبكم في كل مطالبة.','What you pay yourself on each claim.'],
+  h_insC:['סכום הביטוח או תקרת הכיסוי בהצעה.','مبلغ التأمين أو سقف التغطية في العرض.','The sum insured or cover limit in the offer.'],
+  h_insX:['הנחה בשנים הראשונות, שאחריהן הפרמיה עולה.','خصم في السنوات الأولى ثم يرتفع القسط.','A discount in the first years, after which the premium rises.'],
+  h_insE:['כיסויים שמוסיפים בתשלום, למשל רכב חלופי או השתלות.','تغطيات إضافية بدفع، مثل سيارة بديلة أو زراعة أعضاء.','Paid add-ons, such as a replacement car or transplants.'],
+  r_insTotal:['עלות כוללת ל-{y} שנים','التكلفة الإجمالية لـ {y} سنوات','Total cost over {y} years'],
+  r_insSave:['החיסכון: {a} לעומת {b}','التوفير: {a} مقابل {b}','You save: {a} vs {b}'],
+  r_insClaims:['תביעות צפויות','مطالبات متوقعة','Expected claims'], r_insPerYear:['בשנה','سنويًا','a year'],
+  r_insBest:['ההצעה המשתלמת: {n}','العرض الأوفر: {n}','Best offer: {n}'],
+  r_insBestSub:['עלות כוללת ל-{y} שנים · חוסכים {s} · בשנה הראשונה {m} בחודש','التكلفة لـ {y} سنوات · توفير {s} · في السنة الأولى {m} شهريًا','Total over {y} years · you save {s} · first year {m} a month'],
+  t_insCmp:['השוואת ההצעות','مقارنة العروض','The offers side by side'],
+  h_insPm:['פרמיה חודשית','القسط الشهري','Monthly premium'],
+  h_insY1:['שנה ראשונה','السنة الأولى','First year'], h_insPrem:['פרמיות','الأقساط','Premiums'], h_insDed:['השתתפויות','المشاركات','Deductibles'],
+  h_insAll:['סה״כ','المجموع','Total'], h_insCov:['כיסוי','التغطية','Cover'], h_insPer1k:['לכל 1,000 ₪ בשנה','لكل 1,000 ₪ سنويًا','Per ₪1,000 a year'],
+  w_insGrow:['ב{n} הפרמיה עולה {g} בשנה – בטווח ארוך היא עלולה להפוך ליקרה.','في {n} يرتفع القسط {g} سنويًا – قد يصبح مكلفًا على المدى الطويل.','{n}\'s premium rises {g} a year – over time it may become expensive.'],
+  w_insDisc:['ב{n} ההנחה נגמרת אחרי {y} שנים, והמחיר עולה.','في {n} ينتهي الخصم بعد {y} سنوات ويرتفع السعر.','{n}\'s discount ends after {y} years and the price goes up.'],
+  w_insCov:['סכומי הביטוח בהצעות שונים. כדי להשוות נכון, דרגו לפי "עלות לכל 1,000 ₪ כיסוי".','مبالغ التأمين مختلفة بين العروض. للمقارنة الصحيحة رتّبوا حسب "التكلفة لكل 1,000 ₪".','The cover amounts differ. To compare fairly, rank by "cost per ₪1,000 of cover".'],
+  n_ins:['ההשוואה היא כספית בלבד. לפני שבוחרים, בדקו גם את תנאי הפוליסה: החרגות, תקופת אכשרה, הגדרת מקרה ביטוח ושירות. בדיקת ביטוחים קיימים: הר הביטוח באתר משרד האוצר.','المقارنة مالية فقط. قبل الاختيار افحصوا شروط البوليصة: الاستثناءات، فترة الانتظار، تعريف الحدث والخدمة. لفحص تأميناتكم الحالية: "جبل التأمين" في موقع وزارة المالية.','The comparison is about money only. Before choosing, also check the policy terms: exclusions, waiting period, how a claim is defined, and service. To see your existing policies: the Insurance Mountain on the Finance Ministry site.'],
+  n_ins_life:['ריסק: פרמיה משתנה זולה בהתחלה ומתייקרת עם הגיל. פרמיה קבועה יקרה בהתחלה ומשתלמת לטווח ארוך.','حياة: القسط المتغير رخيص في البداية ويغلو مع العمر؛ الثابت أغلى في البداية وأوفر على المدى الطويل.','Term life: a variable premium starts cheap and rises with age; a fixed one starts higher and pays off long-term.'],
+  n_ins_mortlife:['ביטוח חיים למשכנתא: אפשר לקנות מחוץ לבנק, וזה לרוב זול משמעותית. הבנק חייב לקבל פוליסה חיצונית שעומדת בתנאים.','تأمين حياة للرهن: يمكن شراؤه خارج البنك وغالبًا أرخص بكثير؛ البنك ملزم بقبول بوليصة خارجية مستوفية.','Mortgage life: you can buy it outside the bank, usually much cheaper; the bank must accept an outside policy that meets its terms.'],
+  n_ins_mortprop:['מבנה למשכנתא: בדקו שסכום הביטוח הוא עלות בנייה מחדש, לא מחיר הדירה.','مبنى للرهن: تأكدوا أن المبلغ هو تكلفة إعادة البناء لا سعر الشقة.','Mortgage property: make sure the sum is the rebuilding cost, not the flat\'s price.'],
+  n_ins_health:['בריאות: בדקו חפיפה עם הביטוח המשלים של קופת החולים. מספיקה פוליסה אחת לכל כיסוי.','صحة: افحصوا التداخل مع التأمين المكمّل لصندوق المرضى؛ تكفي بوليصة واحدة لكل تغطية.','Health: check overlap with your health fund\'s supplementary plan; one policy per cover is enough.'],
+  n_ins_critical:['מחלות קשות: משלם סכום חד-פעמי באבחון. בדקו את רשימת המחלות ואת תקופת ההמתנה.','أمراض خطيرة: يدفع مبلغًا لمرة واحدة عند التشخيص؛ افحصوا قائمة الأمراض وفترة الانتظار.','Critical illness: pays a lump sum on diagnosis; check the list of illnesses and the waiting period.'],
+  n_ins_disability:['אובדן כושר: עדיפה הגדרת "עיסוק ספציפי". חלק מהכיסוי קיים כבר בקרן הפנסיה, אז בדקו כדי לא לשלם פעמיים.','فقدان القدرة: يُفضّل تعريف "المهنة المحددة"؛ جزء من التغطية موجود في صندوق التقاعد، تحققوا لعدم الدفع مرتين.','Disability: an "own occupation" definition is better; part of the cover may already be in your pension fund, so check to avoid paying twice.'],
+  n_ins_ltc:['סיעודי: בדקו תקופת תשלום (לכל החיים או לתקופה), תקופת המתנה, ואם הפרמיה עולה עם הגיל.','تمريضي: افحصوا مدة الدفع (مدى الحياة أم لفترة)، فترة الانتظار، وهل يرتفع القسط مع العمر.','Long-term care: check how long it pays (for life or a set period), the waiting period, and whether the premium rises with age.'],
+  n_ins_accident:['תאונות אישיות: בדקו מה נחשב תאונה ואם יש כיסוי לספורט.','حوادث شخصية: افحصوا ما يُعدّ حادثًا وهل تُغطّى الرياضة.','Personal accident: check what counts as an accident and whether sport is covered.'],
+  n_ins_carcomp:['רכב מקיף: השוו גם השתתפות עצמית לנהג צעיר, שמאי, רכב חלופי ושבר שמשות.','سيارة شامل: قارنوا المشاركة للسائق الشاب، المخمّن، السيارة البديلة والزجاج.','Car comprehensive: also compare the young-driver deductible, assessor, replacement car and glass.'],
+  n_ins_car3rd:['צד ג׳: בדקו את תקרת הכיסוי לנזק לרכוש של אחרים.','طرف ثالث: افحصوا سقف التغطية لأضرار ممتلكات الغير.','Third party: check the cover limit for damage to others\' property.'],
+  n_ins_carmand:['חובה: הכיסוי זהה בכל החברות, ההבדל הוא רק במחיר. השוו גם ב"הר הביטוח" של משרד האוצר.','إلزامي: التغطية متطابقة في كل الشركات والفرق في السعر فقط.','Compulsory: the cover is the same at every insurer; only the price differs.'],
+  n_ins_homestruct:['מבנה: סכום הביטוח לפי עלות בנייה מחדש. בבית משותף בדקו מה מכוסה ברכוש המשותף.','مبنى: المبلغ حسب تكلفة إعادة البناء؛ في البناية المشتركة افحصوا الأجزاء المشتركة.','Structure: insure for rebuilding cost; in a shared building check what common property is covered.'],
+  n_ins_homecontent:['תכולה: הצהירו על תכשיטים ומחשבים בנפרד, ובדקו אם הפיצוי לפי "חדש תמורת ישן".','محتويات: صرّحوا عن المجوهرات والحواسيب بشكل منفصل، وافحصوا التعويض "جديد مقابل قديم".','Contents: list jewellery and computers separately, and check for new-for-old cover.'],
+  n_ins_travel:['נסיעות: בדקו מצב רפואי קודם, ספורט אתגרי וכבודה. כרטיס אשראי לפעמים כולל ביטוח בסיסי.','سفر: افحصوا الحالة الطبية السابقة والرياضة الخطرة والأمتعة؛ بطاقة الائتمان تشمل أحيانًا تأمينًا أساسيًا.','Travel: check pre-existing conditions, extreme sports and luggage; a credit card may include basic cover.'],
+  n_ins_dental:['שיניים: בדקו תקרות שנתיות ותקופת אכשרה לטיפולים גדולים.','أسنان: افحصوا السقوف السنوية وفترة الانتظار للعلاجات الكبيرة.','Dental: check yearly caps and the waiting period for big treatments.'],
+  n_ins_pet:['חיות מחמד: בדקו החרגות לגזע, גיל ומחלות קודמות.','حيوانات أليفة: افحصوا استثناءات السلالة والعمر والأمراض السابقة.','Pet: check exclusions for breed, age and existing conditions.'],
+  n_ins_business:['עסק: חבות מעבידים, צד ג׳, ציוד ואובדן הכנסה. כל אחד בתקרה משלו.','مصلحة: مسؤولية صاحب العمل، طرف ثالث، معدات وفقدان دخل – لكل سقفه.','Business: employer\'s liability, third party, equipment and loss of income – each with its own limit.']
+});
+(function(){
+  const L = {a: ['א', 'أ', 'A'], b: ['ב', 'ب', 'B'], c: ['ג', 'ج', 'C'], d: ['ד', 'د', 'D']};
+  const F = {P: ['פרמיה חודשית', 'القسط الشهري', 'Monthly premium'], G: ['עלייה בפרמיה בשנה', 'ارتفاع القسط سنويًا', 'Premium rise a year'], D: ['השתתפות עצמית', 'المشاركة الذاتية', 'Deductible'],
+    C: ['סכום ביטוח / כיסוי', 'مبلغ التأمين / التغطية', 'Sum insured / cover'], X: ['הנחה בשנים הראשונות', 'خصم في السنوات الأولى', 'Early-years discount'], XY: ['כמה שנים ההנחה', 'كم سنة الخصم', 'Discount for how many years'],
+    E: ['כיסויים נוספים בחודש', 'تغطيات إضافية شهريًا', 'Add-ons a month']};
+  const O = ['הצעה', 'عرض', 'Offer'];
+  Object.keys(L).forEach(k => {
+    T['o_insOff_' + k] = [0, 1, 2].map(i => O[i] + ' ' + L[k][i]);
+    Object.keys(F).forEach(f => { T['f_ins' + f + '_' + k] = [0, 1, 2].map(i => F[f][i] + ' – ' + O[i] + ' ' + L[k][i]); });
+  });
+})();
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -5226,7 +5373,7 @@ const GROUPS = [
   ['g_save',  ['expenses','freedom','networth','debtplan','savegoal','compound','yield','dividends','avgcost','retire','fire','mgmtfees','hishtalmut','kidsave']],
   ['g_work2', ['clients','salary','selfemp','tax','capital','rental','severance','notice','leave','overtime','taxrefund','joboffer','freelance','empcost','carbenefit','benefits']],
   ['g_loans', ['prime','loan','loancmp','prepay','creditcard','carlease','mortgage','refi','rentbuy','purchasetax','landtax','mortcap','evfuel']],
-  ['g_tools', ['convert','vat','percent','inflation','cpilink','split','breakeven','unitprice','discount','workdays','appliance']]
+  ['g_tools', ['convert','vat','percent','inflation','cpilink','split','breakeven','unitprice','discount','workdays','appliance','insurance']]
 ];
 const TABS = GROUPS.flatMap(g => g[1]);
 
@@ -5810,9 +5957,15 @@ const DEFS = {
     {id:'cp_other', label:'f_otherInc', unit:'ils', val:0, adv:'m_adv'}
   ],
   loan: [
-    {id:'l_amount', label:'f_loanAmt', unit:'cur', val:500000},
-    {id:'l_rate',   label:'f_rate',    unit:'%',   val:4.5},
-    {id:'l_years',  label:'f_term',    unit:'yrs', val:25},
+    SEL('l_mode','f_lMode','pay',[['pay','o_lmPay'],['amount','o_lmAmount'],['term','o_lmTerm']],{wide:true, hint:'h_lMode'}),
+    {id:'l_amount', label:'f_loanAmt', unit:'cur', val:500000, when:['l_mode','pay|term']},
+    {id:'l_pay', label:'f_lPay', unit:'cur', val:3000, when:['l_mode','amount|term'], hint:'h_lPay'},
+    SEL('l_rateType','f_lRateType','fixed',[['fixed','o_lrFixed'],['prime','o_lrPrime']],{wide:true, hint:'h_lRateType'}),
+    {id:'l_rate',   label:'f_rate',    unit:'%',   val:4.5, when:['l_rateType','fixed']},
+    {id:'l_boi', label:'f_lBoi', unit:'%', val:4.5, when:['l_rateType','prime'], hint:'h_lBoi'},
+    {id:'l_spread', label:'f_lSpread', unit:'%', val:1.5, when:['l_rateType','prime'], hint:'h_lSpread'},
+    {id:'l_margin', label:'f_lMargin', unit:'%', val:-0.5, when:['l_rateType','prime'], hint:'h_lMargin'},
+    {id:'l_years',  label:'f_term',    unit:'yrs', val:25, when:['l_mode','pay|amount']},
     SEL('l_type','f_method','annuity',[['annuity','o_annuity'],['equal','o_equal'],['bullet','o_bullet']]),
     {id:'l_grace', label:'f_grace', unit:'mo', val:0, adv:'m_adv'},
     {id:'l_extra', label:'f_extraM', unit:'cur', val:0, adv:'m_adv'},
@@ -6188,6 +6341,31 @@ Object.assign(ICON, {
   workdays: ic('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M8 15l2 2 4-4"/>'),
   cpilink: ic('<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>')
 });
+/* 8.5: comparing insurance offers */
+const INS_KINDS0 = ['life', 'mortlife', 'mortprop', 'health', 'critical', 'disability', 'ltc', 'accident', 'carcomp', 'car3rd', 'carmand', 'homestruct', 'homecontent', 'travel', 'dental', 'pet', 'business'];
+Object.assign(DEFS, {
+  insurance: [
+    SEL('ins_kind','f_insKind','life',INS_KINDS0.map(k => [k, 'o_ins_' + k]),{wide:true, hint:'h_insKind'}),
+    SEL('ins_n','f_insN','2',[['2','=2'],['3','=3'],['4','=4']]),
+    F('ins_years','f_insYears','yrs',10,{hint:'h_insYears'}),
+    SEL('ins_by','f_insBy','total',[['total','o_insByTotal'],['cover','o_insByCover']],{wide:true}),
+    F('ins_claims','f_insClaims','',0,{hint:'h_insClaims'}),
+    F('ins_idx','f_insIdx','%',0,{adv:'m_adv', hint:'h_insIdx'}),
+    ...['a','b','c','d'].flatMap((k, i) => {
+      const w = i < 2 ? {} : {when: ['ins_n', i === 2 ? '3|4' : '4']};
+      return [
+        F('ins_p' + k, 'f_insP_' + k, 'cur', [180, 165, 200, 150][i], Object.assign({hint: i ? undefined : 'h_insP'}, w)),
+        F('ins_g' + k, 'f_insG_' + k, '%', [0, 4, 0, 5][i], Object.assign({hint: i ? undefined : 'h_insG'}, w)),
+        F('ins_d' + k, 'f_insD_' + k, 'cur', [0, 0, 0, 0][i], Object.assign({hint: i ? undefined : 'h_insD'}, w)),
+        F('ins_c' + k, 'f_insC_' + k, 'cur', [1000000, 1000000, 1000000, 1000000][i], Object.assign({hint: i ? undefined : 'h_insC'}, w)),
+        F('ins_x' + k, 'f_insX_' + k, '%', 0, Object.assign({adv: 'm_adv', hint: i ? undefined : 'h_insX'}, w)),
+        F('ins_xy' + k, 'f_insXY_' + k, 'yrs', 0, Object.assign({adv: 'm_adv'}, w)),
+        F('ins_e' + k, 'f_insE_' + k, 'cur', 0, Object.assign({adv: 'm_adv', hint: i ? undefined : 'h_insE'}, w))
+      ];
+    })
+  ]
+});
+Object.assign(ICON, {insurance: ic('<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>')});
 
 /* ================= home + bottom nav + sliders ================= */
 const ICO = {
@@ -9203,6 +9381,121 @@ Object.assign(CALC, {cpilink: calcCpiLink});
 Object.assign(CALC, {overtime: calcOvertime, taxrefund: calcTaxRefund, joboffer: calcJobOffer, freelance: calcFreelance, empcost: calcEmpCost,
   mgmtfees: calcMgmtFees, hishtalmut: calcHishtalmut, kidsave: calcKidSave, benefits: calcBenefits, mortcap: calcMortCap, carbenefit: calcCarBenefit,
   evfuel: calcEvFuel, appliance: calcAppliance, unitprice: calcUnitPrice, discount: calcDiscount, workdays: calcWorkDays});
+/* ================= 8.5: loans by monthly payment, and prime + margin made clear ================= */
+/* the interest: Bank of Israel rate + the prime spread (1.5% by convention) = prime; the bank then adds or takes off its own margin.
+   Each part can be changed. The interest you pay is split between those parts, so it is clear what each costs. */
+const calcLoan85 = CALC.loan;
+function loanSolve(type, r, n, pay){            // the loan amount a monthly payment carries
+  if (!(pay > 0)) return 0;
+  if (type === 'bullet') return r > 0 ? pay / r : 0;
+  if (type === 'equal') return pay / (1 / n + r);
+  return r > 0 ? pay * (1 - Math.pow(1 + r, -n)) / r : pay * n;
+}
+function loanTerm(type, r, amt, pay){           // months to repay an amount with a monthly payment (NaN: never)
+  if (!(pay > 0) || !(amt > 0)) return NaN;
+  if (type === 'bullet') return NaN;
+  if (type === 'equal'){ const first = amt * r; return pay > first ? amt / (pay - first) : NaN; }
+  if (r <= 0) return amt / pay;
+  return pay > amt * r ? -Math.log(1 - amt * r / pay) / Math.log(1 + r) : NaN;
+}
+/* the calculation borrows a field for a moment (the amount, the years or the rate it worked out) and gives back what you typed */
+var LOAN_KEEP = [];
+function loanSet(id, val){ const e = document.getElementById(id); if (e && isFinite(val)){ if (id !== 'l_boi' && !LOAN_KEEP.some(x => x[0] === id)) LOAN_KEEP.push([id, e.value]); e.value = String(Math.round(val * 100) / 100); } }
+CALC.loan = function(){
+  const mode = ($('#l_mode') || {}).value || 'pay', rt = ($('#l_rateType') || {}).value || 'fixed', type = ($('#l_type') || {}).value || 'annuity';
+  /* the Bank of Israel rate follows the live figure until you type your own */
+  const boiEl = $('#l_boi');
+  if (boiEl && !boiEl.dataset.user && typeof MKT === 'object' && MKT.boi > 0 && Math.abs(v('l_boi') - MKT.boi) > 1e-9) loanSet('l_boi', MKT.boi);
+  let parts = null;
+  if (rt === 'prime'){
+    const boi = v('l_boi'), spread = v('l_spread'), margin = v('l_margin'), prime = boi + spread, rate = Math.max(0, prime + margin);
+    parts = {boi, spread, margin, prime, rate};
+    loanSet('l_rate', rate);
+  }
+  const rate = Math.max(0, v('l_rate')), r = rate / 1200;
+  let solved = null;
+  if (mode === 'amount'){
+    const n = Math.max(1, Math.round(clamp(v('l_years'), 0.25, 50) * 12)), pay = Math.max(0, v('l_pay'));
+    const amt = loanSolve(type, r, n, pay); loanSet('l_amount', amt); solved = {k: 'amount', amt, pay, y: n / 12};
+  } else if (mode === 'term'){
+    const amt = Math.max(0, v('l_amount')), pay = Math.max(0, v('l_pay')), n = loanTerm(type, r, amt, pay);
+    if (!isFinite(n)){
+      const min = type === 'equal' ? amt / 600 + amt * r : amt * r;
+      return {hero: {label: t('r_lTerm'), value: '—', sub: t('w_lPayLow', {m: M(min + 0.01, 2)})}, rows: [], warn: [t('w_lPayLow', {m: M(min + 0.01, 2)})], note: t('n_lMode')};
+    }
+    loanSet('l_years', Math.min(50, n / 12)); solved = {k: 'term', n: Math.ceil(n), pay, amt};
+  }
+  let res;
+  try { res = calcLoan85.apply(this, arguments); }
+  finally { LOAN_KEEP.forEach(([id, val]) => { const e = document.getElementById(id); if (e) e.value = val; }); LOAN_KEEP = []; }
+  if (!res || !res.rows) return res;
+  const top = [];
+  if (solved && solved.k === 'amount'){
+    res.hero = {label: t('r_lCanBorrow'), value: M(solved.amt), sub: t('r_lCanSub', {p: M(solved.pay, 2), y: N(solved.y, 1), r: PC(rate)})};
+  } else if (solved && solved.k === 'term'){
+    res.hero = {label: t('r_lTerm'), value: fmtDur(solved.n), sub: t('r_lTermSub', {p: M(solved.pay, 2), a: M(solved.amt)})};
+  }
+  if (parts){
+    top.push([t('r_lBoi'), PC(parts.boi)], [t('r_lSpread'), '+' + PC(parts.spread)], [t('r_lPrime'), PC(parts.prime), 'key'],
+      [t('r_lMargin'), (parts.margin >= 0 ? '+' : '') + PC(parts.margin)], [t('r_lYour'), PC(parts.rate), 'key']);
+    /* the interest you pay, split by where it comes from */
+    const totRow = res.rows.find(x => x[0] === t('r_totInt'));
+    const totInt = totRow ? parseFloat(String(strip(totRow[1])).replace(/[^\d.\-]/g, '')) : NaN;
+    if (parts.rate > 0 && isFinite(totInt) && totInt > 0){
+      const share = x => totInt * x / parts.rate;
+      top.push([t('r_lIntBoi'), M(share(parts.boi))], [t('r_lIntSpread'), M(share(parts.spread))], [t('r_lIntMargin'), (parts.margin < 0 ? '−' : '') + M(Math.abs(share(parts.margin)))]);
+    }
+  }
+  res.rows = top.concat(res.rows);
+  res.note = (res.note ? res.note + ' ' : '') + t(parts ? 'n_lPrime' : 'n_lMode');
+  return res;
+};
+document.addEventListener('input', e => { if (e.target && e.target.id === 'l_boi') e.target.dataset.user = '1'; }, true);
+
+/* ================= 8.5: comparing insurance offers, for every kind of insurance ================= */
+const INS_KINDS = ['life', 'mortlife', 'mortprop', 'health', 'critical', 'disability', 'ltc', 'accident', 'carcomp', 'car3rd', 'carmand', 'homestruct', 'homecontent', 'travel', 'dental', 'pet', 'business'];
+const INS_OFF = ['a', 'b', 'c', 'd'];
+function insOffer(k, yrs, idx){
+  const p = Math.max(0, v('ins_p' + k)), g = clamp(v('ins_g' + k), -20, 50) / 100, d = Math.max(0, v('ins_d' + k)), cov = Math.max(0, v('ins_c' + k));
+  const disc = clamp(v('ins_x' + k), 0, 90) / 100, dy = clamp(Math.round(v('ins_xy' + k)), 0, 50), extra = Math.max(0, v('ins_e' + k));
+  let total = 0, first = 0; const byYear = [];
+  for (let y = 0; y < yrs; y++){
+    const m = (p * Math.pow(1 + g, y) * Math.pow(1 + idx, y)) * (y < dy ? 1 - disc : 1) + extra * Math.pow(1 + idx, y);
+    const yr = m * 12; total += yr; byYear.push(yr); if (y === 0) first = yr;
+  }
+  return {k, p, g, d, cov, disc, dy, extra, total, first, byYear};
+}
+function calcInsurance(){
+  const kind = ($('#ins_kind') || {}).value || 'life', n = clamp(Math.round(+(($('#ins_n') || {}).value || 2)), 2, 4);
+  const yrs = clamp(Math.round(v('ins_years')), 1, 60), idx = clamp(v('ins_idx'), -5, 20) / 100, claims = Math.max(0, v('ins_claims'));
+  const by = ($('#ins_by') || {}).value || 'total';
+  const L = INS_OFF.slice(0, n).map(k => insOffer(k, yrs, idx)).map(o => {
+    o.ded = o.d * claims * yrs;                                     // the deductibles you would expect to pay over the period
+    o.all = o.total + o.ded;
+    o.per1k = o.cov > 0 ? o.all / yrs / (o.cov / 1000) : NaN;       // yearly cost for each ₪1,000 of cover
+    return o;
+  });
+  const key = o => by === 'cover' ? (isFinite(o.per1k) ? o.per1k : Infinity) : o.all;
+  const sorted = L.slice().sort((a, b) => key(a) - key(b)), best = sorted[0], worst = sorted[sorted.length - 1];
+  const name = k => t('o_insOff_' + k);
+  const rows = [];
+  sorted.forEach((o, i) => {
+    rows.push([(i === 0 ? '★ ' : '') + name(o.k) + ' · ' + t('r_insTotal', {y: yrs}), M(o.all), i === 0 ? 'key' : undefined]);
+  });
+  rows.push([t('r_insSave', {a: name(best.k), b: name(worst.k)}), M(worst.all - best.all), 'key']);
+  if (claims > 0) rows.push([t('r_insClaims'), N(claims, 2) + ' ' + t('r_insPerYear')]);
+  const trows = L.map(o => [name(o.k), M(o.p, 2), M(o.first), M(o.total), M(o.ded), M(o.all), o.cov > 0 ? M(o.cov) : '—', isFinite(o.per1k) ? M(o.per1k, 2) : '—']);
+  const warn = [];
+  L.forEach(o => { if (o.g > 0.06) warn.push(t('w_insGrow', {n: name(o.k), g: PC(o.g * 100)})); if (o.disc > 0 && o.dy > 0 && o.dy < yrs) warn.push(t('w_insDisc', {n: name(o.k), y: o.dy})); });
+  if (L.some(o => o.cov > 0) && L.some(o => o.cov > 0 && Math.abs(o.cov - best.cov) / Math.max(1, best.cov) > 0.1)) warn.push(t('w_insCov'));
+  return {
+    hero: {label: t('r_insBest', {n: name(best.k)}), value: M(best.all), sub: t('r_insBestSub', {y: yrs, s: M(worst.all - best.all), m: M(best.first / 12, 2)})},
+    rows, warn: warn.slice(0, 4),
+    table: {title: t('t_insCmp'), open: true, head: ['', t('h_insPm'), t('h_insY1'), t('h_insPrem'), t('h_insDed'), t('h_insAll'), t('h_insCov'), t('h_insPer1k')], rows: trows},
+    note: t('n_ins_' + kind) + ' ' + t('n_ins')
+  };
+}
+Object.assign(CALC, {insurance: calcInsurance});
 
 /* ================= navigation ================= */
 function activate(id, focus){
@@ -10779,8 +11072,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "8.4", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.014151';
+var CHANGELOG = [{"v": "8.5", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.021500';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -12804,10 +13097,11 @@ applyLang = function(){ const r = _alFg.apply(this, arguments); fgRender(); lvRe
 figApply(true);
 
 /* ================= live indices: official price indices and market indices, used across the app and editable ================= */
-var IX_BUILT = {"idx":{"cpi":{"code":"120010","name":"Consumer Price Index - General","m":"2026-09","v":105.3,"base":"Average 2024","mom":-0.5,"yoy":1.6,"ytd":1.64,"hist":[["2005-01",70.6175],["2005-02",70.7588],["2005-03",70.6175],["2005-04",71.1119],["2005-05",71.3237],["2005-06",71.3943],["2005-07",72.1711],["2005-08",72.3124],["2005-09",72.383],["2005-10",72.9479],["2005-11",72.8773],["2005-12",72.7361],["2006-01",72.5242],["2006-02",72.9479],["2006-03",73.1598],["2006-04",73.7953],["2006-05",73.7953],["2006-06",73.8659],["2006-07",73.9366],["2006-08",73.9366],["2006-09",73.301],["2006-10",72.8067],["2006-11",72.6654],["2006-12",72.6654],["2007-01",72.5928],["2007-02",72.3728],["2007-03",72.5195],["2007-04",72.8861],["2007-05",72.8861],["2007-06",73.3994],["2007-07",74.206],["2007-08",74.7192],["2007-09",74.3526],["2007-10",74.4259],["2007-11",74.7192],["2007-12",75.1592],["2008-01",75.1592],["2008-02",75.0125],["2008-03",75.2325],["2008-04",76.3324],["2008-05",76.8457],["2008-06",76.919],["2008-07",77.7989],["2008-08",78.4589],["2008-09",78.4589],["2008-10",78.5322],["2008-11",78.0922],["2008-12",78.0189],["2009-01",77.6288],["2009-02",77.5517],["2009-03",77.9372],["2009-04",78.7081],["2009-05",79.0164],["2009-06",79.7102],["2009-07",80.5582],["2009-08",80.9436],["2009-09",80.7124],["2009-10",80.8666],["2009-11",81.0978],["2009-12",81.0978],["2010-01",80.5582],["2010-02",80.3269],["2010-03",80.404],["2010-04",81.0978],["2010-05",81.4062],["2010-06",81.6375],["2010-07",82.0229],["2010-08",82.4083],["2010-09",82.6396],["2010-10",82.8709],["2010-11",82.948],["2010-12",83.2563],["2011-01",83.4228],["2011-02",83.6682],["2011-03",83.8318],["2011-04",84.3225],["2011-05",84.7314],["2011-06",85.0586],["2011-07",84.8132],["2011-08",85.2222],["2011-09",85.0586],["2011-10",85.1404],["2011-11",85.0586],["2011-12",85.0586],["2012-01",85.0586],["2012-02",85.0586],["2012-03",85.3857],["2012-04",86.1218],["2012-05",86.1218],["2012-06",85.8764],["2012-07",85.9582],["2012-08",86.8579],["2012-09",86.8579],["2012-10",86.6943],["2012-11",86.2854],["2012-12",86.449],["2013-01",86.2761],["2013-02",86.2761],["2013-03",86.4481],["2013-04",86.7922],["2013-05",86.8782],["2013-06",87.5663],["2013-07",87.8244],["2013-08",87.9964],["2013-09",87.9964],["2013-10",88.2545],["2013-11",87.9104],["2013-12",87.9964],["2014-01",87.4803],["2014-02",87.3083],["2014-03",87.5663],["2014-04",87.6523],["2014-05",87.7384],["2014-06",87.9964],["2014-07",88.0824],["2014-08",87.9964],["2014-09",87.7384],["2014-10",87.9964],["2014-11",87.8244],["2014-12",87.8244],["2015-01",87.034],["2015-02",86.4198],["2015-03",86.683],["2015-04",87.2094],["2015-05",87.3849],["2015-06",87.6481],["2015-07",87.8236],["2015-08",87.6481],["2015-09",87.2972],["2015-10",87.3849],["2015-11",87.034],["2015-12",86.9462],["2016-01",86.5076],["2016-02",86.2443],["2016-03",86.0689],["2016-04",86.4198],["2016-05",86.683],["2016-06",86.9462],["2016-07",87.2972],["2016-08",87.034],["2016-09",86.9462],["2016-10",87.1217],["2016-11",86.7708],["2016-12",86.7708],["2017-01",86.5972],["2017-02",86.5972],["2017-03",86.8575],["2017-04",87.0311],["2017-05",87.3782],["2017-06",86.7708],["2017-07",86.684],["2017-08",86.9443],["2017-09",87.0311],["2017-10",87.2914],["2017-11",87.0311],["2017-12",87.1178],["2018-01",86.684],["2018-02",86.7708],["2018-03",87.0311],["2018-04",87.3782],["2018-05",87.812],["2018-06",87.8988],["2018-07",87.8988],["2018-08",87.9855],["2018-09",88.0723],["2018-10",88.3326],["2018-11",88.0723],["2018-12",87.812],["2019-01",87.7242],["2019-02",87.8118],["2019-03",88.25],["2019-04",88.5129],["2019-05",89.1264],["2019-06",88.6006],["2019-07",88.3377],["2019-08",88.5129],["2019-09",88.3377],["2019-10",88.6882],["2019-11",88.3377],["2019-12",88.3377],["2020-01",87.9871],["2020-02",87.8995],["2020-03",88.25],["2020-04",87.9871],["2020-05",87.7242],["2020-06",87.6366],["2020-07",87.8118],["2020-08",87.8118],["2020-09",87.7242],["2020-10",87.9871],["2020-11",87.8118],["2020-12",87.7242],["2021-01",87.6365],["2021-02",87.9002],["2021-03",88.4276],["2021-04",88.6913],["2021-05",89.0429],["2021-06",89.1308],["2021-07",89.4824],["2021-08",89.7461],["2021-09",89.9219],["2021-10",90.0098],["2021-11",89.9219],["2021-12",90.1856],["2022-01",90.3614],["2022-02",90.9767],["2022-03",91.5041],["2022-04",92.2073],["2022-05",92.7347],["2022-06",93.0863],["2022-07",94.1411],["2022-08",93.8774],["2022-09",94.0532],["2022-10",94.5806],["2022-11",94.6685],["2022-12",94.9322],["2023-01",95.217],["2023-02",95.6824],["2023-03",96.0547],["2023-04",96.7993],["2023-05",96.9854],["2023-06",96.9854],["2023-07",97.2647],["2023-08",97.73],["2023-09",97.637],["2023-10",98.1023],["2023-11",97.8231],["2023-12",97.73],["2024-01",97.73],["2024-02",98.1023],["2024-03",98.6608],["2024-04",99.4985],["2024-05",99.6846],["2024-06",99.7777],["2024-07",100.3362],["2024-08",101.2669],["2024-09",101.0808],["2024-10",101.5462],["2024-11",101.1739],["2024-12",100.8946],["2025-01",101.5],["2025-02",101.5],["2025-03",102.0],["2025-04",103.1],["2025-05",102.8],["2025-06",103.1],["2025-07",103.5],["2025-08",104.2],["2025-09",103.6],["2025-10",104.1],["2025-11",103.6],["2025-12",103.6],["2026-01",103.3],["2026-02",103.5],["2026-03",103.9],["2026-04",105.1],["2026-05",104.8],["2026-06",104.8],["2026-07",105.1],["2026-08",105.8],["2026-09",105.3]]},"build":{"code":"200010","name":"Price index of input in residential building - general","m":"2026-09","v":104.0,"base":"July 2025","mom":0.1,"yoy":3.6,"ytd":2.77,"hist":[["2005-01",56.8937],["2005-02",56.9482],["2005-03",57.1117],["2005-04",57.2752],["2005-05",57.3842],["2005-06",57.6566],["2005-07",59.2915],["2005-08",60.8719],["2005-09",61.0354],["2005-10",60.7084],["2005-11",60.1635],["2005-12",59.782],["2006-01",60.4904],["2006-02",60.7084],["2006-03",61.0354],["2006-04",61.4714],["2006-05",61.8528],["2006-06",62.4523],["2006-07",62.9972],["2006-08",63.4332],["2006-09",63.7057],["2006-10",63.4877],["2006-11",63.4877],["2006-12",63.3242],["2007-01",63.9237],["2007-02",64.0327],["2007-03",64.1962],["2007-04",64.1962],["2007-05",64.0872],["2007-06",64.5231],["2007-07",65.2316],["2007-08",65.3951],["2007-09",65.4496],["2007-10",65.3406],["2007-11",65.2861],["2007-12",65.2861],["2008-01",65.5585],["2008-02",65.2861],["2008-03",65.4496],["2008-04",66.3215],["2008-05",67.3569],["2008-06",68.0654],["2008-07",69.1553],["2008-08",69.2643],["2008-09",68.8283],["2008-10",67.6839],["2008-11",67.5204],["2008-12",67.4114],["2009-01",67.0844],["2009-02",67.0844],["2009-03",67.0844],["2009-04",67.1389],["2009-05",67.1389],["2009-06",67.1934],["2009-07",67.4114],["2009-08",67.3569],["2009-09",67.3569],["2009-10",67.1934],["2009-11",67.3024],["2009-12",67.4114],["2010-01",67.6294],["2010-02",67.9564],["2010-03",68.3923],["2010-04",68.9918],["2010-05",69.1553],["2010-06",68.9918],["2010-07",68.9373],["2010-08",69.2643],["2010-09",69.3733],["2010-10",69.4278],["2010-11",69.6457],["2010-12",70.0272],["2011-01",70.4632],["2011-02",70.8991],["2011-03",70.8991],["2011-04",70.8991],["2011-05",71.4441],["2011-06",71.9346],["2011-07",72.0981],["2011-08",72.3143],["2011-09",72.5306],["2011-10",72.6027],["2011-11",72.7469],["2011-12",72.6748],["2012-01",72.8911],["2012-02",73.2516],["2012-03",73.4679],["2012-04",73.9726],["2012-05",74.0447],["2012-06",74.261],["2012-07",74.4773],["2012-08",74.7657],["2012-09",74.7657],["2012-10",74.7657],["2012-11",74.982],["2012-12",75.0541],["2013-01",75.4146],["2013-02",75.5588],["2013-03",75.5588],["2013-04",75.4146],["2013-05",75.6309],["2013-06",75.7751],["2013-07",75.7751],["2013-08",75.8472],["2013-09",75.9913],["2013-10",76.0634],["2013-11",76.1355],["2013-12",76.1355],["2014-01",76.3518],["2014-02",76.3518],["2014-03",76.2797],["2014-04",76.3518],["2014-05",76.4239],["2014-06",76.3518],["2014-07",76.2797],["2014-08",76.3518],["2014-09",76.2797],["2014-10",76.496],["2014-11",76.6402],["2014-12",76.7123],["2015-01",76.7844],["2015-02",76.7123],["2015-03",76.8565],["2015-04",76.8565],["2015-05",76.8565],["2015-06",76.8565],["2015-07",76.9286],["2015-08",77.0728],["2015-09",77.1449],["2015-10",77.217],["2015-11",77.1449],["2015-12",77.4333],["2016-01",77.6496],["2016-02",77.5054],["2016-03",77.5054],["2016-04",77.7217],["2016-05",77.8659],["2016-06",77.938],["2016-07",78.2264],["2016-08",78.2264],["2016-09",78.4427],["2016-10",78.4427],["2016-11",78.5869],["2016-12",78.5869],["2017-01",78.5869],["2017-02",78.7311],["2017-03",78.7311],["2017-04",78.8753],["2017-05",78.8753],["2017-06",79.0195],["2017-07",79.1637],["2017-08",79.5242],["2017-09",79.6683],["2017-10",79.8125],["2017-11",79.8846],["2017-12",80.1009],["2018-01",80.5335],["2018-02",80.7498],["2018-03",80.8219],["2018-04",81.0382],["2018-05",81.1103],["2018-06",81.1824],["2018-07",81.3987],["2018-08",81.5429],["2018-09",81.5429],["2018-10",81.615],["2018-11",81.615],["2018-12",81.6871],["2019-01",82.1918],["2019-02",82.2639],["2019-03",82.2639],["2019-04",82.336],["2019-05",82.4081],["2019-06",82.4081],["2019-07",82.4081],["2019-08",82.4802],["2019-09",82.4802],["2019-10",82.4081],["2019-11",82.4081],["2019-12",82.5523],["2020-01",82.6965],["2020-02",82.6965],["2020-03",82.8407],["2020-04",82.7686],["2020-05",82.6965],["2020-06",82.6965],["2020-07",82.6965],["2020-08",82.7686],["2020-09",82.6965],["2020-10",82.6244],["2020-11",82.6244],["2020-12",82.9849],["2021-01",83.4895],["2021-02",83.6337],["2021-03",84.0663],["2021-04",84.7152],["2021-05",85.292],["2021-06",85.7967],["2021-07",86.013],["2021-08",86.5177],["2021-09",86.734],["2021-10",86.9503],["2021-11",87.3828],["2021-12",87.5991],["2022-01",88.3201],["2022-02",88.7527],["2022-03",89.6179],["2022-04",90.4831],["2022-05",90.9156],["2022-06",91.4203],["2022-07",91.8529],["2022-08",91.925],["2022-09",91.925],["2022-10",91.925],["2022-11",91.7808],["2022-12",91.7808],["2023-01",92.8623],["2023-02",92.7181],["2023-03",92.9344],["2023-04",93.2228],["2023-05",93.1507],["2023-06",93.4391],["2023-07",93.2228],["2023-08",93.2949],["2023-09",93.367],["2023-10",93.5112],["2023-11",93.5833],["2023-12",93.5833],["2024-01",93.8717],["2024-02",93.6554],["2024-03",93.8717],["2024-04",93.7996],["2024-05",94.2322],["2024-06",94.5926],["2024-07",94.9531],["2024-08",95.1694],["2024-09",95.5299],["2024-10",95.7462],["2024-11",96.0346],["2024-12",96.323],["2025-01",98.8464],["2025-02",99.279],["2025-03",99.6395],["2025-04",99.7837],["2025-05",99.9279],["2025-06",99.9279],["2025-07",100.0],["2025-08",100.4],["2025-09",100.4],["2025-10",100.5],["2025-11",101.1],["2025-12",101.2],["2026-01",101.3],["2026-02",101.5],["2026-03",101.7],["2026-04",102.8],["2026-05",103.4],["2026-06",103.6],["2026-07",103.5],["2026-08",103.9],["2026-09",104.0]]},"house":{"code":"40010","name":"Prices of Dwellings","m":"2026-07","v":590.0,"base":"Average 1993","mom":-0.6,"yoy":-1.8,"ytd":-1.7,"hist":[["2015-01",354.8],["2015-02",358.3],["2015-03",360.6],["2015-04",361.5],["2015-05",364.5],["2015-06",368.3],["2015-07",369.2],["2015-08",369.0],["2015-09",371.3],["2015-10",374.4],["2015-11",377.5],["2015-12",380.4],["2016-01",381.4],["2016-02",384.0],["2016-03",389.1],["2016-04",390.2],["2016-05",391.1],["2016-06",393.4],["2016-07",396.1],["2016-08",399.9],["2016-09",404.2],["2016-10",404.4],["2016-11",402.8],["2016-12",402.1],["2017-01",402.8],["2017-02",404.9],["2017-03",406.8],["2017-04",407.7],["2017-05",409.5],["2017-06",412.8],["2017-07",414.3],["2017-08",415.9],["2017-09",414.6],["2017-10",414.5],["2017-11",411.9],["2017-12",407.8],["2018-01",406.3],["2018-02",405.9],["2018-03",406.5],["2018-04",406.2],["2018-05",409.2],["2018-06",410.5],["2018-07",408.1],["2018-08",407.4],["2018-09",406.6],["2018-10",405.8],["2018-11",405.5],["2018-12",404.7],["2019-01",408.3],["2019-02",409.6],["2019-03",410.8],["2019-04",412.9],["2019-05",414.1],["2019-06",413.7],["2019-07",414.9],["2019-08",414.5],["2019-09",416.6],["2019-10",418.7],["2019-11",419.1],["2019-12",421.6],["2020-01",423.7],["2020-02",424.1],["2020-03",423.7],["2020-04",420.7],["2020-05",422.0],["2020-06",426.2],["2020-07",426.2],["2020-08",426.6],["2020-09",427.9],["2020-10",431.8],["2020-11",435.7],["2020-12",438.3],["2021-01",439.2],["2021-02",442.7],["2021-03",448.5],["2021-04",452.1],["2021-05",454.4],["2021-06",459.9],["2021-07",465.4],["2021-08",467.3],["2021-09",471.0],["2021-10",477.6],["2021-11",485.7],["2021-12",495.9],["2022-01",503.8],["2022-02",511.9],["2022-03",517.0],["2022-04",525.3],["2022-05",536.3],["2022-06",543.8],["2022-07",553.6],["2022-08",559.7],["2022-09",565.3],["2022-10",567.0],["2022-11",567.6],["2022-12",568.7],["2023-01",568.7],["2023-02",568.7],["2023-03",567.6],["2023-04",564.8],["2023-05",561.4],["2023-06",560.3],["2023-07",559.2],["2023-08",558.6],["2023-09",557.5],["2023-10",554.7],["2023-11",558.0],["2023-12",563.0],["2024-01",569.2],["2024-02",574.9],["2024-03",579.5],["2024-04",583.6],["2024-05",587.1],["2024-06",591.8],["2024-07",593.0],["2024-08",592.4],["2024-09",593.6],["2024-10",596.6],["2024-11",599.0],["2024-12",606.2],["2025-01",609.8],["2025-02",608.6],["2025-03",607.4],["2025-04",605.0],["2025-05",602.6],["2025-06",602.0],["2025-07",600.8],["2025-08",597.2],["2025-09",593.0],["2025-10",596.0],["2025-11",600.8],["2025-12",600.2],["2026-01",599.6],["2026-02",602.0],["2026-03",599.6],["2026-04",592.4],["2026-05",593.0],["2026-06",593.6],["2026-07",590.0]]}},"mkt":{"asOf":1792103082,"src":"cnbc","items":{"dji":{"n":"Dow Jones","sym":".DJI","p":52177.69,"pc":51621.48,"chp":1.08,"t":1792096445,"cur":"USD","rt":true,"a":{"y1":[1759636800,45479.6],"y5":[1633838400,35294.7561],"y10":[1479013200,18867.9348],"ye":[1766898000,48382.39]},"hAt":1792072902,"y1":14.73,"r5":8.11,"r10":10.8,"ytd":7.84},"ta35":{"n":"TA-35","sym":".TA35","p":4150.13,"pc":4162.77,"chp":-0.15,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3276.85],"y5":[1633838400,1848.07],"y10":[1479013200,1432.48],"ye":[1766898000,3695.29]},"hAt":1792072901,"y1":26.65,"r5":17.51,"r10":11.32,"ytd":12.31},"ta125":{"n":"TA-125","sym":".TA125","p":4017.15,"pc":4025.15,"chp":-0.07,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3358.13],"y5":[1633838400,1909.51],"y10":[1479013200,1251.26],"ye":[1766898000,3733.08]},"hAt":1792072901,"y1":19.62,"r5":15.99,"r10":12.48,"ytd":7.61},"spx":{"n":"S&P 500","sym":".SPX","p":7744.06,"pc":7718.94,"chp":0.33,"t":1792096433,"cur":"USD","rt":true,"a":{"y1":[1759636800,6552.51],"y5":[1633838400,4471.37],"y10":[1479013200,2181.9],"ye":[1766898000,6858.47]},"hAt":1792072901,"y1":18.18,"r5":11.57,"r10":13.62,"ytd":12.91},"ndx":{"n":"Nasdaq 100","sym":".NDX","p":29935.595,"pc":29950.816,"chp":-0.05,"t":1792098959,"cur":"USD","rt":true,"a":{"y1":[1759636800,24221.745],"y5":[1633838400,15146.921],"y10":[1479013200,4808.042],"ye":[1766898000,25206.168]},"hAt":1792072901,"y1":23.59,"r5":14.55,"r10":20.24,"ytd":18.76},"gold":{"n":"Gold","sym":"@GC.1","p":4188.9,"pc":4170.1,"chp":0.45,"t":1792103082,"cur":"USD","rt":false,"a":{"y1":[1759636800,4000.4],"y5":[1633838400,1768.3],"y10":[1479013200,1208.7],"ye":[1766898000,4329.6]},"hAt":1792072902,"y1":4.71,"r5":18.76,"r10":13.35,"ytd":-3.25},"brent":{"n":"Brent","sym":"@LCO.1","p":105.69,"pc":106.06,"chp":-0.35,"t":1792101600,"cur":"USD","rt":false,"a":{"y1":[1759636800,62.73],"y5":[1633838400,84.86],"y10":[1479013200,46.86],"ye":[1766898000,60.75]},"hAt":1792072903,"y1":68.48,"r5":4.47,"r10":8.54,"ytd":73.98}}}};
+var IX_BUILT = {"idx":{"cpi":{"code":"120010","name":"Consumer Price Index - General","m":"2026-09","v":105.3,"base":"Average 2024","mom":-0.5,"yoy":1.6,"ytd":1.64,"hist":[["2005-01",70.6175],["2005-02",70.7588],["2005-03",70.6175],["2005-04",71.1119],["2005-05",71.3237],["2005-06",71.3943],["2005-07",72.1711],["2005-08",72.3124],["2005-09",72.383],["2005-10",72.9479],["2005-11",72.8773],["2005-12",72.7361],["2006-01",72.5242],["2006-02",72.9479],["2006-03",73.1598],["2006-04",73.7953],["2006-05",73.7953],["2006-06",73.8659],["2006-07",73.9366],["2006-08",73.9366],["2006-09",73.301],["2006-10",72.8067],["2006-11",72.6654],["2006-12",72.6654],["2007-01",72.5928],["2007-02",72.3728],["2007-03",72.5195],["2007-04",72.8861],["2007-05",72.8861],["2007-06",73.3994],["2007-07",74.206],["2007-08",74.7192],["2007-09",74.3526],["2007-10",74.4259],["2007-11",74.7192],["2007-12",75.1592],["2008-01",75.1592],["2008-02",75.0125],["2008-03",75.2325],["2008-04",76.3324],["2008-05",76.8457],["2008-06",76.919],["2008-07",77.7989],["2008-08",78.4589],["2008-09",78.4589],["2008-10",78.5322],["2008-11",78.0922],["2008-12",78.0189],["2009-01",77.6288],["2009-02",77.5517],["2009-03",77.9372],["2009-04",78.7081],["2009-05",79.0164],["2009-06",79.7102],["2009-07",80.5582],["2009-08",80.9436],["2009-09",80.7124],["2009-10",80.8666],["2009-11",81.0978],["2009-12",81.0978],["2010-01",80.5582],["2010-02",80.3269],["2010-03",80.404],["2010-04",81.0978],["2010-05",81.4062],["2010-06",81.6375],["2010-07",82.0229],["2010-08",82.4083],["2010-09",82.6396],["2010-10",82.8709],["2010-11",82.948],["2010-12",83.2563],["2011-01",83.4228],["2011-02",83.6682],["2011-03",83.8318],["2011-04",84.3225],["2011-05",84.7314],["2011-06",85.0586],["2011-07",84.8132],["2011-08",85.2222],["2011-09",85.0586],["2011-10",85.1404],["2011-11",85.0586],["2011-12",85.0586],["2012-01",85.0586],["2012-02",85.0586],["2012-03",85.3857],["2012-04",86.1218],["2012-05",86.1218],["2012-06",85.8764],["2012-07",85.9582],["2012-08",86.8579],["2012-09",86.8579],["2012-10",86.6943],["2012-11",86.2854],["2012-12",86.449],["2013-01",86.2761],["2013-02",86.2761],["2013-03",86.4481],["2013-04",86.7922],["2013-05",86.8782],["2013-06",87.5663],["2013-07",87.8244],["2013-08",87.9964],["2013-09",87.9964],["2013-10",88.2545],["2013-11",87.9104],["2013-12",87.9964],["2014-01",87.4803],["2014-02",87.3083],["2014-03",87.5663],["2014-04",87.6523],["2014-05",87.7384],["2014-06",87.9964],["2014-07",88.0824],["2014-08",87.9964],["2014-09",87.7384],["2014-10",87.9964],["2014-11",87.8244],["2014-12",87.8244],["2015-01",87.034],["2015-02",86.4198],["2015-03",86.683],["2015-04",87.2094],["2015-05",87.3849],["2015-06",87.6481],["2015-07",87.8236],["2015-08",87.6481],["2015-09",87.2972],["2015-10",87.3849],["2015-11",87.034],["2015-12",86.9462],["2016-01",86.5076],["2016-02",86.2443],["2016-03",86.0689],["2016-04",86.4198],["2016-05",86.683],["2016-06",86.9462],["2016-07",87.2972],["2016-08",87.034],["2016-09",86.9462],["2016-10",87.1217],["2016-11",86.7708],["2016-12",86.7708],["2017-01",86.5972],["2017-02",86.5972],["2017-03",86.8575],["2017-04",87.0311],["2017-05",87.3782],["2017-06",86.7708],["2017-07",86.684],["2017-08",86.9443],["2017-09",87.0311],["2017-10",87.2914],["2017-11",87.0311],["2017-12",87.1178],["2018-01",86.684],["2018-02",86.7708],["2018-03",87.0311],["2018-04",87.3782],["2018-05",87.812],["2018-06",87.8988],["2018-07",87.8988],["2018-08",87.9855],["2018-09",88.0723],["2018-10",88.3326],["2018-11",88.0723],["2018-12",87.812],["2019-01",87.7242],["2019-02",87.8118],["2019-03",88.25],["2019-04",88.5129],["2019-05",89.1264],["2019-06",88.6006],["2019-07",88.3377],["2019-08",88.5129],["2019-09",88.3377],["2019-10",88.6882],["2019-11",88.3377],["2019-12",88.3377],["2020-01",87.9871],["2020-02",87.8995],["2020-03",88.25],["2020-04",87.9871],["2020-05",87.7242],["2020-06",87.6366],["2020-07",87.8118],["2020-08",87.8118],["2020-09",87.7242],["2020-10",87.9871],["2020-11",87.8118],["2020-12",87.7242],["2021-01",87.6365],["2021-02",87.9002],["2021-03",88.4276],["2021-04",88.6913],["2021-05",89.0429],["2021-06",89.1308],["2021-07",89.4824],["2021-08",89.7461],["2021-09",89.9219],["2021-10",90.0098],["2021-11",89.9219],["2021-12",90.1856],["2022-01",90.3614],["2022-02",90.9767],["2022-03",91.5041],["2022-04",92.2073],["2022-05",92.7347],["2022-06",93.0863],["2022-07",94.1411],["2022-08",93.8774],["2022-09",94.0532],["2022-10",94.5806],["2022-11",94.6685],["2022-12",94.9322],["2023-01",95.217],["2023-02",95.6824],["2023-03",96.0547],["2023-04",96.7993],["2023-05",96.9854],["2023-06",96.9854],["2023-07",97.2647],["2023-08",97.73],["2023-09",97.637],["2023-10",98.1023],["2023-11",97.8231],["2023-12",97.73],["2024-01",97.73],["2024-02",98.1023],["2024-03",98.6608],["2024-04",99.4985],["2024-05",99.6846],["2024-06",99.7777],["2024-07",100.3362],["2024-08",101.2669],["2024-09",101.0808],["2024-10",101.5462],["2024-11",101.1739],["2024-12",100.8946],["2025-01",101.5],["2025-02",101.5],["2025-03",102.0],["2025-04",103.1],["2025-05",102.8],["2025-06",103.1],["2025-07",103.5],["2025-08",104.2],["2025-09",103.6],["2025-10",104.1],["2025-11",103.6],["2025-12",103.6],["2026-01",103.3],["2026-02",103.5],["2026-03",103.9],["2026-04",105.1],["2026-05",104.8],["2026-06",104.8],["2026-07",105.1],["2026-08",105.8],["2026-09",105.3]]},"build":{"code":"200010","name":"Price index of input in residential building - general","m":"2026-09","v":104.0,"base":"July 2025","mom":0.1,"yoy":3.6,"ytd":2.77,"hist":[["2005-01",56.8937],["2005-02",56.9482],["2005-03",57.1117],["2005-04",57.2752],["2005-05",57.3842],["2005-06",57.6566],["2005-07",59.2915],["2005-08",60.8719],["2005-09",61.0354],["2005-10",60.7084],["2005-11",60.1635],["2005-12",59.782],["2006-01",60.4904],["2006-02",60.7084],["2006-03",61.0354],["2006-04",61.4714],["2006-05",61.8528],["2006-06",62.4523],["2006-07",62.9972],["2006-08",63.4332],["2006-09",63.7057],["2006-10",63.4877],["2006-11",63.4877],["2006-12",63.3242],["2007-01",63.9237],["2007-02",64.0327],["2007-03",64.1962],["2007-04",64.1962],["2007-05",64.0872],["2007-06",64.5231],["2007-07",65.2316],["2007-08",65.3951],["2007-09",65.4496],["2007-10",65.3406],["2007-11",65.2861],["2007-12",65.2861],["2008-01",65.5585],["2008-02",65.2861],["2008-03",65.4496],["2008-04",66.3215],["2008-05",67.3569],["2008-06",68.0654],["2008-07",69.1553],["2008-08",69.2643],["2008-09",68.8283],["2008-10",67.6839],["2008-11",67.5204],["2008-12",67.4114],["2009-01",67.0844],["2009-02",67.0844],["2009-03",67.0844],["2009-04",67.1389],["2009-05",67.1389],["2009-06",67.1934],["2009-07",67.4114],["2009-08",67.3569],["2009-09",67.3569],["2009-10",67.1934],["2009-11",67.3024],["2009-12",67.4114],["2010-01",67.6294],["2010-02",67.9564],["2010-03",68.3923],["2010-04",68.9918],["2010-05",69.1553],["2010-06",68.9918],["2010-07",68.9373],["2010-08",69.2643],["2010-09",69.3733],["2010-10",69.4278],["2010-11",69.6457],["2010-12",70.0272],["2011-01",70.4632],["2011-02",70.8991],["2011-03",70.8991],["2011-04",70.8991],["2011-05",71.4441],["2011-06",71.9346],["2011-07",72.0981],["2011-08",72.3143],["2011-09",72.5306],["2011-10",72.6027],["2011-11",72.7469],["2011-12",72.6748],["2012-01",72.8911],["2012-02",73.2516],["2012-03",73.4679],["2012-04",73.9726],["2012-05",74.0447],["2012-06",74.261],["2012-07",74.4773],["2012-08",74.7657],["2012-09",74.7657],["2012-10",74.7657],["2012-11",74.982],["2012-12",75.0541],["2013-01",75.4146],["2013-02",75.5588],["2013-03",75.5588],["2013-04",75.4146],["2013-05",75.6309],["2013-06",75.7751],["2013-07",75.7751],["2013-08",75.8472],["2013-09",75.9913],["2013-10",76.0634],["2013-11",76.1355],["2013-12",76.1355],["2014-01",76.3518],["2014-02",76.3518],["2014-03",76.2797],["2014-04",76.3518],["2014-05",76.4239],["2014-06",76.3518],["2014-07",76.2797],["2014-08",76.3518],["2014-09",76.2797],["2014-10",76.496],["2014-11",76.6402],["2014-12",76.7123],["2015-01",76.7844],["2015-02",76.7123],["2015-03",76.8565],["2015-04",76.8565],["2015-05",76.8565],["2015-06",76.8565],["2015-07",76.9286],["2015-08",77.0728],["2015-09",77.1449],["2015-10",77.217],["2015-11",77.1449],["2015-12",77.4333],["2016-01",77.6496],["2016-02",77.5054],["2016-03",77.5054],["2016-04",77.7217],["2016-05",77.8659],["2016-06",77.938],["2016-07",78.2264],["2016-08",78.2264],["2016-09",78.4427],["2016-10",78.4427],["2016-11",78.5869],["2016-12",78.5869],["2017-01",78.5869],["2017-02",78.7311],["2017-03",78.7311],["2017-04",78.8753],["2017-05",78.8753],["2017-06",79.0195],["2017-07",79.1637],["2017-08",79.5242],["2017-09",79.6683],["2017-10",79.8125],["2017-11",79.8846],["2017-12",80.1009],["2018-01",80.5335],["2018-02",80.7498],["2018-03",80.8219],["2018-04",81.0382],["2018-05",81.1103],["2018-06",81.1824],["2018-07",81.3987],["2018-08",81.5429],["2018-09",81.5429],["2018-10",81.615],["2018-11",81.615],["2018-12",81.6871],["2019-01",82.1918],["2019-02",82.2639],["2019-03",82.2639],["2019-04",82.336],["2019-05",82.4081],["2019-06",82.4081],["2019-07",82.4081],["2019-08",82.4802],["2019-09",82.4802],["2019-10",82.4081],["2019-11",82.4081],["2019-12",82.5523],["2020-01",82.6965],["2020-02",82.6965],["2020-03",82.8407],["2020-04",82.7686],["2020-05",82.6965],["2020-06",82.6965],["2020-07",82.6965],["2020-08",82.7686],["2020-09",82.6965],["2020-10",82.6244],["2020-11",82.6244],["2020-12",82.9849],["2021-01",83.4895],["2021-02",83.6337],["2021-03",84.0663],["2021-04",84.7152],["2021-05",85.292],["2021-06",85.7967],["2021-07",86.013],["2021-08",86.5177],["2021-09",86.734],["2021-10",86.9503],["2021-11",87.3828],["2021-12",87.5991],["2022-01",88.3201],["2022-02",88.7527],["2022-03",89.6179],["2022-04",90.4831],["2022-05",90.9156],["2022-06",91.4203],["2022-07",91.8529],["2022-08",91.925],["2022-09",91.925],["2022-10",91.925],["2022-11",91.7808],["2022-12",91.7808],["2023-01",92.8623],["2023-02",92.7181],["2023-03",92.9344],["2023-04",93.2228],["2023-05",93.1507],["2023-06",93.4391],["2023-07",93.2228],["2023-08",93.2949],["2023-09",93.367],["2023-10",93.5112],["2023-11",93.5833],["2023-12",93.5833],["2024-01",93.8717],["2024-02",93.6554],["2024-03",93.8717],["2024-04",93.7996],["2024-05",94.2322],["2024-06",94.5926],["2024-07",94.9531],["2024-08",95.1694],["2024-09",95.5299],["2024-10",95.7462],["2024-11",96.0346],["2024-12",96.323],["2025-01",98.8464],["2025-02",99.279],["2025-03",99.6395],["2025-04",99.7837],["2025-05",99.9279],["2025-06",99.9279],["2025-07",100.0],["2025-08",100.4],["2025-09",100.4],["2025-10",100.5],["2025-11",101.1],["2025-12",101.2],["2026-01",101.3],["2026-02",101.5],["2026-03",101.7],["2026-04",102.8],["2026-05",103.4],["2026-06",103.6],["2026-07",103.5],["2026-08",103.9],["2026-09",104.0]]},"house":{"code":"40010","name":"Prices of Dwellings","m":"2026-07","v":590.0,"base":"Average 1993","mom":-0.6,"yoy":-1.8,"ytd":-1.7,"hist":[["2015-01",354.8],["2015-02",358.3],["2015-03",360.6],["2015-04",361.5],["2015-05",364.5],["2015-06",368.3],["2015-07",369.2],["2015-08",369.0],["2015-09",371.3],["2015-10",374.4],["2015-11",377.5],["2015-12",380.4],["2016-01",381.4],["2016-02",384.0],["2016-03",389.1],["2016-04",390.2],["2016-05",391.1],["2016-06",393.4],["2016-07",396.1],["2016-08",399.9],["2016-09",404.2],["2016-10",404.4],["2016-11",402.8],["2016-12",402.1],["2017-01",402.8],["2017-02",404.9],["2017-03",406.8],["2017-04",407.7],["2017-05",409.5],["2017-06",412.8],["2017-07",414.3],["2017-08",415.9],["2017-09",414.6],["2017-10",414.5],["2017-11",411.9],["2017-12",407.8],["2018-01",406.3],["2018-02",405.9],["2018-03",406.5],["2018-04",406.2],["2018-05",409.2],["2018-06",410.5],["2018-07",408.1],["2018-08",407.4],["2018-09",406.6],["2018-10",405.8],["2018-11",405.5],["2018-12",404.7],["2019-01",408.3],["2019-02",409.6],["2019-03",410.8],["2019-04",412.9],["2019-05",414.1],["2019-06",413.7],["2019-07",414.9],["2019-08",414.5],["2019-09",416.6],["2019-10",418.7],["2019-11",419.1],["2019-12",421.6],["2020-01",423.7],["2020-02",424.1],["2020-03",423.7],["2020-04",420.7],["2020-05",422.0],["2020-06",426.2],["2020-07",426.2],["2020-08",426.6],["2020-09",427.9],["2020-10",431.8],["2020-11",435.7],["2020-12",438.3],["2021-01",439.2],["2021-02",442.7],["2021-03",448.5],["2021-04",452.1],["2021-05",454.4],["2021-06",459.9],["2021-07",465.4],["2021-08",467.3],["2021-09",471.0],["2021-10",477.6],["2021-11",485.7],["2021-12",495.9],["2022-01",503.8],["2022-02",511.9],["2022-03",517.0],["2022-04",525.3],["2022-05",536.3],["2022-06",543.8],["2022-07",553.6],["2022-08",559.7],["2022-09",565.3],["2022-10",567.0],["2022-11",567.6],["2022-12",568.7],["2023-01",568.7],["2023-02",568.7],["2023-03",567.6],["2023-04",564.8],["2023-05",561.4],["2023-06",560.3],["2023-07",559.2],["2023-08",558.6],["2023-09",557.5],["2023-10",554.7],["2023-11",558.0],["2023-12",563.0],["2024-01",569.2],["2024-02",574.9],["2024-03",579.5],["2024-04",583.6],["2024-05",587.1],["2024-06",591.8],["2024-07",593.0],["2024-08",592.4],["2024-09",593.6],["2024-10",596.6],["2024-11",599.0],["2024-12",606.2],["2025-01",609.8],["2025-02",608.6],["2025-03",607.4],["2025-04",605.0],["2025-05",602.6],["2025-06",602.0],["2025-07",600.8],["2025-08",597.2],["2025-09",593.0],["2025-10",596.0],["2025-11",600.8],["2025-12",600.2],["2026-01",599.6],["2026-02",602.0],["2026-03",599.6],["2026-04",592.4],["2026-05",593.0],["2026-06",593.6],["2026-07",590.0]]}},"mkt":{"asOf":1792104535,"src":"cnbc","items":{"dji":{"n":"Dow Jones","sym":".DJI","p":52177.69,"pc":51621.48,"chp":1.08,"t":1792096445,"cur":"USD","rt":true,"a":{"y1":[1759636800,45479.6],"y5":[1633838400,35294.7561],"y10":[1479013200,18867.9348],"ye":[1766898000,48382.39]},"hAt":1792072902,"y1":14.73,"r5":8.11,"r10":10.8,"ytd":7.84},"ta35":{"n":"TA-35","sym":".TA35","p":4150.13,"pc":4162.77,"chp":-0.15,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3276.85],"y5":[1633838400,1848.07],"y10":[1479013200,1432.48],"ye":[1766898000,3695.29]},"hAt":1792072901,"y1":26.65,"r5":17.51,"r10":11.32,"ytd":12.31},"ta125":{"n":"TA-125","sym":".TA125","p":4017.15,"pc":4025.15,"chp":-0.07,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3358.13],"y5":[1633838400,1909.51],"y10":[1479013200,1251.26],"ye":[1766898000,3733.08]},"hAt":1792072901,"y1":19.62,"r5":15.99,"r10":12.48,"ytd":7.61},"spx":{"n":"S&P 500","sym":".SPX","p":7744.06,"pc":7718.94,"chp":0.33,"t":1792096433,"cur":"USD","rt":true,"a":{"y1":[1759636800,6552.51],"y5":[1633838400,4471.37],"y10":[1479013200,2181.9],"ye":[1766898000,6858.47]},"hAt":1792072901,"y1":18.18,"r5":11.57,"r10":13.62,"ytd":12.91},"ndx":{"n":"Nasdaq 100","sym":".NDX","p":29935.595,"pc":29950.816,"chp":-0.05,"t":1792098959,"cur":"USD","rt":true,"a":{"y1":[1759636800,24221.745],"y5":[1633838400,15146.921],"y10":[1479013200,4808.042],"ye":[1766898000,25206.168]},"hAt":1792072901,"y1":23.59,"r5":14.55,"r10":20.24,"ytd":18.76},"gold":{"n":"Gold","sym":"@GC.1","p":4186.7,"pc":4170.1,"chp":0.4,"t":1792104535,"cur":"USD","rt":false,"a":{"y1":[1759636800,4000.4],"y5":[1633838400,1768.3],"y10":[1479013200,1208.7],"ye":[1766898000,4329.6]},"hAt":1792072902,"y1":4.66,"r5":18.75,"r10":13.34,"ytd":-3.3},"brent":{"n":"Brent","sym":"@LCO.1","p":105.69,"pc":106.06,"chp":-0.35,"t":1792101600,"cur":"USD","rt":false,"a":{"y1":[1759636800,62.73],"y5":[1633838400,84.86],"y10":[1479013200,46.86],"ye":[1766898000,60.75]},"hAt":1792072903,"y1":68.48,"r5":4.47,"r10":8.54,"ytd":73.98}}}};
 var IX = {idx: Object.assign({}, (IX_BUILT && IX_BUILT.idx) || {}), mkt: Object.assign({}, ((IX_BUILT && IX_BUILT.mkt) || {}).items || {}), src: 'built', at: 0};
-var IX_MK = ['ta35', 'ta125', 'spx', 'ndx', 'dji', 'gold', 'brent'], IX_RET = ['ta125', 'ta35', 'spx', 'ndx', 'dji', 'gold'];
-var IX_SYM = {ta35: '.TA35', ta125: '.TA125', spx: '.SPX', ndx: '.NDX', dji: '.DJI', gold: '@GC.1', brent: '@LCO.1'};
+var IX_MK = ['ta35', 'ta125', 'spx', 'ndx', 'dji', 'ixic', 'rut', 'vix', 'ftse', 'dax', 'stoxx', 'nikkei', 'gold', 'silver', 'platinum', 'copper', 'brent', 'wti', 'natgas'], IX_COM = ['gold', 'silver', 'platinum', 'copper', 'brent', 'wti', 'natgas'], IX_RET = ['ta125', 'ta35', 'spx', 'ndx', 'dji', 'gold'];
+var IX_SYM = {ta35: '.TA35', ta125: '.TA125', spx: '.SPX', ndx: '.NDX', dji: '.DJI', ixic: '.IXIC', rut: '.RUT', vix: '.VIX', ftse: '.FTSE', dax: '.GDAXI', stoxx: '.STOXX50E', nikkei: '.N225',
+  gold: '@GC.1', silver: '@SI.1', platinum: '@PL.1', copper: '@HG.1', brent: '@LCO.1', wti: '@CL.1', natgas: '@NG.1'};
 var IXE = {};
 function ixOffVal(id){
   const c = IX.idx.cpi, b = IX.idx.build, h = IX.idx.house;
@@ -12938,9 +13232,10 @@ function ixBoard(){
     h += card(k, N(+d.v, 1), ixCh(+d.mom), meta, go);
   });
   h += `</div><h4 class="ix-g">${asEsc(t('ix_gMkt'))}${IXL.ok && srcOk('mkt', 'live') ? ` <span class="lv-pill on"><i></i>${asEsc(t('lv_live'))}</span>` : ''}</h4><div class="mkt">`;
-  IX_MK.forEach(k => {
+  IX_MK.forEach((k, i) => {
+    if (k === IX_COM[0]) h += `</div><h4 class="ix-g">${asEsc(t('ix_gCom'))}</h4><div class="mkt">`;      // indices first, then commodities
     const d = IX.mkt[k]; if (!d || !(d.p > 0)) return;
-    const val = (k === 'gold' || k === 'brent' ? '$' : '') + N(d.p, null, d.p >= 1000 ? 0 : 2);
+    const val = (IX_COM.includes(k) ? '$' : '') + N(d.p, null, d.p >= 1000 ? 0 : 2);
     const meta = asEsc(ixDay(d.t)) + ' · ' + asEsc(t(!d.live ? 'ix_snap' : d.rt ? 'ix_rt' : 'ix_delay')) + (isFinite(+d.ytd) ? ' · ' + asEsc(t('ix_ytd', {v: ixSg(+d.ytd)})) : '');
     h += card(k, val, ixCh(+d.chp), meta, IX_RET.includes(k) ? 'compound:' + k : 'none');
   });
@@ -16631,6 +16926,259 @@ document.addEventListener('click', e => {
 const _alCty = applyLang;
 applyLang = function(){ const r = _alCty.apply(this, arguments); try { ctyUi(); } catch (e) {} return r; };
 try { if (SET.country == null) SET.country = ''; ctyUi(); } catch (e) {}
+
+/* ================= 8.5: one currency everywhere, and a coin for every currency ================= */
+
+/* ---------- 1. changing the display currency moves the whole app to it ----------
+   every calculator (the per-calculator currencies are cleared) and the converter's "from" side follow the new currency.
+   Calculators that work by Israeli law (salary, tax, VAT…) stay in shekels, because the law is written in shekels. */
+var CUR_ALL_LAST = null;
+function curAll(next, prev){
+  if (!next || next === prev) return;
+  const had = SET.curBy && Object.keys(SET.curBy).length;
+  SET.curBy = {}; saveSet();
+  const xf = $('#x_from'), xt = $('#x_to');
+  if (xf && RATES[next]){ if (xt && xt.value === next) xt.value = prev && RATES[prev] ? prev : (next === 'USD' ? 'ILS' : 'USD'); xf.value = next; }
+  try { fillCB(); } catch (e) {} try { applyEffCur(tab); } catch (e) {} try { calc(tab); } catch (e) {}
+  try { if (CUR_ALL_LAST !== null) toast(t('cur_allNow', {c: curFlag(next) + ' ' + next})); } catch (e) {}
+  CUR_ALL_LAST = next;
+}
+const _setBase86 = setBase;
+setBase = function(c){ const prev = baseCur; const r = _setBase86.apply(this, arguments); curAll(c, prev); coinsAll(); return r; };
+let CUR_PREV = (typeof baseCur !== 'undefined' && baseCur) || 'ILS';
+document.addEventListener('change', e => {
+  const id = e.target && e.target.id; if (id !== 'cur' && id !== 'set_cur') return;
+  setTimeout(() => { const now = baseCur; if (now !== CUR_PREV){ const p = CUR_PREV; CUR_PREV = now; curAll(now, p); } coinsAll(); }, 0);
+});
+CUR_ALL_LAST = CUR_PREV;
+
+/* ---------- 2. flags and coins ---------- */
+const CUR_SYM = {BTC: '₿', ETH: 'Ξ', USDT: '₮', USDC: '$', DAI: '◈', BNB: '◆', SOL: '◎', XRP: '✕', ADA: '₳', DOGE: 'Ð', TON: '◇', LTC: 'Ł', BCH: 'Ƀ', ETC: 'ξ', XLM: '✦', DOT: '●', AVAX: '▲', LINK: '⬡', SHIB: '🐕', UNI: '🦄', ATOM: '⚛', NEAR: 'Ⓝ', APT: '◐', SUI: '💧', ARB: '◮', POL: '⬢', AAVE: '👻', ALGO: 'Ⱥ', FIL: '⨎'};
+const CUR_FLAG = {EUR: '🇪🇺', XAU: '🥇', XAG: '🥈', XPT: '⚪', XPD: '⚪', XDR: '🌐', ANG: '🇨🇼', XAF: '🌍', XOF: '🌍', XCD: '🌴', XPF: '🇵🇫'};
+const CUR_DN = (() => { try { return new Intl.DisplayNames(['en'], {type: 'region'}); } catch (e) { return null; } })();
+function curFlag(c){
+  c = String(c || '').toUpperCase();
+  if (CUR_FLAG[c]) return CUR_FLAG[c];
+  if (typeof CRYPTO === 'object' && CRYPTO[c]) return '🪙';
+  const cc = c.slice(0, 2);
+  try { if (/^[A-Z]{2}$/.test(cc) && CUR_DN && CUR_DN.of(cc) !== cc) return String.fromCodePoint(...[...cc].map(x => 0x1F1E6 + x.charCodeAt(0) - 65)); } catch (e) {}
+  return '💱';
+}
+const isCrypto = c => typeof CRYPTO === 'object' && !!CRYPTO[c];
+function coinHtml(c, big){
+  c = String(c || '').toUpperCase();
+  const cr = isCrypto(c), sym = cr ? (CUR_SYM[c] || c.slice(0, 1)) : '';
+  return `<span class="cur-coin${cr ? ' crypto' : ''}${big ? ' big' : ''}" data-c="${c}" aria-hidden="true"><i>${cr ? sym : curFlag(c)}</i></span>`;
+}
+/* every currency list shows the flag first */
+const _curOpt86 = curOptions;
+curOptions = function(sel){
+  return _curOpt86.apply(this, arguments).replace(/<option value="([A-Z0-9]{2,10})"([^>]*)>/g, (m, c, rest) => m + (isCrypto(c) ? (CUR_SYM[c] || '🪙') : curFlag(c)) + ' ');
+};
+const _fillCB86 = fillCB;
+fillCB = function(){
+  const r = _fillCB86.apply(this, arguments);
+  const f = $('#set_favCur'); if (f) [...f.options].forEach(o => { if (o.value && !o.dataset.fl){ o.dataset.fl = '1'; o.textContent = curFlag(o.value) + ' ' + o.textContent; } });
+  return r;
+};
+/* coins on the screen: next to the currency picker, on the market cards, in the converter */
+function coinBeside(sel){
+  if (!sel) return;
+  let c = sel.previousElementSibling && sel.previousElementSibling.classList && sel.previousElementSibling.classList.contains('cur-coin') ? sel.previousElementSibling : null;
+  const v = sel.value; if (!v) return;
+  if (!c){ sel.insertAdjacentHTML('beforebegin', coinHtml(v)); c = sel.previousElementSibling; c.classList.add('coin-pick'); return; }
+  if (c.dataset.c !== v){ c.outerHTML = coinHtml(v).replace('class="cur-coin', 'class="cur-coin coin-pick spin'); }
+}
+const MK_COIN = [[/דולר|دولار|dollar/i, 'USD'], [/אירו|يورو|euro/i, 'EUR'], [/ביטקוין|بيتكوين|bitcoin/i, 'BTC'], [/אית׳ריום|إيثريوم|ethereum/i, 'ETH'], [/ליש״ט|לירה שטרלינג|جنيه إسترليني|pound/i, 'GBP']];
+function coinsAll(){
+  try { coinBeside($('#cur')); } catch (e) {}
+  /* market cards on Home */
+  $$('#hm .mk, #hmx .mk').forEach(card => {
+    if (card.querySelector('.cur-coin')) return;
+    const l = card.querySelector('.mk-l'); if (!l) return;
+    const hit = MK_COIN.find(([rx]) => rx.test(l.textContent)); if (!hit) return;
+    l.insertAdjacentHTML('afterbegin', coinHtml(hit[1]));
+  });
+  /* the converter: a pair of coins in the result, and a coin for each line of the rates list */
+  const h = $('#hero-convert'), xf = $('#x_from'), xt = $('#x_to');
+  if (h && xf && xt){
+    let pr = h.querySelector('.coin-pair');
+    const key = xf.value + '>' + xt.value;
+    if (!pr || pr.dataset.k !== key){
+      if (pr) pr.remove();
+      h.insertAdjacentHTML('afterbegin', `<span class="coin-pair" data-k="${key}">${coinHtml(xf.value, true)}<b aria-hidden="true">⇄</b>${coinHtml(xt.value, true)}</span>`);
+    }
+  }
+  $$('#panel-convert .ledger .row dt').forEach(dt => {
+    if (dt.querySelector('.cur-coin')) return;
+    const m = dt.textContent.trim().match(/^([A-Z]{3,5})\b/); if (m && RATES[m[1]]) dt.insertAdjacentHTML('afterbegin', coinHtml(m[1]));
+  });
+}
+const _rm86 = renderMarket;
+renderMarket = function(){ const r = _rm86.apply(this, arguments); try { coinsAll(); } catch (e) {} return r; };
+const _calc86 = calc;
+calc = function(id){ const r = _calc86.apply(this, arguments); if (id === 'convert' || id === 'home') try { coinsAll(); } catch (e) {} return r; };
+document.addEventListener('change', e => { const id = e.target && e.target.id; if (id === 'x_from' || id === 'x_to' || id === 'cur') setTimeout(coinsAll, 0); });
+const _fcs86 = fillCurSelects;
+fillCurSelects = function(){ const r = _fcs86.apply(this, arguments); try { coinsAll(); } catch (e) {} return r; };
+try { if (typeof PF === 'object'){ PF.cur = ''; PF.cb = ''; } fillCurSelects(); coinsAll(); } catch (e) {}
+
+/* ================= 8.5: more live sources in every category (currencies, crypto, exchanges and commodities) =================
+   The developer picks a source per category in Connections. Each new source is polled while live data is on and the screen is
+   visible, and stops when live data is off (then the previous close is shown, as before). Inside Claude the page cannot reach
+   these services, so there the site's server copy (updated every half hour) is used. */
+const SRC_NEW = {
+  fx: {
+    frankfurter: {u: 'https://api.frankfurter.dev/v1/latest?base=USD', ms: 3600e3, pick: j => j && j.rates},
+    erapi: {u: 'https://open.er-api.com/v6/latest/USD', ms: 3600e3, pick: j => j && j.rates},
+    fawaz: {u: 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json', ms: 3600e3, pick: j => j && j.usd && Object.fromEntries(Object.entries(j.usd).map(([k, v]) => [k.toUpperCase(), v]))},
+    cbx: {u: 'https://api.coinbase.com/v2/exchange-rates?currency=USD', ms: 60e3, pick: j => j && j.data && j.data.rates && Object.fromEntries(Object.entries(j.data.rates).filter(([k]) => !(typeof CRYPTO === 'object' && CRYPTO[k])).map(([k, v]) => [k, +v]))}
+  },
+  cr: {
+    coingecko: {u: 'https://api.coingecko.com/api/v3/simple/price?vs_currencies=usd&ids=bitcoin,ethereum,solana,ripple,cardano,dogecoin,litecoin,tron,the-open-network,avalanche-2,chainlink,polkadot,bitcoin-cash,stellar,shiba-inu,uniswap,cosmos,near,aptos,sui,arbitrum,aave,algorand,filecoin,ethereum-classic,binancecoin,tether,usd-coin,dai',
+      ms: 60e3, ids: {bitcoin: 'BTC', ethereum: 'ETH', solana: 'SOL', ripple: 'XRP', cardano: 'ADA', dogecoin: 'DOGE', litecoin: 'LTC', 'the-open-network': 'TON', 'avalanche-2': 'AVAX', chainlink: 'LINK', polkadot: 'DOT', 'bitcoin-cash': 'BCH', stellar: 'XLM', 'shiba-inu': 'SHIB', uniswap: 'UNI', cosmos: 'ATOM', near: 'NEAR', aptos: 'APT', sui: 'SUI', arbitrum: 'ARB', aave: 'AAVE', algorand: 'ALGO', filecoin: 'FIL', 'ethereum-classic': 'ETC', binancecoin: 'BNB', tether: 'USDT', 'usd-coin': 'USDC', dai: 'DAI'},
+      pick(j){ const o = {}; Object.keys(j || {}).forEach(id => { const c = this.ids[id], p = j[id] && +j[id].usd; if (c && p > 0) o[c] = p; }); return o; }},
+    kraken: {u: 'https://api.kraken.com/0/public/Ticker?pair=XBTUSD,ETHUSD,SOLUSD,XRPUSD,ADAUSD,XDGUSD,LTCUSD,DOTUSD,LINKUSD,AVAXUSD,BCHUSD,XLMUSD',
+      ms: 30e3, map: {XBT: 'BTC', ETH: 'ETH', SOL: 'SOL', XRP: 'XRP', ADA: 'ADA', XDG: 'DOGE', LTC: 'LTC', DOT: 'DOT', LINK: 'LINK', AVAX: 'AVAX', BCH: 'BCH', XLM: 'XLM'},
+      pick(j){ const o = {}, R = (j && j.result) || {}; Object.keys(R).forEach(k => { const base = Object.keys(this.map).find(b => k.replace(/^X/, '').startsWith(b) || k.startsWith(b)); const p = R[k] && R[k].c && +R[k].c[0]; if (base && p > 0) o[this.map[base]] = p; }); return o; }},
+    bitstamp: {u: 'https://www.bitstamp.net/api/v2/ticker/', ms: 30e3,
+      pick(j){ const o = {}; (Array.isArray(j) ? j : []).forEach(x => { const m = /^([A-Z]+)\/USD$/.exec(x && x.pair || ''); const p = x && +x.last; if (m && p > 0 && typeof CRYPTO === 'object' && CRYPTO[m[1]]) o[m[1]] = p; }); return o; }}
+  },
+  mkt: {
+    goldapi: {multi: [['gold', 'https://api.gold-api.com/price/XAU'], ['silver', 'https://api.gold-api.com/price/XAG'], ['platinum', 'https://api.gold-api.com/price/XPT'], ['copper', 'https://api.gold-api.com/price/HG']], ms: 60e3, pick: j => j && +j.price}
+  }
+};
+Object.keys(SRC_NEW).forEach(g => Object.keys(SRC_NEW[g]).forEach(s => { if (!SRCP_OPT[g].includes(s)) SRCP_OPT[g].splice(SRCP_OPT[g].length - 1, 0, s); }));   // before "manual"
+/* the metals source adds to the live exchanges feed instead of replacing it */
+const _srcOk87 = srcOk;
+srcOk = function(g, s){
+  const p = (typeof SRCP === 'object' && SRCP && SRCP[g]) || '';
+  if (g === 'mkt' && p === 'goldapi') return s === 'live' || s === 'snap' || s === 'goldapi';
+  return _srcOk87.apply(this, arguments);
+};
+var SRCN = {timer: null, at: {}, st: {}};
+const srcnOff = () => (typeof liveOff === 'function' && liveOff()) || SET.liveFx === '0';
+async function srcnGet(u){
+  const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 8000);
+  try { const r = await fetch(u, {signal: ctl.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); if (!r.ok) throw new Error('HTTP ' + r.status); return await r.json(); }
+  finally { clearTimeout(to); }
+}
+async function srcnRun(g, name){
+  const S = SRC_NEW[g][name]; if (!S) return 0;
+  let n = 0;
+  if (g === 'fx'){
+    const j = await srcnGet(S.u), R = S.pick(j) || {};
+    Object.keys(R).forEach(c => { const v = +R[c]; if (!/^[A-Z]{3}$/.test(c) || !(v > 0) || c === 'USD') return; const old = RATES[c]; if (old && (v / old < 0.8 || v / old > 1.25)) return; RATES[c] = v; FXSRC[c] = {s: name, at: Date.now()}; n++; });
+    if (n){ RATES.USD = 1; FXL.at = Date.now(); META.live = true; META.official = false; META.mkt = false; META.unix = Math.floor(Date.now() / 1000); try { lastAt = new Date(); lastOk = true; renderStamp(); } catch (e) {} }
+  } else if (g === 'cr'){
+    const j = await srcnGet(S.u), R = S.pick(j) || {};
+    Object.keys(R).forEach(c => { const p = +R[c]; if (!(p > 0)) return; const v = 1 / p, old = RATES[c]; if (old && (v / old < 0.5 || v / old > 2)) return; RATES[c] = v; FXSRC[c] = {s: name, at: Date.now()}; n++; });
+    if (n){ META.cunix = Math.floor(Date.now() / 1000); }
+  } else if (g === 'mkt'){
+    for (const [k, u] of S.multi){
+      try { const p = S.pick(await srcnGet(u)); const o = IX.mkt[k] || {}; if (p > 0 && (!o.p || (p / o.p > 0.6 && p / o.p < 1.6))){ IX.mkt[k] = Object.assign({}, o, {p, t: Math.floor(Date.now() / 1000), live: true, rt: true, chp: o.pc ? (p / o.pc - 1) * 100 : o.chp}); n++; } } catch (e) {}
+    }
+  }
+  return n;
+}
+async function srcnTick(){
+  clearTimeout(SRCN.timer); SRCN.timer = null;
+  if (IN_CLAUDE || srcnOff() || document.hidden){ SRCN.timer = setTimeout(srcnTick, 30000); return; }
+  let soon = 60e3, changed = 0;
+  for (const g of Object.keys(SRC_NEW)){
+    const name = (typeof SRCP === 'object' && SRCP[g]) || ''; const S = SRC_NEW[g][name]; if (!S) continue;
+    soon = Math.min(soon, S.ms);
+    if (Date.now() - (SRCN.at[g + name] || 0) < S.ms - 500) continue;
+    SRCN.at[g + name] = Date.now();
+    try { const n = await srcnRun(g, name); SRCN.st[g + ':' + name] = n ? 'ok' : 'empty'; changed += n; }
+    catch (e) { SRCN.st[g + ':' + name] = 'bad'; }
+  }
+  if (changed){ try { fillCurSelects(); if (tab === 'home') renderMarket(); else calc(tab); } catch (e) {} }
+  SRCN.timer = setTimeout(srcnTick, Math.max(15000, Math.min(soon, 60000)));
+}
+/* when the developer picks one of these sources, start at once; and pick up a saved choice that was made before this list existed */
+document.addEventListener('change', e => { if (e.target && e.target.closest && e.target.closest('[data-srcp]')) setTimeout(() => { SRCN.at = {}; srcnTick(); }, 300); });
+document.addEventListener('visibilitychange', () => { if (!document.hidden) srcnTick(); });
+try { if (typeof srcpLoad === 'function') srcpLoad(); } catch (e) {}
+setTimeout(srcnTick, 2500);
+
+/* ================= 8.5: developer code reaches everyone by itself =================
+   When the owner publishes code — from the app inside Claude or from the website — every open copy picks it up:
+   - inside Claude: through the app's own database (only the owner may write there; everyone reads), at once;
+   - on the website and in the app: devcode.json on GitHub, checked every two minutes and when the screen comes back.
+   Style changes apply on the spot; a script change reloads the page quietly when nothing is being typed. */
+var DCX = {at: 0, css: '', js: '', db: null, wantReload: false};
+function dcxApply(code, from){
+  if (!code || typeof code !== 'object') return;
+  const at = +code.at || 0; if (at && at <= DCX.at) return;
+  let preview = false; try { preview = DEV_ON && RAWLS.getItem('fin-devcode-preview') === '1'; } catch (e) {}
+  if (preview || (typeof dcSkip === 'function' && dcSkip())) return;
+  const css = String(code.css || ''), js = String(code.js || '');
+  const first = !DCX.at; DCX.at = at || Date.now();
+  if (typeof DC === 'object'){ DC.pub = {js, css, at: DCX.at}; DC.at = DCX.at; }
+  /* style: swap it in place */
+  if (css !== DCX.css){
+    let st = document.getElementById('devcode-css');
+    if (css){ if (!st){ st = document.createElement('style'); st.id = 'devcode-css'; document.head.appendChild(st); } st.textContent = css; } else if (st) st.remove();
+    DCX.css = css;
+  }
+  /* script: first time run it; a later change reloads the page when it is safe */
+  if (js !== DCX.js){
+    const ranBefore = typeof DC === 'object' && DC.ran;
+    DCX.js = js;
+    if (first){ if (!ranBefore && js) try { if (typeof dcRun === 'function') dcRun({js, css: ''}); } catch (e) {} }   // at start the code that already ran is this one
+    else { DCX.wantReload = true; dcxMaybeReload(); }
+  }
+  try { if (typeof dcRender === 'function') dcRender(); } catch (e) {}
+  if (!first) try { toast(t('dcx_got')); } catch (e) {}
+}
+function dcxMaybeReload(){
+  if (!DCX.wantReload) return;
+  const a = document.activeElement, typing = a && /INPUT|TEXTAREA|SELECT/.test(a.tagName);
+  if (typing || document.hidden) return;
+  try { if (typeof svSave === 'function' && SV && SV.mode === 'auto') svSave(true); } catch (e) {}
+  setTimeout(() => location.reload(), 1200);
+  DCX.wantReload = false;
+}
+document.addEventListener('focusout', () => setTimeout(dcxMaybeReload, 400));
+document.addEventListener('visibilitychange', () => { if (!document.hidden){ dcxPoll(); setTimeout(dcxMaybeReload, 400); } });
+/* the GitHub copy, for the website and the app */
+async function dcxPoll(){
+  try {
+    const r = await fetch((IN_CLAUDE ? DC_URL_GH : 'devcode.json') + '?v=' + Date.now(), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'});
+    if (r.ok) dcxApply(await r.json(), 'gh');
+  } catch (e) {}
+}
+setTimeout(() => { dcxPoll(); setInterval(() => { if (!document.hidden) dcxPoll(); }, 120000); }, 1500);
+/* the app's database inside Claude: live for everyone the moment the owner publishes */
+(async function dcxDb(){
+  if (!IN_CLAUDE) return;
+  try {
+    const db = await window.claude.use('db'); if (!db) return; DCX.db = db;
+    db.doc('rates/devcode').onSnapshot(s => { try { if (s && s.exists) dcxApply(s.data(), 'db'); } catch (e) {} });
+  } catch (e) {}
+})();
+/* publishing: inside Claude write the database (and GitHub too when it can be reached); on the website GitHub as before */
+document.addEventListener('click', async e => {
+  const b = e.target.closest && e.target.closest('[data-dc="pub"],[data-dc="unpub"]'); if (!b || !liveOwner() || !IN_CLAUDE || !DCX.db) return;
+  const k = b.dataset.dc;
+  if (k === 'unpub' && b.dataset.sure !== '1') return;          // the first tap only asks "sure?" (handled by the existing button)
+  e.stopImmediatePropagation(); e.preventDefault();
+  const body = k === 'pub' ? dcGet() : {js: '', css: '', at: Date.now()};
+  dcMsg('m_wait');
+  try {
+    await DCX.db.doc('rates/devcode').set(Object.assign({v: 1}, body));
+    let gh = false; try { if (ghTok()){ await ghPut('devcode.json', JSON.stringify(Object.assign({v: 1}, body), null, 1), k === 'pub' ? 'Developer code update' : 'Developer code removed'); gh = true; } } catch (er) {}
+    dcMsg(gh ? 'dcx_okBoth' : 'dcx_okApp'); toast(t(gh ? 'dcx_okBoth' : 'dcx_okApp'));
+  } catch (er) { dcMsg('dcx_fail', {e: String(er && (er.code || er.message) || '')}); }
+}, true);
+/* after publishing on the website, show it here at once instead of waiting for the next check */
+const _ghPut88 = ghPut;
+ghPut = async function(path, text){
+  const r = await _ghPut88.apply(this, arguments);
+  if (path === 'devcode.json'){ try { const j = JSON.parse(text); setTimeout(() => dcxApply(j, 'self'), 0); } catch (e) {} }
+  return r;
+};
 
 applyLang(false);
 activate(tab);
