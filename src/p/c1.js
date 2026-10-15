@@ -223,6 +223,35 @@ function payslipRows(r, o){
   L.push([t('r_totalDed'), -r.ded], [t('r_netMonthly'), r.net]);
   return L.map(([a, b]) => [a, MI(b), pc(Math.abs(b))]);
 }
+/* 8.2: the payslip — monthly or hourly pay, overtime, Shabbat, vacation, sick days (by law: day 1 unpaid, days 2-3 at half, from day 4 full),
+   unpaid absence, holidays, reserve duty, vacation redemption, and the balances: vacation and sick days, recuperation by seniority */
+const VAC5 = [12, 12, 12, 12, 12, 17, 17, 17, 23], VAC6 = [14, 14, 14, 14, 14, 16, 18, 19, 20, 21, 22, 23, 24];
+const HAV_DAYS = y => y < 1 ? 0 : y <= 1 ? 5 : y <= 3 ? 6 : y <= 10 ? 7 : y <= 15 ? 8 : y <= 19 ? 9 : 10;
+function salTime(amt, mode){
+  const vv = id => { const e = $('#' + id); return e ? Math.max(0, v(id) || 0) : 0; }, sel = id => ($('#' + id) || {}).value;
+  const g2n = mode === 'g2n', hourly = g2n && sel('s_payType') === 'hour';
+  const week = sel('s_week') === '6' ? 6 : 5, dayH = 42 / week, wd = Math.max(1, vv('s_wdays') || 22);
+  const rate = hourly ? vv('s_hourRate') : 0, hrs = hourly ? vv('s_hours') : 0;
+  const base0 = hourly ? rate * hrs : amt, hv = hourly ? rate : amt / 182, day = hourly ? rate * dayH : amt / wd;
+  const sickD = vv('s_sickD'), absD = vv('s_absD'), vacD = vv('s_vacD'), holD = hourly ? vv('s_holD') : 0, resD = vv('s_reserveD'), mournD = hourly ? vv('s_mournD') : 0;
+  const sickPaid = sel('s_sickPay') === 'full' ? sickD : Math.min(2, Math.max(0, sickD - 1)) * .5 + Math.max(0, sickD - 3);
+  const T = {hourly, rate, hrs, base0, hv, day, week, sickD, absD, vacD, holD, resD, mournD, sickPay: day * sickPaid, absDed: 0, sickDed: 0, vacPay: 0, holPay: 0, mournPay: 0};
+  if (g2n){
+    if (hourly){ T.vacPay = day * vacD; T.holPay = day * holD; T.resPay = day * resD; T.mournPay = day * mournD; T.base = base0 + T.vacPay + T.holPay + T.sickPay + T.resPay + T.mournPay; }
+    else { T.absDed = day * absD; T.sickDed = day * sickD; T.resPay = 0; T.base = Math.max(0, base0 - T.absDed - T.sickDed + T.sickPay); }
+  } else T.base = amt;
+  T.ot125 = hv * 1.25 * vv('s_ot125'); T.ot150 = hv * 1.5 * vv('s_ot150'); T.shab = hv * 1.5 * vv('s_shab');
+  T.vacRed = day * vv('s_vacRed'); T.comm = vv('s_comm'); T.shift = vv('s_shift'); T.cloth = vv('s_cloth');
+  T.senPay = vv('s_seniorPay'); T.globalOt = vv('s_globalOt'); T.oncall = vv('s_oncall'); T.roleAdd = vv('s_roleAdd'); T.wfh = vv('s_wfh');
+  T.extra = T.ot125 + T.ot150 + T.shab + T.vacRed + T.comm + T.shift + T.cloth + T.senPay + T.globalOt + T.oncall + T.roleAdd + T.wfh;
+  T.adv = vv('s_adv'); T.loan = vv('s_loanDed'); T.after = T.adv + T.loan;
+  const sen = vv('s_senior'), yi = Math.max(1, Math.ceil(sen || 0)), tbl = week === 6 ? VAC6 : VAC5;
+  T.sen = sen; T.vacYear = tbl[Math.min(yi, tbl.length) - 1]; T.vacM = T.vacYear / 12;
+  T.vacBal = vv('s_vacBal') + T.vacM - vacD - vv('s_vacRed'); T.sickBal = Math.min(90, vv('s_sickBal') + 1.5) - sickD;
+  T.havD = HAV_DAYS(sen); T.havDay = vv('s_havDay') || 418; T.havYear = T.havD * T.havDay;
+  T.any = hourly || T.extra > 0 || T.after > 0 || sickD || absD || vacD || holD || resD || mournD;
+  return T;
+}
 function calcSalary(){
   const k = $('#s_per').value === 'y' ? 12 : 1;
   const amt = Math.max(0, v('s_amount')) / k, mode = $('#s_mode').value;
@@ -235,14 +264,16 @@ function calcSalary(){
              coord: ($('#s_job') || {}).value === 'coord' ? clamp(v('s_coord'), 0, 50) : 0};
   const xp = {travel: Math.max(0, v('s_travel')), meals: Math.max(0, v('s_meals')), havraa: Math.max(0, v('s_havraa')) / 12, phone: ($('#s_phone') || {}).value === '1' ? Math.max(0, v('s_phoneVal')) : 0};
   o.extra += xp.travel + xp.meals + xp.havraa; o.benefit += xp.phone;
+  const gift = Math.max(0, v('s_gift') || 0), reimb = Math.max(0, v('s_reimb') || 0), erDis = clamp(v('s_erDis') || 0, 0, 5); o.benefit += gift;
+  const TM = salTime(amt, mode); o.extra += TM.extra; o.otherDed += TM.after;
   const car = salCar();
   const oc = gg => withCar(gg, pts, pens, study, o, car);
-  let g = amt;
+  let g = mode === 'g2n' ? TM.base : amt;
   if (mode === 'n2g'){
     let lo = 0, hi = amt * 4 + 1000 + (car ? car.val * 2 + car.pay + car.extra : 0);
     for (let i = 0; i < 80; i++){
       const mid = (lo + hi) / 2;
-      if (salaryCalc(mid, pts, pens, study, oc(mid)).net < amt) lo = mid; else hi = mid;
+      if (salaryCalc(mid, pts, pens, study, oc(mid)).net + reimb < amt) lo = mid; else hi = mid;
     }
     g = (lo + hi) / 2;
   }
@@ -252,14 +283,30 @@ function calcSalary(){
   const carTax = (r.tax + r.ni + r.health) - (r0.tax + r0.ni + r0.health);
   const cb = car && !o.second && !o.coord && car.rate == null ? carBrackets(r0.gross + r0.extra + o.benefit + r0.erX, car.val + (r.cash || 0), r, r0) : null;
   const marginal = (1 - (r2.net - r.net) / 100) * 100;
-  const rows = [[t('r_grossMonthly'), MI(r.gross)]];
+  /* expense refunds are paid on top of the net and are not taxed; employer disability insurance adds to the employer's cost */
+  const disAmt = r.gross * erDis / 100;
+  if (reimb > 0){ r.net += reimb; r.employer += reimb; if (r0 !== r) r0.net += reimb; }
+  if (disAmt > 0) r.employer += disAmt;
+  const rows = [];
+  if (mode === 'g2n' && (TM.hourly || TM.absDed || TM.sickDed || TM.sickPay || TM.vacPay || TM.holPay || TM.resPay || TM.mournPay)){
+    rows.push([TM.hourly ? t('r_sHourBase', {h: N(TM.hrs), r: MI(TM.rate, 2)}) : t('r_sBase'), MI(TM.base0)]);
+    if (TM.absDed > 0) rows.push([t('r_sAbs', {d: N(TM.absD)}), MI(-TM.absDed)]);
+    if (TM.sickD > 0){ if (TM.sickDed > 0) rows.push([t('r_sSickOff', {d: N(TM.sickD)}), MI(-TM.sickDed)]); rows.push([t('r_sSickPay'), MI(TM.sickPay)]); }
+    if (TM.vacPay > 0) rows.push([t('r_sVacPay', {d: N(TM.vacD)}), MI(TM.vacPay)]);
+    if (TM.holPay > 0) rows.push([t('r_sHolPay', {d: N(TM.holD)}), MI(TM.holPay)]);
+    if (TM.resPay > 0) rows.push([t('r_sResPay', {d: N(TM.resD)}), MI(TM.resPay)]);
+    if (TM.mournPay > 0) rows.push([t('r_sMournPay', {d: N(TM.mournD)}), MI(TM.mournPay)]);
+  }
+  rows.push([t('r_grossMonthly'), MI(r.gross)]);
+  [['ot125', 'r_sOt125'], ['ot150', 'r_sOt150'], ['shab', 'r_sShab'], ['vacRed', 'r_sVacRed'], ['comm', 'r_sComm'], ['shift', 'r_sShift'], ['cloth', 'r_sCloth'], ['senPay', 'r_sSeniorPay'], ['globalOt', 'r_sGlobalOt'], ['oncall', 'r_sOncall'], ['roleAdd', 'r_sRoleAdd'], ['wfh', 'r_sWfh']].forEach(([k, l]) => { if (TM[k] > 0.005) rows.push([t(l), MI(TM[k])]); });
   if (o.bonus > 0) rows.push([t('r_bonusAvg'), MI(r.bonus)]);
   if (xp.travel > 0) rows.push([t('r_sTravel'), MI(xp.travel)]);
   if (xp.meals > 0) rows.push([t('r_sMeals'), MI(xp.meals)]);
   if (xp.havraa > 0) rows.push([t('r_sHavraa'), MI(xp.havraa)]);
-  { const own = r.extra - xp.travel - xp.meals - xp.havraa; if (own > 0.005) rows.push([t('r_sExtra'), MI(own)]); }
+  { const own = r.extra - xp.travel - xp.meals - xp.havraa - TM.extra; if (own > 0.005) rows.push([t('r_sExtra'), MI(own)]); }
   if (xp.phone > 0) rows.push([t('r_sPhone'), MI(xp.phone)]);
-  if (o.benefit - xp.phone > 0.005) rows.push([t('r_benefitRow'), MI(o.benefit - xp.phone)]);
+  if (gift > 0) rows.push([t('r_sGift'), MI(gift)]);
+  if (o.benefit - xp.phone - gift > 0.005) rows.push([t('r_benefitRow'), MI(o.benefit - xp.phone - gift)]);
   if (car) rows.push([t('r_cbVal'), MI(car.val)]);
   if (r.cash > 0) rows.push([t('r_sCarGil'), MI(r.cash)]);
   if (r.erX > 0.5) rows.push([t('r_erX'), MI(r.erX)]);
@@ -267,8 +314,11 @@ function calcSalary(){
   if (r.pens > 0) rows.push([t('r_pensionRow'), MI(-r.pens)]);
   if (r.study > 0) rows.push([t('r_studyRow'), MI(-r.study)]);
   if (r.carPay > 0) rows.push([t('r_sCarPay'), MI(-r.carPay)]);
-  if (r.other > 0) rows.push([t('r_sOtherDed'), MI(-r.other)]);
+  if (r.other - TM.after > 0.005) rows.push([t('r_sOtherDed'), MI(-(r.other - TM.after))]);
+  if (TM.adv > 0) rows.push([t('r_sAdv'), MI(-TM.adv)]);
+  if (TM.loan > 0) rows.push([t('r_sLoanDed'), MI(-TM.loan)]);
   if (r.union > 0) rows.push([t('r_sUnion'), MI(-r.union)]);
+  if (reimb > 0) rows.push([t('r_sReimb'), MI(reimb)]);
   rows.push(
     [t('r_totalDed'), MI(-r.ded), 'key'],
     [t('r_netMonthly'), MI(r.net), 'key'],
@@ -284,8 +334,12 @@ function calcSalary(){
     [t('r_netAnnual'), MI(r.net * 12)],
     [t('r_erPens'), MI(r.erP)], [t('r_erSev'), MI(r.erS)]);
   if (r.erSt > 0) rows.push([t('r_erStudy'), MI(r.erSt)]);
+  if (disAmt > 0) rows.push([t('r_erDis'), MI(disAmt)]);
   rows.push([t('r_erNi'), MI(r.erNi)], [t('r_employerCost'), MI(r.employer), 'key'],
             [t('r_totalSavings'), MI(r.pens + r.erP)]);
+  rows.push([t('r_sVacYear', {w: TM.week}), t('r_sDays', {d: N(TM.vacYear)})], [t('r_sVacAcc'), t('r_sDays', {d: N(TM.vacM, 2)})], [t('r_sVacBal'), t('r_sDays', {d: N(TM.vacBal, 2)}), 'key'],
+            [t('r_sSickAcc'), t('r_sDays', {d: '1.5'})], [t('r_sSickBal'), t('r_sDays', {d: N(TM.sickBal, 1)}), 'key'],
+            [t('r_sHavD'), TM.havD ? t('r_sDays', {d: N(TM.havD)}) : t('r_sHavNone')], [t('r_sHavYear'), MI(TM.havYear)]);
   const per = k === 12 ? ' ' + t('o_perYear') : '';
   return {
     hero: mode === 'g2n'

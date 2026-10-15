@@ -1753,6 +1753,26 @@ input.ro{opacity:.75;cursor:not-allowed}
 :root[data-design="clay"] .bt.on{color:var(--dz-on)}
 @media (prefers-reduced-motion:reduce){:root[data-design="prism"] :is(.dz-art,.page-head,.gold-btn){animation:none}}
 
+/* ================= 8.2: Settings in folding sections ================= */
+.set-sec:has(> details.sec-acc){padding:0 !important;overflow:hidden}
+details.sec-acc > summary{list-style:none;display:flex;align-items:center;gap:10px;cursor:pointer;padding:14px 16px;min-height:56px;-webkit-tap-highlight-color:transparent}
+details.sec-acc > summary::-webkit-details-marker,details.sub-acc > summary::-webkit-details-marker{display:none}
+details.sec-acc > summary .sec-h{margin:0;flex:none;display:flex;align-items:center;gap:10px}
+details.sec-acc > summary .sec-h .sec-t{margin:0;font-size:1rem}
+.sec-sum{flex:1;min-width:0;color:var(--ink-2);font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:end}
+.acc-chev{flex:none;width:20px;height:20px;fill:none;stroke:var(--ink-2);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+details.sec-acc[open] > summary .acc-chev{transform:rotate(180deg)}
+details.sec-acc[open] > summary{border-bottom:1px solid var(--line)}
+details.sec-acc[open] > summary .sec-sum{visibility:hidden}
+.sec-body{padding:12px 16px 16px}
+details.sec-acc > summary:focus-visible,details.sub-acc > summary:focus-visible{outline:2px solid var(--gold-ui);outline-offset:-2px;border-radius:12px}
+details.sub-acc{margin:0 0 12px;border:1px solid var(--line);border-radius:14px;background:var(--g1)}
+details.sub-acc > summary{list-style:none;cursor:pointer;padding:12px 14px;font-weight:600;font-size:.92rem;display:flex;align-items:center;gap:8px}
+details.sub-acc > summary::after{content:"";margin-inline-start:auto;width:8px;height:8px;border-inline-end:2px solid var(--ink-2);border-bottom:2px solid var(--ink-2);transform:rotate(45deg);transition:transform .2s}
+details.sub-acc[open] > summary::after{transform:rotate(-135deg)}
+details.sub-acc > :not(summary){margin:0 12px 12px}
+details.sub-acc .dz-h{display:none}
+
 </style>
 </head>
 <body>
@@ -4904,6 +4924,88 @@ Object.assign(T, {
   dz_sunsetKick:['מחשבון פיננסי','حاسبة مالية','Financial calculator'],
   dz_sunsetTag:['תכנון רגוע לעתיד מואר','تخطيط هادئ لمستقبل مشرق','Calm planning for a bright future']
 });
+Object.assign(T, {
+  /* 8.2: Settings in folding sections */
+  acc_design:['עיצוב: {n}','التصميم: {n}','Design: {n}'],
+  acc_theme:['ערכת נושא: {n}','السمة: {n}','Theme: {n}'],
+  /* 8.2: the full payslip */
+  g_salTime:['שעות, ימים והיעדרויות','الساعات والأيام والغياب','Hours, days and absences'],
+  g_salBal:['יתרות: חופשה, מחלה והבראה','الأرصدة: إجازة ومرض ونقاهة','Balances: vacation, sick days and recuperation'],
+  f_sPayType:['שיטת תשלום','طريقة الدفع','Pay type'],
+  o_payMonth:['משכורת חודשית','راتب شهري','Monthly salary'], o_payHour:['שכר שעתי','أجر بالساعة','Hourly pay'],
+  h_sPayType:['בשכר שעתי מחשבים לפי שעות בפועל, ומשלמים בנפרד על חופשה, חגים ומחלה.','في الأجر بالساعة يُحسب حسب الساعات الفعلية، وتُدفع الإجازة والأعياد والمرض بشكل منفصل.','Hourly pay counts actual hours; vacation, holidays and sick days are paid separately.'],
+  f_sHourRate:['תעריף לשעה','الأجر للساعة','Hourly rate'],
+  f_sHours:['שעות עבודה בחודש','ساعات العمل في الشهر','Hours worked this month'],
+  h_sHours:['משרה מלאה היא 182 שעות בחודש.','الوظيفة الكاملة 182 ساعة في الشهر.','A full-time job is 182 hours a month.'],
+  f_sWeek:['ימי עבודה בשבוע','أيام العمل في الأسبوع','Work days per week'],
+  o_week5:['5 ימים','5 أيام','5 days'], o_week6:['6 ימים','6 أيام','6 days'],
+  f_sWdays:['ימי עבודה בחודש','أيام العمل في الشهر','Work days this month'],
+  h_sWdays:['לחישוב ערך יום עבודה במשכורת חודשית (בדרך כלל 21–23).','لحساب قيمة يوم العمل في الراتب الشهري (عادة 21–23).','Used to work out a day\'s value on a monthly salary (usually 21–23).'],
+  f_sOt125:['שעות נוספות 125%','ساعات إضافية 125%','Overtime hours at 125%'],
+  f_sOt150:['שעות נוספות 150%','ساعات إضافية 150%','Overtime hours at 150%'],
+  h_sOt:['השעתיים הראשונות ביום ב-125%, ומהשלישית ב-150%.','أول ساعتين في اليوم بـ125%، ومن الثالثة بـ150%.','The first two extra hours a day are at 125%, from the third at 150%.'],
+  f_sShab:['שעות בשבת או בחג (150%)','ساعات في السبت أو العيد (150%)','Hours on Shabbat or a holiday (150%)'],
+  h_sShab:['עבודה ביום המנוחה משולמת לפחות ב-150%.','العمل في يوم الراحة يُدفع بـ150% على الأقل.','Work on the rest day is paid at least 150%.'],
+  f_sVacD:['ימי חופשה שנוצלו החודש','أيام إجازة استُخدمت هذا الشهر','Vacation days taken this month'],
+  h_sVacD:['במשכורת חודשית החופשה כבר בתוך השכר; בשכר שעתי היא משולמת בנפרד. יורד מיתרת החופשה.','في الراتب الشهري الإجازة ضمن الراتب؛ وفي الأجر بالساعة تُدفع بشكل منفصل. تُخصم من رصيد الإجازة.','On a monthly salary vacation is already in the pay; on hourly pay it is paid separately. It comes off your vacation balance.'],
+  f_sSickD:['ימי מחלה החודש','أيام مرض هذا الشهر','Sick days this month'],
+  h_sSickD:['לפי חוק דמי מחלה: יום ראשון ללא תשלום, ימים 2–3 ב-50%, ומהיום הרביעי 100%.','حسب قانون أجر المرض: اليوم الأول بلا أجر، اليومان 2–3 بـ50%، ومن اليوم الرابع 100%.','By the Sick Pay Law: day 1 unpaid, days 2–3 at 50%, from day 4 at 100%.'],
+  f_sSickPay:['תשלום ימי מחלה','دفع أيام المرض','Sick pay'],
+  o_sickLaw:['לפי החוק','حسب القانون','By law'], o_sickFull:['מלא מהיום הראשון','كامل من اليوم الأول','Full from day 1'],
+  h_sSickPay:['יש מעסיקים והסכמים שמשלמים מלא כבר מהיום הראשון.','بعض أصحاب العمل والاتفاقيات يدفعون كاملاً من اليوم الأول.','Some employers and agreements pay in full from day 1.'],
+  f_sAbsD:['ימי היעדרות ללא תשלום','أيام غياب بلا أجر','Unpaid absence days'],
+  h_sAbsD:['ירדו מהשכר לפי ערך יום עבודה.','تُخصم من الراتب حسب قيمة يوم العمل.','Deducted from the salary at a day\'s value.'],
+  f_sHolD:['ימי חג בתשלום','أيام عيد مدفوعة','Paid holiday days'],
+  h_sHolD:['לעובד שעתי אחרי 3 חודשי עבודה: עד 9 ימי חג בשנה.','للعامل بالساعة بعد 3 أشهر عمل: حتى 9 أيام عيد في السنة.','For hourly workers after 3 months: up to 9 holiday days a year.'],
+  f_sReserveD:['ימי מילואים','أيام احتياط','Reserve duty days'],
+  h_sReserveD:['במילואים המעסיק ממשיך לשלם שכר מלא, וביטוח לאומי מחזיר לו. בשכר שעתי – לפי ערך יום.','في الاحتياط يواصل صاحب العمل دفع الراتب كاملاً ويعوّضه التأمين الوطني. بالأجر بالساعة – حسب قيمة اليوم.','During reserve duty the employer keeps paying in full and National Insurance repays it. On hourly pay – at a day\'s value.'],
+  f_sMournD:['ימי אבל','أيام حداد','Mourning days'],
+  h_sMournD:['עד 7 ימי אבל בתשלום על קרוב מדרגה ראשונה (לעובד שעתי).','حتى 7 أيام حداد مدفوعة على قريب من الدرجة الأولى (للعامل بالساعة).','Up to 7 paid mourning days for a close relative (hourly workers).'],
+  f_sVacRed:['פדיון ימי חופשה','استرداد أيام إجازة','Vacation days redeemed'],
+  h_sVacRed:['ימי חופשה שהומרו לכסף (בדרך כלל בסיום עבודה). חייבים במס.','أيام إجازة تحوّلت إلى مال (عادة عند انتهاء العمل). خاضعة للضريبة.','Vacation days paid out in cash (usually when leaving). Taxable.'],
+  f_sComm:['עמלות','عمولات','Commissions'], h_sComm:['עמלות מכירה או יעדים החודש.','عمولات بيع أو أهداف هذا الشهر.','Sales or target commissions this month.'],
+  f_sShift:['תוספת משמרות','علاوة ورديات','Shift bonus'], h_sShift:['תוספת על משמרות ערב או לילה.','علاوة على ورديات المساء أو الليل.','Extra pay for evening or night shifts.'],
+  f_sCloth:['דמי ביגוד','بدل ملابس','Clothing allowance'], h_sCloth:['החלק החודשי. חייב במס.','الجزء الشهري. خاضع للضريبة.','The monthly part. Taxable.'],
+  f_sSeniorPay:['תוספת ותק','علاوة أقدمية','Seniority bonus'], h_sSeniorPay:['תוספת קבועה לפי שנות עבודה, אם יש בהסכם.','علاوة ثابتة حسب سنوات العمل، إن وُجدت في الاتفاق.','A fixed addition for years of service, if your agreement has one.'],
+  f_sGlobalOt:['שעות נוספות גלובליות','ساعات إضافية إجمالية','Global overtime'], h_sGlobalOt:['סכום קבוע לשעות נוספות, בלי קשר לשעות בפועל.','مبلغ ثابت للساعات الإضافية بغضّ النظر عن الساعات الفعلية.','A fixed amount for overtime, regardless of actual hours.'],
+  f_sOncall:['כוננות','مناوبة','On-call pay'], h_sOncall:['תשלום על זמינות מחוץ לשעות העבודה.','دفع مقابل الجاهزية خارج ساعات العمل.','Pay for being available outside working hours.'],
+  f_sRoleAdd:['תוספת תפקיד / מקצועית','علاوة وظيفة / مهنية','Role or professional bonus'], h_sRoleAdd:['תוספת קבועה על תפקיד, אחריות או מקצוע.','علاوة ثابتة على الوظيفة أو المسؤولية أو المهنة.','A fixed addition for a role, responsibility or profession.'],
+  f_sWfh:['תוספת עבודה מהבית','علاوة العمل من البيت','Work-from-home allowance'], h_sWfh:['השתתפות באינטרנט, חשמל וכו׳. חייבת במס.','مساهمة في الإنترنت والكهرباء وغيرها. خاضعة للضريبة.','Help with internet, electricity and so on. Taxable.'],
+  f_sGift:['שווי מתנה לחג','قيمة هدية العيد','Holiday gift value'], h_sGift:['מתנה מהמעסיק נחשבת הכנסה לצורך מס (שווי), גם אם לא קיבלתם כסף.','هدية صاحب العمل تُعدّ دخلاً للضريبة (قيمة) حتى بلا نقود.','A gift from the employer counts as income for tax (a benefit), even with no cash.'],
+  f_sReimb:['החזר הוצאות (פטור ממס)','استرداد مصاريف (معفى من الضريبة)','Expense refunds (tax-free)'], h_sReimb:['החזר על הוצאות עבודה לפי קבלות, כמו אש״ל או חניה. מתווסף לנטו ולא חייב במס.','استرداد مصاريف العمل حسب الإيصالات مثل السفر أو الموقف. يُضاف للصافي ولا يخضع للضريبة.','Work expenses repaid against receipts, like travel or parking. Added to the net, not taxed.'],
+  f_sErDis:['אובדן כושר עבודה (מעסיק)','عجز عن العمل (صاحب العمل)','Disability insurance (employer)'], h_sErDis:['הפרשת המעסיק לביטוח אובדן כושר עבודה. בדרך כלל עד 2.5% מהשכר פטור ממס.','مساهمة صاحب العمل في تأمين العجز عن العمل. عادة حتى 2.5% من الراتب معفاة.','The employer\'s payment for disability insurance. Usually up to 2.5% of salary is tax-free.'],
+  f_sAdv:['מקדמה ששולמה','سلفة مدفوعة','Advance already paid'], h_sAdv:['יורדת מהנטו בתלוש הזה.','تُخصم من الصافي في هذه القسيمة.','Taken off the net on this payslip.'],
+  f_sLoanDed:['החזר הלוואה מהמעסיק','سداد قرض صاحب العمل','Employer loan repayment'], h_sLoanDed:['תשלום חודשי שיורד מהנטו.','دفعة شهرية تُخصم من الصافي.','A monthly payment taken off the net.'],
+  f_sSenior:['ותק במקום העבודה','الأقدمية في مكان العمل','Years at this workplace'], h_sSenior:['קובע כמה ימי חופשה והבראה מגיעים לכם.','تحدد عدد أيام الإجازة والنقاهة المستحقة.','Sets how many vacation and recuperation days you get.'],
+  f_sVacBal:['יתרת חופשה מהתלוש הקודם','رصيد الإجازة من القسيمة السابقة','Vacation balance from last payslip'], h_sVacBal:['כפי שמופיע בתלוש של החודש הקודם.','كما يظهر في قسيمة الشهر السابق.','As shown on last month\'s payslip.'],
+  f_sSickBal:['יתרת מחלה מהתלוש הקודם','رصيد المرض من القسيمة السابقة','Sick-day balance from last payslip'], h_sSickBal:['נצברים 1.5 ימים בחודש, עד 90 ימים.','تتراكم 1.5 يوم في الشهر حتى 90 يومًا.','You build up 1.5 days a month, up to 90.'],
+  f_sHavDay:['ערך יום הבראה','قيمة يوم النقاهة','Recuperation day value'], h_sHavDay:['במגזר הפרטי 418 ₪ ליום (מ-2023). במגזר הציבורי הסכום שונה.','في القطاع الخاص 418 ₪ لليوم (منذ 2023). في القطاع العام المبلغ مختلف.','₪418 a day in the private sector (since 2023). The public sector differs.'],
+  r_sBase:['שכר בסיס','الراتب الأساسي','Base salary'],
+  r_sHourBase:['{h} שעות × {r}','{h} ساعة × {r}','{h} hours × {r}'],
+  r_sAbs:['היעדרות ללא תשלום ({d} ימים)','غياب بلا أجر ({d} أيام)','Unpaid absence ({d} days)'],
+  r_sSickOff:['ימי מחלה ({d}) – מהשכר','أيام مرض ({d}) – من الراتب','Sick days ({d}) – off the salary'],
+  r_sSickPay:['דמי מחלה','أجر المرض','Sick pay'],
+  r_sVacPay:['דמי חופשה ({d} ימים)','أجر الإجازة ({d} أيام)','Vacation pay ({d} days)'],
+  r_sHolPay:['דמי חגים ({d} ימים)','أجر الأعياد ({d} أيام)','Holiday pay ({d} days)'],
+  r_sResPay:['מילואים ({d} ימים)','الاحتياط ({d} أيام)','Reserve duty ({d} days)'],
+  r_sMournPay:['ימי אבל ({d})','أيام الحداد ({d})','Mourning days ({d})'],
+  r_sOt125:['שעות נוספות 125%','ساعات إضافية 125%','Overtime 125%'], r_sOt150:['שעות נוספות 150%','ساعات إضافية 150%','Overtime 150%'],
+  r_sShab:['שבת / חג 150%','سبت / عيد 150%','Shabbat / holiday 150%'], r_sVacRed:['פדיון חופשה','استرداد الإجازة','Vacation redeemed'],
+  r_sComm:['עמלות','عمولات','Commissions'], r_sShift:['תוספת משמרות','علاوة ورديات','Shift bonus'], r_sCloth:['דמי ביגוד','بدل ملابس','Clothing allowance'],
+  r_sSeniorPay:['תוספת ותק','علاوة أقدمية','Seniority bonus'], r_sGlobalOt:['שעות נוספות גלובליות','ساعات إضافية إجمالية','Global overtime'], r_sOncall:['כוננות','مناوبة','On-call pay'],
+  r_sRoleAdd:['תוספת תפקיד','علاوة وظيفة','Role bonus'], r_sWfh:['עבודה מהבית','العمل من البيت','Work from home'], r_sGift:['שווי מתנה לחג','قيمة هدية العيد','Holiday gift value'],
+  r_sReimb:['החזר הוצאות (פטור)','استرداد مصاريف (معفى)','Expense refunds (tax-free)'], r_erDis:['אובדן כושר עבודה (מעסיק)','عجز عن العمل (صاحب العمل)','Disability insurance (employer)'],
+  r_sAdv:['מקדמה','سلفة','Advance'], r_sLoanDed:['החזר הלוואה','سداد قرض','Loan repayment'],
+  r_sVacYear:['ימי חופשה בשנה (שבוע של {w} ימים)','أيام الإجازة في السنة (أسبوع {w} أيام)','Vacation days a year ({w}-day week)'],
+  r_sVacAcc:['צבירת חופשה החודש','تراكم الإجازة هذا الشهر','Vacation built up this month'],
+  r_sVacBal:['יתרת חופשה','رصيد الإجازة','Vacation balance'],
+  r_sSickAcc:['צבירת מחלה החודש','تراكم المرض هذا الشهر','Sick days built up this month'],
+  r_sSickBal:['יתרת ימי מחלה','رصيد أيام المرض','Sick-day balance'],
+  r_sHavD:['ימי הבראה בשנה','أيام النقاهة في السنة','Recuperation days a year'],
+  r_sHavNone:['אחרי שנת עבודה ראשונה','بعد السنة الأولى من العمل','After your first year'],
+  r_sHavYear:['דמי הבראה לשנה','بدل النقاهة للسنة','Recuperation pay a year'],
+  r_sDays:['{d} ימים','{d} أيام','{d} days']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -5537,11 +5639,28 @@ const DEFS = {
     SEL('s_mode','f_salMode','g2n',[['g2n','o_g2n'],['n2g','o_n2g']]),
     {id:'s_pension',label:'f_pension', unit:'%', val:6},
     {id:'s_study',  label:'f_study', unit:'%', val:0},
+    SEL('s_payType','f_sPayType','month',[['month','o_payMonth'],['hour','o_payHour']],{wide:true, adv:'g_salTime', hint:'h_sPayType'}),
+    {id:'s_hourRate', label:'f_sHourRate', unit:'ils', val:40, adv:'g_salTime', when:['s_payType','hour']},
+    {id:'s_hours', label:'f_sHours', val:182, adv:'g_salTime', hint:'h_sHours', when:['s_payType','hour']},
+    SEL('s_week','f_sWeek','5',[['5','o_week5'],['6','o_week6']],{adv:'g_salTime'}),
+    {id:'s_wdays', label:'f_sWdays', val:22, adv:'g_salTime', hint:'h_sWdays'},
+    {id:'s_ot125', label:'f_sOt125', val:0, adv:'g_salTime', hint:'h_sOt'},
+    {id:'s_ot150', label:'f_sOt150', val:0, adv:'g_salTime', hint:'h_sOt'},
+    {id:'s_shab', label:'f_sShab', val:0, adv:'g_salTime', hint:'h_sShab'},
+    {id:'s_vacD', label:'f_sVacD', val:0, adv:'g_salTime', hint:'h_sVacD'},
+    {id:'s_sickD', label:'f_sSickD', val:0, adv:'g_salTime', hint:'h_sSickD'},
+    SEL('s_sickPay','f_sSickPay','law',[['law','o_sickLaw'],['full','o_sickFull']],{adv:'g_salTime', hint:'h_sSickPay'}),
+    {id:'s_absD', label:'f_sAbsD', val:0, adv:'g_salTime', hint:'h_sAbsD'},
+    {id:'s_holD', label:'f_sHolD', val:0, adv:'g_salTime', hint:'h_sHolD', when:['s_payType','hour']},
+    {id:'s_reserveD', label:'f_sReserveD', val:0, adv:'g_salTime', hint:'h_sReserveD'},
+    {id:'s_mournD', label:'f_sMournD', val:0, adv:'g_salTime', hint:'h_sMournD', when:['s_payType','hour']},
+    {id:'s_vacRed', label:'f_sVacRed', val:0, adv:'g_salTime', hint:'h_sVacRed'},
     {id:'s_bonus', label:'f_bonus', unit:'ils', val:0, adv:'g_benefits'},
     {id:'s_benefit', label:'f_benefit', unit:'ils', val:0, adv:'g_benefits', hint:'h_benefit'},
     {id:'s_erPens', label:'f_erPens', unit:'%', val:6.5, adv:'g_benefits'},
     {id:'s_erSev', label:'f_erSev', unit:'%', val:6, adv:'g_benefits'},
     {id:'s_erStudy', label:'f_erStudy', unit:'%', val:0, adv:'g_benefits'},
+    {id:'s_erDis', label:'f_sErDis', unit:'%', val:0, adv:'g_benefits', hint:'h_sErDis'},
     SEL('s_car','f_sCar','none',[['none','o_sCarNone'],['co','o_sCarCo']],{wide:true, adv:'g_salCar', hint:'h_sCar'}),
     SEL('s_carMode','f_sCarMode','price',[['list','o_carList'],['price','o_carPrice'],['value','o_carValue']],{wide:true, adv:'g_salCar', hint:'h_sCarMode', when:['s_car','co']}),
     {type:'html', id:'s_carPick', cls:'car-pick', adv:'g_salCar', when:['s_carMode','list']},
@@ -5559,6 +5678,18 @@ const DEFS = {
     SEL('s_phone','f_sPhone','0',[['0','o_no'],['1','o_yes']],{adv:'g_salMore', hint:'h_sPhone'}),
     {id:'s_phoneVal', label:'f_sPhoneVal', unit:'ils', val:105, adv:'g_salMore', when:['s_phone','1']},
     {id:'s_extra', label:'f_sExtra', unit:'ils', val:0, adv:'g_salMore', hint:'h_sExtra'},
+    {id:'s_comm', label:'f_sComm', unit:'ils', val:0, adv:'g_salMore', hint:'h_sComm'},
+    {id:'s_shift', label:'f_sShift', unit:'ils', val:0, adv:'g_salMore', hint:'h_sShift'},
+    {id:'s_cloth', label:'f_sCloth', unit:'ils', val:0, adv:'g_salMore', hint:'h_sCloth'},
+    {id:'s_seniorPay', label:'f_sSeniorPay', unit:'ils', val:0, adv:'g_salMore', hint:'h_sSeniorPay'},
+    {id:'s_globalOt', label:'f_sGlobalOt', unit:'ils', val:0, adv:'g_salMore', hint:'h_sGlobalOt'},
+    {id:'s_oncall', label:'f_sOncall', unit:'ils', val:0, adv:'g_salMore', hint:'h_sOncall'},
+    {id:'s_roleAdd', label:'f_sRoleAdd', unit:'ils', val:0, adv:'g_salMore', hint:'h_sRoleAdd'},
+    {id:'s_wfh', label:'f_sWfh', unit:'ils', val:0, adv:'g_salMore', hint:'h_sWfh'},
+    {id:'s_gift', label:'f_sGift', unit:'ils', val:0, adv:'g_salMore', hint:'h_sGift'},
+    {id:'s_reimb', label:'f_sReimb', unit:'ils', val:0, adv:'g_salMore', hint:'h_sReimb'},
+    {id:'s_adv', label:'f_sAdv', unit:'ils', val:0, adv:'g_salMore', hint:'h_sAdv'},
+    {id:'s_loanDed', label:'f_sLoanDed', unit:'ils', val:0, adv:'g_salMore', hint:'h_sLoanDed'},
     SEL('s_job','f_sJob','main',[['main','o_jobMain'],['second','o_jobSecond'],['coord','o_jobCoord']],{adv:'g_salMore', hint:'h_sJob'}),
     {id:'s_coord', label:'f_sCoord', unit:'%', val:10, adv:'g_salMore', hint:'h_sCoord', when:['s_job','coord']},
     {id:'s_union', label:'f_sUnion', unit:'%', val:0, adv:'g_salMore', hint:'h_sUnion'},
@@ -5567,6 +5698,10 @@ const DEFS = {
     {id:'s_don', label:'f_sDon', unit:'ils', val:0, adv:'g_salMore', hint:'h_sDon'},
     {id:'s_locRate', label:'f_locRate', unit:'%', val:0, adv:'g_salMore', hint:'h_sLoc'},
     {id:'s_locCap', label:'f_locCap', unit:'ils', val:0, adv:'g_salMore', hint:'h_loc'},
+    {id:'s_senior', label:'f_sSenior', unit:'yrs', val:1, adv:'g_salBal', hint:'h_sSenior'},
+    {id:'s_vacBal', label:'f_sVacBal', val:0, adv:'g_salBal', hint:'h_sVacBal'},
+    {id:'s_sickBal', label:'f_sSickBal', val:0, adv:'g_salBal', hint:'h_sSickBal'},
+    {id:'s_havDay', label:'f_sHavDay', unit:'ils', val:418, adv:'g_salBal', hint:'h_sHavDay'},
     {type:'html', id:'se_box', cls:'se-box', adv:'g_salExp'}
   ].concat(creditDefs('s')).concat([
     SEL('s_age','f_sAge','reg',[['reg','o_age_reg'],['u18','o_age_u18'],['retW','o_age_retW'],['ret67','o_age_ret67'],['pens','o_age_pens']],{wide:true, adv:'g_credits', hint:'h_sAge'}),
@@ -7173,6 +7308,35 @@ function payslipRows(r, o){
   L.push([t('r_totalDed'), -r.ded], [t('r_netMonthly'), r.net]);
   return L.map(([a, b]) => [a, MI(b), pc(Math.abs(b))]);
 }
+/* 8.2: the payslip — monthly or hourly pay, overtime, Shabbat, vacation, sick days (by law: day 1 unpaid, days 2-3 at half, from day 4 full),
+   unpaid absence, holidays, reserve duty, vacation redemption, and the balances: vacation and sick days, recuperation by seniority */
+const VAC5 = [12, 12, 12, 12, 12, 17, 17, 17, 23], VAC6 = [14, 14, 14, 14, 14, 16, 18, 19, 20, 21, 22, 23, 24];
+const HAV_DAYS = y => y < 1 ? 0 : y <= 1 ? 5 : y <= 3 ? 6 : y <= 10 ? 7 : y <= 15 ? 8 : y <= 19 ? 9 : 10;
+function salTime(amt, mode){
+  const vv = id => { const e = $('#' + id); return e ? Math.max(0, v(id) || 0) : 0; }, sel = id => ($('#' + id) || {}).value;
+  const g2n = mode === 'g2n', hourly = g2n && sel('s_payType') === 'hour';
+  const week = sel('s_week') === '6' ? 6 : 5, dayH = 42 / week, wd = Math.max(1, vv('s_wdays') || 22);
+  const rate = hourly ? vv('s_hourRate') : 0, hrs = hourly ? vv('s_hours') : 0;
+  const base0 = hourly ? rate * hrs : amt, hv = hourly ? rate : amt / 182, day = hourly ? rate * dayH : amt / wd;
+  const sickD = vv('s_sickD'), absD = vv('s_absD'), vacD = vv('s_vacD'), holD = hourly ? vv('s_holD') : 0, resD = vv('s_reserveD'), mournD = hourly ? vv('s_mournD') : 0;
+  const sickPaid = sel('s_sickPay') === 'full' ? sickD : Math.min(2, Math.max(0, sickD - 1)) * .5 + Math.max(0, sickD - 3);
+  const T = {hourly, rate, hrs, base0, hv, day, week, sickD, absD, vacD, holD, resD, mournD, sickPay: day * sickPaid, absDed: 0, sickDed: 0, vacPay: 0, holPay: 0, mournPay: 0};
+  if (g2n){
+    if (hourly){ T.vacPay = day * vacD; T.holPay = day * holD; T.resPay = day * resD; T.mournPay = day * mournD; T.base = base0 + T.vacPay + T.holPay + T.sickPay + T.resPay + T.mournPay; }
+    else { T.absDed = day * absD; T.sickDed = day * sickD; T.resPay = 0; T.base = Math.max(0, base0 - T.absDed - T.sickDed + T.sickPay); }
+  } else T.base = amt;
+  T.ot125 = hv * 1.25 * vv('s_ot125'); T.ot150 = hv * 1.5 * vv('s_ot150'); T.shab = hv * 1.5 * vv('s_shab');
+  T.vacRed = day * vv('s_vacRed'); T.comm = vv('s_comm'); T.shift = vv('s_shift'); T.cloth = vv('s_cloth');
+  T.senPay = vv('s_seniorPay'); T.globalOt = vv('s_globalOt'); T.oncall = vv('s_oncall'); T.roleAdd = vv('s_roleAdd'); T.wfh = vv('s_wfh');
+  T.extra = T.ot125 + T.ot150 + T.shab + T.vacRed + T.comm + T.shift + T.cloth + T.senPay + T.globalOt + T.oncall + T.roleAdd + T.wfh;
+  T.adv = vv('s_adv'); T.loan = vv('s_loanDed'); T.after = T.adv + T.loan;
+  const sen = vv('s_senior'), yi = Math.max(1, Math.ceil(sen || 0)), tbl = week === 6 ? VAC6 : VAC5;
+  T.sen = sen; T.vacYear = tbl[Math.min(yi, tbl.length) - 1]; T.vacM = T.vacYear / 12;
+  T.vacBal = vv('s_vacBal') + T.vacM - vacD - vv('s_vacRed'); T.sickBal = Math.min(90, vv('s_sickBal') + 1.5) - sickD;
+  T.havD = HAV_DAYS(sen); T.havDay = vv('s_havDay') || 418; T.havYear = T.havD * T.havDay;
+  T.any = hourly || T.extra > 0 || T.after > 0 || sickD || absD || vacD || holD || resD || mournD;
+  return T;
+}
 function calcSalary(){
   const k = $('#s_per').value === 'y' ? 12 : 1;
   const amt = Math.max(0, v('s_amount')) / k, mode = $('#s_mode').value;
@@ -7185,14 +7349,16 @@ function calcSalary(){
              coord: ($('#s_job') || {}).value === 'coord' ? clamp(v('s_coord'), 0, 50) : 0};
   const xp = {travel: Math.max(0, v('s_travel')), meals: Math.max(0, v('s_meals')), havraa: Math.max(0, v('s_havraa')) / 12, phone: ($('#s_phone') || {}).value === '1' ? Math.max(0, v('s_phoneVal')) : 0};
   o.extra += xp.travel + xp.meals + xp.havraa; o.benefit += xp.phone;
+  const gift = Math.max(0, v('s_gift') || 0), reimb = Math.max(0, v('s_reimb') || 0), erDis = clamp(v('s_erDis') || 0, 0, 5); o.benefit += gift;
+  const TM = salTime(amt, mode); o.extra += TM.extra; o.otherDed += TM.after;
   const car = salCar();
   const oc = gg => withCar(gg, pts, pens, study, o, car);
-  let g = amt;
+  let g = mode === 'g2n' ? TM.base : amt;
   if (mode === 'n2g'){
     let lo = 0, hi = amt * 4 + 1000 + (car ? car.val * 2 + car.pay + car.extra : 0);
     for (let i = 0; i < 80; i++){
       const mid = (lo + hi) / 2;
-      if (salaryCalc(mid, pts, pens, study, oc(mid)).net < amt) lo = mid; else hi = mid;
+      if (salaryCalc(mid, pts, pens, study, oc(mid)).net + reimb < amt) lo = mid; else hi = mid;
     }
     g = (lo + hi) / 2;
   }
@@ -7202,14 +7368,30 @@ function calcSalary(){
   const carTax = (r.tax + r.ni + r.health) - (r0.tax + r0.ni + r0.health);
   const cb = car && !o.second && !o.coord && car.rate == null ? carBrackets(r0.gross + r0.extra + o.benefit + r0.erX, car.val + (r.cash || 0), r, r0) : null;
   const marginal = (1 - (r2.net - r.net) / 100) * 100;
-  const rows = [[t('r_grossMonthly'), MI(r.gross)]];
+  /* expense refunds are paid on top of the net and are not taxed; employer disability insurance adds to the employer's cost */
+  const disAmt = r.gross * erDis / 100;
+  if (reimb > 0){ r.net += reimb; r.employer += reimb; if (r0 !== r) r0.net += reimb; }
+  if (disAmt > 0) r.employer += disAmt;
+  const rows = [];
+  if (mode === 'g2n' && (TM.hourly || TM.absDed || TM.sickDed || TM.sickPay || TM.vacPay || TM.holPay || TM.resPay || TM.mournPay)){
+    rows.push([TM.hourly ? t('r_sHourBase', {h: N(TM.hrs), r: MI(TM.rate, 2)}) : t('r_sBase'), MI(TM.base0)]);
+    if (TM.absDed > 0) rows.push([t('r_sAbs', {d: N(TM.absD)}), MI(-TM.absDed)]);
+    if (TM.sickD > 0){ if (TM.sickDed > 0) rows.push([t('r_sSickOff', {d: N(TM.sickD)}), MI(-TM.sickDed)]); rows.push([t('r_sSickPay'), MI(TM.sickPay)]); }
+    if (TM.vacPay > 0) rows.push([t('r_sVacPay', {d: N(TM.vacD)}), MI(TM.vacPay)]);
+    if (TM.holPay > 0) rows.push([t('r_sHolPay', {d: N(TM.holD)}), MI(TM.holPay)]);
+    if (TM.resPay > 0) rows.push([t('r_sResPay', {d: N(TM.resD)}), MI(TM.resPay)]);
+    if (TM.mournPay > 0) rows.push([t('r_sMournPay', {d: N(TM.mournD)}), MI(TM.mournPay)]);
+  }
+  rows.push([t('r_grossMonthly'), MI(r.gross)]);
+  [['ot125', 'r_sOt125'], ['ot150', 'r_sOt150'], ['shab', 'r_sShab'], ['vacRed', 'r_sVacRed'], ['comm', 'r_sComm'], ['shift', 'r_sShift'], ['cloth', 'r_sCloth'], ['senPay', 'r_sSeniorPay'], ['globalOt', 'r_sGlobalOt'], ['oncall', 'r_sOncall'], ['roleAdd', 'r_sRoleAdd'], ['wfh', 'r_sWfh']].forEach(([k, l]) => { if (TM[k] > 0.005) rows.push([t(l), MI(TM[k])]); });
   if (o.bonus > 0) rows.push([t('r_bonusAvg'), MI(r.bonus)]);
   if (xp.travel > 0) rows.push([t('r_sTravel'), MI(xp.travel)]);
   if (xp.meals > 0) rows.push([t('r_sMeals'), MI(xp.meals)]);
   if (xp.havraa > 0) rows.push([t('r_sHavraa'), MI(xp.havraa)]);
-  { const own = r.extra - xp.travel - xp.meals - xp.havraa; if (own > 0.005) rows.push([t('r_sExtra'), MI(own)]); }
+  { const own = r.extra - xp.travel - xp.meals - xp.havraa - TM.extra; if (own > 0.005) rows.push([t('r_sExtra'), MI(own)]); }
   if (xp.phone > 0) rows.push([t('r_sPhone'), MI(xp.phone)]);
-  if (o.benefit - xp.phone > 0.005) rows.push([t('r_benefitRow'), MI(o.benefit - xp.phone)]);
+  if (gift > 0) rows.push([t('r_sGift'), MI(gift)]);
+  if (o.benefit - xp.phone - gift > 0.005) rows.push([t('r_benefitRow'), MI(o.benefit - xp.phone - gift)]);
   if (car) rows.push([t('r_cbVal'), MI(car.val)]);
   if (r.cash > 0) rows.push([t('r_sCarGil'), MI(r.cash)]);
   if (r.erX > 0.5) rows.push([t('r_erX'), MI(r.erX)]);
@@ -7217,8 +7399,11 @@ function calcSalary(){
   if (r.pens > 0) rows.push([t('r_pensionRow'), MI(-r.pens)]);
   if (r.study > 0) rows.push([t('r_studyRow'), MI(-r.study)]);
   if (r.carPay > 0) rows.push([t('r_sCarPay'), MI(-r.carPay)]);
-  if (r.other > 0) rows.push([t('r_sOtherDed'), MI(-r.other)]);
+  if (r.other - TM.after > 0.005) rows.push([t('r_sOtherDed'), MI(-(r.other - TM.after))]);
+  if (TM.adv > 0) rows.push([t('r_sAdv'), MI(-TM.adv)]);
+  if (TM.loan > 0) rows.push([t('r_sLoanDed'), MI(-TM.loan)]);
   if (r.union > 0) rows.push([t('r_sUnion'), MI(-r.union)]);
+  if (reimb > 0) rows.push([t('r_sReimb'), MI(reimb)]);
   rows.push(
     [t('r_totalDed'), MI(-r.ded), 'key'],
     [t('r_netMonthly'), MI(r.net), 'key'],
@@ -7234,8 +7419,12 @@ function calcSalary(){
     [t('r_netAnnual'), MI(r.net * 12)],
     [t('r_erPens'), MI(r.erP)], [t('r_erSev'), MI(r.erS)]);
   if (r.erSt > 0) rows.push([t('r_erStudy'), MI(r.erSt)]);
+  if (disAmt > 0) rows.push([t('r_erDis'), MI(disAmt)]);
   rows.push([t('r_erNi'), MI(r.erNi)], [t('r_employerCost'), MI(r.employer), 'key'],
             [t('r_totalSavings'), MI(r.pens + r.erP)]);
+  rows.push([t('r_sVacYear', {w: TM.week}), t('r_sDays', {d: N(TM.vacYear)})], [t('r_sVacAcc'), t('r_sDays', {d: N(TM.vacM, 2)})], [t('r_sVacBal'), t('r_sDays', {d: N(TM.vacBal, 2)}), 'key'],
+            [t('r_sSickAcc'), t('r_sDays', {d: '1.5'})], [t('r_sSickBal'), t('r_sDays', {d: N(TM.sickBal, 1)}), 'key'],
+            [t('r_sHavD'), TM.havD ? t('r_sDays', {d: N(TM.havD)}) : t('r_sHavNone')], [t('r_sHavYear'), MI(TM.havYear)]);
   const per = k === 12 ? ' ' + t('o_perYear') : '';
   return {
     hero: mode === 'g2n'
@@ -10510,8 +10699,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "8.1", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.223521';
+var CHANGELOG = [{"v": "8.2", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.224602';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -16053,6 +16242,72 @@ const _rsHx = renderStamp;
 renderStamp = function(){ const r = _rsHx.apply(this, arguments); try { if (HXS.key) hxCard(); } catch (e) {} return r; };
 document.addEventListener('click', e => { if (e.target.closest && e.target.closest('#fxGo')) hxBurst(); });
 try { if (SET.hfx == null) SET.hfx = '1'; hxSync(); } catch (e) {}
+
+/* ================= 8.2: tidy Settings — every section folds; tap the title to open it =================
+   sections start closed (a category with a single section opens it), the design and theme galleries fold too,
+   and what you opened stays open for this visit. Search still lands on the right field: it opens <details> on the way. */
+const ACC_KEY = 'fin-acc-open';
+function accOpenSet(){ try { return new Set(JSON.parse(sessionStorage.getItem(ACC_KEY) || '[]')); } catch (e) { return new Set(); } }
+function accRemember(id, open){ const s = accOpenSet(); if (open) s.add(id); else s.delete(id); try { sessionStorage.setItem(ACC_KEY, JSON.stringify([...s])); } catch (e) {} }
+function accSum(sec){
+  const k = sec.dataset.sk;
+  if (k === 'set_look'){
+    const d = (typeof dzOn === 'function' && dzOn()) || 'default', th = (typeof HOL_ACTIVE !== 'undefined' && HOL_ACTIVE) || SET.theme || 'system';
+    return t('dz_' + d) + ' · ' + t(th === 'system' ? 'o_th_sys' : 'sk_' + th);
+  }
+  const labs = $$('.sec-body .field > label, .sec-body .field label:first-child', sec).map(l => l.textContent.trim()).filter(Boolean);
+  const uniq = [...new Set(labs)];
+  return uniq.slice(0, 3).join(' · ') + (uniq.length > 3 ? ' …' : '');
+}
+function accSub(host, key, summary, nodes){
+  if (!host || !nodes.length || nodes[0].closest('details.sub-acc')) return;
+  const d = document.createElement('details'); d.className = 'sub-acc'; d.dataset.acc = key;
+  const s = document.createElement('summary'); s.className = 'sub-acc-s'; d.appendChild(s);
+  nodes[0].before(d); nodes.forEach(n => d.appendChild(n));
+  d.open = accOpenSet().has(key);
+  d.addEventListener('toggle', () => accRemember(key, d.open));
+}
+function accTexts(){
+  $$('.set-sec > details.sec-acc').forEach(d => { const sm = $('.sec-sum', d); if (sm) sm.textContent = accSum(d.parentElement); });
+  const dz = $('details.sub-acc[data-acc="dz"] > summary'), th = $('details.sub-acc[data-acc="th"] > summary');
+  if (dz) dz.textContent = t('acc_design', {n: t('dz_' + ((typeof dzOn === 'function' && dzOn()) || 'default'))});
+  if (th){ const k = (typeof HOL_ACTIVE !== 'undefined' && HOL_ACTIVE) || SET.theme || 'system'; th.textContent = t('acc_theme', {n: t(k === 'system' ? 'o_th_sys' : 'sk_' + k)}); }
+}
+function accBuild(){
+  const sp = $('#panel-settings'); if (!sp) return;
+  const open = accOpenSet();
+  $$('.set-cat .set-sec', sp).forEach(sec => {
+    if (sec.querySelector(':scope > details.sec-acc')) return;
+    const h = sec.querySelector(':scope > .sec-h'); if (!h) return;
+    const cat = sec.closest('.set-cat'), only = cat && $$('.set-sec', cat).length === 1;
+    const d = document.createElement('details'); d.className = 'sec-acc';
+    const s = document.createElement('summary'); s.className = 'sec-sumr';
+    const body = document.createElement('div'); body.className = 'sec-body';
+    [...sec.childNodes].forEach(n => { if (n !== h) body.appendChild(n); });
+    s.appendChild(h); const sm = document.createElement('small'); sm.className = 'sec-sum'; s.appendChild(sm);
+    s.insertAdjacentHTML('beforeend', '<svg class="acc-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>');
+    d.appendChild(s); d.appendChild(body); sec.appendChild(d);
+    const id = sec.dataset.sk || '';
+    d.open = only || open.has(id);
+    d.addEventListener('toggle', () => accRemember(id, d.open));
+  });
+  /* inside Look: the design gallery and the theme gallery fold on their own */
+  const look = $('.set-sec[data-sk="set_look"] .sec-body', sp);
+  if (look){
+    accSub(look, 'dz', '', [$('.dz-h', look), $('#dzGal', look)].filter(Boolean));
+    accSub(look, 'th', '', [$('#skins', look)].filter(Boolean));
+  }
+  accTexts();
+}
+/* search, links and anything that focuses a field inside a closed section opens it */
+document.addEventListener('focusin', e => { let d = e.target.closest && e.target.closest('details'); while (d){ d.open = true; d = d.parentElement && d.parentElement.closest('details'); } });
+const _actAcc = activate;
+activate = function(id){ const r = _actAcc.apply(this, arguments); if (id === 'settings') try { accBuild(); } catch (e) {} return r; };
+const _rsAcc = renderStamp;
+renderStamp = function(){ const r = _rsAcc.apply(this, arguments); try { accBuild(); } catch (e) {} return r; };
+const _atAcc = applyTheme;
+applyTheme = function(){ const r = _atAcc.apply(this, arguments); try { accTexts(); } catch (e) {} return r; };
+try { accBuild(); } catch (e) {}
 
 applyLang(false);
 activate(tab);
