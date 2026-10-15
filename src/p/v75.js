@@ -548,9 +548,9 @@ function pdfModel(id){
   return B;
 }
 function pdfPages(B){
-  const W = 1190, H = 1684, M = 84, rtl = (document.documentElement.dir || 'rtl') === 'rtl', FF = "-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans Hebrew','Noto Sans Arabic',Arial,sans-serif";
+  const O = arguments[1] || {}, W = O.W || 1190, H = O.H || 1684, M = O.M || 84, SC = O.S || 1, rtl = (document.documentElement.dir || 'rtl') === 'rtl', FF = "-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans Hebrew','Noto Sans Arabic',Arial,sans-serif";
   const pages = []; let cv, cx, y;
-  const page = () => { cv = document.createElement('canvas'); cv.width = W; cv.height = H; cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, W, H); try { cx.direction = rtl ? 'rtl' : 'ltr'; } catch (e) {} cx.textBaseline = 'top'; pages.push(cv); y = M; };
+  const page = () => { cv = document.createElement('canvas'); cv.width = W * SC; cv.height = H * SC; cx = cv.getContext('2d'); if (SC !== 1) cx.scale(SC, SC); cx.fillStyle = '#fff'; cx.fillRect(0, 0, W, H); try { cx.direction = rtl ? 'rtl' : 'ltr'; } catch (e) {} cx.textBaseline = 'top'; pages.push(cv); y = M; };
   const font = (sz, w) => { cx.font = (w || 400) + ' ' + sz + 'px ' + FF; };
   const S = rtl ? W - M : M, E = rtl ? M : W - M;              // start and end edges of the text area
   const at = (x0, w, align) => align === 'start' ? (rtl ? x0 + w : x0) : (rtl ? x0 : x0 + w);
@@ -576,7 +576,7 @@ function pdfPages(B){
       cx.fillStyle = '#fbf6e6'; cx.fillRect(M, y, W - 2 * M, h); cx.strokeStyle = '#ecd9a0'; cx.lineWidth = 2; cx.strokeRect(M, y, W - 2 * M, h);
       y += 22; font(26); lab.forEach(l => { text(l, rtl ? S - 20 : S + 20, 'start', '#3a3f4b'); y += 34; });
       font(48, 700); text(b.b, rtl ? S - 20 : S + 20, 'start', '#6b520e'); y += 62;
-      font(22); sub.forEach(l => { text(l, rtl ? S - 20 : S + 20, 'start', '#5b6170'); y += 30; }); y += 24;
+      font(22); sub.forEach(l => { text(l, rtl ? S - 20 : S + 20, 'start', '#5b6170'); y += 30; }); y += 44;
     }
     else if (b.k === 'kv'){
       b.rows.forEach(r => {

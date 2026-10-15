@@ -21,3 +21,23 @@
 .ledger .row dt .cur-coin{width:20px;height:20px;margin-inline-end:6px}.ledger .row dt .cur-coin i{width:15px;height:15px;font-size:17px}
 @media (prefers-reduced-motion:reduce){.cur-coin::after,.cur-coin.spin,.coin-pair .cur-coin:last-child{animation:none}}
 :root[data-motion="reduced"] .cur-coin::after{animation:none}
+/* 8.7: insurance cards and lender picker */
+.ins-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:2px 2px 4px}
+.ins-count{font-size:.85rem;opacity:.7}
+.ins-card + .ins-card{margin-top:10px}
+.ins-co{appearance:auto;padding:8px 10px}
+.ins-dup{border-color:var(--line);color:var(--ink);font-size:.95rem}
+.ins-nm{display:block;width:100%;box-sizing:border-box;margin:0 0 10px;font-weight:600}
+.ins-more{margin-top:10px}.ins-more summary{cursor:pointer;font-size:.9rem;font-weight:600;padding:4px 2px;opacity:.85}
+.ins-more .fields{margin-top:8px}
+.lc-lendrow{display:flex;align-items:center;gap:8px;margin:0 0 10px}
+.lc-lendic{flex:none;width:28px;text-align:center;font-size:1.05rem}
+.lc-lend{flex:1;min-width:0;font:inherit;font-size:.92rem;padding:8px 10px;border-radius:12px;border:1px solid var(--line);background:var(--field,transparent);color:var(--ink)}
+.lc-wrap .lc-card + .lc-card{margin-top:10px}
+/* 8.7: share as text or image */
+.shr-mode{display:flex;gap:6px;padding:4px;border-radius:14px;background:var(--line,rgba(127,127,127,.15));margin:0 0 12px}
+.shr-mode button{flex:1;border:0;border-radius:10px;padding:9px 8px;font:inherit;font-weight:600;background:transparent;color:inherit;cursor:pointer}
+.shr-mode button.on{background:var(--card,#fff);box-shadow:0 1px 6px rgba(0,0,0,.15)}
+.shr-imgwrap{max-height:52vh;overflow:auto;border-radius:12px;border:1px solid var(--line);background:#fff;margin-bottom:12px}
+.shr-imgwrap img{display:block;width:100%;height:auto}
+.shr-imgwait{text-align:center;padding:30px 8px;opacity:.75}
