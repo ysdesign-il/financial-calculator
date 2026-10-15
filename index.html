@@ -1321,6 +1321,20 @@ body:not(.own) .own-only{display:none!important}
 .cs-it small{color:var(--ink-2);font-size:.76rem}
 .cs-u{word-break:break-all}
 .cs-it .btnrow .mv{padding:0 10px;height:auto;min-height:32px;font-size:.8rem}
+/* 7.6 */
+input[data-num]{font-variant-numeric:tabular-nums}
+input.ro{opacity:.75;cursor:not-allowed}
+.fld-off{opacity:.6}
+.page-head .ai-fab.ai-top{position:static;inset:auto;flex:none;min-height:38px;padding:8px 14px 8px 12px;font-size:.84rem;box-shadow:0 4px 14px rgba(0,0,0,.18);margin-inline-start:auto}
+.page-head .ai-top + .ex-btn{margin-inline-start:0}
+@media (max-width:520px){.page-head{flex-wrap:wrap}.page-head .ph-t{flex:1 1 calc(100% - 60px)}.page-head .ai-fab.ai-top{margin-inline-start:0;order:3}.page-head .ai-top ~ .ghost-btn{order:4}.page-head .ai-top + .ex-btn{margin-inline-start:auto}}
+.car-pick{display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--g1)}
+.car-h{display:flex;flex-direction:column;gap:2px}.car-h small{color:var(--ink-2);font-size:.78rem}
+.car-sel{display:grid;grid-template-columns:1fr 1fr;gap:8px}.car-sel label{display:flex;flex-direction:column;gap:4px;font-size:.8rem;color:var(--ink-2)}.car-sel label.wide{grid-column:1/-1}
+.car-sel select,.car-q{width:100%;min-height:42px;font:inherit;font-size:.92rem;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.car-hits{display:flex;flex-wrap:wrap;gap:6px;max-height:180px;overflow:auto}
+.car-pk{margin:0;font-weight:700;color:var(--gold)}
+.close-note{margin:6px 0 0}
 
 </style>
 </head>
@@ -4292,6 +4306,81 @@ Object.assign(T, {
   cs_opt:['מקור שלי: {n}','مصدري: {n}','My source: {n}'], cs_bad:['חסר שם, כתובת תקינה או מה הוא מעדכן','ينقص الاسم أو عنوان صالح أو ما يحدّثه','A name, a valid address or what it updates is missing'],
   cs_pubSite:['נשמר גם לכל מבקרי האתר','حُفظ أيضًا لكل زوار الموقع','Also saved for everyone on the website']
 });
+Object.assign(T, {
+  /* separators */
+  f_sep:['מפריד אלפים ונקודה עשרונית','فاصل الآلاف والفاصلة العشرية','Thousands and decimal separator'],
+  o_sp_comma:['פסיק (15,000.5)','فاصلة (15,000.5)','Comma (15,000.5)'], o_sp_dot:['נקודה (15.000,5)','نقطة (15.000,5)','Dot (15.000,5)'],
+  o_sp_space:['רווח (15 000.5)','مسافة (15 000.5)','Space (15 000.5)'], o_sp_apos:['גרש (15’000.5)','فاصلة عليا (15’000.5)','Apostrophe (15’000.5)'], o_sp_none:['בלי מפריד (15000.5)','بدون فاصل (15000.5)','None (15000.5)'],
+  h_sep:['חל על כל המספרים באפליקציה: בתוצאות ובשדות שמקלידים.','ينطبق على كل الأرقام في التطبيق: في النتائج وفي الحقول التي تكتبها.','Applies to every number in the app: results and the fields you type in.'],
+  sep_ex:['דוגמה: {a} · בשדה: {b}','مثال: {a} · في الحقل: {b}','Example: {a} · in a field: {b}'],
+  f_inGroup:['פסיקים בזמן ההקלדה','الفواصل أثناء الكتابة','Separators while you type'],
+  h_inGroup:['כשמקלידים 15000 מוצג 15,000. החישובים תמיד משתמשים במספר עצמו, כך שזה לא משנה את התוצאה.','عند كتابة 15000 يظهر 15,000. الحسابات تستخدم الرقم نفسه دائمًا، فلا تتغير النتيجة.','Typing 15000 shows 15,000. Calculations always use the number itself, so results do not change.'],
+  /* credit point value */
+  f_ptMode:['שווי נקודת זיכוי','قيمة نقطة الاستحقاق','Credit point value'],
+  o_ptAuto:['רשמי (מתעדכן לבד)','رسمي (يتحدث تلقائيًا)','Official (updates by itself)'], o_ptManual:['ערך משלי','قيمة خاصة بي','My own value'],
+  h_ptMode:['חל על כל המחשבונים שמשתמשים בנקודות זיכוי: שכר, מס הכנסה, עצמאי, שכירות, פיצויים, החזר מס ועוד.','ينطبق على كل الحاسبات التي تستخدم نقاط الاستحقاق: الراتب، ضريبة الدخل، المستقل، الإيجار، التعويضات، استرداد الضريبة وغيرها.','Used by every calculator with credit points: salary, income tax, self-employed, rent, severance, tax refund and more.'],
+  f_ptVal:['שווי נקודה לחודש','قيمة النقطة شهريًا','Value of a point a month'],
+  h_ptVal:['לבחור "ערך משלי" ואז להקליד. השינוי נשמר רק אצלך.','اختر "قيمة خاصة بي" ثم اكتب. يُحفظ التغيير عندك فقط.','Pick "My own value" and type it in. The change is kept only for you.'],
+  pt_now:['בשימוש עכשיו: {v} לחודש ({y} לשנה) · רשמי 2026: {o}','المستخدم الآن: {v} شهريًا ({y} سنويًا) · الرسمي 2026: {o}','In use now: {v} a month ({y} a year) · official 2026: {o}'],
+  pt_set:['שווי נקודת זיכוי: {v} לחודש, בכל המחשבונים','قيمة نقطة الاستحقاق: {v} شهريًا في كل الحاسبات','Credit point value: {v} a month, in every calculator'],
+  pt_auto:['שווי נקודת זיכוי חזר לרשמי: {v} לחודש','عادت قيمة النقطة إلى الرسمية: {v} شهريًا','Credit point value is back to official: {v} a month'],
+  w_ptMine:['החישוב משתמש בשווי נקודת זיכוי שקבעת בהגדרות: {v} לחודש.','يستخدم الحساب قيمة نقطة الاستحقاق التي حددتها في الإعدادات: {v} شهريًا.','This uses the credit point value you set in settings: {v} a month.'],
+  /* salary: car */
+  f_sCarMode:['איך לחשב את שווי הרכב','كيف تُحسب قيمة السيارة','How to work out the car benefit'],
+  o_carList:['אוטומטי: לבחור דגם ממחירון משרד התחבורה','تلقائي: اختيار طراز من قائمة أسعار وزارة المواصلات','Automatic: pick a model from the Ministry of Transport price list'],
+  o_carPrice:['ידני: להקליד מחיר מחירון','يدوي: كتابة سعر القائمة','Manual: type the list price'],
+  o_carValue:['ידני: להקליד שווי שימוש מהתלוש','يدوي: كتابة قيمة الاستخدام من القسيمة','Manual: type the benefit value from the payslip'],
+  h_sCarMode:['באוטומטי המחיר וסוג ההנעה נלקחים מהמחירון הרשמי, והשווי מחושב לפי כללי 2026.','في التلقائي يُؤخذ السعر ونوع المحرك من القائمة الرسمية وتُحسب القيمة حسب قواعد 2026.','In automatic mode the price and engine type come from the official price list, and the value follows the 2026 rules.'],
+  f_sCarVal:['שווי שימוש לחודש (מהתלוש)','قيمة الاستخدام شهريًا (من القسيمة)','Monthly benefit value (from the payslip)'],
+  h_sCarVal:['הסכום שרשום בתלוש כ"שווי רכב", אחרי ההפחתה לרכב ירוק.','المبلغ المسجل في القسيمة كـ"قيمة سيارة" بعد خصم السيارة الخضراء.','The amount on the payslip as "car benefit", after any green-car reduction.'],
+  f_sCarBr:['מדרגת המס על הרכב','شريحة الضريبة على السيارة','Tax bracket on the car'],
+  o_carBrAuto:['אוטומטית לפי השכר','تلقائيًا حسب الراتب','Automatic from your pay'], o_carBrManual:['ידנית: אני בוחר מדרגה','يدويًا: أختار الشريحة','Manual: I pick the bracket'],
+  h_sCarBr:['באוטומטי השווי ממוסה במדרגות שהשכר שלך מגיע אליהן. בידני כל השווי ממוסה בשיעור שבחרת.','في التلقائي تُفرض الضريبة على القيمة حسب شرائح راتبك. في اليدوي تُفرض كلها بالنسبة التي اخترتها.','Automatic taxes the benefit at the brackets your pay reaches. Manual taxes all of it at the rate you pick.'],
+  f_sCarBrRate:['שיעור המס על הרכב','نسبة الضريبة على السيارة','Tax rate on the car'],
+  car_title:['בחירת רכב מהמחירון','اختيار سيارة من القائمة','Pick a car from the price list'],
+  car_src:['מחירון משרד התחבורה (data.gov.il) · עודכן {d}','قائمة أسعار وزارة المواصلات (data.gov.il) · تحدّث {d}','Ministry of Transport price list (data.gov.il) · updated {d}'],
+  car_qPh:['חיפוש: למשל קורולה, טסלה, איוניק','بحث: مثلًا كورولا، تسلا، أيونيك','Search: e.g. Corolla, Tesla, Ioniq'],
+  car_make:['יצרן','الشركة المصنعة','Make'], car_model:['דגם','الطراز','Model'], car_ver:['גרסה, שנה ומחיר','الإصدار والسنة والسعر','Version, year and price'],
+  car_picked:['נבחר: מחיר מחירון {p} · {k}','تم الاختيار: سعر القائمة {p} · {k}','Picked: list price {p} · {k}'],
+  car_hint:['בוחרים יצרן, דגם וגרסה, והמחיר וסוג ההנעה ממולאים לבד.','اختر الشركة والطراز والإصدار ويُملأ السعر ونوع المحرك تلقائيًا.','Pick the make, model and version; the price and engine type fill in by themselves.'],
+  car_none:['לא נמצא דגם כזה','لم يُعثر على هذا الطراز','No such model found'],
+  car_loading:['טוען את המחירון…','جارٍ تحميل القائمة…','Loading the price list…'],
+  car_fail:['המחירון לא נטען כרגע. אפשר להקליד מחיר ידנית.','تعذّر تحميل القائمة الآن. يمكن كتابة السعر يدويًا.','The price list could not load right now. You can type the price yourself.'],
+  car_retry:['לנסות שוב','المحاولة مجددًا','Try again'],
+  /* salary: more options */
+  f_sTravel:['דמי נסיעות לחודש','بدل السفر شهريًا','Travel allowance a month'], h_sTravel:['חייבים במס ובביטוח לאומי, בלי הפרשה לפנסיה.','خاضعة للضريبة والتأمين الوطني، دون اقتطاع للتقاعد.','Taxed and subject to National Insurance, with no pension deduction.'],
+  f_sMeals:['אש"ל או ארוחות לחודש','بدل وجبات شهريًا','Meals allowance a month'], h_sMeals:['תוספת בכסף שחייבת במס.','إضافة مالية خاضعة للضريبة.','A cash addition that is taxed.'],
+  f_sHavraa:['דמי הבראה בשנה','بدل الاستجمام سنويًا','Recuperation pay a year'], h_sHavraa:['הסכום השנתי כפי שרשום בתלוש; מחולק ל-12 בחישוב החודשי.','المبلغ السنوي كما في القسيمة؛ يُقسم على 12 في الحساب الشهري.','The yearly amount on the payslip; spread over 12 months here.'],
+  f_sPhone:['טלפון נייד מהעבודה','هاتف محمول من العمل','Work mobile phone'], h_sPhone:['שווי השימוש בטלפון נוסף להכנסה לצורך מס.','تُضاف قيمة استخدام الهاتف إلى الدخل لأغراض الضريبة.','The phone benefit is added to income for tax.'],
+  f_sPhoneVal:['שווי טלפון לחודש','قيمة الهاتف شهريًا','Phone benefit a month'],
+  o_jobCoord:['משרה עם תיאום מס (שיעור קבוע)','وظيفة بتنسيق ضريبي (نسبة ثابتة)','Job with tax coordination (fixed rate)'],
+  h_sJob:['משרה נוספת בלי תיאום מס: המס הוא בשיעור המרבי ובלי נקודות זיכוי. עם תיאום מס מקלידים את השיעור שאושר.','الوظيفة الإضافية دون تنسيق ضريبي: الضريبة بالنسبة القصوى ودون نقاط. مع التنسيق اكتب النسبة المعتمدة.','A second job without tax coordination: the top rate and no credit points. With coordination, type the approved rate.'],
+  f_sCoord:['שיעור המס לפי תיאום המס','نسبة الضريبة حسب التنسيق','Tax rate from the coordination'], h_sCoord:['השיעור שרשום באישור תיאום המס מרשות המסים.','النسبة المسجلة في تصريح التنسيق من سلطة الضرائب.','The rate on the Tax Authority coordination approval.'],
+  f_sUnion:['דמי חבר או טיפול ארגוני','رسوم العضوية أو الرسوم النقابية','Union or organisational dues'], h_sUnion:['באחוזים מהשכר, למשל 0.8%. יורד מהנטו.','نسبة من الراتب، مثلًا 0.8%. تُخصم من الصافي.','A share of pay, e.g. 0.8%. Taken from net pay.'],
+  f_sLife:['ביטוח חיים פרטי לחודש','تأمين حياة خاص شهريًا','Private life insurance a month'], h_sLife:['מזכה ב-25% זיכוי ממס (הערכה).','يمنح خصمًا ضريبيًا 25% (تقدير).','Gives a 25% tax credit (estimate).'],
+  f_sAge:['גיל וקצבה (לביטוח לאומי)','العمر والمعاش (للتأمين الوطني)','Age and pension (for National Insurance)'],
+  o_age_reg:['מגיל 18 עד גיל פרישה','من 18 حتى سن التقاعد','From 18 to retirement age'], o_age_u18:['מתחת לגיל 18','دون 18','Under 18'],
+  o_age_retW:['אישה בין גיל הפרישה שלה ל-67, בלי קצבת זקנה','امرأة بين سن تقاعدها و67 دون معاش شيخوخة','A woman between her retirement age and 67, no old-age pension'],
+  o_age_ret67:['בני 67 עד 70, בלי קצבת זקנה','من 67 حتى 70 دون معاش شيخوخة','Aged 67 to 70, no old-age pension'],
+  o_age_pens:['מקבל/ת קצבת זקנה','يتلقى معاش شيخوخة','Receiving an old-age pension'],
+  h_sAge:['שיעורי ביטוח לאומי ובריאות של 2026 משתנים לפי הגיל. מתחת ל-18 ומי שמקבל קצבת זקנה לא משלמים מהשכר.','نسب التأمين الوطني والصحة لعام 2026 تتغير حسب العمر. من هم دون 18 ومن يتلقى معاش شيخوخة لا يدفعون من الراتب.','2026 National Insurance and health rates change with age. Under 18 and old-age pensioners pay nothing from pay.'],
+  f_sOleh:['עולה חדש','قادم جديد','New immigrant'], o_olehNew:['עליתי מ-2022 ואילך','قدمت منذ 2022','Arrived from 2022 on'], o_olehOld:['עליתי לפני 2022','قدمت قبل 2022','Arrived before 2022'],
+  h_sOleh:['נקודות זיכוי לפי חודש מאז העלייה (כל זכות).','نقاط استحقاق حسب الشهر منذ الهجرة (كل زخوت).','Credit points by the month since aliyah (Kol Zchut).'],
+  f_sOlehM:['חודש מאז העלייה','الشهر منذ الهجرة','Month since aliyah'], h_sOlehM:['מ-2022: 1/12 נקודה בחודש בשנה הראשונה, 1/4 עד חודש 30, 1/6 עד חודש 42 ו-1/12 עד חודש 54.','منذ 2022: 1/12 نقطة شهريًا في السنة الأولى، 1/4 حتى الشهر 30، 1/6 حتى 42 و1/12 حتى 54.','From 2022: 1/12 point a month in year one, 1/4 to month 30, 1/6 to month 42 and 1/12 to month 54.'],
+  f_sDkids:['ילדים עם מוגבלות','أولاد مع إعاقة','Children with a disability'], h_sDkids:['2 נקודות זיכוי לכל ילד שמוכר כילד עם מוגבלות.','نقطتا استحقاق لكل ولد معترف به كولد مع إعاقة.','2 credit points for each child recognised as having a disability.'],
+  f_sAlim:['משלם/ת מזונות לבן זוג לשעבר (אחרי נישואים בשנית)','يدفع نفقة لزوج سابق (بعد زواج ثانٍ)','Paying alimony to a former spouse (after remarrying)'], h_sAlim:['נקודת זיכוי אחת.','نقطة استحقاق واحدة.','One credit point.'],
+  r_sUnion:['דמי חבר / טיפול ארגוני','رسوم العضوية','Union dues'], r_sTravel:['דמי נסיעות','بدل السفر','Travel allowance'], r_sMeals:['אש"ל וארוחות','بدل الوجبات','Meals allowance'],
+  r_sHavraa:['דמי הבראה (ממוצע חודשי)','بدل الاستجمام (معدل شهري)','Recuperation pay (monthly average)'], r_sPhone:['שווי טלפון','قيمة الهاتف','Phone benefit'],
+  r_sCoordAt:['תיאום מס {r}','تنسيق ضريبي {r}','tax coordination {r}'], r_lifeCred:['זיכוי ביטוח חיים','خصم تأمين الحياة','Life insurance credit'],
+  r_sAgeNi:['ביטוח לאומי לפי גיל','التأمين الوطني حسب العمر','National Insurance by age'], r_hourly:['נטו לשעה (משרה מלאה, 182 שעות)','الصافي للساعة (وظيفة كاملة، 182 ساعة)','Net per hour (full time, 182 hours)'],
+  w_sMinWage:['במשרה מלאה השכר נמוך משכר המינימום ({m} לחודש מאפריל 2026).','في وظيفة كاملة الراتب أقل من الحد الأدنى ({m} شهريًا منذ نيسان 2026).','For a full-time job this is below the minimum wage ({m} a month from April 2026).'],
+  /* closing rates */
+  cl_s_mkt:['שער סגירה של יום המסחר הקודם ({t})','سعر إغلاق يوم التداول السابق ({t})','Previous trading day close ({t})'],
+  cl_st_mkt:['שער סגירה מ-{t}','سعر الإغلاق من {t}','closing rate from {t}'], cl_mk_mktAt:['שער סגירה · {t}','سعر الإغلاق · {t}','Closing rate · {t}'],
+  mk_closeNote:['הנתונים החיים כבויים: מוצגים שערי הסגירה של יום המסחר הקודם ({d}) – מטבעות בסגירת המסחר הבין-בנקאי, ומדדים בסגירת הבורסה שלהם.','البيانات الحية مطفأة: تظهر أسعار إغلاق يوم التداول السابق ({d}) – العملات عند إغلاق التداول بين البنوك والمؤشرات عند إغلاق بورصتها.','Live data is off: showing the previous trading day\'s closing prices ({d}) – currencies at the interbank close, indices at their exchange\'s close.'],
+  src_m_close:['שער סגירה של יום המסחר הקודם','سعر إغلاق يوم التداول السابق','Previous trading day close'],
+  src_w_close:['הנתונים החיים כבויים, ולכן מוצג שער הסגירה של אתמול.','البيانات الحية مطفأة، لذا يظهر سعر إغلاق الأمس.','Live data is off, so yesterday\'s closing rate is shown.']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -4461,7 +4550,7 @@ const RTL = new Set(['he','ar','fa','ur','yi','ps','sd','ug','ckb','dv']);
 var TOUCHED = [], TILE_F = 'all', MY_HANDLE = '';
 try { MY_HANDLE = LS.getItem('fin-handle') || ''; } catch (e) {}
 const MKT = {boi: 3.25, boiDate: '1.9.2026', boiNext: '21.10.2026', cpi: 1.5, cpiMonth: '08/2026', cpiYtd: 2.1, cpiYtdTo: 8, src: 'built'};
-const SET_DEF = {mktLive:'1', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -4929,19 +5018,38 @@ const DEFS = {
     {id:'s_erSev', label:'f_erSev', unit:'%', val:6, adv:'g_benefits'},
     {id:'s_erStudy', label:'f_erStudy', unit:'%', val:0, adv:'g_benefits'},
     SEL('s_car','f_sCar','none',[['none','o_sCarNone'],['co','o_sCarCo']],{wide:true, adv:'g_salCar', hint:'h_sCar'}),
+    SEL('s_carMode','f_sCarMode','price',[['list','o_carList'],['price','o_carPrice'],['value','o_carValue']],{wide:true, adv:'g_salCar', hint:'h_sCarMode', when:['s_car','co']}),
+    {type:'html', id:'s_carPick', cls:'car-pick', adv:'g_salCar', when:['s_carMode','list']},
     {id:'s_carPrice', label:'f_cbPrice', unit:'ils', val:180000, wide:true, adv:'g_salCar', hint:'h_cbPrice', when:['s_car','co']},
+    {id:'s_carVal', label:'f_sCarVal', unit:'ils', val:0, wide:true, adv:'g_salCar', hint:'h_sCarVal', when:['s_carMode','value']},
     SEL('s_carKind','f_cbKind','fuel',[['fuel','o_cbFuel'],['hybrid','o_cbHybrid'],['plugin','o_cbPlugin'],['ev','o_cbEv']],{adv:'g_salCar', when:['s_car','co']}),
     SEL('s_carGil','f_sCarGil','n',[['n','o_sCarGilN'],['y','o_sCarGilY']],{adv:'g_salCar', hint:'h_sCarGil', when:['s_car','co']}),
+    SEL('s_carBr','f_sCarBr','auto',[['auto','o_carBrAuto'],['manual','o_carBrManual']],{adv:'g_salCar', hint:'h_sCarBr', when:['s_car','co']}),
+    SEL('s_carBrRate','f_sCarBrRate','31',[['10','=10%'],['14','=14%'],['20','=20%'],['31','=31%'],['35','=35%'],['47','=47%'],['50','=50% (47% + 3%)']],{adv:'g_salCar', when:['s_carBr','manual']}),
     {id:'s_carPay', label:'f_cbPay', unit:'ils', val:0, adv:'g_salCar', hint:'h_sCarPay', when:['s_car','co']},
     {id:'s_carExtra', label:'f_sCarExtra', unit:'ils', val:0, adv:'g_salCar', hint:'h_sCarExtra', when:['s_car','co']},
+    {id:'s_travel', label:'f_sTravel', unit:'ils', val:0, adv:'g_salMore', hint:'h_sTravel'},
+    {id:'s_meals', label:'f_sMeals', unit:'ils', val:0, adv:'g_salMore', hint:'h_sMeals'},
+    {id:'s_havraa', label:'f_sHavraa', unit:'ils', val:0, adv:'g_salMore', hint:'h_sHavraa'},
+    SEL('s_phone','f_sPhone','0',[['0','o_no'],['1','o_yes']],{adv:'g_salMore', hint:'h_sPhone'}),
+    {id:'s_phoneVal', label:'f_sPhoneVal', unit:'ils', val:105, adv:'g_salMore', when:['s_phone','1']},
     {id:'s_extra', label:'f_sExtra', unit:'ils', val:0, adv:'g_salMore', hint:'h_sExtra'},
-    SEL('s_job','f_sJob','main',[['main','o_jobMain'],['second','o_jobSecond']],{adv:'g_salMore', hint:'h_sJob'}),
+    SEL('s_job','f_sJob','main',[['main','o_jobMain'],['second','o_jobSecond'],['coord','o_jobCoord']],{adv:'g_salMore', hint:'h_sJob'}),
+    {id:'s_coord', label:'f_sCoord', unit:'%', val:10, adv:'g_salMore', hint:'h_sCoord', when:['s_job','coord']},
+    {id:'s_union', label:'f_sUnion', unit:'%', val:0, adv:'g_salMore', hint:'h_sUnion'},
+    {id:'s_life', label:'f_sLife', unit:'ils', val:0, adv:'g_salMore', hint:'h_sLife'},
     {id:'s_otherDed', label:'f_sOtherDed', unit:'ils', val:0, adv:'g_salMore', hint:'h_sOtherDed'},
     {id:'s_don', label:'f_sDon', unit:'ils', val:0, adv:'g_salMore', hint:'h_sDon'},
     {id:'s_locRate', label:'f_locRate', unit:'%', val:0, adv:'g_salMore', hint:'h_sLoc'},
     {id:'s_locCap', label:'f_locCap', unit:'ils', val:0, adv:'g_salMore', hint:'h_loc'},
     {type:'html', id:'se_box', cls:'se-box', adv:'g_salExp'}
-  ].concat(creditDefs('s')).concat(figDefs('s')),
+  ].concat(creditDefs('s')).concat([
+    SEL('s_age','f_sAge','reg',[['reg','o_age_reg'],['u18','o_age_u18'],['retW','o_age_retW'],['ret67','o_age_ret67'],['pens','o_age_pens']],{wide:true, adv:'g_credits', hint:'h_sAge'}),
+    SEL('s_oleh','f_sOleh','0',[['0','o_no'],['new','o_olehNew'],['old','o_olehOld']],{adv:'g_credits', hint:'h_sOleh'}),
+    {id:'s_olehM', label:'f_sOlehM', val:1, adv:'g_credits', hint:'h_sOlehM', when:['s_oleh','new|old']},
+    {id:'s_dkids', label:'f_sDkids', val:0, adv:'g_credits', hint:'h_sDkids'},
+    SEL('s_alim','f_sAlim','0',[['0','o_no'],['1','o_yes']],{adv:'g_credits', hint:'h_sAlim'})
+  ]).concat(figDefs('s')),
   selfemp: [
     {id:'e_rev', label:'f_revenue', unit:'ils', val:300000, wide:true},
     {id:'e_exp', label:'f_expenses', unit:'ils', val:60000, wide:true},
@@ -5516,11 +5624,14 @@ const SETDEFS = [
     SEL('set_digits','f_digits','latn',[['latn','o_dg_latn'],['native','o_dg_native']]),
     SEL('set_dec','f_dec','auto',[['auto','o_dec_auto'],['0','o_dec_0'],['2','o_dec_2']]),
     SEL('set_cpos','f_cpos','auto',[['auto','o_cp_auto'],['before','o_cp_before'],['after','o_cp_after']]),
-    SEL('set_sep','f_sep','auto',[['auto','o_sp_auto'],['comma','o_sp_comma'],['dot','o_sp_dot'],['space','o_sp_space'],['none','o_sp_none']]),
+    SEL('set_sep','f_sep','auto',[['auto','o_sp_auto'],['comma','o_sp_comma'],['dot','o_sp_dot'],['space','o_sp_space'],['apos','o_sp_apos'],['none','o_sp_none']],{hint:'h_sep'}),
+    SEL('set_inGroup','f_inGroup','1',ONOFF,{wide:true, hint:'h_inGroup'}),
     SEL('set_compact','f_compact','0',[['0','o_off'],['1','o_on']],{wide:true})
   ]],
   ['set_calc', [
     SEL('set_start','f_start','home',[['home','o_start_home'],['last','o_start_last']].concat(TABS.filter(x => x !== 'home' && x !== 'settings').map(x => [x, 'tab_' + x])),{wide:true}),
+    SEL('set_ptMode','f_ptMode','auto',[['auto','o_ptAuto'],['manual','o_ptManual']],{wide:true, hint:'h_ptMode'}),
+    {id:'set_ptVal', label:'f_ptVal', unit:'ils', val:'', wide:true, hint:'h_ptVal'},
     SEL('set_saveMode','f_saveMode','auto',[['auto','o_saveAuto'],['manual','o_saveManual'],['none','o_saveNone']],{wide:true}),
     SEL('set_mktLive','f_mktLive','1',[['1','o_mktAuto'],['0','o_mktManual']],{wide:true, hint:'h_mktLive'}),
     SEL('set_vat','f_vatDef','18',[['18','o_vp18'],['17','o_vp17'],['0','o_vp0'],['16','o_vp16'],['14','o_vp14'],['15','o_vp15'],['5','o_vp5'],['19','o_vp19'],['20','o_vp20']],{wide:true}),
@@ -5621,7 +5732,7 @@ function settingsPanelHTML(){
       <p class="fine" id="set_msg" aria-live="polite"></p><p class="fine" id="set_info"></p>`)}
   </section>`;
 }
-const SMAP = {set_mktLive:'mktLive', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
+const SMAP = {set_mktLive:'mktLive', set_inGroup:'inGroup', set_ptMode:'ptMode', set_ptVal:'ptVal', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
@@ -6439,36 +6550,55 @@ function erExcess(base, o){
   return Math.max(0, erP - TAX.erPensRate * Math.min(base, TAX.erPensCap)) + Math.max(0, erS - TAX.erSevRate * Math.min(base, TAX.erSevCap))
     + (typeof IL26 === 'object' ? Math.max(0, erSt - IL26.hishErMax * Math.min(base, IL26.hishCap)) : 0);
 }
+/* National Insurance and health, employee then employer, by age group (Bituach Leumi, 2026):
+   [employee NI reduced, NI full, health reduced, health full, employer reduced, employer full] */
+const NI_AGE = {
+  u18:   [0, 0, 0, 0, .0061, .0212],                      // under 18: the employer pays a small rate, the employee nothing
+  retW:  [.0072, .0507, .0323, .0517, .0417, .0712],      // a woman between her retirement age and 67, no old-age pension
+  ret67: [.0070, .0486, .0323, .0517, .0413, .0696],      // aged 67 to 70, no old-age pension
+  pens:  [0, 0, 0, 0, .0061, .0212]                       // receiving an old-age pension: health is taken from the pension
+};
+function niRates(age){ return NI_AGE[age] || [TAX.niLow, TAX.niHigh, TAX.hLow, TAX.hHigh, TAX.erNiLow, TAX.erNiHigh]; }
 function salaryCalc(g, pts, pensPct, studyPct, o){
   const bonus = o.bonus / 12, base = g + bonus, cash = o.cash || 0, carPay = o.carPay || 0, extra = o.extra || 0, erX = erExcess(base, o);
   const taxBase = base + extra + o.benefit + cash + erX;
-  const b0 = taxByBrackets(taxBase * 12);
+  const cf = o.carRate != null ? (o.carFixed || 0) + (o.cash || 0) : 0;      // a car bracket you chose yourself: the car (and its gross-up) is taxed at that rate
+  const b0 = taxByBrackets((taxBase - cf) * 12);
+  if (cf) b0.tax += cf * 12 * o.carRate;
   const top = TAX.brackets[TAX.brackets.length - 1][1];
-  const b = o.second ? {tax: taxBase * 12 * top, sur: b0.sur} : b0;            // a second job without tax coordination: the top rate, no credit points
+  const coord = o.coord > 0 ? clamp(o.coord, 0, 100) / 100 : 0;                // tax coordination: the rate the Tax Authority approved for this job
+  const b = coord ? {tax: taxBase * 12 * coord, sur: 0} : o.second ? {tax: taxBase * 12 * top, sur: b0.sur} : b0;   // a second job without tax coordination: the top rate, no credit points
   const pens = base * pensPct / 100;
   const qual = Math.min(pens, TAX.pensDepRate * Math.min(base, TAX.pensSalaryCap));
   const loc = o.locRate > 0 ? o.locRate / 100 * Math.min(taxBase * 12, Math.max(0, o.locCap || 0)) : 0;
   const donY = (o.don || 0) * 12, don = donY >= (TAX.donMin || 0) && donY > 0 ? 0.35 * Math.min(donY, 0.3 * taxBase * 12, TAX.donMax || Infinity) : 0;
-  const credits = (o.second ? 0 : pts * TAX.point) + TAX.pensCreditRate * qual * 12 + loc + don;
+  const life = Math.max(0, o.lifeIns || 0) * 12 * 0.25;                        // private life insurance: a 25% credit
+  const credits = (o.second || coord ? 0 : pts * TAX.point) + TAX.pensCreditRate * qual * 12 + loc + don + life;
   const used = Math.min(credits, b.tax);
   const tax = (b.tax - used + b.sur) / 12;
   const low = Math.min(taxBase, TAX.niCut), high = Math.max(0, Math.min(taxBase, TAX.niMax) - TAX.niCut);
-  const ni = low * TAX.niLow + high * TAX.niHigh;
-  const health = low * TAX.hLow + high * TAX.hHigh;
-  const study = base * studyPct / 100, other = o.otherDed || 0;
-  const ded = tax + ni + health + pens + study + carPay + other;
+  const R = niRates(o.age);
+  const ni = low * R[0] + high * R[1];
+  const health = low * R[2] + high * R[3];
+  const study = base * studyPct / 100, other = o.otherDed || 0, union = base * Math.max(0, o.union || 0) / 100;
+  const ded = tax + ni + health + pens + study + carPay + other + union;
   const erP = base * o.erPens / 100, erS = base * o.erSev / 100, erSt = base * o.erStudy / 100;
-  const erNi = low * TAX.erNiLow + high * TAX.erNiHigh;
-  return {gross: base, bonus, extra, net: base + extra + cash - ded, tax, ni, health, pens, study, other, ded, credits: used / 12, cash, carPay, erX, loc: loc / 12, don: don / 12,
+  const erNi = low * R[4] + high * R[5];
+  return {gross: base, bonus, extra, net: base + extra + cash - ded, tax, ni, health, pens, study, other, union, life: life / 12, ded, credits: used / 12, cash, carPay, erX, loc: loc / 12, don: don / 12,
           erP, erS, erSt, erNi, employer: base + extra + cash + erP + erS + erSt + erNi};
 }
 /* --- work car inside the salary --- */
+function carRateSel(){ const m = document.getElementById('s_carBr'); if (!m || m.value !== 'manual') return null; const r = parseFloat(($('#s_carBrRate') || {}).value); return isFinite(r) ? r / 100 : null; }
 function salCar(){
   const sel = document.getElementById('s_car');
   if (!sel || sel.value !== 'co' || typeof IL26 === 'undefined') return null;
   const price = Math.max(0, v('s_carPrice')), kind = $('#s_carKind').value, pay = Math.max(0, v('s_carPay')), extra = Math.max(0, v('s_carExtra'));
+  if (($('#s_carMode') || {}).value === 'value'){                              // the benefit value typed from the payslip
+    const vv = Math.max(0, v('s_carVal'));
+    return {price: 0, kind, pay, extra, gil: $('#s_carGil').value === 'y', base: vv, dd: 0, val: Math.max(0, vv - pay), byVal: true, rate: carRateSel()};
+  }
   const base = Math.min(price, IL26.carCap) * IL26.carPct, dd = Math.min(base, IL26.carDed[kind] || 0), val = Math.max(0, base - dd - pay);
-  return {price, kind, pay, extra, gil: $('#s_carGil').value === 'y', base, dd, val};
+  return {price, kind, pay, extra, gil: $('#s_carGil').value === 'y', base, dd, val, rate: carRateSel()};
 }
 function carBrackets(tb0, add, r, r0){
   const A = taxByBrackets(tb0 * 12), B = taxByBrackets((tb0 + add) * 12), rows = [];
@@ -6490,7 +6620,7 @@ function carBrackets(tb0, add, r, r0){
 }
 function withCar(g, pts, pens, study, o, car){
   if (!car) return o;
-  const oc = Object.assign({}, o, {benefit: o.benefit + car.val, carPay: car.pay + car.extra});
+  const oc = Object.assign({}, o, {benefit: o.benefit + car.val, carPay: car.pay + car.extra}, car.rate != null ? {carFixed: car.val, carRate: car.rate} : {});
   if (!car.gil || car.val <= 0) return oc;
   const want = salaryCalc(g, pts, pens, study, Object.assign({}, o, {carPay: oc.carPay})).net;
   let lo = 0, hi = car.val * 3 + 100;
@@ -6510,6 +6640,7 @@ function payslipRows(r, o){
   if (r.study > 0) L.push([t('r_studyRow'), -r.study]);
   if (r.carPay > 0) L.push([t('r_sCarPay'), -r.carPay]);
   if (r.other > 0) L.push([t('r_sOtherDed'), -r.other]);
+  if (r.union > 0) L.push([t('r_sUnion'), -r.union]);
   if (r.cash > 0) L.splice(1, 0, [t('r_sCarGil'), r.cash]);
   L.push([t('r_totalDed'), -r.ded], [t('r_netMonthly'), r.net]);
   return L.map(([a, b]) => [a, MI(b), pc(Math.abs(b))]);
@@ -6521,7 +6652,11 @@ function calcSalary(){
   const o = {bonus: Math.max(0, v('s_bonus')), benefit: Math.max(0, v('s_benefit')),
              erPens: clamp(v('s_erPens'), 0, 30), erSev: clamp(v('s_erSev'), 0, 30), erStudy: clamp(v('s_erStudy'), 0, 30),
              extra: Math.max(0, v('s_extra')), otherDed: Math.max(0, v('s_otherDed')), don: Math.max(0, v('s_don')),
-             locRate: clamp(v('s_locRate'), 0, 100), locCap: Math.max(0, v('s_locCap')), second: ($('#s_job') || {}).value === 'second'};
+             locRate: clamp(v('s_locRate'), 0, 100), locCap: Math.max(0, v('s_locCap')), second: ($('#s_job') || {}).value === 'second',
+             age: ($('#s_age') || {}).value || 'reg', union: clamp(v('s_union'), 0, 5), lifeIns: Math.max(0, v('s_life')),
+             coord: ($('#s_job') || {}).value === 'coord' ? clamp(v('s_coord'), 0, 50) : 0};
+  const xp = {travel: Math.max(0, v('s_travel')), meals: Math.max(0, v('s_meals')), havraa: Math.max(0, v('s_havraa')) / 12, phone: ($('#s_phone') || {}).value === '1' ? Math.max(0, v('s_phoneVal')) : 0};
+  o.extra += xp.travel + xp.meals + xp.havraa; o.benefit += xp.phone;
   const car = salCar();
   const oc = gg => withCar(gg, pts, pens, study, o, car);
   let g = amt;
@@ -6537,12 +6672,16 @@ function calcSalary(){
   const r2 = salaryCalc(g + 100, pts, pens, study, oc(g + 100));
   const r0 = car ? salaryCalc(g, pts, pens, study, o) : r, drop = r0.net - r.net;
   const carTax = (r.tax + r.ni + r.health) - (r0.tax + r0.ni + r0.health);
-  const cb = car && !o.second ? carBrackets(r0.gross + r0.extra + o.benefit + r0.erX, car.val + (r.cash || 0), r, r0) : null;
+  const cb = car && !o.second && !o.coord && car.rate == null ? carBrackets(r0.gross + r0.extra + o.benefit + r0.erX, car.val + (r.cash || 0), r, r0) : null;
   const marginal = (1 - (r2.net - r.net) / 100) * 100;
   const rows = [[t('r_grossMonthly'), MI(r.gross)]];
   if (o.bonus > 0) rows.push([t('r_bonusAvg'), MI(r.bonus)]);
-  if (r.extra > 0) rows.push([t('r_sExtra'), MI(r.extra)]);
-  if (o.benefit > 0) rows.push([t('r_benefitRow'), MI(o.benefit)]);
+  if (xp.travel > 0) rows.push([t('r_sTravel'), MI(xp.travel)]);
+  if (xp.meals > 0) rows.push([t('r_sMeals'), MI(xp.meals)]);
+  if (xp.havraa > 0) rows.push([t('r_sHavraa'), MI(xp.havraa)]);
+  { const own = r.extra - xp.travel - xp.meals - xp.havraa; if (own > 0.005) rows.push([t('r_sExtra'), MI(own)]); }
+  if (xp.phone > 0) rows.push([t('r_sPhone'), MI(xp.phone)]);
+  if (o.benefit - xp.phone > 0.005) rows.push([t('r_benefitRow'), MI(o.benefit - xp.phone)]);
   if (car) rows.push([t('r_cbVal'), MI(car.val)]);
   if (r.cash > 0) rows.push([t('r_sCarGil'), MI(r.cash)]);
   if (r.erX > 0.5) rows.push([t('r_erX'), MI(r.erX)]);
@@ -6551,15 +6690,18 @@ function calcSalary(){
   if (r.study > 0) rows.push([t('r_studyRow'), MI(-r.study)]);
   if (r.carPay > 0) rows.push([t('r_sCarPay'), MI(-r.carPay)]);
   if (r.other > 0) rows.push([t('r_sOtherDed'), MI(-r.other)]);
+  if (r.union > 0) rows.push([t('r_sUnion'), MI(-r.union)]);
   rows.push(
     [t('r_totalDed'), MI(-r.ded), 'key'],
     [t('r_netMonthly'), MI(r.net), 'key'],
-    ...(car ? [[t('r_cbNetNo'), MI(r0.net)], [t('r_sCarMarg'), !cb ? PC(TAX.brackets[TAX.brackets.length - 1][1] * 100) : cb.m0 === cb.m1 ? N(cb.m0 * 100) + '%' : t('r_sCarMargV', {a: N(cb.m0 * 100) + '%', b: N(cb.m1 * 100) + '%'})], [t('r_sCarTax'), MI(-carTax)], [t('r_sCarDrop'), MI(-drop), 'key'], [t('r_sCarShare'), PC(r0.net > 0 ? drop / r0.net * 100 : NaN)], [t('r_sCarYear'), MI(-drop * 12)]] : []),
+    ...(car ? [[t('r_cbNetNo'), MI(r0.net)], [t('r_sCarMarg'), car.rate != null ? PC(car.rate * 100) + ' · ' + t('o_carBrManual') : o.coord ? PC(o.coord) : !cb ? PC(TAX.brackets[TAX.brackets.length - 1][1] * 100) : cb.m0 === cb.m1 ? N(cb.m0 * 100) + '%' : t('r_sCarMargV', {a: N(cb.m0 * 100) + '%', b: N(cb.m1 * 100) + '%'})], [t('r_sCarTax'), MI(-carTax)], [t('r_sCarDrop'), MI(-drop), 'key'], [t('r_sCarShare'), PC(r0.net > 0 ? drop / r0.net * 100 : NaN)], [t('r_sCarYear'), MI(-drop * 12)]] : []),
     ...(() => { const se = typeof seTotals === 'function' ? seTotals() : {total: 0}; return se.total > 0 ? [[t('r_seCar'), MI(-se.car)], [t('r_seOther'), MI(-se.other)], [t('r_seLeft'), MI(r.net - se.total), 'key'], [t('r_seShare'), PC(r.net > 0 ? se.total / r.net * 100 : NaN)]] : []; })(),
     [t('r_dedShare'), PC(r.gross > 0 ? r.ded / r.gross * 100 : NaN)],
-    [t('r_points'), o.second ? '0 · ' + t('o_jobSecond') : ptsTxt('s', pts)],
+    [t('r_points'), o.coord ? '0 · ' + t('r_sCoordAt', {r: PC(o.coord)}) : o.second ? '0 · ' + t('o_jobSecond') : ptsTxt('s', pts)],
     [t('r_creditsUsed'), MI(r.credits)],
-    ...(r.loc > 0.5 ? [[t('r_locCred'), MI(r.loc)]] : []), ...(r.don > 0.5 ? [[t('r_donCred'), MI(r.don)]] : []),
+    ...(r.loc > 0.5 ? [[t('r_locCred'), MI(r.loc)]] : []), ...(r.don > 0.5 ? [[t('r_donCred'), MI(r.don)]] : []), ...(r.life > 0.5 ? [[t('r_lifeCred'), MI(r.life)]] : []),
+    ...(o.age && o.age !== 'reg' ? [[t('r_sAgeNi'), t('o_age_' + o.age)]] : []),
+    [t('r_hourly'), MI(r.net / 182, 2)],
     [t('r_marginal'), PC(marginal)],
     [t('r_netAnnual'), MI(r.net * 12)],
     [t('r_erPens'), MI(r.erP)], [t('r_erSev'), MI(r.erS)]);
@@ -6575,7 +6717,7 @@ function calcSalary(){
     table2: cb ? {title: t(r.cash > 0 ? 't_sCarBrG' : 't_sCarBr'), open: true, head: [t('h_brRange'), t('h_brRate'), t('h_brAmt'), t('h_brTax')], rows: cb.rows, foot: t('n_sCarBr')} : null,
     table: {title: t('t_payslip'), head: [t('h_item'), t('h_amount'), t('h_pctGross')], rows: payslipRows(r, o)},
     note: t('n_salary2') + ' ' + t('n_points') + (car ? ' ' + t('n_sCar') : ''),
-    warn: (car && car.price > IL26.carCap ? [t('w_cbCap', {c: MI(IL26.carCap)})] : []).concat(o.second ? [t('w_sSecond')] : []),
+    warn: (car && car.price > IL26.carCap ? [t('w_cbCap', {c: MI(IL26.carCap)})] : []).concat(o.second ? [t('w_sSecond')] : []).concat(g > 0 && g < IL26.minWage && o.age !== 'u18' ? [t('w_sMinWage', {m: MI(IL26.minWage, 2)})] : []),
     split: {
       title: t('c_split'),
       items: [
@@ -9840,8 +9982,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "7.5", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.203751';
+var CHANGELOG = [{"v": "7.6", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.210529';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -11865,7 +12007,7 @@ applyLang = function(){ const r = _alFg.apply(this, arguments); fgRender(); lvRe
 figApply(true);
 
 /* ================= live indices: official price indices and market indices, used across the app and editable ================= */
-var IX_BUILT = {"idx":{"cpi":{"code":"120010","name":"Consumer Price Index - General","m":"2026-09","v":105.3,"base":"Average 2024","mom":-0.5,"yoy":1.6,"ytd":1.64,"hist":[["2005-01",70.6175],["2005-02",70.7588],["2005-03",70.6175],["2005-04",71.1119],["2005-05",71.3237],["2005-06",71.3943],["2005-07",72.1711],["2005-08",72.3124],["2005-09",72.383],["2005-10",72.9479],["2005-11",72.8773],["2005-12",72.7361],["2006-01",72.5242],["2006-02",72.9479],["2006-03",73.1598],["2006-04",73.7953],["2006-05",73.7953],["2006-06",73.8659],["2006-07",73.9366],["2006-08",73.9366],["2006-09",73.301],["2006-10",72.8067],["2006-11",72.6654],["2006-12",72.6654],["2007-01",72.5928],["2007-02",72.3728],["2007-03",72.5195],["2007-04",72.8861],["2007-05",72.8861],["2007-06",73.3994],["2007-07",74.206],["2007-08",74.7192],["2007-09",74.3526],["2007-10",74.4259],["2007-11",74.7192],["2007-12",75.1592],["2008-01",75.1592],["2008-02",75.0125],["2008-03",75.2325],["2008-04",76.3324],["2008-05",76.8457],["2008-06",76.919],["2008-07",77.7989],["2008-08",78.4589],["2008-09",78.4589],["2008-10",78.5322],["2008-11",78.0922],["2008-12",78.0189],["2009-01",77.6288],["2009-02",77.5517],["2009-03",77.9372],["2009-04",78.7081],["2009-05",79.0164],["2009-06",79.7102],["2009-07",80.5582],["2009-08",80.9436],["2009-09",80.7124],["2009-10",80.8666],["2009-11",81.0978],["2009-12",81.0978],["2010-01",80.5582],["2010-02",80.3269],["2010-03",80.404],["2010-04",81.0978],["2010-05",81.4062],["2010-06",81.6375],["2010-07",82.0229],["2010-08",82.4083],["2010-09",82.6396],["2010-10",82.8709],["2010-11",82.948],["2010-12",83.2563],["2011-01",83.4228],["2011-02",83.6682],["2011-03",83.8318],["2011-04",84.3225],["2011-05",84.7314],["2011-06",85.0586],["2011-07",84.8132],["2011-08",85.2222],["2011-09",85.0586],["2011-10",85.1404],["2011-11",85.0586],["2011-12",85.0586],["2012-01",85.0586],["2012-02",85.0586],["2012-03",85.3857],["2012-04",86.1218],["2012-05",86.1218],["2012-06",85.8764],["2012-07",85.9582],["2012-08",86.8579],["2012-09",86.8579],["2012-10",86.6943],["2012-11",86.2854],["2012-12",86.449],["2013-01",86.2761],["2013-02",86.2761],["2013-03",86.4481],["2013-04",86.7922],["2013-05",86.8782],["2013-06",87.5663],["2013-07",87.8244],["2013-08",87.9964],["2013-09",87.9964],["2013-10",88.2545],["2013-11",87.9104],["2013-12",87.9964],["2014-01",87.4803],["2014-02",87.3083],["2014-03",87.5663],["2014-04",87.6523],["2014-05",87.7384],["2014-06",87.9964],["2014-07",88.0824],["2014-08",87.9964],["2014-09",87.7384],["2014-10",87.9964],["2014-11",87.8244],["2014-12",87.8244],["2015-01",87.034],["2015-02",86.4198],["2015-03",86.683],["2015-04",87.2094],["2015-05",87.3849],["2015-06",87.6481],["2015-07",87.8236],["2015-08",87.6481],["2015-09",87.2972],["2015-10",87.3849],["2015-11",87.034],["2015-12",86.9462],["2016-01",86.5076],["2016-02",86.2443],["2016-03",86.0689],["2016-04",86.4198],["2016-05",86.683],["2016-06",86.9462],["2016-07",87.2972],["2016-08",87.034],["2016-09",86.9462],["2016-10",87.1217],["2016-11",86.7708],["2016-12",86.7708],["2017-01",86.5972],["2017-02",86.5972],["2017-03",86.8575],["2017-04",87.0311],["2017-05",87.3782],["2017-06",86.7708],["2017-07",86.684],["2017-08",86.9443],["2017-09",87.0311],["2017-10",87.2914],["2017-11",87.0311],["2017-12",87.1178],["2018-01",86.684],["2018-02",86.7708],["2018-03",87.0311],["2018-04",87.3782],["2018-05",87.812],["2018-06",87.8988],["2018-07",87.8988],["2018-08",87.9855],["2018-09",88.0723],["2018-10",88.3326],["2018-11",88.0723],["2018-12",87.812],["2019-01",87.7242],["2019-02",87.8118],["2019-03",88.25],["2019-04",88.5129],["2019-05",89.1264],["2019-06",88.6006],["2019-07",88.3377],["2019-08",88.5129],["2019-09",88.3377],["2019-10",88.6882],["2019-11",88.3377],["2019-12",88.3377],["2020-01",87.9871],["2020-02",87.8995],["2020-03",88.25],["2020-04",87.9871],["2020-05",87.7242],["2020-06",87.6366],["2020-07",87.8118],["2020-08",87.8118],["2020-09",87.7242],["2020-10",87.9871],["2020-11",87.8118],["2020-12",87.7242],["2021-01",87.6365],["2021-02",87.9002],["2021-03",88.4276],["2021-04",88.6913],["2021-05",89.0429],["2021-06",89.1308],["2021-07",89.4824],["2021-08",89.7461],["2021-09",89.9219],["2021-10",90.0098],["2021-11",89.9219],["2021-12",90.1856],["2022-01",90.3614],["2022-02",90.9767],["2022-03",91.5041],["2022-04",92.2073],["2022-05",92.7347],["2022-06",93.0863],["2022-07",94.1411],["2022-08",93.8774],["2022-09",94.0532],["2022-10",94.5806],["2022-11",94.6685],["2022-12",94.9322],["2023-01",95.217],["2023-02",95.6824],["2023-03",96.0547],["2023-04",96.7993],["2023-05",96.9854],["2023-06",96.9854],["2023-07",97.2647],["2023-08",97.73],["2023-09",97.637],["2023-10",98.1023],["2023-11",97.8231],["2023-12",97.73],["2024-01",97.73],["2024-02",98.1023],["2024-03",98.6608],["2024-04",99.4985],["2024-05",99.6846],["2024-06",99.7777],["2024-07",100.3362],["2024-08",101.2669],["2024-09",101.0808],["2024-10",101.5462],["2024-11",101.1739],["2024-12",100.8946],["2025-01",101.5],["2025-02",101.5],["2025-03",102.0],["2025-04",103.1],["2025-05",102.8],["2025-06",103.1],["2025-07",103.5],["2025-08",104.2],["2025-09",103.6],["2025-10",104.1],["2025-11",103.6],["2025-12",103.6],["2026-01",103.3],["2026-02",103.5],["2026-03",103.9],["2026-04",105.1],["2026-05",104.8],["2026-06",104.8],["2026-07",105.1],["2026-08",105.8],["2026-09",105.3]]},"build":{"code":"200010","name":"Price index of input in residential building - general","m":"2026-09","v":104.0,"base":"July 2025","mom":0.1,"yoy":3.6,"ytd":2.77,"hist":[["2005-01",56.8937],["2005-02",56.9482],["2005-03",57.1117],["2005-04",57.2752],["2005-05",57.3842],["2005-06",57.6566],["2005-07",59.2915],["2005-08",60.8719],["2005-09",61.0354],["2005-10",60.7084],["2005-11",60.1635],["2005-12",59.782],["2006-01",60.4904],["2006-02",60.7084],["2006-03",61.0354],["2006-04",61.4714],["2006-05",61.8528],["2006-06",62.4523],["2006-07",62.9972],["2006-08",63.4332],["2006-09",63.7057],["2006-10",63.4877],["2006-11",63.4877],["2006-12",63.3242],["2007-01",63.9237],["2007-02",64.0327],["2007-03",64.1962],["2007-04",64.1962],["2007-05",64.0872],["2007-06",64.5231],["2007-07",65.2316],["2007-08",65.3951],["2007-09",65.4496],["2007-10",65.3406],["2007-11",65.2861],["2007-12",65.2861],["2008-01",65.5585],["2008-02",65.2861],["2008-03",65.4496],["2008-04",66.3215],["2008-05",67.3569],["2008-06",68.0654],["2008-07",69.1553],["2008-08",69.2643],["2008-09",68.8283],["2008-10",67.6839],["2008-11",67.5204],["2008-12",67.4114],["2009-01",67.0844],["2009-02",67.0844],["2009-03",67.0844],["2009-04",67.1389],["2009-05",67.1389],["2009-06",67.1934],["2009-07",67.4114],["2009-08",67.3569],["2009-09",67.3569],["2009-10",67.1934],["2009-11",67.3024],["2009-12",67.4114],["2010-01",67.6294],["2010-02",67.9564],["2010-03",68.3923],["2010-04",68.9918],["2010-05",69.1553],["2010-06",68.9918],["2010-07",68.9373],["2010-08",69.2643],["2010-09",69.3733],["2010-10",69.4278],["2010-11",69.6457],["2010-12",70.0272],["2011-01",70.4632],["2011-02",70.8991],["2011-03",70.8991],["2011-04",70.8991],["2011-05",71.4441],["2011-06",71.9346],["2011-07",72.0981],["2011-08",72.3143],["2011-09",72.5306],["2011-10",72.6027],["2011-11",72.7469],["2011-12",72.6748],["2012-01",72.8911],["2012-02",73.2516],["2012-03",73.4679],["2012-04",73.9726],["2012-05",74.0447],["2012-06",74.261],["2012-07",74.4773],["2012-08",74.7657],["2012-09",74.7657],["2012-10",74.7657],["2012-11",74.982],["2012-12",75.0541],["2013-01",75.4146],["2013-02",75.5588],["2013-03",75.5588],["2013-04",75.4146],["2013-05",75.6309],["2013-06",75.7751],["2013-07",75.7751],["2013-08",75.8472],["2013-09",75.9913],["2013-10",76.0634],["2013-11",76.1355],["2013-12",76.1355],["2014-01",76.3518],["2014-02",76.3518],["2014-03",76.2797],["2014-04",76.3518],["2014-05",76.4239],["2014-06",76.3518],["2014-07",76.2797],["2014-08",76.3518],["2014-09",76.2797],["2014-10",76.496],["2014-11",76.6402],["2014-12",76.7123],["2015-01",76.7844],["2015-02",76.7123],["2015-03",76.8565],["2015-04",76.8565],["2015-05",76.8565],["2015-06",76.8565],["2015-07",76.9286],["2015-08",77.0728],["2015-09",77.1449],["2015-10",77.217],["2015-11",77.1449],["2015-12",77.4333],["2016-01",77.6496],["2016-02",77.5054],["2016-03",77.5054],["2016-04",77.7217],["2016-05",77.8659],["2016-06",77.938],["2016-07",78.2264],["2016-08",78.2264],["2016-09",78.4427],["2016-10",78.4427],["2016-11",78.5869],["2016-12",78.5869],["2017-01",78.5869],["2017-02",78.7311],["2017-03",78.7311],["2017-04",78.8753],["2017-05",78.8753],["2017-06",79.0195],["2017-07",79.1637],["2017-08",79.5242],["2017-09",79.6683],["2017-10",79.8125],["2017-11",79.8846],["2017-12",80.1009],["2018-01",80.5335],["2018-02",80.7498],["2018-03",80.8219],["2018-04",81.0382],["2018-05",81.1103],["2018-06",81.1824],["2018-07",81.3987],["2018-08",81.5429],["2018-09",81.5429],["2018-10",81.615],["2018-11",81.615],["2018-12",81.6871],["2019-01",82.1918],["2019-02",82.2639],["2019-03",82.2639],["2019-04",82.336],["2019-05",82.4081],["2019-06",82.4081],["2019-07",82.4081],["2019-08",82.4802],["2019-09",82.4802],["2019-10",82.4081],["2019-11",82.4081],["2019-12",82.5523],["2020-01",82.6965],["2020-02",82.6965],["2020-03",82.8407],["2020-04",82.7686],["2020-05",82.6965],["2020-06",82.6965],["2020-07",82.6965],["2020-08",82.7686],["2020-09",82.6965],["2020-10",82.6244],["2020-11",82.6244],["2020-12",82.9849],["2021-01",83.4895],["2021-02",83.6337],["2021-03",84.0663],["2021-04",84.7152],["2021-05",85.292],["2021-06",85.7967],["2021-07",86.013],["2021-08",86.5177],["2021-09",86.734],["2021-10",86.9503],["2021-11",87.3828],["2021-12",87.5991],["2022-01",88.3201],["2022-02",88.7527],["2022-03",89.6179],["2022-04",90.4831],["2022-05",90.9156],["2022-06",91.4203],["2022-07",91.8529],["2022-08",91.925],["2022-09",91.925],["2022-10",91.925],["2022-11",91.7808],["2022-12",91.7808],["2023-01",92.8623],["2023-02",92.7181],["2023-03",92.9344],["2023-04",93.2228],["2023-05",93.1507],["2023-06",93.4391],["2023-07",93.2228],["2023-08",93.2949],["2023-09",93.367],["2023-10",93.5112],["2023-11",93.5833],["2023-12",93.5833],["2024-01",93.8717],["2024-02",93.6554],["2024-03",93.8717],["2024-04",93.7996],["2024-05",94.2322],["2024-06",94.5926],["2024-07",94.9531],["2024-08",95.1694],["2024-09",95.5299],["2024-10",95.7462],["2024-11",96.0346],["2024-12",96.323],["2025-01",98.8464],["2025-02",99.279],["2025-03",99.6395],["2025-04",99.7837],["2025-05",99.9279],["2025-06",99.9279],["2025-07",100.0],["2025-08",100.4],["2025-09",100.4],["2025-10",100.5],["2025-11",101.1],["2025-12",101.2],["2026-01",101.3],["2026-02",101.5],["2026-03",101.7],["2026-04",102.8],["2026-05",103.4],["2026-06",103.6],["2026-07",103.5],["2026-08",103.9],["2026-09",104.0]]},"house":{"code":"40010","name":"Prices of Dwellings","m":"2026-07","v":590.0,"base":"Average 1993","mom":-0.6,"yoy":-1.8,"ytd":-1.7,"hist":[["2015-01",354.8],["2015-02",358.3],["2015-03",360.6],["2015-04",361.5],["2015-05",364.5],["2015-06",368.3],["2015-07",369.2],["2015-08",369.0],["2015-09",371.3],["2015-10",374.4],["2015-11",377.5],["2015-12",380.4],["2016-01",381.4],["2016-02",384.0],["2016-03",389.1],["2016-04",390.2],["2016-05",391.1],["2016-06",393.4],["2016-07",396.1],["2016-08",399.9],["2016-09",404.2],["2016-10",404.4],["2016-11",402.8],["2016-12",402.1],["2017-01",402.8],["2017-02",404.9],["2017-03",406.8],["2017-04",407.7],["2017-05",409.5],["2017-06",412.8],["2017-07",414.3],["2017-08",415.9],["2017-09",414.6],["2017-10",414.5],["2017-11",411.9],["2017-12",407.8],["2018-01",406.3],["2018-02",405.9],["2018-03",406.5],["2018-04",406.2],["2018-05",409.2],["2018-06",410.5],["2018-07",408.1],["2018-08",407.4],["2018-09",406.6],["2018-10",405.8],["2018-11",405.5],["2018-12",404.7],["2019-01",408.3],["2019-02",409.6],["2019-03",410.8],["2019-04",412.9],["2019-05",414.1],["2019-06",413.7],["2019-07",414.9],["2019-08",414.5],["2019-09",416.6],["2019-10",418.7],["2019-11",419.1],["2019-12",421.6],["2020-01",423.7],["2020-02",424.1],["2020-03",423.7],["2020-04",420.7],["2020-05",422.0],["2020-06",426.2],["2020-07",426.2],["2020-08",426.6],["2020-09",427.9],["2020-10",431.8],["2020-11",435.7],["2020-12",438.3],["2021-01",439.2],["2021-02",442.7],["2021-03",448.5],["2021-04",452.1],["2021-05",454.4],["2021-06",459.9],["2021-07",465.4],["2021-08",467.3],["2021-09",471.0],["2021-10",477.6],["2021-11",485.7],["2021-12",495.9],["2022-01",503.8],["2022-02",511.9],["2022-03",517.0],["2022-04",525.3],["2022-05",536.3],["2022-06",543.8],["2022-07",553.6],["2022-08",559.7],["2022-09",565.3],["2022-10",567.0],["2022-11",567.6],["2022-12",568.7],["2023-01",568.7],["2023-02",568.7],["2023-03",567.6],["2023-04",564.8],["2023-05",561.4],["2023-06",560.3],["2023-07",559.2],["2023-08",558.6],["2023-09",557.5],["2023-10",554.7],["2023-11",558.0],["2023-12",563.0],["2024-01",569.2],["2024-02",574.9],["2024-03",579.5],["2024-04",583.6],["2024-05",587.1],["2024-06",591.8],["2024-07",593.0],["2024-08",592.4],["2024-09",593.6],["2024-10",596.6],["2024-11",599.0],["2024-12",606.2],["2025-01",609.8],["2025-02",608.6],["2025-03",607.4],["2025-04",605.0],["2025-05",602.6],["2025-06",602.0],["2025-07",600.8],["2025-08",597.2],["2025-09",593.0],["2025-10",596.0],["2025-11",600.8],["2025-12",600.2],["2026-01",599.6],["2026-02",602.0],["2026-03",599.6],["2026-04",592.4],["2026-05",593.0],["2026-06",593.6],["2026-07",590.0]]}},"mkt":{"asOf":1792084253,"src":"cnbc","items":{"dji":{"n":"Dow Jones","sym":".DJI","p":52069.28,"pc":51621.48,"chp":0.87,"t":1792084253,"cur":"USD","rt":true,"a":{"y1":[1759636800,45479.6],"y5":[1633838400,35294.7561],"y10":[1479013200,18867.9348],"ye":[1766898000,48382.39]},"hAt":1792072902,"y1":14.49,"r5":8.06,"r10":10.77,"ytd":7.62},"ta35":{"n":"TA-35","sym":".TA35","p":4150.13,"pc":4162.77,"chp":-0.15,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3276.85],"y5":[1633838400,1848.07],"y10":[1479013200,1432.48],"ye":[1766898000,3695.29]},"hAt":1792072901,"y1":26.65,"r5":17.51,"r10":11.32,"ytd":12.31},"ta125":{"n":"TA-125","sym":".TA125","p":4017.15,"pc":4025.15,"chp":-0.07,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3358.13],"y5":[1633838400,1909.51],"y10":[1479013200,1251.26],"ye":[1766898000,3733.08]},"hAt":1792072901,"y1":19.62,"r5":15.99,"r10":12.48,"ytd":7.61},"spx":{"n":"S&P 500","sym":".SPX","p":7728.97,"pc":7718.94,"chp":0.13,"t":1792084253,"cur":"USD","rt":true,"a":{"y1":[1759636800,6552.51],"y5":[1633838400,4471.37],"y10":[1479013200,2181.9],"ye":[1766898000,6858.47]},"hAt":1792072901,"y1":17.95,"r5":11.53,"r10":13.6,"ytd":12.69},"ndx":{"n":"Nasdaq 100","sym":".NDX","p":29784.35,"pc":29950.816,"chp":-0.56,"t":1792084253,"cur":"USD","rt":true,"a":{"y1":[1759636800,24221.745],"y5":[1633838400,15146.921],"y10":[1479013200,4808.042],"ye":[1766898000,25206.168]},"hAt":1792072901,"y1":22.97,"r5":14.44,"r10":20.18,"ytd":18.16},"gold":{"n":"Gold","sym":"@GC.1","p":4168.1,"pc":4107.9,"chp":1.47,"t":1792083651,"cur":"USD","rt":false,"a":{"y1":[1759636800,4000.4],"y5":[1633838400,1768.3],"y10":[1479013200,1208.7],"ye":[1766898000,4329.6]},"hAt":1792072902,"y1":4.19,"r5":18.65,"r10":13.29,"ytd":-3.73},"brent":{"n":"Brent","sym":"@LCO.1","p":106.26,"pc":106.06,"chp":0.19,"t":1792083650,"cur":"USD","rt":false,"a":{"y1":[1759636800,62.73],"y5":[1633838400,84.86],"y10":[1479013200,46.86],"ye":[1766898000,60.75]},"hAt":1792072903,"y1":69.39,"r5":4.59,"r10":8.6,"ytd":74.91}}}};
+var IX_BUILT = {"idx":{"cpi":{"code":"120010","name":"Consumer Price Index - General","m":"2026-09","v":105.3,"base":"Average 2024","mom":-0.5,"yoy":1.6,"ytd":1.64,"hist":[["2005-01",70.6175],["2005-02",70.7588],["2005-03",70.6175],["2005-04",71.1119],["2005-05",71.3237],["2005-06",71.3943],["2005-07",72.1711],["2005-08",72.3124],["2005-09",72.383],["2005-10",72.9479],["2005-11",72.8773],["2005-12",72.7361],["2006-01",72.5242],["2006-02",72.9479],["2006-03",73.1598],["2006-04",73.7953],["2006-05",73.7953],["2006-06",73.8659],["2006-07",73.9366],["2006-08",73.9366],["2006-09",73.301],["2006-10",72.8067],["2006-11",72.6654],["2006-12",72.6654],["2007-01",72.5928],["2007-02",72.3728],["2007-03",72.5195],["2007-04",72.8861],["2007-05",72.8861],["2007-06",73.3994],["2007-07",74.206],["2007-08",74.7192],["2007-09",74.3526],["2007-10",74.4259],["2007-11",74.7192],["2007-12",75.1592],["2008-01",75.1592],["2008-02",75.0125],["2008-03",75.2325],["2008-04",76.3324],["2008-05",76.8457],["2008-06",76.919],["2008-07",77.7989],["2008-08",78.4589],["2008-09",78.4589],["2008-10",78.5322],["2008-11",78.0922],["2008-12",78.0189],["2009-01",77.6288],["2009-02",77.5517],["2009-03",77.9372],["2009-04",78.7081],["2009-05",79.0164],["2009-06",79.7102],["2009-07",80.5582],["2009-08",80.9436],["2009-09",80.7124],["2009-10",80.8666],["2009-11",81.0978],["2009-12",81.0978],["2010-01",80.5582],["2010-02",80.3269],["2010-03",80.404],["2010-04",81.0978],["2010-05",81.4062],["2010-06",81.6375],["2010-07",82.0229],["2010-08",82.4083],["2010-09",82.6396],["2010-10",82.8709],["2010-11",82.948],["2010-12",83.2563],["2011-01",83.4228],["2011-02",83.6682],["2011-03",83.8318],["2011-04",84.3225],["2011-05",84.7314],["2011-06",85.0586],["2011-07",84.8132],["2011-08",85.2222],["2011-09",85.0586],["2011-10",85.1404],["2011-11",85.0586],["2011-12",85.0586],["2012-01",85.0586],["2012-02",85.0586],["2012-03",85.3857],["2012-04",86.1218],["2012-05",86.1218],["2012-06",85.8764],["2012-07",85.9582],["2012-08",86.8579],["2012-09",86.8579],["2012-10",86.6943],["2012-11",86.2854],["2012-12",86.449],["2013-01",86.2761],["2013-02",86.2761],["2013-03",86.4481],["2013-04",86.7922],["2013-05",86.8782],["2013-06",87.5663],["2013-07",87.8244],["2013-08",87.9964],["2013-09",87.9964],["2013-10",88.2545],["2013-11",87.9104],["2013-12",87.9964],["2014-01",87.4803],["2014-02",87.3083],["2014-03",87.5663],["2014-04",87.6523],["2014-05",87.7384],["2014-06",87.9964],["2014-07",88.0824],["2014-08",87.9964],["2014-09",87.7384],["2014-10",87.9964],["2014-11",87.8244],["2014-12",87.8244],["2015-01",87.034],["2015-02",86.4198],["2015-03",86.683],["2015-04",87.2094],["2015-05",87.3849],["2015-06",87.6481],["2015-07",87.8236],["2015-08",87.6481],["2015-09",87.2972],["2015-10",87.3849],["2015-11",87.034],["2015-12",86.9462],["2016-01",86.5076],["2016-02",86.2443],["2016-03",86.0689],["2016-04",86.4198],["2016-05",86.683],["2016-06",86.9462],["2016-07",87.2972],["2016-08",87.034],["2016-09",86.9462],["2016-10",87.1217],["2016-11",86.7708],["2016-12",86.7708],["2017-01",86.5972],["2017-02",86.5972],["2017-03",86.8575],["2017-04",87.0311],["2017-05",87.3782],["2017-06",86.7708],["2017-07",86.684],["2017-08",86.9443],["2017-09",87.0311],["2017-10",87.2914],["2017-11",87.0311],["2017-12",87.1178],["2018-01",86.684],["2018-02",86.7708],["2018-03",87.0311],["2018-04",87.3782],["2018-05",87.812],["2018-06",87.8988],["2018-07",87.8988],["2018-08",87.9855],["2018-09",88.0723],["2018-10",88.3326],["2018-11",88.0723],["2018-12",87.812],["2019-01",87.7242],["2019-02",87.8118],["2019-03",88.25],["2019-04",88.5129],["2019-05",89.1264],["2019-06",88.6006],["2019-07",88.3377],["2019-08",88.5129],["2019-09",88.3377],["2019-10",88.6882],["2019-11",88.3377],["2019-12",88.3377],["2020-01",87.9871],["2020-02",87.8995],["2020-03",88.25],["2020-04",87.9871],["2020-05",87.7242],["2020-06",87.6366],["2020-07",87.8118],["2020-08",87.8118],["2020-09",87.7242],["2020-10",87.9871],["2020-11",87.8118],["2020-12",87.7242],["2021-01",87.6365],["2021-02",87.9002],["2021-03",88.4276],["2021-04",88.6913],["2021-05",89.0429],["2021-06",89.1308],["2021-07",89.4824],["2021-08",89.7461],["2021-09",89.9219],["2021-10",90.0098],["2021-11",89.9219],["2021-12",90.1856],["2022-01",90.3614],["2022-02",90.9767],["2022-03",91.5041],["2022-04",92.2073],["2022-05",92.7347],["2022-06",93.0863],["2022-07",94.1411],["2022-08",93.8774],["2022-09",94.0532],["2022-10",94.5806],["2022-11",94.6685],["2022-12",94.9322],["2023-01",95.217],["2023-02",95.6824],["2023-03",96.0547],["2023-04",96.7993],["2023-05",96.9854],["2023-06",96.9854],["2023-07",97.2647],["2023-08",97.73],["2023-09",97.637],["2023-10",98.1023],["2023-11",97.8231],["2023-12",97.73],["2024-01",97.73],["2024-02",98.1023],["2024-03",98.6608],["2024-04",99.4985],["2024-05",99.6846],["2024-06",99.7777],["2024-07",100.3362],["2024-08",101.2669],["2024-09",101.0808],["2024-10",101.5462],["2024-11",101.1739],["2024-12",100.8946],["2025-01",101.5],["2025-02",101.5],["2025-03",102.0],["2025-04",103.1],["2025-05",102.8],["2025-06",103.1],["2025-07",103.5],["2025-08",104.2],["2025-09",103.6],["2025-10",104.1],["2025-11",103.6],["2025-12",103.6],["2026-01",103.3],["2026-02",103.5],["2026-03",103.9],["2026-04",105.1],["2026-05",104.8],["2026-06",104.8],["2026-07",105.1],["2026-08",105.8],["2026-09",105.3]]},"build":{"code":"200010","name":"Price index of input in residential building - general","m":"2026-09","v":104.0,"base":"July 2025","mom":0.1,"yoy":3.6,"ytd":2.77,"hist":[["2005-01",56.8937],["2005-02",56.9482],["2005-03",57.1117],["2005-04",57.2752],["2005-05",57.3842],["2005-06",57.6566],["2005-07",59.2915],["2005-08",60.8719],["2005-09",61.0354],["2005-10",60.7084],["2005-11",60.1635],["2005-12",59.782],["2006-01",60.4904],["2006-02",60.7084],["2006-03",61.0354],["2006-04",61.4714],["2006-05",61.8528],["2006-06",62.4523],["2006-07",62.9972],["2006-08",63.4332],["2006-09",63.7057],["2006-10",63.4877],["2006-11",63.4877],["2006-12",63.3242],["2007-01",63.9237],["2007-02",64.0327],["2007-03",64.1962],["2007-04",64.1962],["2007-05",64.0872],["2007-06",64.5231],["2007-07",65.2316],["2007-08",65.3951],["2007-09",65.4496],["2007-10",65.3406],["2007-11",65.2861],["2007-12",65.2861],["2008-01",65.5585],["2008-02",65.2861],["2008-03",65.4496],["2008-04",66.3215],["2008-05",67.3569],["2008-06",68.0654],["2008-07",69.1553],["2008-08",69.2643],["2008-09",68.8283],["2008-10",67.6839],["2008-11",67.5204],["2008-12",67.4114],["2009-01",67.0844],["2009-02",67.0844],["2009-03",67.0844],["2009-04",67.1389],["2009-05",67.1389],["2009-06",67.1934],["2009-07",67.4114],["2009-08",67.3569],["2009-09",67.3569],["2009-10",67.1934],["2009-11",67.3024],["2009-12",67.4114],["2010-01",67.6294],["2010-02",67.9564],["2010-03",68.3923],["2010-04",68.9918],["2010-05",69.1553],["2010-06",68.9918],["2010-07",68.9373],["2010-08",69.2643],["2010-09",69.3733],["2010-10",69.4278],["2010-11",69.6457],["2010-12",70.0272],["2011-01",70.4632],["2011-02",70.8991],["2011-03",70.8991],["2011-04",70.8991],["2011-05",71.4441],["2011-06",71.9346],["2011-07",72.0981],["2011-08",72.3143],["2011-09",72.5306],["2011-10",72.6027],["2011-11",72.7469],["2011-12",72.6748],["2012-01",72.8911],["2012-02",73.2516],["2012-03",73.4679],["2012-04",73.9726],["2012-05",74.0447],["2012-06",74.261],["2012-07",74.4773],["2012-08",74.7657],["2012-09",74.7657],["2012-10",74.7657],["2012-11",74.982],["2012-12",75.0541],["2013-01",75.4146],["2013-02",75.5588],["2013-03",75.5588],["2013-04",75.4146],["2013-05",75.6309],["2013-06",75.7751],["2013-07",75.7751],["2013-08",75.8472],["2013-09",75.9913],["2013-10",76.0634],["2013-11",76.1355],["2013-12",76.1355],["2014-01",76.3518],["2014-02",76.3518],["2014-03",76.2797],["2014-04",76.3518],["2014-05",76.4239],["2014-06",76.3518],["2014-07",76.2797],["2014-08",76.3518],["2014-09",76.2797],["2014-10",76.496],["2014-11",76.6402],["2014-12",76.7123],["2015-01",76.7844],["2015-02",76.7123],["2015-03",76.8565],["2015-04",76.8565],["2015-05",76.8565],["2015-06",76.8565],["2015-07",76.9286],["2015-08",77.0728],["2015-09",77.1449],["2015-10",77.217],["2015-11",77.1449],["2015-12",77.4333],["2016-01",77.6496],["2016-02",77.5054],["2016-03",77.5054],["2016-04",77.7217],["2016-05",77.8659],["2016-06",77.938],["2016-07",78.2264],["2016-08",78.2264],["2016-09",78.4427],["2016-10",78.4427],["2016-11",78.5869],["2016-12",78.5869],["2017-01",78.5869],["2017-02",78.7311],["2017-03",78.7311],["2017-04",78.8753],["2017-05",78.8753],["2017-06",79.0195],["2017-07",79.1637],["2017-08",79.5242],["2017-09",79.6683],["2017-10",79.8125],["2017-11",79.8846],["2017-12",80.1009],["2018-01",80.5335],["2018-02",80.7498],["2018-03",80.8219],["2018-04",81.0382],["2018-05",81.1103],["2018-06",81.1824],["2018-07",81.3987],["2018-08",81.5429],["2018-09",81.5429],["2018-10",81.615],["2018-11",81.615],["2018-12",81.6871],["2019-01",82.1918],["2019-02",82.2639],["2019-03",82.2639],["2019-04",82.336],["2019-05",82.4081],["2019-06",82.4081],["2019-07",82.4081],["2019-08",82.4802],["2019-09",82.4802],["2019-10",82.4081],["2019-11",82.4081],["2019-12",82.5523],["2020-01",82.6965],["2020-02",82.6965],["2020-03",82.8407],["2020-04",82.7686],["2020-05",82.6965],["2020-06",82.6965],["2020-07",82.6965],["2020-08",82.7686],["2020-09",82.6965],["2020-10",82.6244],["2020-11",82.6244],["2020-12",82.9849],["2021-01",83.4895],["2021-02",83.6337],["2021-03",84.0663],["2021-04",84.7152],["2021-05",85.292],["2021-06",85.7967],["2021-07",86.013],["2021-08",86.5177],["2021-09",86.734],["2021-10",86.9503],["2021-11",87.3828],["2021-12",87.5991],["2022-01",88.3201],["2022-02",88.7527],["2022-03",89.6179],["2022-04",90.4831],["2022-05",90.9156],["2022-06",91.4203],["2022-07",91.8529],["2022-08",91.925],["2022-09",91.925],["2022-10",91.925],["2022-11",91.7808],["2022-12",91.7808],["2023-01",92.8623],["2023-02",92.7181],["2023-03",92.9344],["2023-04",93.2228],["2023-05",93.1507],["2023-06",93.4391],["2023-07",93.2228],["2023-08",93.2949],["2023-09",93.367],["2023-10",93.5112],["2023-11",93.5833],["2023-12",93.5833],["2024-01",93.8717],["2024-02",93.6554],["2024-03",93.8717],["2024-04",93.7996],["2024-05",94.2322],["2024-06",94.5926],["2024-07",94.9531],["2024-08",95.1694],["2024-09",95.5299],["2024-10",95.7462],["2024-11",96.0346],["2024-12",96.323],["2025-01",98.8464],["2025-02",99.279],["2025-03",99.6395],["2025-04",99.7837],["2025-05",99.9279],["2025-06",99.9279],["2025-07",100.0],["2025-08",100.4],["2025-09",100.4],["2025-10",100.5],["2025-11",101.1],["2025-12",101.2],["2026-01",101.3],["2026-02",101.5],["2026-03",101.7],["2026-04",102.8],["2026-05",103.4],["2026-06",103.6],["2026-07",103.5],["2026-08",103.9],["2026-09",104.0]]},"house":{"code":"40010","name":"Prices of Dwellings","m":"2026-07","v":590.0,"base":"Average 1993","mom":-0.6,"yoy":-1.8,"ytd":-1.7,"hist":[["2015-01",354.8],["2015-02",358.3],["2015-03",360.6],["2015-04",361.5],["2015-05",364.5],["2015-06",368.3],["2015-07",369.2],["2015-08",369.0],["2015-09",371.3],["2015-10",374.4],["2015-11",377.5],["2015-12",380.4],["2016-01",381.4],["2016-02",384.0],["2016-03",389.1],["2016-04",390.2],["2016-05",391.1],["2016-06",393.4],["2016-07",396.1],["2016-08",399.9],["2016-09",404.2],["2016-10",404.4],["2016-11",402.8],["2016-12",402.1],["2017-01",402.8],["2017-02",404.9],["2017-03",406.8],["2017-04",407.7],["2017-05",409.5],["2017-06",412.8],["2017-07",414.3],["2017-08",415.9],["2017-09",414.6],["2017-10",414.5],["2017-11",411.9],["2017-12",407.8],["2018-01",406.3],["2018-02",405.9],["2018-03",406.5],["2018-04",406.2],["2018-05",409.2],["2018-06",410.5],["2018-07",408.1],["2018-08",407.4],["2018-09",406.6],["2018-10",405.8],["2018-11",405.5],["2018-12",404.7],["2019-01",408.3],["2019-02",409.6],["2019-03",410.8],["2019-04",412.9],["2019-05",414.1],["2019-06",413.7],["2019-07",414.9],["2019-08",414.5],["2019-09",416.6],["2019-10",418.7],["2019-11",419.1],["2019-12",421.6],["2020-01",423.7],["2020-02",424.1],["2020-03",423.7],["2020-04",420.7],["2020-05",422.0],["2020-06",426.2],["2020-07",426.2],["2020-08",426.6],["2020-09",427.9],["2020-10",431.8],["2020-11",435.7],["2020-12",438.3],["2021-01",439.2],["2021-02",442.7],["2021-03",448.5],["2021-04",452.1],["2021-05",454.4],["2021-06",459.9],["2021-07",465.4],["2021-08",467.3],["2021-09",471.0],["2021-10",477.6],["2021-11",485.7],["2021-12",495.9],["2022-01",503.8],["2022-02",511.9],["2022-03",517.0],["2022-04",525.3],["2022-05",536.3],["2022-06",543.8],["2022-07",553.6],["2022-08",559.7],["2022-09",565.3],["2022-10",567.0],["2022-11",567.6],["2022-12",568.7],["2023-01",568.7],["2023-02",568.7],["2023-03",567.6],["2023-04",564.8],["2023-05",561.4],["2023-06",560.3],["2023-07",559.2],["2023-08",558.6],["2023-09",557.5],["2023-10",554.7],["2023-11",558.0],["2023-12",563.0],["2024-01",569.2],["2024-02",574.9],["2024-03",579.5],["2024-04",583.6],["2024-05",587.1],["2024-06",591.8],["2024-07",593.0],["2024-08",592.4],["2024-09",593.6],["2024-10",596.6],["2024-11",599.0],["2024-12",606.2],["2025-01",609.8],["2025-02",608.6],["2025-03",607.4],["2025-04",605.0],["2025-05",602.6],["2025-06",602.0],["2025-07",600.8],["2025-08",597.2],["2025-09",593.0],["2025-10",596.0],["2025-11",600.8],["2025-12",600.2],["2026-01",599.6],["2026-02",602.0],["2026-03",599.6],["2026-04",592.4],["2026-05",593.0],["2026-06",593.6],["2026-07",590.0]]}},"mkt":{"asOf":1792087343,"src":"cnbc","items":{"dji":{"n":"Dow Jones","sym":".DJI","p":52143.95,"pc":51621.48,"chp":1.01,"t":1792087343,"cur":"USD","rt":true,"a":{"y1":[1759636800,45479.6],"y5":[1633838400,35294.7561],"y10":[1479013200,18867.9348],"ye":[1766898000,48382.39]},"hAt":1792072902,"y1":14.65,"r5":8.09,"r10":10.79,"ytd":7.77},"ta35":{"n":"TA-35","sym":".TA35","p":4150.13,"pc":4162.77,"chp":-0.15,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3276.85],"y5":[1633838400,1848.07],"y10":[1479013200,1432.48],"ye":[1766898000,3695.29]},"hAt":1792072901,"y1":26.65,"r5":17.51,"r10":11.32,"ytd":12.31},"ta125":{"n":"TA-125","sym":".TA125","p":4017.15,"pc":4025.15,"chp":-0.07,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3358.13],"y5":[1633838400,1909.51],"y10":[1479013200,1251.26],"ye":[1766898000,3733.08]},"hAt":1792072901,"y1":19.62,"r5":15.99,"r10":12.48,"ytd":7.61},"spx":{"n":"S&P 500","sym":".SPX","p":7735.83,"pc":7718.94,"chp":0.22,"t":1792087343,"cur":"USD","rt":true,"a":{"y1":[1759636800,6552.51],"y5":[1633838400,4471.37],"y10":[1479013200,2181.9],"ye":[1766898000,6858.47]},"hAt":1792072901,"y1":18.06,"r5":11.55,"r10":13.61,"ytd":12.79},"ndx":{"n":"Nasdaq 100","sym":".NDX","p":29824.408,"pc":29950.816,"chp":-0.42,"t":1792087343,"cur":"USD","rt":true,"a":{"y1":[1759636800,24221.745],"y5":[1633838400,15146.921],"y10":[1479013200,4808.042],"ye":[1766898000,25206.168]},"hAt":1792072901,"y1":23.13,"r5":14.47,"r10":20.2,"ytd":18.32},"gold":{"n":"Gold","sym":"@GC.1","p":4174.5,"pc":4107.9,"chp":1.62,"t":1792086736,"cur":"USD","rt":false,"a":{"y1":[1759636800,4000.4],"y5":[1633838400,1768.3],"y10":[1479013200,1208.7],"ye":[1766898000,4329.6]},"hAt":1792072902,"y1":4.35,"r5":18.68,"r10":13.31,"ytd":-3.58},"brent":{"n":"Brent","sym":"@LCO.1","p":105.87,"pc":106.06,"chp":-0.18,"t":1792086740,"cur":"USD","rt":false,"a":{"y1":[1759636800,62.73],"y5":[1633838400,84.86],"y10":[1479013200,46.86],"ye":[1766898000,60.75]},"hAt":1792072903,"y1":68.77,"r5":4.51,"r10":8.56,"ytd":74.27}}}};
 var IX = {idx: Object.assign({}, (IX_BUILT && IX_BUILT.idx) || {}), mkt: Object.assign({}, ((IX_BUILT && IX_BUILT.mkt) || {}).items || {}), src: 'built', at: 0};
 var IX_MK = ['ta35', 'ta125', 'spx', 'ndx', 'dji', 'gold', 'brent'], IX_RET = ['ta125', 'ta35', 'spx', 'ndx', 'dji', 'gold'];
 var IX_SYM = {ta35: '.TA35', ta125: '.TA125', spx: '.SPX', ndx: '.NDX', dji: '.DJI', gold: '@GC.1', brent: '@LCO.1'};
@@ -14457,6 +14599,343 @@ show = function(id, res){
   }
   return showSrc75.call(this, id, res);
 };
+
+
+/* ================= 7.6: digit grouping while you type, your own separators, yesterday's close when live data is off,
+   the credit point value in settings, more salary options, the company car from the government price list, AI at the top ================= */
+
+/* ---------- separators: one choice for everything the app shows and everything you type ---------- */
+var SEP_G = {comma: ',', dot: '.', space: ' ', apos: '’', none: ''};
+function sepGroup(){
+  const s = SET.sep; if (s && s !== 'auto' && SEP_G[s] != null) return SEP_G[s];
+  try { return (new Intl.NumberFormat(locOf()).formatToParts(12345.5).find(p => p.type === 'group') || {}).value || ','; } catch (e) { return ','; }
+}
+function sepDec(){
+  const s = SET.sep; if (s === 'dot') return ','; if (s && s !== 'auto') return '.';
+  try { return (new Intl.NumberFormat(locOf()).formatToParts(1.5).find(p => p.type === 'decimal') || {}).value || '.'; } catch (e) { return '.'; }
+}
+N = function(x, d, max){
+  if (!isFinite(x)) return '—';
+  const key = lang + SET.digits + '|' + d + '|' + max;
+  let f = nfc[key];
+  if (!f){
+    const o = max != null ? {maximumFractionDigits: max} : d == null ? {maximumFractionDigits: 2} : {minimumFractionDigits: d, maximumFractionDigits: d};
+    try { f = nfc[key] = new Intl.NumberFormat(locOf(), o); } catch (e) { f = nfc[key] = new Intl.NumberFormat('en-US', o); }
+  }
+  if (!SET.sep || SET.sep === 'auto') return f.format(x);
+  const g = SEP_G[SET.sep] != null ? SEP_G[SET.sep] : ',', dc = SET.sep === 'dot' ? ',' : '.';
+  return f.formatToParts(x).map(p => p.type === 'group' ? g : p.type === 'decimal' ? dc : p.value).join('');
+};
+
+/* ---------- number fields show 15,000 while you type; every calculation still reads the plain number ---------- */
+var NUM_VAL = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+var NUM_SKIP = /^(in_from|in_to|wd_|dev_|acc_|mv_|rc_|del_|hd_|ln_|srl|cl_dueDay|cs_|dc_|gh_|fx_|aix_|as_q|gs_q|cp_q|ex_q|scn-in-|exp_date)/;
+const numGrpOn = () => SET.inGroup !== '0';
+function numPlain(v){                                   // a number written by code: always "." for decimals
+  let s = String(v == null ? '' : v).trim();
+  if (/e[+-]?\d/i.test(s) && isFinite(+s)) s = String(+s);
+  s = s.replace(/[^\d.\-]/g, '');
+  const neg = s.charAt(0) === '-'; s = s.replace(/-/g, '');
+  const i = s.indexOf('.'); if (i >= 0) s = s.slice(0, i + 1) + s.slice(i + 1).replace(/\./g, '');
+  return (neg ? '-' : '') + s;
+}
+function numRead(disp){                                  // what the person typed, in their separators → a plain number
+  let s = String(disp == null ? '' : disp).replace(/[\s  ’'`]/g, '');
+  const g = numGrpOn() ? sepGroup() : '', dc = sepDec();
+  s = s.replace(/[٠-٩]/g, c => String(c.charCodeAt(0) - 0x660)).replace(/[۰-۹]/g, c => String(c.charCodeAt(0) - 0x6F0));
+  if (dc === ','){
+    const ld = s.lastIndexOf('.');                       // a keyboard with only "." still gives decimals: ".5" at the end is a decimal point
+    if (s.indexOf(',') < 0 && ld >= 0 && s.length - ld - 1 <= 2) s = s.slice(0, ld).replace(/\./g, '') + ',' + s.slice(ld + 1);
+    s = s.replace(/\./g, '').replace(/,/g, '.');
+  } else {
+    s = s.replace(/,/g, '');
+    if (g && g !== ',' && g !== '.') s = s.split(g).join('');
+  }
+  return numPlain(s);
+}
+function numShow(raw){
+  raw = String(raw == null ? '' : raw);
+  if (raw === '' || raw === '-' || raw === '.') return raw === '.' ? '0' + sepDec() : raw;
+  const neg = raw.charAt(0) === '-', r = neg ? raw.slice(1) : raw, i = r.indexOf('.');
+  let ip = i < 0 ? r : r.slice(0, i); const fp = i < 0 ? null : r.slice(i + 1);
+  ip = ip.replace(/^0+(?=\d)/, '');
+  if (ip === '' && fp != null) ip = '0';
+  const g = numGrpOn() ? sepGroup() : '';
+  if (g && ip.length > 3) ip = ip.replace(/\B(?=(\d{3})+(?!\d))/g, g);
+  return (neg ? '-' : '') + ip + (fp != null ? sepDec() + fp : '');
+}
+function numSetDisp(el, raw){ const d = numShow(raw); NUM_VAL.set.call(el, d); el.__raw = raw; el.__disp = d; }
+function numEnhance(el){
+  if (!el || el.__num || el.tagName !== 'INPUT' || el.readOnly && el.dataset.numSkip) return;
+  if (NUM_SKIP.test(el.id || '') || el.classList.contains('rng') || el.classList.contains('lc-name')) return;
+  const im = el.getAttribute('inputmode') || '';
+  if (!(el.type === 'number' || (el.type === 'text' && /decimal|numeric/.test(im)))) return;
+  const raw0 = numPlain(NUM_VAL.get.call(el));
+  if (el.type === 'number'){ el.type = 'text'; if (!im) el.setAttribute('inputmode', 'decimal'); }
+  el.__num = true; el.setAttribute('data-num', '1'); el.setAttribute('autocomplete', 'off'); el.setAttribute('spellcheck', 'false');
+  if (!el.getAttribute('dir')) el.setAttribute('dir', 'ltr');
+  Object.defineProperty(el, 'value', {configurable: true,
+    get(){ const d = NUM_VAL.get.call(this); return d === this.__disp ? this.__raw : numRead(d); },
+    set(v){ numSetDisp(this, numPlain(v)); }});
+  numSetDisp(el, raw0);
+}
+function numScan(root){ $$('input', root || document).forEach(numEnhance); }
+function numRefresh(){ $$('input[data-num]').forEach(el => numSetDisp(el, el.__raw != null ? el.__raw : numRead(NUM_VAL.get.call(el)))); }
+document.addEventListener('input', e => {
+  const el = e.target; if (!el || !el.__num) return;
+  const disp = NUM_VAL.get.call(el), pos = el.selectionStart == null ? disp.length : el.selectionStart;
+  const before = disp.slice(0, pos), nd = (before.match(/\d/g) || []).length;
+  const raw = numRead(disp), out = numShow(raw);
+  el.__raw = raw;
+  if (out === disp){ el.__disp = out; return; }
+  NUM_VAL.set.call(el, out); el.__disp = out;
+  let k = 0, p = 0; while (p < out.length && k < nd){ if (/\d/.test(out.charAt(p))) k++; p++; }
+  if (/[.,]$/.test(before) && out.charAt(p) === sepDec()) p++;
+  if (nd === 0 && /^-/.test(out)) p = Math.max(p, 1);
+  try { if (document.activeElement === el) el.setSelectionRange(p, p); } catch (err) {}
+}, true);
+document.addEventListener('focusin', e => { const el = e.target; if (el && el.__num) try { const n = NUM_VAL.get.call(el).length; setTimeout(() => { try { if (document.activeElement === el && el.selectionStart === el.selectionEnd) el.setSelectionRange(n, n); } catch (x) {} }, 0); } catch (err) {} });
+new MutationObserver(ms => { for (const m of ms) for (const n of m.addedNodes){ if (n.nodeType !== 1) continue; if (n.tagName === 'INPUT') numEnhance(n); else if (n.querySelector && n.querySelector('input')) numScan(n); } })
+  .observe(document.body, {childList: true, subtree: true});
+numScan();
+document.addEventListener('change', e => {
+  const id = e.target && e.target.id;
+  if (id === 'set_sep' || id === 'set_inGroup' || id === 'set_digits' || id === 'set_lang'){ setTimeout(() => { numRefresh(); try { calc(tab); } catch (x) {} sepHint(); }, 0); }
+});
+function sepHint(){
+  const s = $('#set_sep'); if (!s) return;
+  const f = s.closest('.field'); if (!f) return;
+  let ex = $('.sep-ex', f); if (!ex){ ex = document.createElement('small'); ex.className = 'hint sep-ex'; ex.setAttribute('dir', 'ltr'); f.appendChild(ex); }
+  ex.textContent = t('sep_ex', {a: N(1234567.89, 2), b: numShow('15000')});
+}
+setTimeout(sepHint, 0);
+
+/* ---------- the credit point value: official, or your own (Settings → Calculators) ---------- */
+function ptOfficial(){ const o = typeof FG_OFF === 'object' && FG_OFF.point; return isFinite(+o) && +o > 0 ? +o : 242; }
+function ptMine(){ const v = parseFloat(SET.ptVal); return SET.ptMode === 'manual' && v > 0 && v < 5000 ? v : 0; }
+function ptApply(){ const m = ptMine(); if (m) TAX.point = m * 12; }
+const figApply76 = figApply;
+figApply = function(){ const r = figApply76.apply(this, arguments); ptApply(); try { ptUi(); } catch (e) {} return r; };
+function ptUi(){
+  const m = $('#set_ptMode'), f = $('#set_ptVal'); if (!m || !f) return;
+  m.value = SET.ptMode === 'manual' ? 'manual' : 'auto';
+  const man = m.value === 'manual';
+  f.disabled = !man; const box = f.closest('.field'); if (box) box.classList.toggle('fld-off', !man);
+  if (!man || !(parseFloat(SET.ptVal) > 0)){ if (document.activeElement !== f) f.value = man ? (SET.ptVal || '') : String(ptOfficial()); }
+  let h = box && $('.pt-now', box); if (box && !h){ h = document.createElement('small'); h.className = 'hint pt-now'; box.appendChild(h); }
+  if (h) h.textContent = t('pt_now', {v: MI(TAX.point / 12, 2), y: MI(TAX.point), o: MI(ptOfficial(), 2)});
+}
+document.addEventListener('change', e => {
+  const id = e.target && e.target.id; if (id !== 'set_ptMode' && id !== 'set_ptVal') return;
+  if (id === 'set_ptVal'){ const v = parseFloat(e.target.value); SET.ptVal = v > 0 ? String(v) : ''; if (v > 0) SET.ptMode = 'manual'; }
+  saveSet(); figApply(false); try { calc(tab); } catch (x) {}
+  toast(t(ptMine() ? 'pt_set' : 'pt_auto', {v: MI(TAX.point / 12, 2)}));
+});
+const showPt = show;
+show = function(id, res){
+  if (ptMine() && res && !FG_SKIP.includes(id) && !['vat', 'loan', 'mortgage', 'prime', 'loancmp', 'refi', 'prepay', 'savegoal', 'retire', 'creditcard', 'rentbuy', 'carlease', 'avgcost', 'breakeven', 'networth', 'debtplan', 'fire', 'freedom', 'inflation', 'cpilink', 'mgmtfees', 'kidsave', 'benefits', 'mortcap', 'empcost'].includes(id))
+    res = Object.assign({}, res, {warn: (res.warn || []).concat(t('w_ptMine', {v: MI(ptMine(), 2)}))});
+  return showPt.call(this, id, res);
+};
+ptApply(); setTimeout(ptUi, 0);
+const applyLangPt = applyLang;
+applyLang = function(){ const r = applyLangPt.apply(this, arguments); try { ptUi(); sepHint(); } catch (e) {} return r; };
+
+/* ---------- salary: more credit points (new immigrant, child with a disability, alimony) ---------- */
+function olehPts(){
+  const k = ($('#s_oleh') || {}).value, m = Math.max(1, Math.floor(v('s_olehM') || 1));
+  if (k === 'new') return m <= 12 ? 1 : m <= 30 ? 3 : m <= 42 ? 2 : m <= 54 ? 1 : 0;      // from 2022: 1/12, then 1/4, 1/6, 1/12 point a month
+  if (k === 'old') return m <= 18 ? 3 : m <= 30 ? 2 : m <= 42 ? 1 : 0;                    // before 2022: 1/4, 1/6, 1/12 point a month
+  return 0;
+}
+const pointsOf76 = pointsOf;
+pointsOf = function(p){
+  let pts = pointsOf76.apply(this, arguments);
+  if (p === 's'){
+    pts += olehPts();
+    pts += 2 * Math.max(0, Math.floor(v('s_dkids') || 0));
+    if (($('#s_alim') || {}).value === '1') pts += 1;
+  }
+  return pts;
+};
+/* fields that only matter with a company car stay hidden without one */
+const applyWhen76 = applyWhen;
+applyWhen = function(id){
+  const r = applyWhen76.apply(this, arguments);
+  if (id === 'salary'){
+    const co = ($('#s_car') || {}).value === 'co', mode = ($('#s_carMode') || {}).value;
+    ['s_carMode', 's_carKind', 's_carGil', 's_carPay', 's_carExtra', 's_carBr'].forEach(k => { const f = $('#' + k); const box = f && f.closest('.field'); if (box) box.hidden = !co; });
+    const bx = $('#s_carBrRate'), bb = bx && bx.closest('.field'); if (bb) bb.hidden = !co || ($('#s_carBr') || {}).value !== 'manual';
+    const pr = $('#s_carPrice'), pb = pr && pr.closest('.field'); if (pb) pb.hidden = !co || mode === 'value';
+    const vv = $('#s_carVal'), vb = vv && vv.closest('.field'); if (vb) vb.hidden = !co || mode !== 'value';
+    const pk = $('#s_carPick'); if (pk) pk.hidden = !co || mode !== 'list';
+    if (pr){ pr.readOnly = co && mode === 'list'; pr.classList.toggle('ro', pr.readOnly); }
+    const kd = $('#s_carKind'); if (kd) kd.disabled = co && mode === 'list' && !!(SET.carPick && SET.carPick.p);
+    if (co && mode === 'list') carPickRender();
+  }
+  return r;
+};
+
+/* ---------- the company car straight from the Ministry of Transport price list ---------- */
+var CARS = {d: null, st: '', at: 0, q: ''};
+function carsUrl(){ return IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/cars.json' : 'cars.json'; }
+async function carsLoad(){
+  if (CARS.d || CARS.st === 'wait') return CARS.d;
+  CARS.st = 'wait'; carPickRender();
+  try {
+    const r = await fetch(carsUrl() + '?v=' + Math.floor(Date.now() / 86400000), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'});
+    if (!r.ok) throw 0;
+    const d = await r.json(); if (!d || !d.makes) throw 0;
+    CARS.d = d; CARS.st = 'ok';
+  } catch (e) { CARS.st = 'fail'; }
+  carPickRender();
+  return CARS.d;
+}
+var CAR_HE = {'קורולה': 'corolla', 'יאריס': 'yaris', 'קאמרי': 'camry', 'ראב': 'rav4', 'פריוס': 'prius', 'סי אייץ': 'c-hr', 'הילנדר': 'highlander', 'לנד קרוזר': 'land cruiser',
+  'איוניק': 'ioniq', 'טוסון': 'tucson', 'קונה': 'kona', 'אלנטרה': 'elantra', 'סונטה': 'sonata', 'סנטה פה': 'santa fe', 'i10': 'i10', 'i20': 'i20', 'i30': 'i30',
+  'ספורטז': 'sportage', 'פיקנטו': 'picanto', 'ניירו': 'niro', 'סיד': 'ceed', 'סורנטו': 'sorento', 'סטוניק': 'stonic', 'אוקטביה': 'octavia', 'סופרב': 'superb', 'קודיאק': 'kodiaq', 'קארוק': 'karoq', 'פאביה': 'fabia', 'קאמיק': 'kamiq', 'אניאק': 'enyaq',
+  'גולף': 'golf', 'פולו': 'polo', 'פאסאט': 'passat', 'טיגואן': 'tiguan', 'טי רוק': 't-roc', 'מאזדה': 'mazda', 'סיוויק': 'civic', 'ג\'אז': 'jazz', 'סוויפט': 'swift', 'ויטרה': 'vitara', 'קשקאי': 'qashqai', 'ג\'וק': 'juke', 'מיקרה': 'micra',
+  'טסלה': 'tesla', 'מודל 3': 'model 3', 'מודל y': 'model y', 'אטו 3': 'atto 3', 'דולפין': 'dolphin', 'סיל': 'seal', 'קליו': 'clio', 'קפצ\'ור': 'captur', 'מגאן': 'megane', 'דאסטר': 'duster', 'סנדרו': 'sandero', 'ג\'וגר': 'jogger',
+  '208': '208', '2008': '2008', '3008': '3008', 'קורסה': 'corsa', 'אסטרה': 'astra', 'מוקה': 'mokka', 'סיד ספורטס': 'ceed', 'אאוטלנדר': 'outlander', 'אקליפס': 'eclipse', 'ספייס סטאר': 'space star', 'פורסטר': 'forester', 'XV': 'xv'};
+function carAlias(q){ let s = ' ' + q + ' '; Object.keys(CAR_HE).forEach(h => { const n = pmNorm(h).trim(); if (n && s.includes(' ' + n + ' ')) s = s.replace(' ' + n + ' ', ' ' + CAR_HE[h] + ' '); }); return pmNorm(s).trim(); }
+const carKindName = k => t({fuel: 'o_cbFuel', hybrid: 'o_cbHybrid', plugin: 'o_cbPlugin', ev: 'o_cbEv'}[k] || 'o_cbFuel');
+function carPickRender(){
+  const box = $('#s_carPick'); if (!box || box.hidden) return;
+  if (!CARS.d){
+    if (CARS.st !== 'wait' && CARS.st !== 'fail') { carsLoad(); return; }
+    box.innerHTML = `<p class="fine car-st">${asEsc(t(CARS.st === 'fail' ? 'car_fail' : 'car_loading'))}</p>${CARS.st === 'fail' ? `<button type="button" class="mv wide" id="car_retry">${asEsc(t('car_retry'))}</button>` : ''}`;
+    return;
+  }
+  const P = SET.carPick || {}, M = CARS.d.makes, makes = Object.keys(M);
+  const key = [lang, P.mk, P.md, P.i, CARS.q, CARS.d.asOf].join('|'); if (box.dataset.k === key) return; box.dataset.k = key;
+  const opt = (v, l, on) => `<option value="${asEsc(v)}"${on ? ' selected' : ''}>${asEsc(l)}</option>`;
+  const q = carAlias(pmNorm(CARS.q || '').trim());
+  let hits = '';
+  if (q.length >= 2){
+    const words = q.split(' '), res = [];
+    makes.forEach(mk => Object.keys(M[mk]).forEach(md => { const tx = pmNorm(mk + ' ' + md).toLowerCase(); if (words.every(w => tx.includes(w))) res.push([mk, md]); }));
+    hits = `<div class="car-hits">${res.slice(0, 30).map(([mk, md]) => `<button type="button" class="as-chip" data-carhit="${asEsc(mk)}|${asEsc(md)}">${asEsc(md)} · <small>${asEsc(mk)}</small></button>`).join('') || `<p class="fine">${asEsc(t('car_none'))}</p>`}</div>`;
+  }
+  const mdl = P.mk && M[P.mk] ? Object.keys(M[P.mk]) : [], vers = P.mk && P.md && M[P.mk] && M[P.mk][P.md] ? M[P.mk][P.md] : [];
+  box.innerHTML = `<div class="car-h"><b>${asEsc(t('car_title'))}</b><small>${asEsc(t('car_src', {d: new Date((CARS.d.asOf || 0) * 1000).toLocaleDateString(locOf())}))}</small></div>
+    <input type="search" class="car-q lookup" id="car_q" placeholder="${asEsc(t('car_qPh'))}" value="${asEsc(CARS.q || '')}" autocomplete="off">${hits}
+    <div class="car-sel"><label><span>${asEsc(t('car_make'))}</span><select id="car_mk"><option value="">—</option>${makes.map(m => opt(m, m, m === P.mk)).join('')}</select></label>
+    <label><span>${asEsc(t('car_model'))}</span><select id="car_md"${mdl.length ? '' : ' disabled'}><option value="">—</option>${mdl.map(m => opt(m, m, m === P.md)).join('')}</select></label>
+    <label class="wide"><span>${asEsc(t('car_ver'))}</span><select id="car_v"${vers.length ? '' : ' disabled'}><option value="">—</option>${vers.map((x, i) => opt(String(i), [x[0], x[1], MI(x[2]), carKindName(x[3])].filter(Boolean).join(' · '), String(i) === String(P.i))).join('')}</select></label></div>
+    ${P.p ? `<p class="car-pk">✓ ${asEsc(t('car_picked', {p: MI(P.p), k: carKindName(P.k)}))}</p>` : `<p class="fine">${asEsc(t('car_hint'))}</p>`}`;
+}
+function carSetPick(p){
+  SET.carPick = p; saveSet();
+  const v0 = p.mk && p.md && CARS.d && CARS.d.makes[p.mk] && CARS.d.makes[p.mk][p.md] ? CARS.d.makes[p.mk][p.md][+p.i] : null;
+  if (v0 && p.i !== '' && p.i != null){
+    SET.carPick = Object.assign(p, {p: v0[2], k: v0[3]}); saveSet();
+    const pr = $('#s_carPrice'), kd = $('#s_carKind');
+    if (pr){ pr.value = v0[2]; pr.dispatchEvent(new Event('input', {bubbles: true})); }
+    if (kd){ kd.value = v0[3]; kd.dispatchEvent(new Event('change', {bubbles: true})); }
+  } else { delete SET.carPick.p; delete SET.carPick.k; saveSet(); }
+  carPickRender(); try { calc('salary'); } catch (e) {}
+}
+document.addEventListener('change', e => {
+  const id = e.target && e.target.id;
+  if (id === 'car_mk') carSetPick({mk: e.target.value, md: '', i: ''});
+  else if (id === 'car_md') carSetPick({mk: (SET.carPick || {}).mk, md: e.target.value, i: ''});
+  else if (id === 'car_v') carSetPick(Object.assign({}, SET.carPick || {}, {i: e.target.value}));
+});
+document.addEventListener('input', e => { if (e.target && e.target.id === 'car_q'){ CARS.q = e.target.value; const pos = e.target.selectionStart; carPickRender(); const q = $('#car_q'); if (q){ q.focus(); try { q.setSelectionRange(pos, pos); } catch (x) {} } } });
+document.addEventListener('click', e => {
+  const h = e.target.closest && e.target.closest('[data-carhit]');
+  if (h){ const [mk, md] = h.dataset.carhit.split('|'); CARS.q = ''; const vs = CARS.d.makes[mk][md] || []; carSetPick({mk, md, i: vs.length === 1 ? '0' : ''}); const v = $('#car_v'); if (v && vs.length > 1) v.focus(); return; }
+  if (e.target.closest && e.target.closest('#car_retry')){ CARS.st = ''; carPickRender(); }
+});
+
+/* ---------- live data off: yesterday's closing rates, at the close of trading ---------- */
+var CLOSE = {usd: null, at: 0, on: false, d: null, pc: {}, T: null};
+var CLOSE_KEYS = {s_mkt: 'cl_s_mkt', st_mkt: 'cl_st_mkt', mk_mktAt: 'cl_mk_mktAt'};
+function closeTexts(on){                                     // labels say "closing rate" while live data is off
+  if (on && !CLOSE.T){ CLOSE.T = {}; Object.keys(CLOSE_KEYS).forEach(k => { CLOSE.T[k] = T[k]; T[k] = T[CLOSE_KEYS[k]]; }); }
+  else if (!on && CLOSE.T){ Object.keys(CLOSE.T).forEach(k => { T[k] = CLOSE.T[k]; }); CLOSE.T = null; }
+}
+function prevTradingDay(){ const d = new Date(); do { d.setDate(d.getDate() - 1); } while (d.getDay() === 0 || d.getDay() === 6); return d; }
+function tzUnix(day, hh, mm, tz){
+  const y = day.getFullYear(), mo = day.getMonth(), d = day.getDate(), guess = Date.UTC(y, mo, d, hh, mm);
+  try {
+    const p = new Intl.DateTimeFormat('en-US', {timeZone: tz, hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'}).formatToParts(new Date(guess));
+    const g = k => +(p.find(x => x.type === k) || {}).value;
+    const asTz = Date.UTC(g('year'), g('month') - 1, g('day'), g('hour') % 24, g('minute'));
+    return Math.round((guess - (asTz - guess)) / 1000);
+  } catch (e) { return Math.round(guess / 1000); }
+}
+const closeLabel = () => { const d = CLOSE.d || prevTradingDay(); try { return new Intl.DateTimeFormat(locOf(), {weekday: 'short', day: 'numeric', month: 'short'}).format(d); } catch (e) { return d.toDateString(); } };
+async function closeFetchLive(){                           // on the website the quote feed gives the previous close directly
+  if (IN_CLAUDE) return false;
+  try {
+    const r = await fetch(IX_QURL, {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); if (!r.ok) return false;
+    const rows = ((((await r.json()) || {}).FormattedQuoteResult || {}).FormattedQuote) || [], usd = {};
+    rows.forEach(q => {
+      const fk = Object.keys(FX_CN).find(x => FX_CN[x][0] === q.symbol), pc = ixNum(q.previous_day_closing);
+      if (fk && pc > 0){ usd[fk] = FX_CN[fk][1] ? 1 / pc : pc; return; }
+      const k = IX_MK.find(x => IX_SYM[x] === q.symbol); if (k && pc > 0) CLOSE.pc[k] = pc;
+    });
+    if (Object.keys(usd).length >= 3){ CLOSE.usd = usd; CLOSE.at = Date.now(); return true; }
+  } catch (e) {}
+  return false;
+}
+function closeApply(){
+  if (SET.mktLive !== '0') return;
+  const day = prevTradingDay(); CLOSE.d = day; CLOSE.on = true; closeTexts(true);
+  let n = 0;
+  if (CLOSE.usd){
+    Object.keys(CLOSE.usd).forEach(k => { const v = +CLOSE.usd[k], old = RATES[k]; if (!(v > 0) || (old && (v / old < 0.8 || v / old > 1.25))) return; RATES[k] = v; FXSRC[k] = {s: 'close', at: tzUnix(day, 17, 0, 'America/New_York') * 1000}; n++; });
+  } else if (typeof OFFDOC === 'object' && OFFDOC){ try { applyDbRates(OFFDOC); } catch (e) {} }
+  if (n){ RATES.USD = 1; META.live = false; META.official = false; META.mkt = true; META.unix = tzUnix(day, 17, 0, 'America/New_York'); }
+  IX_MK.forEach(k => {
+    const it = IX.mkt[k], pc = +CLOSE.pc[k] || (it && +it.pc); if (!it || !(pc > 0)) return;
+    const ta = k === 'ta35' || k === 'ta125';
+    IX.mkt[k] = Object.assign({}, it, {p: pc, pc, chp: NaN, live: false, closed: true, t: ta ? tzUnix(day, 17, 25, 'Asia/Jerusalem') : tzUnix(day, 16, 0, 'America/New_York')});
+  });
+  try { fillCurSelects(); renderStamp(); if (tab === 'home') renderMarket(); else calc(tab); } catch (e) {}
+}
+const fxApplySnap76 = fxApplySnap;
+fxApplySnap = function(L){
+  try { if (L && L.close && typeof L.close === 'object' && Object.keys(L.close).length >= 3){ CLOSE.usd = L.close; CLOSE.at = +L.asOf || 0; } } catch (e) {}
+  const r = fxApplySnap76.apply(this, arguments);
+  if (SET.mktLive === '0' && !MKT_FORCE) setTimeout(closeApply, 0);
+  return r;
+};
+const ixApply76 = ixApply;
+ixApply = function(d){
+  try { const it = d && d.mkt && d.mkt.items; if (it) Object.keys(it).forEach(k => { if (+it[k].pc > 0) CLOSE.pc[k] = +it[k].pc; }); } catch (e) {}
+  const r = ixApply76.apply(this, arguments); if (SET.mktLive === '0' && !MKT_FORCE) setTimeout(closeApply, 0); return r; };
+const rfDataTime76 = rfDataTime;
+rfDataTime = function(){ return CLOSE.on && SET.mktLive === '0' ? closeLabel() : rfDataTime76.apply(this, arguments); };
+const mktApply76 = mktApply;
+mktApply = function(quiet){
+  const r = mktApply76.apply(this, arguments);
+  if (SET.mktLive === '0'){ closeFetchLive().then(closeApply, closeApply); closeApply(); }
+  else if (CLOSE.on){ CLOSE.on = false; closeTexts(false); try { refreshEverything(true); } catch (e) {} }
+  return r;
+};
+const ixBoardClose = ixBoard;
+ixBoard = function(){
+  const r = ixBoardClose.apply(this, arguments);
+  if (CLOSE.on && SET.mktLive === '0'){ const n = $('#hmx .mkt-note'); if (n && !$('.close-note', n.parentNode)) n.insertAdjacentHTML('beforebegin', `<p class="fine close-note">🕔 ${asEsc(t('mk_closeNote', {d: closeLabel()}))}</p>`); }
+  return r;
+};
+if (SET.mktLive === '0') setTimeout(() => { closeFetchLive().then(closeApply, closeApply); }, 2600);
+
+/* ---------- AI at the top of every calculator ---------- */
+var AI_TOP_SKIP = ['home', 'settings', 'assist'];
+const aiFabSync76 = aiFabSync;
+aiFabSync = function(){
+  const r = aiFabSync76.apply(this, arguments);
+  const b = $('#ai_fab'), h = $('#phead'); if (!b || !h) return r;
+  const top = !AI_TOP_SKIP.includes(tab);
+  if (top){ const anchor = $('.ph-t', h); if (b.parentNode !== h || b.previousElementSibling !== anchor) anchor ? anchor.insertAdjacentElement('afterend', b) : h.appendChild(b); }
+  else if (b.parentNode !== document.body) document.body.appendChild(b);
+  b.classList.toggle('ai-top', top); b.hidden = tab === 'assist';
+  return r;
+};
+try { aiFabSync(); } catch (e) {}
 
 applyLang(false);
 activate(tab);
