@@ -9,7 +9,7 @@ assert L[528].startswith('const TABS') and L[612].strip()=='};' and L[615].start
 assert L[743].startswith('const navEl') and L[860].startswith('/* ===') and 'navigation' in L[1243] and L[501].strip()=='};'
 out = []
 out.append(seg(1, 11)); out.append(P('tokens.css')); out.append(seg(38, 231)); out.append(P('css.css')); out.append(P('theme.css')); out.append(P('design.css')); out.append(P('fx.css')); out.append(P('design2.css')); out.append(P('acc.css')); out.append(P('perf.css')); out.append(P('cur.css'))
-out.append(seg(232, 234)); out.append(P('body.html')); out.append(seg(267, 502)); out.append(P('i1.js')+P('i2.js')+P('i3.js')+P('i4.js')+P('i5.js')+P('i6.js')+P('i7.js')+P('i8.js')+P('i9.js')+P('i10.js')+P('i11.js')+P('i12.js')+P('i13.js')+P('i14.js')+P('i15.js')+P('i16.js')+P('i17.js')+P('i18.js')+P('i19.js')+P('i20.js')+P('i21.js')+P('i22.js')+P('i23.js')+P('i25.js'))
+out.append(seg(232, 234)); out.append(P('body.html')); out.append(seg(267, 502)); out.append(P('i1.js')+P('i2.js')+P('i3.js')+P('i4.js')+P('i5.js')+P('i6.js')+P('i7.js')+P('i8.js')+P('i9.js')+P('i10.js')+P('i11.js')+P('i12.js')+P('i13.js')+P('i14.js')+P('i15.js')+P('i16.js')+P('i17.js')+P('i18.js')+P('i19.js')+P('i20.js')+P('i21.js')+P('i22.js')+P('i23.js')+P('i25.js')+P('i26.js'))
 out.append(seg(503, 523)); out.append(P('crypto.js')); out.append(P('fx_official.js')); out.append(P('groups.js'))
 out.append(seg(530, 613)); out.append(P('ico.js'))
 out.append(seg(614, 615)); out.append(P('sico.js')+P('ui2a.js')+P('ui2b.js')+P('ui2d.js')+P('ui2c.js')+P('ui2e.js')+P('ui2f.js'))
