@@ -13,7 +13,12 @@ const DZ = {
 DZ.orbit.t['--dz-hero'] = 'url(' + DZ_IMG.orbitHero + ')'; DZ.orbit.t['--dz-head'] = 'url(' + DZ_IMG.orbitHead + ')';
 DZ.aurum.t['--dz-hero'] = 'url(' + DZ_IMG.aurumHero + ')'; DZ.aurum.t['--dz-head'] = 'url(' + DZ_IMG.aurumHead + ')';
 (function dzCss(){
-  let css = ''; for (const k in DZ){ css += ':root[data-design="' + k + '"]{' + Object.entries(DZ[k].t).map(([p, v]) => p + ':' + v).join(';') + '}\n'; }
+  /* a design keeps its own colors only when no color theme is chosen ("by device", dark or light); with a color theme it takes the theme's colors */
+  let css = ''; for (const k in DZ){
+    const img = ['--dz-hero', '--dz-head'], t0 = Object.entries(DZ[k].t);
+    css += ':root[data-design="' + k + '"][data-dzc="own"]{' + t0.filter(([p]) => !img.includes(p)).map(([p, v]) => p + ':' + v).join(';') + '}\n';
+    css += ':root[data-design="' + k + '"]{' + t0.filter(([p]) => img.includes(p)).map(([p, v]) => p + ':' + v).join(';') + '}\n';
+  }
   const st = document.createElement('style'); st.id = 'dz-css'; st.textContent = css; document.head.appendChild(st);
 })();
 const dzOn = () => DZ[SET.design] ? SET.design : '';
@@ -27,11 +32,15 @@ applyTheme = function(){
   const r0 = _atDz.apply(this, arguments);
   const d = dzOn(), r = document.documentElement;
   if (d){
-    r.dataset.design = d; r.dataset.theme = 'dark'; r.dataset.skin = 'dz-' + d;
-    ['--gold-ui', '--gold', '--brass'].forEach(p => r.style.removeProperty(p));
-    const mc = document.querySelector('meta[name="theme-color"]'); if (mc) mc.content = DZ[d].t['--navy'];
+    const sk = SKINS[HOL_ACTIVE || SET.theme];
+    r.dataset.design = d; r.dataset.dzc = sk ? 'skin' : 'own';
+    if (!sk){
+      r.dataset.theme = 'dark'; r.dataset.skin = 'dz-' + d;
+      ['--gold-ui', '--gold', '--brass'].forEach(p => r.style.removeProperty(p));
+      const mc = document.querySelector('meta[name="theme-color"]'); if (mc) mc.content = DZ[d].t['--navy'];
+    }
     dzFont();
-  } else delete r.dataset.design;
+  } else { delete r.dataset.design; delete r.dataset.dzc; }
   try { dzGal(); } catch (e) {}
   return r0;
 };
@@ -62,13 +71,7 @@ function dzPick(k){
 }
 const _skRDz = skRender;
 skRender = function(){ const r = _skRDz.apply(this, arguments); try { dzGal(); } catch (e) {} return r; };
-/* a color theme belongs to the default design, so choosing one returns to it */
-const _skPDz = skPick;
-skPick = function(k){ if (dzOn()){ SET.design = 'default'; } return _skPDz.apply(this, arguments); };
 document.addEventListener('click', e => { const c = e.target.closest('[data-dz-pick]'); if (c){ e.preventDefault(); dzPick(c.dataset.dzPick); } });
-document.addEventListener('change', e => {
-  if (e.target && e.target.id === 'set_theme' && dzOn()){ SET.design = 'default'; saveSet(); applyTheme(); try { skRender(); } catch (err) {} }
-});
 document.addEventListener('keydown', e => {
   const c = e.target.closest && e.target.closest('.dz-c'); if (!c || !['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'].includes(e.key)) return;
   const rtl = document.documentElement.dir === 'rtl', all = $$('.dz-c', c.parentElement), i = all.indexOf(c), fw = e.key === 'ArrowDown' || (e.key === 'ArrowLeft' ? rtl : e.key === 'ArrowRight' ? !rtl : false);

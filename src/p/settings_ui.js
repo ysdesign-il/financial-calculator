@@ -9,6 +9,7 @@ const SETDEFS = [
     SEL('set_design','f_design','default',[['default','dz_default'],['orbit','dz_orbit'],['aurum','dz_aurum']],{wide:true, hint:'h_design'}),
     SEL('set_theme','f_theme','system',[['system','o_th_sys'],['dark','sk_dark'],['light','sk_light'],['telaviv','sk_telaviv'],['jerusalem','sk_jerusalem'],['banknote','sk_banknote'],['deadsea','sk_deadsea'],['eilat','sk_eilat'],['terminal','sk_terminal'],['roshhashana','sk_roshhashana'],['hanukkah','sk_hanukkah'],['passover','sk_passover'],['christmas','sk_christmas'],['easter','sk_easter'],['newyear','sk_newyear'],['ramadan','sk_ramadan'],['eidfitr','sk_eidfitr'],['eidadha','sk_eidadha'],['yomkippur','sk_yomkippur'],['sukkot','sk_sukkot'],['simchattorah','sk_simchattorah'],['tubishvat','sk_tubishvat'],['purim','sk_purim'],['atzmaut','sk_atzmaut'],['lagbaomer','sk_lagbaomer'],['yomyerushalayim','sk_yomyerushalayim'],['shavuot','sk_shavuot'],['tubeav','sk_tubeav'],['advent','sk_advent'],['epiphany','sk_epiphany'],['valentine','sk_valentine'],['palmsunday','sk_palmsunday'],['ascension','sk_ascension'],['pentecost','sk_pentecost'],['assumption','sk_assumption'],['allsaints','sk_allsaints']],{wide:true, hint:'h_theme'}),
     SEL('set_holAuto','f_holAuto','0',[['0','o_off'],['all','o_holAll'],['jewish','o_holJ'],['christian','o_holC'],['muslim','o_holM']],{wide:true, hint:'h_holAuto'}),
+    SEL('set_hfx','f_hfx','1',ONOFF,{wide:true, hint:'h_hfx'}),
     SEL('set_accent','f_accent','gold',[['gold','o_ac_gold'],['blue','o_ac_blue'],['green','o_ac_green'],['violet','o_ac_violet']]),
     SEL('set_size','f_size','m',[['s','o_sz_s'],['m','o_sz_m'],['l','o_sz_l']]),
     SEL('set_contrast','f_contrast','normal',[['normal','o_ct_normal'],['high','o_ct_high']]),
@@ -132,7 +133,7 @@ function settingsPanelHTML(){
       <p class="fine" id="set_msg" aria-live="polite"></p><p class="fine" id="set_info"></p>`)}
   </section>`;
 }
-const SMAP = {set_design:'design', set_mktLive:'mktLive', set_inGroup:'inGroup', set_ptMode:'ptMode', set_ptVal:'ptVal', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
+const SMAP = {set_design:'design', set_hfx:'hfx', set_mktLive:'mktLive', set_inGroup:'inGroup', set_ptMode:'ptMode', set_ptVal:'ptVal', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',

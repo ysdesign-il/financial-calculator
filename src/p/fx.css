@@ -1,0 +1,33 @@
+/* ================= 8.0: holiday effects ================= */
+.fx-back,.fx-front{position:fixed;inset:0;pointer-events:none}
+.fx-back{z-index:0}
+.fx-front{z-index:45}
+:root[data-fx] .shell{position:relative;z-index:1}
+.fx-gar{position:relative;height:52px;margin:-6px 0 4px;pointer-events:none}
+.fx-str{position:absolute;inset:0 0 auto;width:100%;height:30px;overflow:visible}
+.fx-str path{fill:none;stroke:color-mix(in srgb,var(--ink) 45%,transparent);stroke-width:.6;vector-effect:non-scaling-stroke}
+.fx-f{position:absolute;width:22px;transform-origin:50% 0;animation:fxSway 3.2s ease-in-out infinite alternate}
+.fx-f svg{display:block;width:22px;height:16px;filter:drop-shadow(0 2px 3px rgba(0,20,80,.35))}
+.fx-l{width:20px}.fx-l svg{width:20px;height:34px;margin-top:var(--ln,10px);filter:drop-shadow(0 0 6px rgba(255,200,90,.55))}
+.fx-l .fx-glow{animation:fxFlick 1.6s ease-in-out infinite alternate}
+@keyframes fxSway{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+@keyframes fxFlick{from{opacity:.65}to{opacity:1}}
+.fx-hol{position:relative;overflow:hidden;display:flex;align-items:center;gap:14px;margin:0 0 14px;padding:14px 16px;border-radius:22px;border:1px solid var(--sk-hh-bd,var(--hero-bd));background:var(--sk-hh,var(--hero-grad));color:var(--sk-hh-v,var(--ink));box-shadow:0 14px 34px var(--shadow)}
+.fx-hol::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.22) 45%,transparent 60%);transform:translateX(-100%);animation:fxShine 5s ease-in-out 1s infinite;pointer-events:none}
+@keyframes fxShine{0%{transform:translateX(-100%)}40%,100%{transform:translateX(100%)}}
+.fx-txt{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.fx-txt b{font-size:1.2rem;line-height:1.2;color:var(--sk-hh-v,var(--ink))}
+.fx-txt small{font-size:.86rem;color:var(--sk-hh-l,var(--ink-2))}
+.fx-emo{font-size:2.6rem;line-height:1;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));animation:fxBob 2.6s ease-in-out infinite alternate}
+@keyframes fxBob{from{transform:translateY(-2px) rotate(-4deg)}to{transform:translateY(3px) rotate(4deg)}}
+.fx-wave{width:132px;height:96px;flex:none;margin:-6px -4px -10px -6px}
+.fx-go{flex:none;appearance:none;border:1px solid color-mix(in srgb,var(--sk-hh-v,#fff) 40%,transparent);background:rgba(255,255,255,.14);border-radius:999px;width:44px;height:44px;font-size:1.25rem;cursor:pointer;position:relative;z-index:1}
+.fx-go:focus-visible{outline:2px solid var(--gold-ui);outline-offset:2px}
+/* Independence Day: blue and white, a band of stars, and the flag waving */
+.fx-hol-atzmaut{background:radial-gradient(rgba(255,255,255,.18) 1px,transparent 1.6px) 0 0/16px 16px,linear-gradient(135deg,#0038B8 0%,#1E5BD8 55%,#0A2A86 100%);border-color:rgba(255,255,255,.55);color:#fff}
+.fx-hol-atzmaut .fx-txt b{color:#fff;font-size:1.32rem;text-shadow:0 2px 10px rgba(0,0,40,.5)}
+.fx-hol-atzmaut .fx-txt small{color:#DCE7FF}
+.fx-hol-atzmaut::before{content:"";position:absolute;inset:auto 0 0;height:6px;background:repeating-linear-gradient(90deg,#fff 0 18px,#0038B8 18px 36px);opacity:.85}
+@media (prefers-reduced-motion:reduce){.fx-f,.fx-l .fx-glow,.fx-hol::after,.fx-emo{animation:none}}
+:root[data-motion="reduced"] .fx-front{display:none}
+@media print{.fx-back,.fx-front,.fx-gar,.fx-hol{display:none !important}}

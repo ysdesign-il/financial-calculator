@@ -1366,70 +1366,103 @@ input.ro{opacity:.75;cursor:not-allowed}
 .dz-c-aurum .dz-pv i:nth-of-type(3){background:linear-gradient(90deg,#F1D497,#B8893F);border:0}
 @media (max-width:420px){.dz-gal{gap:8px}.dz-c small{display:none}.dz-pv{height:72px}}
 
+/* ---- design accents: the design's own, or taken from the chosen color theme ---- */
+:root[data-design="orbit"]{--dz-a1:#E8C27A;--dz-a2:#38D2FF;--dz-a3:#9B6BFF;--dz-b1:#F6DCA0;--dz-b2:#B98942;--dz-bt:#1A1204;--dz-hv1:#FFE7B0;--dz-hv2:#E2B263;--dz-on:#FFFFFF;--dz-seg1:#2F6BFF;--dz-seg2:#38D2FF;--dz-segt:#FFFFFF}
+:root[data-design="aurum"]{--dz-a1:#D8B46A;--dz-a2:#F3E2B3;--dz-a3:#9C7A3C;--dz-b1:#F3D99C;--dz-b2:#AE8139;--dz-bt:#140E03;--dz-hv1:#F6E2AE;--dz-hv2:#C99A4C;--dz-on:#E9C982;--dz-seg1:#F1D497;--dz-seg2:#C99A4C;--dz-segt:#140E03}
+:root[data-design][data-dzc="skin"]{--dz-a1:var(--gold-ui);--dz-a2:var(--c2);--dz-a3:var(--c1);--dz-b1:color-mix(in srgb,var(--gold-ui) 60%,#fff);--dz-b2:color-mix(in srgb,var(--gold-ui) 82%,#000);--dz-hv1:var(--hero-val);--dz-hv2:color-mix(in srgb,var(--hero-val) 80%,var(--ink));--dz-on:var(--gold);--dz-seg1:var(--gold-ui);--dz-seg2:color-mix(in srgb,var(--gold-ui) 70%,var(--c2))}
+:root[data-design][data-dzc="skin"][data-theme="dark"]{--dz-bt:#140d02;--dz-segt:#140d02}
+:root[data-design][data-dzc="skin"][data-theme="light"]{--dz-bt:var(--navy);--dz-segt:var(--navy);--dz-b1:color-mix(in srgb,var(--gold-ui) 45%,#fff);--dz-b2:var(--gold-ui)}
+
 /* ---- shared by both designs ---- */
-:root[data-design] .dz-ban{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;position:relative;overflow:hidden;min-height:210px;margin:0 0 16px;padding:22px 18px 18px;border-radius:26px;border:1px solid var(--hero-bd);background:linear-gradient(180deg,rgba(0,0,0,0) 30%,var(--bg) 100%),var(--dz-hero) center 40%/cover;box-shadow:0 18px 44px rgba(0,0,0,.5)}
+:root[data-design] .dz-ban{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;position:relative;overflow:hidden;min-height:210px;margin:0 0 16px;padding:22px 18px 18px;border-radius:26px;border:1px solid color-mix(in srgb,var(--dz-a1) 45%,transparent);background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(4,5,12,.88) 100%),var(--dz-hero) center 40%/cover;box-shadow:0 18px 44px rgba(0,0,0,.45);color:#F6F2E8}
 :root[data-design] .dz-ban .dz-o,:root[data-design] .dz-ban .dz-a{display:none}
 :root[data-design="orbit"] .dz-ban .dz-o,:root[data-design="aurum"] .dz-ban .dz-a{display:block}
 :root[data-design] .dz-brand{font-size:2rem;line-height:1.1;direction:ltr}
 :root[data-design] .dz-kick{font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;margin-top:4px;opacity:.9}
 :root[data-design] .dz-tag{margin-top:10px;font-size:1.02rem;font-weight:500;text-shadow:0 2px 12px rgba(0,0,0,.8)}
-:root[data-design] .page-head{position:relative;flex-wrap:wrap;min-height:128px;align-items:flex-end;padding:16px 14px 12px;border-radius:24px;border:1px solid var(--line);background:linear-gradient(0deg,var(--bg) 0%,color-mix(in srgb,var(--bg) 55%,transparent) 48%,rgba(0,0,0,.08) 100%),var(--dz-head) center 45%/cover;box-shadow:0 14px 34px rgba(0,0,0,.4);margin-bottom:14px}
-:root[data-design] .page-head h2,:root[data-design] .page-head p{text-shadow:0 2px 10px rgba(0,0,0,.85)}
-:root[data-design] .page-head p{color:color-mix(in srgb,var(--ink) 82%,transparent)}
-:root[data-design] .gold-btn{border-radius:999px;min-height:46px;padding:11px 26px;font-weight:700}
-:root[data-design] .hero-value{font-size:clamp(2.1rem,9vw,3rem);letter-spacing:.01em}
+:root[data-design] .page-head{position:relative;flex-wrap:wrap;min-height:128px;align-items:flex-end;padding:16px 14px 12px;border-radius:24px;border:1px solid color-mix(in srgb,var(--dz-a1) 35%,transparent);background:linear-gradient(0deg,var(--bg) 0%,color-mix(in srgb,var(--bg) 55%,transparent) 48%,rgba(0,0,0,.08) 100%),var(--dz-head) center 45%/cover;box-shadow:0 14px 34px var(--shadow);margin-bottom:14px}
+:root[data-design] .page-head h2,:root[data-design] .page-head p{text-shadow:0 1px 10px var(--bg),0 0 2px var(--bg)}
+:root[data-design] .page-head p{color:color-mix(in srgb,var(--ink) 85%,transparent)}
+:root[data-design] .gold-btn{border-radius:999px;min-height:46px;padding:11px 26px;font-weight:700;background:linear-gradient(90deg,var(--dz-b1),color-mix(in srgb,var(--dz-b1) 50%,var(--dz-b2)) 55%,var(--dz-b2));color:var(--dz-bt);box-shadow:0 8px 26px color-mix(in srgb,var(--dz-a1) 35%,transparent),inset 0 1px 0 rgba(255,255,255,.5)}
+:root[data-design] .hero-value{font-size:clamp(2.1rem,9vw,3rem);letter-spacing:.01em;background:linear-gradient(180deg,var(--dz-hv1),var(--dz-hv2));-webkit-background-clip:text;background-clip:text;color:transparent}
 :root[data-design] .hhero .v{text-shadow:0 0 24px color-mix(in srgb,var(--hero-val) 35%,transparent)}
 :root[data-design] .field input,:root[data-design] .field select{border-color:var(--line)}
+:root[data-design] :is(.tchip.on,.sv-seg button[aria-checked="true"],.seg button[aria-pressed="true"]){background:linear-gradient(90deg,var(--dz-seg1),var(--dz-seg2));border-color:transparent;color:var(--dz-segt)}
+:root[data-design] .bt.on{color:var(--dz-on)}
+:root[data-design] .rng::-moz-range-progress{background:linear-gradient(90deg,var(--dz-a3),var(--dz-a2))}
 
 /* ---- ORBIT: deep space, glass cards, glowing tiles ---- */
-:root[data-design="orbit"] :is(.inputs,.chart,.panel-flat,.sched,.mk,.set-cat .set-sec,.hclock,.svbar){background:linear-gradient(160deg,rgba(40,52,120,.30),rgba(10,14,40,.55));border:1px solid rgba(130,160,255,.20);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 14px 36px rgba(0,0,0,.45);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
-:root[data-design="orbit"] .hero{background:radial-gradient(260px 140px at 85% 0%,rgba(124,92,255,.35),transparent 70%),radial-gradient(240px 140px at 0% 100%,rgba(56,210,255,.18),transparent 70%),linear-gradient(160deg,rgba(24,30,78,.85),rgba(8,12,34,.92));border:1px solid rgba(130,160,255,.34);box-shadow:0 0 0 1px rgba(124,92,255,.10),0 18px 40px rgba(0,0,0,.5)}
-:root[data-design="orbit"] .hero-value{background:linear-gradient(180deg,#FFE7B0,#E2B263);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 14px rgba(232,194,122,.35))}
-:root[data-design="orbit"] .hero-label{color:#C9D2FF}
-:root[data-design="orbit"] .tile{background:radial-gradient(90% 60% at 50% 100%,rgba(124,92,255,.22),transparent 70%),linear-gradient(165deg,rgba(36,46,110,.55),rgba(9,13,36,.85));border:1px solid rgba(130,160,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 24px rgba(0,0,0,.4);border-radius:18px}
-:root[data-design="orbit"] .tile .ic{width:32px;height:32px;stroke-width:1.6;color:#A98BFF;filter:drop-shadow(0 0 6px currentColor)}
-:root[data-design="orbit"] .tile:nth-child(3n+2) .ic{color:#38D2FF}
-:root[data-design="orbit"] .tile:nth-child(3n) .ic{color:#E8C27A}
-:root[data-design="orbit"] .tile:hover{border-color:rgba(56,210,255,.6);box-shadow:0 0 0 1px rgba(56,210,255,.25),0 0 22px rgba(56,210,255,.22)}
-:root[data-design="orbit"] .gold-btn{background:linear-gradient(90deg,#F6DCA0,#D9AE62 55%,#B98942);color:#1A1204;box-shadow:0 8px 26px rgba(232,194,122,.35),inset 0 1px 0 rgba(255,255,255,.5)}
-:root[data-design="orbit"] .rng::-webkit-slider-runnable-track{height:5px;background:linear-gradient(to right,#7C5CFF 0,#38D2FF var(--p),rgba(150,170,255,.18) var(--p))}
-:root[data-design="orbit"] .rng::-moz-range-progress{background:linear-gradient(90deg,#7C5CFF,#38D2FF)}
-:root[data-design="orbit"] .rng::-webkit-slider-thumb{width:22px;height:22px;margin-top:-8.5px;background:radial-gradient(circle at 40% 35%,#FFFFFF,#BFE9FF 45%,#38D2FF);border:2px solid #0A1029;box-shadow:0 0 0 1px rgba(56,210,255,.8),0 0 16px rgba(56,210,255,.75)}
-:root[data-design="orbit"] .rng::-moz-range-thumb{background:#BFE9FF;border:2px solid #0A1029;box-shadow:0 0 14px rgba(56,210,255,.75)}
-:root[data-design="orbit"] :is(.tchip.on,.sv-seg button[aria-checked="true"],.seg button[aria-pressed="true"]){background:linear-gradient(90deg,#2F6BFF,#38D2FF);border-color:transparent;color:#fff;box-shadow:0 0 16px rgba(56,160,255,.45)}
-:root[data-design="orbit"] .bottom{background:rgba(8,12,34,.78);border-color:rgba(130,160,255,.22);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
-:root[data-design="orbit"] .bt.on{color:#FFFFFF;text-shadow:0 0 10px rgba(56,210,255,.9)}
-:root[data-design="orbit"] .bt.on .ic{color:#38D2FF;filter:drop-shadow(0 0 6px rgba(56,210,255,.9))}
-:root[data-design="orbit"] .dz-brand{font-weight:300;letter-spacing:.42em;color:#F4E6C6;text-shadow:0 0 18px rgba(232,194,122,.55);padding-inline-start:.42em}
+:root[data-design="orbit"] :is(.inputs,.chart,.panel-flat,.sched,.mk,.set-cat .set-sec,.hclock,.svbar){background:linear-gradient(160deg,color-mix(in srgb,var(--surface) 78%,var(--dz-a3) 14%),color-mix(in srgb,var(--surface) 70%,transparent));border:1px solid color-mix(in srgb,var(--dz-a2) 24%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 14px 36px var(--shadow);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+:root[data-design="orbit"] .hero{background:radial-gradient(260px 140px at 85% 0%,color-mix(in srgb,var(--dz-a3) 35%,transparent),transparent 70%),radial-gradient(240px 140px at 0% 100%,color-mix(in srgb,var(--dz-a2) 20%,transparent),transparent 70%),linear-gradient(160deg,color-mix(in srgb,var(--surface) 85%,var(--dz-a3) 15%),var(--surface));border:1px solid color-mix(in srgb,var(--dz-a2) 34%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--dz-a3) 12%,transparent),0 18px 40px var(--shadow)}
+:root[data-design="orbit"] .hero-value{filter:drop-shadow(0 0 14px color-mix(in srgb,var(--dz-a1) 35%,transparent))}
+:root[data-design="orbit"] .tile{background:radial-gradient(90% 60% at 50% 100%,color-mix(in srgb,var(--dz-a3) 22%,transparent),transparent 70%),linear-gradient(165deg,color-mix(in srgb,var(--surface) 80%,var(--dz-a3) 16%),var(--surface));border:1px solid color-mix(in srgb,var(--dz-a2) 24%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 24px var(--shadow);border-radius:18px}
+:root[data-design="orbit"] .tile .ic{width:32px;height:32px;stroke-width:1.6;color:var(--dz-a3);filter:drop-shadow(0 0 6px color-mix(in srgb,currentColor 70%,transparent))}
+:root[data-design="orbit"] .tile:nth-child(3n+2) .ic{color:var(--dz-a2)}
+:root[data-design="orbit"] .tile:nth-child(3n) .ic{color:var(--dz-a1)}
+:root[data-design="orbit"] .tile:hover{border-color:color-mix(in srgb,var(--dz-a2) 60%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--dz-a2) 25%,transparent),0 0 22px color-mix(in srgb,var(--dz-a2) 22%,transparent)}
+:root[data-design="orbit"] .rng::-webkit-slider-runnable-track{height:5px;background:linear-gradient(to right,var(--dz-a3) 0,var(--dz-a2) var(--p),var(--track) var(--p))}
+:root[data-design="orbit"] .rng::-webkit-slider-thumb{width:22px;height:22px;margin-top:-8.5px;background:radial-gradient(circle at 40% 35%,#FFFFFF,color-mix(in srgb,var(--dz-a2) 35%,#fff) 45%,var(--dz-a2));border:2px solid var(--field);box-shadow:0 0 0 1px var(--dz-a2),0 0 16px color-mix(in srgb,var(--dz-a2) 75%,transparent)}
+:root[data-design="orbit"] .rng::-moz-range-thumb{background:var(--dz-a2);border:2px solid var(--field);box-shadow:0 0 14px var(--dz-a2)}
+:root[data-design="orbit"] :is(.tchip.on,.sv-seg button[aria-checked="true"],.seg button[aria-pressed="true"]){box-shadow:0 0 16px color-mix(in srgb,var(--dz-seg2) 45%,transparent)}
+:root[data-design="orbit"] .bottom{background:color-mix(in srgb,var(--surface) 80%,transparent);border-color:color-mix(in srgb,var(--dz-a2) 24%,transparent);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+:root[data-design="orbit"] .bt.on{text-shadow:0 0 10px color-mix(in srgb,var(--dz-a2) 90%,transparent)}
+:root[data-design="orbit"] .bt.on .ic{color:var(--dz-a2);filter:drop-shadow(0 0 6px var(--dz-a2))}
+:root[data-design="orbit"] .dz-brand{font-weight:300;letter-spacing:.42em;color:color-mix(in srgb,var(--dz-a1) 40%,#fff);text-shadow:0 0 18px color-mix(in srgb,var(--dz-a1) 55%,transparent);padding-inline-start:.42em}
 :root[data-design="orbit"] .dz-kick{color:#D8DEFF}
-:root[data-design="orbit"] .dz-ban{border-color:rgba(130,160,255,.35)}
-:root[data-design="orbit"] .dz-ban::before{content:"";position:absolute;inset:-30% -10% auto;height:150%;border-radius:50%;border:2px solid rgba(255,214,140,.55);box-shadow:0 0 30px rgba(255,190,100,.45),inset 0 0 30px rgba(255,190,100,.25);pointer-events:none;transform:translateY(-34%)}
-:root[data-design="orbit"] .page-head{border-color:rgba(130,160,255,.28)}
+:root[data-design="orbit"] .dz-ban::before{content:"";position:absolute;inset:-30% -10% auto;height:150%;border-radius:50%;border:2px solid color-mix(in srgb,var(--dz-a1) 60%,#fff);box-shadow:0 0 30px color-mix(in srgb,var(--dz-a1) 55%,transparent),inset 0 0 30px color-mix(in srgb,var(--dz-a1) 30%,transparent);pointer-events:none;transform:translateY(-34%)}
 
-/* ---- AURUM: black and gold luxury, serif headings ---- */
+/* ---- AURUM: luxury, framed cards, serif headings ---- */
 :root[data-design="aurum"] :is(.home-hello,.page-head h2,.sec-t,.hero-value,.hhero .v,.dz-brand,.tiles-h,.set-cat h3){font-family:'Cormorant Garamond','Frank Ruhl Libre',Georgia,serif;font-weight:600;letter-spacing:.01em}
-:root[data-design="aurum"] :is(.inputs,.chart,.panel-flat,.sched,.mk,.set-cat .set-sec,.hclock,.svbar){background:linear-gradient(165deg,#17140E,#0D0B08);border:1px solid rgba(212,175,95,.24);box-shadow:inset 0 1px 0 rgba(255,236,190,.05),0 12px 30px rgba(0,0,0,.55)}
-:root[data-design="aurum"] .hero{background:radial-gradient(280px 160px at 90% 0%,rgba(212,175,95,.20),transparent 70%),linear-gradient(165deg,#1A160E,#0B0A07);border:1px solid rgba(212,175,95,.5)}
-:root[data-design="aurum"] .hero-value{background:linear-gradient(180deg,#F6E2AE,#C99A4C);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:clamp(2.3rem,10vw,3.3rem)}
-:root[data-design="aurum"] .hero-label{color:#D9C79F}
-:root[data-design="aurum"] .tile{background:linear-gradient(165deg,#1A170F,#0C0A07);border:1px solid rgba(212,175,95,.32);border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,236,190,.06)}
-:root[data-design="aurum"] .tile .ic{width:30px;height:30px;color:#E2BE74;stroke-width:1.5}
-:root[data-design="aurum"] .tile:hover{border-color:#D8B46A;box-shadow:0 0 18px rgba(212,175,95,.22)}
-:root[data-design="aurum"] .gold-btn{background:linear-gradient(90deg,#F3D99C,#D8B46A 50%,#AE8139);color:#140E03;box-shadow:0 8px 24px rgba(212,175,95,.30),inset 0 1px 0 rgba(255,255,255,.45)}
-:root[data-design="aurum"] .rng::-webkit-slider-runnable-track{height:4px;background:linear-gradient(to right,#B8893F 0,#F1D497 var(--p),rgba(212,175,95,.18) var(--p))}
-:root[data-design="aurum"] .rng::-moz-range-progress{background:linear-gradient(90deg,#B8893F,#F1D497)}
-:root[data-design="aurum"] .rng::-webkit-slider-thumb{width:20px;height:20px;background:radial-gradient(circle at 40% 35%,#FFF3D0,#E2BE74 55%,#B8893F);border:2px solid #0E0C08;box-shadow:0 0 0 1px #D8B46A,0 0 12px rgba(212,175,95,.55)}
-:root[data-design="aurum"] .rng::-moz-range-thumb{background:#E2BE74;border:2px solid #0E0C08}
-:root[data-design="aurum"] :is(.tchip.on,.sv-seg button[aria-checked="true"],.seg button[aria-pressed="true"]){background:linear-gradient(90deg,#F1D497,#C99A4C);border-color:transparent;color:#140E03}
-:root[data-design="aurum"] .tchip{border-color:rgba(212,175,95,.3)}
-:root[data-design="aurum"] .bottom{background:rgba(10,9,6,.94);border-color:rgba(212,175,95,.28)}
-:root[data-design="aurum"] .bt.on{color:#E9C982}
-:root[data-design="aurum"] .dz-ban{align-items:flex-start;text-align:start;border-color:rgba(212,175,95,.5);min-height:230px}
-:root[data-design="aurum"] .dz-brand{order:-2;font-size:1.25rem;letter-spacing:.3em;color:#E9C982;position:absolute;top:16px;inset-inline:0;text-align:center}
-:root[data-design="aurum"] .dz-kick{order:-1;position:absolute;top:44px;inset-inline:0;text-align:center;font-size:.6rem;color:#BFAF8A}
-:root[data-design="aurum"] .dz-tag{font-family:'Cormorant Garamond','Frank Ruhl Libre',Georgia,serif;font-size:1.7rem;line-height:1.15;color:#EED39A;font-weight:600}
-:root[data-design="aurum"] .page-head{border-color:rgba(212,175,95,.35)}
+:root[data-design="aurum"] :is(.inputs,.chart,.panel-flat,.sched,.mk,.set-cat .set-sec,.hclock,.svbar){background:linear-gradient(165deg,color-mix(in srgb,var(--surface) 90%,var(--dz-a1) 6%),var(--surface));border:1px solid color-mix(in srgb,var(--dz-a1) 30%,transparent);box-shadow:inset 0 1px 0 rgba(255,236,190,.05),0 12px 30px var(--shadow)}
+:root[data-design="aurum"] .hero{background:radial-gradient(280px 160px at 90% 0%,color-mix(in srgb,var(--dz-a1) 20%,transparent),transparent 70%),linear-gradient(165deg,color-mix(in srgb,var(--surface) 88%,var(--dz-a1) 8%),var(--surface));border:1px solid color-mix(in srgb,var(--dz-a1) 50%,transparent)}
+:root[data-design="aurum"] .hero-value{font-size:clamp(2.3rem,10vw,3.3rem)}
+:root[data-design="aurum"] .tile{background:linear-gradient(165deg,color-mix(in srgb,var(--surface) 88%,var(--dz-a1) 8%),var(--surface));border:1px solid color-mix(in srgb,var(--dz-a1) 36%,transparent);border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,236,190,.06)}
+:root[data-design="aurum"] .tile .ic{width:30px;height:30px;color:var(--gold);stroke-width:1.5}
+:root[data-design="aurum"] .tile:hover{border-color:var(--dz-a1);box-shadow:0 0 18px color-mix(in srgb,var(--dz-a1) 22%,transparent)}
+:root[data-design="aurum"] .rng::-webkit-slider-runnable-track{height:4px;background:linear-gradient(to right,var(--dz-b2) 0,var(--dz-b1) var(--p),var(--track) var(--p))}
+:root[data-design="aurum"] .rng::-webkit-slider-thumb{width:20px;height:20px;background:radial-gradient(circle at 40% 35%,#FFF3D0,var(--dz-a1) 55%,var(--dz-b2));border:2px solid var(--field);box-shadow:0 0 0 1px var(--dz-a1),0 0 12px color-mix(in srgb,var(--dz-a1) 55%,transparent)}
+:root[data-design="aurum"] .rng::-moz-range-thumb{background:var(--dz-a1);border:2px solid var(--field)}
+:root[data-design="aurum"] .tchip{border-color:color-mix(in srgb,var(--dz-a1) 30%,transparent)}
+:root[data-design="aurum"] .bottom{background:color-mix(in srgb,var(--navy) 94%,transparent);border-color:color-mix(in srgb,var(--dz-a1) 28%,transparent)}
+:root[data-design="aurum"] .dz-ban{align-items:flex-start;text-align:start;min-height:230px}
+:root[data-design="aurum"] .dz-brand{order:-2;font-size:1.25rem;letter-spacing:.3em;color:color-mix(in srgb,var(--dz-a1) 75%,#fff);position:absolute;top:16px;inset-inline:0;text-align:center}
+:root[data-design="aurum"] .dz-kick{order:-1;position:absolute;top:44px;inset-inline:0;text-align:center;font-size:.6rem;color:#D8CCAE}
+:root[data-design="aurum"] .dz-tag{font-family:'Cormorant Garamond','Frank Ruhl Libre',Georgia,serif;font-size:1.7rem;line-height:1.15;color:color-mix(in srgb,var(--dz-a1) 55%,#fff);font-weight:600}
 @media print{:root[data-design] .dz-ban{display:none}:root[data-design] .page-head{background:none;min-height:0;box-shadow:none}}
+
+/* ================= 8.0: holiday effects ================= */
+.fx-back,.fx-front{position:fixed;inset:0;pointer-events:none}
+.fx-back{z-index:0}
+.fx-front{z-index:45}
+:root[data-fx] .shell{position:relative;z-index:1}
+.fx-gar{position:relative;height:52px;margin:-6px 0 4px;pointer-events:none}
+.fx-str{position:absolute;inset:0 0 auto;width:100%;height:30px;overflow:visible}
+.fx-str path{fill:none;stroke:color-mix(in srgb,var(--ink) 45%,transparent);stroke-width:.6;vector-effect:non-scaling-stroke}
+.fx-f{position:absolute;width:22px;transform-origin:50% 0;animation:fxSway 3.2s ease-in-out infinite alternate}
+.fx-f svg{display:block;width:22px;height:16px;filter:drop-shadow(0 2px 3px rgba(0,20,80,.35))}
+.fx-l{width:20px}.fx-l svg{width:20px;height:34px;margin-top:var(--ln,10px);filter:drop-shadow(0 0 6px rgba(255,200,90,.55))}
+.fx-l .fx-glow{animation:fxFlick 1.6s ease-in-out infinite alternate}
+@keyframes fxSway{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+@keyframes fxFlick{from{opacity:.65}to{opacity:1}}
+.fx-hol{position:relative;overflow:hidden;display:flex;align-items:center;gap:14px;margin:0 0 14px;padding:14px 16px;border-radius:22px;border:1px solid var(--sk-hh-bd,var(--hero-bd));background:var(--sk-hh,var(--hero-grad));color:var(--sk-hh-v,var(--ink));box-shadow:0 14px 34px var(--shadow)}
+.fx-hol::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.22) 45%,transparent 60%);transform:translateX(-100%);animation:fxShine 5s ease-in-out 1s infinite;pointer-events:none}
+@keyframes fxShine{0%{transform:translateX(-100%)}40%,100%{transform:translateX(100%)}}
+.fx-txt{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.fx-txt b{font-size:1.2rem;line-height:1.2;color:var(--sk-hh-v,var(--ink))}
+.fx-txt small{font-size:.86rem;color:var(--sk-hh-l,var(--ink-2))}
+.fx-emo{font-size:2.6rem;line-height:1;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));animation:fxBob 2.6s ease-in-out infinite alternate}
+@keyframes fxBob{from{transform:translateY(-2px) rotate(-4deg)}to{transform:translateY(3px) rotate(4deg)}}
+.fx-wave{width:132px;height:96px;flex:none;margin:-6px -4px -10px -6px}
+.fx-go{flex:none;appearance:none;border:1px solid color-mix(in srgb,var(--sk-hh-v,#fff) 40%,transparent);background:rgba(255,255,255,.14);border-radius:999px;width:44px;height:44px;font-size:1.25rem;cursor:pointer;position:relative;z-index:1}
+.fx-go:focus-visible{outline:2px solid var(--gold-ui);outline-offset:2px}
+/* Independence Day: blue and white, a band of stars, and the flag waving */
+.fx-hol-atzmaut{background:radial-gradient(rgba(255,255,255,.18) 1px,transparent 1.6px) 0 0/16px 16px,linear-gradient(135deg,#0038B8 0%,#1E5BD8 55%,#0A2A86 100%);border-color:rgba(255,255,255,.55);color:#fff}
+.fx-hol-atzmaut .fx-txt b{color:#fff;font-size:1.32rem;text-shadow:0 2px 10px rgba(0,0,40,.5)}
+.fx-hol-atzmaut .fx-txt small{color:#DCE7FF}
+.fx-hol-atzmaut::before{content:"";position:absolute;inset:auto 0 0;height:6px;background:repeating-linear-gradient(90deg,#fff 0 18px,#0038B8 18px 36px);opacity:.85}
+@media (prefers-reduced-motion:reduce){.fx-f,.fx-l .fx-glow,.fx-hol::after,.fx-emo{animation:none}}
+:root[data-motion="reduced"] .fx-front{display:none}
+@media print{.fx-back,.fx-front,.fx-gar,.fx-hol{display:none !important}}
 
 </style>
 </head>
@@ -4482,7 +4515,7 @@ Object.assign(T, {
 Object.assign(T, {
   /* 7.8: app designs */
   f_design:['עיצוב האפליקציה','تصميم التطبيق','App design'],
-  h_design:['העיצוב משנה את כל המראה: רקעים, כרטיסים, כפתורים ותמונות. ערכות הצבעים שלמטה חלות על העיצוב הרגיל.','التصميم يغيّر المظهر كله: الخلفيات والبطاقات والأزرار والصور. السمات اللونية أدناه تنطبق على التصميم العادي.','A design changes the whole look: backgrounds, cards, buttons and images. The color themes below apply to the default design.'],
+  h_design:['העיצוב משנה את המבנה: כרטיסים, כפתורים, תמונות ואפקטים. ערכת הנושא קובעת את הצבעים, בכל עיצוב. "לפי המכשיר" שומר על הצבעים המקוריים של העיצוב.','التصميم يغيّر الشكل: البطاقات والأزرار والصور والمؤثرات. السمة تحدد الألوان في كل تصميم. "حسب الجهاز" يحافظ على ألوان التصميم الأصلية.','A design sets the style: cards, buttons, images and effects. The theme sets the colors, in every design. "By device" keeps the design\'s own colors.'],
   dz_gal:['עיצובים','التصاميم','Designs'],
   dz_default:['רגיל (ברירת מחדל)','عادي (افتراضي)','Default'],
   dz_defaultS:['המראה הנוכחי, עם ערכות הצבעים','المظهر الحالي مع السمات اللونية','The current look, with color themes'],
@@ -4494,7 +4527,7 @@ Object.assign(T, {
   dz_orbitTag:['חישוב עמוק יותר לעתיד גדול יותר','حساب أعمق لمستقبل أكبر','Deeper calculations for a bigger future'],
   dz_aurumKick:['אינטליגנציה פיננסית','ذكاء مالي','Financial intelligence'],
   dz_aurumTag:['תכנן · חשב · השג','خطّط · احسب · حقّق','Plan · Calculate · Achieve'],
-  dz_skinNote:['פעיל עיצוב מיוחד. בחירת ערכת צבעים תחזיר לעיצוב הרגיל.','تصميم خاص مفعّل. اختيار سمة لونية يعيد التصميم العادي.','A special design is on. Choosing a color theme returns to the default design.']
+  dz_skinNote:['ערכת הנושא צובעת גם את העיצוב שבחרתם. "לפי המכשיר" מחזיר את הצבעים המקוריים של העיצוב.','السمة تلوّن التصميم الذي اخترتموه أيضاً. "حسب الجهاز" يعيد ألوان التصميم الأصلية.','The theme also colors the design you chose. "By device" brings back the design\'s own colors.']
 });
 Object.assign(T, {
   /* 7.9: saved files */
@@ -4512,6 +4545,28 @@ Object.assign(T, {
   fl_delAllSure:['לחצו שוב כדי למחוק הכל','اضغط مرة أخرى لحذف الكل','Tap again to delete all'],
   fl_allGone:['כל הקבצים נמחקו','تم حذف كل الملفات','All files deleted'],
   fl_made:['נשמר כקובץ בתיקיית השמורים ({n})','حُفظ كملف في مجلد المحفوظات ({n})','Saved as a file in the Saved folder ({n})']
+});
+Object.assign(T, {
+  /* 8.0: holiday effects */
+  f_hfx:['אפקטים חגיגיים','مؤثرات احتفالية','Holiday effects'],
+  h_hfx:['בערכות החגים: דגלים, זיקוקים, שלג, ניצוצות ועוד. בתנועה מופחתת מוצגת תמונה שקטה.','في سمات الأعياد: أعلام وألعاب نارية وثلج وشرارات والمزيد. مع الحركة المخففة تظهر صورة ثابتة.','In holiday themes: flags, fireworks, snow, sparks and more. With reduced motion a still picture is shown.'],
+  fx_again:['עוד חגיגה','احتفال آخر','Celebrate again'],
+  fx_gen:['{n} · חג שמח!','{n} · عيد سعيد!','{n} · Happy holidays!'],
+  fx_il:['{n} שנים למדינת ישראל 🇮🇱','{n} عاماً لدولة إسرائيل 🇮🇱','{n} years of the State of Israel 🇮🇱'],
+  fx_g_atzmaut:['יום עצמאות שמח!','عيد استقلال سعيد!','Happy Independence Day!'],
+  fx_g_roshhashana:['שנה טובה ומתוקה!','سنة طيبة وحلوة!','A good and sweet New Year!'],
+  fx_g_yomkippur:['גמר חתימה טובה','ختمًا طيبًا','G\'mar Chatima Tova'],
+  fx_g_sukkot:['חג סוכות שמח!','عيد مظال سعيد!','Happy Sukkot!'],
+  fx_g_hanukkah:['חנוכה שמח!','حانوكا سعيد!','Happy Hanukkah!'],
+  fx_g_purim:['פורים שמח!','بوريم سعيد!','Happy Purim!'],
+  fx_g_passover:['חג פסח כשר ושמח!','فصح سعيد!','Happy Passover!'],
+  fx_g_christmas:['חג מולד שמח!','ميلاد مجيد!','Merry Christmas!'],
+  fx_g_newyear:['שנה אזרחית טובה!','سنة جديدة سعيدة!','Happy New Year!'],
+  fx_g_ramadan:['רמדאן כרים!','رمضان كريم!','Ramadan Kareem!'],
+  fx_g_eidfitr:['עיד מובארכ!','عيد فطر مبارك!','Eid Mubarak!'],
+  fx_g_eidadha:['עיד אל-אדחא מובארכ!','عيد أضحى مبارك!','Eid al-Adha Mubarak!'],
+  fx_g_valentine:['חג אהבה שמח!','عيد حب سعيد!','Happy Valentine\'s Day!'],
+  fx_g_tubeav:['ט״ו באב שמח!','طو بآف سعيد!','Happy Tu B\'Av!']
 });
 
 const t = (k, p) => {
@@ -4682,7 +4737,7 @@ const RTL = new Set(['he','ar','fa','ur','yi','ps','sd','ug','ckb','dv']);
 var TOUCHED = [], TILE_F = 'all', MY_HANDLE = '';
 try { MY_HANDLE = LS.getItem('fin-handle') || ''; } catch (e) {}
 const MKT = {boi: 3.25, boiDate: '1.9.2026', boiNext: '21.10.2026', cpi: 1.5, cpiMonth: '08/2026', cpiYtd: 2.1, cpiYtdTo: 8, src: 'built'};
-const SET_DEF = {design:'default', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {design:'default', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -4979,6 +5034,7 @@ const SICO = {
   set_fx:'<path d="M4 12a8 8 0 0 1 14-5l2 2M20 12a8 8 0 0 1-14 5l-2-2"/>',
   set_data:'<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3 3 7 3s7-1.3 7-3"/>',
   set_design:'<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="16" cy="8.5" r="1.5"/>',
+  set_hfx:'<path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="2.5"/>',
   set_theme:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',
   set_accent:'<path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/>',
   set_size:'<path d="M4 19l5-13 5 13M6 14h6M16 19h5M18.5 12v7"/>',
@@ -5744,6 +5800,7 @@ const SETDEFS = [
     SEL('set_design','f_design','default',[['default','dz_default'],['orbit','dz_orbit'],['aurum','dz_aurum']],{wide:true, hint:'h_design'}),
     SEL('set_theme','f_theme','system',[['system','o_th_sys'],['dark','sk_dark'],['light','sk_light'],['telaviv','sk_telaviv'],['jerusalem','sk_jerusalem'],['banknote','sk_banknote'],['deadsea','sk_deadsea'],['eilat','sk_eilat'],['terminal','sk_terminal'],['roshhashana','sk_roshhashana'],['hanukkah','sk_hanukkah'],['passover','sk_passover'],['christmas','sk_christmas'],['easter','sk_easter'],['newyear','sk_newyear'],['ramadan','sk_ramadan'],['eidfitr','sk_eidfitr'],['eidadha','sk_eidadha'],['yomkippur','sk_yomkippur'],['sukkot','sk_sukkot'],['simchattorah','sk_simchattorah'],['tubishvat','sk_tubishvat'],['purim','sk_purim'],['atzmaut','sk_atzmaut'],['lagbaomer','sk_lagbaomer'],['yomyerushalayim','sk_yomyerushalayim'],['shavuot','sk_shavuot'],['tubeav','sk_tubeav'],['advent','sk_advent'],['epiphany','sk_epiphany'],['valentine','sk_valentine'],['palmsunday','sk_palmsunday'],['ascension','sk_ascension'],['pentecost','sk_pentecost'],['assumption','sk_assumption'],['allsaints','sk_allsaints']],{wide:true, hint:'h_theme'}),
     SEL('set_holAuto','f_holAuto','0',[['0','o_off'],['all','o_holAll'],['jewish','o_holJ'],['christian','o_holC'],['muslim','o_holM']],{wide:true, hint:'h_holAuto'}),
+    SEL('set_hfx','f_hfx','1',ONOFF,{wide:true, hint:'h_hfx'}),
     SEL('set_accent','f_accent','gold',[['gold','o_ac_gold'],['blue','o_ac_blue'],['green','o_ac_green'],['violet','o_ac_violet']]),
     SEL('set_size','f_size','m',[['s','o_sz_s'],['m','o_sz_m'],['l','o_sz_l']]),
     SEL('set_contrast','f_contrast','normal',[['normal','o_ct_normal'],['high','o_ct_high']]),
@@ -5867,7 +5924,7 @@ function settingsPanelHTML(){
       <p class="fine" id="set_msg" aria-live="polite"></p><p class="fine" id="set_info"></p>`)}
   </section>`;
 }
-const SMAP = {set_design:'design', set_mktLive:'mktLive', set_inGroup:'inGroup', set_ptMode:'ptMode', set_ptVal:'ptVal', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
+const SMAP = {set_design:'design', set_hfx:'hfx', set_mktLive:'mktLive', set_inGroup:'inGroup', set_ptMode:'ptMode', set_ptVal:'ptVal', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
@@ -8683,7 +8740,7 @@ panelsEl.addEventListener('change', e => {
     const k = SMAP[id];
     if (k === 'accent'){ const eff = (typeof HOL_ACTIVE !== 'undefined' && HOL_ACTIVE) || SET.theme; SET.accentFor = SKINS[eff] ? eff : ''; }
     if (k === 'theme') SET.accentFor = '';
-    if (['theme','accent','contrast','motion','font','sliders','holAuto','design'].includes(k)){ applyTheme(); if (typeof skRender === 'function') skRender(); }
+    if (['theme','accent','contrast','motion','font','sliders','holAuto','design','hfx'].includes(k)){ applyTheme(); if (typeof skRender === 'function') skRender(); }
     if (k === 'size') applySize();
     if (DEFKEYS.includes(k)) applyDefaults();
     if (k === 'remember'){ if (val === '1') saveVals(); else { try { LS.removeItem('fin-vals'); } catch(err) {} } }
@@ -10117,8 +10174,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "7.9", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.215454';
+var CHANGELOG = [{"v": "8.0", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.220445';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -15182,7 +15239,12 @@ const DZ = {
 DZ.orbit.t['--dz-hero'] = 'url(' + DZ_IMG.orbitHero + ')'; DZ.orbit.t['--dz-head'] = 'url(' + DZ_IMG.orbitHead + ')';
 DZ.aurum.t['--dz-hero'] = 'url(' + DZ_IMG.aurumHero + ')'; DZ.aurum.t['--dz-head'] = 'url(' + DZ_IMG.aurumHead + ')';
 (function dzCss(){
-  let css = ''; for (const k in DZ){ css += ':root[data-design="' + k + '"]{' + Object.entries(DZ[k].t).map(([p, v]) => p + ':' + v).join(';') + '}\n'; }
+  /* a design keeps its own colors only when no color theme is chosen ("by device", dark or light); with a color theme it takes the theme's colors */
+  let css = ''; for (const k in DZ){
+    const img = ['--dz-hero', '--dz-head'], t0 = Object.entries(DZ[k].t);
+    css += ':root[data-design="' + k + '"][data-dzc="own"]{' + t0.filter(([p]) => !img.includes(p)).map(([p, v]) => p + ':' + v).join(';') + '}\n';
+    css += ':root[data-design="' + k + '"]{' + t0.filter(([p]) => img.includes(p)).map(([p, v]) => p + ':' + v).join(';') + '}\n';
+  }
   const st = document.createElement('style'); st.id = 'dz-css'; st.textContent = css; document.head.appendChild(st);
 })();
 const dzOn = () => DZ[SET.design] ? SET.design : '';
@@ -15196,11 +15258,15 @@ applyTheme = function(){
   const r0 = _atDz.apply(this, arguments);
   const d = dzOn(), r = document.documentElement;
   if (d){
-    r.dataset.design = d; r.dataset.theme = 'dark'; r.dataset.skin = 'dz-' + d;
-    ['--gold-ui', '--gold', '--brass'].forEach(p => r.style.removeProperty(p));
-    const mc = document.querySelector('meta[name="theme-color"]'); if (mc) mc.content = DZ[d].t['--navy'];
+    const sk = SKINS[HOL_ACTIVE || SET.theme];
+    r.dataset.design = d; r.dataset.dzc = sk ? 'skin' : 'own';
+    if (!sk){
+      r.dataset.theme = 'dark'; r.dataset.skin = 'dz-' + d;
+      ['--gold-ui', '--gold', '--brass'].forEach(p => r.style.removeProperty(p));
+      const mc = document.querySelector('meta[name="theme-color"]'); if (mc) mc.content = DZ[d].t['--navy'];
+    }
     dzFont();
-  } else delete r.dataset.design;
+  } else { delete r.dataset.design; delete r.dataset.dzc; }
   try { dzGal(); } catch (e) {}
   return r0;
 };
@@ -15231,13 +15297,7 @@ function dzPick(k){
 }
 const _skRDz = skRender;
 skRender = function(){ const r = _skRDz.apply(this, arguments); try { dzGal(); } catch (e) {} return r; };
-/* a color theme belongs to the default design, so choosing one returns to it */
-const _skPDz = skPick;
-skPick = function(k){ if (dzOn()){ SET.design = 'default'; } return _skPDz.apply(this, arguments); };
 document.addEventListener('click', e => { const c = e.target.closest('[data-dz-pick]'); if (c){ e.preventDefault(); dzPick(c.dataset.dzPick); } });
-document.addEventListener('change', e => {
-  if (e.target && e.target.id === 'set_theme' && dzOn()){ SET.design = 'default'; saveSet(); applyTheme(); try { skRender(); } catch (err) {} }
-});
 document.addEventListener('keydown', e => {
   const c = e.target.closest && e.target.closest('.dz-c'); if (!c || !['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'].includes(e.key)) return;
   const rtl = document.documentElement.dir === 'rtl', all = $$('.dz-c', c.parentElement), i = all.indexOf(c), fw = e.key === 'ArrowDown' || (e.key === 'ArrowLeft' ? rtl : e.key === 'ArrowRight' ? !rtl : false);
@@ -15261,7 +15321,7 @@ function flSnap(id){
   return {vals: panelVals(id), hero: {label: strip(r.hero.label), value: strip(r.hero.value)}, rows: (r.rows || []).map(x => [strip(x[0]), strip(x[1])]).slice(0, 16)};
 }
 function flCalcTab(id){ return TABS.includes(id) && svKind(id) === 'calc' && !['saved', 'home', 'settings', 'assist'].includes(id); }
-function flMake(ids, src){
+function flMake(ids, src, name){
   const now = Date.now(); let a = flAll(), n = 0;
   ids.forEach(id => {
     if (!flCalcTab(id)) return;
@@ -15271,7 +15331,7 @@ function flMake(ids, src){
       const i = a.findIndex(x => x.src === 'auto' && x.tab === id);
       if (i >= 0){ const f = a[i]; if (JSON.stringify(f.vals) === JSON.stringify(s.vals)) return; Object.assign(f, s, {up: now}); a.splice(i, 1); a.unshift(f); n++; return; }
     }
-    a.unshift(Object.assign({id: tId(), tab: id, src, at: now, up: now}, s)); n++;
+    a.unshift(Object.assign({id: tId(), tab: id, src, at: now, up: now}, name ? {n: String(name).slice(0, 40)} : {}, s)); n++;
   });
   if (n) flSet(a);
   return n;
@@ -15295,6 +15355,13 @@ svSave = function(quiet){
   if (ok && ids.length){ FL.dirty.clear(); const n = flMake(ids, SV.mode === 'auto' ? 'auto' : 'manual'); if (n && !quiet) setTimeout(() => toast(t('fl_made', {n})), 1700); }
   return ok;
 };
+/* saving a named calculation (the Save button in a calculator) keeps a file too */
+const saveScenario79 = saveScenario;
+saveScenario = function(id){
+  const n0 = (SCN[id] || []).length, r = saveScenario79.apply(this, arguments), L = SCN[id] || [];
+  if (L.length > n0) flMake([id], 'manual', L[L.length - 1].n);
+  return r;
+};
 /* clearing everything clears the files too */
 const svClearAll79 = svClearAll;
 svClearAll = function(){ const r = svClearAll79.apply(this, arguments); FL.dirty.clear(); flSet([]); return r; };
@@ -15304,13 +15371,13 @@ svClearScreen = function(id){ const r = svClearScreen79.apply(this, arguments); 
 SVD.view = 'files';
 function flRender(box){
   const E = asEsc, all = flAll(), q = SVD.q.trim().toLowerCase();
-  const list = all.filter(f => !q || (t('tab_' + f.tab) + ' ' + ((f.hero && f.hero.value) || '')).toLowerCase().includes(q));
+  const list = all.filter(f => !q || (t('tab_' + f.tab) + ' ' + (f.n || '') + ' ' + ((f.hero && f.hero.value) || '')).toLowerCase().includes(q));
   const top = box.querySelector('.svd-top'); if (top){ const p = top.querySelector('p.fine'); if (p) p.textContent = t('fl_intro'); }
   let h = `<input id="svd_q" type="search" class="cl-q" autocomplete="off" placeholder="${E(t('svd_search'))}" value="${E(SVD.q)}" data-pii-ok>`;
   if (all.length) h += `<div class="btnrow fl-bar"><button type="button" class="btn danger" data-fl="all">🗑️ ${E(t(FL.sure ? 'fl_delAllSure' : 'fl_delAll', {n: all.length}))}</button></div>`;
   if (!list.length) h += `<div class="svd-empty"><b>${E(t(q ? 'svd_noMatch' : 'fl_empty'))}</b><p class="fine">${E(t(SV.mode === 'none' ? 'fl_howNone' : 'fl_how'))}</p></div>`;
   list.forEach(f => {
-    const name = t('tab_' + f.tab), badge = t(f.src === 'auto' ? 'fl_auto' : 'fl_manual');
+    const name = t('tab_' + f.tab) + (f.n ? ' — ' + f.n : ''), badge = t(f.src === 'auto' ? 'fl_auto' : 'fl_manual');
     h += `<div class="svd-it fl-it" data-flid="${E(f.id)}">
       <div class="svd-h"><span class="fl-ic" aria-hidden="true">📄</span><b class="svd-n">${E(name)}</b><span class="fl-b fl-${f.src === 'auto' ? 'a' : 'm'}">${E(badge)}</span><span class="svd-v num">${E((f.hero && f.hero.value) || '')}</span></div>
       <small class="svd-meta">${E((f.hero && f.hero.label) || '')} · ${E(t(f.src === 'auto' && f.up !== f.at ? 'svd_editedAt' : 'svd_savedAt', {d: svdDate(f.up || f.at)}))}</small>
@@ -15344,7 +15411,7 @@ document.addEventListener('click', e => {
   }
   const a = el.closest('[data-fla]'); if (!a) return;
   const f = flFile(a); if (!f) return;
-  const k = a.dataset.fla, s = {n: svdDate(f.up || f.at), hero: f.hero, rows: f.rows};
+  const k = a.dataset.fla, s = {n: f.n || svdDate(f.up || f.at), hero: f.hero, rows: f.rows};
   if (k === 'del'){ flSet(flAll().filter(x => x.id !== f.id)); toast(t('fl_gone')); return; }
   if (k === 'open'){ setVals(f.vals || {}); try { touch(f.tab); } catch (er) {} activate(f.tab); calc(f.tab); toast(t('svd_opened', {n: t('tab_' + f.tab)})); return; }
   if (k === 'share'){ shrOpen(null, svdScnText(f.tab, s), t('tab_' + f.tab)); return; }
@@ -15354,6 +15421,229 @@ document.addEventListener('click', e => {
     deliver(svdScnText(f.tab, s), nm, 'text/plain;charset=utf-8'); return;
   }
 });
+
+/* ================= 8.0: holiday effects — every holiday theme comes alive (in every design) =================
+   ambient layer behind the content (flags, snow, sparks, lanterns' stars, leaves, hearts…), a celebration burst
+   in front when the holiday starts (fireworks, a rain of flags), a garland across the top, and a greeting card on Home
+   with a waving Israeli flag on Independence Day. Off switch in Settings → Display; reduced motion draws a still frame. */
+const HX_IL = ['#0038B8', '#FFFFFF', '#4C8DFF', '#A9C8FF'];
+const HXP = {
+  atzmaut: {k: 'flag', n: 26, fw: HX_IL, rain: 'flag', gar: 'il', ic: 'flag'},
+  yomyerushalayim: {k: 'dust', n: 46, c: ['#E8C97A', '#FFF1C9', '#C9A24A'], fw: ['#E8C97A', '#FFFFFF', '#4C8DFF'], ic: '✨'},
+  roshhashana: {k: 'seed', n: 36, c: ['#C81D3A', '#E8475F', '#F4B942'], fw: ['#F4B942', '#E8475F', '#FFE3A0'], ic: '🍎'},
+  yomkippur: {k: 'dust', n: 30, c: ['#FFFFFF', '#E6ECFF'], ic: '🕊️'},
+  sukkot: {k: 'leaf', n: 30, c: ['#8CBF3F', '#D9A441', '#B5651D', '#6E9E2E'], ic: '🌿'},
+  simchattorah: {k: 'confetti', n: 60, c: ['#F4B942', '#4C8DFF', '#FFFFFF', '#E04A5F'], fw: ['#F4B942', '#4C8DFF', '#FFFFFF'], ic: '📜'},
+  hanukkah: {k: 'spark', n: 46, c: ['#FFD27A', '#9CC8FF', '#FFFFFF'], fw: ['#FFD27A', '#9CC8FF', '#FFFFFF'], ic: '🕎'},
+  tubishvat: {k: 'petal', n: 40, c: ['#FFD1DC', '#FFFFFF', '#F7A9C0'], ic: '🌳'},
+  purim: {k: 'confetti', n: 80, c: ['#FF5D8F', '#FFC93C', '#2EC4B6', '#9B5DE5', '#00BBF9'], rain: 'confetti', fw: ['#FF5D8F', '#FFC93C', '#2EC4B6', '#9B5DE5'], ic: '🎭'},
+  passover: {k: 'petal', n: 30, c: ['#9BD07A', '#FFFFFF', '#E9C46A'], ic: '🍷'},
+  lagbaomer: {k: 'ember', n: 60, c: ['#FFB347', '#FF6A3D', '#FFE08A'], ic: '🔥'},
+  shavuot: {k: 'petal', n: 34, c: ['#FFFFFF', '#F6E7A1', '#BFE3A6'], ic: '🌾'},
+  tubeav: {k: 'heart', n: 28, c: ['#FF6B8B', '#FFB3C1', '#FFFFFF'], ic: '💞'},
+  christmas: {k: 'snow', n: 80, fw: ['#F2C14E', '#E5484D', '#5FD08F', '#FFFFFF'], ic: '🎄'},
+  advent: {k: 'snow', n: 46, ic: '🕯️'},
+  epiphany: {k: 'star', n: 40, c: ['#FFE29A', '#FFFFFF'], ic: '⭐'},
+  newyear: {k: 'confetti', n: 70, c: ['#E8C77A', '#8FB8FF', '#F28AB2', '#7CE0B5', '#FFFFFF'], rain: 'confetti', fw: ['#E8C77A', '#8FB8FF', '#F28AB2', '#7CE0B5', '#FFFFFF'], ic: '🎆'},
+  easter: {k: 'petal', n: 36, c: ['#F6C945', '#B7A4F2', '#7FD6B0', '#F7A9C0'], ic: '🥚'},
+  valentine: {k: 'heart', n: 34, c: ['#FF4D6D', '#FF8FA3', '#FFFFFF'], ic: '💕'},
+  palmsunday: {k: 'leaf', n: 26, c: ['#5E9E3A', '#8CC152', '#3F7D2A'], ic: '🌿'},
+  ascension: {k: 'dust', n: 34, c: ['#FFFFFF', '#CFE3FF'], ic: '☁️'},
+  pentecost: {k: 'ember', n: 40, c: ['#FF8A3D', '#FFD27A', '#FF5A4E'], ic: '🕊️'},
+  assumption: {k: 'star', n: 30, c: ['#FFFFFF', '#CFE3FF', '#FFE29A'], ic: '✨'},
+  allsaints: {k: 'dust', n: 30, c: ['#FFD27A', '#FFF1C9'], ic: '🕯️'},
+  ramadan: {k: 'star', n: 46, c: ['#FFFFFF', '#F5D98C'], gar: 'lantern', ic: '🌙'},
+  eidfitr: {k: 'star', n: 40, c: ['#FFFFFF', '#F7DE8F'], gar: 'lantern', fw: ['#E2B84B', '#FFFFFF', '#118A60'], ic: '🌙'},
+  eidadha: {k: 'star', n: 40, c: ['#FFFFFF', '#FFF0C9'], gar: 'lantern', fw: ['#F2A93B', '#FFFFFF', '#3CC6C0'], ic: '🌙'}
+};
+const HX_GREET = ['atzmaut', 'roshhashana', 'yomkippur', 'sukkot', 'hanukkah', 'purim', 'passover', 'christmas', 'newyear', 'ramadan', 'eidfitr', 'eidadha', 'valentine', 'tubeav'];
+const HXS = {key: '', still: false, w: 0, h: 0, dpr: 1, back: null, bx: null, front: null, fx2: null, ps: [], fw: [], rain: [], raf: 0, t0: 0, burstEnd: 0, sprites: {}, flagC: null, wave: null, waveRaf: 0};
+const hxMotionOff = () => SET.motion === 'reduced' || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+const hxKey = () => { const k = (typeof HOL_ACTIVE !== 'undefined' && HOL_ACTIVE) || SET.theme; return SET.hfx !== '0' && HXP[k] ? k : ''; };
+const hxR = (a, b) => a + Math.random() * (b - a);
+const hxPick = a => a[Math.floor(Math.random() * a.length)];
+/* ---------- drawing helpers ---------- */
+function hxIlFlag(c, x, y, w, h){   /* the flag of Israel: two blue stripes and a Star of David */
+  c.fillStyle = '#FFFFFF'; c.fillRect(x, y, w, h);
+  c.fillStyle = '#0038B8'; c.fillRect(x, y + h * 15 / 160, w, h * 25 / 160); c.fillRect(x, y + h * 120 / 160, w, h * 25 / 160);
+  const cx = x + w / 2, cy = y + h / 2, r = h * 0.205;
+  c.strokeStyle = '#0038B8'; c.lineWidth = Math.max(1, h * 0.034); c.lineJoin = 'miter';
+  for (const s of [-1, 1]){ c.beginPath(); for (let i = 0; i < 3; i++){ const a = (s * Math.PI / 2) + i * 2 * Math.PI / 3; const px = cx + r * Math.cos(a), py = cy - r * Math.sin(a); i ? c.lineTo(px, py) : c.moveTo(px, py); } c.closePath(); c.stroke(); }
+}
+function hxSprite(col, size){
+  const key = col + size; if (HXS.sprites[key]) return HXS.sprites[key];
+  const cv = document.createElement('canvas'); cv.width = cv.height = size * 2; const g = cv.getContext('2d');
+  const gr = g.createRadialGradient(size, size, 0, size, size, size); gr.addColorStop(0, '#FFFFFF'); gr.addColorStop(0.25, col); gr.addColorStop(1, 'rgba(0,0,0,0)');
+  g.fillStyle = gr; g.fillRect(0, 0, size * 2, size * 2); HXS.sprites[key] = cv; return cv;
+}
+function hxHeart(c, s){ c.beginPath(); c.moveTo(0, s * .3); c.bezierCurveTo(-s, -s * .4, -s * .45, -s * 1.1, 0, -s * .45); c.bezierCurveTo(s * .45, -s * 1.1, s, -s * .4, 0, s * .3); c.fill(); }
+/* ---------- particles ---------- */
+function hxNew(cfg, kind, top){
+  const W = HXS.w, H = HXS.h, cols = cfg.c || ['#FFFFFF'];
+  const p = {k: kind, x: hxR(0, W), y: top ? hxR(-H * .3, -10) : hxR(0, H), r: hxR(2, 5), c: hxPick(cols), ph: hxR(0, 6.28), vph: hxR(.02, .08), rot: hxR(0, 6.28), vr: hxR(-.04, .04), vx: hxR(-.3, .3), vy: hxR(.4, 1.2), a: hxR(.55, 1)};
+  if (kind === 'snow'){ p.c = '#FFFFFF'; p.r = hxR(1.2, 3.6); p.vy = hxR(.3, 1.1); }
+  if (kind === 'confetti'){ p.r = hxR(3, 6); p.vy = hxR(.8, 2); }
+  if (kind === 'flag'){ p.r = hxR(5, 9); p.vy = hxR(.5, 1.3); p.vr = hxR(-.02, .02); }
+  if (kind === 'heart' || kind === 'spark' || kind === 'ember'){ p.vy = -hxR(.3, kind === 'ember' ? 1.6 : .9); if (top) p.y = H + hxR(10, H * .3); }
+  if (kind === 'heart') p.r = hxR(5, 10);
+  if (kind === 'leaf' || kind === 'petal'){ p.r = hxR(4, 8); p.vy = hxR(.4, 1.1); }
+  if (kind === 'star'){ p.vy = 0; p.vx = 0; p.r = hxR(1.5, 4); p.y = hxR(0, H * .8); }
+  if (kind === 'dust'){ p.vy = hxR(-.25, .25); p.vx = hxR(-.25, .25); p.r = hxR(2, 6); }
+  if (kind === 'seed'){ p.r = hxR(2.5, 4.5); p.vy = hxR(.6, 1.4); }
+  return p;
+}
+function hxStep(p, cfg, dt){
+  const W = HXS.w, H = HXS.h; p.ph += p.vph * dt; p.rot += p.vr * dt;
+  p.x += (p.vx + Math.sin(p.ph) * (p.k === 'snow' || p.k === 'petal' || p.k === 'leaf' || p.k === 'flag' ? .6 : .25)) * dt; p.y += p.vy * dt;
+  const out = p.vy < 0 ? p.y < -30 : p.y > H + 30;
+  if (out || p.x < -40 || p.x > W + 40){ Object.assign(p, hxNew(cfg, p.k, true)); if (p.k === 'dust') { p.x = hxR(0, W); p.y = hxR(0, H); } }
+}
+function hxDraw(c, p){
+  c.save(); c.globalAlpha = p.a; c.translate(p.x, p.y);
+  switch (p.k){
+    case 'snow': c.fillStyle = '#FFFFFF'; c.shadowColor = 'rgba(255,255,255,.8)'; c.shadowBlur = 4; c.beginPath(); c.arc(0, 0, p.r, 0, 6.283); c.fill(); break;
+    case 'confetti': c.rotate(p.rot); c.scale(1, Math.cos(p.ph * 2)); c.fillStyle = p.c; c.fillRect(-p.r, -p.r * .4, p.r * 2, p.r * .8); break;
+    case 'flag': { c.rotate(p.rot * .3); c.scale(Math.cos(p.ph * 1.6), 1); const w = p.r * 3, h = p.r * 2.2; c.shadowColor = 'rgba(0,20,80,.35)'; c.shadowBlur = 3; hxIlFlag(c, -w / 2, -h / 2, w, h); c.shadowBlur = 0; c.strokeStyle = 'rgba(0,40,120,.25)'; c.lineWidth = .6; c.strokeRect(-w / 2, -h / 2, w, h); break; }
+    case 'heart': c.rotate(Math.sin(p.ph) * .3); c.fillStyle = p.c; c.globalAlpha = p.a * .85; hxHeart(c, p.r); break;
+    case 'leaf': c.rotate(p.rot); c.fillStyle = p.c; c.beginPath(); c.ellipse(0, 0, p.r * 1.5, p.r * .7, 0, 0, 6.283); c.fill(); c.strokeStyle = 'rgba(0,0,0,.25)'; c.lineWidth = .7; c.beginPath(); c.moveTo(-p.r * 1.4, 0); c.lineTo(p.r * 1.4, 0); c.stroke(); break;
+    case 'petal': c.rotate(p.rot); c.scale(1, .5 + .5 * Math.abs(Math.cos(p.ph))); c.fillStyle = p.c; c.beginPath(); c.ellipse(0, 0, p.r, p.r * .62, 0, 0, 6.283); c.fill(); break;
+    case 'seed': c.fillStyle = p.c; c.beginPath(); c.ellipse(0, 0, p.r * .75, p.r, 0, 0, 6.283); c.fill(); c.fillStyle = 'rgba(255,255,255,.6)'; c.beginPath(); c.arc(-p.r * .25, -p.r * .35, p.r * .25, 0, 6.283); c.fill(); break;
+    case 'star': { const tw = .35 + .65 * Math.abs(Math.sin(p.ph)), s = hxSprite(p.c, 12); c.globalAlpha = p.a * tw; c.drawImage(s, -p.r * 3, -p.r * 3, p.r * 6, p.r * 6); c.strokeStyle = p.c; c.lineWidth = .8; c.beginPath(); c.moveTo(-p.r * 2.4 * tw, 0); c.lineTo(p.r * 2.4 * tw, 0); c.moveTo(0, -p.r * 2.4 * tw); c.lineTo(0, p.r * 2.4 * tw); c.stroke(); break; }
+    default: { const s = hxSprite(p.c, 16), fl = p.k === 'dust' ? .7 + .3 * Math.sin(p.ph) : .55 + .45 * Math.abs(Math.sin(p.ph * 2)); c.globalAlpha = p.a * fl; c.drawImage(s, -p.r * 2, -p.r * 2, p.r * 4, p.r * 4); }
+  }
+  c.restore();
+}
+/* ---------- fireworks (front layer, during the celebration) ---------- */
+function hxRocket(cols){ const W = HXS.w, H = HXS.h; HXS.fw.push({rk: 1, x: hxR(W * .15, W * .85), y: H + 10, tx: 0, ty: hxR(H * .14, H * .42), vy: -hxR(9, 12), c: hxPick(cols), cols}); }
+function hxBoom(r){
+  const n = Math.round(hxR(55, 90)), ring = Math.random() < .35;
+  for (let i = 0; i < n; i++){
+    const a = (i / n) * 6.283 + hxR(-.05, .05), sp = ring ? 4.2 : hxR(1, 5.2);
+    HXS.fw.push({x: r.x, y: r.y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 1, dec: hxR(.010, .018), c: Math.random() < .7 ? r.c : hxPick(r.cols), px: r.x, py: r.y});
+  }
+}
+function hxFront(dt, now){
+  const c = HXS.fx2, cfg = HXP[HXS.key]; if (!c || !cfg) return;
+  const W = HXS.w, H = HXS.h, left = HXS.burstEnd - now, k = Math.max(0, Math.min(1, left / 1200)), into = Math.min(1, (now - HXS.t0) / 500);
+  c.clearRect(0, 0, W, H);
+  /* a night sky fades in behind the fireworks and away at the end */
+  if (cfg.fw){ c.fillStyle = 'rgba(3,6,22,' + (.5 * Math.min(into, k)).toFixed(3) + ')'; c.fillRect(0, 0, W, H); }
+  if (cfg.fw && left > 1600 && Math.random() < .06 * dt) hxRocket(cfg.fw);
+  c.globalCompositeOperation = 'lighter';
+  for (let i = HXS.fw.length - 1; i >= 0; i--){
+    const f = HXS.fw[i];
+    if (f.rk){ f.y += f.vy * dt; f.vy += .12 * dt; c.fillStyle = f.c; c.globalAlpha = 1; c.beginPath(); c.arc(f.x, f.y, 2, 0, 6.283); c.fill(); if (f.vy >= -1 || f.y <= f.ty){ hxBoom(f); HXS.fw.splice(i, 1); } continue; }
+    f.px = f.x; f.py = f.y; f.vx *= .985; f.vy = f.vy * .985 + .045 * dt; f.x += f.vx * dt; f.y += f.vy * dt; f.life -= f.dec * dt;
+    if (f.life <= 0){ HXS.fw.splice(i, 1); continue; }
+    c.globalAlpha = Math.max(0, f.life) * Math.max(k, .2); c.strokeStyle = f.c; c.lineWidth = 2; c.beginPath(); c.moveTo(f.px, f.py); c.lineTo(f.x, f.y); c.stroke();
+  }
+  c.globalCompositeOperation = 'source-over'; c.globalAlpha = 1;
+  /* a rain of flags / confetti */
+  HXS.rain.forEach(p => { p.ph += p.vph * dt; p.rot += p.vr * dt; p.x += (p.vx + Math.sin(p.ph) * .8) * dt; p.y += p.vy * dt; p.a = Math.min(1, k * 1.2); hxDraw(c, p); });
+}
+/* ---------- the loop ---------- */
+function hxLoop(now){
+  HXS.raf = 0; const key = HXS.key, cfg = HXP[key]; if (!key || document.hidden) return;
+  const dt = Math.min(3, ((now - (HXS.last || now)) / 16.7) || 1); HXS.last = now;
+  const c = HXS.bx; c.clearRect(0, 0, HXS.w, HXS.h);
+  HXS.ps.forEach(p => { hxStep(p, cfg, dt); hxDraw(c, p); });
+  if (HXS.burstEnd > now) hxFront(dt, now);
+  else if (HXS.front && !HXS.front.hidden){ HXS.front.hidden = true; HXS.fw = []; HXS.rain = []; }
+  HXS.raf = requestAnimationFrame(hxLoop);
+}
+function hxSize(){
+  const d = HXS.dpr = Math.min(2, window.devicePixelRatio || 1), W = HXS.w = innerWidth, H = HXS.h = innerHeight;
+  [[HXS.back, HXS.bx], [HXS.front, HXS.fx2]].forEach(([cv, cx]) => { if (!cv) return; cv.width = Math.round(W * d); cv.height = Math.round(H * d); cv.style.width = W + 'px'; cv.style.height = H + 'px'; cx.setTransform(d, 0, 0, d, 0, 0); });
+}
+function hxLayers(){
+  if (HXS.back) return;
+  HXS.back = document.createElement('canvas'); HXS.back.className = 'fx-back'; HXS.back.setAttribute('aria-hidden', 'true');
+  HXS.front = document.createElement('canvas'); HXS.front.className = 'fx-front'; HXS.front.setAttribute('aria-hidden', 'true'); HXS.front.hidden = true;
+  document.body.prepend(HXS.back); document.body.appendChild(HXS.front);
+  HXS.bx = HXS.back.getContext('2d'); HXS.fx2 = HXS.front.getContext('2d'); hxSize();
+  addEventListener('resize', () => { if (!HXS.key) return; hxSize(); hxSeed(); if (HXS.still) hxStill(); });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && HXS.key && !HXS.still && !HXS.raf){ HXS.last = 0; HXS.raf = requestAnimationFrame(hxLoop); } });
+}
+function hxSeed(){
+  const cfg = HXP[HXS.key]; if (!cfg) { HXS.ps = []; return; }
+  const n = Math.round(cfg.n * Math.max(.6, Math.min(1.6, (HXS.w * HXS.h) / (390 * 844))));
+  HXS.ps = Array.from({length: n}, () => hxNew(cfg, cfg.k, false));
+}
+function hxStill(){ const c = HXS.bx; c.clearRect(0, 0, HXS.w, HXS.h); HXS.ps.forEach(p => hxDraw(c, p)); }
+/* the celebration in front: fireworks and a rain of flags (or confetti) for about seven seconds */
+function hxBurst(){
+  const cfg = HXP[HXS.key]; if (!cfg || HXS.still || (!cfg.fw && !cfg.rain)) return;
+  const now = performance.now(); HXS.t0 = now; HXS.burstEnd = now + 7000; HXS.fw = []; HXS.front.hidden = false;
+  HXS.rain = cfg.rain ? Array.from({length: Math.round(34 * Math.max(.7, HXS.w / 600))}, () => { const p = hxNew(cfg, cfg.rain, true); p.vy = hxR(1.6, 3.4); p.r = cfg.rain === 'flag' ? hxR(7, 13) : hxR(4, 8); p.y = hxR(-HXS.h * .9, -10); return p; }) : [];
+  if (cfg.fw) for (let i = 0; i < 3; i++) setTimeout(() => { if (HXS.burstEnd > performance.now()) hxRocket(cfg.fw); }, i * 260);
+  if (!HXS.raf){ HXS.last = 0; HXS.raf = requestAnimationFrame(hxLoop); }
+}
+/* ---------- garland across the top (Israeli flags, or Ramadan lanterns) ---------- */
+function hxGarland(type){
+  $$('.fx-gar').forEach(g => g.remove()); if (!type) return;
+  const host = $('.main-in'); if (!host) return;
+  const g = document.createElement('div'); g.className = 'fx-gar fx-gar-' + type; g.setAttribute('aria-hidden', 'true');
+  const n = Math.max(7, Math.min(16, Math.round((host.clientWidth || 360) / 46)));
+  let h = '<svg class="fx-str" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0 2 Q25 22 50 10 T100 2" /></svg>';
+  for (let i = 0; i < n; i++){
+    const x = (i + .5) / n, y = 2 + (x < .5 ? 16 * Math.sin(x * 2 * Math.PI) * .55 : 8 * Math.sin((x - .5) * 2 * Math.PI)) + 4;
+    const st = `inset-inline-start:calc(${(x * 100).toFixed(2)}% - 11px);top:${(y * 1.35).toFixed(1)}px;animation-delay:${(-i * .37).toFixed(2)}s`;
+    if (type === 'il') h += `<span class="fx-f" style="${st}"><svg viewBox="0 0 22 16"><rect width="22" height="16" fill="#fff"/><rect y="1.5" width="22" height="2.5" fill="#0038B8"/><rect y="12" width="22" height="2.5" fill="#0038B8"/><path d="M11 4.8l2.8 4.8H8.2zM11 11.2L8.2 6.4h5.6z" fill="none" stroke="#0038B8" stroke-width=".7"/></svg></span>`;
+    else h += `<span class="fx-f fx-l" style="${st};--ln:${(10 + (i % 3) * 9)}px"><svg viewBox="0 0 20 34"><path d="M10 0v6" stroke="#C9A24A" stroke-width="1"/><path d="M5 8h10l-1 3H6z" fill="#C9A24A"/><path d="M6 11h8l2 6-2 9H6l-2-9z" fill="#3A2A10" stroke="#E2B84B" stroke-width="1"/><path d="M8 13h4l1 4-1 7H8l-1-7z" fill="#FFD27A" class="fx-glow"/><path d="M6 26h8l-2 3H8z" fill="#C9A24A"/></svg></span>`;
+  }
+  g.innerHTML = h; host.prepend(g);
+}
+/* ---------- the greeting card on Home, with a waving flag on Independence Day ---------- */
+function hxWave(cv){
+  cancelAnimationFrame(HXS.waveRaf);
+  const d = Math.min(2, window.devicePixelRatio || 1), W = 132, H = 96; cv.width = W * d; cv.height = H * d; const c = cv.getContext('2d'); c.setTransform(d, 0, 0, d, 0, 0);
+  const fw = 104, fh = 74, off = document.createElement('canvas'); off.width = fw * 2; off.height = fh * 2; const o = off.getContext('2d'); o.scale(2, 2); hxIlFlag(o, 0, 0, fw, fh);
+  const pole = 12, top = 10;
+  const frame = t => {
+    c.clearRect(0, 0, W, H);
+    c.fillStyle = '#C9A24A'; c.fillRect(pole - 3, 4, 3, H - 6); c.beginPath(); c.arc(pole - 1.5, 4, 3, 0, 6.283); c.fill();
+    for (let x = 0; x < fw; x += 2){
+      const ph = x * .07 - t * .004, k = x / fw, dy = Math.sin(ph) * 5 * k, sh = Math.cos(ph) * k;
+      c.drawImage(off, x * 2, 0, 4, fh * 2, pole + x, top + dy, 2.4, fh);
+      c.fillStyle = sh > 0 ? 'rgba(255,255,255,' + (sh * .18).toFixed(3) + ')' : 'rgba(0,10,40,' + (-sh * .22).toFixed(3) + ')'; c.fillRect(pole + x, top + dy, 2.4, fh);
+    }
+    if (!HXS.still && cv.isConnected) HXS.waveRaf = requestAnimationFrame(frame);
+  };
+  frame(0);
+}
+function hxCard(){
+  const old = $('#fxHol'), key = HXS.key; if (!key){ if (old) old.remove(); return; }
+  const home = $('#panel-home'); if (!home) return;
+  const cfg = HXP[key], E = asEsc;
+  const title = HX_GREET.includes(key) ? t('fx_g_' + key) : t('fx_gen', {n: t('sk_' + key)});
+  const sub = key === 'atzmaut' ? t('fx_il', {n: new Date().getFullYear() - 1948}) : '';
+  const art = cfg.ic === 'flag' ? '<canvas class="fx-wave" width="132" height="96"></canvas>' : `<span class="fx-emo">${cfg.ic}</span>`;
+  const html = `<div class="fx-hol fx-hol-${key}" id="fxHol" role="note">${art}<div class="fx-txt"><b>${E(title)}</b>${sub ? `<small>${E(sub)}</small>` : ''}</div>${cfg.fw || cfg.rain ? `<button type="button" class="fx-go" id="fxGo" data-ia="fx_again">🎆</button>` : ''}</div>`;
+  if (old && old.dataset.k === key && old.dataset.l === lang) return;
+  if (old) old.remove();
+  const at = $('.home-hello', home); if (!at) return;
+  at.insertAdjacentHTML('beforebegin', html); const el = $('#fxHol'); el.dataset.k = key; el.dataset.l = lang;
+  const b = $('#fxGo'); if (b){ b.setAttribute('aria-label', t('fx_again')); b.title = t('fx_again'); }
+  const w = $('.fx-wave', el); if (w) hxWave(w);
+}
+/* ---------- switching ---------- */
+function hxSync(){
+  const key = hxKey(), r = document.documentElement, still = hxMotionOff();
+  if (key === HXS.key && still === HXS.still){ hxCard(); return; }
+  HXS.key = key; HXS.still = still; cancelAnimationFrame(HXS.raf); HXS.raf = 0; HXS.burstEnd = 0;
+  if (!key){ delete r.dataset.fx; if (HXS.back){ HXS.bx.clearRect(0, 0, HXS.w, HXS.h); HXS.front.hidden = true; } hxGarland(''); hxCard(); return; }
+  r.dataset.fx = key; hxLayers(); hxSize(); hxSeed(); hxGarland(HXP[key].gar || ''); hxCard();
+  if (still){ hxStill(); return; }
+  HXS.last = 0; HXS.raf = requestAnimationFrame(hxLoop);
+  let seen = ''; try { seen = sessionStorage.getItem('fx-b') || ''; } catch (e) {}
+  if (seen !== key){ try { sessionStorage.setItem('fx-b', key); } catch (e) {} setTimeout(hxBurst, 600); }
+}
+const _atHx = applyTheme;
+applyTheme = function(){ const r = _atHx.apply(this, arguments); try { hxSync(); } catch (e) {} return r; };
+const _rsHx = renderStamp;
+renderStamp = function(){ const r = _rsHx.apply(this, arguments); try { if (HXS.key) hxCard(); } catch (e) {} return r; };
+document.addEventListener('click', e => { if (e.target.closest && e.target.closest('#fxGo')) hxBurst(); });
+try { if (SET.hfx == null) SET.hfx = '1'; hxSync(); } catch (e) {}
 
 applyLang(false);
 activate(tab);
