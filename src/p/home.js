@@ -21,6 +21,7 @@ function rangeFill(r){
 function homePanelHTML(){
   const tile = id => `<button type="button" class="tile" data-go="${id}">${ICON[id]}<span data-i="tab_${id}"></span></button>`;
   return `<section class="panel panel-home" id="panel-home" role="tabpanel" aria-labelledby="tab-home" hidden>
+    <div class="dz-ban" id="dzBan" aria-hidden="true"><span class="dz-brand dz-o">ORBIT</span><span class="dz-brand dz-a">AURUM</span><span class="dz-kick dz-o" data-i="dz_orbitKick"></span><span class="dz-kick dz-a" data-i="dz_aurumKick"></span><span class="dz-tag dz-o" data-i="dz_orbitTag"></span><span class="dz-tag dz-a" data-i="dz_aurumTag"></span></div>
     <h2 class="home-hello" data-i="home_hello"></h2>
     <p class="home-sub" data-i="home_sub"></p>
     <div class="hclock" id="hclock"></div>

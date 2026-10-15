@@ -18,7 +18,7 @@ panelsEl.addEventListener('change', e => {
     const k = SMAP[id];
     if (k === 'accent'){ const eff = (typeof HOL_ACTIVE !== 'undefined' && HOL_ACTIVE) || SET.theme; SET.accentFor = SKINS[eff] ? eff : ''; }
     if (k === 'theme') SET.accentFor = '';
-    if (['theme','accent','contrast','motion','font','sliders','holAuto'].includes(k)){ applyTheme(); if (typeof skRender === 'function') skRender(); }
+    if (['theme','accent','contrast','motion','font','sliders','holAuto','design'].includes(k)){ applyTheme(); if (typeof skRender === 'function') skRender(); }
     if (k === 'size') applySize();
     if (DEFKEYS.includes(k)) applyDefaults();
     if (k === 'remember'){ if (val === '1') saveVals(); else { try { localStorage.removeItem('fin-vals'); } catch(err) {} } }
