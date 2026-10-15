@@ -15,3 +15,7 @@ button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
 /* 8.4: the currency offer under Country of origin */
 .cty-offer{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:-4px 0 6px}
 .cty-offer .mv{min-height:34px}
+
+/* 8.5: Claude key on the website */
+.ak-wrap{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.ak-go{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:6px}
