@@ -128,36 +128,55 @@ function erExcess(base, o){
   return Math.max(0, erP - TAX.erPensRate * Math.min(base, TAX.erPensCap)) + Math.max(0, erS - TAX.erSevRate * Math.min(base, TAX.erSevCap))
     + (typeof IL26 === 'object' ? Math.max(0, erSt - IL26.hishErMax * Math.min(base, IL26.hishCap)) : 0);
 }
+/* National Insurance and health, employee then employer, by age group (Bituach Leumi, 2026):
+   [employee NI reduced, NI full, health reduced, health full, employer reduced, employer full] */
+const NI_AGE = {
+  u18:   [0, 0, 0, 0, .0061, .0212],                      // under 18: the employer pays a small rate, the employee nothing
+  retW:  [.0072, .0507, .0323, .0517, .0417, .0712],      // a woman between her retirement age and 67, no old-age pension
+  ret67: [.0070, .0486, .0323, .0517, .0413, .0696],      // aged 67 to 70, no old-age pension
+  pens:  [0, 0, 0, 0, .0061, .0212]                       // receiving an old-age pension: health is taken from the pension
+};
+function niRates(age){ return NI_AGE[age] || [TAX.niLow, TAX.niHigh, TAX.hLow, TAX.hHigh, TAX.erNiLow, TAX.erNiHigh]; }
 function salaryCalc(g, pts, pensPct, studyPct, o){
   const bonus = o.bonus / 12, base = g + bonus, cash = o.cash || 0, carPay = o.carPay || 0, extra = o.extra || 0, erX = erExcess(base, o);
   const taxBase = base + extra + o.benefit + cash + erX;
-  const b0 = taxByBrackets(taxBase * 12);
+  const cf = o.carRate != null ? (o.carFixed || 0) + (o.cash || 0) : 0;      // a car bracket you chose yourself: the car (and its gross-up) is taxed at that rate
+  const b0 = taxByBrackets((taxBase - cf) * 12);
+  if (cf) b0.tax += cf * 12 * o.carRate;
   const top = TAX.brackets[TAX.brackets.length - 1][1];
-  const b = o.second ? {tax: taxBase * 12 * top, sur: b0.sur} : b0;            // a second job without tax coordination: the top rate, no credit points
+  const coord = o.coord > 0 ? clamp(o.coord, 0, 100) / 100 : 0;                // tax coordination: the rate the Tax Authority approved for this job
+  const b = coord ? {tax: taxBase * 12 * coord, sur: 0} : o.second ? {tax: taxBase * 12 * top, sur: b0.sur} : b0;   // a second job without tax coordination: the top rate, no credit points
   const pens = base * pensPct / 100;
   const qual = Math.min(pens, TAX.pensDepRate * Math.min(base, TAX.pensSalaryCap));
   const loc = o.locRate > 0 ? o.locRate / 100 * Math.min(taxBase * 12, Math.max(0, o.locCap || 0)) : 0;
   const donY = (o.don || 0) * 12, don = donY >= (TAX.donMin || 0) && donY > 0 ? 0.35 * Math.min(donY, 0.3 * taxBase * 12, TAX.donMax || Infinity) : 0;
-  const credits = (o.second ? 0 : pts * TAX.point) + TAX.pensCreditRate * qual * 12 + loc + don;
+  const life = Math.max(0, o.lifeIns || 0) * 12 * 0.25;                        // private life insurance: a 25% credit
+  const credits = (o.second || coord ? 0 : pts * TAX.point) + TAX.pensCreditRate * qual * 12 + loc + don + life;
   const used = Math.min(credits, b.tax);
   const tax = (b.tax - used + b.sur) / 12;
   const low = Math.min(taxBase, TAX.niCut), high = Math.max(0, Math.min(taxBase, TAX.niMax) - TAX.niCut);
-  const ni = low * TAX.niLow + high * TAX.niHigh;
-  const health = low * TAX.hLow + high * TAX.hHigh;
-  const study = base * studyPct / 100, other = o.otherDed || 0;
-  const ded = tax + ni + health + pens + study + carPay + other;
+  const R = niRates(o.age);
+  const ni = low * R[0] + high * R[1];
+  const health = low * R[2] + high * R[3];
+  const study = base * studyPct / 100, other = o.otherDed || 0, union = base * Math.max(0, o.union || 0) / 100;
+  const ded = tax + ni + health + pens + study + carPay + other + union;
   const erP = base * o.erPens / 100, erS = base * o.erSev / 100, erSt = base * o.erStudy / 100;
-  const erNi = low * TAX.erNiLow + high * TAX.erNiHigh;
-  return {gross: base, bonus, extra, net: base + extra + cash - ded, tax, ni, health, pens, study, other, ded, credits: used / 12, cash, carPay, erX, loc: loc / 12, don: don / 12,
+  const erNi = low * R[4] + high * R[5];
+  return {gross: base, bonus, extra, net: base + extra + cash - ded, tax, ni, health, pens, study, other, union, life: life / 12, ded, credits: used / 12, cash, carPay, erX, loc: loc / 12, don: don / 12,
           erP, erS, erSt, erNi, employer: base + extra + cash + erP + erS + erSt + erNi};
 }
 /* --- work car inside the salary --- */
+function carRateSel(){ const m = document.getElementById('s_carBr'); if (!m || m.value !== 'manual') return null; const r = parseFloat(($('#s_carBrRate') || {}).value); return isFinite(r) ? r / 100 : null; }
 function salCar(){
   const sel = document.getElementById('s_car');
   if (!sel || sel.value !== 'co' || typeof IL26 === 'undefined') return null;
   const price = Math.max(0, v('s_carPrice')), kind = $('#s_carKind').value, pay = Math.max(0, v('s_carPay')), extra = Math.max(0, v('s_carExtra'));
+  if (($('#s_carMode') || {}).value === 'value'){                              // the benefit value typed from the payslip
+    const vv = Math.max(0, v('s_carVal'));
+    return {price: 0, kind, pay, extra, gil: $('#s_carGil').value === 'y', base: vv, dd: 0, val: Math.max(0, vv - pay), byVal: true, rate: carRateSel()};
+  }
   const base = Math.min(price, IL26.carCap) * IL26.carPct, dd = Math.min(base, IL26.carDed[kind] || 0), val = Math.max(0, base - dd - pay);
-  return {price, kind, pay, extra, gil: $('#s_carGil').value === 'y', base, dd, val};
+  return {price, kind, pay, extra, gil: $('#s_carGil').value === 'y', base, dd, val, rate: carRateSel()};
 }
 function carBrackets(tb0, add, r, r0){
   const A = taxByBrackets(tb0 * 12), B = taxByBrackets((tb0 + add) * 12), rows = [];
@@ -179,7 +198,7 @@ function carBrackets(tb0, add, r, r0){
 }
 function withCar(g, pts, pens, study, o, car){
   if (!car) return o;
-  const oc = Object.assign({}, o, {benefit: o.benefit + car.val, carPay: car.pay + car.extra});
+  const oc = Object.assign({}, o, {benefit: o.benefit + car.val, carPay: car.pay + car.extra}, car.rate != null ? {carFixed: car.val, carRate: car.rate} : {});
   if (!car.gil || car.val <= 0) return oc;
   const want = salaryCalc(g, pts, pens, study, Object.assign({}, o, {carPay: oc.carPay})).net;
   let lo = 0, hi = car.val * 3 + 100;
@@ -199,6 +218,7 @@ function payslipRows(r, o){
   if (r.study > 0) L.push([t('r_studyRow'), -r.study]);
   if (r.carPay > 0) L.push([t('r_sCarPay'), -r.carPay]);
   if (r.other > 0) L.push([t('r_sOtherDed'), -r.other]);
+  if (r.union > 0) L.push([t('r_sUnion'), -r.union]);
   if (r.cash > 0) L.splice(1, 0, [t('r_sCarGil'), r.cash]);
   L.push([t('r_totalDed'), -r.ded], [t('r_netMonthly'), r.net]);
   return L.map(([a, b]) => [a, MI(b), pc(Math.abs(b))]);
@@ -210,7 +230,11 @@ function calcSalary(){
   const o = {bonus: Math.max(0, v('s_bonus')), benefit: Math.max(0, v('s_benefit')),
              erPens: clamp(v('s_erPens'), 0, 30), erSev: clamp(v('s_erSev'), 0, 30), erStudy: clamp(v('s_erStudy'), 0, 30),
              extra: Math.max(0, v('s_extra')), otherDed: Math.max(0, v('s_otherDed')), don: Math.max(0, v('s_don')),
-             locRate: clamp(v('s_locRate'), 0, 100), locCap: Math.max(0, v('s_locCap')), second: ($('#s_job') || {}).value === 'second'};
+             locRate: clamp(v('s_locRate'), 0, 100), locCap: Math.max(0, v('s_locCap')), second: ($('#s_job') || {}).value === 'second',
+             age: ($('#s_age') || {}).value || 'reg', union: clamp(v('s_union'), 0, 5), lifeIns: Math.max(0, v('s_life')),
+             coord: ($('#s_job') || {}).value === 'coord' ? clamp(v('s_coord'), 0, 50) : 0};
+  const xp = {travel: Math.max(0, v('s_travel')), meals: Math.max(0, v('s_meals')), havraa: Math.max(0, v('s_havraa')) / 12, phone: ($('#s_phone') || {}).value === '1' ? Math.max(0, v('s_phoneVal')) : 0};
+  o.extra += xp.travel + xp.meals + xp.havraa; o.benefit += xp.phone;
   const car = salCar();
   const oc = gg => withCar(gg, pts, pens, study, o, car);
   let g = amt;
@@ -226,12 +250,16 @@ function calcSalary(){
   const r2 = salaryCalc(g + 100, pts, pens, study, oc(g + 100));
   const r0 = car ? salaryCalc(g, pts, pens, study, o) : r, drop = r0.net - r.net;
   const carTax = (r.tax + r.ni + r.health) - (r0.tax + r0.ni + r0.health);
-  const cb = car && !o.second ? carBrackets(r0.gross + r0.extra + o.benefit + r0.erX, car.val + (r.cash || 0), r, r0) : null;
+  const cb = car && !o.second && !o.coord && car.rate == null ? carBrackets(r0.gross + r0.extra + o.benefit + r0.erX, car.val + (r.cash || 0), r, r0) : null;
   const marginal = (1 - (r2.net - r.net) / 100) * 100;
   const rows = [[t('r_grossMonthly'), MI(r.gross)]];
   if (o.bonus > 0) rows.push([t('r_bonusAvg'), MI(r.bonus)]);
-  if (r.extra > 0) rows.push([t('r_sExtra'), MI(r.extra)]);
-  if (o.benefit > 0) rows.push([t('r_benefitRow'), MI(o.benefit)]);
+  if (xp.travel > 0) rows.push([t('r_sTravel'), MI(xp.travel)]);
+  if (xp.meals > 0) rows.push([t('r_sMeals'), MI(xp.meals)]);
+  if (xp.havraa > 0) rows.push([t('r_sHavraa'), MI(xp.havraa)]);
+  { const own = r.extra - xp.travel - xp.meals - xp.havraa; if (own > 0.005) rows.push([t('r_sExtra'), MI(own)]); }
+  if (xp.phone > 0) rows.push([t('r_sPhone'), MI(xp.phone)]);
+  if (o.benefit - xp.phone > 0.005) rows.push([t('r_benefitRow'), MI(o.benefit - xp.phone)]);
   if (car) rows.push([t('r_cbVal'), MI(car.val)]);
   if (r.cash > 0) rows.push([t('r_sCarGil'), MI(r.cash)]);
   if (r.erX > 0.5) rows.push([t('r_erX'), MI(r.erX)]);
@@ -240,15 +268,18 @@ function calcSalary(){
   if (r.study > 0) rows.push([t('r_studyRow'), MI(-r.study)]);
   if (r.carPay > 0) rows.push([t('r_sCarPay'), MI(-r.carPay)]);
   if (r.other > 0) rows.push([t('r_sOtherDed'), MI(-r.other)]);
+  if (r.union > 0) rows.push([t('r_sUnion'), MI(-r.union)]);
   rows.push(
     [t('r_totalDed'), MI(-r.ded), 'key'],
     [t('r_netMonthly'), MI(r.net), 'key'],
-    ...(car ? [[t('r_cbNetNo'), MI(r0.net)], [t('r_sCarMarg'), !cb ? PC(TAX.brackets[TAX.brackets.length - 1][1] * 100) : cb.m0 === cb.m1 ? N(cb.m0 * 100) + '%' : t('r_sCarMargV', {a: N(cb.m0 * 100) + '%', b: N(cb.m1 * 100) + '%'})], [t('r_sCarTax'), MI(-carTax)], [t('r_sCarDrop'), MI(-drop), 'key'], [t('r_sCarShare'), PC(r0.net > 0 ? drop / r0.net * 100 : NaN)], [t('r_sCarYear'), MI(-drop * 12)]] : []),
+    ...(car ? [[t('r_cbNetNo'), MI(r0.net)], [t('r_sCarMarg'), car.rate != null ? PC(car.rate * 100) + ' · ' + t('o_carBrManual') : o.coord ? PC(o.coord) : !cb ? PC(TAX.brackets[TAX.brackets.length - 1][1] * 100) : cb.m0 === cb.m1 ? N(cb.m0 * 100) + '%' : t('r_sCarMargV', {a: N(cb.m0 * 100) + '%', b: N(cb.m1 * 100) + '%'})], [t('r_sCarTax'), MI(-carTax)], [t('r_sCarDrop'), MI(-drop), 'key'], [t('r_sCarShare'), PC(r0.net > 0 ? drop / r0.net * 100 : NaN)], [t('r_sCarYear'), MI(-drop * 12)]] : []),
     ...(() => { const se = typeof seTotals === 'function' ? seTotals() : {total: 0}; return se.total > 0 ? [[t('r_seCar'), MI(-se.car)], [t('r_seOther'), MI(-se.other)], [t('r_seLeft'), MI(r.net - se.total), 'key'], [t('r_seShare'), PC(r.net > 0 ? se.total / r.net * 100 : NaN)]] : []; })(),
     [t('r_dedShare'), PC(r.gross > 0 ? r.ded / r.gross * 100 : NaN)],
-    [t('r_points'), o.second ? '0 · ' + t('o_jobSecond') : ptsTxt('s', pts)],
+    [t('r_points'), o.coord ? '0 · ' + t('r_sCoordAt', {r: PC(o.coord)}) : o.second ? '0 · ' + t('o_jobSecond') : ptsTxt('s', pts)],
     [t('r_creditsUsed'), MI(r.credits)],
-    ...(r.loc > 0.5 ? [[t('r_locCred'), MI(r.loc)]] : []), ...(r.don > 0.5 ? [[t('r_donCred'), MI(r.don)]] : []),
+    ...(r.loc > 0.5 ? [[t('r_locCred'), MI(r.loc)]] : []), ...(r.don > 0.5 ? [[t('r_donCred'), MI(r.don)]] : []), ...(r.life > 0.5 ? [[t('r_lifeCred'), MI(r.life)]] : []),
+    ...(o.age && o.age !== 'reg' ? [[t('r_sAgeNi'), t('o_age_' + o.age)]] : []),
+    [t('r_hourly'), MI(r.net / 182, 2)],
     [t('r_marginal'), PC(marginal)],
     [t('r_netAnnual'), MI(r.net * 12)],
     [t('r_erPens'), MI(r.erP)], [t('r_erSev'), MI(r.erS)]);
@@ -264,7 +295,7 @@ function calcSalary(){
     table2: cb ? {title: t(r.cash > 0 ? 't_sCarBrG' : 't_sCarBr'), open: true, head: [t('h_brRange'), t('h_brRate'), t('h_brAmt'), t('h_brTax')], rows: cb.rows, foot: t('n_sCarBr')} : null,
     table: {title: t('t_payslip'), head: [t('h_item'), t('h_amount'), t('h_pctGross')], rows: payslipRows(r, o)},
     note: t('n_salary2') + ' ' + t('n_points') + (car ? ' ' + t('n_sCar') : ''),
-    warn: (car && car.price > IL26.carCap ? [t('w_cbCap', {c: MI(IL26.carCap)})] : []).concat(o.second ? [t('w_sSecond')] : []),
+    warn: (car && car.price > IL26.carCap ? [t('w_cbCap', {c: MI(IL26.carCap)})] : []).concat(o.second ? [t('w_sSecond')] : []).concat(g > 0 && g < IL26.minWage && o.age !== 'u18' ? [t('w_sMinWage', {m: MI(IL26.minWage, 2)})] : []),
     split: {
       title: t('c_split'),
       items: [

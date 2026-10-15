@@ -23,11 +23,14 @@ const SETDEFS = [
     SEL('set_digits','f_digits','latn',[['latn','o_dg_latn'],['native','o_dg_native']]),
     SEL('set_dec','f_dec','auto',[['auto','o_dec_auto'],['0','o_dec_0'],['2','o_dec_2']]),
     SEL('set_cpos','f_cpos','auto',[['auto','o_cp_auto'],['before','o_cp_before'],['after','o_cp_after']]),
-    SEL('set_sep','f_sep','auto',[['auto','o_sp_auto'],['comma','o_sp_comma'],['dot','o_sp_dot'],['space','o_sp_space'],['none','o_sp_none']]),
+    SEL('set_sep','f_sep','auto',[['auto','o_sp_auto'],['comma','o_sp_comma'],['dot','o_sp_dot'],['space','o_sp_space'],['apos','o_sp_apos'],['none','o_sp_none']],{hint:'h_sep'}),
+    SEL('set_inGroup','f_inGroup','1',ONOFF,{wide:true, hint:'h_inGroup'}),
     SEL('set_compact','f_compact','0',[['0','o_off'],['1','o_on']],{wide:true})
   ]],
   ['set_calc', [
     SEL('set_start','f_start','home',[['home','o_start_home'],['last','o_start_last']].concat(TABS.filter(x => x !== 'home' && x !== 'settings').map(x => [x, 'tab_' + x])),{wide:true}),
+    SEL('set_ptMode','f_ptMode','auto',[['auto','o_ptAuto'],['manual','o_ptManual']],{wide:true, hint:'h_ptMode'}),
+    {id:'set_ptVal', label:'f_ptVal', unit:'ils', val:'', wide:true, hint:'h_ptVal'},
     SEL('set_saveMode','f_saveMode','auto',[['auto','o_saveAuto'],['manual','o_saveManual'],['none','o_saveNone']],{wide:true}),
     SEL('set_mktLive','f_mktLive','1',[['1','o_mktAuto'],['0','o_mktManual']],{wide:true, hint:'h_mktLive'}),
     SEL('set_vat','f_vatDef','18',[['18','o_vp18'],['17','o_vp17'],['0','o_vp0'],['16','o_vp16'],['14','o_vp14'],['15','o_vp15'],['5','o_vp5'],['19','o_vp19'],['20','o_vp20']],{wide:true}),
@@ -128,7 +131,7 @@ function settingsPanelHTML(){
       <p class="fine" id="set_msg" aria-live="polite"></p><p class="fine" id="set_info"></p>`)}
   </section>`;
 }
-const SMAP = {set_mktLive:'mktLive', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
+const SMAP = {set_mktLive:'mktLive', set_inGroup:'inGroup', set_ptMode:'ptMode', set_ptVal:'ptVal', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
