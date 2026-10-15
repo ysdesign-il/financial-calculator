@@ -1110,3 +1110,9 @@ input.ro{opacity:.75;cursor:not-allowed}
 .car-hits{display:flex;flex-wrap:wrap;gap:6px;max-height:180px;overflow:auto}
 .car-pk{margin:0;font-weight:700;color:var(--gold)}
 .close-note{margin:6px 0 0}
+/* 7.9 saved files */
+.fl-it .svd-h{align-items:center}
+.fl-ic{font-size:1.05rem;line-height:1}
+.fl-b{font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.fl-b.fl-m{border-color:color-mix(in srgb,var(--gold-ui) 55%,transparent);color:var(--gold)}
+.fl-bar{margin:8px 0 4px}
