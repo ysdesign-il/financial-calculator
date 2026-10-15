@@ -1,18 +1,16 @@
 {
- "started": "2026-10-15 18:44:53 UTC",
+ "started": "2026-10-15 19:09:32 UTC",
  "events": [
   "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
   "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
-  "published ru",
   "  gemini gemini-flash-lite-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
   "  gemini: gemini quota used up",
-  "published am"
+  "published ru"
  ],
  "langs": {
-  "ru": 3442,
-  "am": 3251
+  "ru": 3440
  },
- "finished": "2026-10-15 18:45:11 UTC",
+ "finished": "2026-10-15 19:09:36 UTC",
  "coverage": {
   "am": 3251,
   "sq": 3111,
@@ -70,7 +68,7 @@
   "pa": 0,
   "ps": 0,
   "ro": 3111,
-  "ru": 3442,
+  "ru": 3440,
   "sr": 0,
   "si": 0,
   "sk": 0,
@@ -92,5 +90,5 @@
   "yo": 0,
   "zu": 0
  },
- "total": 3442
+ "total": 3475
 }
