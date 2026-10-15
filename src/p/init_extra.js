@@ -3537,7 +3537,7 @@ function ixCh(x){ if (!isFinite(x)) return ''; const c = x > 0 ? 'up' : x < 0 ? 
 function ixBoard(){
   const box = $('#hm'); if (!box) return;
   let ext = $('#hmx'); if (!ext){ ext = document.createElement('div'); ext.id = 'hmx'; ext.className = 'hmx'; box.parentNode.insertBefore(ext, box.nextSibling); }
-  const card = (k, val, ch, meta, go, extra) => `<button type="button" class="mk ix-card" data-ixgo="${go}"${extra || ''}><span class="mk-l">${asEsc(ixName(k))}</span><b class="num">${val}</b>${ch}<small>${meta}</small></button>`;
+  const card = (k, val, ch, meta, go, extra) => `<button type="button" class="mk ix-card" data-ixgo="${go}" data-ixk="${k}"${extra || ''}><span class="mk-l">${asEsc(ixName(k))}</span><b class="num">${val}</b>${ch}<small>${meta}</small></button>`;
   let h = `<h4 class="ix-g">${asEsc(t('ix_gPrice'))}</h4><div class="mkt">`;
   [['cpi', 'cpilink:cpi'], ['build', 'cpilink:build'], ['house', 'rentbuy']].forEach(([k, go]) => {
     const d = IX.idx[k]; if (!d) return;
