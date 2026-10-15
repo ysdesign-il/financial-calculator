@@ -22,10 +22,11 @@ DZ.aurum.t['--dz-hero'] = 'url(' + DZ_IMG.aurumHero + ')'; DZ.aurum.t['--dz-head
   const st = document.createElement('style'); st.id = 'dz-css'; st.textContent = css; document.head.appendChild(st);
 })();
 const dzOn = () => DZ[SET.design] ? SET.design : '';
+const DZ_FONT = {aurum: 'Cormorant+Garamond:wght@500;600;700'};
 function dzFont(){
-  if (dzOn() !== 'aurum' || document.getElementById('font-dz')) return;
-  const l = document.createElement('link'); l.id = 'font-dz'; l.rel = 'stylesheet';
-  l.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap'; document.head.appendChild(l);
+  const d = dzOn(), f = DZ_FONT[d]; if (!f || document.getElementById('font-dz-' + d)) return;
+  const l = document.createElement('link'); l.id = 'font-dz-' + d; l.rel = 'stylesheet';
+  l.href = 'https://fonts.googleapis.com/css2?family=' + f + '&display=swap'; document.head.appendChild(l);
 }
 const _atDz = applyTheme;
 applyTheme = function(){
@@ -35,7 +36,7 @@ applyTheme = function(){
     const sk = SKINS[HOL_ACTIVE || SET.theme];
     r.dataset.design = d; r.dataset.dzc = sk ? 'skin' : 'own';
     if (!sk){
-      r.dataset.theme = 'dark'; r.dataset.skin = 'dz-' + d;
+      r.dataset.theme = DZ[d].mode || 'dark'; r.dataset.skin = 'dz-' + d;
       ['--gold-ui', '--gold', '--brass'].forEach(p => r.style.removeProperty(p));
       const mc = document.querySelector('meta[name="theme-color"]'); if (mc) mc.content = DZ[d].t['--navy'];
     }
@@ -46,7 +47,7 @@ applyTheme = function(){
 };
 function dzCard(k){
   const on = (dzOn() || 'default') === k;
-  const pv = k === 'default' ? '' : ` style="--dz-pv:url(${DZ_IMG[k + 'Hero']})"`;
+  const pv = DZ_IMG[k + 'Hero'] ? ` style="--dz-pv:url(${DZ_IMG[k + 'Hero']})"` : '';
   return `<button type="button" class="dz-c dz-c-${k}" role="radio" data-dz-pick="${k}" aria-checked="${on}"><span class="dz-pv"${pv} aria-hidden="true"><b>${k === 'default' ? '₪' : k.toUpperCase()}</b><i></i><i></i><i></i></span><span class="skin-n">${asEsc(t('dz_' + k))}</span><small>${asEsc(t('dz_' + k + 'S'))}</small></button>`;
 }
 function dzGalHTML(){ return DZ_KEYS.map(dzCard).join(''); }
@@ -77,4 +78,4 @@ document.addEventListener('keydown', e => {
   const rtl = document.documentElement.dir === 'rtl', all = $$('.dz-c', c.parentElement), i = all.indexOf(c), fw = e.key === 'ArrowDown' || (e.key === 'ArrowLeft' ? rtl : e.key === 'ArrowRight' ? !rtl : false);
   const n = all[(i + (fw ? 1 : -1) + all.length) % all.length]; if (n){ e.preventDefault(); n.focus(); }
 });
-try { if (!DZ_KEYS.includes(SET.design)) SET.design = 'default'; applyTheme(); } catch (e) {}
+try { if (!SET.design) SET.design = 'default'; applyTheme(); } catch (e) {}   /* unknown designs are checked once all designs are registered (v81) */
