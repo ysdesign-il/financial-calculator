@@ -14,7 +14,7 @@ function flSnap(id){
   return {vals: panelVals(id), hero: {label: strip(r.hero.label), value: strip(r.hero.value)}, rows: (r.rows || []).map(x => [strip(x[0]), strip(x[1])]).slice(0, 16)};
 }
 function flCalcTab(id){ return TABS.includes(id) && svKind(id) === 'calc' && !['saved', 'home', 'settings', 'assist'].includes(id); }
-function flMake(ids, src){
+function flMake(ids, src, name){
   const now = Date.now(); let a = flAll(), n = 0;
   ids.forEach(id => {
     if (!flCalcTab(id)) return;
@@ -24,7 +24,7 @@ function flMake(ids, src){
       const i = a.findIndex(x => x.src === 'auto' && x.tab === id);
       if (i >= 0){ const f = a[i]; if (JSON.stringify(f.vals) === JSON.stringify(s.vals)) return; Object.assign(f, s, {up: now}); a.splice(i, 1); a.unshift(f); n++; return; }
     }
-    a.unshift(Object.assign({id: tId(), tab: id, src, at: now, up: now}, s)); n++;
+    a.unshift(Object.assign({id: tId(), tab: id, src, at: now, up: now}, name ? {n: String(name).slice(0, 40)} : {}, s)); n++;
   });
   if (n) flSet(a);
   return n;
@@ -48,6 +48,13 @@ svSave = function(quiet){
   if (ok && ids.length){ FL.dirty.clear(); const n = flMake(ids, SV.mode === 'auto' ? 'auto' : 'manual'); if (n && !quiet) setTimeout(() => toast(t('fl_made', {n})), 1700); }
   return ok;
 };
+/* saving a named calculation (the Save button in a calculator) keeps a file too */
+const saveScenario79 = saveScenario;
+saveScenario = function(id){
+  const n0 = (SCN[id] || []).length, r = saveScenario79.apply(this, arguments), L = SCN[id] || [];
+  if (L.length > n0) flMake([id], 'manual', L[L.length - 1].n);
+  return r;
+};
 /* clearing everything clears the files too */
 const svClearAll79 = svClearAll;
 svClearAll = function(){ const r = svClearAll79.apply(this, arguments); FL.dirty.clear(); flSet([]); return r; };
@@ -57,13 +64,13 @@ svClearScreen = function(id){ const r = svClearScreen79.apply(this, arguments); 
 SVD.view = 'files';
 function flRender(box){
   const E = asEsc, all = flAll(), q = SVD.q.trim().toLowerCase();
-  const list = all.filter(f => !q || (t('tab_' + f.tab) + ' ' + ((f.hero && f.hero.value) || '')).toLowerCase().includes(q));
+  const list = all.filter(f => !q || (t('tab_' + f.tab) + ' ' + (f.n || '') + ' ' + ((f.hero && f.hero.value) || '')).toLowerCase().includes(q));
   const top = box.querySelector('.svd-top'); if (top){ const p = top.querySelector('p.fine'); if (p) p.textContent = t('fl_intro'); }
   let h = `<input id="svd_q" type="search" class="cl-q" autocomplete="off" placeholder="${E(t('svd_search'))}" value="${E(SVD.q)}" data-pii-ok>`;
   if (all.length) h += `<div class="btnrow fl-bar"><button type="button" class="btn danger" data-fl="all">🗑️ ${E(t(FL.sure ? 'fl_delAllSure' : 'fl_delAll', {n: all.length}))}</button></div>`;
   if (!list.length) h += `<div class="svd-empty"><b>${E(t(q ? 'svd_noMatch' : 'fl_empty'))}</b><p class="fine">${E(t(SV.mode === 'none' ? 'fl_howNone' : 'fl_how'))}</p></div>`;
   list.forEach(f => {
-    const name = t('tab_' + f.tab), badge = t(f.src === 'auto' ? 'fl_auto' : 'fl_manual');
+    const name = t('tab_' + f.tab) + (f.n ? ' — ' + f.n : ''), badge = t(f.src === 'auto' ? 'fl_auto' : 'fl_manual');
     h += `<div class="svd-it fl-it" data-flid="${E(f.id)}">
       <div class="svd-h"><span class="fl-ic" aria-hidden="true">📄</span><b class="svd-n">${E(name)}</b><span class="fl-b fl-${f.src === 'auto' ? 'a' : 'm'}">${E(badge)}</span><span class="svd-v num">${E((f.hero && f.hero.value) || '')}</span></div>
       <small class="svd-meta">${E((f.hero && f.hero.label) || '')} · ${E(t(f.src === 'auto' && f.up !== f.at ? 'svd_editedAt' : 'svd_savedAt', {d: svdDate(f.up || f.at)}))}</small>
@@ -97,7 +104,7 @@ document.addEventListener('click', e => {
   }
   const a = el.closest('[data-fla]'); if (!a) return;
   const f = flFile(a); if (!f) return;
-  const k = a.dataset.fla, s = {n: svdDate(f.up || f.at), hero: f.hero, rows: f.rows};
+  const k = a.dataset.fla, s = {n: f.n || svdDate(f.up || f.at), hero: f.hero, rows: f.rows};
   if (k === 'del'){ flSet(flAll().filter(x => x.id !== f.id)); toast(t('fl_gone')); return; }
   if (k === 'open'){ setVals(f.vals || {}); try { touch(f.tab); } catch (er) {} activate(f.tab); calc(f.tab); toast(t('svd_opened', {n: t('tab_' + f.tab)})); return; }
   if (k === 'share'){ shrOpen(null, svdScnText(f.tab, s), t('tab_' + f.tab)); return; }
