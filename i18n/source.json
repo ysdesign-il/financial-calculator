@@ -3967,6 +3967,7 @@
 "w_lcUnfair": "The offers differ in amount or term, so they are ranked by true yearly cost. A shorter loan costs less in total but has a higher monthly payment.",
 "w_lease": "Lease",
 "w_liab": "Liabilities",
+"w_lim": "The highest value here is {n}, so it was calculated with {n}.",
 "w_lkBack": "The current index is earlier than the base, so this runs back in time.",
 "w_ltLinear": "Excludes the linear method for properties bought before 2014 and detailed exemption conditions. Check with the Tax Authority.",
 "w_ltv": "Financing ({a}%) is above the limit for this buyer type ({b}%).",
