@@ -1,0 +1,19 @@
+/* ================= 8.2: Settings in folding sections ================= */
+.set-sec:has(> details.sec-acc){padding:0 !important;overflow:hidden}
+details.sec-acc > summary{list-style:none;display:flex;align-items:center;gap:10px;cursor:pointer;padding:14px 16px;min-height:56px;-webkit-tap-highlight-color:transparent}
+details.sec-acc > summary::-webkit-details-marker,details.sub-acc > summary::-webkit-details-marker{display:none}
+details.sec-acc > summary .sec-h{margin:0;flex:none;display:flex;align-items:center;gap:10px}
+details.sec-acc > summary .sec-h .sec-t{margin:0;font-size:1rem}
+.sec-sum{flex:1;min-width:0;color:var(--ink-2);font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:end}
+.acc-chev{flex:none;width:20px;height:20px;fill:none;stroke:var(--ink-2);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+details.sec-acc[open] > summary .acc-chev{transform:rotate(180deg)}
+details.sec-acc[open] > summary{border-bottom:1px solid var(--line)}
+details.sec-acc[open] > summary .sec-sum{visibility:hidden}
+.sec-body{padding:12px 16px 16px}
+details.sec-acc > summary:focus-visible,details.sub-acc > summary:focus-visible{outline:2px solid var(--gold-ui);outline-offset:-2px;border-radius:12px}
+details.sub-acc{margin:0 0 12px;border:1px solid var(--line);border-radius:14px;background:var(--g1)}
+details.sub-acc > summary{list-style:none;cursor:pointer;padding:12px 14px;font-weight:600;font-size:.92rem;display:flex;align-items:center;gap:8px}
+details.sub-acc > summary::after{content:"";margin-inline-start:auto;width:8px;height:8px;border-inline-end:2px solid var(--ink-2);border-bottom:2px solid var(--ink-2);transform:rotate(45deg);transition:transform .2s}
+details.sub-acc[open] > summary::after{transform:rotate(-135deg)}
+details.sub-acc > :not(summary){margin:0 12px 12px}
+details.sub-acc .dz-h{display:none}
