@@ -94,7 +94,9 @@ function calcInsurance(){
   });
   const key = o => by === 'cover' ? (isFinite(o.per1k) ? o.per1k : Infinity) : o.all;
   const sorted = L.slice().sort((a, b) => key(a) - key(b)), best = sorted[0], worst = sorted[sorted.length - 1];
-  const name = k => t('o_insOff_' + k);
+  insCoFilter(kind);
+  const co = k => ($('#ins_co' + k) || {}).value || '';
+  const name = k => { const c = co(k); if (!c) return t('o_insOff_' + k); const same = INS_OFF.slice(0, n).filter(x => co(x) === c).length > 1; return t('o_insCo_' + c) + (same ? ' (' + t('o_insOff_' + k) + ')' : ''); };
   const rows = [];
   sorted.forEach((o, i) => {
     rows.push([(i === 0 ? '★ ' : '') + name(o.k) + ' · ' + t('r_insTotal', {y: yrs}), M(o.all), i === 0 ? 'key' : undefined]);
@@ -111,5 +113,18 @@ function calcInsurance(){
     table: {title: t('t_insCmp'), open: true, head: ['', t('h_insPm'), t('h_insY1'), t('h_insPrem'), t('h_insDed'), t('h_insAll'), t('h_insCov'), t('h_insPer1k')], rows: trows},
     note: t('n_ins_' + kind) + ' ' + t('n_ins')
   };
+}
+/* which insurers sell which kind: general insurers (car, home, business) are not offered for life and health plans, and PassportCard only for travel */
+const INS_GENERAL = ['shomera', 'libra', 'wesure', 'shlomo'], INS_LIFEHEALTH = ['life', 'health', 'critical', 'disability', 'ltc', 'dental'];
+function insCoOk(c, kind){
+  if (c === 'passport') return kind === 'travel';
+  if (INS_GENERAL.includes(c)) return !INS_LIFEHEALTH.includes(kind);
+  return true;
+}
+function insCoFilter(kind){
+  INS_OFF.forEach(k => { const s = $('#ins_co' + k); if (!s) return;
+    [...s.options].forEach(o => { const ok = !o.value || insCoOk(o.value, kind); o.hidden = !ok; o.disabled = !ok; });
+    if (s.value && !insCoOk(s.value, kind)) s.value = '';
+  });
 }
 Object.assign(CALC, {insurance: calcInsurance});

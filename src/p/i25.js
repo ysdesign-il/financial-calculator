@@ -110,10 +110,21 @@ Object.assign(T, {
   n_ins_pet:['חיות מחמד: בדקו החרגות לגזע, גיל ומחלות קודמות.','حيوانات أليفة: افحصوا استثناءات السلالة والعمر والأمراض السابقة.','Pet: check exclusions for breed, age and existing conditions.'],
   n_ins_business:['עסק: חבות מעבידים, צד ג׳, ציוד ואובדן הכנסה. כל אחד בתקרה משלו.','مصلحة: مسؤولية صاحب العمل، طرف ثالث، معدات وفقدان دخل – لكل سقفه.','Business: employer\'s liability, third party, equipment and loss of income – each with its own limit.']
 });
+Object.assign(T, {
+  o_insCo_none:['— בלי שם (הצעה) —','— بدون اسم (عرض) —','— no name (offer) —'],
+  o_insCo_harel:['הראל','هرئيل','Harel'], o_insCo_migdal:['מגדל','مجدال','Migdal'], o_insCo_clal:['כלל','كلال','Clal'],
+  o_insCo_phoenix:['הפניקס','هفينيكس','The Phoenix'], o_insCo_menora:['מנורה מבטחים','مينورا مفطاحيم','Menora Mivtachim'],
+  o_insCo_ayalon:['איילון','أيالون','Ayalon'], o_insCo_hachshara:['הכשרה','هخشرا','Hachshara'], o_insCo_direct:['ביטוח ישיר','التأمين المباشر','Direct Insurance'],
+  o_insCo_aig:['AIG','AIG','AIG'], o_insCo_shomera:['שומרה','شومرا','Shomera'], o_insCo_libra:['ליברה','ليبرا','Libra'],
+  o_insCo_wesure:['ווישור','ويشور','Wesure'], o_insCo_shlomo:['שלמה ביטוח','شلومو للتأمين','Shlomo Insurance'],
+  o_insCo_passport:['פספורטכארד','باسبورت كارد','PassportCard'], o_insCo_other:['חברה אחרת / סוכן','شركة أخرى / وكيل','Other insurer / agent'],
+  h_insCo:['בחרו את החברה שנתנה את ההצעה – השם יופיע בתוצאות. המחירים הם מה שהזנתם מההצעה שקיבלתם, לא מחירון של החברה. הרשימה לפי סוג הביטוח.','اختاروا الشركة التي قدّمت العرض – سيظهر الاسم في النتائج. الأسعار هي ما أدخلتموه من العرض، وليست قائمة أسعار الشركة.','Pick the insurer that made the offer – its name shows in the results. Prices are what you typed from the offer, not the insurer\'s price list.']
+});
 (function(){
   const L = {a: ['א', 'أ', 'A'], b: ['ב', 'ب', 'B'], c: ['ג', 'ج', 'C'], d: ['ד', 'د', 'D']};
   const F = {P: ['פרמיה חודשית', 'القسط الشهري', 'Monthly premium'], G: ['עלייה בפרמיה בשנה', 'ارتفاع القسط سنويًا', 'Premium rise a year'], D: ['השתתפות עצמית', 'المشاركة الذاتية', 'Deductible'],
     C: ['סכום ביטוח / כיסוי', 'مبلغ التأمين / التغطية', 'Sum insured / cover'], X: ['הנחה בשנים הראשונות', 'خصم في السنوات الأولى', 'Early-years discount'], XY: ['כמה שנים ההנחה', 'كم سنة الخصم', 'Discount for how many years'],
+    Co: ['חברת ביטוח', 'شركة التأمين', 'Insurer'],
     E: ['כיסויים נוספים בחודש', 'تغطيات إضافية شهريًا', 'Add-ons a month']};
   const O = ['הצעה', 'عرض', 'Offer'];
   Object.keys(L).forEach(k => {
