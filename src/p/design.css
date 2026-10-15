@@ -1,0 +1,88 @@
+/* ================= 7.8: app designs (ORBIT, AURUM); the default design has none of these rules ================= */
+.dz-ban{display:none}
+.dz-h{margin-top:0}
+.dz-gal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 16px;grid-column:1/-1}
+.dz-in{grid-column:1/-1}
+.dz-c{appearance:none;font:inherit;color:var(--ink);text-align:start;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:7px 7px 10px;border-radius:16px;border:1px solid var(--line);background:var(--g1);min-width:0}
+.dz-c[aria-checked="true"]{border-color:var(--gold-ui);box-shadow:0 0 0 2px color-mix(in srgb,var(--gold-ui) 45%,transparent)}
+.dz-c:focus-visible{outline:2px solid var(--gold-ui);outline-offset:2px}
+.dz-c small{color:var(--ink-2);font-size:.72rem;line-height:1.3}
+.dz-c .skin-n{font-weight:600;font-size:.86rem}
+.dz-pv{position:relative;display:block;height:84px;border-radius:11px;overflow:hidden;background:linear-gradient(135deg,#0A1226,#14305E);border:1px solid rgba(255,255,255,.08)}
+.dz-pv b{position:absolute;inset-inline-start:9px;top:8px;font-size:.78rem;letter-spacing:.18em;color:#FFE29A;font-weight:600}
+.dz-pv i{position:absolute;bottom:8px;height:16px;width:24%;border-radius:5px;background:rgba(255,255,255,.12)}
+.dz-pv i:nth-of-type(1){inset-inline-start:8px}.dz-pv i:nth-of-type(2){inset-inline-start:38%}.dz-pv i:nth-of-type(3){inset-inline-end:8px;background:#F2C45A}
+.dz-c-orbit .dz-pv{background:linear-gradient(180deg,rgba(5,8,23,.15),rgba(5,8,23,.85)),var(--dz-pv) center/cover;border-color:rgba(120,150,255,.4)}
+.dz-c-orbit .dz-pv b{color:#F1E2C0;letter-spacing:.32em;font-weight:500}
+.dz-c-orbit .dz-pv i{background:rgba(120,150,255,.28);border:1px solid rgba(160,185,255,.4)}
+.dz-c-orbit .dz-pv i:nth-of-type(3){background:linear-gradient(90deg,#F6DCA0,#C9974A);border:0}
+.dz-c-aurum .dz-pv{background:linear-gradient(180deg,rgba(8,7,5,.1),rgba(8,7,5,.88)),var(--dz-pv) center/cover;border-color:rgba(212,175,95,.5)}
+.dz-c-aurum .dz-pv b{color:#E9C982;font-family:'Cormorant Garamond','Frank Ruhl Libre',Georgia,serif;letter-spacing:.22em;font-size:.86rem}
+.dz-c-aurum .dz-pv i{background:#16130D;border:1px solid rgba(212,175,95,.45)}
+.dz-c-aurum .dz-pv i:nth-of-type(3){background:linear-gradient(90deg,#F1D497,#B8893F);border:0}
+@media (max-width:420px){.dz-gal{gap:8px}.dz-c small{display:none}.dz-pv{height:72px}}
+
+/* ---- shared by both designs ---- */
+:root[data-design] .dz-ban{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;position:relative;overflow:hidden;min-height:210px;margin:0 0 16px;padding:22px 18px 18px;border-radius:26px;border:1px solid var(--hero-bd);background:linear-gradient(180deg,rgba(0,0,0,0) 30%,var(--bg) 100%),var(--dz-hero) center 40%/cover;box-shadow:0 18px 44px rgba(0,0,0,.5)}
+:root[data-design] .dz-ban .dz-o,:root[data-design] .dz-ban .dz-a{display:none}
+:root[data-design="orbit"] .dz-ban .dz-o,:root[data-design="aurum"] .dz-ban .dz-a{display:block}
+:root[data-design] .dz-brand{font-size:2rem;line-height:1.1;direction:ltr}
+:root[data-design] .dz-kick{font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;margin-top:4px;opacity:.9}
+:root[data-design] .dz-tag{margin-top:10px;font-size:1.02rem;font-weight:500;text-shadow:0 2px 12px rgba(0,0,0,.8)}
+:root[data-design] .page-head{position:relative;flex-wrap:wrap;min-height:128px;align-items:flex-end;padding:16px 14px 12px;border-radius:24px;border:1px solid var(--line);background:linear-gradient(0deg,var(--bg) 0%,color-mix(in srgb,var(--bg) 55%,transparent) 48%,rgba(0,0,0,.08) 100%),var(--dz-head) center 45%/cover;box-shadow:0 14px 34px rgba(0,0,0,.4);margin-bottom:14px}
+:root[data-design] .page-head h2,:root[data-design] .page-head p{text-shadow:0 2px 10px rgba(0,0,0,.85)}
+:root[data-design] .page-head p{color:color-mix(in srgb,var(--ink) 82%,transparent)}
+:root[data-design] .gold-btn{border-radius:999px;min-height:46px;padding:11px 26px;font-weight:700}
+:root[data-design] .hero-value{font-size:clamp(2.1rem,9vw,3rem);letter-spacing:.01em}
+:root[data-design] .hhero .v{text-shadow:0 0 24px color-mix(in srgb,var(--hero-val) 35%,transparent)}
+:root[data-design] .field input,:root[data-design] .field select{border-color:var(--line)}
+
+/* ---- ORBIT: deep space, glass cards, glowing tiles ---- */
+:root[data-design="orbit"] :is(.inputs,.chart,.panel-flat,.sched,.mk,.set-cat .set-sec,.hclock,.svbar){background:linear-gradient(160deg,rgba(40,52,120,.30),rgba(10,14,40,.55));border:1px solid rgba(130,160,255,.20);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 14px 36px rgba(0,0,0,.45);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+:root[data-design="orbit"] .hero{background:radial-gradient(260px 140px at 85% 0%,rgba(124,92,255,.35),transparent 70%),radial-gradient(240px 140px at 0% 100%,rgba(56,210,255,.18),transparent 70%),linear-gradient(160deg,rgba(24,30,78,.85),rgba(8,12,34,.92));border:1px solid rgba(130,160,255,.34);box-shadow:0 0 0 1px rgba(124,92,255,.10),0 18px 40px rgba(0,0,0,.5)}
+:root[data-design="orbit"] .hero-value{background:linear-gradient(180deg,#FFE7B0,#E2B263);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 14px rgba(232,194,122,.35))}
+:root[data-design="orbit"] .hero-label{color:#C9D2FF}
+:root[data-design="orbit"] .tile{background:radial-gradient(90% 60% at 50% 100%,rgba(124,92,255,.22),transparent 70%),linear-gradient(165deg,rgba(36,46,110,.55),rgba(9,13,36,.85));border:1px solid rgba(130,160,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 24px rgba(0,0,0,.4);border-radius:18px}
+:root[data-design="orbit"] .tile .ic{width:32px;height:32px;stroke-width:1.6;color:#A98BFF;filter:drop-shadow(0 0 6px currentColor)}
+:root[data-design="orbit"] .tile:nth-child(3n+2) .ic{color:#38D2FF}
+:root[data-design="orbit"] .tile:nth-child(3n) .ic{color:#E8C27A}
+:root[data-design="orbit"] .tile:hover{border-color:rgba(56,210,255,.6);box-shadow:0 0 0 1px rgba(56,210,255,.25),0 0 22px rgba(56,210,255,.22)}
+:root[data-design="orbit"] .gold-btn{background:linear-gradient(90deg,#F6DCA0,#D9AE62 55%,#B98942);color:#1A1204;box-shadow:0 8px 26px rgba(232,194,122,.35),inset 0 1px 0 rgba(255,255,255,.5)}
+:root[data-design="orbit"] .rng::-webkit-slider-runnable-track{height:5px;background:linear-gradient(to right,#7C5CFF 0,#38D2FF var(--p),rgba(150,170,255,.18) var(--p))}
+:root[data-design="orbit"] .rng::-moz-range-progress{background:linear-gradient(90deg,#7C5CFF,#38D2FF)}
+:root[data-design="orbit"] .rng::-webkit-slider-thumb{width:22px;height:22px;margin-top:-8.5px;background:radial-gradient(circle at 40% 35%,#FFFFFF,#BFE9FF 45%,#38D2FF);border:2px solid #0A1029;box-shadow:0 0 0 1px rgba(56,210,255,.8),0 0 16px rgba(56,210,255,.75)}
+:root[data-design="orbit"] .rng::-moz-range-thumb{background:#BFE9FF;border:2px solid #0A1029;box-shadow:0 0 14px rgba(56,210,255,.75)}
+:root[data-design="orbit"] :is(.tchip.on,.sv-seg button[aria-checked="true"],.seg button[aria-pressed="true"]){background:linear-gradient(90deg,#2F6BFF,#38D2FF);border-color:transparent;color:#fff;box-shadow:0 0 16px rgba(56,160,255,.45)}
+:root[data-design="orbit"] .bottom{background:rgba(8,12,34,.78);border-color:rgba(130,160,255,.22);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+:root[data-design="orbit"] .bt.on{color:#FFFFFF;text-shadow:0 0 10px rgba(56,210,255,.9)}
+:root[data-design="orbit"] .bt.on .ic{color:#38D2FF;filter:drop-shadow(0 0 6px rgba(56,210,255,.9))}
+:root[data-design="orbit"] .dz-brand{font-weight:300;letter-spacing:.42em;color:#F4E6C6;text-shadow:0 0 18px rgba(232,194,122,.55);padding-inline-start:.42em}
+:root[data-design="orbit"] .dz-kick{color:#D8DEFF}
+:root[data-design="orbit"] .dz-ban{border-color:rgba(130,160,255,.35)}
+:root[data-design="orbit"] .dz-ban::before{content:"";position:absolute;inset:-30% -10% auto;height:150%;border-radius:50%;border:2px solid rgba(255,214,140,.55);box-shadow:0 0 30px rgba(255,190,100,.45),inset 0 0 30px rgba(255,190,100,.25);pointer-events:none;transform:translateY(-34%)}
+:root[data-design="orbit"] .page-head{border-color:rgba(130,160,255,.28)}
+
+/* ---- AURUM: black and gold luxury, serif headings ---- */
+:root[data-design="aurum"] :is(.home-hello,.page-head h2,.sec-t,.hero-value,.hhero .v,.dz-brand,.tiles-h,.set-cat h3){font-family:'Cormorant Garamond','Frank Ruhl Libre',Georgia,serif;font-weight:600;letter-spacing:.01em}
+:root[data-design="aurum"] :is(.inputs,.chart,.panel-flat,.sched,.mk,.set-cat .set-sec,.hclock,.svbar){background:linear-gradient(165deg,#17140E,#0D0B08);border:1px solid rgba(212,175,95,.24);box-shadow:inset 0 1px 0 rgba(255,236,190,.05),0 12px 30px rgba(0,0,0,.55)}
+:root[data-design="aurum"] .hero{background:radial-gradient(280px 160px at 90% 0%,rgba(212,175,95,.20),transparent 70%),linear-gradient(165deg,#1A160E,#0B0A07);border:1px solid rgba(212,175,95,.5)}
+:root[data-design="aurum"] .hero-value{background:linear-gradient(180deg,#F6E2AE,#C99A4C);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:clamp(2.3rem,10vw,3.3rem)}
+:root[data-design="aurum"] .hero-label{color:#D9C79F}
+:root[data-design="aurum"] .tile{background:linear-gradient(165deg,#1A170F,#0C0A07);border:1px solid rgba(212,175,95,.32);border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,236,190,.06)}
+:root[data-design="aurum"] .tile .ic{width:30px;height:30px;color:#E2BE74;stroke-width:1.5}
+:root[data-design="aurum"] .tile:hover{border-color:#D8B46A;box-shadow:0 0 18px rgba(212,175,95,.22)}
+:root[data-design="aurum"] .gold-btn{background:linear-gradient(90deg,#F3D99C,#D8B46A 50%,#AE8139);color:#140E03;box-shadow:0 8px 24px rgba(212,175,95,.30),inset 0 1px 0 rgba(255,255,255,.45)}
+:root[data-design="aurum"] .rng::-webkit-slider-runnable-track{height:4px;background:linear-gradient(to right,#B8893F 0,#F1D497 var(--p),rgba(212,175,95,.18) var(--p))}
+:root[data-design="aurum"] .rng::-moz-range-progress{background:linear-gradient(90deg,#B8893F,#F1D497)}
+:root[data-design="aurum"] .rng::-webkit-slider-thumb{width:20px;height:20px;background:radial-gradient(circle at 40% 35%,#FFF3D0,#E2BE74 55%,#B8893F);border:2px solid #0E0C08;box-shadow:0 0 0 1px #D8B46A,0 0 12px rgba(212,175,95,.55)}
+:root[data-design="aurum"] .rng::-moz-range-thumb{background:#E2BE74;border:2px solid #0E0C08}
+:root[data-design="aurum"] :is(.tchip.on,.sv-seg button[aria-checked="true"],.seg button[aria-pressed="true"]){background:linear-gradient(90deg,#F1D497,#C99A4C);border-color:transparent;color:#140E03}
+:root[data-design="aurum"] .tchip{border-color:rgba(212,175,95,.3)}
+:root[data-design="aurum"] .bottom{background:rgba(10,9,6,.94);border-color:rgba(212,175,95,.28)}
+:root[data-design="aurum"] .bt.on{color:#E9C982}
+:root[data-design="aurum"] .dz-ban{align-items:flex-start;text-align:start;border-color:rgba(212,175,95,.5);min-height:230px}
+:root[data-design="aurum"] .dz-brand{order:-2;font-size:1.25rem;letter-spacing:.3em;color:#E9C982;position:absolute;top:16px;inset-inline:0;text-align:center}
+:root[data-design="aurum"] .dz-kick{order:-1;position:absolute;top:44px;inset-inline:0;text-align:center;font-size:.6rem;color:#BFAF8A}
+:root[data-design="aurum"] .dz-tag{font-family:'Cormorant Garamond','Frank Ruhl Libre',Georgia,serif;font-size:1.7rem;line-height:1.15;color:#EED39A;font-weight:600}
+:root[data-design="aurum"] .page-head{border-color:rgba(212,175,95,.35)}
+@media print{:root[data-design] .dz-ban{display:none}:root[data-design] .page-head{background:none;min-height:0;box-shadow:none}}

@@ -6,6 +6,7 @@ const NUMF = (id, label, unit, hint) => ({id, label, unit, val:'', wide:false, h
 const PROFK = [['k0','f_k0'],['k12','f_k12'],['k3','f_k3'],['k45','f_k45'],['k617','f_k617'],['k18','f_k18']];
 const SETDEFS = [
   ['set_look', [
+    SEL('set_design','f_design','default',[['default','dz_default'],['orbit','dz_orbit'],['aurum','dz_aurum']],{wide:true, hint:'h_design'}),
     SEL('set_theme','f_theme','system',[['system','o_th_sys'],['dark','sk_dark'],['light','sk_light'],['telaviv','sk_telaviv'],['jerusalem','sk_jerusalem'],['banknote','sk_banknote'],['deadsea','sk_deadsea'],['eilat','sk_eilat'],['terminal','sk_terminal'],['roshhashana','sk_roshhashana'],['hanukkah','sk_hanukkah'],['passover','sk_passover'],['christmas','sk_christmas'],['easter','sk_easter'],['newyear','sk_newyear'],['ramadan','sk_ramadan'],['eidfitr','sk_eidfitr'],['eidadha','sk_eidadha'],['yomkippur','sk_yomkippur'],['sukkot','sk_sukkot'],['simchattorah','sk_simchattorah'],['tubishvat','sk_tubishvat'],['purim','sk_purim'],['atzmaut','sk_atzmaut'],['lagbaomer','sk_lagbaomer'],['yomyerushalayim','sk_yomyerushalayim'],['shavuot','sk_shavuot'],['tubeav','sk_tubeav'],['advent','sk_advent'],['epiphany','sk_epiphany'],['valentine','sk_valentine'],['palmsunday','sk_palmsunday'],['ascension','sk_ascension'],['pentecost','sk_pentecost'],['assumption','sk_assumption'],['allsaints','sk_allsaints']],{wide:true, hint:'h_theme'}),
     SEL('set_holAuto','f_holAuto','0',[['0','o_off'],['all','o_holAll'],['jewish','o_holJ'],['christian','o_holC'],['muslim','o_holM']],{wide:true, hint:'h_holAuto'}),
     SEL('set_accent','f_accent','gold',[['gold','o_ac_gold'],['blue','o_ac_blue'],['green','o_ac_green'],['violet','o_ac_violet']]),
@@ -89,7 +90,7 @@ function settingsPanelHTML(){
     ${sec('set_security', '<div id="sec_box" class="sec-box"></div>')}
     ${sec('set_sync', '<div id="lv_box" class="lv-box" aria-live="polite"></div>')}
     ${sec('set_figs', '<div id="fg_box" class="fg-box"></div>')}
-    ${SETDEFS.slice(0, 2).map(([k, fs]) => sec(k, (k === 'set_look' ? '<div class="skins" id="skins" role="radiogroup" data-ia="f_theme"></div>' : '') + fl(fs))).join('')}
+    ${SETDEFS.slice(0, 2).map(([k, fs]) => sec(k, (k === 'set_look' ? '<h4 class="skins-h dz-h" data-i="dz_gal"></h4><div class="dz-gal" id="dzGal" role="radiogroup" data-ia="f_design"></div><div class="skins" id="skins" role="radiogroup" data-ia="f_theme"></div>' : '') + fl(fs))).join('')}
     ${sec('set_clock', '<div class="cstyles" id="cstyles" role="radiogroup" data-ia="set_clock"></div><h4 class="ck-st-h" data-i="ck_studio"></h4><div class="ck-studio" id="ck_studio"></div><div class="fields">' + [
       SEL('set_clock24','f_clock24','1',[['1','o_24h'],['0','o_12h']]),
       SEL('set_clockSec','f_clockSec','0',[['1','o_on'],['0','o_off']]),
@@ -131,7 +132,7 @@ function settingsPanelHTML(){
       <p class="fine" id="set_msg" aria-live="polite"></p><p class="fine" id="set_info"></p>`)}
   </section>`;
 }
-const SMAP = {set_mktLive:'mktLive', set_inGroup:'inGroup', set_ptMode:'ptMode', set_ptVal:'ptVal', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
+const SMAP = {set_design:'design', set_mktLive:'mktLive', set_inGroup:'inGroup', set_ptMode:'ptMode', set_ptVal:'ptVal', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
