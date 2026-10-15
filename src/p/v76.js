@@ -4,13 +4,16 @@
 
 /* ---------- separators: one choice for everything the app shows and everything you type ---------- */
 var SEP_G = {comma: ',', dot: '.', space: ' ', apos: '’', none: ''};
+var SEP_MEMO = {};   /* 8.3: the answer only changes with the language or the setting */
 function sepGroup(){
   const s = SET.sep; if (s && s !== 'auto' && SEP_G[s] != null) return SEP_G[s];
-  try { return (new Intl.NumberFormat(locOf()).formatToParts(12345.5).find(p => p.type === 'group') || {}).value || ','; } catch (e) { return ','; }
+  const k = 'g' + locOf(); if (SEP_MEMO[k] != null) return SEP_MEMO[k];
+  try { return SEP_MEMO[k] = (new Intl.NumberFormat(locOf()).formatToParts(12345.5).find(p => p.type === 'group') || {}).value || ','; } catch (e) { return ','; }
 }
 function sepDec(){
   const s = SET.sep; if (s === 'dot') return ','; if (s && s !== 'auto') return '.';
-  try { return (new Intl.NumberFormat(locOf()).formatToParts(1.5).find(p => p.type === 'decimal') || {}).value || '.'; } catch (e) { return '.'; }
+  const k = 'd' + locOf(); if (SEP_MEMO[k] != null) return SEP_MEMO[k];
+  try { return SEP_MEMO[k] = (new Intl.NumberFormat(locOf()).formatToParts(1.5).find(p => p.type === 'decimal') || {}).value || '.'; } catch (e) { return '.'; }
 }
 N = function(x, d, max){
   if (!isFinite(x)) return '—';

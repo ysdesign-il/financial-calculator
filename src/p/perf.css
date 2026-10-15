@@ -1,0 +1,13 @@
+/* ================= 8.3: smoother scrolling on phones ================= */
+/* the theme background stays put without background-attachment:fixed, which makes phones repaint the whole page while scrolling */
+:root[data-skin] body{background:var(--bg);background-attachment:scroll}
+:root[data-skin] body::before{content:"";position:fixed;inset:0;z-index:-1;background:var(--sk-body);pointer-events:none}
+/* frosted glass costs a lot on a phone's graphics chip when every card has it: on touch screens only the bottom bar and the
+   page header keep the blur; cards get a slightly more solid surface instead */
+@media (hover:none),(pointer:coarse){
+  :root[data-design] :is(.inputs,.chart,.panel-flat,.sched,.mk,.set-cat .set-sec,.hclock,.svbar,.tile,.hero){-webkit-backdrop-filter:none !important;backdrop-filter:none !important}
+  :root[data-design="orbit"] :is(.inputs,.chart,.panel-flat,.sched,.mk,.set-cat .set-sec,.hclock,.svbar){background:linear-gradient(160deg,color-mix(in srgb,var(--surface) 90%,var(--dz-a3) 10%),var(--surface))}
+  :root[data-design="aurora"] :is(.inputs,.chart,.panel-flat,.sched,.mk,.set-cat .set-sec,.hclock,.svbar,.tile,.hero){background:color-mix(in srgb,var(--surface) 84%,transparent)}
+}
+/* taps respond at once (no double-tap zoom wait) */
+button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
