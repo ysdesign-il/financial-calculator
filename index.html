@@ -5208,10 +5208,21 @@ Object.assign(T, {
   n_ins_pet:['חיות מחמד: בדקו החרגות לגזע, גיל ומחלות קודמות.','حيوانات أليفة: افحصوا استثناءات السلالة والعمر والأمراض السابقة.','Pet: check exclusions for breed, age and existing conditions.'],
   n_ins_business:['עסק: חבות מעבידים, צד ג׳, ציוד ואובדן הכנסה. כל אחד בתקרה משלו.','مصلحة: مسؤولية صاحب العمل، طرف ثالث، معدات وفقدان دخل – لكل سقفه.','Business: employer\'s liability, third party, equipment and loss of income – each with its own limit.']
 });
+Object.assign(T, {
+  o_insCo_none:['— בלי שם (הצעה) —','— بدون اسم (عرض) —','— no name (offer) —'],
+  o_insCo_harel:['הראל','هرئيل','Harel'], o_insCo_migdal:['מגדל','مجدال','Migdal'], o_insCo_clal:['כלל','كلال','Clal'],
+  o_insCo_phoenix:['הפניקס','هفينيكس','The Phoenix'], o_insCo_menora:['מנורה מבטחים','مينورا مفطاحيم','Menora Mivtachim'],
+  o_insCo_ayalon:['איילון','أيالون','Ayalon'], o_insCo_hachshara:['הכשרה','هخشرا','Hachshara'], o_insCo_direct:['ביטוח ישיר','التأمين المباشر','Direct Insurance'],
+  o_insCo_aig:['AIG','AIG','AIG'], o_insCo_shomera:['שומרה','شومرا','Shomera'], o_insCo_libra:['ליברה','ليبرا','Libra'],
+  o_insCo_wesure:['ווישור','ويشور','Wesure'], o_insCo_shlomo:['שלמה ביטוח','شلومو للتأمين','Shlomo Insurance'],
+  o_insCo_passport:['פספורטכארד','باسبورت كارد','PassportCard'], o_insCo_other:['חברה אחרת / סוכן','شركة أخرى / وكيل','Other insurer / agent'],
+  h_insCo:['בחרו את החברה שנתנה את ההצעה – השם יופיע בתוצאות. המחירים הם מה שהזנתם מההצעה שקיבלתם, לא מחירון של החברה. הרשימה לפי סוג הביטוח.','اختاروا الشركة التي قدّمت العرض – سيظهر الاسم في النتائج. الأسعار هي ما أدخلتموه من العرض، وليست قائمة أسعار الشركة.','Pick the insurer that made the offer – its name shows in the results. Prices are what you typed from the offer, not the insurer\'s price list.']
+});
 (function(){
   const L = {a: ['א', 'أ', 'A'], b: ['ב', 'ب', 'B'], c: ['ג', 'ج', 'C'], d: ['ד', 'د', 'D']};
   const F = {P: ['פרמיה חודשית', 'القسط الشهري', 'Monthly premium'], G: ['עלייה בפרמיה בשנה', 'ارتفاع القسط سنويًا', 'Premium rise a year'], D: ['השתתפות עצמית', 'المشاركة الذاتية', 'Deductible'],
     C: ['סכום ביטוח / כיסוי', 'مبلغ التأمين / التغطية', 'Sum insured / cover'], X: ['הנחה בשנים הראשונות', 'خصم في السنوات الأولى', 'Early-years discount'], XY: ['כמה שנים ההנחה', 'كم سنة الخصم', 'Discount for how many years'],
+    Co: ['חברת ביטוח', 'شركة التأمين', 'Insurer'],
     E: ['כיסויים נוספים בחודש', 'تغطيات إضافية شهريًا', 'Add-ons a month']};
   const O = ['הצעה', 'عرض', 'Offer'];
   Object.keys(L).forEach(k => {
@@ -6342,6 +6353,7 @@ Object.assign(ICON, {
   cpilink: ic('<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>')
 });
 /* 8.5: comparing insurance offers */
+const INS_COS = ['harel','migdal','clal','phoenix','menora','ayalon','hachshara','direct','aig','shomera','libra','wesure','shlomo','passport','other'];
 const INS_KINDS0 = ['life', 'mortlife', 'mortprop', 'health', 'critical', 'disability', 'ltc', 'accident', 'carcomp', 'car3rd', 'carmand', 'homestruct', 'homecontent', 'travel', 'dental', 'pet', 'business'];
 Object.assign(DEFS, {
   insurance: [
@@ -6354,6 +6366,7 @@ Object.assign(DEFS, {
     ...['a','b','c','d'].flatMap((k, i) => {
       const w = i < 2 ? {} : {when: ['ins_n', i === 2 ? '3|4' : '4']};
       return [
+        SEL('ins_co' + k, 'f_insCo_' + k, '', [['', 'o_insCo_none']].concat(INS_COS.map(c => [c, 'o_insCo_' + c])), Object.assign({wide: true, hint: i ? undefined : 'h_insCo'}, w)),
         F('ins_p' + k, 'f_insP_' + k, 'cur', [180, 165, 200, 150][i], Object.assign({hint: i ? undefined : 'h_insP'}, w)),
         F('ins_g' + k, 'f_insG_' + k, '%', [0, 4, 0, 5][i], Object.assign({hint: i ? undefined : 'h_insG'}, w)),
         F('ins_d' + k, 'f_insD_' + k, 'cur', [0, 0, 0, 0][i], Object.assign({hint: i ? undefined : 'h_insD'}, w)),
@@ -9477,7 +9490,9 @@ function calcInsurance(){
   });
   const key = o => by === 'cover' ? (isFinite(o.per1k) ? o.per1k : Infinity) : o.all;
   const sorted = L.slice().sort((a, b) => key(a) - key(b)), best = sorted[0], worst = sorted[sorted.length - 1];
-  const name = k => t('o_insOff_' + k);
+  insCoFilter(kind);
+  const co = k => ($('#ins_co' + k) || {}).value || '';
+  const name = k => { const c = co(k); if (!c) return t('o_insOff_' + k); const same = INS_OFF.slice(0, n).filter(x => co(x) === c).length > 1; return t('o_insCo_' + c) + (same ? ' (' + t('o_insOff_' + k) + ')' : ''); };
   const rows = [];
   sorted.forEach((o, i) => {
     rows.push([(i === 0 ? '★ ' : '') + name(o.k) + ' · ' + t('r_insTotal', {y: yrs}), M(o.all), i === 0 ? 'key' : undefined]);
@@ -9494,6 +9509,19 @@ function calcInsurance(){
     table: {title: t('t_insCmp'), open: true, head: ['', t('h_insPm'), t('h_insY1'), t('h_insPrem'), t('h_insDed'), t('h_insAll'), t('h_insCov'), t('h_insPer1k')], rows: trows},
     note: t('n_ins_' + kind) + ' ' + t('n_ins')
   };
+}
+/* which insurers sell which kind: general insurers (car, home, business) are not offered for life and health plans, and PassportCard only for travel */
+const INS_GENERAL = ['shomera', 'libra', 'wesure', 'shlomo'], INS_LIFEHEALTH = ['life', 'health', 'critical', 'disability', 'ltc', 'dental'];
+function insCoOk(c, kind){
+  if (c === 'passport') return kind === 'travel';
+  if (INS_GENERAL.includes(c)) return !INS_LIFEHEALTH.includes(kind);
+  return true;
+}
+function insCoFilter(kind){
+  INS_OFF.forEach(k => { const s = $('#ins_co' + k); if (!s) return;
+    [...s.options].forEach(o => { const ok = !o.value || insCoOk(o.value, kind); o.hidden = !ok; o.disabled = !ok; });
+    if (s.value && !insCoOk(s.value, kind)) s.value = '';
+  });
 }
 Object.assign(CALC, {insurance: calcInsurance});
 
@@ -11072,8 +11100,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "8.5", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.021534';
+var CHANGELOG = [{"v": "8.6", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.022311';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
