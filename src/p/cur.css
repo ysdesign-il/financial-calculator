@@ -41,3 +41,14 @@
 .shr-imgwrap{max-height:52vh;overflow:auto;border-radius:12px;border:1px solid var(--line);background:#fff;margin-bottom:12px}
 .shr-imgwrap img{display:block;width:100%;height:auto}
 .shr-imgwait{text-align:center;padding:30px 8px;opacity:.75}
+/* 8.8: pictures for live indices and commodities */
+.mk-l .mk-ic,.mk-l .mk-flag{vertical-align:middle;margin-inline-end:7px}
+.mk-ic{display:inline-flex;width:36px;height:36px;position:relative;filter:drop-shadow(0 2px 3px rgba(0,0,0,.28))}
+.mk-ic svg{width:100%;height:100%}
+.mk-ic-gold::after,.mk-ic-silver::after,.mk-ic-platinum::after,.mk-ic-copper::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%);background-size:250% 100%;mix-blend-mode:screen;animation:mkShine 3.6s ease-in-out infinite;-webkit-mask:linear-gradient(#000,#000);clip-path:polygon(12% 82%,88% 82%,75% 30%,25% 30%)}
+.mk-ic-natgas svg{animation:mkFlick 1.8s ease-in-out infinite;transform-origin:50% 90%}
+.mk-l .mk-flag{width:32px;height:32px}.mk-l .mk-flag i{width:25px;height:25px;font-size:28px}
+@keyframes mkShine{0%,60%{background-position:150% 0}100%{background-position:-50% 0}}
+@keyframes mkFlick{0%,100%{transform:scale(1)}50%{transform:scale(1.06,.95)}}
+@media (prefers-reduced-motion:reduce){.mk-ic::after,.mk-ic-natgas svg{animation:none}}
+:root[data-motion="reduced"] .mk-ic::after,:root[data-motion="reduced"] .mk-ic-natgas svg{animation:none}
