@@ -1,4 +1,5 @@
 /* 8.5: comparing insurance offers */
+const INS_COS = ['harel','migdal','clal','phoenix','menora','ayalon','hachshara','direct','aig','shomera','libra','wesure','shlomo','passport','other'];
 const INS_KINDS0 = ['life', 'mortlife', 'mortprop', 'health', 'critical', 'disability', 'ltc', 'accident', 'carcomp', 'car3rd', 'carmand', 'homestruct', 'homecontent', 'travel', 'dental', 'pet', 'business'];
 Object.assign(DEFS, {
   insurance: [
@@ -11,6 +12,7 @@ Object.assign(DEFS, {
     ...['a','b','c','d'].flatMap((k, i) => {
       const w = i < 2 ? {} : {when: ['ins_n', i === 2 ? '3|4' : '4']};
       return [
+        SEL('ins_co' + k, 'f_insCo_' + k, '', [['', 'o_insCo_none']].concat(INS_COS.map(c => [c, 'o_insCo_' + c])), Object.assign({wide: true, hint: i ? undefined : 'h_insCo'}, w)),
         F('ins_p' + k, 'f_insP_' + k, 'cur', [180, 165, 200, 150][i], Object.assign({hint: i ? undefined : 'h_insP'}, w)),
         F('ins_g' + k, 'f_insG_' + k, '%', [0, 4, 0, 5][i], Object.assign({hint: i ? undefined : 'h_insG'}, w)),
         F('ins_d' + k, 'f_insD_' + k, 'cur', [0, 0, 0, 0][i], Object.assign({hint: i ? undefined : 'h_insD'}, w)),
