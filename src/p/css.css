@@ -1,0 +1,8 @@
+.adv{margin-top:14px;border-top:1px solid var(--line);padding-top:4px}
+.adv summary{cursor:pointer;padding:10px 0;font-weight:600;font-size:.92rem;color:var(--ink)}
+.adv .fields{margin-top:6px}
+.sub-h{grid-column:1/-1;margin:6px 0 -4px;font-size:.8rem;font-weight:600;color:var(--ink-2);letter-spacing:.02em}
+.warn{margin:12px 0 0;padding:10px 12px;border-radius:10px;border:1px solid var(--c3);color:var(--ink);font-size:.88rem;background:color-mix(in srgb,var(--c3) 10%,transparent)}
+.ok-note{border-color:var(--c1);background:color-mix(in srgb,var(--c1) 8%,transparent)}
+.warn[hidden]{display:none}
+.lookup{width:100%;margin:0 0 10px;min-height:40px;font:inherit;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:10px;padding:6px 10px}

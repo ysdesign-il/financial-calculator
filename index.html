@@ -1250,6 +1250,77 @@ body:not(.own) .own-only{display:none!important}
   .fields > .field.ic-field:not(.wide) > .fi svg{width:14px;height:14px}
   .fields > .field.ic-field:not(.wide) > .fb > label{display:block;padding-inline-start:30px;min-height:24px}
 }
+/* ===== 7.5 ===== */
+.field.fig-off input{opacity:.62}
+.mk-mode{font:inherit;font-size:.72rem;font-weight:600;border:1px solid var(--line);background:var(--g1);color:var(--ink-2);border-radius:999px;padding:3px 10px;margin-inline-start:6px;cursor:pointer;vertical-align:middle}
+.mk-mode.off{border-color:var(--gold-ui);color:var(--gold)}
+.svbar .sv-share{display:none}
+#panel-expenses .sv-share,#panel-clients .sv-share,#panel-percent .sv-share{display:flex;gap:6px;flex-wrap:wrap}
+.sv-share button{font:inherit;font-size:.8rem;font-weight:600;border:1px solid var(--line);background:var(--g1);color:var(--ink);border-radius:999px;padding:6px 12px;min-height:34px;cursor:pointer}
+.svd-top{display:grid;gap:8px;margin-bottom:10px}
+.svd-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.svd-tabs button{font:inherit;font-weight:600;font-size:.86rem;border:1px solid var(--line);background:var(--g1);color:var(--ink-2);border-radius:999px;padding:7px 14px;min-height:38px;cursor:pointer}
+.svd-tabs button[aria-pressed="true"]{background:var(--gold-ui);color:#1a1405;border-color:transparent}
+.svd-cat{margin:14px 0;padding:12px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.svd-ch{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-size:1rem}
+.svd-ch small{color:var(--ink-2);font-weight:500}
+.svd-ch .fg-x{margin-inline-start:auto}
+.svd-ic{display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;border-radius:8px;background:var(--g1);border:1px solid var(--line)}
+.svd-ic svg{width:16px;height:16px}
+.svd-it{padding:10px 0;border-top:1px solid var(--line);display:grid;gap:4px}
+.svd-cat .svd-it:first-of-type{border-top:0}
+.svd-it.bin{padding:10px 12px;border:1px solid var(--line);border-radius:14px;margin:8px 0;background:var(--surface)}
+.svd-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.svd-n{font-weight:700}
+.svd-v{margin-inline-start:auto;font-weight:700;color:var(--gold)}
+.svd-cat-t{margin-inline-start:auto;font-size:.8rem;color:var(--ink-2)}
+.svd-meta{color:var(--ink-2);font-size:.78rem}
+.svd-note{margin:2px 0;font-size:.86rem;color:var(--ink);white-space:pre-wrap}
+.svd-acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.svd-acts .mv,.svd-acts .gold-btn{padding:0 10px;font-size:.82rem;min-height:34px;height:auto}
+.mv.danger,.svd-acts .danger{color:#c0392b;border-color:rgba(192,57,43,.35)}
+.svd-ren{flex:1 1 160px;min-width:0}
+.svd-empty{text-align:center;padding:26px 12px;border:1px dashed var(--line);border-radius:16px;margin:10px 0}
+.svd-empty b{display:block;margin-bottom:6px}
+.svd-tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.svd-tool{display:grid;gap:4px;justify-items:start;text-align:start;font:inherit;color:var(--ink);padding:12px;border-radius:14px;border:1px solid var(--line);background:var(--g1);cursor:pointer}
+.svd-tool small{color:var(--ink-2)}
+.scn-edit{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 12px;margin-bottom:10px;border-radius:12px;border:1px solid var(--gold-ui);background:var(--g1)}
+.scn-edit span{flex:1 1 180px;font-weight:600}
+.sh-box{max-width:520px}
+.shr-pre{max-height:38vh;overflow:auto;white-space:pre-wrap;font:inherit;font-size:.84rem;line-height:1.5;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--ink);margin:0 0 10px}
+.shr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.shr-b{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border-radius:14px;border:1px solid var(--line);background:var(--g1);color:var(--ink);font:inherit;font-size:.82rem;text-decoration:none;cursor:pointer;font-size:1.2rem}
+.shr-b span{font-size:.78rem}
+.pdf-doc{position:fixed;top:0;left:-12000px;width:794px;padding:40px 44px;background:#fff;color:#141821;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','IBM Plex Sans Hebrew','IBM Plex Sans Arabic',Arial,sans-serif;font-size:15px;line-height:1.5}
+.pdf-doc header{border-bottom:3px solid #C9A227;padding-bottom:12px;margin-bottom:16px}
+.pdf-doc .pd-brand{font-size:12px;color:#8a7020;font-weight:700;letter-spacing:.04em}
+.pdf-doc h1{margin:4px 0;font-size:26px}
+.pdf-doc .pd-date{font-size:12px;color:#5b6170}
+.pdf-doc h2{font-size:17px;margin:18px 0 8px;color:#1f2a44}
+.pdf-doc h3{font-size:15px;margin:14px 0 6px;color:#1f2a44}
+.pdf-doc table{width:100%;border-collapse:collapse;font-size:13.5px}
+.pdf-doc th,.pdf-doc td{border-bottom:1px solid #e3e6ee;padding:6px 8px;text-align:start;vertical-align:top}
+.pdf-doc th{background:#f4f6fa;font-weight:700}
+.pdf-doc td:last-child{font-weight:600;white-space:nowrap}
+.pdf-doc .pd-hero{display:grid;gap:2px;padding:14px 16px;border-radius:12px;background:#fbf6e6;border:1px solid #ecd9a0;margin-bottom:10px}
+.pdf-doc .pd-hero b{font-size:26px;color:#6b520e}
+.pdf-doc .pd-hero small{color:#5b6170}
+.pdf-doc .pd-note{font-size:12.5px;color:#5b6170;margin-top:12px}
+.pdf-doc .pd-warn{font-size:12.5px;color:#8a3a12;background:#fff4ec;border-radius:8px;padding:8px 10px}
+.pdf-doc .pd-total{font-size:15px;margin-top:10px}
+.pdf-doc footer{margin-top:22px;padding-top:10px;border-top:1px solid #e3e6ee;font-size:11px;color:#8a8f9c}
+.dc-code{width:100%;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;line-height:1.45;padding:10px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--ink);tab-size:2;resize:vertical}
+.dc-help{direction:ltr;text-align:left;white-space:pre-wrap;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.76rem;padding:10px;border-radius:10px;background:var(--field);border:1px solid var(--line);overflow:auto}
+.man-box{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:8px 0 4px;padding:10px;border:1px dashed var(--gold-ui);border-radius:12px}
+.man-f{display:grid;gap:3px;font-size:.8rem;color:var(--ink-2)}
+.man-f input{font:inherit;padding:7px 9px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink);min-width:0}
+.man-box .gold-btn{grid-column:1/-1}
+.cs-list{display:grid;gap:8px;margin:8px 0}
+.cs-it{display:grid;gap:4px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--g1)}
+.cs-it small{color:var(--ink-2);font-size:.76rem}
+.cs-u{word-break:break-all}
+.cs-it .btnrow .mv{padding:0 10px;height:auto;min-height:32px;font-size:.8rem}
 
 </style>
 </head>
@@ -4047,6 +4118,180 @@ r_lcBestApr:['הכי משתלמת: {x}, עלות שנתית נמוכה ב','ال
 r_lcVsApr:['לעומת {x}, כולל עמלות','مقارنة بـ{x}، شاملة العمولات','vs {x}, fees included'],
 w_lcAprDiff:['שימו לב: לפי העלות השנתית האמיתית {x} זולה יותר, כי ב{y} משלמים יותר עמלות מראש. אם יש לכם שימוש טוב לכסף עכשיו, {x} עדיפה.','انتبه: حسب التكلفة السنوية الحقيقية {x} أرخص، لأن في {y} تُدفع عمولات أكثر مقدمًا. إن كان للمال استخدام جيد الآن فـ{x} أفضل.','Note: by true yearly cost {x} is cheaper, because {y} charges more fees up front. If you have a good use for the money now, {x} is the better pick.']
 });
+/* 7.5 */
+Object.assign(T, {
+  d_loancmp:['כמה הצעות הלוואה שרוצים זו מול זו, עם שם לכל הצעה: כמה תחזירו בסך הכול ומה העלות השנתית האמיתית כולל עמלות.','عروض قروض بقدر ما تريد جنبًا إلى جنب مع اسم لكل عرض: كم ستعيد إجمالًا وما التكلفة السنوية الحقيقية شاملة الرسوم.','As many loan offers as you like side by side, each with a name: how much you repay in total and the true yearly cost including fees.'],
+  n_da:['עמלות נכללות אם הזנתם אותן; מס על רווח אינו נכלל. מיצוע מוריד את מחיר האיזון אך אינו מבטיח רווח.','تُحتسب العمولات إذا أدخلتها؛ ضريبة الربح غير مشمولة. المتوسط يخفض سعر التعادل ولا يضمن الربح.','Fees count if you enter them; tax on profit is not included. Averaging lowers your break-even price but does not guarantee a profit.'],
+  n_be:['הוצאות קבועות ועלות משתנה ליחידה נחשבות קבועות בטווח. מס נכלל רק אם הזנתם שיעור מס.','تُعتبر التكاليف الثابتة والمتغيرة للوحدة ثابتة ضمن النطاق. الضريبة تُحتسب فقط إذا أدخلت نسبتها.','Fixed costs and variable cost per unit are assumed constant. Tax counts only if you enter a tax rate.'],
+
+  /* salary: more options */
+  g_salMore:['אפשרויות נוספות לתלוש','خيارات إضافية للقسيمة','More payslip options'],
+  f_sExtra:['תוספות שלא לפנסיה (נסיעות, שעות נוספות)','إضافات لا تدخل التقاعد (سفر، ساعات إضافية)','Extras not for pension (travel, overtime)'],
+  h_sExtra:['חייבות במס ובביטוח לאומי, אבל לא מפרישים מהן לפנסיה.','خاضعة للضريبة والتأمين الوطني لكن لا يُقتطع منها للتقاعد.','Taxed and subject to National Insurance, but no pension is deducted from them.'],
+  r_sExtra:['תוספות (נסיעות / שעות נוספות)','إضافات (سفر / ساعات إضافية)','Extras (travel / overtime)'],
+  f_sJob:['סוג המשרה','نوع الوظيفة','Type of job'],
+  o_jobMain:['משרה ראשית','وظيفة رئيسية','Main job'],
+  o_jobSecond:['משרה נוספת (בלי תיאום מס)','وظيفة إضافية (دون تنسيق ضريبي)','Second job (no tax coordination)'],
+  h_sJob:['במשרה נוספת בלי תיאום מס מנכים מס בשיעור המרבי ובלי נקודות זיכוי. תיאום מס בדרך כלל מוריד את המס.','في الوظيفة الإضافية دون تنسيق ضريبي تُخصم الضريبة بالنسبة القصوى ودون نقاط إعفاء. التنسيق عادةً يخفض الضريبة.','A second job without tax coordination is taxed at the top rate with no credit points. Coordinating usually lowers the tax.'],
+  w_sSecond:['חושב לפי משרה נוספת בלי תיאום מס: מס בשיעור המרבי ובלי נקודות זיכוי. כדאי לבקש תיאום מס.','حُسب كوظيفة إضافية دون تنسيق ضريبي: الضريبة بالنسبة القصوى ودون نقاط إعفاء. يُستحسن طلب تنسيق ضريبي.','Worked out as a second job without tax coordination: top tax rate and no credit points. Ask for tax coordination.'],
+  f_sOtherDed:['ניכויים אחרים מהנטו (דמי ועד, החזר הלוואה)','خصومات أخرى من الصافي (نقابة، سداد قرض)','Other deductions from net (union, loan repayment)'],
+  h_sOtherDed:['סכומים שיורדים מהתלוש אחרי המס. הם לא משנים את המס.','مبالغ تُخصم من القسيمة بعد الضريبة ولا تغيّرها.','Amounts taken off the payslip after tax. They do not change the tax.'],
+  r_sOtherDed:['ניכויים אחרים','خصومات أخرى','Other deductions'],
+  f_sDon:['תרומה דרך התלוש (בחודש)','تبرع عبر القسيمة (شهريًا)','Donation through the payslip (monthly)'],
+  h_sDon:['תרומה למוסד מאושר מזכה ב-35% זיכוי ממס, מעל הסכום השנתי המזערי ועד 30% מההכנסה.','التبرع لمؤسسة معتمدة يمنح خصمًا ضريبيًا 35% فوق الحد الأدنى السنوي وحتى 30% من الدخل.','A donation to an approved body gives a 35% tax credit, above the yearly minimum and up to 30% of income.'],
+  h_sLoc:['תושבי יישוב מזכה מקבלים הנחה במס עד תקרה שנתית. השיעור והתקרה מופיעים ברשימת היישובים של רשות המסים.','سكان البلدات المؤهلة يحصلون على خصم ضريبي حتى سقف سنوي. النسبة والسقف في قائمة البلدات لدى سلطة الضرائب.','Residents of a qualifying town get a tax discount up to a yearly cap. The rate and cap are in the Tax Authority list of towns.'],
+
+  /* tax figures: automatic or by hand */
+  g_taxFig:['ערכי המס: אוטומטי או ידני','قيم الضريبة: تلقائي أو يدوي','Tax figures: automatic or manual'],
+  f_figMode:['מקור הערכים','مصدر القيم','Where the figures come from'],
+  o_figAuto:['אוטומטי – הערכים הרשמיים של 2026','تلقائي – القيم الرسمية لعام 2026','Automatic – the official 2026 figures'],
+  o_figManual:['ידני – אני קובע את הערכים','يدوي – أحدد القيم بنفسي','Manual – I set the figures'],
+  h_figMode:['באוטומטי רואים את הערכים הרשמיים ולא ניתן לשנות אותם. בידני אפשר לשנות כל ערך, למשל שווי נקודת זיכוי, והחישוב נעשה רק לפיהם.','في الوضع التلقائي تُعرض القيم الرسمية دون تعديل. في اليدوي يمكن تغيير أي قيمة، مثل قيمة نقطة الإعفاء، ويُحسب وفقها فقط.','Automatic shows the official figures, read-only. Manual lets you change any of them, such as the credit point value, and the result uses only yours.'],
+  f_fPt:['שווי נקודת זיכוי (לחודש)','قيمة نقطة الإعفاء (شهريًا)','Credit point value (monthly)'],
+  h_fPt:['2026: 242 ₪ לחודש (2,904 ₪ לשנה).','2026: 242 ₪ شهريًا (2,904 ₪ سنويًا).','2026: ₪242 a month (₪2,904 a year).'],
+  f_fB1:['מדרגה 1 עד (לחודש)','الشريحة 1 حتى (شهريًا)','Bracket 1 up to (monthly)'], f_fB2:['מדרגה 2 עד (לחודש)','الشريحة 2 حتى (شهريًا)','Bracket 2 up to (monthly)'],
+  f_fB3:['מדרגה 3 עד (לחודש)','الشريحة 3 حتى (شهريًا)','Bracket 3 up to (monthly)'], f_fB4:['מדרגה 4 עד (לחודש)','الشريحة 4 حتى (شهريًا)','Bracket 4 up to (monthly)'],
+  f_fB5:['מדרגה 5 עד (לחודש)','الشريحة 5 حتى (شهريًا)','Bracket 5 up to (monthly)'],
+  f_fR1:['שיעור מדרגה 1','نسبة الشريحة 1','Bracket 1 rate'], f_fR2:['שיעור מדרגה 2','نسبة الشريحة 2','Bracket 2 rate'], f_fR3:['שיעור מדרגה 3','نسبة الشريحة 3','Bracket 3 rate'],
+  f_fR4:['שיעור מדרגה 4','نسبة الشريحة 4','Bracket 4 rate'], f_fR5:['שיעור מדרגה 5','نسبة الشريحة 5','Bracket 5 rate'], f_fR6:['שיעור המדרגה העליונה','نسبة الشريحة العليا','Top bracket rate'],
+  f_fSur:['מס יסף – מעל (לחודש)','ضريبة إضافية – فوق (شهريًا)','Surtax – above (monthly)'], f_fSurR:['שיעור מס יסף','نسبة الضريبة الإضافية','Surtax rate'],
+  f_fNiCut:['ביטוח לאומי – סף מופחת (לחודש)','التأمين الوطني – حد النسبة المخفّضة (شهريًا)','National Insurance – reduced-rate limit (monthly)'],
+  f_fNiMax:['ביטוח לאומי – תקרה (לחודש)','التأمين الوطني – السقف (شهريًا)','National Insurance – ceiling (monthly)'],
+  f_fNiL:['ביטוח לאומי – שיעור מופחת','التأمين الوطني – النسبة المخفّضة','National Insurance – reduced rate'], f_fNiH:['ביטוח לאומי – שיעור מלא','التأمين الوطني – النسبة الكاملة','National Insurance – full rate'],
+  f_fHL:['מס בריאות – שיעור מופחת','ضريبة الصحة – النسبة المخفّضة','Health tax – reduced rate'], f_fHH:['מס בריאות – שיעור מלא','ضريبة الصحة – النسبة الكاملة','Health tax – full rate'],
+  f_fPensCap:['תקרת שכר לזיכוי פנסיה (לחודש)','سقف الأجر لخصم التقاعد (شهريًا)','Salary cap for the pension credit (monthly)'],
+  f_fPensCr:['שיעור הזיכוי על הפקדה לפנסיה','نسبة الخصم على إيداع التقاعد','Credit rate on the pension deposit'],
+  w_figManual:['חושב לפי ערכי מס שהזנתם ידנית, לא לפי הערכים הרשמיים.','حُسب وفق قيم ضريبة أدخلتها يدويًا، لا وفق القيم الرسمية.','Worked out with tax figures you typed in, not the official ones.'],
+  w_figOrder:['שימו לב: גבולות המדרגות צריכים לעלות ממדרגה למדרגה.','انتبه: يجب أن ترتفع حدود الشرائح من شريحة لأخرى.','Note: bracket limits should rise from one bracket to the next.'],
+
+  /* market data */
+  f_mktLive:['נתוני שוק','بيانات السوق','Market data'],
+  o_mktAuto:['אוטומטי – מתעדכן חי','تلقائي – تحديث مباشر','Automatic – updates live'],
+  o_mktManual:['ידני – רק כשאני לוחץ רענון','يدوي – فقط عند الضغط على تحديث','Manual – only when I tap refresh'],
+  h_mktLive:['בידני האפליקציה לא מושכת שערים ומדדים לבד; הנתונים האחרונים נשמרים, וכפתור הרענון מעדכן פעם אחת. נתונים רשמיים יומיים (בנק ישראל, מדד) ממשיכים להגיע.','في الوضع اليدوي لا يجلب التطبيق الأسعار والمؤشرات تلقائيًا؛ تبقى آخر البيانات وزر التحديث يجلبها مرة واحدة. البيانات الرسمية اليومية تستمر بالوصول.','In manual mode the app does not fetch rates and indices by itself; the last values stay and the refresh button updates once. Official daily figures still arrive.'],
+  mk_isOn:['נתוני שוק: חי','بيانات السوق: مباشر','Market data: live'], mk_isOff:['נתוני שוק: ידני','بيانات السوق: يدوي','Market data: manual'],
+  mk_offDone:['נתוני השוק עברו לידני – מתעדכנים רק ברענון','انتقلت بيانات السوق إلى اليدوي – تتحدث عند التحديث فقط','Market data is now manual – it updates only when you refresh'],
+  mk_onDone:['נתוני השוק מתעדכנים שוב אוטומטית','بيانات السوق تتحدث تلقائيًا مجددًا','Market data updates automatically again'],
+  fx_paused:['עדכון חי כבוי (נתוני שוק ידניים)','التحديث المباشر متوقف (بيانات سوق يدوية)','Live updates off (manual market data)'],
+
+  /* holiday themes */
+  sk_yomkippur:['יום כיפור','يوم الغفران','Yom Kippur'], sk_yomkippurS:['לבן שקט וכחול רך','أبيض هادئ وأزرق ناعم','Quiet white and soft blue'],
+  sk_sukkot:['סוכות','عيد العرش','Sukkot'], sk_sukkotS:['סכך ירוק ואתרוג צהוב','سقف أخضر وأترج أصفر','Green thatch and yellow etrog'],
+  sk_simchattorah:['שמחת תורה','فرحة التوراة','Simchat Torah'], sk_simchattorahS:['דגלים, כחול וזהב חגיגי','أعلام وأزرق وذهبي احتفالي','Flags, blue and festive gold'],
+  sk_tubishvat:['ט״ו בשבט','رأس سنة الأشجار','Tu BiShvat'], sk_tubishvatS:['שקדייה פורחת בוורוד וירוק','لوز مزهر بالوردي والأخضر','Almond blossom in pink and green'],
+  sk_purim:['פורים','عيد المساخر','Purim'], sk_purimS:['קונפטי צבעוני ומסכות','قصاصات ملونة وأقنعة','Colourful confetti and masks'],
+  sk_atzmaut:['יום העצמאות','يوم الاستقلال','Independence Day'], sk_atzmautS:['כחול-לבן של הדגל','أزرق وأبيض العلم','The blue and white of the flag'],
+  sk_lagbaomer:['ל״ג בעומר','لاغ بعومر','Lag BaOmer'], sk_lagbaomerS:['אור מדורה חמים','ضوء نار دافئ','Warm bonfire glow'],
+  sk_yomyerushalayim:['יום ירושלים','يوم القدس','Jerusalem Day'], sk_yomyerushalayimS:['אבן ירושלמית וזהב','حجر القدس والذهب','Jerusalem stone and gold'],
+  sk_shavuot:['שבועות','عيد الأسابيع','Shavuot'], sk_shavuotS:['חיטה, חלב ופרחים','قمح وحليب وزهور','Wheat, milk and flowers'],
+  sk_tubeav:['ט״ו באב','عيد الحب العبري','Tu BeAv'], sk_tubeavS:['ורוד ולבן של אהבה','وردي وأبيض للحب','Pink and white for love'],
+  sk_advent:['אדוונט','زمن المجيء','Advent'], sk_adventS:['סגול ונרות לקראת חג המולד','بنفسجي وشموع قبل الميلاد','Purple and candles before Christmas'],
+  sk_epiphany:['חג ההתגלות','عيد الغطاس','Epiphany'], sk_epiphanyS:['כוכב זהב בשמי לילה','نجمة ذهبية في سماء الليل','A gold star in the night sky'],
+  sk_valentine:['ולנטיין','عيد الحب','Valentine’s Day'], sk_valentineS:['ורוד ואדום רך','وردي وأحمر ناعم','Soft pink and red'],
+  sk_palmsunday:['יום ראשון של הדקלים','أحد الشعانين','Palm Sunday'], sk_palmsundayS:['עלי דקל ירוקים','سعف نخيل أخضر','Green palm leaves'],
+  sk_ascension:['חג העלייה','عيد الصعود','Ascension Day'], sk_ascensionS:['שמיים ועננים בהירים','سماء وغيوم صافية','Bright sky and clouds'],
+  sk_pentecost:['חג השבועות הנוצרי (פנטקוסט)','عيد العنصرة','Pentecost'], sk_pentecostS:['אדום ולהבות','أحمر ولهب','Red and flames'],
+  sk_assumption:['חג עליית מרים','عيد انتقال العذراء','Assumption Day'], sk_assumptionS:['תכלת, לבן וזהב','أزرق فاتح وأبيض وذهبي','Light blue, white and gold'],
+  sk_allsaints:['יום כל הקדושים','عيد جميع القديسين','All Saints’ Day'], sk_allsaintsS:['נרות זיכרון חמים','شموع ذكرى دافئة','Warm memorial candles'],
+
+  /* AI */
+  xai_hello:['שלום! שאלו כל שאלה – חישובים עונים כאן מיד, ושאלות אחרות נפתחות במודל AI שבחרתם.','مرحبًا! اسأل أي سؤال – الحسابات يُجاب عنها هنا فورًا، والأسئلة الأخرى تُفتح في نموذج الذكاء الاصطناعي الذي اخترته.','Hi! Ask anything – calculations are answered here at once, other questions open in the AI model you picked.'],
+  xai_askExplain:['הסבר לי בפשטות את התוצאה ואת השדות במחשבון','اشرح لي ببساطة النتيجة والحقول في حاسبة','Explain simply the result and the fields of the calculator'],
+  xai_askImprove:['איך אפשר לשפר את התוצאה שלי במחשבון','كيف يمكنني تحسين نتيجتي في حاسبة','How can I improve my result in the calculator'],
+
+  /* personal identifiers */
+  pii_block:['אין להזין פרטים מזהים כמו ת״ז, מספר כרטיס אשראי או חשבון בנק – השדה נוקה.','لا يُسمح بإدخال بيانات تعريفية مثل رقم الهوية أو بطاقة الائتمان أو الحساب البنكي – تم مسح الحقل.','Personal identifiers such as ID, card or bank account numbers are not allowed – the field was cleared.'],
+
+  /* saved folder + recycle bin */
+  tab_saved:['שמורים','المحفوظات','Saved'],
+  d_saved:['כל מה ששמרתם, לפי קטגוריה – לפתוח, לערוך, לשתף, ולשחזר מסל המיחזור.','كل ما حفظته حسب الفئة – للفتح والتعديل والمشاركة والاستعادة من سلة المحذوفات.','Everything you saved, by category – open, edit, share, and restore from the recycle bin.'],
+  svd_intro:['כל חישוב ששמרתם נמצא כאן, תחת המחשבון שבו שמרתם אותו. מחיקה מעבירה לסל המיחזור ל-30 יום.','كل حساب حفظته موجود هنا تحت الحاسبة التي حفظته فيها. الحذف ينقله إلى سلة المحذوفات لمدة 30 يومًا.','Every calculation you saved is here, under the calculator you saved it in. Deleting moves it to the recycle bin for 30 days.'],
+  svd_tabAll:['השמורים שלי','محفوظاتي','My saved'], svd_tabBin:['סל מיחזור','سلة المحذوفات','Recycle bin'],
+  svd_search:['חיפוש בשמורים','بحث في المحفوظات','Search saved'],
+  svd_empty:['עדיין לא שמרתם כלום','لم تحفظ شيئًا بعد','Nothing saved yet'], svd_noMatch:['לא נמצא','لا توجد نتائج','Nothing found'],
+  svd_howTo:['בכל מחשבון, למטה ב„תרחישים שמורים”, נותנים שם ולוחצים שמירה – והחישוב מופיע כאן.','في كل حاسبة، أسفل «السيناريوهات المحفوظة»، أدخل اسمًا واضغط حفظ – ويظهر الحساب هنا.','In any calculator, under “Saved scenarios” at the bottom, give it a name and tap save – it appears here.'],
+  svd_openCalc:['למחשבון','إلى الحاسبة','Open calculator'], svd_open:['פתח','فتح','Open'], svd_edit:['ערוך','تعديل','Edit'], svd_rename:['שנה שם','إعادة تسمية','Rename'],
+  svd_note:['הערה','ملاحظة','Note'], svd_noteAsk:['הערה לשמור (בלי פרטים מזהים):','ملاحظة للحفظ (دون بيانات تعريفية):','A note to keep (no personal identifiers):'],
+  svd_del:['מחק','حذف','Delete'], svd_ok:['אישור','موافق','OK'],
+  svd_savedAt:['נשמר {d}','حُفظ {d}','Saved {d}'], svd_editedAt:['עודכן {d}','عُدّل {d}','Edited {d}'],
+  svd_opened:['נפתח: {n}','فُتح: {n}','Opened: {n}'],
+  svd_editing:['עורכים את „{n}” – שנו ערכים ולחצו שמירה','تعديل «{n}» – غيّر القيم واضغط حفظ','Editing “{n}” – change values and tap save'],
+  svd_saveEdit:['שמור שינויים','حفظ التغييرات','Save changes'], svd_cancelEdit:['בטל','إلغاء','Cancel'],
+  svd_editSaved:['„{n}” עודכן','تم تحديث «{n}»','“{n}” updated'],
+  svd_savedIn:['נשמר בשמורים תחת {c}','حُفظ في المحفوظات ضمن {c}','Saved in Saved under {c}'],
+  svd_toTrash:['הועבר לסל המיחזור – אפשר לשחזר עד 30 יום','نُقل إلى سلة المحذوفات – يمكن الاستعادة حتى 30 يومًا','Moved to the recycle bin – restore within 30 days'],
+  svd_tools:['כלים עם נתונים','أدوات فيها بيانات','Tools with data'], svd_nRec:['{n} רשומות','{n} سجلات','{n} entries'], svd_nCl:['{n} לקוחות','{n} عملاء','{n} clients'],
+  svd_binIntro:['פריטים שמחקתם נשארים כאן 30 יום ואז נמחקים לגמרי. אפשר לשחזר או למחוק לצמיתות.','العناصر المحذوفة تبقى هنا 30 يومًا ثم تُحذف نهائيًا. يمكن الاستعادة أو الحذف النهائي.','Deleted items stay here for 30 days, then they are gone for good. Restore them or delete them permanently.'],
+  svd_binEmpty:['סל המיחזור ריק','سلة المحذوفات فارغة','The recycle bin is empty'],
+  svd_delAt:['נמחק {d}','حُذف {d}','Deleted {d}'], svd_left:['עוד {n} ימים','بعد {n} أيام','{n} days left'],
+  svd_restore:['שחזר','استعادة','Restore'], svd_kill:['מחק לצמיתות','حذف نهائي','Delete for good'], svd_sure:['בטוחים? לחצו שוב','متأكد؟ اضغط مجددًا','Sure? Tap again'],
+  svd_emptyBin:['רוקן את הסל','إفراغ السلة','Empty the bin'], svd_restored:['שוחזר למקומו','تمت الاستعادة','Restored'],
+  svd_killed:['נמחק לצמיתות','حُذف نهائيًا','Deleted for good'], svd_emptied:['סל המיחזור רוקן','تم إفراغ السلة','The recycle bin was emptied'],
+
+  /* share, copy, PDF */
+  b_share:['שיתוף','مشاركة','Share'], b_pdf:['PDF','PDF','PDF'],
+  shr_title:['שיתוף התוכן','مشاركة المحتوى','Share this'], shr_sys:['שיתוף…','مشاركة…','Share…'], shr_mail:['אימייל','بريد إلكتروني','Email'],
+  shr_inputs:['הנתונים שהזנתי:','البيانات التي أدخلتها:','What I entered:'], shr_results:['התוצאה:','النتيجة:','Result:'], shr_total:['סה״כ','المجموع','Total'],
+  shr_by:['מחשבון פיננסי','الحاسبة المالية','Financial Calculator'],
+  shr_priv:['משתפים רק את מה שמופיע כאן. פרטים מזהים אינם נשמרים באפליקציה.','تتم مشاركة ما يظهر هنا فقط. لا تُحفظ بيانات تعريفية في التطبيق.','Only what is shown here is shared. Personal identifiers are never kept in the app.'],
+  shr_copiedInstead:['השיתוף לא זמין כאן – התוכן הועתק','المشاركة غير متاحة هنا – تم نسخ المحتوى','Sharing is not available here – the content was copied'],
+  shr_pdfFoot:['הופק במחשבון הפיננסי. מידע כללי בלבד ואינו ייעוץ.','أُنتج في الحاسبة المالية. معلومات عامة وليست استشارة.','Made with the Financial Calculator. General information, not advice.'],
+  pdf_making:['מכין PDF…','جارٍ إعداد PDF…','Making the PDF…'], pdf_done:['קובץ ה-PDF מוכן','ملف PDF جاهز','The PDF is ready'],
+  pdf_declined:['השמירה בוטלה','تم إلغاء الحفظ','The save was cancelled'], pdf_fail:['לא הצלחנו ליצור PDF כאן – נסו שוב או השתמשו בהעתקה','تعذّر إنشاء PDF هنا – حاول مجددًا أو استخدم النسخ','Could not make a PDF here – try again or use copy'],
+
+  /* developer: code */
+  dc_title:['קוד מפתח','كود المطوّر','Developer code'],
+  dc_intro:['כתבו JavaScript ו-CSS שירוצו בכל המחשבונים – באפליקציה ובאתר. נסו קודם אצלכם, ואז פרסמו לכולם.','اكتب JavaScript وCSS يعملان في كل الحاسبات – في التطبيق والموقع. جرّب لديك أولًا ثم انشر للجميع.','Write JavaScript and CSS that run in every calculator – in the app and on the website. Try it on your device first, then publish to everyone.'],
+  dc_stNone:['אין כרגע קוד מפתח פעיל','لا يوجد كود مطوّر نشط حاليًا','No developer code is live'], dc_stLive:['קוד מפתח פעיל אצל כולם · {d}','كود المطوّر نشط لدى الجميع · {d}','Developer code is live for everyone · {d}'],
+  dc_stPreview:['תצוגה מקדימה: הטיוטה שלכם רצה רק במכשיר הזה','معاينة: مسودتك تعمل على هذا الجهاز فقط','Preview: your draft runs on this device only'],
+  dc_api:['מה אפשר לשנות (FinApp)','ما يمكن تغييره (FinApp)','What you can change (FinApp)'],
+  dc_apiFig:['ערכי מס ושוק','قيم الضرائب والسوق','tax and market figures'], dc_apiCalc:['להחליף מחשבון','استبدال حاسبة','replace a calculator'], dc_apiRes:['לשנות כל תוצאה','تعديل أي نتيجة','change any result'],
+  dc_saveDraft:['שמור טיוטה','حفظ مسودة','Save draft'], dc_try:['נסה אצלי','جرّب لديّ','Try on my device'], dc_tryAgain:['עדכן תצוגה','تحديث المعاينة','Update preview'], dc_stop:['הפסק תצוגה','إيقاف المعاينة','Stop preview'],
+  dc_draftSaved:['הטיוטה נשמרה במכשיר','حُفظت المسودة على الجهاز','Draft saved on this device'],
+  dc_pubT:['פרסום לכולם','النشر للجميع','Publish to everyone'],
+  dc_pubS:['הפרסום נשמר במאגר ה-GitHub של האתר, ומשם מתעדכן אוטומטית באתר ובאפליקציה. רק מי שיש לו הרשאת כתיבה למאגר יכול לפרסם.','يُحفظ النشر في مستودع GitHub للموقع ومنه يتحدث تلقائيًا في الموقع والتطبيق. فقط من لديه صلاحية كتابة يمكنه النشر.','Publishing saves to the site’s GitHub repository, and from there it updates the website and the app automatically. Only someone with write access to the repository can publish.'],
+  dc_tok:['טוקן GitHub (נשמר רק במכשיר הזה)','رمز GitHub (يُحفظ على هذا الجهاز فقط)','GitHub token (kept on this device only)'],
+  dc_tokH:['טוקן אישי עם הרשאת Contents לקריאה וכתיבה למאגר financial-calculator בלבד. הוא לא נשלח לשום מקום חוץ מ-GitHub.','رمز شخصي بصلاحية Contents للقراءة والكتابة لمستودع financial-calculator فقط. لا يُرسل إلا إلى GitHub.','A personal token with Contents read and write for the financial-calculator repository only. It is sent nowhere but GitHub.'],
+  dc_tokSaved:['הטוקן נשמר במכשיר','حُفظ الرمز على الجهاز','Token saved on this device'], dc_forget:['מחק טוקן','حذف الرمز','Forget token'],
+  dc_pub:['פרסם לכולם','انشر للجميع','Publish to everyone'], dc_unpub:['הסר את הקוד מכולם','أزل الكود من الجميع','Remove the code for everyone'],
+  dc_pubOk:['פורסם – יופיע אצל כולם תוך כ-2 דקות','نُشر – سيظهر لدى الجميع خلال دقيقتين تقريبًا','Published – everyone gets it within about 2 minutes'],
+  dc_needTok:['צריך טוקן GitHub כדי לפרסם','يلزم رمز GitHub للنشر','A GitHub token is needed to publish'], dc_badTok:['GitHub דחה את הטוקן – בדקו הרשאות','رفض GitHub الرمز – تحقق من الصلاحيات','GitHub refused the token – check its permissions'],
+  dc_ghErr:['GitHub לא קיבל את השינוי ({e})','لم يقبل GitHub التغيير ({e})','GitHub did not accept the change ({e})'],
+  dc_blocked:['מכאן אי אפשר להגיע ל-GitHub – פרסמו מהאתר','لا يمكن الوصول إلى GitHub من هنا – انشر من الموقع','GitHub cannot be reached from here – publish from the website'],
+  dc_safe:['אם קוד שובר משהו: פתחו את האתר עם ‎#nocode‎ בסוף הכתובת והקוד לא ירוץ אצלכם, ואז תקנו או הסירו אותו.','إذا عطّل الكود شيئًا: افتح الموقع مع ‎#nocode‎ في نهاية العنوان فلن يعمل لديك، ثم أصلحه أو أزله.','If code breaks something: open the site with #nocode at the end of the address and it will not run for you, then fix or remove it.'],
+
+  /* developer: ChatGPT through GitHub */
+  gpt_title:['פיתוח דרך ChatGPT ו-GitHub','التطوير عبر ChatGPT وGitHub','Develop with ChatGPT and GitHub'],
+  gpt_intro:['אפשר לפתח את האפליקציה גם דרך ChatGPT: הוא מתחבר למאגר ב-GitHub, מבצע שינויים בקוד, ואחרי האישור שלכם האתר והאפליקציה מתעדכנים לבד.','يمكن تطوير التطبيق عبر ChatGPT أيضًا: يتصل بمستودع GitHub ويعدّل الكود، وبعد موافقتك يتحدث الموقع والتطبيق تلقائيًا.','You can also develop the app with ChatGPT: it connects to the GitHub repository, changes the code, and after you approve, the website and app update by themselves.'],
+  gpt_s1:['ב-ChatGPT: הגדרות ← מחברים (Connectors) ← GitHub, והתחברו עם החשבון שלכם.','في ChatGPT: الإعدادات ← الموصلات ← GitHub، وسجّل الدخول بحسابك.','In ChatGPT: Settings → Connectors → GitHub, and sign in with your account.'],
+  gpt_s2:['תנו גישה רק למאגר financial-calculator.','امنح الوصول لمستودع financial-calculator فقط.','Give access to the financial-calculator repository only.'],
+  gpt_s3:['פתחו את Codex ובקשו שינוי. הקוד נמצא בתיקייה src, וההוראות לבנייה בקובץ AGENTS.md.','افتح Codex واطلب تغييرًا. الكود في المجلد src وتعليمات البناء في AGENTS.md.','Open Codex and ask for a change. The code is in the src folder and the build steps are in AGENTS.md.'],
+  gpt_s4:['אשרו את השינוי (Merge) – תוך דקות האתר נבנה ומתפרסם מחדש.','وافق على التغيير (Merge) – خلال دقائق يُبنى الموقع ويُنشر من جديد.','Approve the change (Merge) – within minutes the site is rebuilt and published.'],
+  gpt_conn:['מחברים ב-ChatGPT','الموصلات في ChatGPT','ChatGPT connectors'],
+  gpt_safe:['רק מי שיש לו הרשאה למאגר ב-GitHub יכול לשנות את הקוד. מבקרים באתר או באפליקציה לא יכולים.','فقط من لديه صلاحية على المستودع في GitHub يمكنه تغيير الكود. زوار الموقع أو التطبيق لا يستطيعون.','Only someone with access to the GitHub repository can change the code. Visitors to the site or app cannot.'],
+
+  /* developer: data sources by hand or added */
+  src_p_fx_manual:['ידני – אני מזין שערים','يدوي – أُدخل الأسعار','Manual – I type the rates'], src_p_cr_manual:['ידני – אני מזין מחירים','يدوي – أُدخل الأسعار','Manual – I type the prices'], src_p_mkt_manual:['ידני – אני מזין ערכים','يدوي – أُدخل القيم','Manual – I type the values'],
+  src_m_manual:['הוזן ידנית','أُدخل يدويًا','Typed in by hand'], src_w_manual:['הערך הוזן ידנית על ידי המפתח ולא מתעדכן לבד.','أدخل المطوّر القيمة يدويًا ولا تتحدث تلقائيًا.','The developer typed this value in; it does not update by itself.'],
+  src_m_custom:['מקור שהמפתח הוסיף','مصدر أضافه المطوّر','A source the developer added'], src_w_custom:['נמשך ממקור שהמפתח הוסיף, לפי הזמן שנקבע.','يُجلب من مصدر أضافه المطوّر وفق الفاصل المحدد.','Pulled from a source the developer added, on the interval set.'],
+  man_fx:['1 {c} = ? ₪','1 {c} = ? ₪','1 {c} = ? ₪'], man_cr:['1 {c} = ? $','1 {c} = ? $','1 {c} = ? $'],
+  man_save:['שמור ערכים ידניים','حفظ القيم اليدوية','Save manual values'], man_saved:['נשמר ועודכן בכל המחשבונים','حُفظ وتحدّث في كل الحاسبات','Saved and applied in every calculator'],
+  cs_title:['מקורות נתונים שהוספתם','مصادر بيانات أضفتها','Data sources you added'],
+  cs_intro:['הוסיפו מקור משלכם: כתובת שמחזירה JSON, הנתיב לערך בתוכה, ומה הוא מעדכן. אחר כך בחרו אותו ברשימת המקורות למעלה, או לחצו „השתמש”.','أضف مصدرًا خاصًا: عنوان يعيد JSON والمسار إلى القيمة وما يحدّثه. ثم اختره من قائمة المصادر أعلاه أو اضغط «استخدم».','Add your own source: an address that returns JSON, the path to the value in it, and what it updates. Then pick it in the source list above, or tap “Use”.'],
+  cs_none:['עדיין לא הוספתם מקורות','لم تضف مصادر بعد','No sources added yet'],
+  cs_addT:['הוספת מקור','إضافة مصدر','Add a source'], cs_editT:['עריכת מקור','تعديل مصدر','Edit source'], cs_add:['הוסף מקור','أضف مصدرًا','Add source'],
+  cs_n:['שם','الاسم','Name'], cs_g:['סוג הנתון','نوع البيانات','Kind of data'], cs_u:['כתובת (JSON)','العنوان (JSON)','Address (JSON)'],
+  cs_p:['נתיב לערך','مسار القيمة','Path to the value'], cs_pH:['למשל rates.ILS או data[0].price','مثلًا rates.ILS أو data[0].price','For example rates.ILS or data[0].price'],
+  cs_k:['מה הוא מעדכן (קוד מטבע או מדד)','ما الذي يحدّثه (رمز عملة أو مؤشر)','What it updates (currency code or index)'],
+  cs_kind:['מה הערך אומר','ماذا تعني القيمة','What the value means'],
+  cs_k_ilsPer:['כמה שקלים ל-1 יחידה','كم شيكلًا لوحدة واحدة','Shekels per 1 unit'], cs_k_usdPer:['כמה דולרים ל-1 יחידה','كم دولارًا لوحدة واحدة','Dollars per 1 unit'],
+  cs_k_perUsd:['כמה יחידות לדולר אחד','كم وحدة لدولار واحد','Units per 1 dollar'], cs_k_value:['ערך המדד עצמו','قيمة المؤشر نفسها','The index value itself'],
+  cs_s:['כל כמה שניות לבדוק','كل كم ثانية للفحص','Check every how many seconds'], cs_every:['כל {n} שניות','كل {n} ثانية','every {n} s'],
+  cs_on:['בשימוש','قيد الاستخدام','In use'], cs_offT:['לא בשימוש','غير مستخدم','Not in use'], cs_use:['השתמש','استخدم','Use'], cs_useOff:['הפסק להשתמש','أوقف الاستخدام','Stop using'],
+  cs_test:['בדוק','افحص','Test'], cs_last:['ערך אחרון {v}','آخر قيمة {v}','last value {v}'], cs_err:['שגיאה: {e}','خطأ: {e}','error: {e}'],
+  cs_opt:['מקור שלי: {n}','مصدري: {n}','My source: {n}'], cs_bad:['חסר שם, כתובת תקינה או מה הוא מעדכן','ينقص الاسم أو عنوان صالح أو ما يحدّثه','A name, a valid address or what it updates is missing'],
+  cs_pubSite:['נשמר גם לכל מבקרי האתר','حُفظ أيضًا لكل زوار الموقع','Also saved for everyone on the website']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -4068,7 +4313,7 @@ function liveTouch(k){ if (LIVE_APPLYING || !FUSER) return; try { const ts = JSO
 const LS = FUSER
   ? {getItem: k => SS.getItem(WK(k)), setItem: (k, v) => { v = String(v); if (SS.getItem(WK(k)) === v) return; SS.setItem(WK(k), v); liveTouch(k); persistSoon(); }, removeItem: k => { if (SS.getItem(WK(k)) == null) return; SS.removeItem(WK(k)); liveTouch(k); persistSoon(); }}
   : {getItem: k => RAWLS.getItem(k), setItem: (k, v) => RAWLS.setItem(k, v), removeItem: k => RAWLS.removeItem(k)};
-const DATA_KEYS = ['fin-set', 'fin-vals', 'fin-scn', 'fin-lang', 'fin-cur', 'fin-tab', 'fin-exp', 'fin-clients'];
+const DATA_KEYS = ['fin-set', 'fin-vals', 'fin-scn', 'fin-lang', 'fin-cur', 'fin-tab', 'fin-exp', 'fin-clients', 'fin-trash'];
 /* saving: automatic, or only when you tap Save. In manual mode your data changes wait here (and survive a reload of this tab) until you save */
 const SAVE_KEYS = ['fin-vals', 'fin-scn', 'fin-exp', 'fin-clients'];
 const LS_RAW = {getItem: LS.getItem, setItem: LS.setItem, removeItem: LS.removeItem};
@@ -4197,7 +4442,7 @@ Object.assign(RATES, {"AUD":1.4331,"BRL":5.0165,"CAD":1.4241,"CHF":0.83232,"CNY"
 META.unix = 1791894003; META.official = true;
 
 const GROUPS = [
-  ['g_main',  ['home','assist','settings']],
+  ['g_main',  ['home','saved','assist','settings']],
   ['g_save',  ['expenses','freedom','networth','debtplan','savegoal','compound','yield','dividends','avgcost','retire','fire','mgmtfees','hishtalmut','kidsave']],
   ['g_work2', ['clients','salary','selfemp','tax','capital','rental','severance','notice','leave','overtime','taxrefund','joboffer','freelance','empcost','carbenefit','benefits']],
   ['g_loans', ['prime','loan','loancmp','prepay','creditcard','carlease','mortgage','refi','rentbuy','purchasetax','landtax','mortcap','evfuel']],
@@ -4216,7 +4461,7 @@ const RTL = new Set(['he','ar','fa','ur','yi','ps','sd','ug','ckb','dv']);
 var TOUCHED = [], TILE_F = 'all', MY_HANDLE = '';
 try { MY_HANDLE = LS.getItem('fin-handle') || ''; } catch (e) {}
 const MKT = {boi: 3.25, boiDate: '1.9.2026', boiNext: '21.10.2026', cpi: 1.5, cpiMonth: '08/2026', cpiYtd: 2.1, cpiYtdTo: 8, src: 'built'};
-const SET_DEF = {clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {mktLive:'1', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -4611,6 +4856,20 @@ const creditDefs = p => {
     {id:p+'_xp', label:'f_xp', val:0, adv:A, hint:'h_xp'}
   ];
 };
+/* the tax figures a calculator uses: automatic (the official 2026 values) or typed in by hand */
+const figDefs = p => {
+  const A = 'g_taxFig', r4 = x => Math.round(x * 10000) / 10000;
+  const F = (k, lab, unit, val, hint) => ({id: p + '_' + k, label: lab, unit, val: r4(val), adv: A, hint});
+  return [SEL(p + '_fig', 'f_figMode', 'auto', [['auto', 'o_figAuto'], ['manual', 'o_figManual']], {wide: true, adv: A, hint: 'h_figMode'}),
+    F('fPt', 'f_fPt', 'ils', TAX.point / 12, 'h_fPt')]
+    .concat(TAX.brackets.slice(0, 5).map((b, i) => F('fB' + (i + 1), 'f_fB' + (i + 1), 'ils', b[0] / 12)))
+    .concat(TAX.brackets.map((b, i) => F('fR' + (i + 1), 'f_fR' + (i + 1), '%', b[1] * 100)))
+    .concat([F('fSur', 'f_fSur', 'ils', TAX.surtaxFrom / 12), F('fSurR', 'f_fSurR', '%', TAX.surtaxRate * 100),
+      F('fNiCut', 'f_fNiCut', 'ils', TAX.niCut), F('fNiMax', 'f_fNiMax', 'ils', TAX.niMax),
+      F('fNiL', 'f_fNiL', '%', TAX.niLow * 100), F('fNiH', 'f_fNiH', '%', TAX.niHigh * 100),
+      F('fHL', 'f_fHL', '%', TAX.hLow * 100), F('fHH', 'f_fHH', '%', TAX.hHigh * 100),
+      F('fPensCap', 'f_fPensCap', 'ils', TAX.pensSalaryCap), F('fPensCr', 'f_fPensCr', '%', TAX.pensCreditRate * 100)]);
+};
 /* Reserve duty (combat): days served in the previous year → credit points (tax years 2026–2027; source: Kol Zchut) */
 const resPts = d => { d = Math.floor(Math.max(0, d || 0)); if (d < 30) return 0; if (d < 40) return 0.5; if (d < 50) return 0.75; return Math.min(4, 1 + 0.25 * Math.floor((d - 50) / 5)); };
 const ptsTxt = (p, pts) => { const r = resPts(v(p + '_res')); return N(pts, 2) + (r ? ' ' + t('r_ptsRes', {n: N(r, 2)}) : ''); };
@@ -4675,8 +4934,14 @@ const DEFS = {
     SEL('s_carGil','f_sCarGil','n',[['n','o_sCarGilN'],['y','o_sCarGilY']],{adv:'g_salCar', hint:'h_sCarGil', when:['s_car','co']}),
     {id:'s_carPay', label:'f_cbPay', unit:'ils', val:0, adv:'g_salCar', hint:'h_sCarPay', when:['s_car','co']},
     {id:'s_carExtra', label:'f_sCarExtra', unit:'ils', val:0, adv:'g_salCar', hint:'h_sCarExtra', when:['s_car','co']},
+    {id:'s_extra', label:'f_sExtra', unit:'ils', val:0, adv:'g_salMore', hint:'h_sExtra'},
+    SEL('s_job','f_sJob','main',[['main','o_jobMain'],['second','o_jobSecond']],{adv:'g_salMore', hint:'h_sJob'}),
+    {id:'s_otherDed', label:'f_sOtherDed', unit:'ils', val:0, adv:'g_salMore', hint:'h_sOtherDed'},
+    {id:'s_don', label:'f_sDon', unit:'ils', val:0, adv:'g_salMore', hint:'h_sDon'},
+    {id:'s_locRate', label:'f_locRate', unit:'%', val:0, adv:'g_salMore', hint:'h_sLoc'},
+    {id:'s_locCap', label:'f_locCap', unit:'ils', val:0, adv:'g_salMore', hint:'h_loc'},
     {type:'html', id:'se_box', cls:'se-box', adv:'g_salExp'}
-  ].concat(creditDefs('s')),
+  ].concat(creditDefs('s')).concat(figDefs('s')),
   selfemp: [
     {id:'e_rev', label:'f_revenue', unit:'ils', val:300000, wide:true},
     {id:'e_exp', label:'f_expenses', unit:'ils', val:60000, wide:true},
@@ -4693,7 +4958,7 @@ const DEFS = {
     {id:'t_locRate', label:'f_locRate', unit:'%', val:0, adv:'m_adv'},
     {id:'t_locCap', label:'f_locCap', unit:'ils', val:0, adv:'m_adv', hint:'h_loc'},
     {id:'t_other', label:'f_otherCredits', unit:'ils', val:0, adv:'m_adv', hint:'h_otherCredits'}
-  ].concat(creditDefs('t')),
+  ].concat(creditDefs('t')).concat(figDefs('t')),
   rental: [
     {id:'r_rent', label:'f_rentM', unit:'ils', val:6000, wide:true},
     {id:'r_other', label:'f_rentOther', unit:'ils', val:180000, wide:true},
@@ -4936,7 +5201,7 @@ function panelHTML(id){
     <div class="inputs"><div class="fields">${basic.map(fieldHTML).join('')}</div>${advHTML}</div>
     <div class="detail">
       <p class="warn" id="wn-${id}" hidden></p>
-      <div class="acts" id="ac-${id}"><button type="button" class="chip" data-ac="copy" data-i="b_copy"></button><button type="button" class="chip" data-ac="csv" data-i="b_csv"></button><button type="button" class="chip" data-ac="print" data-i="b_print"></button></div>
+      <div class="acts" id="ac-${id}"><button type="button" class="chip" data-ac="copy" data-i="b_copy"></button><button type="button" class="chip" data-ac="share" data-i="b_share"></button><button type="button" class="chip" data-ac="pdf" data-i="b_pdf"></button></div>
       <dl class="ledger" id="led-${id}"></dl>
       <p class="fine" id="nt-${id}" hidden></p>
       <figure class="chart" id="sp-${id}" hidden><figcaption></figcaption><div class="donutwrap"><div class="donut"></div><div class="legend"></div></div></figure>
@@ -5234,7 +5499,7 @@ const NUMF = (id, label, unit, hint) => ({id, label, unit, val:'', wide:false, h
 const PROFK = [['k0','f_k0'],['k12','f_k12'],['k3','f_k3'],['k45','f_k45'],['k617','f_k617'],['k18','f_k18']];
 const SETDEFS = [
   ['set_look', [
-    SEL('set_theme','f_theme','system',[['system','o_th_sys'],['dark','sk_dark'],['light','sk_light'],['telaviv','sk_telaviv'],['jerusalem','sk_jerusalem'],['banknote','sk_banknote'],['deadsea','sk_deadsea'],['eilat','sk_eilat'],['terminal','sk_terminal'],['roshhashana','sk_roshhashana'],['hanukkah','sk_hanukkah'],['passover','sk_passover'],['christmas','sk_christmas'],['easter','sk_easter'],['newyear','sk_newyear'],['ramadan','sk_ramadan'],['eidfitr','sk_eidfitr'],['eidadha','sk_eidadha']],{wide:true, hint:'h_theme'}),
+    SEL('set_theme','f_theme','system',[['system','o_th_sys'],['dark','sk_dark'],['light','sk_light'],['telaviv','sk_telaviv'],['jerusalem','sk_jerusalem'],['banknote','sk_banknote'],['deadsea','sk_deadsea'],['eilat','sk_eilat'],['terminal','sk_terminal'],['roshhashana','sk_roshhashana'],['hanukkah','sk_hanukkah'],['passover','sk_passover'],['christmas','sk_christmas'],['easter','sk_easter'],['newyear','sk_newyear'],['ramadan','sk_ramadan'],['eidfitr','sk_eidfitr'],['eidadha','sk_eidadha'],['yomkippur','sk_yomkippur'],['sukkot','sk_sukkot'],['simchattorah','sk_simchattorah'],['tubishvat','sk_tubishvat'],['purim','sk_purim'],['atzmaut','sk_atzmaut'],['lagbaomer','sk_lagbaomer'],['yomyerushalayim','sk_yomyerushalayim'],['shavuot','sk_shavuot'],['tubeav','sk_tubeav'],['advent','sk_advent'],['epiphany','sk_epiphany'],['valentine','sk_valentine'],['palmsunday','sk_palmsunday'],['ascension','sk_ascension'],['pentecost','sk_pentecost'],['assumption','sk_assumption'],['allsaints','sk_allsaints']],{wide:true, hint:'h_theme'}),
     SEL('set_holAuto','f_holAuto','0',[['0','o_off'],['all','o_holAll'],['jewish','o_holJ'],['christian','o_holC'],['muslim','o_holM']],{wide:true, hint:'h_holAuto'}),
     SEL('set_accent','f_accent','gold',[['gold','o_ac_gold'],['blue','o_ac_blue'],['green','o_ac_green'],['violet','o_ac_violet']]),
     SEL('set_size','f_size','m',[['s','o_sz_s'],['m','o_sz_m'],['l','o_sz_l']]),
@@ -5257,6 +5522,7 @@ const SETDEFS = [
   ['set_calc', [
     SEL('set_start','f_start','home',[['home','o_start_home'],['last','o_start_last']].concat(TABS.filter(x => x !== 'home' && x !== 'settings').map(x => [x, 'tab_' + x])),{wide:true}),
     SEL('set_saveMode','f_saveMode','auto',[['auto','o_saveAuto'],['manual','o_saveManual'],['none','o_saveNone']],{wide:true}),
+    SEL('set_mktLive','f_mktLive','1',[['1','o_mktAuto'],['0','o_mktManual']],{wide:true, hint:'h_mktLive'}),
     SEL('set_vat','f_vatDef','18',[['18','o_vp18'],['17','o_vp17'],['0','o_vp0'],['16','o_vp16'],['14','o_vp14'],['15','o_vp15'],['5','o_vp5'],['19','o_vp19'],['20','o_vp20']],{wide:true}),
     SEL('set_dealer','f_dealer','murshe',[['murshe','o_murshe'],['patur','o_patur']],{wide:true}),
     SEL('set_buyer','f_buyerType','first',[['first','o_bt_first'],['upg','o_bt_upg'],['inv','o_bt_inv']],{wide:true}),
@@ -5355,7 +5621,7 @@ function settingsPanelHTML(){
       <p class="fine" id="set_msg" aria-live="polite"></p><p class="fine" id="set_info"></p>`)}
   </section>`;
 }
-const SMAP = {set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
+const SMAP = {set_mktLive:'mktLive', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
@@ -5514,7 +5780,6 @@ async function deliver(text, name, mime){
 function doAction(act, id){
   const rows = resultRows(id);
   if (act === 'copy'){ copyText($('#page-title').textContent + '\n' + rows.map(r => r.join(': ')).join('\n')); toast(t('st_copied')); }
-  else if (act === 'csv'){ deliver('﻿' + rows.map(r => r.map(c => '"' + c.replace(/"/g, '""') + '"').join(',')).join('\n'), id + '.csv', 'text/csv;charset=utf-8'); }
   else if (act === 'print'){ try { window.print(); } catch(e) { toast('—'); } }
 }
 /* --- scenarios --- */
@@ -5724,7 +5989,7 @@ function expSave(){
 function expDel(id){
   const it = expData().items.find(x => x.id === id); if (!it) return;
   if (it.rec && it.date.slice(0, 7) < EXP_M){ it.end = ymAdd(EXP_M, -1); }       // a monthly expense stops from this month on
-  else EXP.items = EXP.items.filter(x => x.id !== id);
+  else { if (typeof trashPut === 'function') trashPut('exp', 'expenses', it); EXP.items = EXP.items.filter(x => x.id !== id); }
   toolsSave('fin-exp', EXP); expRender();
 }
 function expBudgets(){
@@ -5739,7 +6004,7 @@ function expBudClose(){ const o = $('#ebx'); if (o){ o.hidden = true; document.b
 
 /* ---------- client manager for accountants ---------- */
 var CL = null, CL_Q = '', CL_FS = '', CL_EDIT = null;
-function clData(){ if (!CL){ CL = toolsLoad('fin-clients', {clients: [], dueDay: 15}); if (!Array.isArray(CL.clients)) CL.clients = []; if (!CL.dueDay) CL.dueDay = 15; } return CL; }
+function clData(){ if (!CL){ CL = toolsLoad('fin-clients', {clients: [], dueDay: 15}); if (!Array.isArray(CL.clients)) CL.clients = []; CL.clients.forEach(c => { if (c && 'idn' in c) delete c.idn; }); if (!CL.dueDay) CL.dueDay = 15; } return CL; }
 function clDue(c, kind, now){
   const freq = c[kind]; if (!freq || freq === 'n') return null;
   const D = clData().dueDay;
@@ -5796,12 +6061,12 @@ function clRender(){
   }).join('') : `<p class="exp-empty">${tEsc(t(data.clients.length ? 'cl_noDue' : 'cl_emptyAll'))}</p>`;
   $('#cl_fs').innerHTML = [['', 'cl_all']].concat(CL_STATUS.map(([k]) => [k, 'cl_st_' + k])).map(([k, l]) => `<button type="button" class="as-chip${CL_FS === k ? ' on' : ''}" data-clfs="${k}">${tEsc(t(l))}${k ? ' · ' + data.clients.filter(c => c.status === k).length : ''}</button>`).join('');
   const q = CL_Q.trim().toLowerCase();
-  const list = data.clients.filter(c => (!CL_FS || c.status === CL_FS) && (!q || [c.name, c.phone, c.idn, c.email, c.tags, c.notes].join(' ').toLowerCase().includes(q)))
+  const list = data.clients.filter(c => (!CL_FS || c.status === CL_FS) && (!q || [c.name, c.phone, c.email, c.tags, c.notes].join(' ').toLowerCase().includes(q)))
     .sort((a, b) => a.name.localeCompare(b.name, lang));
   const nextOf = c => duties.find(d => d.c === c);
   $('#cl_list').innerHTML = list.length ? list.map(c => {
     const st = CL_STATUS.find(x => x[0] === c.status) || CL_STATUS[0], nx = nextOf(c), ph = clPhone(c.phone);
-    return `<div class="cl-card" style="--sc:${st[1]}"><div class="cc-top"><span class="cc-n"><b>${tEsc(c.name)}</b><small>${tEsc(t('cl_t_' + c.type))}${c.idn ? ' · ' + tEsc(c.idn) : ''}</small></span><span class="cc-st">${tEsc(t('cl_st_' + c.status))}</span></div>
+    return `<div class="cl-card" style="--sc:${st[1]}"><div class="cc-top"><span class="cc-n"><b>${tEsc(c.name)}</b><small>${tEsc(t('cl_t_' + c.type))}</small></span><span class="cc-st">${tEsc(t('cl_st_' + c.status))}</span></div>
       ${nx ? `<p class="cc-next${nx.due < today0 ? ' late' : ''}">⏰ ${tEsc(nx.kind === 'task' ? nx.task.title : t('cl_k_' + nx.kind))} · ${tEsc(dLabel(ymOf(nx.due) + '-' + String(nx.due.getDate()).padStart(2, '0')))}</p>` : ''}
       ${c.notes ? `<p class="cc-notes">${tEsc(c.notes)}</p>` : ''}
       <div class="cc-act">${ph ? `<a class="cc-b" href="tel:${tEsc(c.phone.replace(/[^\d+]/g, ''))}" aria-label="${tEsc(t('cl_call'))}">📞</a><a class="cc-b" href="https://wa.me/${tEsc(ph)}" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>` : ''}${c.email ? `<a class="cc-b" href="mailto:${tEsc(c.email)}" aria-label="${tEsc(t('cl_mail'))}">✉️</a>` : ''}
@@ -5811,7 +6076,7 @@ function clRender(){
   const qi = $('#cl_q'); if (qi) qi.placeholder = t('cl_search');
 }
 function clForm(c){
-  CL_EDIT = c ? c.id : null; c = c || {name: '', type: 'murshe', idn: '', phone: '', email: '', vat: 'b', adv: 'm', fee: '', status: 'active', notes: '', tags: '', tasks: []};
+  CL_EDIT = c ? c.id : null; c = c || {name: '', type: 'murshe', phone: '', email: '', vat: 'b', adv: 'm', fee: '', status: 'active', notes: '', tags: '', tasks: []};
   if (!$('#clx')) document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="clx" hidden><div class="cp-box cl-box" role="dialog" aria-modal="true" aria-labelledby="clf_t"><div class="cp-top"><h3 id="clf_t"></h3><button type="button" class="cp-x" id="clf_x">×</button></div><form id="clf" class="cl-form" autocomplete="off"></form></div></div>`);
   const opt = (name, vals, cur, pre) => `<select id="clf_${name}">${vals.map(v => `<option value="${v}"${v === cur ? ' selected' : ''}>${tEsc(t(pre + v))}</option>`).join('')}</select>`;
   const fld = (id, lab, html, wide) => `<div class="field${wide ? ' wide' : ''}"><label for="clf_${id}">${tEsc(t(lab))}</label>${html}</div>`;
@@ -5821,7 +6086,6 @@ function clForm(c){
     ${fld('name', 'cl_name', inp('name', c.name, 'text', 'required maxlength="80" dir="auto"'), true)}
     ${fld('type', 'cl_type', opt('type', CL_TYPES, c.type, 'cl_t_'))}
     ${fld('status', 'cl_status', opt('status', CL_STATUS.map(x => x[0]), c.status, 'cl_st_'))}
-    ${fld('idn', 'cl_idn', inp('idn', c.idn, 'text', 'inputmode="numeric" maxlength="12" dir="ltr"'))}
     ${fld('fee', 'cl_fee', inp('fee', c.fee, 'text', 'inputmode="decimal" dir="ltr"'))}
     ${fld('phone', 'cl_phone', inp('phone', c.phone, 'tel', 'dir="ltr" maxlength="20"'))}
     ${fld('email', 'cl_email', inp('email', c.email, 'email', 'dir="ltr" maxlength="80"'))}
@@ -5844,7 +6108,7 @@ function clSave(){
   if (!name){ $('#clf_msg').textContent = t('cl_needName'); $('#clf_name').focus(); return; }
   const data = clData(), old = data.clients.find(c => c.id === CL_EDIT);
   const tasks = $$('#clf_tasks .cl-task').map(r => { const id = r.dataset.tid, prev = ((old && old.tasks) || []).concat(CL_TMP_TASKS || []).find(x => x.id === id) || {}; return Object.assign({}, prev, {done: $('[data-tdone]', r).checked}); });
-  const c = Object.assign(old || {id: tId(), created: Date.now(), done: {}}, {name, type: v('type'), status: v('status'), idn: v('idn').trim(), fee: v('fee').replace(/[^\d.]/g, ''),
+  const c = Object.assign(old || {id: tId(), created: Date.now(), done: {}}, {name, type: v('type'), status: v('status'), fee: v('fee').replace(/[^\d.]/g, ''),
     phone: v('phone').trim(), email: v('email').trim(), vat: v('vat'), adv: v('adv'), tags: v('tags').trim(), notes: v('notes').trim(), tasks});
   if (!old) data.clients.push(c);
   CL_TMP_TASKS = null; toolsSave('fin-clients', data); clClose(); clRender();
@@ -5864,7 +6128,7 @@ document.addEventListener('click', e => {
   const ex = $('#exx');
   if (ex && !ex.hidden){
     if (el === ex || el.closest('#exf_x')) return expClose();
-    const dl = el.closest('#exf_del'); if (dl){ if (!dl.dataset.sure){ dl.dataset.sure = '1'; dl.textContent = t('exp_sure'); return; } expClose(); EXP.items = EXP.items.filter(x => x.id !== EXP_ED); toolsSave('fin-exp', EXP); expRender(); return; }
+    const dl = el.closest('#exf_del'); if (dl){ if (!dl.dataset.sure){ dl.dataset.sure = '1'; dl.textContent = t('exp_sure'); return; } expClose(); { const it0 = EXP.items.find(x => x.id === EXP_ED); if (it0 && typeof trashPut === 'function') trashPut('exp', 'expenses', it0); } EXP.items = EXP.items.filter(x => x.id !== EXP_ED); toolsSave('fin-exp', EXP); expRender(); return; }
   }
   const eb = $('#ebx'); if (eb && !eb.hidden && (el === eb || el.closest('#ebf_x'))) return expBudClose();
   // clients
@@ -5880,10 +6144,10 @@ document.addEventListener('click', e => {
     if (el === ov || el.closest('#clf_x')) return clClose();
     if (el.closest('#clf_ta')){ const tt = $('#clf_tt').value.trim(); if (!tt) return; const x = {id: tId(), title: tt, due: $('#clf_td').value, done: false}; CL_TMP_TASKS.push(x); $('#clf_tasks').insertAdjacentHTML('beforeend', clTaskRow(x)); $('#clf_tt').value = ''; return; }
     const td = el.closest('[data-tdel]'); if (td){ td.closest('.cl-task').remove(); return; }
-    const dl = el.closest('#clf_del'); if (dl){ if (!dl.dataset.sure){ dl.dataset.sure = '1'; dl.textContent = t('cl_sureDel'); return; } CL.clients = CL.clients.filter(c => c.id !== CL_EDIT); toolsSave('fin-clients', CL); clClose(); clRender(); return; }
+    const dl = el.closest('#clf_del'); if (dl){ if (!dl.dataset.sure){ dl.dataset.sure = '1'; dl.textContent = t('cl_sureDel'); return; } { const c0 = CL.clients.find(c => c.id === CL_EDIT); if (c0 && typeof trashPut === 'function') trashPut('cl', 'clients', c0); } CL.clients = CL.clients.filter(c => c.id !== CL_EDIT); toolsSave('fin-clients', CL); clClose(); clRender(); return; }
   }
   if (el.closest('#cl_exp')){ $('#cl_json').value = JSON.stringify(clData(), null, 1); $('#cl_bmsg').textContent = t('cl_expDone'); try { if (navigator.clipboard) navigator.clipboard.writeText($('#cl_json').value).catch(() => {}); } catch (err) {} return; }
-  if (el.closest('#cl_imp')){ try { const d = JSON.parse($('#cl_json').value); if (!d || !Array.isArray(d.clients)) throw 0; CL = d; toolsSave('fin-clients', CL); $('#cl_bmsg').textContent = t('cl_impDone', {n: d.clients.length}); clRender(); } catch (err) { $('#cl_bmsg').textContent = t('cl_impBad'); } return; }
+  if (el.closest('#cl_imp')){ try { const d = JSON.parse($('#cl_json').value); if (!d || !Array.isArray(d.clients)) throw 0; d.clients.forEach(c => { if (c && typeof c === 'object') delete c.idn; }); CL = d; toolsSave('fin-clients', CL); $('#cl_bmsg').textContent = t('cl_impDone', {n: d.clients.length}); clRender(); } catch (err) { $('#cl_bmsg').textContent = t('cl_impBad'); } return; }
 });
 document.addEventListener('submit', e => {
   if (e.target.id === 'exf'){ e.preventDefault(); expSave(); }
@@ -5901,6 +6165,11 @@ Object.assign(ICON, {
   expenses: ic('<rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h4"/><path d="M16 3l-2 3M10 3l2 3"/>'),
   clients: ic('<circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M15 6h6M15 10h6M17 14h4"/>')
 });
+/* ================= saved items: one folder for everything you saved, by category, with a 30-day recycle bin ================= */
+function savedPanelHTML(){
+  return `<section class="panel panel-flat tool-panel" id="panel-saved" role="tabpanel" aria-labelledby="tab-saved" hidden><div id="svd_root"></div></section>`;
+}
+Object.assign(ICON, {saved: ic('<path d="M6 3h12v18l-6-4-6 4z"/><path d="M9 8h6"/>')});
 
 const navEl = $('#nav'), panelsEl = $('#panels');
 function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
@@ -5909,7 +6178,7 @@ function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
   }</div>`
 ).join(''); }
 renderNav();
-panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'clients' ? clientsPanelHTML() : panelHTML(id)).join('');
+panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'saved' ? savedPanelHTML() : id === 'clients' ? clientsPanelHTML() : panelHTML(id)).join('');
 
 /* ================= language ================= */
 function updateHead(){
@@ -6171,22 +6440,27 @@ function erExcess(base, o){
     + (typeof IL26 === 'object' ? Math.max(0, erSt - IL26.hishErMax * Math.min(base, IL26.hishCap)) : 0);
 }
 function salaryCalc(g, pts, pensPct, studyPct, o){
-  const bonus = o.bonus / 12, base = g + bonus, cash = o.cash || 0, carPay = o.carPay || 0, erX = erExcess(base, o), taxBase = base + o.benefit + cash + erX;
-  const b = taxByBrackets(taxBase * 12);
+  const bonus = o.bonus / 12, base = g + bonus, cash = o.cash || 0, carPay = o.carPay || 0, extra = o.extra || 0, erX = erExcess(base, o);
+  const taxBase = base + extra + o.benefit + cash + erX;
+  const b0 = taxByBrackets(taxBase * 12);
+  const top = TAX.brackets[TAX.brackets.length - 1][1];
+  const b = o.second ? {tax: taxBase * 12 * top, sur: b0.sur} : b0;            // a second job without tax coordination: the top rate, no credit points
   const pens = base * pensPct / 100;
   const qual = Math.min(pens, TAX.pensDepRate * Math.min(base, TAX.pensSalaryCap));
-  const credits = pts * TAX.point + TAX.pensCreditRate * qual * 12;
+  const loc = o.locRate > 0 ? o.locRate / 100 * Math.min(taxBase * 12, Math.max(0, o.locCap || 0)) : 0;
+  const donY = (o.don || 0) * 12, don = donY >= (TAX.donMin || 0) && donY > 0 ? 0.35 * Math.min(donY, 0.3 * taxBase * 12, TAX.donMax || Infinity) : 0;
+  const credits = (o.second ? 0 : pts * TAX.point) + TAX.pensCreditRate * qual * 12 + loc + don;
   const used = Math.min(credits, b.tax);
   const tax = (b.tax - used + b.sur) / 12;
   const low = Math.min(taxBase, TAX.niCut), high = Math.max(0, Math.min(taxBase, TAX.niMax) - TAX.niCut);
   const ni = low * TAX.niLow + high * TAX.niHigh;
   const health = low * TAX.hLow + high * TAX.hHigh;
-  const study = base * studyPct / 100;
-  const ded = tax + ni + health + pens + study + carPay;
+  const study = base * studyPct / 100, other = o.otherDed || 0;
+  const ded = tax + ni + health + pens + study + carPay + other;
   const erP = base * o.erPens / 100, erS = base * o.erSev / 100, erSt = base * o.erStudy / 100;
   const erNi = low * TAX.erNiLow + high * TAX.erNiHigh;
-  return {gross: base, bonus, net: base + cash - ded, tax, ni, health, pens, study, ded, credits: used / 12, cash, carPay, erX,
-          erP, erS, erSt, erNi, employer: base + cash + erP + erS + erSt + erNi};
+  return {gross: base, bonus, extra, net: base + extra + cash - ded, tax, ni, health, pens, study, other, ded, credits: used / 12, cash, carPay, erX, loc: loc / 12, don: don / 12,
+          erP, erS, erSt, erNi, employer: base + extra + cash + erP + erS + erSt + erNi};
 }
 /* --- work car inside the salary --- */
 function salCar(){
@@ -6231,9 +6505,11 @@ function withCar(g, pts, pens, study, o, car){
 function payslipRows(r, o){
   const pc = x => PC(r.gross > 0 ? x / r.gross * 100 : NaN);
   const L = [[t('r_grossMonthly'), r.gross], [t('r_incomeTax'), -r.tax], [t('r_ni'), -r.ni], [t('r_health'), -r.health]];
+  if (r.extra > 0) L.splice(1, 0, [t('r_sExtra'), r.extra]);
   if (r.pens > 0) L.push([t('r_pensionRow'), -r.pens]);
   if (r.study > 0) L.push([t('r_studyRow'), -r.study]);
   if (r.carPay > 0) L.push([t('r_sCarPay'), -r.carPay]);
+  if (r.other > 0) L.push([t('r_sOtherDed'), -r.other]);
   if (r.cash > 0) L.splice(1, 0, [t('r_sCarGil'), r.cash]);
   L.push([t('r_totalDed'), -r.ded], [t('r_netMonthly'), r.net]);
   return L.map(([a, b]) => [a, MI(b), pc(Math.abs(b))]);
@@ -6243,7 +6519,9 @@ function calcSalary(){
   const amt = Math.max(0, v('s_amount')) / k, mode = $('#s_mode').value;
   const pts = pointsOf('s'), pens = clamp(v('s_pension'), 0, 30), study = clamp(v('s_study'), 0, 30);
   const o = {bonus: Math.max(0, v('s_bonus')), benefit: Math.max(0, v('s_benefit')),
-             erPens: clamp(v('s_erPens'), 0, 30), erSev: clamp(v('s_erSev'), 0, 30), erStudy: clamp(v('s_erStudy'), 0, 30)};
+             erPens: clamp(v('s_erPens'), 0, 30), erSev: clamp(v('s_erSev'), 0, 30), erStudy: clamp(v('s_erStudy'), 0, 30),
+             extra: Math.max(0, v('s_extra')), otherDed: Math.max(0, v('s_otherDed')), don: Math.max(0, v('s_don')),
+             locRate: clamp(v('s_locRate'), 0, 100), locCap: Math.max(0, v('s_locCap')), second: ($('#s_job') || {}).value === 'second'};
   const car = salCar();
   const oc = gg => withCar(gg, pts, pens, study, o, car);
   let g = amt;
@@ -6259,10 +6537,11 @@ function calcSalary(){
   const r2 = salaryCalc(g + 100, pts, pens, study, oc(g + 100));
   const r0 = car ? salaryCalc(g, pts, pens, study, o) : r, drop = r0.net - r.net;
   const carTax = (r.tax + r.ni + r.health) - (r0.tax + r0.ni + r0.health);
-  const cb = car ? carBrackets(r0.gross + o.benefit, car.val + (r.cash || 0), r, r0) : null;
+  const cb = car && !o.second ? carBrackets(r0.gross + r0.extra + o.benefit + r0.erX, car.val + (r.cash || 0), r, r0) : null;
   const marginal = (1 - (r2.net - r.net) / 100) * 100;
   const rows = [[t('r_grossMonthly'), MI(r.gross)]];
   if (o.bonus > 0) rows.push([t('r_bonusAvg'), MI(r.bonus)]);
+  if (r.extra > 0) rows.push([t('r_sExtra'), MI(r.extra)]);
   if (o.benefit > 0) rows.push([t('r_benefitRow'), MI(o.benefit)]);
   if (car) rows.push([t('r_cbVal'), MI(car.val)]);
   if (r.cash > 0) rows.push([t('r_sCarGil'), MI(r.cash)]);
@@ -6271,14 +6550,16 @@ function calcSalary(){
   if (r.pens > 0) rows.push([t('r_pensionRow'), MI(-r.pens)]);
   if (r.study > 0) rows.push([t('r_studyRow'), MI(-r.study)]);
   if (r.carPay > 0) rows.push([t('r_sCarPay'), MI(-r.carPay)]);
+  if (r.other > 0) rows.push([t('r_sOtherDed'), MI(-r.other)]);
   rows.push(
     [t('r_totalDed'), MI(-r.ded), 'key'],
     [t('r_netMonthly'), MI(r.net), 'key'],
-    ...(car ? [[t('r_cbNetNo'), MI(r0.net)], [t('r_sCarMarg'), cb.m0 === cb.m1 ? N(cb.m0 * 100) + '%' : t('r_sCarMargV', {a: N(cb.m0 * 100) + '%', b: N(cb.m1 * 100) + '%'})], [t('r_sCarTax'), MI(-carTax)], [t('r_sCarDrop'), MI(-drop), 'key'], [t('r_sCarShare'), PC(r0.net > 0 ? drop / r0.net * 100 : NaN)], [t('r_sCarYear'), MI(-drop * 12)]] : []),
+    ...(car ? [[t('r_cbNetNo'), MI(r0.net)], [t('r_sCarMarg'), !cb ? PC(TAX.brackets[TAX.brackets.length - 1][1] * 100) : cb.m0 === cb.m1 ? N(cb.m0 * 100) + '%' : t('r_sCarMargV', {a: N(cb.m0 * 100) + '%', b: N(cb.m1 * 100) + '%'})], [t('r_sCarTax'), MI(-carTax)], [t('r_sCarDrop'), MI(-drop), 'key'], [t('r_sCarShare'), PC(r0.net > 0 ? drop / r0.net * 100 : NaN)], [t('r_sCarYear'), MI(-drop * 12)]] : []),
     ...(() => { const se = typeof seTotals === 'function' ? seTotals() : {total: 0}; return se.total > 0 ? [[t('r_seCar'), MI(-se.car)], [t('r_seOther'), MI(-se.other)], [t('r_seLeft'), MI(r.net - se.total), 'key'], [t('r_seShare'), PC(r.net > 0 ? se.total / r.net * 100 : NaN)]] : []; })(),
     [t('r_dedShare'), PC(r.gross > 0 ? r.ded / r.gross * 100 : NaN)],
-    [t('r_points'), ptsTxt('s', pts)],
+    [t('r_points'), o.second ? '0 · ' + t('o_jobSecond') : ptsTxt('s', pts)],
     [t('r_creditsUsed'), MI(r.credits)],
+    ...(r.loc > 0.5 ? [[t('r_locCred'), MI(r.loc)]] : []), ...(r.don > 0.5 ? [[t('r_donCred'), MI(r.don)]] : []),
     [t('r_marginal'), PC(marginal)],
     [t('r_netAnnual'), MI(r.net * 12)],
     [t('r_erPens'), MI(r.erP)], [t('r_erSev'), MI(r.erS)]);
@@ -6294,7 +6575,7 @@ function calcSalary(){
     table2: cb ? {title: t(r.cash > 0 ? 't_sCarBrG' : 't_sCarBr'), open: true, head: [t('h_brRange'), t('h_brRate'), t('h_brAmt'), t('h_brTax')], rows: cb.rows, foot: t('n_sCarBr')} : null,
     table: {title: t('t_payslip'), head: [t('h_item'), t('h_amount'), t('h_pctGross')], rows: payslipRows(r, o)},
     note: t('n_salary2') + ' ' + t('n_points') + (car ? ' ' + t('n_sCar') : ''),
-    warn: car && car.price > IL26.carCap ? [t('w_cbCap', {c: MI(IL26.carCap)})] : [],
+    warn: (car && car.price > IL26.carCap ? [t('w_cbCap', {c: MI(IL26.carCap)})] : []).concat(o.second ? [t('w_sSecond')] : []),
     split: {
       title: t('c_split'),
       items: [
@@ -6754,13 +7035,12 @@ function calcYield(){
   if (tax > 0) rows.push([t('r_gainNet'), M_(netGain)], [t('r_annNet'), PC(Rn * 100)]);
   if (infl > 0) rows.push([t('r_annReal'), PC(((1 + Rn) / (1 + infl) - 1) * 100)], [t('r_realFinal'), M_(Bn / Math.pow(1 + infl, M / 12))]);
   if (R > 0) rows.push([t('r_double'), `${N(Math.log(2) / Math.log(1 + R), 1)} ${t('w_years')}`]);
-  if (D > 0) rows.push([t('r_xirrNote'), '']);
   const hero = {
     rate: {label: t('r_avgAnnual'), value: PC(R * 100), sub: t('r_totReturn') + ': ' + PC(put > 0 ? gain / put * 100 : NaN)},
     end: {label: t('r_yEnd'), value: M_(B), sub: t('r_gainLoss') + ': ' + M_(gain)},
     years: {label: t('r_yYears'), value: ok ? fmtDur(Math.round(M)) : '—', sub: ok ? t('r_yEnd') + ': ' + M_(B) : t('r_notReach')}
   }[mode];
-  return {hero, rows};
+  return {hero, rows, note: D > 0 ? t('r_xirrNote') : undefined};
 }
 function M_(x){ return M(x); }
 /* --- dividends --- */
@@ -6815,7 +7095,7 @@ function calcDividends(){
   };
 }
 
-const CALC = {home: calcHome, settings: calcSettings, convert: calcConvert, vat: calcVat, percent: calcPercent, salary: calcSalary, selfemp: calcSelfemp,
+const CALC = {home: calcHome, settings: calcSettings, saved: () => null, convert: calcConvert, vat: calcVat, percent: calcPercent, salary: calcSalary, selfemp: calcSelfemp,
               tax: calcTaxTab, rental: calcRental, capital: calcCapital, loan: calcLoan, mortgage: calcMortgage,
               compound: calcCompound, yield: calcYield, dividends: calcDividends};
 function applyWhen(id){
@@ -9560,8 +9840,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "7.4", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.021012';
+var CHANGELOG = [{"v": "7.5", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.203751';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -11585,7 +11865,7 @@ applyLang = function(){ const r = _alFg.apply(this, arguments); fgRender(); lvRe
 figApply(true);
 
 /* ================= live indices: official price indices and market indices, used across the app and editable ================= */
-var IX_BUILT = {"idx":{"cpi":{"code":"120010","name":"Consumer Price Index - General","m":"2026-08","v":105.8,"base":"Average 2024","mom":0.7,"yoy":1.5,"ytd":2.12,"hist":[["2005-01",70.6175],["2005-02",70.7588],["2005-03",70.6175],["2005-04",71.1119],["2005-05",71.3237],["2005-06",71.3943],["2005-07",72.1711],["2005-08",72.3124],["2005-09",72.383],["2005-10",72.9479],["2005-11",72.8773],["2005-12",72.7361],["2006-01",72.5242],["2006-02",72.9479],["2006-03",73.1598],["2006-04",73.7953],["2006-05",73.7953],["2006-06",73.8659],["2006-07",73.9366],["2006-08",73.9366],["2006-09",73.301],["2006-10",72.8067],["2006-11",72.6654],["2006-12",72.6654],["2007-01",72.5928],["2007-02",72.3728],["2007-03",72.5195],["2007-04",72.8861],["2007-05",72.8861],["2007-06",73.3994],["2007-07",74.206],["2007-08",74.7192],["2007-09",74.3526],["2007-10",74.4259],["2007-11",74.7192],["2007-12",75.1592],["2008-01",75.1592],["2008-02",75.0125],["2008-03",75.2325],["2008-04",76.3324],["2008-05",76.8457],["2008-06",76.919],["2008-07",77.7989],["2008-08",78.4589],["2008-09",78.4589],["2008-10",78.5322],["2008-11",78.0922],["2008-12",78.0189],["2009-01",77.6288],["2009-02",77.5517],["2009-03",77.9372],["2009-04",78.7081],["2009-05",79.0164],["2009-06",79.7102],["2009-07",80.5582],["2009-08",80.9436],["2009-09",80.7124],["2009-10",80.8666],["2009-11",81.0978],["2009-12",81.0978],["2010-01",80.5582],["2010-02",80.3269],["2010-03",80.404],["2010-04",81.0978],["2010-05",81.4062],["2010-06",81.6375],["2010-07",82.0229],["2010-08",82.4083],["2010-09",82.6396],["2010-10",82.8709],["2010-11",82.948],["2010-12",83.2563],["2011-01",83.4228],["2011-02",83.6682],["2011-03",83.8318],["2011-04",84.3225],["2011-05",84.7314],["2011-06",85.0586],["2011-07",84.8132],["2011-08",85.2222],["2011-09",85.0586],["2011-10",85.1404],["2011-11",85.0586],["2011-12",85.0586],["2012-01",85.0586],["2012-02",85.0586],["2012-03",85.3857],["2012-04",86.1218],["2012-05",86.1218],["2012-06",85.8764],["2012-07",85.9582],["2012-08",86.8579],["2012-09",86.8579],["2012-10",86.6943],["2012-11",86.2854],["2012-12",86.449],["2013-01",86.2761],["2013-02",86.2761],["2013-03",86.4481],["2013-04",86.7922],["2013-05",86.8782],["2013-06",87.5663],["2013-07",87.8244],["2013-08",87.9964],["2013-09",87.9964],["2013-10",88.2545],["2013-11",87.9104],["2013-12",87.9964],["2014-01",87.4803],["2014-02",87.3083],["2014-03",87.5663],["2014-04",87.6523],["2014-05",87.7384],["2014-06",87.9964],["2014-07",88.0824],["2014-08",87.9964],["2014-09",87.7384],["2014-10",87.9964],["2014-11",87.8244],["2014-12",87.8244],["2015-01",87.034],["2015-02",86.4198],["2015-03",86.683],["2015-04",87.2094],["2015-05",87.3849],["2015-06",87.6481],["2015-07",87.8236],["2015-08",87.6481],["2015-09",87.2972],["2015-10",87.3849],["2015-11",87.034],["2015-12",86.9462],["2016-01",86.5076],["2016-02",86.2443],["2016-03",86.0689],["2016-04",86.4198],["2016-05",86.683],["2016-06",86.9462],["2016-07",87.2972],["2016-08",87.034],["2016-09",86.9462],["2016-10",87.1217],["2016-11",86.7708],["2016-12",86.7708],["2017-01",86.5972],["2017-02",86.5972],["2017-03",86.8575],["2017-04",87.0311],["2017-05",87.3782],["2017-06",86.7708],["2017-07",86.684],["2017-08",86.9443],["2017-09",87.0311],["2017-10",87.2914],["2017-11",87.0311],["2017-12",87.1178],["2018-01",86.684],["2018-02",86.7708],["2018-03",87.0311],["2018-04",87.3782],["2018-05",87.812],["2018-06",87.8988],["2018-07",87.8988],["2018-08",87.9855],["2018-09",88.0723],["2018-10",88.3326],["2018-11",88.0723],["2018-12",87.812],["2019-01",87.7242],["2019-02",87.8118],["2019-03",88.25],["2019-04",88.5129],["2019-05",89.1264],["2019-06",88.6006],["2019-07",88.3377],["2019-08",88.5129],["2019-09",88.3377],["2019-10",88.6882],["2019-11",88.3377],["2019-12",88.3377],["2020-01",87.9871],["2020-02",87.8995],["2020-03",88.25],["2020-04",87.9871],["2020-05",87.7242],["2020-06",87.6366],["2020-07",87.8118],["2020-08",87.8118],["2020-09",87.7242],["2020-10",87.9871],["2020-11",87.8118],["2020-12",87.7242],["2021-01",87.6365],["2021-02",87.9002],["2021-03",88.4276],["2021-04",88.6913],["2021-05",89.0429],["2021-06",89.1308],["2021-07",89.4824],["2021-08",89.7461],["2021-09",89.9219],["2021-10",90.0098],["2021-11",89.9219],["2021-12",90.1856],["2022-01",90.3614],["2022-02",90.9767],["2022-03",91.5041],["2022-04",92.2073],["2022-05",92.7347],["2022-06",93.0863],["2022-07",94.1411],["2022-08",93.8774],["2022-09",94.0532],["2022-10",94.5806],["2022-11",94.6685],["2022-12",94.9322],["2023-01",95.217],["2023-02",95.6824],["2023-03",96.0547],["2023-04",96.7993],["2023-05",96.9854],["2023-06",96.9854],["2023-07",97.2647],["2023-08",97.73],["2023-09",97.637],["2023-10",98.1023],["2023-11",97.8231],["2023-12",97.73],["2024-01",97.73],["2024-02",98.1023],["2024-03",98.6608],["2024-04",99.4985],["2024-05",99.6846],["2024-06",99.7777],["2024-07",100.3362],["2024-08",101.2669],["2024-09",101.0808],["2024-10",101.5462],["2024-11",101.1739],["2024-12",100.8946],["2025-01",101.5],["2025-02",101.5],["2025-03",102.0],["2025-04",103.1],["2025-05",102.8],["2025-06",103.1],["2025-07",103.5],["2025-08",104.2],["2025-09",103.6],["2025-10",104.1],["2025-11",103.6],["2025-12",103.6],["2026-01",103.3],["2026-02",103.5],["2026-03",103.9],["2026-04",105.1],["2026-05",104.8],["2026-06",104.8],["2026-07",105.1],["2026-08",105.8]]},"build":{"code":"200010","name":"Price index of input in residential building - general","m":"2026-08","v":103.9,"base":"July 2025","mom":0.4,"yoy":3.5,"ytd":2.67,"hist":[["2005-01",56.8937],["2005-02",56.9482],["2005-03",57.1117],["2005-04",57.2752],["2005-05",57.3842],["2005-06",57.6566],["2005-07",59.2915],["2005-08",60.8719],["2005-09",61.0354],["2005-10",60.7084],["2005-11",60.1635],["2005-12",59.782],["2006-01",60.4904],["2006-02",60.7084],["2006-03",61.0354],["2006-04",61.4714],["2006-05",61.8528],["2006-06",62.4523],["2006-07",62.9972],["2006-08",63.4332],["2006-09",63.7057],["2006-10",63.4877],["2006-11",63.4877],["2006-12",63.3242],["2007-01",63.9237],["2007-02",64.0327],["2007-03",64.1962],["2007-04",64.1962],["2007-05",64.0872],["2007-06",64.5231],["2007-07",65.2316],["2007-08",65.3951],["2007-09",65.4496],["2007-10",65.3406],["2007-11",65.2861],["2007-12",65.2861],["2008-01",65.5585],["2008-02",65.2861],["2008-03",65.4496],["2008-04",66.3215],["2008-05",67.3569],["2008-06",68.0654],["2008-07",69.1553],["2008-08",69.2643],["2008-09",68.8283],["2008-10",67.6839],["2008-11",67.5204],["2008-12",67.4114],["2009-01",67.0844],["2009-02",67.0844],["2009-03",67.0844],["2009-04",67.1389],["2009-05",67.1389],["2009-06",67.1934],["2009-07",67.4114],["2009-08",67.3569],["2009-09",67.3569],["2009-10",67.1934],["2009-11",67.3024],["2009-12",67.4114],["2010-01",67.6294],["2010-02",67.9564],["2010-03",68.3923],["2010-04",68.9918],["2010-05",69.1553],["2010-06",68.9918],["2010-07",68.9373],["2010-08",69.2643],["2010-09",69.3733],["2010-10",69.4278],["2010-11",69.6457],["2010-12",70.0272],["2011-01",70.4632],["2011-02",70.8991],["2011-03",70.8991],["2011-04",70.8991],["2011-05",71.4441],["2011-06",71.9346],["2011-07",72.0981],["2011-08",72.3143],["2011-09",72.5306],["2011-10",72.6027],["2011-11",72.7469],["2011-12",72.6748],["2012-01",72.8911],["2012-02",73.2516],["2012-03",73.4679],["2012-04",73.9726],["2012-05",74.0447],["2012-06",74.261],["2012-07",74.4773],["2012-08",74.7657],["2012-09",74.7657],["2012-10",74.7657],["2012-11",74.982],["2012-12",75.0541],["2013-01",75.4146],["2013-02",75.5588],["2013-03",75.5588],["2013-04",75.4146],["2013-05",75.6309],["2013-06",75.7751],["2013-07",75.7751],["2013-08",75.8472],["2013-09",75.9913],["2013-10",76.0634],["2013-11",76.1355],["2013-12",76.1355],["2014-01",76.3518],["2014-02",76.3518],["2014-03",76.2797],["2014-04",76.3518],["2014-05",76.4239],["2014-06",76.3518],["2014-07",76.2797],["2014-08",76.3518],["2014-09",76.2797],["2014-10",76.496],["2014-11",76.6402],["2014-12",76.7123],["2015-01",76.7844],["2015-02",76.7123],["2015-03",76.8565],["2015-04",76.8565],["2015-05",76.8565],["2015-06",76.8565],["2015-07",76.9286],["2015-08",77.0728],["2015-09",77.1449],["2015-10",77.217],["2015-11",77.1449],["2015-12",77.4333],["2016-01",77.6496],["2016-02",77.5054],["2016-03",77.5054],["2016-04",77.7217],["2016-05",77.8659],["2016-06",77.938],["2016-07",78.2264],["2016-08",78.2264],["2016-09",78.4427],["2016-10",78.4427],["2016-11",78.5869],["2016-12",78.5869],["2017-01",78.5869],["2017-02",78.7311],["2017-03",78.7311],["2017-04",78.8753],["2017-05",78.8753],["2017-06",79.0195],["2017-07",79.1637],["2017-08",79.5242],["2017-09",79.6683],["2017-10",79.8125],["2017-11",79.8846],["2017-12",80.1009],["2018-01",80.5335],["2018-02",80.7498],["2018-03",80.8219],["2018-04",81.0382],["2018-05",81.1103],["2018-06",81.1824],["2018-07",81.3987],["2018-08",81.5429],["2018-09",81.5429],["2018-10",81.615],["2018-11",81.615],["2018-12",81.6871],["2019-01",82.1918],["2019-02",82.2639],["2019-03",82.2639],["2019-04",82.336],["2019-05",82.4081],["2019-06",82.4081],["2019-07",82.4081],["2019-08",82.4802],["2019-09",82.4802],["2019-10",82.4081],["2019-11",82.4081],["2019-12",82.5523],["2020-01",82.6965],["2020-02",82.6965],["2020-03",82.8407],["2020-04",82.7686],["2020-05",82.6965],["2020-06",82.6965],["2020-07",82.6965],["2020-08",82.7686],["2020-09",82.6965],["2020-10",82.6244],["2020-11",82.6244],["2020-12",82.9849],["2021-01",83.4895],["2021-02",83.6337],["2021-03",84.0663],["2021-04",84.7152],["2021-05",85.292],["2021-06",85.7967],["2021-07",86.013],["2021-08",86.5177],["2021-09",86.734],["2021-10",86.9503],["2021-11",87.3828],["2021-12",87.5991],["2022-01",88.3201],["2022-02",88.7527],["2022-03",89.6179],["2022-04",90.4831],["2022-05",90.9156],["2022-06",91.4203],["2022-07",91.8529],["2022-08",91.925],["2022-09",91.925],["2022-10",91.925],["2022-11",91.7808],["2022-12",91.7808],["2023-01",92.8623],["2023-02",92.7181],["2023-03",92.9344],["2023-04",93.2228],["2023-05",93.1507],["2023-06",93.4391],["2023-07",93.2228],["2023-08",93.2949],["2023-09",93.367],["2023-10",93.5112],["2023-11",93.5833],["2023-12",93.5833],["2024-01",93.8717],["2024-02",93.6554],["2024-03",93.8717],["2024-04",93.7996],["2024-05",94.2322],["2024-06",94.5926],["2024-07",94.9531],["2024-08",95.1694],["2024-09",95.5299],["2024-10",95.7462],["2024-11",96.0346],["2024-12",96.323],["2025-01",98.8464],["2025-02",99.279],["2025-03",99.6395],["2025-04",99.7837],["2025-05",99.9279],["2025-06",99.9279],["2025-07",100.0],["2025-08",100.4],["2025-09",100.4],["2025-10",100.5],["2025-11",101.1],["2025-12",101.2],["2026-01",101.3],["2026-02",101.5],["2026-03",101.7],["2026-04",102.8],["2026-05",103.4],["2026-06",103.6],["2026-07",103.5],["2026-08",103.9]]},"house":{"code":"40010","name":"Prices of Dwellings","m":"2026-06","v":594.8,"base":"Average 1993","mom":0.2,"yoy":-1.2,"ytd":-0.9,"hist":[["2015-01",354.8],["2015-02",358.3],["2015-03",360.6],["2015-04",361.5],["2015-05",364.5],["2015-06",368.3],["2015-07",369.2],["2015-08",369.0],["2015-09",371.3],["2015-10",374.4],["2015-11",377.5],["2015-12",380.4],["2016-01",381.4],["2016-02",384.0],["2016-03",389.1],["2016-04",390.2],["2016-05",391.1],["2016-06",393.4],["2016-07",396.1],["2016-08",399.9],["2016-09",404.2],["2016-10",404.4],["2016-11",402.8],["2016-12",402.1],["2017-01",402.8],["2017-02",404.9],["2017-03",406.8],["2017-04",407.7],["2017-05",409.5],["2017-06",412.8],["2017-07",414.3],["2017-08",415.9],["2017-09",414.6],["2017-10",414.5],["2017-11",411.9],["2017-12",407.8],["2018-01",406.3],["2018-02",405.9],["2018-03",406.5],["2018-04",406.2],["2018-05",409.2],["2018-06",410.5],["2018-07",408.1],["2018-08",407.4],["2018-09",406.6],["2018-10",405.8],["2018-11",405.5],["2018-12",404.7],["2019-01",408.3],["2019-02",409.6],["2019-03",410.8],["2019-04",412.9],["2019-05",414.1],["2019-06",413.7],["2019-07",414.9],["2019-08",414.5],["2019-09",416.6],["2019-10",418.7],["2019-11",419.1],["2019-12",421.6],["2020-01",423.7],["2020-02",424.1],["2020-03",423.7],["2020-04",420.7],["2020-05",422.0],["2020-06",426.2],["2020-07",426.2],["2020-08",426.6],["2020-09",427.9],["2020-10",431.8],["2020-11",435.7],["2020-12",438.3],["2021-01",439.2],["2021-02",442.7],["2021-03",448.5],["2021-04",452.1],["2021-05",454.4],["2021-06",459.9],["2021-07",465.4],["2021-08",467.3],["2021-09",471.0],["2021-10",477.6],["2021-11",485.7],["2021-12",495.9],["2022-01",503.8],["2022-02",511.9],["2022-03",517.0],["2022-04",525.3],["2022-05",536.3],["2022-06",543.8],["2022-07",553.6],["2022-08",559.7],["2022-09",565.3],["2022-10",567.0],["2022-11",567.6],["2022-12",568.7],["2023-01",568.7],["2023-02",568.7],["2023-03",567.6],["2023-04",564.8],["2023-05",561.4],["2023-06",560.3],["2023-07",559.2],["2023-08",558.6],["2023-09",557.5],["2023-10",554.7],["2023-11",558.0],["2023-12",563.0],["2024-01",569.2],["2024-02",574.9],["2024-03",579.5],["2024-04",583.6],["2024-05",587.1],["2024-06",591.8],["2024-07",593.0],["2024-08",592.4],["2024-09",593.6],["2024-10",596.6],["2024-11",599.0],["2024-12",606.2],["2025-01",609.8],["2025-02",608.6],["2025-03",607.4],["2025-04",605.0],["2025-05",602.6],["2025-06",602.0],["2025-07",600.8],["2025-08",597.2],["2025-09",593.0],["2025-10",596.0],["2025-11",600.8],["2025-12",600.2],["2026-01",599.6],["2026-02",602.0],["2026-03",599.6],["2026-04",593.0],["2026-05",593.6],["2026-06",594.8]]}},"mkt":{"asOf":1792018388,"src":"cnbc","items":{"dji":{"n":"Dow Jones","sym":".DJI","p":51621.48,"pc":51670.1,"chp":-0.09,"t":1792010177,"cur":"USD","rt":true,"a":{"y1":[1759636800,45479.6],"y5":[1633838400,35294.7561],"y10":[1479013200,18867.9348],"ye":[1766898000,48382.39]},"hAt":1791996966,"y1":13.5,"r5":7.88,"r10":10.68,"ytd":6.69},"ta35":{"n":"TA-35","sym":".TA35","p":4160.19,"pc":4130.05,"chp":0.79,"t":1791987269,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3276.85],"y5":[1633838400,1848.07],"y10":[1479013200,1432.48],"ye":[1766898000,3695.29]},"hAt":1791996966,"y1":26.96,"r5":17.58,"r10":11.35,"ytd":12.58},"ta125":{"n":"TA-125","sym":".TA125","p":4027.78,"pc":3999.51,"chp":0.64,"t":1791987269,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3358.13],"y5":[1633838400,1909.51],"y10":[1479013200,1251.26],"ye":[1766898000,3733.08]},"hAt":1791996966,"y1":19.94,"r5":16.06,"r10":12.51,"ytd":7.89},"spx":{"n":"S&P 500","sym":".SPX","p":7718.94,"pc":7805.45,"chp":-1.11,"t":1792010168,"cur":"USD","rt":true,"a":{"y1":[1759636800,6552.51],"y5":[1633838400,4471.37],"y10":[1479013200,2181.9],"ye":[1766898000,6858.47]},"hAt":1791996966,"y1":17.8,"r5":11.51,"r10":13.59,"ytd":12.55},"ndx":{"n":"Nasdaq 100","sym":".NDX","p":29950.816,"pc":30569.481,"chp":-2.02,"t":1792012559,"cur":"USD","rt":true,"a":{"y1":[1759636800,24221.745],"y5":[1633838400,15146.921],"y10":[1479013200,4808.042],"ye":[1766898000,25206.168]},"hAt":1791996966,"y1":23.65,"r5":14.57,"r10":20.25,"ytd":18.82},"gold":{"n":"Gold","sym":"@GC.1","p":4129.6,"pc":4107.9,"chp":0.53,"t":1792018388,"cur":"USD","rt":false,"a":{"y1":[1759636800,4000.4],"y5":[1633838400,1768.3],"y10":[1479013200,1208.7],"ye":[1766898000,4329.6]},"hAt":1791996966,"y1":3.23,"r5":18.44,"r10":13.19,"ytd":-4.62},"brent":{"n":"Brent","sym":"@LCO.1","p":106.06,"pc":106.06,"chp":null,"t":1791954000,"cur":"USD","rt":false,"a":{"y1":[1759636800,62.73],"y5":[1633838400,84.86],"y10":[1479013200,46.86],"ye":[1766898000,60.75]},"hAt":1791996967,"y1":69.07,"r5":4.55,"r10":8.59,"ytd":74.58}}}};
+var IX_BUILT = {"idx":{"cpi":{"code":"120010","name":"Consumer Price Index - General","m":"2026-09","v":105.3,"base":"Average 2024","mom":-0.5,"yoy":1.6,"ytd":1.64,"hist":[["2005-01",70.6175],["2005-02",70.7588],["2005-03",70.6175],["2005-04",71.1119],["2005-05",71.3237],["2005-06",71.3943],["2005-07",72.1711],["2005-08",72.3124],["2005-09",72.383],["2005-10",72.9479],["2005-11",72.8773],["2005-12",72.7361],["2006-01",72.5242],["2006-02",72.9479],["2006-03",73.1598],["2006-04",73.7953],["2006-05",73.7953],["2006-06",73.8659],["2006-07",73.9366],["2006-08",73.9366],["2006-09",73.301],["2006-10",72.8067],["2006-11",72.6654],["2006-12",72.6654],["2007-01",72.5928],["2007-02",72.3728],["2007-03",72.5195],["2007-04",72.8861],["2007-05",72.8861],["2007-06",73.3994],["2007-07",74.206],["2007-08",74.7192],["2007-09",74.3526],["2007-10",74.4259],["2007-11",74.7192],["2007-12",75.1592],["2008-01",75.1592],["2008-02",75.0125],["2008-03",75.2325],["2008-04",76.3324],["2008-05",76.8457],["2008-06",76.919],["2008-07",77.7989],["2008-08",78.4589],["2008-09",78.4589],["2008-10",78.5322],["2008-11",78.0922],["2008-12",78.0189],["2009-01",77.6288],["2009-02",77.5517],["2009-03",77.9372],["2009-04",78.7081],["2009-05",79.0164],["2009-06",79.7102],["2009-07",80.5582],["2009-08",80.9436],["2009-09",80.7124],["2009-10",80.8666],["2009-11",81.0978],["2009-12",81.0978],["2010-01",80.5582],["2010-02",80.3269],["2010-03",80.404],["2010-04",81.0978],["2010-05",81.4062],["2010-06",81.6375],["2010-07",82.0229],["2010-08",82.4083],["2010-09",82.6396],["2010-10",82.8709],["2010-11",82.948],["2010-12",83.2563],["2011-01",83.4228],["2011-02",83.6682],["2011-03",83.8318],["2011-04",84.3225],["2011-05",84.7314],["2011-06",85.0586],["2011-07",84.8132],["2011-08",85.2222],["2011-09",85.0586],["2011-10",85.1404],["2011-11",85.0586],["2011-12",85.0586],["2012-01",85.0586],["2012-02",85.0586],["2012-03",85.3857],["2012-04",86.1218],["2012-05",86.1218],["2012-06",85.8764],["2012-07",85.9582],["2012-08",86.8579],["2012-09",86.8579],["2012-10",86.6943],["2012-11",86.2854],["2012-12",86.449],["2013-01",86.2761],["2013-02",86.2761],["2013-03",86.4481],["2013-04",86.7922],["2013-05",86.8782],["2013-06",87.5663],["2013-07",87.8244],["2013-08",87.9964],["2013-09",87.9964],["2013-10",88.2545],["2013-11",87.9104],["2013-12",87.9964],["2014-01",87.4803],["2014-02",87.3083],["2014-03",87.5663],["2014-04",87.6523],["2014-05",87.7384],["2014-06",87.9964],["2014-07",88.0824],["2014-08",87.9964],["2014-09",87.7384],["2014-10",87.9964],["2014-11",87.8244],["2014-12",87.8244],["2015-01",87.034],["2015-02",86.4198],["2015-03",86.683],["2015-04",87.2094],["2015-05",87.3849],["2015-06",87.6481],["2015-07",87.8236],["2015-08",87.6481],["2015-09",87.2972],["2015-10",87.3849],["2015-11",87.034],["2015-12",86.9462],["2016-01",86.5076],["2016-02",86.2443],["2016-03",86.0689],["2016-04",86.4198],["2016-05",86.683],["2016-06",86.9462],["2016-07",87.2972],["2016-08",87.034],["2016-09",86.9462],["2016-10",87.1217],["2016-11",86.7708],["2016-12",86.7708],["2017-01",86.5972],["2017-02",86.5972],["2017-03",86.8575],["2017-04",87.0311],["2017-05",87.3782],["2017-06",86.7708],["2017-07",86.684],["2017-08",86.9443],["2017-09",87.0311],["2017-10",87.2914],["2017-11",87.0311],["2017-12",87.1178],["2018-01",86.684],["2018-02",86.7708],["2018-03",87.0311],["2018-04",87.3782],["2018-05",87.812],["2018-06",87.8988],["2018-07",87.8988],["2018-08",87.9855],["2018-09",88.0723],["2018-10",88.3326],["2018-11",88.0723],["2018-12",87.812],["2019-01",87.7242],["2019-02",87.8118],["2019-03",88.25],["2019-04",88.5129],["2019-05",89.1264],["2019-06",88.6006],["2019-07",88.3377],["2019-08",88.5129],["2019-09",88.3377],["2019-10",88.6882],["2019-11",88.3377],["2019-12",88.3377],["2020-01",87.9871],["2020-02",87.8995],["2020-03",88.25],["2020-04",87.9871],["2020-05",87.7242],["2020-06",87.6366],["2020-07",87.8118],["2020-08",87.8118],["2020-09",87.7242],["2020-10",87.9871],["2020-11",87.8118],["2020-12",87.7242],["2021-01",87.6365],["2021-02",87.9002],["2021-03",88.4276],["2021-04",88.6913],["2021-05",89.0429],["2021-06",89.1308],["2021-07",89.4824],["2021-08",89.7461],["2021-09",89.9219],["2021-10",90.0098],["2021-11",89.9219],["2021-12",90.1856],["2022-01",90.3614],["2022-02",90.9767],["2022-03",91.5041],["2022-04",92.2073],["2022-05",92.7347],["2022-06",93.0863],["2022-07",94.1411],["2022-08",93.8774],["2022-09",94.0532],["2022-10",94.5806],["2022-11",94.6685],["2022-12",94.9322],["2023-01",95.217],["2023-02",95.6824],["2023-03",96.0547],["2023-04",96.7993],["2023-05",96.9854],["2023-06",96.9854],["2023-07",97.2647],["2023-08",97.73],["2023-09",97.637],["2023-10",98.1023],["2023-11",97.8231],["2023-12",97.73],["2024-01",97.73],["2024-02",98.1023],["2024-03",98.6608],["2024-04",99.4985],["2024-05",99.6846],["2024-06",99.7777],["2024-07",100.3362],["2024-08",101.2669],["2024-09",101.0808],["2024-10",101.5462],["2024-11",101.1739],["2024-12",100.8946],["2025-01",101.5],["2025-02",101.5],["2025-03",102.0],["2025-04",103.1],["2025-05",102.8],["2025-06",103.1],["2025-07",103.5],["2025-08",104.2],["2025-09",103.6],["2025-10",104.1],["2025-11",103.6],["2025-12",103.6],["2026-01",103.3],["2026-02",103.5],["2026-03",103.9],["2026-04",105.1],["2026-05",104.8],["2026-06",104.8],["2026-07",105.1],["2026-08",105.8],["2026-09",105.3]]},"build":{"code":"200010","name":"Price index of input in residential building - general","m":"2026-09","v":104.0,"base":"July 2025","mom":0.1,"yoy":3.6,"ytd":2.77,"hist":[["2005-01",56.8937],["2005-02",56.9482],["2005-03",57.1117],["2005-04",57.2752],["2005-05",57.3842],["2005-06",57.6566],["2005-07",59.2915],["2005-08",60.8719],["2005-09",61.0354],["2005-10",60.7084],["2005-11",60.1635],["2005-12",59.782],["2006-01",60.4904],["2006-02",60.7084],["2006-03",61.0354],["2006-04",61.4714],["2006-05",61.8528],["2006-06",62.4523],["2006-07",62.9972],["2006-08",63.4332],["2006-09",63.7057],["2006-10",63.4877],["2006-11",63.4877],["2006-12",63.3242],["2007-01",63.9237],["2007-02",64.0327],["2007-03",64.1962],["2007-04",64.1962],["2007-05",64.0872],["2007-06",64.5231],["2007-07",65.2316],["2007-08",65.3951],["2007-09",65.4496],["2007-10",65.3406],["2007-11",65.2861],["2007-12",65.2861],["2008-01",65.5585],["2008-02",65.2861],["2008-03",65.4496],["2008-04",66.3215],["2008-05",67.3569],["2008-06",68.0654],["2008-07",69.1553],["2008-08",69.2643],["2008-09",68.8283],["2008-10",67.6839],["2008-11",67.5204],["2008-12",67.4114],["2009-01",67.0844],["2009-02",67.0844],["2009-03",67.0844],["2009-04",67.1389],["2009-05",67.1389],["2009-06",67.1934],["2009-07",67.4114],["2009-08",67.3569],["2009-09",67.3569],["2009-10",67.1934],["2009-11",67.3024],["2009-12",67.4114],["2010-01",67.6294],["2010-02",67.9564],["2010-03",68.3923],["2010-04",68.9918],["2010-05",69.1553],["2010-06",68.9918],["2010-07",68.9373],["2010-08",69.2643],["2010-09",69.3733],["2010-10",69.4278],["2010-11",69.6457],["2010-12",70.0272],["2011-01",70.4632],["2011-02",70.8991],["2011-03",70.8991],["2011-04",70.8991],["2011-05",71.4441],["2011-06",71.9346],["2011-07",72.0981],["2011-08",72.3143],["2011-09",72.5306],["2011-10",72.6027],["2011-11",72.7469],["2011-12",72.6748],["2012-01",72.8911],["2012-02",73.2516],["2012-03",73.4679],["2012-04",73.9726],["2012-05",74.0447],["2012-06",74.261],["2012-07",74.4773],["2012-08",74.7657],["2012-09",74.7657],["2012-10",74.7657],["2012-11",74.982],["2012-12",75.0541],["2013-01",75.4146],["2013-02",75.5588],["2013-03",75.5588],["2013-04",75.4146],["2013-05",75.6309],["2013-06",75.7751],["2013-07",75.7751],["2013-08",75.8472],["2013-09",75.9913],["2013-10",76.0634],["2013-11",76.1355],["2013-12",76.1355],["2014-01",76.3518],["2014-02",76.3518],["2014-03",76.2797],["2014-04",76.3518],["2014-05",76.4239],["2014-06",76.3518],["2014-07",76.2797],["2014-08",76.3518],["2014-09",76.2797],["2014-10",76.496],["2014-11",76.6402],["2014-12",76.7123],["2015-01",76.7844],["2015-02",76.7123],["2015-03",76.8565],["2015-04",76.8565],["2015-05",76.8565],["2015-06",76.8565],["2015-07",76.9286],["2015-08",77.0728],["2015-09",77.1449],["2015-10",77.217],["2015-11",77.1449],["2015-12",77.4333],["2016-01",77.6496],["2016-02",77.5054],["2016-03",77.5054],["2016-04",77.7217],["2016-05",77.8659],["2016-06",77.938],["2016-07",78.2264],["2016-08",78.2264],["2016-09",78.4427],["2016-10",78.4427],["2016-11",78.5869],["2016-12",78.5869],["2017-01",78.5869],["2017-02",78.7311],["2017-03",78.7311],["2017-04",78.8753],["2017-05",78.8753],["2017-06",79.0195],["2017-07",79.1637],["2017-08",79.5242],["2017-09",79.6683],["2017-10",79.8125],["2017-11",79.8846],["2017-12",80.1009],["2018-01",80.5335],["2018-02",80.7498],["2018-03",80.8219],["2018-04",81.0382],["2018-05",81.1103],["2018-06",81.1824],["2018-07",81.3987],["2018-08",81.5429],["2018-09",81.5429],["2018-10",81.615],["2018-11",81.615],["2018-12",81.6871],["2019-01",82.1918],["2019-02",82.2639],["2019-03",82.2639],["2019-04",82.336],["2019-05",82.4081],["2019-06",82.4081],["2019-07",82.4081],["2019-08",82.4802],["2019-09",82.4802],["2019-10",82.4081],["2019-11",82.4081],["2019-12",82.5523],["2020-01",82.6965],["2020-02",82.6965],["2020-03",82.8407],["2020-04",82.7686],["2020-05",82.6965],["2020-06",82.6965],["2020-07",82.6965],["2020-08",82.7686],["2020-09",82.6965],["2020-10",82.6244],["2020-11",82.6244],["2020-12",82.9849],["2021-01",83.4895],["2021-02",83.6337],["2021-03",84.0663],["2021-04",84.7152],["2021-05",85.292],["2021-06",85.7967],["2021-07",86.013],["2021-08",86.5177],["2021-09",86.734],["2021-10",86.9503],["2021-11",87.3828],["2021-12",87.5991],["2022-01",88.3201],["2022-02",88.7527],["2022-03",89.6179],["2022-04",90.4831],["2022-05",90.9156],["2022-06",91.4203],["2022-07",91.8529],["2022-08",91.925],["2022-09",91.925],["2022-10",91.925],["2022-11",91.7808],["2022-12",91.7808],["2023-01",92.8623],["2023-02",92.7181],["2023-03",92.9344],["2023-04",93.2228],["2023-05",93.1507],["2023-06",93.4391],["2023-07",93.2228],["2023-08",93.2949],["2023-09",93.367],["2023-10",93.5112],["2023-11",93.5833],["2023-12",93.5833],["2024-01",93.8717],["2024-02",93.6554],["2024-03",93.8717],["2024-04",93.7996],["2024-05",94.2322],["2024-06",94.5926],["2024-07",94.9531],["2024-08",95.1694],["2024-09",95.5299],["2024-10",95.7462],["2024-11",96.0346],["2024-12",96.323],["2025-01",98.8464],["2025-02",99.279],["2025-03",99.6395],["2025-04",99.7837],["2025-05",99.9279],["2025-06",99.9279],["2025-07",100.0],["2025-08",100.4],["2025-09",100.4],["2025-10",100.5],["2025-11",101.1],["2025-12",101.2],["2026-01",101.3],["2026-02",101.5],["2026-03",101.7],["2026-04",102.8],["2026-05",103.4],["2026-06",103.6],["2026-07",103.5],["2026-08",103.9],["2026-09",104.0]]},"house":{"code":"40010","name":"Prices of Dwellings","m":"2026-07","v":590.0,"base":"Average 1993","mom":-0.6,"yoy":-1.8,"ytd":-1.7,"hist":[["2015-01",354.8],["2015-02",358.3],["2015-03",360.6],["2015-04",361.5],["2015-05",364.5],["2015-06",368.3],["2015-07",369.2],["2015-08",369.0],["2015-09",371.3],["2015-10",374.4],["2015-11",377.5],["2015-12",380.4],["2016-01",381.4],["2016-02",384.0],["2016-03",389.1],["2016-04",390.2],["2016-05",391.1],["2016-06",393.4],["2016-07",396.1],["2016-08",399.9],["2016-09",404.2],["2016-10",404.4],["2016-11",402.8],["2016-12",402.1],["2017-01",402.8],["2017-02",404.9],["2017-03",406.8],["2017-04",407.7],["2017-05",409.5],["2017-06",412.8],["2017-07",414.3],["2017-08",415.9],["2017-09",414.6],["2017-10",414.5],["2017-11",411.9],["2017-12",407.8],["2018-01",406.3],["2018-02",405.9],["2018-03",406.5],["2018-04",406.2],["2018-05",409.2],["2018-06",410.5],["2018-07",408.1],["2018-08",407.4],["2018-09",406.6],["2018-10",405.8],["2018-11",405.5],["2018-12",404.7],["2019-01",408.3],["2019-02",409.6],["2019-03",410.8],["2019-04",412.9],["2019-05",414.1],["2019-06",413.7],["2019-07",414.9],["2019-08",414.5],["2019-09",416.6],["2019-10",418.7],["2019-11",419.1],["2019-12",421.6],["2020-01",423.7],["2020-02",424.1],["2020-03",423.7],["2020-04",420.7],["2020-05",422.0],["2020-06",426.2],["2020-07",426.2],["2020-08",426.6],["2020-09",427.9],["2020-10",431.8],["2020-11",435.7],["2020-12",438.3],["2021-01",439.2],["2021-02",442.7],["2021-03",448.5],["2021-04",452.1],["2021-05",454.4],["2021-06",459.9],["2021-07",465.4],["2021-08",467.3],["2021-09",471.0],["2021-10",477.6],["2021-11",485.7],["2021-12",495.9],["2022-01",503.8],["2022-02",511.9],["2022-03",517.0],["2022-04",525.3],["2022-05",536.3],["2022-06",543.8],["2022-07",553.6],["2022-08",559.7],["2022-09",565.3],["2022-10",567.0],["2022-11",567.6],["2022-12",568.7],["2023-01",568.7],["2023-02",568.7],["2023-03",567.6],["2023-04",564.8],["2023-05",561.4],["2023-06",560.3],["2023-07",559.2],["2023-08",558.6],["2023-09",557.5],["2023-10",554.7],["2023-11",558.0],["2023-12",563.0],["2024-01",569.2],["2024-02",574.9],["2024-03",579.5],["2024-04",583.6],["2024-05",587.1],["2024-06",591.8],["2024-07",593.0],["2024-08",592.4],["2024-09",593.6],["2024-10",596.6],["2024-11",599.0],["2024-12",606.2],["2025-01",609.8],["2025-02",608.6],["2025-03",607.4],["2025-04",605.0],["2025-05",602.6],["2025-06",602.0],["2025-07",600.8],["2025-08",597.2],["2025-09",593.0],["2025-10",596.0],["2025-11",600.8],["2025-12",600.2],["2026-01",599.6],["2026-02",602.0],["2026-03",599.6],["2026-04",592.4],["2026-05",593.0],["2026-06",593.6],["2026-07",590.0]]}},"mkt":{"asOf":1792084253,"src":"cnbc","items":{"dji":{"n":"Dow Jones","sym":".DJI","p":52069.28,"pc":51621.48,"chp":0.87,"t":1792084253,"cur":"USD","rt":true,"a":{"y1":[1759636800,45479.6],"y5":[1633838400,35294.7561],"y10":[1479013200,18867.9348],"ye":[1766898000,48382.39]},"hAt":1792072902,"y1":14.49,"r5":8.06,"r10":10.77,"ytd":7.62},"ta35":{"n":"TA-35","sym":".TA35","p":4150.13,"pc":4162.77,"chp":-0.15,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3276.85],"y5":[1633838400,1848.07],"y10":[1479013200,1432.48],"ye":[1766898000,3695.29]},"hAt":1792072901,"y1":26.65,"r5":17.51,"r10":11.32,"ytd":12.31},"ta125":{"n":"TA-125","sym":".TA125","p":4017.15,"pc":4025.15,"chp":-0.07,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3358.13],"y5":[1633838400,1909.51],"y10":[1479013200,1251.26],"ye":[1766898000,3733.08]},"hAt":1792072901,"y1":19.62,"r5":15.99,"r10":12.48,"ytd":7.61},"spx":{"n":"S&P 500","sym":".SPX","p":7728.97,"pc":7718.94,"chp":0.13,"t":1792084253,"cur":"USD","rt":true,"a":{"y1":[1759636800,6552.51],"y5":[1633838400,4471.37],"y10":[1479013200,2181.9],"ye":[1766898000,6858.47]},"hAt":1792072901,"y1":17.95,"r5":11.53,"r10":13.6,"ytd":12.69},"ndx":{"n":"Nasdaq 100","sym":".NDX","p":29784.35,"pc":29950.816,"chp":-0.56,"t":1792084253,"cur":"USD","rt":true,"a":{"y1":[1759636800,24221.745],"y5":[1633838400,15146.921],"y10":[1479013200,4808.042],"ye":[1766898000,25206.168]},"hAt":1792072901,"y1":22.97,"r5":14.44,"r10":20.18,"ytd":18.16},"gold":{"n":"Gold","sym":"@GC.1","p":4168.1,"pc":4107.9,"chp":1.47,"t":1792083651,"cur":"USD","rt":false,"a":{"y1":[1759636800,4000.4],"y5":[1633838400,1768.3],"y10":[1479013200,1208.7],"ye":[1766898000,4329.6]},"hAt":1792072902,"y1":4.19,"r5":18.65,"r10":13.29,"ytd":-3.73},"brent":{"n":"Brent","sym":"@LCO.1","p":106.26,"pc":106.06,"chp":0.19,"t":1792083650,"cur":"USD","rt":false,"a":{"y1":[1759636800,62.73],"y5":[1633838400,84.86],"y10":[1479013200,46.86],"ye":[1766898000,60.75]},"hAt":1792072903,"y1":69.39,"r5":4.59,"r10":8.6,"ytd":74.91}}}};
 var IX = {idx: Object.assign({}, (IX_BUILT && IX_BUILT.idx) || {}), mkt: Object.assign({}, ((IX_BUILT && IX_BUILT.mkt) || {}).items || {}), src: 'built', at: 0};
 var IX_MK = ['ta35', 'ta125', 'spx', 'ndx', 'dji', 'gold', 'brent'], IX_RET = ['ta125', 'ta35', 'spx', 'ndx', 'dji', 'gold'];
 var IX_SYM = {ta35: '.TA35', ta125: '.TA125', spx: '.SPX', ndx: '.NDX', dji: '.DJI', gold: '@GC.1', brent: '@LCO.1'};
@@ -13256,6 +13536,927 @@ function rsDedupe(res){
 }
 const showRs = show;
 show = function(id, res){ return showRs.call(this, id, rsDedupe(res)); };
+
+
+/* ================= 7.5 ================= */
+
+/* ---------- tax figures in salary and income tax: automatic (official) or typed in by hand ---------- */
+var FIG_F = [['fPt', () => TAX.point / 12, x => { TAX.point = x * 12; }]]
+  .concat([0, 1, 2, 3, 4].map(i => ['fB' + (i + 1), () => TAX.brackets[i][0] / 12, x => { TAX.brackets[i][0] = x * 12; }]))
+  .concat(TAX.brackets.map((b, i) => ['fR' + (i + 1), () => TAX.brackets[i][1] * 100, x => { TAX.brackets[i][1] = x / 100; }]))
+  .concat([
+    ['fSur', () => TAX.surtaxFrom / 12, x => { TAX.surtaxFrom = x * 12; }], ['fSurR', () => TAX.surtaxRate * 100, x => { TAX.surtaxRate = x / 100; }],
+    ['fNiCut', () => TAX.niCut, x => { TAX.niCut = x; }], ['fNiMax', () => TAX.niMax, x => { TAX.niMax = x; }],
+    ['fNiL', () => TAX.niLow * 100, x => { TAX.niLow = x / 100; }], ['fNiH', () => TAX.niHigh * 100, x => { TAX.niHigh = x / 100; }],
+    ['fHL', () => TAX.hLow * 100, x => { TAX.hLow = x / 100; }], ['fHH', () => TAX.hHigh * 100, x => { TAX.hHigh = x / 100; }],
+    ['fPensCap', () => TAX.pensSalaryCap, x => { TAX.pensSalaryCap = x; }], ['fPensCr', () => TAX.pensCreditRate * 100, x => { TAX.pensCreditRate = x / 100; }]]);
+const figR4 = x => String(Math.round(x * 10000) / 10000);
+function figSync(p, manual){
+  FIG_F.forEach(([k, get]) => {
+    const el = document.getElementById(p + '_' + k); if (!el) return;
+    el.disabled = !manual;
+    if (!manual && document.activeElement !== el){ const v = figR4(get()); if (el.value !== v) el.value = v; }
+    const f = el.closest('.field'); if (f) f.classList.toggle('fig-off', !manual);
+  });
+}
+function figRun(p, fn){
+  const manual = (document.getElementById(p + '_fig') || {}).value === 'manual';
+  figSync(p, manual);
+  if (!manual) return fn();
+  const keep = Object.assign({}, TAX, {brackets: TAX.brackets.map(x => x.slice())});
+  try {
+    FIG_F.forEach(([k, , set]) => { const el = document.getElementById(p + '_' + k); const x = el ? parseFloat(el.value) : NaN; if (isFinite(x) && x >= 0) set(x); });
+    let bad = false; for (let i = 1; i < 5; i++) if (!(TAX.brackets[i][0] > TAX.brackets[i - 1][0])) bad = true;
+    const r = fn();
+    if (r) r.warn = (r.warn || []).concat([t('w_figManual')]).concat(bad ? [t('w_figOrder')] : []);
+    return r;
+  } finally { Object.keys(keep).forEach(k => { TAX[k] = keep[k]; }); }
+}
+['salary', 'tax'].forEach(id => { const f = CALC[id]; if (typeof f === 'function') CALC[id] = () => figRun(id === 'salary' ? 's' : 't', f); });
+
+/* ---------- market data: automatic (live) or manual (only when you tap refresh) ---------- */
+var MKT_FORCE = false;
+const mktHold = () => SET.mktLive === '0' && !MKT_FORCE;
+const fxTick75 = fxTick;
+fxTick = async function(){ if (mktHold()){ fxTimer = null; fxStatus('fx_paused'); return; } return fxTick75.apply(this, arguments); };
+const binTick75 = binTick;
+binTick = async function(){ if (mktHold()){ binTimer = null; SRC_ST.binance = 'off'; return; } return binTick75.apply(this, arguments); };
+const ixLiveTick75 = ixLiveTick;
+ixLiveTick = async function(force){ if (mktHold() && !force){ clearTimeout(IXL.timer); IXL.timer = null; return false; } return ixLiveTick75.apply(this, arguments); };
+const tryLiveCrypto75 = tryLiveCrypto;
+tryLiveCrypto = async function(){ if (mktHold()) return false; return tryLiveCrypto75.apply(this, arguments); };
+const fxApplySnap75 = fxApplySnap;
+fxApplySnap = function(){ if (mktHold()) return false; return fxApplySnap75.apply(this, arguments); };
+const ixApply75 = ixApply;
+ixApply = function(d){ if (mktHold() && d && d.mkt) d = Object.assign({}, d, {mkt: null}); return ixApply75.call(this, d, arguments[1]); };
+const refreshEverything75 = refreshEverything;
+refreshEverything = async function(manual){
+  if (SET.mktLive === '0' && !manual){ try { await rfOfficial(); } catch (e) {} return false; }
+  MKT_FORCE = SET.mktLive === '0';
+  try { return await refreshEverything75.apply(this, arguments); } finally { MKT_FORCE = false; }
+};
+function mktApply(quiet){
+  if (SET.mktLive === '0'){
+    if (fxTimer){ clearTimeout(fxTimer); fxTimer = null; } if (binTimer){ clearTimeout(binTimer); binTimer = null; }
+    clearTimeout(IXL.timer); IXL.timer = null; fxStatus('fx_paused');
+  } else { try { fxStart(); binStart(); ixLiveTick(); } catch (e) {} }
+  const s = $('#set_mktLive'); if (s) s.value = SET.mktLive || '1';
+  try { if (tab === 'home') renderMarket(); } catch (e) {}
+  if (!quiet) toast(t(SET.mktLive === '0' ? 'mk_offDone' : 'mk_onDone'));
+}
+document.addEventListener('change', e => { if (e.target && e.target.id === 'set_mktLive'){ SET.mktLive = e.target.value === '0' ? '0' : '1'; saveSet(); mktApply(); } });
+const ixBoard75 = ixBoard;
+ixBoard = function(){
+  const r = ixBoard75.apply(this, arguments);
+  const ext = $('#hmx'); if (!ext) return r;
+  const off = SET.mktLive === '0';
+  if (off) $$('.ix-g .lv-pill', ext).forEach(p => p.remove());
+  const g = $$('.ix-g', ext)[1];
+  if (g && !$('.mk-mode', g)) g.insertAdjacentHTML('beforeend', ` <button type="button" class="mk-mode${off ? ' off' : ''}" id="mkt_tog" aria-pressed="${!off}">${asEsc(t(off ? 'mk_isOff' : 'mk_isOn'))}</button>`);
+  return r;
+};
+document.addEventListener('click', e => { if (e.target.closest('#mkt_tog')){ SET.mktLive = SET.mktLive === '0' ? '1' : '0'; saveSet(); mktApply(); } });
+if (SET.mktLive === '0') mktApply(true);
+
+/* ---------- every Jewish and Christian holiday has its own theme ---------- */
+const HOL_NEW = {
+  yomkippur: mkSkin({group:'j', mode:'light', bg:'#F4F6FA', surface:'#FFFFFF', ink:'#1A2233', ink2:'#5E6B80', line:'rgba(26,34,51,.12)', navy:'#2B3A55', onNavy:'#F4F7FC', onNavy2:'#C2CCDD', acc:'#C9D4E8', accText:'#2F4A7A', heroVal:'#2F4A7A', heroTint:'rgba(47,74,122,.10)', heroBd:'rgba(47,74,122,.26)', c:['#2F4A7A','#8A9BB8','#C8A24A','#5E8C7A'],
+    rail:'linear-gradient(180deg,#33456A,#222F48)', hh:'radial-gradient(160px 120px at 82% 18%,rgba(255,255,255,.95),transparent 70%),linear-gradient(135deg,#FFFFFF,#E3E9F3 60%,#CBD6E8)', hhBd:'rgba(47,74,122,.28)', hhL:'#3A4A66', hhV:'#22345A', hhS:'#5E6B80', bottom:'rgba(34,47,72,.94)', body:'radial-gradient(1000px 520px at 85% -10%,rgba(201,212,232,.55),transparent 60%),#F4F6FA'}),
+  sukkot: mkSkin({group:'j', mode:'light', bg:'#F3F6E8', surface:'#FFFFFF', ink:'#1F2A12', ink2:'#5D6A48', line:'rgba(31,42,18,.13)', navy:'#2F5A1E', onNavy:'#F1F8E6', onNavy2:'#BFD6A6', acc:'#E8C547', accText:'#3E7A22', heroVal:'#3E7A22', heroTint:'rgba(62,122,34,.12)', heroBd:'rgba(62,122,34,.30)', c:['#3E7A22','#D9A82B','#8C5A2B','#2E7FA0'],
+    rail:'linear-gradient(180deg,#3B6B26,#244516)', hh:'repeating-linear-gradient(100deg,rgba(40,70,20,.22) 0 3px,transparent 3px 15px),radial-gradient(70px 70px at 84% 26%,rgba(255,226,92,.75),transparent 70%),linear-gradient(135deg,#7DB247,#3E7A22 55%,#2A5617)', hhBd:'rgba(232,197,71,.55)', hhL:'#EAF5D8', hhV:'#FFF0A6', hhS:'#CFE5B0', bottom:'rgba(36,69,22,.94)', body:'radial-gradient(1000px 520px at 85% -10%,rgba(232,197,71,.18),transparent 60%),#F3F6E8'}),
+  simchattorah: mkSkin({group:'j', mode:'dark', bg:'#0B1636', surface:'#13214A', field:'#0F1B40', ink:'#F1F5FF', ink2:'#A8B6DA', line:'rgba(241,245,255,.10)', navy:'#070F28', onNavy:'#F1F5FF', onNavy2:'#A8B6DA', acc:'#FFD166', heroVal:'#FFD166', heroTint:'rgba(255,209,102,.16)', heroBd:'rgba(255,209,102,.38)', c:['#FFD166','#5DADEC','#EF6F6C','#7BD389'],
+    rail:'linear-gradient(180deg,#10204D,#070F28)', hh:'linear-gradient(115deg,transparent 0 62%,rgba(255,209,102,.30) 62% 66%,transparent 66% 72%,rgba(93,173,236,.30) 72% 76%,transparent 76%),radial-gradient(circle at 20% 30%,#FFD166 0 2px,transparent 2.6px),radial-gradient(circle at 44% 70%,#EF6F6C 0 2px,transparent 2.6px),linear-gradient(135deg,#2449A8,#16307A 55%,#0E1F55)', hhBd:'rgba(255,209,102,.5)', hhL:'#D6E2FF', hhV:'#FFE29A', hhS:'#AFC1EA', bottom:'rgba(7,15,40,.93)', body:'radial-gradient(900px 480px at 50% -10%,rgba(255,209,102,.12),transparent 60%),#0B1636'}),
+  tubishvat: mkSkin({group:'j', mode:'light', bg:'#F6F3EE', surface:'#FFFFFF', ink:'#2A2218', ink2:'#6B6152', line:'rgba(42,34,24,.12)', navy:'#4E6B2E', onNavy:'#F3F8EA', onNavy2:'#C8D9AE', acc:'#F2B8C6', accText:'#5B7F2E', heroVal:'#5B7F2E', heroTint:'rgba(229,143,166,.16)', heroBd:'rgba(91,127,46,.30)', c:['#5B7F2E','#E58FA6','#B07A3B','#3F8FA6'],
+    rail:'linear-gradient(180deg,#5A7A36,#3E5622)', hh:'radial-gradient(circle at 18% 30%,#fff 0 3px,transparent 3.6px),radial-gradient(circle at 34% 64%,#fff 0 2.4px,transparent 3px),radial-gradient(circle at 70% 24%,#fff 0 2.8px,transparent 3.4px),radial-gradient(circle at 86% 60%,#fff 0 2.2px,transparent 2.8px),linear-gradient(135deg,#FCE4EA,#F6C9D4 50%,#E8A9B9)', hhBd:'rgba(91,127,46,.35)', hhL:'#6A3A4A', hhV:'#4E6B2E', hhS:'#7A5060', bottom:'rgba(62,86,34,.94)', body:'radial-gradient(1000px 520px at 85% -10%,rgba(242,184,198,.30),transparent 60%),#F6F3EE'}),
+  purim: mkSkin({group:'j', mode:'dark', bg:'#1A0F2E', surface:'#261843', field:'#20133A', ink:'#FFF4FB', ink2:'#C9B6E3', line:'rgba(255,244,251,.10)', navy:'#110A20', onNavy:'#FFF4FB', onNavy2:'#C9B6E3', acc:'#FF9F43', heroVal:'#FFC857', heroTint:'rgba(255,159,67,.18)', heroBd:'rgba(255,200,87,.40)', c:['#FFC857','#FF5C8A','#5CE1E6','#9BE15D'],
+    rail:'linear-gradient(180deg,#22143B,#110A20)', hh:'radial-gradient(circle at 12% 22%,#FFC857 0 2.4px,transparent 3px),radial-gradient(circle at 28% 74%,#5CE1E6 0 2.4px,transparent 3px),radial-gradient(circle at 48% 30%,#9BE15D 0 2px,transparent 2.6px),radial-gradient(circle at 66% 66%,#FFF 0 2px,transparent 2.6px),radial-gradient(circle at 88% 28%,#FF5C8A 0 2.6px,transparent 3.2px),linear-gradient(135deg,#7B2FF7,#C2185B 60%,#FF6F00)', hhBd:'rgba(255,200,87,.55)', hhL:'#FFE3F1', hhV:'#FFE29A', hhS:'#F4C6E0', bottom:'rgba(17,10,32,.93)', body:'radial-gradient(rgba(255,200,87,.10) 1.5px,transparent 2px) 0 0/30px 30px,radial-gradient(900px 480px at 80% -10%,rgba(194,24,91,.18),transparent 60%),#1A0F2E'}),
+  atzmaut: mkSkin({group:'j', mode:'light', bg:'#EEF4FF', surface:'#FFFFFF', ink:'#0E1F45', ink2:'#4A5B80', line:'rgba(14,31,69,.12)', navy:'#0038B8', onNavy:'#FFFFFF', onNavy2:'#C6D6FF', acc:'#8FB4FF', accText:'#0038B8', heroVal:'#0038B8', heroTint:'rgba(0,56,184,.10)', heroBd:'rgba(0,56,184,.30)', c:['#0038B8','#4C8DFF','#F2B33D','#2EAD7A'],
+    rail:'linear-gradient(180deg,#0A45C8,#002B8F)', hh:'linear-gradient(180deg,#FFFFFF 0 14%,#0038B8 14% 22%,#FFFFFF 22% 78%,#0038B8 78% 86%,#FFFFFF 86%)', hhBd:'rgba(0,56,184,.35)', hhL:'#22408A', hhV:'#0038B8', hhS:'#4A5B80', bottom:'rgba(0,43,143,.94)', body:'radial-gradient(1000px 520px at 85% -10%,rgba(76,141,255,.16),transparent 60%),#EEF4FF'}),
+  lagbaomer: mkSkin({group:'j', mode:'dark', bg:'#140A06', surface:'#22120A', field:'#1B0E08', ink:'#FFF3E8', ink2:'#D7B49A', line:'rgba(255,243,232,.10)', navy:'#0D0603', onNavy:'#FFF3E8', onNavy2:'#D7B49A', acc:'#FF8A3D', heroVal:'#FFB347', heroTint:'rgba(255,138,61,.20)', heroBd:'rgba(255,138,61,.40)', c:['#FF8A3D','#FFD166','#E4572E','#7CC6FE'],
+    rail:'linear-gradient(180deg,#24120A,#0D0603)', hh:'radial-gradient(150px 120px at 50% 118%,rgba(255,170,60,.85),transparent 70%),radial-gradient(90px 80px at 50% 100%,rgba(255,230,120,.7),transparent 70%),linear-gradient(160deg,#3A1A0C,#1F0E06)', hhBd:'rgba(255,138,61,.5)', hhL:'#FFD9BF', hhV:'#FFE0A3', hhS:'#E8B898', bottom:'rgba(13,6,3,.93)', body:'radial-gradient(800px 420px at 50% 110%,rgba(255,138,61,.16),transparent 60%),#140A06'}),
+  yomyerushalayim: mkSkin({group:'j', mode:'light', bg:'#F6EFE2', surface:'#FFFDF8', ink:'#2E2414', ink2:'#6E5F45', line:'rgba(46,36,20,.13)', navy:'#6B5226', onNavy:'#FBF4E6', onNavy2:'#E0CDA6', acc:'#D9B26A', accText:'#8A6420', heroVal:'#8A6420', heroTint:'rgba(217,178,106,.18)', heroBd:'rgba(138,100,32,.30)', c:['#8A6420','#2F6E9E','#B5523B','#5E8C4A'],
+    rail:'linear-gradient(180deg,#7A5E2C,#55401C)', hh:'linear-gradient(0deg,rgba(120,90,40,.16) 1px,transparent 1px) 0 0/100% 18px,linear-gradient(90deg,rgba(120,90,40,.12) 1px,transparent 1px) 0 0/36px 18px,radial-gradient(120px 80px at 84% 20%,rgba(255,236,190,.9),transparent 70%),linear-gradient(135deg,#F3E2BE,#E2C68E)', hhBd:'rgba(138,100,32,.35)', hhL:'#6E5022', hhV:'#5A3E12', hhS:'#7A6440', bottom:'rgba(85,64,28,.94)', body:'radial-gradient(1000px 520px at 85% -10%,rgba(217,178,106,.22),transparent 60%),#F6EFE2'}),
+  shavuot: mkSkin({group:'j', mode:'light', bg:'#F7F5EA', surface:'#FFFFFF', ink:'#262414', ink2:'#6A6650', line:'rgba(38,36,20,.12)', navy:'#3F6B3A', onNavy:'#F4FAEE', onNavy2:'#C3D9B6', acc:'#F0C75E', accText:'#4D7A2E', heroVal:'#4D7A2E', heroTint:'rgba(240,199,94,.18)', heroBd:'rgba(77,122,46,.30)', c:['#4D7A2E','#E0A93A','#E07A8F','#4A8FC2'],
+    rail:'linear-gradient(180deg,#4A7A44,#2F5229)', hh:'repeating-linear-gradient(75deg,rgba(190,140,40,.22) 0 2px,transparent 2px 12px),radial-gradient(circle at 80% 30%,#F59AB0 0 5px,transparent 5.6px),radial-gradient(circle at 90% 62%,#FFFFFF 0 4px,transparent 4.6px),linear-gradient(135deg,#FFF7D6,#F3E3A1 55%,#E7CC72)', hhBd:'rgba(77,122,46,.35)', hhL:'#6A5520', hhV:'#3F6B3A', hhS:'#7A6830', bottom:'rgba(47,82,41,.94)', body:'radial-gradient(1000px 520px at 85% -10%,rgba(240,199,94,.20),transparent 60%),#F7F5EA'}),
+  tubeav: mkSkin({group:'j', mode:'dark', bg:'#1E0E18', surface:'#2D1524', field:'#25111E', ink:'#FFF0F6', ink2:'#DDB0C4', line:'rgba(255,240,246,.10)', navy:'#150910', onNavy:'#FFF0F6', onNavy2:'#DDB0C4', acc:'#FF7AA8', heroVal:'#FFB3CF', heroTint:'rgba(255,122,168,.18)', heroBd:'rgba(255,122,168,.40)', c:['#FF7AA8','#F5F0E6','#C77DFF','#FFD27A'],
+    rail:'linear-gradient(180deg,#2A1220,#150910)', hh:'radial-gradient(circle at 80% 26%,rgba(255,255,255,.9) 0 10px,transparent 10.6px),radial-gradient(160px 110px at 18% 100%,rgba(255,122,168,.45),transparent 70%),linear-gradient(135deg,#B8326A,#7A1C46 55%,#3E0C24)', hhBd:'rgba(255,179,207,.5)', hhL:'#FFD3E4', hhV:'#FFFFFF', hhS:'#F0B7CD', bottom:'rgba(21,9,16,.93)', body:'radial-gradient(900px 480px at 80% -10%,rgba(255,122,168,.16),transparent 60%),#1E0E18'}),
+  advent: mkSkin({group:'c', mode:'dark', bg:'#140C22', surface:'#201335', field:'#1A0F2C', ink:'#F6F0FF', ink2:'#B9A9D6', line:'rgba(246,240,255,.10)', navy:'#0D0718', onNavy:'#F6F0FF', onNavy2:'#B9A9D6', acc:'#C9A3FF', heroVal:'#FFD27A', heroTint:'rgba(201,163,255,.18)', heroBd:'rgba(201,163,255,.38)', c:['#C9A3FF','#FFD27A','#E8798B','#7FD1B9'],
+    rail:'linear-gradient(180deg,#1E1233,#0D0718)', hh:[20, 40, 60, 80].map(x => 'radial-gradient(7px 12px at ' + x + '% 80%,rgba(255,214,130,.95),transparent 75%)').join(',') + ',linear-gradient(135deg,#4B2A7A,#2E1A50 55%,#1C1033)', hhBd:'rgba(201,163,255,.45)', hhL:'#E6D8FF', hhV:'#FFE3A6', hhS:'#C8B6E8', bottom:'rgba(13,7,24,.93)', body:'radial-gradient(900px 480px at 50% -10%,rgba(201,163,255,.14),transparent 60%),#140C22'}),
+  epiphany: mkSkin({group:'c', mode:'dark', bg:'#0A1024', surface:'#121B3A', field:'#0E1630', ink:'#F3F5FF', ink2:'#A7B0D6', line:'rgba(243,245,255,.10)', navy:'#060B1A', onNavy:'#F3F5FF', onNavy2:'#A7B0D6', acc:'#F4C95D', heroVal:'#F4C95D', heroTint:'rgba(244,201,93,.16)', heroBd:'rgba(244,201,93,.38)', c:['#F4C95D','#9AB6FF','#E07A5F','#81C995'],
+    rail:'linear-gradient(180deg,#101A3A,#060B1A)', hh:'radial-gradient(circle at 82% 22%,#FFF6D6 0 4px,rgba(244,201,93,.6) 5px,transparent 26px),linear-gradient(118deg,transparent 0 60%,rgba(244,201,93,.18) 60% 63%,transparent 63%),linear-gradient(160deg,#1E2C66,#101A40)', hhBd:'rgba(244,201,93,.5)', hhL:'#D2DAFF', hhV:'#FFE29A', hhS:'#AFB8E0', bottom:'rgba(6,11,26,.93)', body:'radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px) 0 0/30px 30px,#0A1024'}),
+  valentine: mkSkin({group:'c', mode:'light', bg:'#FFF1F4', surface:'#FFFFFF', ink:'#3A1020', ink2:'#7E5363', line:'rgba(58,16,32,.12)', navy:'#A0123E', onNavy:'#FFF0F4', onNavy2:'#F6BCCB', acc:'#FF8FAB', accText:'#C2185B', heroVal:'#C2185B', heroTint:'rgba(194,24,91,.10)', heroBd:'rgba(194,24,91,.28)', c:['#C2185B','#FF8FAB','#7B2D8E','#F2A541'],
+    rail:'linear-gradient(180deg,#B3164A,#8A0F35)', hh:'radial-gradient(circle at 84% 24%,rgba(255,255,255,.85) 0 9px,transparent 9.6px),linear-gradient(135deg,#FFD1DC,#FF9EB5 55%,#F06292)', hhBd:'rgba(194,24,91,.35)', hhL:'#7A1236', hhV:'#5E0A28', hhS:'#8A3A55', bottom:'rgba(138,15,53,.94)', body:'radial-gradient(1000px 520px at 85% -10%,rgba(255,143,171,.22),transparent 60%),#FFF1F4'}),
+  palmsunday: mkSkin({group:'c', mode:'light', bg:'#EFF6EC', surface:'#FFFFFF', ink:'#17301C', ink2:'#4F6A55', line:'rgba(23,48,28,.12)', navy:'#1F5A35', onNavy:'#F0F9F2', onNavy2:'#B5D8BE', acc:'#9CCC65', accText:'#2E7D32', heroVal:'#2E7D32', heroTint:'rgba(46,125,50,.12)', heroBd:'rgba(46,125,50,.30)', c:['#2E7D32','#C0A050','#5C8DBF','#B45F4A'],
+    rail:'linear-gradient(180deg,#24683D,#16452A)', hh:'repeating-linear-gradient(60deg,rgba(255,255,255,.14) 0 2px,transparent 2px 10px),repeating-linear-gradient(-60deg,rgba(255,255,255,.10) 0 2px,transparent 2px 10px),linear-gradient(135deg,#7CC47F,#43A047 55%,#2E7D32)', hhBd:'rgba(46,125,50,.40)', hhL:'#F1FAEE', hhV:'#FFFFFF', hhS:'#E3F2DD', bottom:'rgba(22,69,42,.94)', body:'radial-gradient(1000px 520px at 85% -10%,rgba(156,204,101,.22),transparent 60%),#EFF6EC'}),
+  ascension: mkSkin({group:'c', mode:'light', bg:'#EEF6FD', surface:'#FFFFFF', ink:'#102A43', ink2:'#4B637A', line:'rgba(16,42,67,.12)', navy:'#1E4E79', onNavy:'#F0F7FE', onNavy2:'#B8D3EC', acc:'#FFD27A', accText:'#1F6FB2', heroVal:'#1F6FB2', heroTint:'rgba(31,111,178,.10)', heroBd:'rgba(31,111,178,.28)', c:['#1F6FB2','#E8B04A','#69B7A8','#B47EDE'],
+    rail:'linear-gradient(180deg,#245C8E,#173F63)', hh:'radial-gradient(110px 46px at 22% 70%,rgba(255,255,255,.9),transparent 70%),radial-gradient(90px 40px at 60% 82%,rgba(255,255,255,.8),transparent 70%),radial-gradient(120px 120px at 84% 10%,rgba(255,225,150,.9),transparent 70%),linear-gradient(180deg,#BFE3FF,#8CC8F5 60%,#5FA8E0)', hhBd:'rgba(31,111,178,.35)', hhL:'#0F3A63', hhV:'#0B2E52', hhS:'#24527E', bottom:'rgba(23,63,99,.94)', body:'radial-gradient(1000px 520px at 85% -10%,rgba(255,210,122,.20),transparent 60%),#EEF6FD'}),
+  pentecost: mkSkin({group:'c', mode:'dark', bg:'#1C0808', surface:'#2B0F0F', field:'#230B0B', ink:'#FFF2EC', ink2:'#D9AFA2', line:'rgba(255,242,236,.10)', navy:'#120404', onNavy:'#FFF2EC', onNavy2:'#D9AFA2', acc:'#FF6B3D', heroVal:'#FFB15C', heroTint:'rgba(255,107,61,.18)', heroBd:'rgba(255,107,61,.40)', c:['#FF6B3D','#FFD166','#F25C78','#6CC4E8'],
+    rail:'linear-gradient(180deg,#2A0C0C,#120404)', hh:[16, 38, 60, 82].map(x => 'radial-gradient(9px 18px at ' + x + '% 34%,rgba(255,190,90,.95),transparent 75%)').join(',') + ',linear-gradient(160deg,#C0392B,#7B1E1E 55%,#3A0B0B)', hhBd:'rgba(255,177,92,.5)', hhL:'#FFD8C8', hhV:'#FFE0A6', hhS:'#EDB8A6', bottom:'rgba(18,4,4,.93)', body:'radial-gradient(900px 480px at 50% -10%,rgba(255,107,61,.14),transparent 60%),#1C0808'}),
+  assumption: mkSkin({group:'c', mode:'light', bg:'#F0F5FC', surface:'#FFFFFF', ink:'#14254A', ink2:'#55678C', line:'rgba(20,37,74,.12)', navy:'#2A4C8C', onNavy:'#F2F6FD', onNavy2:'#BFD0EE', acc:'#9EC1F0', accText:'#2A5DB0', heroVal:'#2A5DB0', heroTint:'rgba(42,93,176,.10)', heroBd:'rgba(42,93,176,.28)', c:['#2A5DB0','#D4AF37','#7FB3D5','#C06C84'],
+    rail:'linear-gradient(180deg,#30569C,#1F3C70)', hh:'radial-gradient(130px 110px at 80% 20%,rgba(255,255,255,.95),transparent 70%),radial-gradient(circle at 80% 20%,transparent 0 40px,rgba(212,175,55,.35) 41px 43px,transparent 44px),linear-gradient(135deg,#DCE9FA,#B3CDF2 55%,#86AEE6)', hhBd:'rgba(42,93,176,.35)', hhL:'#1E3B70', hhV:'#14305E', hhS:'#3A5684', bottom:'rgba(31,60,112,.94)', body:'radial-gradient(1000px 520px at 85% -10%,rgba(158,193,240,.30),transparent 60%),#F0F5FC'}),
+  allsaints: mkSkin({group:'c', mode:'dark', bg:'#160F14', surface:'#241820', field:'#1D131A', ink:'#FBF2EA', ink2:'#C7B0A4', line:'rgba(251,242,234,.10)', navy:'#0E090C', onNavy:'#FBF2EA', onNavy2:'#C7B0A4', acc:'#E9A84B', heroVal:'#F2C46B', heroTint:'rgba(233,168,75,.18)', heroBd:'rgba(233,168,75,.38)', c:['#E9A84B','#B784C9','#E06C5A','#7FBFA0'],
+    rail:'linear-gradient(180deg,#22161E,#0E090C)', hh:CANDLES + ',linear-gradient(160deg,#4A2638,#2A1520)', hhBd:'rgba(233,168,75,.5)', hhL:'#F0D9CB', hhV:'#FFE0A6', hhS:'#D4B8AA', bottom:'rgba(14,9,12,.93)', body:'radial-gradient(900px 480px at 50% -10%,rgba(233,168,75,.12),transparent 60%),#160F14'})
+};
+Object.assign(SKINS, HOL_NEW);
+['yomkippur', 'sukkot', 'simchattorah', 'tubishvat', 'purim', 'atzmaut', 'lagbaomer', 'yomyerushalayim', 'shavuot', 'tubeav'].forEach(k => { if (!SKIN_HOL.j.includes(k)) SKIN_HOL.j.push(k); });
+['advent', 'epiphany', 'valentine', 'palmsunday', 'ascension', 'pentecost', 'assumption', 'allsaints'].forEach(k => { if (!SKIN_HOL.c.includes(k)) SKIN_HOL.c.push(k); });
+(function(){
+  let css = ''; for (const k in HOL_NEW){ css += ':root[data-skin="' + k + '"]{' + Object.entries(HOL_NEW[k].t).map(([p, v]) => p + ':' + v).join(';') + '}\n'; }
+  const st = document.createElement('style'); st.id = 'skin-css-75'; st.textContent = css; document.head.appendChild(st);
+})();
+const holidayNow75 = holidayNow;
+holidayNow = function(d){
+  const pick = SET.holAuto; if (!pick || pick === '0') return '';
+  d = d || new Date();
+  const on = g => pick === 'all' || pick === g, he = holHeb(d), mo = d.getMonth() + 1, da = d.getDate(), y = d.getFullYear();
+  const inH = segs => he && segs.some(([m, a, b]) => he[0] === m && he[1] >= a && he[1] <= b);
+  const day = new Date(y, mo - 1, da), off = (e, a, b) => { const x = Math.round((day - new Date(e.getFullYear(), e.getMonth(), e.getDate())) / 864e5); return x >= a && x <= b; };
+  if (on('jewish')){
+    if (inH([['Tishri', 9, 10]])) return 'yomkippur';
+    if (inH([['Tishri', 14, 21]])) return 'sukkot';
+    if (inH([['Tishri', 22, 23]])) return 'simchattorah';
+    if (inH([['Shevat', 13, 15]])) return 'tubishvat';
+    if (inH([['Adar', 11, 15], ['Adar II', 11, 15]])) return 'purim';
+    if (inH([['Iyar', 3, 6]])) return 'atzmaut';
+    if (inH([['Iyar', 17, 18]])) return 'lagbaomer';
+    if (inH([['Iyar', 27, 28]])) return 'yomyerushalayim';
+    if (inH([['Sivan', 4, 7]])) return 'shavuot';
+    if (inH([['Av', 14, 15]])) return 'tubeav';
+  }
+  if (on('christian')){
+    const ew = easterW(y), eo = easterO(y);
+    const adv = (() => { const c = new Date(y, 11, 25); const s = new Date(c); s.setDate(c.getDate() - ((c.getDay() + 7) % 7 || 7) - 21); return s; })();
+    if (mo === 1 && da === 6) return 'epiphany';
+    if (mo === 2 && (da === 13 || da === 14)) return 'valentine';
+    if (off(ew, -7, -6) || off(eo, -7, -6)) return 'palmsunday';
+    if (off(ew, 39, 40)) return 'ascension';
+    if (off(ew, 49, 50)) return 'pentecost';
+    if (mo === 8 && (da === 14 || da === 15)) return 'assumption';
+    if ((mo === 10 && da === 31) || (mo === 11 && da <= 2)) return 'allsaints';
+    if (day >= adv && mo === 12 && da <= 9) return 'advent';
+    if (mo === 11 && day >= adv) return 'advent';
+  }
+  return holidayNow75.apply(this, arguments);
+};
+try { applyTheme(); skRender(); } catch (e) {}
+
+/* ---------- AI: free questions go to outside AI models that need no account; exact things stay in the app ---------- */
+Object.assign(XAI, {
+  claude: {n: 'Claude', max: 1500, u: q => 'https://claude.ai/new?q=' + encodeURIComponent(q)},
+  grok: {n: 'Grok', max: 1100, u: q => 'https://grok.com/?q=' + encodeURIComponent(q)},
+  lechat: {n: 'Le Chat', max: 1100, u: q => 'https://chat.mistral.ai/chat?q=' + encodeURIComponent(q)},
+  you: {n: 'You.com', max: 600, u: q => 'https://you.com/search?tbm=youchat&q=' + encodeURIComponent(q)}
+});
+var XAI_ORDER = ['chatgpt', 'claude', 'perplexity', 'copilot', 'googleai', 'grok', 'lechat', 'duck', 'you'];
+xaiEngine = function(){ const e = SET.aiEngine; return XAI[e] ? e : 'chatgpt'; };
+xaiOpts = function(){ return XAI_ORDER.filter(k => XAI[k]).map(k => `<option value="${k}"${xaiEngine() === k ? ' selected' : ''}>${asEsc(XAI[k].n)}</option>`).join(''); };
+xaiRow = function(q, id){
+  const P = k => XAI[k].u(xaiPrompt(k, q, id).short);
+  return `<div class="xai-row"><span>${asEsc(t('xai_more'))}</span>${XAI_ORDER.filter(k => XAI[k]).map(k => `<a class="xai-b" href="${asEsc(P(k))}" target="_blank" rel="noopener noreferrer" data-xai="${k}" data-q="${asEsc(q)}">${asEsc(XAI[k].n)} ↗</a>`).join('')}</div>`;
+};
+/* in-app answers only for what the app knows exactly: calculations, live figures, your own results, which calculator fits */
+pmLocalSync = function(raw, screen){
+  raw = String(raw || '').trim(); if (!raw) return null;
+  const n = pmNorm(raw), def = pmIsDef(raw), hasNum = /\d/.test(raw);
+  if (PM_RX.thanks.test(n) && n.trim().split(' ').length <= 4) return t('pm_thanks');
+  if (PM_RX.greet.test(n) && n.trim().split(' ').length <= 3) return t('xai_hello');
+  PMX.fu = false;
+  if (!def || hasNum) for (const sk of PM_SKILLS){ try { const a = sk(n, raw); if (a) return a; } catch (e) {} }
+  if (/^\s*(ו|ומה|ואם|ואז|אז|and|what if|what about|و)/i.test(raw) || raw.split(/\s+/).length <= 4){
+    PMX.fu = true;
+    try { for (const sk of PM_SKILLS.filter(f => f.name === 'loan' || f.name === 'grow')){ const a = sk(n, raw); if (a){ PMX.fu = false; return a; } } } catch (e) {}
+    PMX.fu = false;
+  }
+  if (PM_RX.res.test(n) && (screen || PM_LASTCALC) && !def) return pmResults(screen && !['home', 'settings', 'assist', 'saved'].includes(screen) ? screen : PM_LASTCALC);
+  if (pmWantsCalc(raw)){ const cs = pmCalcs(raw).slice(0, 3); if (cs.length) return t('pm_calcFit') + '\n' + cs.map(id => '[[' + id + ']] ' + t('d_' + id)).join('\n'); }
+  return null;
+};
+const aiAsk75 = aiAsk;
+aiAsk = async function(q, kind){
+  if (kind === 'explain' || kind === 'improve'){
+    q = String(q || '').trim(); if (!q || AIX.busy) return;
+    const eng = xaiEngine(), id = tab;
+    aiLog('user', q);
+    const ask = (kind === 'explain' ? t('xai_askExplain') : t('xai_askImprove')) + ' ' + t('tab_' + id);
+    const url = xaiOpen(eng, ask, id);
+    aiLog('ai', '', `<p>${asEsc(t('xai_opened', {n: XAI[eng].n}))}</p><p class="fine">${asEsc(t('xai_sentCtx'))}</p><p><a class="xai-b" href="${asEsc(url)}" target="_blank" rel="noopener noreferrer">${asEsc(t('xai_openIn', {n: XAI[eng].n}))} ↗</a></p>` + xaiRow(ask, id));
+    return;
+  }
+  return aiAsk75.apply(this, arguments);
+};
+const pmLinkify75 = pmLinkify;
+pmLinkify = function(h){
+  return pmLinkify75(h).replace(/(https:\/\/(?:claude\.ai\/new|grok\.com\/|chat\.mistral\.ai\/chat|you\.com\/search)[^\s<"]*)/g, u => {
+    const k = /claude/.test(u) ? 'claude' : /grok/.test(u) ? 'grok' : /mistral/.test(u) ? 'lechat' : 'you';
+    return `<a class="xai-b" href="${u}" target="_blank" rel="noopener noreferrer">${asEsc(t('xai_openIn', {n: XAI[k].n}))} ↗</a>`;
+  });
+};
+const engRender75 = engRender;
+engRender = function(){ const r = engRender75.apply(this, arguments); const s = $('#set_aiEngine'); if (s){ s.innerHTML = xaiOpts(); } return r; };
+try { if (!XAI[SET.aiEngine]){ SET.aiEngine = 'chatgpt'; saveSet(); } engRender(); aiEngSync(); } catch (e) {}
+
+/* ---------- never keep personal identifiers: ID numbers, card numbers, bank accounts ---------- */
+function piiLuhn(d){ let s = 0, alt = false; for (let i = d.length - 1; i >= 0; i--){ let n = +d[i]; if (alt){ n *= 2; if (n > 9) n -= 9; } s += n; alt = !alt; } return s % 10 === 0; }
+function piiIlId(d){ if (!/^\d{8,9}$/.test(d)) return false; d = d.padStart(9, '0'); let s = 0; for (let i = 0; i < 9; i++){ let n = +d[i] * ((i % 2) + 1); if (n > 9) n -= 9; s += n; } return s % 10 === 0 && !/^(\d)\1+$/.test(d); }
+function piiIn(str, numOnly){
+  const s = String(str == null ? '' : str); if (!/\d{4}/.test(s.replace(/[\s-]/g, ''))) return '';
+  for (const c of (s.match(/(?:\d[ -]?){13,19}/g) || [])){ const d = c.replace(/\D/g, ''); if (d.length >= 13 && d.length <= 19 && piiLuhn(d)) return 'card'; }
+  if (numOnly) return '';
+  if (/\bIL\s?\d{2}(?:[\s-]?\d){19}\b/i.test(s)) return 'iban';
+  const idRx = /(^|[^\d.,])(\d{8,9})(?![\d.,])/g; let mm;
+  while ((mm = idRx.exec(s))) if (piiIlId(mm[2])) return 'id';
+  if (/(ת[\"״'׳]?ז|ת\.ז\.?|תעודת\s*זהות|מספר\s*זהות|דרכון|passport|cvv|cvc|\bid\s*(?:no|number|#)|رقم\s*الهوية|هوية|جواز)/i.test(s) && /\d{5,}/.test(s.replace(/[\s-]/g, ''))) return 'id';
+  if (/(חשבון\s*בנק|מספר\s*חשבון|account\s*(?:no|number)|רישיון\s*נהיגה)/i.test(s) && /\d{5,}/.test(s.replace(/[\s-]/g, ''))) return 'acct';
+  return '';
+}
+const PII_SKIP = /^(set_json|cl_json|mv_txt|mv_code_in|mv_pw|rc_|dev_|dc_|gh_|acc_|ln_u|del_|hd_q|fx_|fg_|cs_u|cs_p)/;
+document.addEventListener('input', e => {
+  const el = e.target; if (!el || !el.tagName) return;
+  if (el.type === 'password' || el.type === 'url' || el.type === 'range' || el.type === 'date' || el.type === 'tel' || el.dataset.piiOk != null || el.classList.contains('srl-u')) return;
+  if (el.id && PII_SKIP.test(el.id)) return;
+  const isText = el.tagName === 'TEXTAREA' || (el.tagName === 'INPUT' && /^(text|search|email|number|)$/.test(el.type || ''));
+  if (!isText) return;
+  const kind = piiIn(el.value, el.type === 'number' || /decimal|numeric/.test(el.inputMode || ''));
+  if (!kind) return;
+  el.value = '';
+  clearTimeout(piiIn.t); piiIn.t = setTimeout(() => toast(t('pii_block')), 30);
+}, true);
+/* anything saved before is cleaned as well */
+(function piiScrub(){
+  let ch = false;
+  try { Object.keys(SCN || {}).forEach(k => (SCN[k] || []).forEach(s => { if (s && piiIn(s.n)){ s.n = '#'; ch = true; } })); if (ch) saveScn(); } catch (e) {}
+  try { const d = expData(); let c2 = false; d.items.forEach(x => { ['note', 'name', 'title'].forEach(f => { if (x && piiIn(x[f])){ x[f] = ''; c2 = true; } }); }); if (c2) toolsSave('fin-exp', d); } catch (e) {}
+  try { const d = clData(); let c3 = false; d.clients.forEach(c => { ['name', 'notes', 'tags'].forEach(f => { if (c && piiIn(c[f])){ c[f] = f === 'name' ? '—' : ''; c3 = true; } }); }); if (c3) toolsSave('fin-clients', d); } catch (e) {}
+})();
+
+/* ---------- recycle bin: deleted things wait 30 days, then they are gone ---------- */
+const TR_MS = 30 * 864e5;
+function trashAll(){
+  let a = []; try { a = JSON.parse(LS.getItem('fin-trash') || '[]'); } catch (e) {}
+  if (!Array.isArray(a)) a = [];
+  const now = Date.now(), keep = a.filter(x => x && x.item && x.at && now - x.at < TR_MS);
+  if (keep.length !== a.length) trashSet(keep);
+  return keep;
+}
+function trashSet(a){ try { LS.setItem('fin-trash', JSON.stringify(a)); } catch (e) {} if (tab === 'saved') try { svdRender(); } catch (e) {} }
+function trashPut(kind, tb, item){
+  if (!item) return;
+  const a = trashAll(); a.unshift({id: tId(), kind, tab: tb, item: JSON.parse(JSON.stringify(item)), at: Date.now()}); trashSet(a.slice(0, 500));
+}
+function trashRestore(id){
+  const a = trashAll(), i = a.findIndex(x => x.id === id); if (i < 0) return;
+  const x = a[i];
+  if (x.kind === 'scn'){ (SCN[x.tab] = SCN[x.tab] || []).push(x.item); saveScn(); try { renderScn(x.tab); } catch (e) {} }
+  else if (x.kind === 'exp'){ expData().items.push(x.item); toolsSave('fin-exp', EXP); }
+  else if (x.kind === 'cl'){ clData().clients.push(x.item); toolsSave('fin-clients', CL); }
+  a.splice(i, 1); trashSet(a); toast(t('svd_restored'));
+}
+/* a saved scenario that is deleted goes to the bin */
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-sc="del"]'); if (!b) return;
+  const box = b.closest('.scn'), row = b.closest('.scn-row'); if (!box || !row) return;
+  e.stopPropagation(); e.preventDefault();
+  const id = box.dataset.tab, i = +row.dataset.i, list = SCN[id] || [];
+  if (!list[i]) return;
+  trashPut('scn', id, list[i]); list.splice(i, 1); saveScn(); renderScn(id); toast(t('svd_toTrash'));
+}, true);
+const saveScenario75 = saveScenario;
+saveScenario = function(id){
+  const n0 = (SCN[id] || []).length; const r = saveScenario75.apply(this, arguments);
+  const L = SCN[id] || []; if (L.length > n0){ L[L.length - 1].at = Date.now(); saveScn(); toast(t('svd_savedIn', {c: t('tab_' + id)})); }
+  return r;
+};
+const svClearScreen75 = svClearScreen;
+svClearScreen = function(id){
+  const k = svKind(id);
+  if (k === 'calc') (SCN[id] || []).forEach(s => trashPut('scn', id, s));
+  else if (k === 'exp') expData().items.forEach(x => trashPut('exp', 'expenses', x));
+  else if (k === 'cl') clData().clients.forEach(c => trashPut('cl', 'clients', c));
+  return svClearScreen75.apply(this, arguments);
+};
+function trashEverything(){
+  Object.keys(SCN || {}).forEach(id => (SCN[id] || []).forEach(s => trashPut('scn', id, s)));
+  try { expData().items.forEach(x => trashPut('exp', 'expenses', x)); } catch (e) {}
+  try { clData().clients.forEach(c => trashPut('cl', 'clients', c)); } catch (e) {}
+}
+const svClearAll75 = svClearAll;
+svClearAll = function(){ trashEverything(); return svClearAll75.apply(this, arguments); };
+document.addEventListener('click', e => { if (e.target.closest && e.target.closest('#set_clear')) trashEverything(); }, true);
+const svKind75 = svKind;
+svKind = function(id){ return id === 'saved' ? '' : svKind75.apply(this, arguments); };
+
+/* ---------- the Saved folder ---------- */
+var SVD = {view: 'all', q: '', ren: null, sure: '', edit: null};
+const svdDate = ms => { try { return new Intl.DateTimeFormat(locOf(), {day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'}).format(new Date(ms)); } catch (e) { return ''; } };
+function svdCats(){
+  const q = SVD.q.trim().toLowerCase(), out = [];
+  TABS.forEach(id => {
+    const L = (SCN[id] || []).map((s, i) => ({s, i})).filter(({s}) => !q || (String(s.n) + ' ' + (s.note || '') + ' ' + t('tab_' + id)).toLowerCase().includes(q));
+    if (L.length) out.push({id, items: L});
+  });
+  return out;
+}
+function svdRender(){
+  const box = $('#svd_root'); if (!box) return;
+  const E = asEsc, bin = trashAll(), cats = svdCats();
+  const nItems = Object.keys(SCN || {}).reduce((s, k) => s + (SCN[k] || []).length, 0);
+  const exN = (() => { try { return expData().items.length; } catch (e) { return 0; } })(), clN = (() => { try { return clData().clients.length; } catch (e) { return 0; } })();
+  let h = `<div class="svd-top"><p class="fine">${E(t('svd_intro'))}</p>
+    <div class="seg svd-tabs" role="group"><button type="button" data-svdv="all" aria-pressed="${SVD.view === 'all'}">${E(t('svd_tabAll'))} · ${nItems}</button><button type="button" data-svdv="bin" aria-pressed="${SVD.view === 'bin'}">🗑️ ${E(t('svd_tabBin'))} · ${bin.length}</button></div></div>`;
+  if (SVD.view === 'all'){
+    h += `<input id="svd_q" type="search" class="cl-q" autocomplete="off" placeholder="${E(t('svd_search'))}" value="${E(SVD.q)}" data-pii-ok>`;
+    if (!cats.length) h += `<div class="svd-empty"><b>${E(t(SVD.q ? 'svd_noMatch' : 'svd_empty'))}</b><p class="fine">${E(t('svd_howTo'))}</p></div>`;
+    cats.forEach(({id, items}) => {
+      h += `<section class="svd-cat"><h3 class="svd-ch"><span class="svd-ic">${ICON[id] || ''}</span><span>${E(t('tab_' + id))}</span><small>${items.length}</small><button type="button" class="fg-x" data-svdgo="${id}">${E(t('svd_openCalc'))}</button></h3>`;
+      items.forEach(({s, i}) => {
+        const key = id + ':' + i, ren = SVD.ren === key;
+        h += `<div class="svd-it" data-svdk="${E(key)}">
+          <div class="svd-h">${ren ? `<input class="svd-ren lookup" maxlength="40" dir="auto" value="${E(s.n)}" aria-label="${E(t('svd_rename'))}"><button type="button" class="gold-btn" data-svda="renok">${E(t('svd_ok'))}</button>` : `<b class="svd-n">${E(s.n)}</b>`}
+            <span class="svd-v num">${E((s.hero && s.hero.value) || '')}</span></div>
+          <small class="svd-meta">${E((s.hero && s.hero.label) || '')}${s.at ? ' · ' + E(t('svd_savedAt', {d: svdDate(s.at)})) : ''}${s.up ? ' · ' + E(t('svd_editedAt', {d: svdDate(s.up)})) : ''}</small>
+          ${s.note ? `<p class="svd-note">${E(s.note)}</p>` : ''}
+          <div class="svd-acts"><button type="button" class="mv" data-svda="open">${E(t('svd_open'))}</button><button type="button" class="mv" data-svda="edit">✏️ ${E(t('svd_edit'))}</button><button type="button" class="mv" data-svda="ren">${E(t('svd_rename'))}</button><button type="button" class="mv" data-svda="note">${E(t('svd_note'))}</button><button type="button" class="mv" data-svda="share">${E(t('b_share'))}</button><button type="button" class="mv danger" data-svda="del">🗑️ ${E(t('svd_del'))}</button></div></div>`;
+      });
+      h += '</section>';
+    });
+    if (exN || clN){
+      h += `<section class="svd-cat"><h3 class="svd-ch"><span>${E(t('svd_tools'))}</span></h3><div class="svd-tools">`;
+      if (exN) h += `<button type="button" class="svd-tool" data-svdgo="expenses"><span class="svd-ic">${ICON.expenses || ''}</span><b>${E(t('tab_expenses'))}</b><small>${E(t('svd_nRec', {n: exN}))}</small></button>`;
+      if (clN) h += `<button type="button" class="svd-tool" data-svdgo="clients"><span class="svd-ic">${ICON.clients || ''}</span><b>${E(t('tab_clients'))}</b><small>${E(t('svd_nCl', {n: clN}))}</small></button>`;
+      h += '</div></section>';
+    }
+  } else {
+    h += `<p class="fine">${E(t('svd_binIntro'))}</p>`;
+    if (!bin.length) h += `<div class="svd-empty"><b>${E(t('svd_binEmpty'))}</b></div>`;
+    else h += `<div class="btnrow"><button type="button" class="btn danger" data-svdb="empty">${E(t(SVD.sure === 'empty' ? 'svd_sure' : 'svd_emptyBin'))}</button></div>`;
+    bin.forEach(x => {
+      const left = Math.max(1, Math.ceil((x.at + TR_MS - Date.now()) / 864e5));
+      const name = x.kind === 'scn' ? x.item.n : x.kind === 'exp' ? ((x.item.note || t('ec_' + x.item.cat) || '') + ' · ' + M(+x.item.amt || 0, 2, x.item.cur || expCur())) : x.item.name;
+      const cat = x.kind === 'scn' ? t('tab_' + x.tab) : t(x.kind === 'exp' ? 'tab_expenses' : 'tab_clients');
+      h += `<div class="svd-it bin" data-trid="${E(x.id)}"><div class="svd-h"><b class="svd-n">${E(name || '—')}</b><span class="svd-cat-t">${E(cat)}</span></div>
+        <small class="svd-meta">${E(t('svd_delAt', {d: svdDate(x.at)}))} · ${E(t('svd_left', {n: left}))}</small>
+        <div class="svd-acts"><button type="button" class="gold-btn" data-svdb="restore">↺ ${E(t('svd_restore'))}</button><button type="button" class="mv danger" data-svdb="kill">${E(t(SVD.sure === x.id ? 'svd_sure' : 'svd_kill'))}</button></div></div>`;
+    });
+  }
+  box.innerHTML = h;
+}
+function svdItem(key){ const [id, i] = String(key).split(':'); return {id, i: +i, s: (SCN[id] || [])[+i]}; }
+document.addEventListener('click', e => {
+  const el = e.target; if (!el.closest) return;
+  const v = el.closest('[data-svdv]'); if (v){ SVD.view = v.dataset.svdv; SVD.sure = ''; svdRender(); return; }
+  const g = el.closest('[data-svdgo]'); if (g){ activate(g.dataset.svdgo); return; }
+  const a = el.closest('[data-svda]');
+  if (a){
+    const it = svdItem(a.closest('.svd-it').dataset.svdk); if (!it.s) return;
+    const k = a.dataset.svda;
+    if (k === 'open' || k === 'edit'){
+      setVals(it.s.vals || {}); try { touch(it.id); } catch (er) {}
+      SVD.edit = k === 'edit' ? {id: it.id, i: it.i} : null;
+      activate(it.id); calc(it.id);
+      if (k === 'edit'){ const d = $('#sc-' + it.id); if (d){ d.open = true; svdEditBar(it.id); setTimeout(() => d.scrollIntoView({block: 'center', behavior: SET.motion === 'reduce' ? 'auto' : 'smooth'}), 120); } }
+      else toast(t('svd_opened', {n: it.s.n}));
+      return;
+    }
+    if (k === 'ren'){ SVD.ren = it.id + ':' + it.i; svdRender(); const r = $('.svd-ren'); if (r){ r.focus(); r.select(); } return; }
+    if (k === 'renok'){ const r = $('.svd-ren'); const n = r ? r.value.trim().slice(0, 40) : ''; if (n && !piiIn(n)){ it.s.n = n; it.s.up = Date.now(); saveScn(); try { renderScn(it.id); } catch (er) {} } SVD.ren = null; svdRender(); return; }
+    if (k === 'note'){
+      const cur = it.s.note || '';
+      const n = (window.prompt ? window.prompt(t('svd_noteAsk'), cur) : null);
+      if (n == null) return;
+      const clean = String(n).slice(0, 300);
+      if (piiIn(clean)){ toast(t('pii_block')); return; }
+      it.s.note = clean.trim(); it.s.up = Date.now(); saveScn(); svdRender(); return;
+    }
+    if (k === 'share'){ shrOpen(null, svdScnText(it.id, it.s), it.s.n); return; }
+    if (k === 'del'){ trashPut('scn', it.id, it.s); SCN[it.id].splice(it.i, 1); saveScn(); try { renderScn(it.id); } catch (er) {} svdRender(); toast(t('svd_toTrash')); return; }
+  }
+  const b = el.closest('[data-svdb]');
+  if (b){
+    const k = b.dataset.svdb, row = b.closest('.svd-it'), id = row && row.dataset.trid;
+    if (k === 'restore'){ trashRestore(id); svdRender(); return; }
+    if (k === 'kill'){ if (SVD.sure !== id){ SVD.sure = id; svdRender(); return; } SVD.sure = ''; trashSet(trashAll().filter(x => x.id !== id)); toast(t('svd_killed')); return; }
+    if (k === 'empty'){ if (SVD.sure !== 'empty'){ SVD.sure = 'empty'; svdRender(); return; } SVD.sure = ''; trashSet([]); toast(t('svd_emptied')); return; }
+  }
+});
+document.addEventListener('keydown', e => { if (e.target && e.target.classList && e.target.classList.contains('svd-ren') && e.key === 'Enter'){ e.preventDefault(); const b = e.target.parentNode.querySelector('[data-svda="renok"]'); if (b) b.click(); } });
+document.addEventListener('input', e => { if (e.target && e.target.id === 'svd_q'){ SVD.q = e.target.value; const pos = e.target.selectionStart; svdRender(); const q = $('#svd_q'); if (q){ q.focus(); try { q.setSelectionRange(pos, pos); } catch (er) {} } } });
+/* editing a saved item inside its calculator */
+function svdEditBar(id){
+  const box = $('#sc-' + id); if (!box) return;
+  let bar = $('.scn-edit', box);
+  const ed = SVD.edit && SVD.edit.id === id ? SVD.edit : null, s = ed && (SCN[id] || [])[ed.i];
+  if (!s){ if (bar) bar.remove(); return; }
+  if (!bar){ bar = document.createElement('div'); bar.className = 'scn-edit'; $('.scn-b', box).prepend(bar); }
+  bar.innerHTML = `<span>✏️ ${asEsc(t('svd_editing', {n: s.n}))}</span><button type="button" class="gold-btn" data-sve="save">${asEsc(t('svd_saveEdit'))}</button><button type="button" class="mv" data-sve="cancel">${asEsc(t('svd_cancelEdit'))}</button>`;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-sve]'); if (!b || !SVD.edit) return;
+  const {id, i} = SVD.edit, s = (SCN[id] || [])[i];
+  if (b.dataset.sve === 'save' && s && LAST[id]){
+    const r = LAST[id];
+    s.vals = panelVals(id); s.hero = {label: strip(r.hero.label), value: strip(r.hero.value)}; s.rows = (r.rows || []).map(x => [strip(x[0]), strip(x[1])]).slice(0, 16); s.up = Date.now();
+    saveScn(); toast(t('svd_editSaved', {n: s.n}));
+  }
+  SVD.edit = null; svdEditBar(id); renderScn(id);
+});
+const renderScn75 = renderScn;
+renderScn = function(id){ const r = renderScn75.apply(this, arguments); try { svdEditBar(id); } catch (e) {} return r; };
+CALC.saved = () => { svdRender(); return null; };
+Object.assign(GS_SYN, {saved: 'שמורים שמירה תיקייה סל מיחזור saved folder trash recycle bin محفوظات سلة'});
+if (typeof EX_SKIP !== 'undefined' && !EX_SKIP.includes('saved')) EX_SKIP.push('saved');
+if (typeof FG_SKIP !== 'undefined' && !FG_SKIP.includes('saved')) FG_SKIP.push('saved');
+if (typeof DASH_SKIP !== 'undefined' && !DASH_SKIP.includes('saved')) DASH_SKIP.push('saved');
+const aiChipKeys75 = aiChipKeys;
+aiChipKeys = function(id){ return id === 'saved' ? ['ai_cWhich'] : aiChipKeys75.apply(this, arguments); };
+const activate75 = activate;
+activate = function(id){ const r = activate75.apply(this, arguments); if (id === 'saved'){ SVD.ren = null; svdRender(); } return r; };
+const applyLang75 = applyLang;
+applyLang = function(){ const r = applyLang75.apply(this, arguments); if (tab === 'saved') try { svdRender(); } catch (e) {} return r; };
+trashAll();
+
+/* ---------- share, copy and PDF of what you entered on a screen ---------- */
+function shrFields(id){
+  if (!['calc'].includes(svKind(id)) && id !== 'percent') return [];
+  const manual = (($('#s_fig') || {}).value === 'manual' && id === 'salary') || (($('#t_fig') || {}).value === 'manual' && id === 'tax');
+  return aiFields(id).filter(f => f.shown && f.value !== '' && !(f.type === 'number' && +f.value === 0) && !(/^[st]_f(?!ig)/.test(f.id) && !manual))
+    .map(f => [f.label, f.options ? ((f.options.find(o => o[0] === f.value) || [])[1] || f.value) : (f.type === 'number' ? N(+f.value, null, 4) : f.value) + (f.unit && !f.options ? ' ' + f.unit : '')]);
+}
+function shrResult(id){
+  if (id === 'percent') return {rows: $$('#panel-percent .sentence').map(s => [exClean($('.s-line', s) ? $('.s-line', s).textContent : ''), exClean($('.s-result', s) ? $('.s-result', s).textContent : '')])};
+  const r = LAST[id]; if (!r || !r.hero) return null;
+  return {hero: [strip(r.hero.label), strip(r.hero.value), r.hero.sub ? strip(r.hero.sub) : ''], rows: (r.rows || []).map(x => [strip(x[0]), strip(x[1])]),
+    note: r.note ? strip(r.note) : '', warn: (r.warn || []).map(strip), tables: [r.table2, r.table].filter(x => x && x.rows && x.rows.length).map(tb => ({title: strip(tb.title || ''), head: (tb.head || []).map(strip), rows: tb.rows.map(row => (Array.isArray(row) ? row : row.c || []).map(c => strip(c)))}))};
+}
+function shrExp(){
+  const d = expData(), ym = (typeof EXP_M === 'string' && EXP_M) || ymOf(new Date());
+  const it = d.items.filter(x => String(x.date || '').slice(0, 7) === ym || (x.rec && String(x.date || '').slice(0, 7) <= ym && (!x.end || x.end >= ym)));
+  const tot = it.reduce((s, x) => s + (+x.amt || 0), 0);
+  return {title: t('tab_expenses') + ' · ' + ymLabel(ym), rows: it.map(x => [(x.date ? dLabel(x.date) + ' · ' : '') + t('ec_' + x.cat) + (x.note ? ' · ' + x.note : ''), M(+x.amt || 0, 2, x.cur || expCur())]), total: M(tot, 2, expCur())};
+}
+function shrCl(){ return {title: t('tab_clients'), rows: clData().clients.map(c => [c.name + ' · ' + t('cl_t_' + c.type), t('cl_st_' + c.status) + (c.fee ? ' · ' + M(+c.fee, 0, expCur()) : '')])}; }
+function shrText(id){
+  const L = [], when = svdDate(Date.now());
+  const kind = svKind(id);
+  if (kind === 'exp' || kind === 'cl'){
+    const x = kind === 'exp' ? shrExp() : shrCl();
+    L.push(x.title + ' — ' + when, ''); x.rows.forEach(r => L.push('• ' + r[0] + ': ' + r[1])); if (x.total) L.push('', t('shr_total') + ': ' + x.total);
+  } else {
+    L.push(t('tab_' + id) + ' — ' + when);
+    const F = shrFields(id); if (F.length){ L.push('', t('shr_inputs')); F.forEach(f => L.push('• ' + f[0] + ': ' + f[1])); }
+    const R = shrResult(id);
+    if (R){ L.push('', t('shr_results')); if (R.hero) L.push('★ ' + R.hero[0] + ': ' + R.hero[1]); R.rows.forEach(r => L.push('• ' + r[0] + (r[1] ? ': ' + r[1] : ''))); if (R.note) L.push('', R.note); }
+  }
+  L.push('', '— ' + t('shr_by'));
+  return L.join('\n').replace(/[\u2066-\u2069]/g, '');
+}
+function svdScnText(id, s){
+  const L = [t('tab_' + id) + ' — ' + s.n];
+  if (s.hero) L.push('★ ' + s.hero.label + ': ' + s.hero.value);
+  (s.rows || []).forEach(r => L.push('• ' + r[0] + ': ' + r[1]));
+  if (s.note) L.push('', s.note);
+  L.push('', '— ' + t('shr_by'));
+  return L.join('\n').replace(/[\u2066-\u2069]/g, '');
+}
+var SHR = {text: '', title: '', id: null};
+function shrOpen(id, text, title){
+  SHR = {id, text: text || shrText(id), title: title || t('tab_' + id)};
+  if (!$('#shx')) document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="shx" hidden><div class="cp-box sh-box" role="dialog" aria-modal="true" aria-labelledby="shx_t"><div class="cp-top"><h3 id="shx_t"></h3><button type="button" class="cp-x" id="shx_x">×</button></div><div id="shx_b"></div></div></div>`);
+  const E = asEsc, enc = encodeURIComponent, txt = SHR.text;
+  $('#shx_t').textContent = t('shr_title'); $('#shx_x').setAttribute('aria-label', t('cp_close'));
+  $('#shx_b').innerHTML = `<pre class="shr-pre" dir="auto">${E(txt)}</pre>
+    <div class="shr-grid">
+      ${navigator.share ? `<button type="button" class="shr-b" data-shx="sys">📤<span>${E(t('shr_sys'))}</span></button>` : ''}
+      <a class="shr-b" href="https://wa.me/?text=${enc(txt)}" target="_blank" rel="noopener noreferrer">💬<span>WhatsApp</span></a>
+      <a class="shr-b" href="https://t.me/share/url?url=${enc(' ')}&text=${enc(txt)}" target="_blank" rel="noopener noreferrer">✈️<span>Telegram</span></a>
+      <a class="shr-b" href="mailto:?subject=${enc(SHR.title)}&body=${enc(txt)}" target="_blank" rel="noopener noreferrer">✉️<span>${E(t('shr_mail'))}</span></a>
+      <button type="button" class="shr-b" data-shx="copy">📋<span>${E(t('b_copy'))}</span></button>
+      ${id ? `<button type="button" class="shr-b" data-shx="pdf">📄<span>${E(t('b_pdf'))}</span></button>` : ''}
+    </div><p class="fine">${E(t('shr_priv'))}</p>`;
+  $('#shx').hidden = false; document.body.classList.add('cp-lock');
+}
+function shrClose(){ const o = $('#shx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); } }
+document.addEventListener('click', async e => {
+  const el = e.target; if (!el.closest) return;
+  const o = $('#shx');
+  if (o && !o.hidden){
+    if (el === o || el.closest('#shx_x')) return shrClose();
+    const b = el.closest('[data-shx]');
+    if (b){
+      const k = b.dataset.shx;
+      if (k === 'copy'){ copyText(SHR.text); toast(t('st_copied')); }
+      else if (k === 'sys'){ try { await navigator.share({title: SHR.title, text: SHR.text}); } catch (er) { if (!er || er.name !== 'AbortError'){ copyText(SHR.text); toast(t('shr_copiedInstead')); } } }
+      else if (k === 'pdf'){ shrClose(); pdfMake(SHR.id); }
+    }
+  }
+  const s = el.closest('[data-shr]');
+  if (s){ const id = s.closest('.svbar') ? s.closest('.svbar').dataset.svp : tab; const k = s.dataset.shr;
+    if (k === 'copy'){ copyText(shrText(id)); toast(t('st_copied')); } else if (k === 'share') shrOpen(id); else if (k === 'pdf') pdfMake(id); }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape'){ const o = $('#shx'); if (o && !o.hidden){ e.preventDefault(); shrClose(); } } });
+const doAction75 = doAction;
+doAction = function(act, id){
+  if (act === 'copy'){ copyText(shrText(id)); toast(t('st_copied')); return; }
+  if (act === 'share'){ shrOpen(id); return; }
+  if (act === 'pdf' || act === 'print'){ pdfMake(id); return; }
+  return doAction75.apply(this, arguments);
+};
+const svBarHtml75 = svBarHtml;
+svBarHtml = function(){
+  return svBarHtml75.apply(this, arguments) + `<div class="sv-share"><button type="button" data-shr="copy">📋 ${asEsc(t('b_copy'))}</button><button type="button" data-shr="share">📤 ${asEsc(t('b_share'))}</button><button type="button" data-shr="pdf">📄 ${asEsc(t('b_pdf'))}</button></div>`;
+};
+/* the PDF is drawn here, page by page, and written as a real PDF file: no outside service, works offline and inside Claude */
+function pdfModel(id){
+  const kind = svKind(id), B = [];
+  B.push({k: 'brand', s: t('shr_by')}, {k: 'title', s: t('tab_' + id)}, {k: 'date', s: svdDate(Date.now())}, {k: 'rule'});
+  if (kind === 'exp' || kind === 'cl'){
+    const x = kind === 'exp' ? shrExp() : shrCl();
+    B.push({k: 'h2', s: x.title}, {k: 'kv', rows: x.rows}); if (x.total) B.push({k: 'kv', rows: [[t('shr_total'), x.total]], bold: true});
+  } else {
+    const F = shrFields(id), R = shrResult(id);
+    if (F.length) B.push({k: 'h2', s: t('shr_inputs').replace(/:$/, '')}, {k: 'kv', rows: F});
+    if (R){
+      B.push({k: 'h2', s: t('shr_results').replace(/:$/, '')});
+      if (R.hero) B.push({k: 'hero', a: R.hero[0], b: R.hero[1], c: R.hero[2]});
+      if (R.rows.length) B.push({k: 'kv', rows: R.rows});
+      (R.tables || []).forEach(tb => B.push({k: 'h3', s: tb.title}, {k: 'table', head: tb.head, rows: tb.rows.slice(0, 400)}));
+      if (R.warn && R.warn.length) B.push({k: 'p', s: R.warn.join(' '), warn: true});
+      if (R.note) B.push({k: 'p', s: R.note});
+    }
+  }
+  B.push({k: 'rule'}, {k: 'foot', s: t('shr_pdfFoot')});
+  return B;
+}
+function pdfPages(B){
+  const W = 1190, H = 1684, M = 84, rtl = (document.documentElement.dir || 'rtl') === 'rtl', FF = "-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans Hebrew','Noto Sans Arabic',Arial,sans-serif";
+  const pages = []; let cv, cx, y;
+  const page = () => { cv = document.createElement('canvas'); cv.width = W; cv.height = H; cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, W, H); try { cx.direction = rtl ? 'rtl' : 'ltr'; } catch (e) {} cx.textBaseline = 'top'; pages.push(cv); y = M; };
+  const font = (sz, w) => { cx.font = (w || 400) + ' ' + sz + 'px ' + FF; };
+  const S = rtl ? W - M : M, E = rtl ? M : W - M;              // start and end edges of the text area
+  const at = (x0, w, align) => align === 'start' ? (rtl ? x0 + w : x0) : (rtl ? x0 : x0 + w);
+  const wrap = (txt, maxW) => { const out = []; String(txt == null ? '' : txt).split('\n').forEach(par => { let line = ''; par.split(/\s+/).forEach(wd => { const tr = line ? line + ' ' + wd : wd; if (cx.measureText(tr).width > maxW && line){ out.push(line); line = wd; } else line = tr; }); out.push(line); }); return out; };
+  const need = h => { if (y + h > H - M) page(); };
+  const numy = s => /^[\s\u200e\u200f\u2066-\u2069\-−+\d,.%₪$€£¥:/()]+$/.test(String(s)) && /\d/.test(String(s));
+  const text = (s, x, align, color) => {
+    cx.fillStyle = color || '#141821'; cx.textAlign = align === 'end' ? (rtl ? 'left' : 'right') : (rtl ? 'right' : 'left');
+    const flip = rtl && numy(s); if (flip){ try { cx.direction = 'ltr'; } catch (e) {} }
+    cx.fillText(String(s).replace(/[\u200e\u200f\u2066-\u2069]/g, ''), x, y);
+    if (flip){ try { cx.direction = 'rtl'; } catch (e) {} }
+  };
+  page();
+  B.forEach(b => {
+    if (b.k === 'brand'){ font(22, 700); need(30); text(b.s, S, 'start', '#8a7020'); y += 32; }
+    else if (b.k === 'title'){ font(48, 700); wrap(b.s, W - 2 * M).forEach(l => { need(60); text(l, S, 'start'); y += 60; }); }
+    else if (b.k === 'date'){ font(22); need(30); text(b.s, S, 'start', '#5b6170'); y += 36; }
+    else if (b.k === 'rule'){ need(20); cx.fillStyle = '#C9A227'; cx.fillRect(M, y + 6, W - 2 * M, 4); y += 26; }
+    else if (b.k === 'h2' || b.k === 'h3'){ font(b.k === 'h2' ? 32 : 28, 700); need(70); y += 14; text(b.s, S, 'start', '#1f2a44'); y += b.k === 'h2' ? 46 : 40; }
+    else if (b.k === 'hero'){
+      font(26); const lab = wrap(b.a, W - 2 * M - 40); font(48, 700); const sub = b.c ? (font(22), wrap(b.c, W - 2 * M - 40)) : [];
+      const h = 28 + lab.length * 34 + 62 + sub.length * 30 + 20; need(h);
+      cx.fillStyle = '#fbf6e6'; cx.fillRect(M, y, W - 2 * M, h); cx.strokeStyle = '#ecd9a0'; cx.lineWidth = 2; cx.strokeRect(M, y, W - 2 * M, h);
+      y += 22; font(26); lab.forEach(l => { text(l, rtl ? S - 20 : S + 20, 'start', '#3a3f4b'); y += 34; });
+      font(48, 700); text(b.b, rtl ? S - 20 : S + 20, 'start', '#6b520e'); y += 62;
+      font(22); sub.forEach(l => { text(l, rtl ? S - 20 : S + 20, 'start', '#5b6170'); y += 30; }); y += 24;
+    }
+    else if (b.k === 'kv'){
+      b.rows.forEach(r => {
+        font(25, b.bold ? 700 : 400); const vw = Math.min((W - 2 * M) * 0.45, cx.measureText(String(r[1] || '')).width + 10);
+        const L = wrap(r[0], W - 2 * M - vw - 30); const h = Math.max(1, L.length) * 34 + 16; need(h);
+        L.forEach((l, i) => { text(l, S, 'start', '#262b36'); if (i < L.length - 1) y += 34; });
+        font(25, 700); text(String(r[1] || ''), E, 'end', '#141821'); y += 34 + 6;
+        cx.fillStyle = '#e3e6ee'; cx.fillRect(M, y, W - 2 * M, 2); y += 10;
+      });
+    }
+    else if (b.k === 'table'){
+      const n = Math.max((b.head || []).length, ...b.rows.map(r => r.length)), cw = (W - 2 * M) / Math.max(1, n);
+      const colX = i => rtl ? W - M - (i + 1) * cw : M + i * cw;
+      const drawRow = (cells, head) => {
+        font(21, head ? 700 : 400); const L = cells.map(c => wrap(c, cw - 16)); const h = Math.max(...L.map(x => x.length), 1) * 28 + 14;
+        need(h); if (head){ cx.fillStyle = '#f4f6fa'; cx.fillRect(M, y, W - 2 * M, h); }
+        const y0 = y; L.forEach((ls, i) => { ls.forEach((l, j) => { y = y0 + 7 + j * 28; text(l, at(colX(i), cw, 'start') + (rtl ? -8 : 8), 'start', '#141821'); }); });
+        y = y0 + h; cx.fillStyle = '#e3e6ee'; cx.fillRect(M, y - 2, W - 2 * M, 2);
+      };
+      if (b.head && b.head.length) drawRow(b.head, true);
+      b.rows.forEach(r => drawRow(r, false));
+      y += 8;
+    }
+    else if (b.k === 'p'){ font(22); const L = wrap(b.s, W - 2 * M); need(Math.min(L.length, 4) * 30 + 16); y += 8; L.forEach(l => { need(30); text(l, S, 'start', b.warn ? '#8a3a12' : '#5b6170'); y += 30; }); y += 8; }
+    else if (b.k === 'foot'){ font(19); wrap(b.s, W - 2 * M).forEach(l => { need(26); text(l, S, 'start', '#8a8f9c'); y += 26; }); }
+  });
+  return pages;
+}
+function pdfBytes(pages){
+  const enc = new TextEncoder(), parts = [], offs = []; let len = 0;
+  const put = x => { const u = typeof x === 'string' ? enc.encode(x) : x; parts.push(u); len += u.length; };
+  const obj = (n, body) => { offs[n] = len; put(n + ' 0 obj\n'); body(); put('\nendobj\n'); };
+  const imgs = pages.map(c => { const d = atob(c.toDataURL('image/jpeg', 0.9).split(',')[1]); const u = new Uint8Array(d.length); for (let i = 0; i < d.length; i++) u[i] = d.charCodeAt(i); return {u, w: c.width, h: c.height}; });
+  const N = pages.length, PW = 595.28, PH = 841.89;
+  put('%PDF-1.4\n'); put(new Uint8Array([37, 226, 227, 207, 211, 10]));
+  obj(1, () => put('<< /Type /Catalog /Pages 2 0 R >>'));
+  obj(2, () => put('<< /Type /Pages /Count ' + N + ' /Kids [' + imgs.map((_, i) => (3 + i * 3) + ' 0 R').join(' ') + '] >>'));
+  imgs.forEach((im, i) => {
+    const p = 3 + i * 3, c = p + 1, x = p + 2, cs = 'q ' + PW + ' 0 0 ' + PH + ' 0 0 cm /Im' + i + ' Do Q';
+    obj(p, () => put('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + PW + ' ' + PH + '] /Resources << /XObject << /Im' + i + ' ' + x + ' 0 R >> >> /Contents ' + c + ' 0 R >>'));
+    obj(c, () => put('<< /Length ' + cs.length + ' >>\nstream\n' + cs + '\nendstream'));
+    obj(x, () => { put('<< /Type /XObject /Subtype /Image /Width ' + im.w + ' /Height ' + im.h + ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' + im.u.length + ' >>\nstream\n'); put(im.u); put('\nendstream'); });
+  });
+  const total = 3 + N * 3, xref = len;
+  put('xref\n0 ' + total + '\n0000000000 65535 f \n'); for (let n = 1; n < total; n++) put(String(offs[n]).padStart(10, '0') + ' 00000 n \n');
+  put('trailer\n<< /Size ' + total + ' /Root 1 0 R >>\nstartxref\n' + xref + '\n%%EOF');
+  return new Blob(parts, {type: 'application/pdf'});
+}
+var PDF_BUSY = false;
+async function pdfMake(id){
+  if (PDF_BUSY) return; PDF_BUSY = true;
+  toast(t('pdf_making'));
+  try {
+    try { await document.fonts.ready; } catch (e) {}
+    const blob = pdfBytes(pdfPages(pdfModel(id)));
+    const name = (t('tab_' + id) + ' ' + new Date().toISOString().slice(0, 10)).replace(/[\\/:*?"<>|]+/g, ' ').trim() + '.pdf';
+    const r = await fileSave(blob, name, 'application/pdf');
+    toast(t(r === 'saved' ? 'pdf_done' : r === 'declined' ? 'pdf_declined' : 'pdf_fail'));
+  } catch (e) { toast(t('pdf_fail')); }
+  finally { PDF_BUSY = false; }
+}
+
+/* ---------- a small, stable door for developer code: everything here updates every calculator at once ---------- */
+var DC_HOOKS = [];
+const showDc = show;
+show = function(id, res){
+  for (const f of DC_HOOKS){ try { const r = f(id, res); if (r && typeof r === 'object') res = r; } catch (e) {} }
+  return showDc.call(this, id, res);
+};
+try {
+  window.FinApp = Object.freeze({
+    version: APP_VER, T, TAX, IL26: typeof IL26 === 'object' ? IL26 : null, MKT, CALC, DEFS, t,
+    rates: () => RATES, settings: () => SET, tab: () => tab, last: id => LAST[id || tab],
+    calc: id => { try { calc(id || tab); } catch (e) {} }, recalc: () => { try { if (tab === 'home') renderMarket(); else calc(tab); } catch (e) {} },
+    open: id => activate(id), toast: m => toast(String(m)),
+    onResult: fn => { if (typeof fn === 'function') DC_HOOKS.push(fn); },
+    addText: (k, he, ar, en) => { T[k] = [he, ar || en || he, en || he]; }
+  });
+} catch (e) {}
+/* developer code, published from the app, the website or GitHub, runs in the app and on the website */
+var DC = {pub: null, at: 0, ran: false, err: ''};
+const DC_URL_GH = 'https://ysdesign-il.github.io/financial-calculator/devcode.json', DC_REPO = 'ysdesign-il/financial-calculator';
+function dcSkip(){ return /[#&?]nocode\b/.test(location.hash + location.search); }
+function dcRun(code){
+  if (!code || DC.ran || dcSkip()) return;
+  DC.ran = true;
+  try {
+    if (code.css){ const st = document.createElement('style'); st.id = 'devcode-css'; st.textContent = String(code.css); document.head.appendChild(st); }
+    if (code.js){ const sc = document.createElement('script'); sc.id = 'devcode-js'; sc.textContent = '(function(FinApp){try{\n' + String(code.js) + '\n}catch(e){console.warn("devcode",e);}})(window.FinApp);'; document.body.appendChild(sc); }
+    setTimeout(() => { try { if (tab === 'home') renderMarket(); else calc(tab); } catch (e) {} }, 0);
+  } catch (e) { DC.err = String(e && e.message || e); }
+}
+function dcDraft(){ try { return JSON.parse(RAWLS.getItem('fin-devcode-draft') || 'null'); } catch (e) { return null; } }
+async function dcLoad(){
+  let d = null;
+  try { const r = await fetch((IN_CLAUDE ? DC_URL_GH : 'devcode.json') + '?v=' + Math.floor(Date.now() / 120000), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); if (r.ok) d = await r.json(); } catch (e) {}
+  if (d && typeof d === 'object'){ DC.pub = {js: String(d.js || ''), css: String(d.css || ''), at: +d.at || 0}; DC.at = DC.pub.at; }
+  let preview = false; try { preview = DEV_ON && RAWLS.getItem('fin-devcode-preview') === '1'; } catch (e) {}
+  dcRun(preview ? dcDraft() : DC.pub);
+  dcRender();
+}
+setTimeout(dcLoad, 300);
+
+/* ---------- developer only: write code here, try it on your device, publish to everyone through GitHub ---------- */
+function ghTok(){ try { return RAWLS.getItem('fin-gh-tok') || ''; } catch (e) { return ''; } }
+const b64u = s => btoa(unescape(encodeURIComponent(s)));
+async function ghPut(path, text, msg){
+  const tok = ghTok(); if (!tok) throw new Error('notoken');
+  const H = {Authorization: 'Bearer ' + tok, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'};
+  const base = 'https://api.github.com/repos/' + DC_REPO + '/contents/' + path;
+  let sha;
+  const g = await fetch(base + '?ref=main', {headers: H, cache: 'no-store'});
+  if (g.ok){ sha = (await g.json()).sha; } else if (g.status !== 404) throw new Error('gh' + g.status);
+  const p = await fetch(base, {method: 'PUT', headers: Object.assign({'Content-Type': 'application/json'}, H), body: JSON.stringify({message: msg, content: b64u(text), branch: 'main', sha})});
+  if (!p.ok) throw new Error('gh' + p.status);
+  return true;
+}
+function dcRender(){
+  const box = $('#dc_box'); if (!box || !liveOwner()) return;
+  if (box.contains(document.activeElement) && /TEXTAREA|INPUT/.test(document.activeElement.tagName)) return;
+  const E = asEsc, d = dcDraft() || DC.pub || {js: '', css: ''};
+  let prev = false; try { prev = RAWLS.getItem('fin-devcode-preview') === '1'; } catch (e) {}
+  box.innerHTML = `<p class="fine">${E(t('dc_intro'))}</p>
+    <p class="gk-st ${prev ? 'new' : DC.pub && (DC.pub.js || DC.pub.css) ? 'ok' : ''}">${E(prev ? t('dc_stPreview') : DC.pub && (DC.pub.js || DC.pub.css) ? t('dc_stLive', {d: DC.at ? svdDate(DC.at) : '—'}) : t('dc_stNone'))}</p>
+    <div class="field wide"><label for="dc_js">JavaScript</label><textarea id="dc_js" class="dc-code" rows="10" dir="ltr" spellcheck="false" autocapitalize="off" autocomplete="off" data-pii-ok placeholder="FinApp.TAX.point = 2904; FinApp.recalc();">${E(d.js || '')}</textarea></div>
+    <div class="field wide"><label for="dc_css">CSS</label><textarea id="dc_css" class="dc-code" rows="5" dir="ltr" spellcheck="false" autocapitalize="off" autocomplete="off" data-pii-ok placeholder=".hero{border-radius:20px}">${E(d.css || '')}</textarea></div>
+    <details class="adv"><summary>${E(t('dc_api'))}</summary><pre class="dc-help" dir="ltr">FinApp.TAX, FinApp.IL26, FinApp.MKT      // ${E(t('dc_apiFig'))}
+FinApp.CALC.salary = () => ({...})       // ${E(t('dc_apiCalc'))}
+FinApp.onResult((id, res) => res)        // ${E(t('dc_apiRes'))}
+FinApp.addText('key', 'עברית', 'عربي', 'English')
+FinApp.recalc(); FinApp.open('salary'); FinApp.toast('…')</pre></details>
+    <div class="btnrow"><button type="button" class="mv" data-dc="draft">${E(t('dc_saveDraft'))}</button><button type="button" class="gold-btn" data-dc="try">${E(t(prev ? 'dc_tryAgain' : 'dc_try'))}</button>${prev ? `<button type="button" class="mv" data-dc="stop">${E(t('dc_stop'))}</button>` : ''}</div>
+    <h4 class="sec-h">${E(t('dc_pubT'))}</h4><p class="fine">${E(t('dc_pubS'))}</p>
+    <div class="field wide"><label for="gh_tok">${E(t('dc_tok'))}</label><input id="gh_tok" type="password" autocomplete="off" dir="ltr" class="lookup" placeholder="github_pat_…" value="${ghTok() ? '••••••••' : ''}"><small class="hint">${E(t('dc_tokH'))}</small></div>
+    <div class="btnrow"><button type="button" class="gold-btn" data-dc="pub">${E(t('dc_pub'))}</button><button type="button" class="mv" data-dc="unpub">${E(t('dc_unpub'))}</button>${ghTok() ? `<button type="button" class="mv" data-dc="forget">${E(t('dc_forget'))}</button>` : ''}</div>
+    <p class="fine" id="dc_msg" role="status"></p>
+    <p class="fine">${E(t('dc_safe'))}</p>`;
+}
+function dcMsg(k, p){ const m = $('#dc_msg'); if (m) m.textContent = k ? t(k, p) : ''; }
+function dcGet(){ return {js: ($('#dc_js') || {}).value || '', css: ($('#dc_css') || {}).value || '', at: Date.now()}; }
+document.addEventListener('change', e => { if (e.target && e.target.id === 'gh_tok'){ const v = e.target.value.trim(); if (v && !/^•+$/.test(v)){ try { RAWLS.setItem('fin-gh-tok', v); } catch (er) {} e.target.value = '••••••••'; dcMsg('dc_tokSaved'); } } });
+document.addEventListener('click', async e => {
+  const b = e.target.closest && e.target.closest('[data-dc]'); if (!b || !liveOwner()) return;
+  const k = b.dataset.dc;
+  if (k === 'draft'){ try { RAWLS.setItem('fin-devcode-draft', JSON.stringify(dcGet())); } catch (er) {} dcMsg('dc_draftSaved'); return; }
+  if (k === 'try'){ try { RAWLS.setItem('fin-devcode-draft', JSON.stringify(dcGet())); RAWLS.setItem('fin-devcode-preview', '1'); } catch (er) {} location.reload(); return; }
+  if (k === 'stop'){ try { RAWLS.removeItem('fin-devcode-preview'); } catch (er) {} location.reload(); return; }
+  if (k === 'forget'){ try { RAWLS.removeItem('fin-gh-tok'); } catch (er) {} dcRender(); return; }
+  if (k === 'pub' || k === 'unpub'){
+    if (k === 'unpub' && b.dataset.sure !== '1'){ b.dataset.sure = '1'; b.textContent = t('b_sure'); return; }
+    const body = k === 'pub' ? dcGet() : {js: '', css: '', at: Date.now()};
+    dcMsg('m_wait');
+    try { await ghPut('devcode.json', JSON.stringify(Object.assign({v: 1}, body), null, 1), k === 'pub' ? 'Developer code update' : 'Developer code removed'); dcMsg('dc_pubOk'); toast(t('dc_pubOk')); }
+    catch (er) { const m = String(er && er.message || ''); dcMsg(m === 'notoken' ? 'dc_needTok' : /gh40[13]/.test(m) ? 'dc_badTok' : /gh/.test(m) ? 'dc_ghErr' : 'dc_blocked', {e: m}); }
+  }
+});
+/* ChatGPT and other AI tools can develop the app through GitHub: only people with access to the repository can change it */
+function gptRender(){
+  const box = $('#gpt_box'); if (!box || !liveOwner()) return;
+  const E = asEsc;
+  box.innerHTML = `<p class="fine">${E(t('gpt_intro'))}</p><ol class="mv-steps"><li>${E(t('gpt_s1'))}</li><li>${E(t('gpt_s2'))}</li><li>${E(t('gpt_s3'))}</li><li>${E(t('gpt_s4'))}</li></ol>
+    <div class="btnrow"><a class="gold-btn" href="https://chatgpt.com/codex" target="_blank" rel="noopener noreferrer">ChatGPT Codex ↗</a><a class="mv" href="https://chatgpt.com/#settings/Connectors" target="_blank" rel="noopener noreferrer">${E(t('gpt_conn'))} ↗</a><a class="mv" href="https://github.com/${DC_REPO}" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+    <p class="fine">🔒 ${E(t('gpt_safe'))}</p>`;
+}
+/* the developer's own sections sit in Connections, hidden from everyone else */
+function v5DevSecs(){
+  const page = $('#panel-settings .set-cat[data-cat="conn"]'); if (!page) return;
+  [['set_devcode', 'dc_title', 'dc_box'], ['set_devgpt', 'gpt_title', 'gpt_box'], ['set_devsrc', 'cs_title', 'cs_box']].forEach(([sk, tk, bx]) => {
+    if ($(`.set-sec[data-sk="${sk}"]`)) return;
+    page.insertAdjacentHTML('beforeend', `<div class="set-sec" data-sk="${sk}" data-own="1" hidden><h3 class="sec-t" data-i="${tk}">${asEsc(t(tk))}</h3><div id="${bx}"></div></div>`);
+    if (!OWN_SECS.includes(sk)) OWN_SECS.push(sk);
+  });
+}
+v5DevSecs();
+const liveApply75 = liveApply;
+liveApply = function(){ const r = liveApply75.apply(this, arguments); try { dcRender(); gptRender(); csrcRender(); } catch (e) {} return r; };
+
+/* ---------- developer only: data sources by hand, or from sources you add ---------- */
+['fx', 'cr', 'mkt'].forEach(g => { if (!SRCP_OPT[g].includes('manual')) SRCP_OPT[g].push('manual'); });
+const CS_KIND = ['ilsPer', 'usdPer', 'perUsd', 'value'];
+function csClean(list){
+  return (Array.isArray(list) ? list : []).slice(0, 20).map(x => ({id: String(x && x.id || '').replace(/[^a-z0-9]/g, '').slice(0, 12) || Math.random().toString(36).slice(2, 8), n: String(x && x.n || '').slice(0, 40), g: ['fx', 'cr', 'mkt'].includes(x && x.g) ? x.g : 'fx',
+    u: lnUrl(x && x.u), p: String(x && x.p || '').replace(/[^\w.\[\]-]/g, '').slice(0, 120), k: String(x && x.k || '').replace(/[^\w.]/g, '').slice(0, 12), kind: CS_KIND.includes(x && x.kind) ? x.kind : 'ilsPer', s: Math.max(10, Math.min(86400, +(x && x.s) || 60))})).filter(x => x.n && x.u && x.k);
+}
+function manClean(m){ const o = {}; ['fx', 'cr', 'mkt'].forEach(g => { const src = m && m[g] && typeof m[g] === 'object' ? m[g] : {}; o[g] = {}; Object.keys(src).slice(0, 30).forEach(k => { const v = +src[k]; if (/^[\w.]{2,12}$/.test(k) && v > 0 && isFinite(v)) o[g][k] = v; }); }); return o; }
+var SRC_MAN = {fx: {}, cr: {}, mkt: {}}, SRC_CUST = [];
+const srcpClean75 = srcpClean;
+srcpClean = function(d){
+  const cust = csClean(d && d.cust), o = srcpClean75.call(this, d);
+  Object.keys(SRCP_OPT).forEach(g => { const v = d && d[g]; if (typeof v === 'string' && /^c:[a-z0-9]{1,12}$/.test(v) && cust.some(c => 'c:' + c.id === v && c.g === g)) o[g] = v; });
+  o.man = manClean(d && d.man); o.cust = cust;
+  return o;
+};
+srcOk = function(g, s){
+  const P = (typeof SRCP === 'object' && SRCP) || {}, p = P[g];
+  if (!p || p === 'auto') return true;
+  if (p === 'manual' || /^c:/.test(p)) return s === p;
+  if (g === 'fx') return p === 'cnbc' ? (s === 'cnbc' || s === 'snap') : p === s;
+  if (g === 'cr') return p === s;
+  if (g === 'mkt') return p === 'live' || s === 'snap';
+  return true;
+};
+function csApplyVal(g, k, kind, v, srcTag){
+  if (!(v > 0) || !isFinite(v)) return false;
+  const now = Date.now();
+  if (g === 'mkt'){ const o = IX.mkt[k]; if (!o) return false; IX.mkt[k] = Object.assign({}, o, {p: v, t: Math.floor(now / 1000), live: false}); return true; }
+  const code = k.toUpperCase(); if (!/^[A-Z0-9]{2,10}$/.test(code)) return false;
+  let r;                                                         // RATES = units of the currency per 1 US dollar
+  if (kind === 'perUsd') r = v; else if (kind === 'usdPer') r = 1 / v;
+  else if (kind === 'ilsPer') r = code === 'USD' ? null : (RATES.ILS || 0) / v; else r = v;
+  if (code === 'USD' && kind === 'ilsPer'){ RATES.ILS = v; FXSRC.ILS = {s: srcTag, at: now}; }
+  else if (r > 0 && isFinite(r)){ RATES[code] = r; FXSRC[code] = {s: srcTag, at: now}; }
+  else return false;
+  RATES.USD = 1;
+  if (g === 'fx'){ META.live = false; META.mkt = false; META.official = false; META.unix = Math.floor(now / 1000); }
+  if (g === 'cr'){ META.cunix = Math.floor(now / 1000); }
+  return true;
+}
+function srcManApply(){
+  let n = 0;
+  ['fx', 'cr', 'mkt'].forEach(g => {
+    if (SRCP[g] !== 'manual') return;
+    const m = SRC_MAN[g] || {}, keys = Object.keys(m).sort((a, b) => (b === 'USD') - (a === 'USD'));
+    keys.forEach(k => { if (csApplyVal(g, k, g === 'fx' ? 'ilsPer' : g === 'cr' ? 'usdPer' : 'value', m[k], 'manual')) n++; });
+  });
+  if (n){ try { fillCurSelects(); renderStamp(); if (tab === 'home') renderMarket(); else calc(tab); } catch (e) {} }
+}
+function jPath(o, p){ return String(p || '').replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean).reduce((a, k) => a == null ? a : a[k], o); }
+var CS_T = {}, CS_ST = {};
+async function csFetch(c){
+  const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 8000);
+  try { const r = await fetch(c.u, {signal: ctl.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); if (!r.ok) throw new Error('http ' + r.status); const v = parseFloat(jPath(await r.json(), c.p)); if (!(v > 0)) throw new Error('path'); return v; }
+  finally { clearTimeout(to); }
+}
+function csStart(){
+  Object.keys(CS_T).forEach(k => { clearTimeout(CS_T[k]); delete CS_T[k]; });
+  SRC_CUST.forEach(c => {
+    if (SRCP[c.g] !== 'c:' + c.id) return;
+    const tick = async () => {
+      if (!document.hidden){
+        try { const v = await csFetch(c); if (csApplyVal(c.g, c.k, c.g === 'mkt' ? 'value' : c.kind, v, 'custom')){ CS_ST[c.id] = {ok: true, v, at: Date.now()}; try { fillCurSelects(); if (tab === 'home') renderMarket(); else if (tab !== 'settings') calc(tab); } catch (e) {} } }
+        catch (e) { CS_ST[c.id] = {ok: false, e: String(e && e.message || e), at: Date.now()}; }
+        try { csrcRender(); } catch (e) {}
+      }
+      CS_T[c.id] = setTimeout(tick, c.s * 1000);
+    };
+    tick();
+  });
+}
+const srcpSet75 = srcpSet;
+srcpSet = function(next){
+  SRC_MAN = manClean(next && next.man); SRC_CUST = csClean(next && next.cust);
+  const r = srcpSet75.apply(this, arguments);
+  srcManApply(); csStart();
+  try { csrcRender(); } catch (e) {}
+  return r;
+};
+/* while a group is set by hand or by an added source, the other feeds stay out of it */
+const srcOwn = g => SRCP[g] === 'manual' || /^c:/.test(SRCP[g] || '');
+const applyDbRates75 = applyDbRates;
+applyDbRates = function(d){ if (d && (srcOwn('fx') || srcOwn('cr'))){ d = Object.assign({}, d); if (srcOwn('fx')) delete d.usd; if (srcOwn('cr')) delete d.crypto; } return applyDbRates75.call(this, d); };
+const applyUsd75 = applyUsd;
+applyUsd = function(){ if (srcOwn('fx')) return 0; return applyUsd75.apply(this, arguments); };
+const ixApply75b = ixApply;
+ixApply = function(d){ if (srcOwn('mkt') && d && d.mkt) d = Object.assign({}, d, {mkt: null}); return ixApply75b.call(this, d, arguments[1]); };
+const srcPickHtml75 = srcPickHtml;
+srcPickHtml = function(g){
+  let h = srcPickHtml75.apply(this, arguments);
+  const sel = h.indexOf('</select>');
+  if (sel > 0 && SRC_CUST.some(c => c.g === g)) h = h.slice(0, sel) + SRC_CUST.filter(c => c.g === g).map(c => `<option value="c:${c.id}"${SRCP[g] === 'c:' + c.id ? ' selected' : ''}>${asEsc(t('cs_opt', {n: c.n}))}</option>`).join('') + h.slice(sel);
+  if (SRCP[g] === 'manual'){
+    const keys = g === 'fx' ? ['USD', 'EUR', 'GBP'] : g === 'cr' ? ['BTC', 'ETH'] : IX_MK.slice();
+    const lab = k => g === 'fx' ? t('man_fx', {c: k}) : g === 'cr' ? t('man_cr', {c: k}) : ixName(k);
+    h += `<div class="man-box" data-mang="${g}">${keys.map(k => `<label class="man-f"><span>${asEsc(lab(k))}</span><input type="number" inputmode="decimal" step="any" data-mank="${k}" value="${SRC_MAN[g] && SRC_MAN[g][k] != null ? SRC_MAN[g][k] : ''}" data-pii-ok></label>`).join('')}<button type="button" class="gold-btn" data-mansave="${g}">${asEsc(t('man_save'))}</button></div>`;
+  }
+  return h;
+};
+async function srcpSaveAll(next){
+  await srcpSave(next);
+  if (!IN_CLAUDE && ghTok()){ try { await ghPut('srcpref.json', JSON.stringify(Object.assign({}, srcpClean(next), {at: Date.now()}), null, 1), 'Data sources update'); toast(t('cs_pubSite')); } catch (e) {} }
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest && e.target.closest('[data-mansave]'); if (!b || !liveOwner()) return;
+  const g = b.dataset.mansave, box = b.closest('.man-box'), vals = {};
+  $$('[data-mank]', box).forEach(i => { const v = parseFloat(i.value); if (v > 0) vals[i.dataset.mank] = v; });
+  const next = Object.assign({}, SRCP, {man: Object.assign({}, SRC_MAN, {[g]: vals}), cust: SRC_CUST});
+  try { await srcpSaveAll(next); srcpSet(next); toast(t('man_saved')); } catch (er) { toast(t('src_pFail')); }
+});
+/* the list of sources the developer added */
+var CS_EDIT = null;
+function csrcRender(){
+  const box = $('#cs_box'); if (!box || !liveOwner()) return;
+  if (box.contains(document.activeElement) && /INPUT|SELECT/.test(document.activeElement.tagName)) return;
+  const E = asEsc, e0 = CS_EDIT ? (SRC_CUST.find(c => c.id === CS_EDIT) || {}) : {n: '', g: 'fx', u: '', p: '', k: '', kind: 'ilsPer', s: 60};
+  let h = `<p class="fine">${E(t('cs_intro'))}</p>`;
+  h += SRC_CUST.length ? `<div class="cs-list">${SRC_CUST.map(c => { const st = CS_ST[c.id], on = SRCP[c.g] === 'c:' + c.id;
+    return `<div class="cs-it" data-csid="${c.id}"><div class="src-top"><b>${E(c.n)}</b><span class="src-st s-${on ? (st && st.ok ? 'live' : st ? 'stale' : 'sched') : 'sched'}">${E(on ? t('cs_on') : t('cs_offT'))}</span></div>
+      <small dir="ltr" class="cs-u">${E(c.u)}</small><small>${E(t('src_g_' + c.g))} · ${E(c.k)} · ${E(t('cs_k_' + c.kind))} · ${E(t('cs_every', {n: c.s}))}${st ? ' · ' + E(st.ok ? t('cs_last', {v: N(st.v, null, 6)}) : t('cs_err', {e: st.e})) : ''}</small>
+      <div class="btnrow"><button type="button" class="mv" data-csa="${on ? 'off' : 'on'}">${E(t(on ? 'cs_useOff' : 'cs_use'))}</button><button type="button" class="mv" data-csa="test">${E(t('cs_test'))}</button><button type="button" class="mv" data-csa="edit">${E(t('ln_edit'))}</button><button type="button" class="mv danger" data-csa="del">${E(t('ln_del'))}</button></div></div>`; }).join('')}</div>` : `<p class="fine">${E(t('cs_none'))}</p>`;
+  h += `<div class="ln-form"><h4 class="ln-h">${E(t(CS_EDIT ? 'cs_editT' : 'cs_addT'))}</h4>
+    <div class="ln-f"><label for="cs_n">${E(t('cs_n'))}</label><input id="cs_n" maxlength="40" value="${E(e0.n || '')}" data-pii-ok></div>
+    <div class="ln-f"><label for="cs_g">${E(t('cs_g'))}</label><select id="cs_g">${['fx', 'cr', 'mkt'].map(g => `<option value="${g}"${e0.g === g ? ' selected' : ''}>${E(t('src_g_' + g))}</option>`).join('')}</select></div>
+    <div class="ln-f"><label for="cs_u">${E(t('cs_u'))}</label><input id="cs_u" dir="ltr" inputmode="url" autocapitalize="off" spellcheck="false" placeholder="https://…/data.json" value="${E(e0.u || '')}"></div>
+    <div class="ln-f"><label for="cs_p">${E(t('cs_p'))}</label><input id="cs_p" dir="ltr" autocapitalize="off" spellcheck="false" placeholder="rates.ILS" value="${E(e0.p || '')}"><small class="hint">${E(t('cs_pH'))}</small></div>
+    <div class="ln-f"><label for="cs_k">${E(t('cs_k'))}</label><input id="cs_k" dir="ltr" autocapitalize="characters" spellcheck="false" placeholder="USD / BTC / ta35" value="${E(e0.k || '')}" data-pii-ok></div>
+    <div class="ln-f"><label for="cs_kind">${E(t('cs_kind'))}</label><select id="cs_kind">${CS_KIND.map(k => `<option value="${k}"${e0.kind === k ? ' selected' : ''}>${E(t('cs_k_' + k))}</option>`).join('')}</select></div>
+    <div class="ln-f"><label for="cs_s">${E(t('cs_s'))}</label><input id="cs_s" type="number" inputmode="numeric" min="10" step="1" value="${E(String(e0.s || 60))}" data-pii-ok></div>
+    <div class="btnrow"><button type="button" class="gold-btn" data-csa="save">${E(t(CS_EDIT ? 'ln_saveEd' : 'cs_add'))}</button>${CS_EDIT ? `<button type="button" class="mv" data-csa="cancel">${E(t('ln_cancel'))}</button>` : ''}</div><small class="hint" id="cs_msg"></small></div>`;
+  box.innerHTML = h;
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest && e.target.closest('[data-csa]'); if (!b || !liveOwner()) return;
+  const k = b.dataset.csa, row = b.closest('.cs-it'), id = row && row.dataset.csid, c = id && SRC_CUST.find(x => x.id === id);
+  const save = async (cust, picks) => { const next = Object.assign({}, SRCP, picks || {}, {man: SRC_MAN, cust}); await srcpSaveAll(next); srcpSet(next); };
+  try {
+    if (k === 'cancel'){ CS_EDIT = null; csrcRender(); return; }
+    if (k === 'edit'){ CS_EDIT = id; csrcRender(); const n = $('#cs_n'); if (n) n.focus(); return; }
+    if (k === 'test' && c){ const m = $('#cs_msg'); try { const v = await csFetch(c); CS_ST[c.id] = {ok: true, v, at: Date.now()}; } catch (er) { CS_ST[c.id] = {ok: false, e: String(er && er.message || er), at: Date.now()}; } csrcRender(); return; }
+    if (k === 'on' && c){ await save(SRC_CUST, {[c.g]: 'c:' + c.id}); toast(t('man_saved')); return; }
+    if (k === 'off' && c){ await save(SRC_CUST, {[c.g]: 'auto'}); toast(t('man_saved')); return; }
+    if (k === 'del' && c){ if (b.dataset.sure !== '1'){ b.dataset.sure = '1'; b.textContent = t('b_sure'); return; } const picks = SRCP[c.g] === 'c:' + c.id ? {[c.g]: 'auto'} : {}; await save(SRC_CUST.filter(x => x.id !== id), picks); return; }
+    if (k === 'save'){
+      const v = s => ($('#' + s) || {}).value || '';
+      const rec = {id: CS_EDIT || Math.random().toString(36).slice(2, 8), n: v('cs_n').trim(), g: v('cs_g'), u: v('cs_u').trim(), p: v('cs_p').trim(), k: v('cs_k').trim(), kind: v('cs_kind'), s: +v('cs_s')};
+      const ok = csClean([rec])[0], m = $('#cs_msg');
+      if (!ok){ if (m) m.textContent = t('cs_bad'); return; }
+      const list = SRC_CUST.filter(x => x.id !== ok.id).concat(ok);
+      CS_EDIT = null; await save(list); toast(t('man_saved')); return;
+    }
+  } catch (er) { toast(t('src_pFail')); }
+});
+try { csrcRender(); dcRender(); gptRender(); liveApply(); } catch (e) {}
+/* the converter says where the rate came from when the developer set it by hand or from an added source */
+const showSrc75 = show;
+show = function(id, res){
+  if (id === 'convert' && res && Array.isArray(res.rows) && srcOwn('fx')){
+    const lab = t('r_rateSrc'), own = t('s_manual');
+    res = Object.assign({}, res, {rows: res.rows.map(r => r && r[0] === lab && r[1] !== own ? [r[0], t(SRCP.fx === 'manual' ? 'src_m_manual' : 'src_m_custom')] : r)});
+  }
+  return showSrc75.call(this, id, res);
+};
 
 applyLang(false);
 activate(tab);

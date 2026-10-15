@@ -1,0 +1,594 @@
+[
+ {
+  "v": "7.5",
+  "date": "2026-10-15",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "7.4",
+  "date": "2026-10-15",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "7.3",
+  "date": "2026-10-15",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "7.2",
+  "date": "2026-10-15",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "7.1",
+  "date": "2026-10-15",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "7.0",
+  "date": "2026-10-15",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "6.9",
+  "date": "2026-10-15",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "6.8",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "6.7",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "6.6",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "6.5",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "6.4",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "6.3",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "6.2",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "6.1",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "6.0",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "שיפורים ותיקונים.",
+   "ar": "تحسينات وإصلاحات.",
+   "en": "Improvements and fixes."
+  }
+ },
+ {
+  "v": "5.9",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "מרכז מקורות הנתונים, רק למפתח: לכל נתון רואים מאיפה הוא מגיע, מתי התעדכן, כמה הוא מאחר ולמה, עם קישורים ישירים למקור, לנתון הגולמי ולהשוואה, ובדיקה חיה של כל החיבורים. למשתמשים הכול עובד מאחורי הקלעים.",
+   "ar": "مركز مصادر البيانات للمطوّر فقط: لكل رقم ترى مصدره ووقت تحديثه ومقدار تأخره وسببه، مع روابط مباشرة للمصدر والبيانات الخام والمقارنة، وفحص مباشر لكل الاتصالات. للمستخدمين يعمل كل شيء خلف الكواليس.",
+   "en": "A data sources centre for the developer only: for every number see where it comes from, when it changed, how late it is and why, with direct links to the source, the raw data and a comparison, plus a live test of every connection. For people everything runs behind the scenes."
+  }
+ },
+ {
+  "v": "5.8",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "שערים מדויקים: הדולר, האירו והמטבעות העיקריים מגיעים עכשיו משערי שוק בין-בנקאיים בזמן אמת, ולא רק מהשער היציג שמתפרסם פעם ביום. כפתור חדש \"רענון כל הנתונים\" במסך הבית (וגם הכפתור בראש המסך) מרענן מיד שערים, קריפטו, מדדים, בורסות ונתונים רשמיים.",
+   "ar": "أسعار دقيقة: الدولار واليورو والعملات الرئيسية تأتي الآن من أسعار السوق بين البنوك في الوقت الفعلي، وليس فقط من السعر الرسمي الذي يُنشر مرة يوميًا. زر جديد \"تحديث كل البيانات\" في الشاشة الرئيسية (وكذلك الزر أعلى الشاشة) يحدّث فورًا الأسعار والعملات المشفّرة والمؤشرات والبورصات والبيانات الرسمية.",
+   "en": "Accurate rates: the dollar, euro and main currencies now come from real-time interbank market rates, not only the once-a-day official rate. A new \"Refresh all data\" button on the home screen (and the one at the top) instantly refreshes rates, crypto, indices, markets and official data."
+  }
+ },
+ {
+  "v": "5.7",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "שעון בהשראת האייפון: 6 סגנונות חדשים (מסך נעילה, מצב המתנה, שעות מעל דקות, זכוכית נוזלית, קו מתאר וספרות מתהפכות) והתאמה אישית של גופן, צבע, עובי, גודל וספרות. חזרו לכולם כפתור הרענון בראש המסך, מתג השערים החיים והסברים במסך הבית, ופרטי המקור והרענון בהמרת מטבע.",
+   "ar": "ساعة مستوحاة من آيفون: 6 أنماط جديدة (شاشة القفل، وضع الاستعداد، الساعات فوق الدقائق، زجاج سائل، خط محيطي، أرقام قلّابة) وتخصيص الخط واللون والسُّمك والحجم والأرقام. عاد للجميع زر التحديث في أعلى الشاشة ومفتاح الأسعار المباشرة والشروح في الشاشة الرئيسية وتفاصيل المصدر والتحديث في تحويل العملات.",
+   "en": "An iPhone-inspired clock: 6 new styles (lock screen, StandBy, stacked, liquid glass, outline and flip) plus your own font, colour, weight, size and digits. Back for everyone: the refresh button up top, the live-rates switch and notes on the home screen, and the source and refresh details in the currency converter."
+  }
+ },
+ {
+  "v": "5.6",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "כל החיבורים בזמן אמת עובדים מאחורי הקלעים: למשתמשים אין יותר מתגים, מקורות, סטטוס חיבור או עריכת נתוני מערכת – הם רואים רק תוצאות מדויקות לפי הנתונים הרשמיים. ניהול החיבורים והנתונים נשאר רק אצל בעל האפליקציה.",
+   "ar": "كل الاتصالات المباشرة تعمل خلف الكواليس: لم يعد لدى المستخدمين مفاتيح أو مصادر أو حالة اتصال أو تعديل لبيانات النظام – يرون فقط نتائج دقيقة حسب البيانات الرسمية. إدارة الاتصالات والبيانات تبقى لمالك التطبيق فقط.",
+   "en": "All live connections now run behind the scenes: people no longer see switches, sources, connection status or system-figure editing, only accurate results from the official data. Managing connections and data stays with the app owner."
+  }
+ },
+ {
+  "v": "5.5",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "מדדים אמיתיים בזמן אמת בכל האפליקציה: מדד המחירים לצרכן, מדד תשומות הבנייה ומדד מחירי הדירות מהלמ\"ס, ות\"א 35, ת\"א 125, S&P 500, נאסד\"ק 100, דאו ג'ונס, זהב ונפט – חי במסך הבית. מחשבון חדש: הצמדה למדד. בריבית דריבית, תשואה ופרישה אפשר לבחור תשואה לפי מדד. כל מדד ניתן לעריכה בהגדרות.",
+   "ar": "مؤشرات حقيقية في الوقت الفعلي في كل التطبيق: مؤشر أسعار المستهلك ومؤشر مدخلات البناء ومؤشر أسعار المساكن من دائرة الإحصاء، وتل أبيب 35 وتل أبيب 125 وS&P 500 وناسداك 100 وداو جونز والذهب والنفط – مباشرة في الشاشة الرئيسية. حاسبة جديدة: الربط بالمؤشر. في الفائدة المركبة والعائد والتقاعد يمكن اختيار عائد حسب مؤشر. كل مؤشر قابل للتعديل في الإعدادات.",
+   "en": "Real indices in real time across the app: the CBS consumer price, construction input and home price indices, plus TA-35, TA-125, S&P 500, Nasdaq 100, Dow Jones, gold and oil, live on the home screen. New calculator: index linkage. Compound interest, yield and retirement can take an index's return. Every index can be edited in settings."
+  }
+ },
+ {
+  "v": "5.4",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "נתונים חיים: כל שינוי מגיע מיד לחלונות ולמכשירים שלך, מוצפן ופרטי. בהגדרות נוסף \"נתוני מערכת: חיים וניתנים לשינוי\" – מדרגות מס, ביטוח לאומי, שכר מינימום, רכב, ריבית ומע\"מ מתעדכנים לבד, ואפשר לשנות כל נתון לעצמך. רשימת שמות המשתמשים נשמרת רק כטביעה מוצפנת.",
+   "ar": "بيانات مباشرة: كل تغيير يصل فورًا إلى نوافذك وأجهزتك، مشفّرًا وخاصًا. أُضيف في الإعدادات \"بيانات النظام: مباشرة وقابلة للتعديل\" – شرائح الضريبة والتأمين الوطني والحد الأدنى للأجور والسيارة والفائدة وضريبة القيمة المضافة تتحدث تلقائيًا، ويمكنك تعديل أي قيمة لنفسك. قائمة أسماء المستخدمين تُحفظ كبصمة مشفّرة فقط.",
+   "en": "Live data: every change reaches your windows and devices right away, encrypted and private. New in settings, \"System figures: live and editable\": tax brackets, National Insurance, minimum wage, car, interest and VAT update by themselves, and you can change any figure for yourself. The username list now keeps only encrypted fingerprints."
+  }
+ },
+ {
+  "v": "5.3",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "ברכב מהעבודה במחשבון השכר: טבלת מדרגות המס על שווי הרכב. רואים כמה מהשווי נופל בכל מדרגה, כמה מס משלמים בה, ביטוח לאומי ומס בריאות, ומאיזו מדרגה שולית לאיזו הרכב מעביר אותך.",
+   "ar": "في سيارة العمل بحاسبة الراتب: جدول شرائح الضريبة على قيمة السيارة. ترى كم من القيمة يقع في كل شريحة وكم ضريبة تدفع فيها، والتأمين الوطني وضريبة الصحة، ومن أي شريحة حدية إلى أي شريحة تنقلك السيارة.",
+   "en": "Work car in the salary calculator: a tax bracket table for the car benefit. See how much of it falls in each bracket, the tax there, National Insurance and health tax, and which marginal bracket the car moves you into."
+  }
+ },
+ {
+  "v": "5.2",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "במחשבון השכר: רכב מהעבודה (רכב צמוד). מזינים מחיר מחירון, סוג רכב, השתתפות וגילום, ורואים את שווי השימוש וכמה הרכב מוריד מהנטו בחודש ובשנה.",
+   "ar": "في حاسبة الراتب: سيارة من العمل (سيارة مرافقة). أدخل سعر القائمة ونوع السيارة والمساهمة والتجسيم، وشاهد قيمة الاستخدام وكم تخفض السيارة من الصافي شهريًا وسنويًا.",
+   "en": "Salary: work car (company car). Enter the list price, car type, your contribution and gross-up, and see the benefit value and how much the car cuts from net pay each month and year."
+  }
+ },
+ {
+  "v": "5.1",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "במחשבון השכר: הוצאות מהנטו (רכב, דלק לפי ק״מ, ביטוח, טסט, חניה, כביש 6, תחבורה ציבורית והוצאות אישיות) וכמה נשאר בכיס. החיבורים בזמן אמת מוצגים רק לבעל האפליקציה.",
+   "ar": "في حاسبة الراتب: مصاريف من الصافي (سيارة، وقود حسب الكيلومترات، تأمين، فحص، موقف، الشارع 6، مواصلات ومصاريف شخصية) وكم يبقى. الاتصالات المباشرة تظهر لمالك التطبيق فقط.",
+   "en": "Salary: costs out of net pay (car, fuel by km, insurance, test, parking, Highway 6, transit and your own items) and what is left. Live connections are shown only to the app owner."
+  }
+ },
+ {
+  "v": "5.0",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "16 כלים חדשים לפי נתוני 2026: שעות נוספות, החזר מס, השוואת הצעות עבודה, תעריף לשעה לעצמאים, עלות מעביד, דמי ניהול, קרן השתלמות, חיסכון לכל ילד, דמי אבטלה ולידה, כמה משכנתא אפשר לקבל, שווי רכב, רכב חשמלי מול בנזין, צריכת חשמל, מחיר ליחידה, הנחות ומבצעים וימי עבודה בין תאריכים.",
+   "ar": "16 أداة جديدة حسب بيانات 2026: الساعات الإضافية، استرداد الضريبة، مقارنة عروض العمل، سعر الساعة للمستقل، تكلفة صاحب العمل، رسوم الإدارة، صندوق الاستكمال، ادخار لكل طفل، البطالة والولادة، كم رهنًا يمكن الحصول عليه، قيمة السيارة، كهربائي مقابل بنزين، استهلاك الكهرباء، سعر الوحدة، الخصومات وأيام العمل.",
+   "en": "16 new tools with 2026 figures: overtime, tax refund, job offers, freelance rate, employer cost, management fees, study fund, child savings, unemployment and maternity, mortgage affordability, company car, EV vs petrol, appliance power, unit price, discounts and working days."
+  }
+ },
+ {
+  "v": "4.6",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "השוואת הלוואות: לכל הצעה אפשר לבחור ריבית קבועה, פריים ± מרווח, או חישוב הריבית לפי ההחזר החודשי. אימייל: גם גרסאות של אותה תיבה נחסמות שוב.",
+   "ar": "مقارنة القروض: لكل عرض فائدة ثابتة أو البرايم ± هامش أو حساب الفائدة من القسط الشهري. البريد: تُحظر مجددًا نسخ الصندوق نفسه.",
+   "en": "Loan comparison: each offer can use a fixed rate, Prime ± margin, or work out the rate from the monthly payment. Email: variants of the same inbox are blocked again."
+  }
+ },
+ {
+  "v": "4.5",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "קטגוריית אבטחה חיה: מכשירים מחוברים, ניסיונות כניסה וניתוק מכשירים, בלי מעקב. השוואת הלוואות עם כמה הצעות שרוצים ושם לכל אחת, חלוקת הוצאות עם 6 דרכים והתחשבנות, מיון א׳ ב׳ בתוך קטגוריות. הוסרו Investing ו-Claude מהעוזר, ואימייל נחסם רק כשהוא זהה בדיוק.",
+   "ar": "قسم أمان مباشر: الأجهزة المتصلة ومحاولات الدخول وفصل الأجهزة دون تتبّع. مقارنة قروض بعدد غير محدود من العروض وباسم لكل عرض، تقسيم مصاريف بست طرق وتسوية، وترتيب أبجدي داخل الفئات. أُزيل Investing وClaude من المساعد، ويُحظر البريد فقط عند التطابق التام.",
+   "en": "A live Security section: signed-in devices, sign-in attempts and signing devices out, with no tracking. Loan comparison with as many named offers as you like, bill splitting with six methods and settle-up, A–Z sorting inside categories. Removed Investing and Claude from the assistant; an email is blocked only when it is exactly the same."
+  }
+ },
+ {
+  "v": "4.4",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "כל אימייל יכול להיות משויך לחשבון אחד בלבד. הבדיקה נעשית בלי לחשוף את הכתובת.",
+   "ar": "يمكن ربط كل بريد بحساب واحد فقط، ويتم التحقق دون كشف العنوان.",
+   "en": "Each email can belong to one account only, checked without revealing the address."
+  }
+ },
+ {
+  "v": "4.3.1",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "הבהרה באימות האימייל: מקלידים רק את כתובת המייל, והאפליקציה לעולם לא מבקשת את הסיסמה של חשבון המייל.",
+   "ar": "توضيح في تأكيد البريد: تكتب عنوان البريد فقط، ولا يطلب التطبيق أبدًا كلمة مرور حساب البريد.",
+   "en": "Clarified email verification: you type only the email address, and the app never asks for your email account password."
+  }
+ },
+ {
+  "v": "4.3",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "קוד ה-PIN ותיקיית האבטחה הוסרו, ובהרשמה מופיעה אזהרה באדום לבחור שם משתמש וסיסמה ייחודיים לאפליקציה בלבד.",
+   "ar": "أُزيل رمز PIN ومجلد الأمان، ويظهر عند التسجيل تنبيه أحمر لاختيار اسم مستخدم وكلمة مرور خاصّين بالتطبيق فقط.",
+   "en": "The PIN code and the Security folder were removed, and sign-up now shows a red warning to use a username and password unique to this app."
+  }
+ },
+ {
+  "v": "4.2",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "תיקייה חדשה בהגדרות: אבטחה, ובה קוד ה-PIN.",
+   "ar": "مجلد جديد في الإعدادات: الأمان، وفيه رمز PIN.",
+   "en": "A new Settings folder, Security, holding the PIN code."
+  }
+ },
+ {
+  "v": "4.1",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "קוד PIN של 4–6 ספרות שנועל את האפליקציה כשיוצאים ממנה, עם שחזור דרך האימייל המאומת.",
+   "ar": "رمز PIN من 4–6 أرقام يقفل التطبيق عند الخروج منه، مع الاستعادة عبر البريد المؤكد.",
+   "en": "A 4–6 digit PIN that locks the app when you leave it, with recovery through your verified email."
+  }
+ },
+ {
+  "v": "4.0",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "חסימת הרשמה שאי אפשר לעקוף: ב-Claude היא חלה על כל המשתמשים ורק בעל האפליקציה משנה אותה, וגם טלפון חדש ושחזור חסומים. הוסרו הקישורים לבלינק, אינטר, כל זכות וביטוח לאומי.",
+   "ar": "حظر تسجيل لا يمكن تجاوزه: في Claude يسري على جميع المستخدمين ويغيّره مالك التطبيق فقط، ويُحظر أيضًا الهاتف الجديد والاستعادة. أُزيلت روابط Blink وinter.il وكول زخوت والتأمين الوطني.",
+   "en": "A sign-up block that cannot be bypassed: in Claude it applies to all users and only the app owner can change it, and new phone and recovery are blocked too. Removed the Blink, inter.il, Kol Zchut and National Insurance links."
+  }
+ },
+ {
+  "v": "3.9",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "אימות אימייל ושחזור סיסמה: שולחים לעצמכם מייל עם קוד שחזור, ואם שוכחים סיסמה קובעים חדשה בלי לאבד נתונים.",
+   "ar": "تأكيد البريد واستعادة كلمة المرور: ترسل لنفسك رسالة فيها رمز استعادة، وإذا نسيت كلمة المرور تعيّن واحدة جديدة دون فقدان البيانات.",
+   "en": "Email verification and password recovery: send yourself an email with a recovery key, and if you forget your password set a new one without losing data."
+  }
+ },
+ {
+  "v": "3.8",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "מחיקת חשבון ושם משתמש לצמיתות בכפתור נפרד בהגדרות החשבון, עם אישור בסיסמה ובהקלדת שם המשתמש.",
+   "ar": "حذف الحساب واسم المستخدم نهائيًا بزر منفصل في إعدادات الحساب، مع التأكيد بكلمة المرور وكتابة اسم المستخدم.",
+   "en": "Delete the account and username permanently with a separate button in account settings, confirmed by password and typing the username."
+  }
+ },
+ {
+  "v": "3.7",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "טלפון חדש בכפתור אחד עם מעבר בין שליחה לקבלה, וקוד העברה אישי שמתחלף כל 15 דקות.",
+   "ar": "هاتف جديد بزر واحد مع التبديل بين الإرسال والاستلام، ورمز نقل شخصي يتغيّر كل 15 دقيقة.",
+   "en": "New phone in one button with a switch between send and receive, and a personal transfer code that changes every 15 minutes."
+  }
+ },
+ {
+  "v": "3.6.1",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "מעבר לטלפון חדש נמצא עכשיו בשורה העליונה של החשבון, ליד כניסה והרשמה.",
+   "ar": "الانتقال إلى هاتف جديد أصبح في الصف العلوي للحساب بجانب الدخول والتسجيل.",
+   "en": "Moving to a new phone is now in the account's top row, next to sign in and sign up."
+  }
+ },
+ {
+  "v": "3.6",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "מעבר לטלפון חדש עם אותו שם משתמש וסיסמה וכל הנתונים: קוד העברה מוצפן, ובתוך Claude גיבוי אוטומטי בענן.",
+   "ar": "الانتقال إلى هاتف جديد بنفس اسم المستخدم وكلمة المرور وكل البيانات: رمز نقل مشفّر، وداخل Claude نسخ احتياطي تلقائي في السحابة.",
+   "en": "Move to a new phone with the same username, password and all your data: an encrypted transfer code, plus automatic cloud backup inside Claude."
+  }
+ },
+ {
+  "v": "3.5",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "הוצאות חודשיות: כפתור + צף, עריכת הוצאות, מטבע ומדינה לכל הוצאה עם המרה אוטומטית, עיר/אזור, אמצעי תשלום, תקציב לכל קטגוריה, הכנסה חודשית ופילוח גם לפי אמצעי תשלום ומדינה.",
+   "ar": "المصاريف الشهرية: زر + عائم، تعديل المصاريف، عملة ودولة لكل مصروف مع تحويل تلقائي، المدينة/المنطقة، وسيلة الدفع، ميزانية لكل فئة، الدخل الشهري، والتوزيع أيضًا حسب وسيلة الدفع والدولة.",
+   "en": "Monthly expenses: a floating + button, editing, a currency and country per expense with automatic conversion, city/region, payment method, a budget per category, monthly income, and breakdowns by payment method and country."
+  }
+ },
+ {
+  "v": "3.4",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "שני כלים חדשים: הוצאות חודשיות עם תצוגה לפי קטגוריות, וניהול לקוחות לרואי חשבון עם דיווחי מע״מ ומקדמות, משימות וקשר מהיר.",
+   "ar": "أداتان جديدتان: المصاريف الشهرية مع عرض حسب الفئات، وإدارة العملاء للمحاسبين مع تقارير الضريبة والدفعات المسبقة والمهام والتواصل السريع.",
+   "en": "Two new tools: monthly expenses shown by category, and a client manager for accountants with VAT and advance-tax filings, tasks and quick contact."
+  }
+ },
+ {
+  "v": "3.3",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "טופס המשוב הוסר מהאפליקציה.",
+   "ar": "أُزيل نموذج الملاحظات من التطبيق.",
+   "en": "The feedback form was removed from the app."
+  }
+ },
+ {
+  "v": "3.2",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "משוב מתוך האפליקציה שנשלח ישירות ליוצר בלי לחשוף את המייל שלו, וחיפוש ב-Investing.com בלוח השערים החיים.",
+   "ar": "ملاحظات من داخل التطبيق تصل مباشرة إلى صاحبه دون كشف بريده، وبحث في Investing.com داخل لوحة الأسعار الحيّة.",
+   "en": "In-app feedback that goes straight to the creator without revealing their email, and Investing.com search in the live board."
+  }
+ },
+ {
+  "v": "3.1",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "שעון עם תאריך לועזי ותאריך עברי במסך הבית, בחמישה סגנונות לבחירה בהגדרות.",
+   "ar": "ساعة مع التاريخ الميلادي والعبري في الشاشة الرئيسية، بخمسة أنماط للاختيار في الإعدادات.",
+   "en": "A clock with the Gregorian and Hebrew dates on the home screen, in five styles to choose from in Settings."
+  }
+ },
+ {
+  "v": "3.0",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "ערכות לחגים: ראש השנה, חנוכה, פסח, חג המולד, פסחא, סילבסטר, רמדאן, עיד אל-פיטר ועיד אל-אדחא — עם אפשרות למעבר אוטומטי בזמן החג.",
+   "ar": "سمات للأعياد: رأس السنة العبرية، حانوكا، الفصح اليهودي، الميلاد، الفصح، رأس السنة الميلادية، رمضان، عيد الفطر وعيد الأضحى — مع خيار التبديل التلقائي خلال العيد.",
+   "en": "Holiday themes: Rosh Hashanah, Hanukkah, Passover, Christmas, Easter, New Year's Eve, Ramadan, Eid al-Fitr and Eid al-Adha — with an option to switch automatically during the holiday."
+  }
+ },
+ {
+  "v": "2.9",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "ערכות נושא: 9 עיצובים שמחליפים בלחיצה — לילה כחול, יום, חוף תל אביב, אבן ירושלמית, שטר כסף, ים המלח, שקיעה באילת ומסוף מסחר. כפתור פלטה בראש המסך.",
+   "ar": "السمات: 9 تصاميم تُبدَّل بنقرة — ليل أزرق، نهار، شاطئ تل أبيب، حجر القدس، ورقة نقدية، البحر الميت، غروب في إيلات وشاشة التداول. زر لوحة الألوان أعلى الشاشة.",
+   "en": "Themes: 9 designs you switch with one tap — Midnight blue, Daylight, Tel Aviv beach, Jerusalem stone, Banknote, Dead Sea, Eilat sunset and Trading terminal. A palette button at the top of the screen."
+  }
+ },
+ {
+  "v": "2.8.2",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "לוח Investing.com מתפרס עכשיו על כל המסך ומציג את כל הטבלה, עם כפתורי הגדלה והקטנה.",
+   "ar": "لوحة Investing.com تملأ الشاشة الآن وتعرض الجدول كاملًا، مع أزرار التكبير والتصغير.",
+   "en": "The Investing.com board now fills the screen and shows the whole table, with zoom buttons."
+  }
+ },
+ {
+  "v": "2.8.1",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "בדיקת איכות אוטומטית לתרגומים: תרגום שהגיע לטקסט הלא נכון נפסל ומתורגם מחדש.",
+   "ar": "فحص جودة تلقائي للترجمات: الترجمة التي أُلحقت بنص خاطئ تُرفض وتُعاد ترجمتها.",
+   "en": "Automatic quality check for translations: a translation attached to the wrong text is rejected and translated again."
+  }
+ },
+ {
+  "v": "2.8",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "Investing.com בזמן אמת: לוח חי עם הדולר מול כל המטבעות, מטבעות עיקריים, קריפטו ולוח אירועים כלכליים.",
+   "ar": "Investing.com لحظيًا: لوحة حيّة للدولار مقابل كل العملات، والعملات الرئيسية، والعملات المشفّرة، والأجندة الاقتصادية.",
+   "en": "Investing.com in real time: a live board with the dollar against every currency, major pairs, crypto and the economic calendar."
+  }
+ },
+ {
+  "v": "2.7",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "מודל AI אישי שעובד במכשיר בלי מפתח ובלי אינטרנט, עם בחירה בינו לבין Gemini; קישור ל-Investing.com בחיבורים בזמן אמת.",
+   "ar": "نموذج ذكاء اصطناعي شخصي يعمل على الجهاز دون مفتاح ودون إنترنت، مع الاختيار بينه وبين Gemini؛ ورابط إلى Investing.com في الاتصالات الحية.",
+   "en": "A personal AI model that runs on the device with no key and no internet, with a choice between it and Gemini; plus an Investing.com link in live connections."
+  }
+ },
+ {
+  "v": "2.6",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "כל 80 השפות: הממשק כולו מתורגם, לא רק עברית, ערבית ואנגלית. שפה חדשה מתורגמת אוטומטית בבחירה הראשונה ונשמרת.",
+   "ar": "جميع اللغات الثمانين: الواجهة كلها مترجمة، وليس العبرية والعربية والإنجليزية فقط. تُترجم اللغة الجديدة تلقائيًا عند اختيارها أول مرة وتُحفظ.",
+   "en": "All 80 languages: the whole interface is translated, not just Hebrew, Arabic and English. A new language is translated automatically the first time you pick it, and saved."
+  }
+ },
+ {
+  "v": "2.5",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "ההגדרות מסודרות עכשיו לפי קטגוריות, בעיצוב חדש וברור יותר.",
+   "ar": "الإعدادات مرتّبة الآن حسب الفئات، بتصميم جديد وأوضح.",
+   "en": "Settings are now organised into categories with a new, clearer design."
+  }
+ },
+ {
+  "v": "2.4",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "הוסרה רשימת היסטוריית הגרסאות מההגדרות.",
+   "ar": "أُزيلت قائمة سجل الإصدارات من الإعدادات.",
+   "en": "Removed the version history list from Settings."
+  }
+ },
+ {
+  "v": "2.3",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "מספר גרסה לכל עדכון, היסטוריית גרסאות, ובדיקת עדכונים אוטומטית — הקישור נשאר אותו קישור.",
+   "ar": "رقم إصدار لكل تحديث، وسجل الإصدارات، وفحص تلقائي للتحديثات — الرابط يبقى نفسه.",
+   "en": "A version number for every update, version history, and automatic update checks — the link stays the same."
+  }
+ },
+ {
+  "v": "2.2",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "תיקון העוזר עם Gemini וכפתור \"אישור ובדיקת המפתח\" עם הודעות שגיאה ברורות.",
+   "ar": "إصلاح المساعد مع Gemini وزر \"تأكيد المفتاح وفحصه\" مع رسائل خطأ واضحة.",
+   "en": "Gemini assistant fix and an \"Approve & test key\" button with clear error messages."
+  }
+ },
+ {
+  "v": "2.1",
+  "date": "2026-10-14",
+  "notes": {
+   "he": "האתר ב-GitHub: נתוני בנק ישראל, ריבית ומדד מתעדכנים לבד כל שעתיים; עוזר AI עם מפתח Gemini חינמי.",
+   "ar": "الموقع على GitHub: بيانات بنك إسرائيل والفائدة والمؤشر تتحدّث تلقائيًا كل ساعتين؛ مساعد ذكاء اصطناعي بمفتاح Gemini مجاني.",
+   "en": "GitHub site: Bank of Israel rates, interest and CPI update by themselves every two hours; AI assistant with a free Gemini key."
+  }
+ },
+ {
+  "v": "2.0",
+  "notes": {
+   "he": "שם משתמש @ ייחודי, סיסמה והרשמה, ותג הרשאות שמראה שרק הבעלים יכול לשנות.",
+   "ar": "اسم مستخدم @ فريد، وكلمة مرور وتسجيل، وشارة صلاحيات تُظهر أن المالك وحده يمكنه التغيير.",
+   "en": "Unique @username, password and sign-up, and a permission badge showing only the owner can make changes."
+  }
+ },
+ {
+  "v": "1.9",
+  "notes": {
+   "he": "חיפוש בכל האפליקציה, וחיבורים ל-Binance ול-Blink ול-inter.il.",
+   "ar": "بحث في كل التطبيق، واتصالات مع Binance وBlink وinter.il.",
+   "en": "App-wide search, plus Binance, Blink and inter.il connections."
+  }
+ },
+ {
+  "v": "1.8",
+  "notes": {
+   "he": "עוזר שמסביר כל שדה ותוצאה בשפה פשוטה, נקודות זכות למילואים, וקישורים לכל זכות ולביטוח לאומי.",
+   "ar": "مساعد يشرح كل حقل ونتيجة بلغة بسيطة، ونقاط استحقاق لخدمة الاحتياط، وروابط لـ«كل زخوت» والتأمين الوطني.",
+   "en": "An assistant that explains every field and result simply, reserve-duty credit points, and links to Kol Zchut and National Insurance."
+  }
+ },
+ {
+  "v": "1.7",
+  "notes": {
+   "he": "ממיר מטבעות עם כל המטבעות והקריפטו, חיפוש מטבע, וחיבור בלחיצה אחת בלי חשבון.",
+   "ar": "محوّل عملات بكل العملات والعملات المشفّرة، وبحث عن العملة، واتصال بنقرة واحدة دون حساب.",
+   "en": "Currency converter with every currency and crypto, currency search, and one-tap connection with no account."
+  }
+ },
+ {
+  "v": "1.6",
+  "notes": {
+   "he": "קטגוריות מאוחדות ומסודרות, וקישורים בהגדרות לכל מקורות הנתונים בזמן אמת.",
+   "ar": "فئات موحّدة ومرتّبة، وروابط في الإعدادات لكل مصادر البيانات الحية.",
+   "en": "Merged, tidier categories and links in Settings to every live data source."
+  }
+ },
+ {
+  "v": "1.5",
+  "notes": {
+   "he": "מחשבון ריבית ופריים מלא, וריבית בנק ישראל ומדד המחירים מתעדכנים אוטומטית.",
+   "ar": "حاسبة كاملة للفائدة والبرايم، وفائدة بنك إسرائيل ومؤشر الأسعار يتحدّثان تلقائيًا.",
+   "en": "Full interest and prime calculator; Bank of Israel rate and CPI update automatically."
+  }
+ },
+ {
+  "v": "1.4",
+  "notes": {
+   "he": "שערים חיים שמתעדכנים כל שנייה, והגדרות לכל החיבורים בזמן אמת.",
+   "ar": "أسعار حيّة تتحدّث كل ثانية، وإعدادات لكل الاتصالات الحية.",
+   "en": "Live rates every second and settings for every live connection."
+  }
+ },
+ {
+  "v": "1.3",
+  "notes": {
+   "he": "שערים רשמיים של בנק ישראל והבנק המרכזי האירופי, ומחשבון אינפלציה.",
+   "ar": "أسعار رسمية من بنك إسرائيل والبنك المركزي الأوروبي، وحاسبة التضخّم.",
+   "en": "Official Bank of Israel and ECB rates, and an inflation calculator."
+  }
+ },
+ {
+  "v": "1.2",
+  "notes": {
+   "he": "מסך בית חי עם נתוני שוק אמיתיים.",
+   "ar": "شاشة رئيسية حيّة ببيانات سوق حقيقية.",
+   "en": "Live home screen with real market data."
+  }
+ },
+ {
+  "v": "1.1",
+  "notes": {
+   "he": "עוזר AI אישי וחיפוש.",
+   "ar": "مساعد ذكاء اصطناعي شخصي وبحث.",
+   "en": "Personal AI assistant and search."
+  }
+ },
+ {
+  "v": "1.0",
+  "notes": {
+   "he": "המחשבון הפיננסי: שכר, מס, משכנתא, הלוואות, חיסכון ועוד — בעברית, ערבית ואנגלית.",
+   "ar": "الحاسبة المالية: الراتب، الضريبة، الرهن العقاري، القروض، الادخار وغيرها — بالعبرية والعربية والإنجليزية.",
+   "en": "The financial calculator: salary, tax, mortgage, loans, savings and more — in Hebrew, Arabic and English."
+  }
+ }
+]

@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>מחשבון פיננסי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#EEF1F6; --surface:#FFFFFF; --field:#FFFFFF;
+  --ink:#0E1A33; --ink-2:#56627A; --line:#DCE1EA;
+  --navy:#0B1F3F; --hero-bg:#0B1F3F; --on-navy:#F3F6FC; --on-navy-2:#A9B8D3; --nav-line:rgba(255,255,255,.12);
+  --brass:#C69A3E; --focus:#1F4FB8;
+  --c1:#2A4A7F; --c2:#C69A3E; --c3:#B4533C; --c4:#8FA3C7;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#0A1226; --surface:#101B35; --field:#0C1630;
+    --ink:#E7EDF8; --ink-2:#9AA9C5; --line:#22314F;
+    --navy:#070E20; --hero-bg:#15284F;
+    --brass:#E0B65A; --focus:#8FB0F5;
+    --c1:#6C8FD6; --c2:#E0B65A; --c3:#E08A70; --c4:#5E7399;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#0A1226; --surface:#101B35; --field:#0C1630;
+  --ink:#E7EDF8; --ink-2:#9AA9C5; --line:#22314F;
+  --navy:#070E20; --hero-bg:#15284F;
+  --brass:#E0B65A; --focus:#8FB0F5;
+  --c1:#6C8FD6; --c2:#E0B65A; --c3:#E08A70; --c4:#5E7399;
+}
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font:400 1rem/1.55 'IBM Plex Sans Hebrew','IBM Plex Sans Arabic','IBM Plex Sans',system-ui,'Segoe UI',Arial,sans-serif;
+}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.rail :focus-visible{outline-color:#E0B65A}
+.num{direction:ltr;unicode-bidi:isolate;display:inline-block}
+
+/* ---------- shell ---------- */
+.rail{background:var(--navy);color:var(--on-navy);padding:14px 14px 0}
+.rail-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.05rem;color:#fff}
+.mark{width:30px;height:30px;flex:none}
+.rail-ctrls{display:flex;gap:8px;align-items:center}
+.cap{display:none}
+.seg{display:inline-flex;background:rgba(255,255,255,.09);border-radius:10px;padding:3px}
+.seg button{
+  appearance:none;border:0;background:none;color:var(--on-navy-2);font:inherit;font-size:.82rem;font-weight:600;
+  padding:6px 11px;border-radius:8px;cursor:pointer;min-width:38px;
+}
+.seg button[aria-pressed="true"]{background:#fff;color:#0B1F3F}
+.rail select{
+  font:inherit;font-size:.86rem;color:#fff;background:rgba(255,255,255,.09);
+  border:1px solid var(--nav-line);border-radius:10px;padding:7px 10px;min-height:38px;max-width:11rem;
+}
+.rail select option,.rail select optgroup{background:var(--surface);color:var(--ink)}
+.nav{display:flex;overflow-x:auto;gap:2px;margin:12px -14px 0;padding:0 10px;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.grp{display:contents}
+.grp-l{display:none}
+.tab{
+  position:relative;display:flex;align-items:center;gap:8px;flex:none;
+  appearance:none;background:none;border:0;border-bottom:3px solid transparent;
+  color:var(--on-navy-2);font:inherit;font-size:.92rem;font-weight:500;
+  padding:12px 12px;cursor:pointer;white-space:nowrap;
+}
+.tab:hover{color:#fff}
+.tab[aria-selected="true"]{color:#fff;border-bottom-color:var(--brass)}
+.ic{width:19px;height:19px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+.main{padding:20px 14px 36px;min-width:0}
+.main-in{max-width:1040px;margin:0 auto}
+.page-head{margin-bottom:18px}
+.page-head h2{margin:0;font-size:1.55rem;font-weight:600;letter-spacing:-.01em;line-height:1.25}
+.page-head p{margin:4px 0 0;color:var(--ink-2);font-size:.95rem;max-width:42rem}
+
+/* ---------- panels ---------- */
+.hero{
+  background:var(--hero-bg);color:#fff;border-radius:14px;padding:13px 18px 14px;
+  position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:5;
+  box-shadow:0 8px 22px rgba(8,18,40,.22);
+}
+.hero-label{display:block;color:var(--on-navy-2);font-size:.88rem}
+.hero-value{
+  font-family:'Frank Ruhl Libre',Georgia,'Times New Roman',serif;font-weight:500;
+  font-size:clamp(1.75rem,7.5vw,3.1rem);line-height:1.12;letter-spacing:-.01em;
+  font-variant-numeric:lining-nums tabular-nums;overflow-wrap:anywhere;
+}
+.hero-sub{display:none;color:var(--on-navy-2);font-size:.9rem;margin-top:4px}
+
+.inputs{
+  background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:18px;margin-top:14px;
+}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px 12px}
+.field.wide{grid-column:1/-1}
+.field label{display:block;font-size:.83rem;font-weight:500;color:var(--ink-2);margin-bottom:5px}
+.hint{display:block;margin-top:5px;font-size:.78rem;color:var(--ink-2);line-height:1.4}
+.control{
+  display:flex;direction:ltr;align-items:center;gap:6px;
+  background:var(--field);border:1px solid var(--line);border-radius:10px;
+  padding:0 12px;min-height:44px;
+}
+.control:focus-within,.field select:focus,.inl-select:focus{
+  border-color:var(--brass);box-shadow:0 0 0 3px color-mix(in srgb,var(--brass) 28%,transparent);
+}
+.control input{
+  flex:1;min-width:0;width:100%;border:0;background:none;outline:0;color:var(--ink);
+  font:inherit;font-weight:500;text-align:right;padding:8px 0;font-variant-numeric:tabular-nums;
+}
+.control input:focus-visible{outline:0}
+.control .u{flex:none;color:var(--ink-2);font-size:.9rem}
+.control.sm{display:inline-flex;width:8.6em;min-height:38px}
+.field select,.inl-select{
+  width:100%;min-height:44px;font:inherit;font-weight:500;color:var(--ink);
+  background:var(--field);border:1px solid var(--line);border-radius:10px;padding:8px 10px;outline:0;
+}
+.inl-select{width:auto;min-height:38px}
+.btn{
+  width:100%;min-height:42px;font:inherit;font-weight:500;color:var(--ink);cursor:pointer;
+  background:none;border:1px solid var(--line);border-radius:10px;padding:8px 12px;
+}
+.btn:hover{border-color:var(--brass)}
+
+.detail{margin-top:10px}
+.ledger{margin:0;padding:0}
+.row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:11px 2px;border-bottom:1px solid var(--line)}
+.row dt{color:var(--ink-2);font-size:.95rem}
+.row dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums;text-align:end}
+.row.key{border-bottom:0;border-top:2px solid var(--ink);margin-top:-1px}
+.row.key dt{color:var(--ink);font-weight:600}
+.row.key dd{font-size:1.08rem}
+.fine{margin:12px 2px 0;color:var(--ink-2);font-size:.82rem;line-height:1.5}
+
+.chart{margin:20px 0 0;padding:16px 14px 14px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.chart figcaption{font-weight:600;font-size:.95rem;margin-bottom:10px}
+.svgwrap{width:100%}
+.svgwrap svg{display:block;max-width:100%}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:10px;font-size:.85rem;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend b{color:var(--ink);font-weight:600}
+.sw{width:11px;height:11px;border-radius:3px;display:inline-block;flex:none}
+.c-ink{fill:var(--c1);background:var(--c1)}
+.c-accent{fill:var(--c2);background:var(--c2)}
+.c-warm{fill:var(--c3);background:var(--c3)}
+.c-soft{fill:var(--c4);background:var(--c4)}
+.bar{display:flex;gap:2px;height:24px;border-radius:7px;overflow:hidden;direction:ltr}
+.bar span{display:block;min-width:3px}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{fill:var(--ink-2);font-size:11px;font-family:inherit}
+
+.sched{margin-top:20px;border-top:1px solid var(--line);padding-top:6px}
+.sched summary{cursor:pointer;padding:9px 0;font-weight:600}
+.scroll{overflow-x:auto;max-width:100%}
+.tbl{width:100%;border-collapse:collapse;font-size:.9rem;font-variant-numeric:tabular-nums}
+.tbl th,.tbl td{padding:8px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl thead th{color:var(--ink-2);font-weight:500;position:sticky;top:0;background:var(--bg)}
+.tbl tbody th{font-weight:500}
+.tbl td{direction:ltr}
+:root[dir="rtl"] .tbl th,:root[dir="rtl"] .tbl td{text-align:right}
+:root[dir="ltr"] .tbl th,:root[dir="ltr"] .tbl td{text-align:left}
+
+.panel-flat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 18px}
+.sentence{padding:18px 0;border-bottom:1px solid var(--line)}
+.sentence:last-child{border-bottom:0}
+.s-line{margin:0 0 8px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:1.05rem}
+.s-result{margin:0;font-family:'Frank Ruhl Libre',Georgia,serif;font-size:1.9rem;font-weight:500;line-height:1.25}
+
+.note{margin:28px 0 0;color:var(--ink-2);font-size:.82rem;line-height:1.55;max-width:48rem}
+.note a{color:inherit}
+
+/* ---------- desktop ---------- */
+@media (min-width:960px){
+  .shell{display:grid;grid-template-columns:276px minmax(0,1fr);min-height:100vh}
+  .rail{
+    position:sticky;top:0;height:100vh;overflow-y:auto;padding:26px 16px 20px;
+    display:flex;flex-direction:column;
+  }
+  .rail-top{display:contents}
+  .brand{order:0;margin:0 6px 22px}
+  .nav{order:1;flex:1;display:block;margin:0;padding:0;overflow:visible}
+  .grp{display:block;margin-bottom:18px}
+  .grp-l{display:block;margin:0 14px 6px;color:var(--on-navy-2);font-size:.78rem;font-weight:500;opacity:.85}
+  .tab{
+    width:100%;height:44px;padding:0 14px;border-bottom:0;border-radius:10px;font-size:.95rem;
+  }
+  .tab::before{
+    content:"";position:absolute;inset-block:11px;inset-inline-start:0;width:3px;border-radius:3px;background:transparent;
+  }
+  .tab:hover{background:rgba(255,255,255,.06)}
+  .tab[aria-selected="true"]{background:rgba(255,255,255,.1)}
+  .tab[aria-selected="true"]::before{background:var(--brass)}
+  .rail-ctrls{
+    order:2;flex-direction:column;align-items:stretch;gap:8px;margin-top:12px;
+    border-top:1px solid var(--nav-line);padding-top:16px;
+  }
+  .cap{display:block;font-size:.76rem;color:var(--on-navy-2);margin:2px 2px 0}
+  .seg{display:flex}
+  .seg button{flex:1}
+  .rail select{max-width:none;width:100%}
+  .main{padding:38px 44px 48px}
+  .page-head{margin-bottom:22px}
+}
+@media (min-width:1180px){
+  .panel:not(.panel-flat){
+    display:grid;grid-template-columns:minmax(310px,370px) minmax(0,1fr);column-gap:44px;
+    grid-template-areas:"inputs hero" "inputs detail";align-items:start;
+  }
+  .panel .hero{grid-area:hero;position:static;padding:22px 26px 24px;box-shadow:none}
+  .panel .hero-label{font-size:.95rem}
+  .panel .hero-sub{display:block}
+  .panel .inputs{grid-area:inputs;position:sticky;top:20px;margin-top:0}
+  .panel .detail{grid-area:detail;margin-top:12px}
+  .fields{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-top">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#14305E"/><path d="M9 23v-5M14.5 23V13M20 23v-7M25.5 23V9" stroke="#E0B65A" stroke-width="2.6" stroke-linecap="round" fill="none"/></svg>
+        <span data-i="appTitle"></span>
+      </div>
+      <div class="rail-ctrls">
+        <span class="cap" data-i="cap_lang"></span>
+        <div class="seg" role="group" data-ia="aria_lang" id="seg">
+          <button type="button" data-lang="he" title="עברית">עב</button>
+          <button type="button" data-lang="ar" title="العربية">عر</button>
+          <button type="button" data-lang="en" title="English">EN</button>
+        </div>
+        <label class="cap" for="cur" data-i="cap_cur"></label>
+        <select id="cur" data-ia="aria_cur"></select>
+      </div>
+    </div>
+    <nav class="nav" role="tablist" data-ia="aria_tabs" id="nav"></nav>
+  </aside>
+
+  <main class="main">
+    <div class="main-in">
+      <header class="page-head">
+        <h2 id="page-title"></h2>
+        <p id="page-desc"></p>
+      </header>
+      <div id="panels"></div>
+      <p class="note"><span data-i="note"></span> <a href="https://www.exchangerate-api.com" target="_blank" rel="noopener">Rates By Exchange Rate API</a></p>
+    </div>
+  </main>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+/* ================= i18n: [Hebrew, Arabic, English] ================= */
+const LANGS = ['he','ar','en'];
+const LOC = {he:'he-IL', ar:'ar-u-nu-latn', en:'en-US'};
+const T = {
+  appTitle:['מחשבון פיננסי','الحاسبة المالية','Financial Calculator'],
+  note:['החישובים להמחשה בלבד ואינם מהווים ייעוץ פיננסי או ייעוץ מס. נתוני המס והשכר הם לשנת 2026 בישראל. שערי המטבע הם לעיון בלבד ואינם שערי עסקה.','الحسابات للتوضيح فقط ولا تُعد استشارة مالية أو ضريبية. معطيات الضرائب والرواتب لسنة 2026 في إسرائيل. أسعار العملات للاطلاع فقط وليست أسعار تنفيذ.','Calculations are for illustration only and are not financial or tax advice. Tax and payroll figures are for Israel, 2026. Exchange rates are indicative, not transaction rates.'],
+  aria_lang:['שפה','اللغة','Language'],
+  aria_cur:['מטבע תצוגה','عملة العرض','Display currency'],
+  aria_tabs:['סוג החישוב','نوع الحساب','Calculator type'],
+  cap_lang:['שפה','اللغة','Language'],
+  cap_cur:['מטבע תצוגה','عملة العرض','Display currency'],
+  g_tools:['כלים','أدوات','Tools'],
+  g_work:['שכר ומס','الرواتب والضرائب','Pay and tax'],
+  g_money:['השקעות והלוואות','الاستثمار والقروض','Investing and loans'],
+  tab_convert:['המרת מטבע','تحويل العملات','Currency converter'],
+  tab_vat:['מע״מ','ضريبة القيمة المضافة','VAT'],
+  tab_percent:['אחוזים','النسب المئوية','Percentages'],
+  tab_salary:['מחשבון שכר','حاسبة الراتب','Salary'],
+  tab_tax:['מס הכנסה','ضريبة الدخل','Income tax'],
+  tab_loan:['הלוואות','القروض','Loans'],
+  tab_compound:['ריבית דריבית','الفائدة المركبة','Compound interest'],
+  tab_yield:['תשואה','العائد','Return'],
+  tab_dividends:['דיבידנדים','أرباح الأسهم','Dividends'],
+  d_convert:['המרה בין כל המטבעות לפי שערי היום, עם אפשרות לשער ידני.','تحويل بين جميع العملات حسب أسعار اليوم، مع إمكانية إدخال سعر يدوي.','Convert between all currencies at daily rates, with an optional manual rate.'],
+  d_vat:['הוספה וחילוץ של מע״מ מסכום, בשיעור שתבחרו.','إضافة ضريبة القيمة المضافة أو استخراجها من مبلغ بالنسبة التي تختارها.','Add VAT to an amount or pull it out of a gross price, at the rate you choose.'],
+  d_percent:['ארבע שאלות נפוצות על אחוזים, בנוסח של משפט.','أربعة أسئلة شائعة عن النسب المئوية بصيغة جمل.','Four common percentage questions, written as sentences.'],
+  d_salary:['מברוטו לנטו או מנטו לברוטו, לפי נתוני 2026 בישראל.','من الإجمالي إلى الصافي أو العكس، حسب معطيات 2026 في إسرائيل.','Gross to net or net to gross, using 2026 Israeli figures.'],
+  d_tax:['מס הכנסה לפי מדרגות 2026, נקודות זיכוי ומס יסף.','ضريبة الدخل حسب شرائح 2026 ونقاط الائتمان والضريبة الإضافية.','Income tax by 2026 brackets, credit points and the surtax.'],
+  d_loan:['תשלום חודשי, סך הריבית ולוח סילוקין.','القسط الشهري وإجمالي الفائدة وجدول السداد.','Monthly payment, total interest and an amortization schedule.'],
+  d_compound:['צמיחה של חיסכון עם הפקדות חודשיות וריבית דריבית.','نمو المدخرات مع إيداعات شهرية وفائدة مركبة.','Savings growth with monthly deposits and compound interest.'],
+  d_yield:['תשואה כוללת ושנתית, אחרי מס ואינפלציה.','العائد الإجمالي والسنوي بعد الضريبة والتضخم.','Total and annual return, after tax and inflation.'],
+  d_dividends:['הכנסה מדיבידנדים, תשואה ותחזית לפי שנים.','الدخل من أرباح الأسهم والعائد وتوقعات حسب السنوات.','Dividend income, yield and a year-by-year projection.'],
+  commonCur:['נפוצים','شائعة','Common'],
+  allCur:['כל המטבעות','جميع العملات','All currencies'],
+
+  p_s1a:['כמה זה','كم يساوي','What is'],
+  p_s1b:['מתוך','من','of'],
+  p_q:['?','؟','?'],
+  p_s2:['הוא כמה אחוז מתוך','يمثل كم بالمئة من','is what percent of'],
+  p_s3a:['שינוי מ-','التغيير من','Change from'],
+  p_s3b:['ל-','إلى','to'],
+  o_plus:['ועוד','زائد','plus'],
+  o_minus:['פחות','ناقص','minus'],
+  a_pct:['אחוז','نسبة مئوية','Percent'],
+  a_amount:['סכום','مبلغ','Amount'],
+  a_number:['מספר','رقم','Number'],
+  a_start:['ערך התחלתי','القيمة الابتدائية','Starting value'],
+  a_end:['ערך סופי','القيمة النهائية','Final value'],
+  a_action:['פעולה','العملية','Operation'],
+  r_inc:['עלייה של {p}','زيادة بنسبة {p}','Increase of {p}'],
+  r_dec:['ירידה של {p}','انخفاض بنسبة {p}','Decrease of {p}'],
+  r_none:['ללא שינוי','لا تغيير','No change'],
+
+  u_yrs:['שנים','سنوات','yrs'],
+  w_year:['שנה','السنة','Year'],
+  w_years:['שנים','سنوات','years'],
+  w_total:['סה״כ','الإجمالي','Total'],
+
+  f_amount:['סכום','المبلغ','Amount'],
+  f_from:['ממטבע','من عملة','From'],
+  f_to:['למטבע','إلى عملة','To'],
+  b_swap:['⇄ החלפת כיוון','⇄ عكس الاتجاه','⇄ Swap currencies'],
+  b_refresh:['⟳ רענון שערים','⟳ تحديث الأسعار','⟳ Refresh rates'],
+  f_custom:['שער ידני (לא חובה)','سعر صرف يدوي (اختياري)','Custom rate (optional)'],
+  h_custom:['1 ממטבע המקור = ? במטבע היעד. השאירו ריק לשימוש בשער העדכני.','1 من العملة المصدر = ؟ بالعملة الهدف. اتركه فارغًا لاستخدام السعر الحالي.','1 source = ? target. Leave empty to use the current rate.'],
+  st_loading:['טוען…','جارٍ التحميل…','Loading…'],
+  st_ok:['השערים עודכנו ({d})','تم تحديث الأسعار ({d})','Rates updated ({d})'],
+  st_fail:['אי אפשר למשוך שערים חיים מהעמוד הזה. מוצגים שערי {d}.','تعذّر جلب أسعار مباشرة من هذه الصفحة. الأسعار المعروضة بتاريخ {d}.','Live rates cannot be fetched from this page. Showing rates as of {d}.'],
+  r_rate:['שער','السعر','Rate'],
+  r_rateInv:['שער הפוך','السعر المعاكس','Inverse rate'],
+  r_rateSrc:['מקור השערים','مصدر الأسعار','Rate source'],
+  r_rateDate:['שערים נכונים ל','الأسعار حتى','Rates as of'],
+  s_live:['חי','مباشر','Live'],
+  s_snap:['נתון יומי שמור בעמוד','بيانات يومية محفوظة في الصفحة','Daily data stored in the page'],
+  s_manual:['שער ידני','سعر يدوي','Manual rate'],
+  t_otherCur:['הסכום במטבעות נוספים','المبلغ بعملات أخرى','Amount in other currencies'],
+  h_currency:['מטבע','العملة','Currency'],
+
+  f_vatMode:['סוג חישוב','نوع الحساب','Calculation'],
+  o_vatAdd:['הוספת מע״מ (מנטו לברוטו)','إضافة الضريبة (من الصافي إلى الإجمالي)','Add VAT (net to gross)'],
+  o_vatExtract:['חילוץ מע״מ (מברוטו לנטו)','استخراج الضريبة (من الإجمالي إلى الصافي)','Extract VAT (gross to net)'],
+  f_vatRate:['שיעור מע״מ','نسبة ضريبة القيمة المضافة','VAT rate'],
+  h_vatRate:['בישראל השיעור הרגיל הוא 18%. לשיעור אפס, כמו בייצוא, הזינו 0.','في إسرائيل النسبة العادية 18%. للنسبة صفر، مثل التصدير، أدخل 0.','The standard rate in Israel is 18%. For a zero rate, such as exports, enter 0.'],
+  r_vatTotal:['סכום כולל מע״מ','المبلغ شامل الضريبة','Amount including VAT'],
+  r_vatNet:['סכום לפני מע״מ','المبلغ قبل الضريبة','Amount before VAT'],
+  r_vatAmt:['המע״מ','قيمة الضريبة','VAT'],
+  r_vatShare:['המע״מ כאחוז מהסכום הכולל','الضريبة كنسبة من المبلغ الإجمالي','VAT as % of total'],
+  s_vatSub:['מע״מ בסך {v}','ضريبة بقيمة {v}','VAT of {v}'],
+
+  f_salAmount:['שכר חודשי','الراتب الشهري','Monthly salary'],
+  f_salMode:['כיוון החישוב','اتجاه الحساب','Direction'],
+  o_g2n:['מברוטו לנטו','من الإجمالي إلى الصافي','Gross to net'],
+  o_n2g:['מנטו לברוטו','من الصافي إلى الإجمالي','Net to gross'],
+  f_points:['נקודות זיכוי','نقاط الائتمان','Tax credit points'],
+  h_points:['ברירת מחדל: גבר תושב 2.25, אישה 2.75','الافتراضي: رجل مقيم 2.25، امرأة 2.75','Default: resident man 2.25, woman 2.75'],
+  f_pension:['הפרשת עובד לפנסיה','اقتطاع الموظف للتقاعد','Employee pension contribution'],
+  f_study:['הפרשת עובד לקרן השתלמות','اقتطاع الموظف لصندوق الاستكمال المهني','Employee study fund contribution'],
+  r_netMonthly:['שכר נטו חודשי','صافي الراتب الشهري','Monthly net salary'],
+  r_grossMonthly:['שכר ברוטו חודשי','الراتب الإجمالي الشهري','Monthly gross salary'],
+  s_fromGross:['מתוך ברוטו {g}','من إجمالي {g}','from gross {g}'],
+  s_toNet:['כדי לקבל נטו {g}','للحصول على صافٍ {g}','to take home {g}'],
+  r_incomeTax:['מס הכנסה','ضريبة الدخل','Income tax'],
+  r_ni:['ביטוח לאומי','التأمين الوطني','National Insurance'],
+  r_health:['מס בריאות','ضريبة الصحة','Health tax'],
+  r_pensionRow:['פנסיה (עובד)','التقاعد (الموظف)','Pension (employee)'],
+  r_studyRow:['קרן השתלמות (עובד)','صندوق الاستكمال (الموظف)','Study fund (employee)'],
+  r_totalDed:['סך הניכויים','إجمالي الاقتطاعات','Total deductions'],
+  r_dedShare:['הניכויים כאחוז מהברוטו','الاقتطاعات كنسبة من الإجمالي','Deductions as % of gross'],
+  r_creditsUsed:['זיכויי מס שנוצלו בחודש','الائتمانات الضريبية المستخدمة شهريًا','Tax credits applied per month'],
+  r_marginal:['ניכוי משולב על שקל נוסף','الاقتطاع الهامشي على شيكل إضافي','Combined rate on an extra shekel'],
+  r_netAnnual:['נטו שנתי','الصافي السنوي','Net per year'],
+  r_employerCost:['עלות מעסיק משוערת','تكلفة صاحب العمل التقديرية','Estimated employer cost'],
+  c_split:['לאן הולך השכר הברוטו','إلى أين يذهب الراتب الإجمالي','Where your gross salary goes'],
+  l_netPay:['נטו','الصافي','Net'],
+  l_incTax:['מס הכנסה','ضريبة الدخل','Income tax'],
+  l_niHealth:['ביטוח לאומי ובריאות','التأمين الوطني والصحة','National Insurance and health'],
+  l_savings:['פנסיה וקרן השתלמות','التقاعد وصندوق الاستكمال','Pension and study fund'],
+  n_salary:['חישוב משוער לשכיר תושב: מדרגות מס 2026, ביטוח לאומי ומס בריאות, וזיכוי של 35% על הפרשת עובד לפנסיה. הוא אינו כולל הטבות נוספות, למשל ילדים, יישוב מזכה או הפרשות מעסיק לקרן השתלמות. עלות המעסיק מחושבת לפי 6.5% פנסיה ו-6% פיצויים.','حساب تقديري لموظف مقيم: شرائح ضريبة 2026 والتأمين الوطني وضريبة الصحة وائتمان 35% على اقتطاع الموظف للتقاعد. لا يشمل مزايا أخرى مثل الأطفال أو البلدات المستحقة أو مساهمات صاحب العمل في صندوق الاستكمال. تكلفة صاحب العمل بحسب 6.5% تقاعد و6% تعويضات.','Estimate for a resident employee: 2026 tax brackets, National Insurance and health tax, and a 35% credit on the employee pension contribution. It excludes other benefits such as children, qualifying localities or employer study fund contributions. Employer cost assumes 6.5% pension and 6% severance.'],
+
+  f_taxIncome:['הכנסה חייבת','الدخل الخاضع للضريبة','Taxable income'],
+  h_taxIncome:['הכנסה מיגיעה אישית, כמו שכר או רווח מעסק','دخل من جهد شخصي مثل الراتب أو أرباح العمل','Earned income such as salary or business profit'],
+  f_taxPeriod:['תקופה','الفترة','Period'],
+  o_annualP:['שנתית','سنوية','Annual'],
+  o_monthlyP:['חודשית','شهرية','Monthly'],
+  f_otherCredits:['זיכויים נוספים בשנה','ائتمانات إضافية سنويًا','Other credits per year'],
+  h_otherCredits:['למשל פנסיה, תרומות או יישוב מזכה','مثل التقاعد أو التبرعات','For example pension, donations or a qualifying locality'],
+  r_taxYear:['מס הכנסה לתשלום בשנה','ضريبة الدخل السنوية المستحقة','Income tax payable per year'],
+  r_taxMonth:['מס הכנסה לתשלום בחודש','ضريبة الدخل الشهرية المستحقة','Income tax payable per month'],
+  s_taxSub:['שיעור אפקטיבי {e}, שיעור שולי {m}','المعدل الفعلي {e}، المعدل الهامشي {m}','Effective rate {e}, marginal rate {m}'],
+  r_incomeYear:['הכנסה חייבת שנתית','الدخل السنوي الخاضع للضريبة','Annual taxable income'],
+  r_taxBefore:['מס לפי מדרגות','الضريبة حسب الشرائح','Tax by brackets'],
+  r_surtax:['מס יסף','الضريبة الإضافية','Surtax'],
+  r_credApplied:['זיכויים (נקודות ואחרים)','الائتمانات (النقاط وغيرها)','Credits (points and other)'],
+  r_taxPayable:['מס הכנסה לתשלום','ضريبة الدخل المستحقة','Income tax payable'],
+  r_effRate:['שיעור מס אפקטיבי','المعدل الفعلي','Effective rate'],
+  r_margRate:['שיעור מס שולי','المعدل الهامشي','Marginal rate'],
+  r_afterTax:['הכנסה אחרי מס הכנסה','الدخل بعد ضريبة الدخل','Income after income tax'],
+  r_perMonth:['מס חודשי ממוצע','متوسط الضريبة الشهرية','Average monthly tax'],
+  c_taxBracket:['המס לפי מדרגה','الضريبة حسب الشريحة','Tax by bracket'],
+  l_tax:['מס','ضريبة','Tax'],
+  t_brackets:['פירוט לפי מדרגות','التفصيل حسب الشرائح','Breakdown by bracket'],
+  h_bracket:['מדרגה','الشريحة','Bracket'],
+  h_rate:['שיעור','النسبة','Rate'],
+  h_inBracket:['הכנסה במדרגה','الدخل في الشريحة','Income in bracket'],
+  h_taxCol:['מס','الضريبة','Tax'],
+  n_tax:['מס הכנסה על הכנסה מיגיעה אישית לפי מדרגות 2026. מס היסף הוא 3% על החלק שמעל 721,560 ₪ בשנה. הסכומים בשקלים, בלי קשר למטבע התצוגה.','ضريبة الدخل على الدخل من جهد شخصي حسب شرائح 2026. الضريبة الإضافية 3% على الجزء الذي يتجاوز 721,560 شيكل سنويًا. المبالغ بالشيكل بغض النظر عن عملة العرض.','Income tax on earned income by 2026 brackets. The surtax is 3% on the part above ₪721,560 a year. Amounts are in shekels regardless of the display currency.'],
+
+  f_price:['מחיר מניה','سعر السهم','Share price'],
+  f_shares:['כמות מניות','عدد الأسهم','Number of shares'],
+  f_dps:['דיבידנד שנתי למניה','أرباح الأسهم السنوية للسهم','Annual dividend per share'],
+  f_freq:['תשלומים בשנה','عدد الدفعات في السنة','Payments per year'],
+  o_yearly:['פעם בשנה','مرة في السنة','Yearly'],
+  o_semi:['חצי שנתי','نصف سنوي','Semi-annual'],
+  o_quarterly:['רבעוני','ربع سنوي','Quarterly'],
+  o_monthly:['חודשי','شهري','Monthly'],
+  f_divTax:['מס על דיבידנד','ضريبة أرباح الأسهم','Tax on dividends'],
+  f_divGrowth:['צמיחת הדיבידנד בשנה','نمو الأرباح سنويًا','Annual dividend growth'],
+  f_years:['מספר שנים','عدد السنوات','Number of years'],
+  r_divNet:['דיבידנד שנתי נטו','صافي أرباح الأسهم السنوية','Annual net dividend'],
+  r_invest:['סכום ההשקעה','مبلغ الاستثمار','Investment amount'],
+  r_divGross:['דיבידנד שנתי ברוטו','أرباح الأسهم السنوية الإجمالية','Annual gross dividend'],
+  r_tax:['מס ({n}%)','الضريبة ({n}%)','Tax ({n}%)'],
+  r_netPay:['נטו לכל תשלום','الصافي لكل دفعة','Net per payment'],
+  r_yGross:['תשואת דיבידנד ברוטו','عائد الأرباح (إجمالي)','Dividend yield (gross)'],
+  r_yNet:['תשואת דיבידנד נטו','عائد الأرباح (صافي)','Dividend yield (net)'],
+  r_grossYear:['דיבידנד ברוטו בשנה {n}','الأرباح الإجمالية في السنة {n}','Gross dividend in year {n}'],
+  r_cumNet:['סך הדיבידנדים נטו ב-{n} שנים','إجمالي الأرباح الصافية خلال {n} سنة','Total net dividends over {n} years'],
+  r_yoc:['תשואה על העלות בשנה האחרונה','العائد على التكلفة في السنة الأخيرة','Yield on cost in final year'],
+  c_divChart:['דיבידנד שנתי נטו לפי שנה','صافي الأرباح السنوية حسب السنة','Net annual dividend by year'],
+  l_netDiv:['דיבידנד נטו','أرباح صافية','Net dividend'],
+  t_yearly:['פירוט שנתי','التفاصيل السنوية','Yearly breakdown'],
+  h_gross:['ברוטו','إجمالي','Gross'],
+  h_net:['נטו','صافي','Net'],
+  h_cumNet:['נטו מצטבר','صافي تراكمي','Cumulative net'],
+
+  f_loanAmt:['סכום ההלוואה','مبلغ القرض','Loan amount'],
+  f_rate:['ריבית שנתית','الفائدة السنوية','Annual interest rate'],
+  f_term:['תקופה','المدة','Term'],
+  f_method:['שיטת החזר','طريقة السداد','Repayment method'],
+  o_annuity:['שפיצר (תשלום קבוע)','أقساط ثابتة (شبيتسر)','Fixed payment (annuity)'],
+  o_equal:['קרן שווה (תשלום יורד)','أصل متساوٍ (قسط متناقص)','Equal principal (declining payment)'],
+  r_monthly:['תשלום חודשי','القسط الشهري','Monthly payment'],
+  r_monthlyFixed:['תשלום חודשי קבוע','القسط الشهري الثابت','Fixed monthly payment'],
+  r_firstPay:['תשלום חודשי ראשון','القسط الشهري الأول','First monthly payment'],
+  r_lastPay:['תשלום חודשי אחרון','القسط الشهري الأخير','Last monthly payment'],
+  r_loanAmt:['סכום ההלוואה','مبلغ القرض','Loan amount'],
+  r_totInt:['סך הריבית','إجمالي الفائدة','Total interest'],
+  r_totPaid:['סך כל התשלומים','إجمالي المدفوعات','Total payments'],
+  r_intPct:['הריבית כאחוז מההלוואה','الفائدة كنسبة من القرض','Interest as % of loan'],
+  r_numPay:['מספר תשלומים','عدد الدفعات','Number of payments'],
+  c_loanChart:['החזר שנתי: קרן וריבית','السداد السنوي: الأصل والفائدة','Yearly repayment: principal and interest'],
+  l_principal:['קרן','الأصل','Principal'],
+  l_interest:['ריבית','الفائدة','Interest'],
+  t_amort:['לוח סילוקין שנתי','جدول السداد السنوي','Yearly amortization schedule'],
+  h_balance:['יתרה','الرصيد','Balance'],
+
+  f_start:['סכום התחלתי','المبلغ الابتدائي','Starting amount'],
+  f_end:['סכום סופי','المبلغ النهائي','Final amount'],
+  f_duration:['משך ההשקעה','مدة الاستثمار','Investment period'],
+  f_taxGain:['מס על הרווח','ضريبة على الربح','Tax on gains'],
+  f_infl:['אינפלציה שנתית','التضخم السنوي','Annual inflation'],
+  r_avgAnnual:['תשואה שנתית ממוצעת','متوسط العائد السنوي','Average annual return'],
+  r_gainLoss:['רווח או הפסד','الربح أو الخسارة','Gain or loss'],
+  r_totReturn:['תשואה כוללת','العائد الإجمالي','Total return'],
+  r_gainNet:['רווח אחרי מס','الربح بعد الضريبة','Gain after tax'],
+  r_annNet:['תשואה שנתית אחרי מס','العائد السنوي بعد الضريبة','Annual return after tax'],
+  r_annReal:['תשואה שנתית ריאלית (אחרי אינפלציה)','العائد السنوي الحقيقي (بعد التضخم)','Real annual return (after inflation)'],
+  r_double:['זמן להכפלת הכסף','الوقت لمضاعفة المال','Time to double'],
+  r_invalidY:['הזינו סכום התחלתי ומשך השקעה גדולים מאפס','أدخل مبلغًا ابتدائيًا ومدة أكبر من الصفر','Enter a starting amount and period greater than zero'],
+
+  f_monthly:['הפקדה חודשית','إيداع شهري','Monthly deposit'],
+  h_endMonth:['מופקדת בסוף כל חודש','تُودع في نهاية كل شهر','Deposited at the end of each month'],
+  f_compFreq:['צבירת ריבית','احتساب الفائدة','Compounding'],
+  o_cfMonthly:['חודשית','شهري','Monthly'],
+  o_cfQuarterly:['רבעונית','ربع سنوي','Quarterly'],
+  o_cfYearly:['שנתית','سنوي','Yearly'],
+  o_cfDaily:['יומית','يومي','Daily'],
+  r_final:['סכום בסוף התקופה','المبلغ في نهاية المدة','Amount at end of period'],
+  r_deposited:['סה״כ הופקד','إجمالي الإيداعات','Total deposited'],
+  r_intEarned:['רווח מריבית','الفائدة المكتسبة','Interest earned'],
+  r_intShare:['חלק הרווח מהסכום הסופי','حصة الفائدة من المبلغ النهائي','Interest share of final amount'],
+  r_ear:['ריבית אפקטיבית שנתית','الفائدة الفعلية السنوية','Effective annual rate'],
+  r_netAfterTax:['סכום נטו אחרי מס','المبلغ الصافي بعد الضريبة','Net amount after tax'],
+  r_real:['שווי ריאלי (אחרי אינפלציה)','القيمة الحقيقية (بعد التضخم)','Real value (after inflation)'],
+  c_growth:['צמיחת הכסף לפי שנה','نمو المال حسب السنة','Money growth by year'],
+  l_deposits:['הפקדות','الإيداعات','Deposits'],
+  h_deposited:['הופקד','المُودَع','Deposited']
+};
+const t = (k, p) => {
+  let s = (T[k] || [k,k,k])[LANGS.indexOf(lang)];
+  if (p) for (const x in p) s = s.split('{'+x+'}').join(p[x]);
+  return s;
+};
+
+/* ================= exchange rates (USD base) ================= */
+let RATES = {"USD":1,"AED":3.6725,"AFN":64.924614,"ALL":81.907653,"AMD":362.201696,"ANG":1.79,"AOA":928.339731,"ARS":1515.8766,"AUD":1.436501,"AWG":1.79,"AZN":1.699787,"BAM":1.750825,"BBD":2,"BDT":123.198998,"BGN":1.750825,"BHD":0.376,"BIF":3001.103523,"BMD":1,"BND":1.280792,"BOB":11.842148,"BRL":4.989911,"BSD":1,"BTN":95.913362,"BWP":13.974043,"BYN":3.011836,"BZD":2,"CAD":1.427373,"CDF":2312.138431,"CHF":0.834009,"CLF":0.024719,"CLP":977.033618,"CNH":6.694513,"CNY":6.70582,"COP":3198.099135,"CRC":455.303365,"CUP":24,"CVE":98.707321,"CZK":21.829017,"DJF":177.721,"DKK":6.684975,"DOP":60.873077,"DZD":134.631082,"EGP":52.658715,"ERN":15,"ETB":161.476064,"EUR":0.895156,"FJD":2.248408,"FKP":0.75643,"FOK":6.686339,"GBP":0.756615,"GEL":2.596409,"GGP":0.75643,"GHS":11.772815,"GIP":0.75643,"GMD":74.559797,"GNF":8800.490983,"GTQ":7.64477,"GYD":209.038401,"HKD":7.847659,"HNL":26.838812,"HRK":6.744754,"HTG":130.923287,"HUF":326.831837,"IDR":17924.343507,"ILS":3.076893,"IMP":0.75643,"INR":95.90693,"IQD":1508.260905,"IRR":1718298.042257,"ISK":122.079821,"JEP":0.75643,"JMD":158.979857,"JOD":0.709,"JPY":158.544079,"KES":129.690434,"KGS":87.469028,"KHR":4054.023004,"KID":1.43646,"KMF":440.40102,"KRW":1333.744079,"KWD":0.311015,"KYD":0.833333,"KZT":450.740106,"LAK":22218.824732,"LBP":89500,"LKR":330.778402,"LRD":170.808183,"LSL":16.543726,"LYD":6.423041,"MAD":9.71107,"MDL":17.871956,"MGA":4526.158467,"MKD":54.573615,"MMK":2098.574459,"MNT":3603.898415,"MOP":8.083243,"MRU":40.200665,"MUR":47.506193,"MVR":15.441956,"MWK":1742.182803,"MXN":18.293254,"MYR":4.083336,"MZN":63.723629,"NAD":16.543726,"NGN":1331.44261,"NIO":36.792486,"NOK":9.573394,"NPR":153.461379,"NZD":1.788691,"OMR":0.384497,"PAB":1,"PEN":3.434509,"PGK":4.407143,"PHP":62.786942,"PKR":276.919098,"PLN":3.92703,"PYG":5715.389721,"QAR":3.64,"RON":4.772581,"RSD":104.934937,"RUB":84.043643,"RWF":1477.750986,"SAR":3.75,"SBD":7.984757,"SCR":14.458129,"SDG":454.209545,"SEK":10.031647,"SGD":1.280778,"SHP":0.75643,"SLE":24.587682,"SLL":24587.681848,"SOS":571.628492,"SRD":37.649374,"SSP":5751.002658,"STN":21.931976,"SYP":121.714922,"SZL":16.543726,"THB":33.618266,"TJS":9.23153,"TMT":3.499779,"TND":3.006979,"TOP":2.392271,"TRY":49.355625,"TTD":6.785624,"TVD":1.43646,"TWD":31.958914,"TZS":2633.373235,"UAH":44.965677,"UGX":4004.878818,"UYU":40.220831,"UZS":11887.066267,"VES":876.7976,"VND":25897.062624,"VUV":119.457954,"WST":2.749526,"XAF":587.20136,"XCD":2.7,"XCG":1.79,"XDR":0.739486,"XOF":587.20136,"XPF":106.823942,"YER":236.158165,"ZAR":16.544146,"ZMW":20.088454,"ZWG":26.6492,"ZWL":26.6492};
+const META = {live:false, unix:1791849451};
+const PIN = ['ILS','USD','EUR','GBP','JPY','CHF','CAD','AUD','JOD','EGP','AED','SAR','TRY','CNY','INR','RUB'];
+
+/* ================= Israel 2026 tax constants ================= */
+const TAX = {
+  brackets:[[84120,.10],[120720,.14],[228000,.20],[301200,.31],[560280,.35],[Infinity,.47]],
+  surtaxFrom:721560, surtaxRate:.03, point:2904,
+  niCut:7703, niMax:51910, niLow:.0104, niHigh:.07, hLow:.0323, hHigh:.0517,
+  pensSalaryCap:9700, pensCreditRate:.35, pensDepRate:.07,
+  erNiLow:.0451, erNiHigh:.076, erPension:.065, erSeverance:.06
+};
+
+/* ================= state ================= */
+const GROUPS = [
+  ['g_tools', ['convert','vat','percent']],
+  ['g_work',  ['salary','tax']],
+  ['g_money', ['loan','compound','yield','dividends']]
+];
+const TABS = GROUPS.flatMap(g => g[1]);
+let lang = 'he', cur = 'ILS', tab = 'convert';
+try {
+  lang = localStorage.getItem('fin-lang') || lang;
+  cur  = localStorage.getItem('fin-cur')  || cur;
+  tab  = localStorage.getItem('fin-tab')  || tab;
+} catch(e) {}
+if (!LANGS.includes(lang)) lang = 'he';
+if (!RATES[cur]) cur = 'ILS';
+if (!TABS.includes(tab)) tab = 'convert';
+
+/* ================= formatting ================= */
+const nfc = {};
+function N(x, d, max){
+  if (!isFinite(x)) return '—';
+  const key = lang + '|' + d + '|' + max;
+  let f = nfc[key];
+  if (!f){
+    const o = max != null ? {maximumFractionDigits:max}
+            : d == null ? {maximumFractionDigits:2}
+            : {minimumFractionDigits:d, maximumFractionDigits:d};
+    f = nfc[key] = new Intl.NumberFormat(LOC[lang], o);
+  }
+  return f.format(x);
+}
+const symCache = {};
+function symOf(c){
+  if (symCache[c]) return symCache[c];
+  let s = c;
+  try {
+    const p = new Intl.NumberFormat('en', {style:'currency', currency:c, currencyDisplay:'narrowSymbol'})
+      .formatToParts(0).find(x => x.type === 'currency');
+    if (p) s = p.value;
+  } catch(e) {}
+  return symCache[c] = s;
+}
+function M(x, d=0, c=cur){
+  if (!isFinite(x)) return '—';
+  const s = x < 0 ? '-' : '';
+  const a = N(Math.abs(x), d);
+  if (c === 'ILS') return `${s}${a} ₪`;
+  const sy = symOf(c);
+  return sy.length > 1 ? `${s}${sy} ${a}` : `${s}${sy}${a}`;
+}
+const MI = (x, d=0) => M(x, d, 'ILS');
+const PC = x => isFinite(x) ? `${N(x,2)}%` : '—';
+const v = id => { const n = parseFloat($('#'+id).value); return isFinite(n) ? n : 0; };
+const clamp = (x,a,b) => Math.min(b, Math.max(a, x));
+const numHTML = s => `<span class="num">${s}</span>`;
+
+let DN = null;
+function mkDN(){
+  try { DN = new Intl.DisplayNames([lang], {type:'currency'}); } catch(e) { DN = null; }
+}
+function curName(c){
+  try { return DN ? (DN.of(c) || c) : c; } catch(e) { return c; }
+}
+function curOptions(selected){
+  const pin = PIN.filter(c => RATES[c]);
+  const rest = Object.keys(RATES).filter(c => !pin.includes(c)).sort();
+  const opt = c => `<option value="${c}"${c===selected?' selected':''}>${c} – ${curName(c)}</option>`;
+  return `<optgroup label="${t('commonCur')}">${pin.map(opt).join('')}</optgroup><optgroup label="${t('allCur')}">${rest.map(opt).join('')}</optgroup>`;
+}
+function fillCurSelects(){
+  [['cur', cur], ['x_from','ILS'], ['x_to','USD']].forEach(([id, def]) => {
+    const s = $('#'+id);
+    const sel = RATES[s.value] ? s.value : def;
+    s.innerHTML = curOptions(sel);
+    s.value = sel;
+  });
+}
+
+/* ================= icons ================= */
+const ic = p => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
+const ICON = {
+  convert: ic('<path d="M4 8h13l-3-3M20 16H7l3 3"/>'),
+  vat: ic('<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/>'),
+  percent: ic('<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.4"/><circle cx="17" cy="17" r="2.4"/>'),
+  salary: ic('<rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6.5 9.5v.01M17.5 14.5v.01"/>'),
+  tax: ic('<path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 13h6M10 17h6"/>'),
+  loan: ic('<path d="M3 10l9-6 9 6"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/>'),
+  compound: ic('<path d="M4 20h16"/><path d="M6.5 20v-4M10.5 20v-7M14.5 20v-10M18.5 20V5"/>'),
+  yield: ic('<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>'),
+  dividends: ic('<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>')
+};
+
+/* ================= field builders ================= */
+function unitHTML(u){
+  if (!u) return '';
+  if (u === 'cur') return `<span class="u cur">${symOf(cur)}</span>`;
+  if (u === 'ils') return `<span class="u">₪</span>`;
+  if (u === 'yrs') return `<span class="u" data-i="u_yrs"></span>`;
+  return `<span class="u">${u}</span>`;
+}
+function fieldHTML(f){
+  const hint = f.hint ? `<small class="hint" data-i="${f.hint}"></small>` : '';
+  const wide = f.wide ? ' wide' : '';
+  if (f.type === 'swap')
+    return `<div class="field wide"><button type="button" class="btn" id="${f.id}" data-i="${f.label}"></button></div>`;
+  if (f.type === 'refresh')
+    return `<div class="field wide"><button type="button" class="btn" id="${f.id}" data-i="${f.label}"></button><small class="hint" id="x_status" aria-live="polite"></small></div>`;
+  if (f.type === 'cursel')
+    return `<div class="field"><label for="${f.id}" data-i="${f.label}"></label><select id="${f.id}"></select></div>`;
+  if (f.type === 'select')
+    return `<div class="field${wide}"><label for="${f.id}" data-i="${f.label}"></label>
+      <select id="${f.id}">${f.opts.map(([val,k]) => `<option value="${val}"${String(val)===String(f.val)?' selected':''} data-i="${k}"></option>`).join('')}</select>${hint}</div>`;
+  return `<div class="field${wide}"><label for="${f.id}" data-i="${f.label}"></label>
+    <div class="control"><input id="${f.id}" type="number" inputmode="decimal" step="any" value="${f.val}">${unitHTML(f.unit)}</div>${hint}</div>`;
+}
+function inl(id, val, unit, ariaKey){
+  return `<span class="control sm"><input id="${id}" type="number" inputmode="decimal" step="any" value="${val}" data-ia="${ariaKey}">${unitHTML(unit)}</span>`;
+}
+
+const DEFS = {
+  convert: [
+    {id:'x_amount', label:'f_amount', val:1000, wide:true},
+    {id:'x_from',   label:'f_from', type:'cursel'},
+    {id:'x_to',     label:'f_to',   type:'cursel'},
+    {id:'x_swap',   label:'b_swap', type:'swap'},
+    {id:'x_rate',   label:'f_custom', val:'', wide:true, hint:'h_custom'},
+    {id:'x_refresh',label:'b_refresh', type:'refresh'}
+  ],
+  vat: [
+    {id:'v_amount', label:'f_amount', unit:'cur', val:1000, wide:true},
+    {id:'v_mode',   label:'f_vatMode', type:'select', val:'add', wide:true,
+      opts:[['add','o_vatAdd'],['extract','o_vatExtract']]},
+    {id:'v_rate',   label:'f_vatRate', unit:'%', val:18, wide:true, hint:'h_vatRate'}
+  ],
+  salary: [
+    {id:'s_amount', label:'f_salAmount', unit:'ils', val:15000, wide:true},
+    {id:'s_mode',   label:'f_salMode', type:'select', val:'g2n', wide:true,
+      opts:[['g2n','o_g2n'],['n2g','o_n2g']]},
+    {id:'s_points', label:'f_points', val:2.25, hint:'h_points'},
+    {id:'s_pension',label:'f_pension', unit:'%', val:6},
+    {id:'s_study',  label:'f_study', unit:'%', val:0}
+  ],
+  tax: [
+    {id:'t_income', label:'f_taxIncome', unit:'ils', val:240000, wide:true, hint:'h_taxIncome'},
+    {id:'t_period', label:'f_taxPeriod', type:'select', val:'y', opts:[['y','o_annualP'],['m','o_monthlyP']]},
+    {id:'t_points', label:'f_points', val:2.25},
+    {id:'t_other',  label:'f_otherCredits', unit:'ils', val:0, wide:true, hint:'h_otherCredits'}
+  ],
+  loan: [
+    {id:'l_amount', label:'f_loanAmt',   unit:'cur', val:500000},
+    {id:'l_rate',   label:'f_rate',      unit:'%',   val:4.5},
+    {id:'l_years',  label:'f_term',      unit:'yrs', val:25},
+    {id:'l_type',   label:'f_method', type:'select', val:'annuity',
+      opts:[['annuity','o_annuity'],['equal','o_equal']]}
+  ],
+  compound: [
+    {id:'c_init',   label:'f_start',     unit:'cur', val:10000},
+    {id:'c_monthly',label:'f_monthly',   unit:'cur', val:1000, hint:'h_endMonth'},
+    {id:'c_rate',   label:'f_rate',      unit:'%',   val:6},
+    {id:'c_years',  label:'f_years',     unit:'yrs', val:20},
+    {id:'c_freq',   label:'f_compFreq', type:'select', val:12,
+      opts:[[12,'o_cfMonthly'],[4,'o_cfQuarterly'],[1,'o_cfYearly'],[365,'o_cfDaily']]},
+    {id:'c_tax',    label:'f_taxGain',   unit:'%',   val:0},
+    {id:'c_infl',   label:'f_infl',      unit:'%',   val:0}
+  ],
+  yield: [
+    {id:'y_start',  label:'f_start',     unit:'cur', val:10000},
+    {id:'y_end',    label:'f_end',       unit:'cur', val:15000},
+    {id:'y_years',  label:'f_duration',  unit:'yrs', val:5},
+    {id:'y_tax',    label:'f_taxGain',   unit:'%',   val:0},
+    {id:'y_infl',   label:'f_infl',      unit:'%',   val:0}
+  ],
+  dividends: [
+    {id:'d_price',  label:'f_price',     unit:'cur', val:100},
+    {id:'d_shares', label:'f_shares',    val:100},
+    {id:'d_dps',    label:'f_dps',       unit:'cur', val:4},
+    {id:'d_freq',   label:'f_freq', type:'select', val:4,
+      opts:[[1,'o_yearly'],[2,'o_semi'],[4,'o_quarterly'],[12,'o_monthly']]},
+    {id:'d_tax',    label:'f_divTax',    unit:'%',   val:25},
+    {id:'d_growth', label:'f_divGrowth', unit:'%',   val:5},
+    {id:'d_years',  label:'f_years',     unit:'yrs', val:10}
+  ]
+};
+
+/* ================= build DOM ================= */
+function panelHTML(id){
+  return `<section class="panel" id="panel-${id}" role="tabpanel" aria-labelledby="tab-${id}" hidden>
+    <div class="hero" id="hero-${id}"></div>
+    <div class="inputs"><div class="fields">${DEFS[id].map(fieldHTML).join('')}</div></div>
+    <div class="detail">
+      <dl class="ledger" id="led-${id}"></dl>
+      <p class="fine" id="nt-${id}" hidden></p>
+      <figure class="chart" id="sp-${id}" hidden><figcaption></figcaption><div class="bar"></div><div class="legend"></div></figure>
+      <figure class="chart" id="ch-${id}" hidden><figcaption></figcaption><div class="svgwrap"></div><div class="legend"></div></figure>
+      <details class="sched" id="tb-${id}" hidden><summary></summary><div class="scroll"></div></details>
+    </div>
+  </section>`;
+}
+function percentPanelHTML(){
+  return `<section class="panel panel-flat" id="panel-percent" role="tabpanel" aria-labelledby="tab-percent" hidden>
+    <div class="sentence">
+      <p class="s-line"><span data-i="p_s1a"></span>${inl('pa_x',15,'%','a_pct')}<span data-i="p_s1b"></span>${inl('pa_y',2000,'','a_amount')}<span data-i="p_q"></span></p>
+      <p class="s-result" id="pr_a"></p>
+    </div>
+    <div class="sentence">
+      <p class="s-line">${inl('pb_x',300,'','a_number')}<span data-i="p_s2"></span>${inl('pb_y',1200,'','a_amount')}<span data-i="p_q"></span></p>
+      <p class="s-result" id="pr_b"></p>
+    </div>
+    <div class="sentence">
+      <p class="s-line"><span data-i="p_s3a"></span>${inl('pc_a',80,'','a_start')}<span data-i="p_s3b"></span>${inl('pc_b',100,'','a_end')}</p>
+      <p class="s-result" id="pr_c"></p>
+    </div>
+    <div class="sentence">
+      <p class="s-line">${inl('pd_x',500,'','a_amount')}
+        <select id="pd_op" class="inl-select" data-ia="a_action"><option value="add" data-i="o_plus"></option><option value="sub" data-i="o_minus"></option></select>
+        ${inl('pd_p',18,'%','a_pct')}</p>
+      <p class="s-result" id="pr_d"></p>
+    </div>
+  </section>`;
+}
+
+const navEl = $('#nav'), panelsEl = $('#panels');
+navEl.innerHTML = GROUPS.map(([gk, ids]) =>
+  `<div class="grp" role="presentation"><span class="grp-l" data-i="${gk}"></span>${
+    ids.map(id => `<button class="tab" role="tab" id="tab-${id}" aria-controls="panel-${id}" aria-selected="false" tabindex="-1" data-tab="${id}">${ICON[id]}<span data-i="tab_${id}"></span></button>`).join('')
+  }</div>`
+).join('');
+panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : panelHTML(id)).join('');
+
+/* ================= language ================= */
+function updateHead(){
+  $('#page-title').textContent = t('tab_' + tab);
+  $('#page-desc').textContent = t('d_' + tab);
+}
+function applyLang(recalc){
+  const root = document.documentElement;
+  root.lang = lang;
+  root.dir = lang === 'en' ? 'ltr' : 'rtl';
+  document.title = t('appTitle');
+  mkDN();
+  $$('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); });
+  $$('[data-ia]').forEach(el => { el.setAttribute('aria-label', t(el.dataset.ia)); });
+  $$('#seg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false'));
+  fillCurSelects();
+  updateHead();
+  if (recalc) calc(tab);
+}
+
+/* ================= chart ================= */
+function niceMax(x){
+  const p = Math.pow(10, Math.floor(Math.log10(x)));
+  const m = x / p;
+  const nm = m <= 1 ? 1 : m <= 2 ? 2 : m <= 4 ? 4 : m <= 8 ? 8 : 10;
+  return nm * p;
+}
+function compact(x){
+  const f = (n, s) => (n >= 10 ? Math.round(n) : Math.round(n*10)/10) + s;
+  if (x >= 1e9) return f(x/1e9, 'B');
+  if (x >= 1e6) return f(x/1e6, 'M');
+  if (x >= 1e3) return f(x/1e3, 'K');
+  return String(Math.round(x*100)/100);
+}
+function drawChart(el){
+  const s = el._spec; if (!s) return;
+  const wrap = $('.svgwrap', el);
+  const W = Math.max(260, Math.floor(wrap.clientWidth) || 600), H = 240;
+  const pl = 44, pr = 6, pt = 8, pb = 26, ih = H - pt - pb;
+  const n = s.labels.length;
+  const totals = s.labels.map((_, i) => s.layers.reduce((a, l) => a + Math.max(0, l.values[i] || 0), 0));
+  const max = niceMax(Math.max(1e-9, ...totals));
+  const bw = (W - pl - pr) / n, gap = Math.min(5, bw * 0.2);
+  const step = Math.ceil(n / Math.max(1, Math.floor((W - pl) / 36)));
+  let g = '';
+  for (let k = 0; k <= 4; k++){
+    const y = pt + ih * (1 - k/4);
+    g += `<line class="grid" x1="${pl}" x2="${W-pr}" y1="${y}" y2="${y}"/><text class="ax" x="${pl-6}" y="${y+4}" text-anchor="end">${compact(max*k/4)}</text>`;
+  }
+  for (let i = 0; i < n; i++){
+    let acc = 0;
+    s.layers.forEach(l => {
+      const val = Math.max(0, l.values[i] || 0);
+      const h = val / max * ih;
+      if (h > 0){
+        const y = pt + ih - (acc / max * ih) - h;
+        g += `<rect class="${l.cls}" rx="2" x="${(pl + i*bw + gap/2).toFixed(1)}" y="${y.toFixed(1)}" width="${Math.max(1, bw-gap).toFixed(1)}" height="${h.toFixed(1)}"><title>${s.unit ? s.unit + ' ' : ''}${s.labels[i]}: ${l.name} – ${s.fmt(val)}</title></rect>`;
+      }
+      acc += val;
+    });
+    if (i % step === 0){
+      g += `<text class="ax" x="${(pl + i*bw + bw/2).toFixed(1)}" y="${H-8}" text-anchor="middle">${s.labels[i]}</text>`;
+    }
+  }
+  wrap.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${s.title}" style="direction:ltr">${g}</svg>`;
+}
+
+/* ================= renderer ================= */
+function show(id, res){
+  $('#hero-'+id).innerHTML =
+    `<span class="hero-label">${res.hero.label}</span>` +
+    `<span class="hero-value num">${res.hero.value}</span>` +
+    (res.hero.sub ? `<div class="hero-sub">${res.hero.sub}</div>` : '');
+  $('#led-'+id).innerHTML = res.rows.map(r =>
+    `<div class="row${r[2] ? ' ' + r[2] : ''}"><dt>${r[0]}</dt><dd class="num">${r[1]}</dd></div>`).join('');
+
+  const nt = $('#nt-'+id);
+  if (res.note){ nt.hidden = false; nt.textContent = res.note; } else nt.hidden = true;
+
+  const sp = $('#sp-'+id);
+  if (res.split){
+    const items = res.split.items.filter(i => i.v > 0);
+    const tot = items.reduce((a, i) => a + i.v, 0) || 1;
+    sp.hidden = false;
+    $('figcaption', sp).textContent = res.split.title;
+    $('.bar', sp).innerHTML = items.map(i =>
+      `<span class="${i.cls}" style="flex:${i.v} 1 0" title="${i.name}: ${i.fmt}"></span>`).join('');
+    $('.legend', sp).innerHTML = items.map(i =>
+      `<span><i class="sw ${i.cls}"></i>${i.name} <b class="num">${i.fmt}</b> <span class="num">${PC(i.v / tot * 100)}</span></span>`).join('');
+  } else sp.hidden = true;
+
+  const ch = $('#ch-'+id);
+  if (res.chart){
+    ch.hidden = false; ch._spec = res.chart;
+    $('figcaption', ch).textContent = res.chart.title;
+    $('.legend', ch).innerHTML = res.chart.layers.map(l => `<span><i class="sw ${l.cls}"></i>${l.name}</span>`).join('');
+    drawChart(ch);
+  } else { ch.hidden = true; ch._spec = null; }
+
+  const tb = $('#tb-'+id);
+  if (res.table){
+    tb.hidden = false;
+    if (res.table.open && !tb._init){ tb.open = true; tb._init = true; }
+    $('summary', tb).textContent = res.table.title;
+    $('.scroll', tb).innerHTML = `<table class="tbl"><thead><tr>${res.table.head.map(h => `<th scope="col">${h}</th>`).join('')}</tr></thead><tbody>${
+      res.table.rows.map(r => `<tr>${r.map((c,i) => i ? `<td>${c}</td>` : `<th scope="row">${c}</th>`).join('')}</tr>`).join('')
+    }</tbody></table>`;
+  } else tb.hidden = true;
+}
+
+/* ================= calculators ================= */
+/* --- converter --- */
+const rateOf = (from, to) => RATES[to] / RATES[from];
+const dec = x => Math.abs(x) >= 1 ? 2 : 4;
+function dateStr(){
+  try {
+    return new Intl.DateTimeFormat(LOC[lang], {dateStyle:'medium', timeStyle:'short', timeZone:'UTC'})
+      .format(new Date(META.unix * 1000)) + ' UTC';
+  } catch(e) { return new Date(META.unix * 1000).toUTCString(); }
+}
+function calcConvert(){
+  const amt = v('x_amount');
+  const from = $('#x_from').value, to = $('#x_to').value;
+  if (!RATES[from] || !RATES[to]) return null;
+  const raw = parseFloat($('#x_rate').value);
+  const manual = isFinite(raw) && raw > 0 ? raw : null;
+  const r = manual != null ? manual : rateOf(from, to);
+  const out = amt * r;
+  return {
+    hero: {label: `<bdi dir="ltr">${N(amt, null, 2)} ${from} =</bdi>`, value: M(out, dec(out), to),
+           sub: `<bdi dir="ltr">1 ${from} = ${N(r, null, 4)} ${to}</bdi>`},
+    rows: [
+      [t('r_rate'),    `1 ${from} = ${N(r, null, 4)} ${to}`],
+      [t('r_rateInv'), `1 ${to} = ${N(1 / r, null, 4)} ${from}`],
+      [t('r_rateSrc'), manual != null ? t('s_manual') : (META.live ? t('s_live') : t('s_snap'))],
+      [t('r_rateDate'), dateStr()]
+    ],
+    table: {
+      title: t('t_otherCur'), open: true,
+      head: [t('h_currency'), t('f_amount')],
+      rows: PIN.filter(c => c !== from && RATES[c]).map(c => {
+        const val = amt * rateOf(from, c);
+        return [`${c} – ${curName(c)}`, M(val, dec(val), c)];
+      })
+    }
+  };
+}
+
+/* --- VAT --- */
+function calcVat(){
+  const amt = v('v_amount'), rate = Math.max(0, v('v_rate')) / 100, mode = $('#v_mode').value;
+  const net = mode === 'add' ? amt : amt / (1 + rate);
+  const gross = mode === 'add' ? amt * (1 + rate) : amt;
+  const vat = gross - net;
+  return {
+    hero: mode === 'add'
+      ? {label: t('r_vatTotal'), value: M(gross, 2), sub: t('s_vatSub', {v: M(vat, 2)})}
+      : {label: t('r_vatNet'),   value: M(net, 2),   sub: t('s_vatSub', {v: M(vat, 2)})},
+    rows: [
+      [t('r_vatNet'), M(net, 2)],
+      [t('r_vatAmt'), M(vat, 2)],
+      [t('r_vatTotal'), M(gross, 2), 'key'],
+      [t('r_vatShare'), PC(gross ? vat / gross * 100 : NaN)]
+    ]
+  };
+}
+
+/* --- percentages --- */
+function calcPercent(){
+  const set = (id, html) => { $('#'+id).innerHTML = html; };
+  set('pr_a', numHTML(N(v('pa_x') / 100 * v('pa_y'))));
+  const w = v('pb_y');
+  set('pr_b', numHTML(w ? PC(v('pb_x') / w * 100) : '—'));
+  const a = v('pc_a'), b = v('pc_b');
+  if (a === 0) set('pr_c', numHTML('—'));
+  else {
+    const ch = (b - a) / Math.abs(a) * 100;
+    set('pr_c', ch === 0 ? t('r_none') : t(ch > 0 ? 'r_inc' : 'r_dec', {p: numHTML(PC(Math.abs(ch)))}));
+  }
+  const sign = $('#pd_op').value === 'add' ? 1 : -1;
+  set('pr_d', numHTML(N(v('pd_x') * (1 + sign * v('pd_p') / 100))));
+}
+
+/* --- Israeli income tax helpers --- */
+function taxByBrackets(income){
+  let prev = 0, tax = 0;
+  const parts = [];
+  for (const [lim, r] of TAX.brackets){
+    const amt = Math.max(0, Math.min(income, lim) - prev);
+    parts.push({from: prev, to: lim, rate: r, amt, tax: amt * r});
+    tax += amt * r;
+    prev = lim;
+  }
+  const sur = Math.max(0, income - TAX.surtaxFrom) * TAX.surtaxRate;
+  return {tax, sur, parts};
+}
+function marginalRate(income){
+  let rate = TAX.brackets[0][1];
+  for (const [lim, r] of TAX.brackets){ rate = r; if (income <= lim) break; }
+  return rate + (income > TAX.surtaxFrom ? TAX.surtaxRate : 0);
+}
+function salaryCalc(g, pts, pensPct, studyPct){
+  const b = taxByBrackets(g * 12);
+  const pens = g * pensPct / 100;
+  const qual = Math.min(pens, TAX.pensDepRate * Math.min(g, TAX.pensSalaryCap));
+  const credits = pts * TAX.point + TAX.pensCreditRate * qual * 12;
+  const before = b.tax + b.sur;
+  const used = Math.min(credits, before);
+  const tax = (before - used) / 12;
+  const low = Math.min(g, TAX.niCut), high = Math.max(0, Math.min(g, TAX.niMax) - TAX.niCut);
+  const ni = low * TAX.niLow + high * TAX.niHigh;
+  const health = low * TAX.hLow + high * TAX.hHigh;
+  const study = g * studyPct / 100;
+  const ded = tax + ni + health + pens + study;
+  const employer = g * (1 + TAX.erPension + TAX.erSeverance) + low * TAX.erNiLow + high * TAX.erNiHigh;
+  return {gross: g, net: g - ded, tax, ni, health, pens, study, ded, credits: used / 12, employer};
+}
+
+/* --- salary --- */
+function calcSalary(){
+  const amt = Math.max(0, v('s_amount')), mode = $('#s_mode').value;
+  const pts = Math.max(0, v('s_points')), pens = clamp(v('s_pension'), 0, 30), study = clamp(v('s_study'), 0, 30);
+  let g = amt;
+  if (mode === 'n2g'){
+    let lo = amt, hi = amt * 4 + 1000;
+    for (let i = 0; i < 80; i++){
+      const mid = (lo + hi) / 2;
+      if (salaryCalc(mid, pts, pens, study).net < amt) lo = mid; else hi = mid;
+    }
+    g = (lo + hi) / 2;
+  }
+  const r = salaryCalc(g, pts, pens, study);
+  const step = 100;
+  const r2 = salaryCalc(g + step, pts, pens, study);
+  const marginal = (1 - (r2.net - r.net) / step) * 100;
+  const rows = [
+    [t('r_grossMonthly'), MI(r.gross)],
+    [t('r_incomeTax'), MI(-r.tax)],
+    [t('r_ni'), MI(-r.ni)],
+    [t('r_health'), MI(-r.health)]
+  ];
+  if (r.pens > 0) rows.push([t('r_pensionRow'), MI(-r.pens)]);
+  if (r.study > 0) rows.push([t('r_studyRow'), MI(-r.study)]);
+  rows.push(
+    [t('r_totalDed'), MI(-r.ded), 'key'],
+    [t('r_netMonthly'), MI(r.net), 'key'],
+    [t('r_dedShare'), PC(r.gross > 0 ? r.ded / r.gross * 100 : NaN)],
+    [t('r_creditsUsed'), MI(r.credits)],
+    [t('r_marginal'), PC(marginal)],
+    [t('r_netAnnual'), MI(r.net * 12)],
+    [t('r_employerCost'), MI(r.employer)]
+  );
+  return {
+    hero: mode === 'g2n'
+      ? {label: t('r_netMonthly'), value: MI(r.net), sub: t('s_fromGross', {g: MI(r.gross)})}
+      : {label: t('r_grossMonthly'), value: MI(r.gross), sub: t('s_toNet', {g: MI(r.net)})},
+    rows,
+    note: t('n_salary'),
+    split: {
+      title: t('c_split'),
+      items: [
+        {name: t('l_netPay'),    v: r.net,                   cls:'c-ink',    fmt: MI(r.net)},
+        {name: t('l_incTax'),    v: r.tax,                   cls:'c-accent', fmt: MI(r.tax)},
+        {name: t('l_niHealth'),  v: r.ni + r.health,         cls:'c-warm',   fmt: MI(r.ni + r.health)},
+        {name: t('l_savings'),   v: r.pens + r.study,        cls:'c-soft',   fmt: MI(r.pens + r.study)}
+      ]
+    }
+  };
+}
+
+/* --- income tax --- */
+function calcTaxTab(){
+  const monthly = $('#t_period').value === 'm';
+  const income = Math.max(0, v('t_income')) * (monthly ? 12 : 1);
+  const pts = Math.max(0, v('t_points')), other = Math.max(0, v('t_other'));
+  const b = taxByBrackets(income);
+  const before = b.tax + b.sur;
+  const credits = pts * TAX.point + other;
+  const used = Math.min(credits, before);
+  const payable = Math.max(0, before - used);
+  const eff = income > 0 ? payable / income * 100 : NaN;
+  const marg = marginalRate(income) * 100;
+  const rows = [
+    [t('r_incomeYear'), MI(income)],
+    [t('r_taxBefore'), MI(b.tax)]
+  ];
+  if (b.sur > 0) rows.push([t('r_surtax'), MI(b.sur)]);
+  rows.push(
+    [t('r_credApplied'), MI(-used)],
+    [t('r_taxPayable'), MI(payable), 'key'],
+    [t('r_effRate'), PC(eff)],
+    [t('r_margRate'), PC(marg)],
+    [t('r_perMonth'), MI(payable / 12)],
+    [t('r_afterTax'), MI(income - payable)]
+  );
+  const parts = b.parts.filter(p => p.amt > 0);
+  const tableRows = parts.map(p => [
+    `${N(p.from)} – ${isFinite(p.to) ? N(p.to) : '∞'}`, PC(p.rate * 100), MI(p.amt), MI(p.tax)
+  ]);
+  if (b.sur > 0) tableRows.push([`${t('r_surtax')} ${N(TAX.surtaxFrom)}+`, PC(TAX.surtaxRate * 100), MI(income - TAX.surtaxFrom), MI(b.sur)]);
+  return {
+    hero: {
+      label: t(monthly ? 'r_taxMonth' : 'r_taxYear'),
+      value: MI(payable / (monthly ? 12 : 1)),
+      sub: t('s_taxSub', {e: PC(eff), m: PC(marg)})
+    },
+    rows,
+    note: t('n_tax'),
+    chart: {
+      title: t('c_taxBracket'), unit: '', fmt: x => MI(x),
+      layers: [{name: t('l_tax'), cls:'c-ink', values: parts.map(p => p.tax)}],
+      labels: parts.map(p => `${N(p.rate * 100)}%`)
+    },
+    table: {
+      title: t('t_brackets'),
+      head: [t('h_bracket'), t('h_rate'), t('h_inBracket'), t('h_taxCol')],
+      rows: tableRows
+    }
+  };
+}
+
+/* --- dividends --- */
+function calcDividends(){
+  const price = v('d_price'), shares = v('d_shares'), dps = v('d_dps');
+  const f = parseInt($('#d_freq').value, 10) || 1;
+  const tax = clamp(v('d_tax'), 0, 100) / 100;
+  const years = clamp(Math.round(v('d_years')), 1, 60);
+  const g = v('d_growth') / 100;
+  const invest = price * shares, gross = dps * shares, net = gross * (1 - tax);
+  const yld = price > 0 ? dps / price : NaN;
+  const grossY = [], netY = [], cumY = [];
+  let cum = 0;
+  for (let i = 0; i < years; i++){
+    const gy = gross * Math.pow(1 + g, i), ny = gy * (1 - tax);
+    cum += ny; grossY.push(gy); netY.push(ny); cumY.push(cum);
+  }
+  const lastGross = grossY[years - 1];
+  const rows = [
+    [t('r_invest'), M(invest)],
+    [t('r_divGross'), M(gross)],
+    [t('r_tax', {n: N(tax*100)}), M(-(gross - net))],
+    [t('r_divNet'), M(net), 'key'],
+    [t('r_netPay'), M(net / f, 2)],
+    [t('r_yGross'), PC(yld * 100)],
+    [t('r_yNet'), PC(yld * (1 - tax) * 100)],
+    [t('r_grossYear', {n: years}), M(lastGross)],
+    [t('r_cumNet', {n: years}), M(cum)]
+  ];
+  if (invest > 0) rows.push([t('r_yoc'), PC(lastGross / invest * 100)]);
+  return {
+    hero: {label: t('r_divNet'), value: M(net), sub: t('r_yNet') + ': ' + PC(yld * (1 - tax) * 100)},
+    rows,
+    chart: {
+      title: t('c_divChart'), unit: t('w_year'), fmt: x => M(x),
+      layers: [{name: t('l_netDiv'), cls:'c-ink', values: netY}],
+      labels: netY.map((_, i) => i + 1)
+    },
+    table: {
+      title: t('t_yearly'),
+      head: [t('w_year'), t('h_gross'), t('h_net'), t('h_cumNet')],
+      rows: netY.map((x, i) => [i + 1, M(grossY[i]), M(x), M(cumY[i])])
+    }
+  };
+}
+
+/* --- loans --- */
+function calcLoan(){
+  const amt = Math.max(0, v('l_amount')), rate = Math.max(0, v('l_rate'));
+  const yrs = clamp(v('l_years'), 0.25, 50), type = $('#l_type').value;
+  const n = Math.max(1, Math.round(yrs * 12)), r = rate / 1200;
+  const pmt = r === 0 ? amt / n : amt * r / (1 - Math.pow(1 + r, -n));
+  let bal = amt, totalInt = 0, first = 0, last = 0;
+  const Y = [];
+  for (let m = 1; m <= n; m++){
+    const int = bal * r;
+    const pr = type === 'annuity' ? pmt - int : amt / n;
+    const pay = int + pr;
+    if (m === 1) first = pay;
+    if (m === n) last = pay;
+    bal = Math.max(0, bal - pr);
+    totalInt += int;
+    const y = Math.ceil(m / 12) - 1;
+    if (!Y[y]) Y[y] = {pr:0, int:0, end:0};
+    Y[y].pr += pr; Y[y].int += int; Y[y].end = bal;
+  }
+  const total = amt + totalInt;
+  const rows = type === 'annuity'
+    ? [[t('r_monthlyFixed'), M(first, 2)]]
+    : [[t('r_firstPay'), M(first, 2)], [t('r_lastPay'), M(last, 2)]];
+  rows.push(
+    [t('r_loanAmt'), M(amt)],
+    [t('r_totInt'), M(totalInt)],
+    [t('r_totPaid'), M(total), 'key'],
+    [t('r_intPct'), PC(amt > 0 ? totalInt / amt * 100 : NaN)],
+    [t('r_numPay'), N(n, 0)]
+  );
+  return {
+    hero: {label: t(type === 'annuity' ? 'r_monthly' : 'r_firstPay'), value: M(first, 2),
+           sub: t('r_totInt') + ': ' + M(totalInt)},
+    rows,
+    chart: {
+      title: t('c_loanChart'), unit: t('w_year'), fmt: x => M(x),
+      layers: [
+        {name: t('l_principal'), cls:'c-ink',  values: Y.map(y => y.pr)},
+        {name: t('l_interest'),  cls:'c-warm', values: Y.map(y => y.int)}
+      ],
+      labels: Y.map((_, i) => i + 1)
+    },
+    table: {
+      title: t('t_amort'),
+      head: [t('w_year'), t('l_principal'), t('l_interest'), t('h_balance')],
+      rows: Y.map((y, i) => [i + 1, M(y.pr), M(y.int), M(y.end)])
+    }
+  };
+}
+
+/* --- return --- */
+function calcYield(){
+  const a = v('y_start'), b = Math.max(0, v('y_end')), yrs = v('y_years');
+  const tax = clamp(v('y_tax'), 0, 100) / 100, infl = v('y_infl') / 100;
+  if (!(a > 0) || !(yrs > 0)){
+    return {hero:{label: t('r_avgAnnual'), value:'—'}, rows:[[t('r_invalidY'), '—']]};
+  }
+  const gain = b - a;
+  const netGain = gain > 0 ? gain * (1 - tax) : gain;
+  const bNet = a + netGain;
+  const cagr = Math.pow(b / a, 1 / yrs) - 1;
+  const cagrNet = Math.pow(bNet / a, 1 / yrs) - 1;
+  const rows = [
+    [t('r_gainLoss'), M(gain)],
+    [t('r_totReturn'), PC(gain / a * 100)]
+  ];
+  if (tax > 0) rows.push([t('r_gainNet'), M(netGain)], [t('r_annNet'), PC(cagrNet * 100)]);
+  if (infl > 0) rows.push([t('r_annReal'), PC(((1 + cagrNet) / (1 + infl) - 1) * 100)]);
+  if (cagr > 0) rows.push([t('r_double'), `${N(Math.log(2) / Math.log(1 + cagr), 1)} ${t('w_years')}`]);
+  return {hero:{label: t('r_avgAnnual'), value: PC(cagr * 100), sub: t('r_totReturn') + ': ' + PC(gain / a * 100)}, rows};
+}
+
+/* --- compound interest --- */
+function calcCompound(){
+  const p0 = Math.max(0, v('c_init')), mo = Math.max(0, v('c_monthly'));
+  const rate = v('c_rate') / 100;
+  const yrs = clamp(Math.round(v('c_years')), 1, 60);
+  const f = parseInt($('#c_freq').value, 10) || 12;
+  const infl = v('c_infl') / 100, tax = clamp(v('c_tax'), 0, 100) / 100;
+  const rm = Math.pow(1 + rate / f, f / 12) - 1;
+  let bal = p0, dep = p0;
+  const Y = [];
+  for (let y = 1; y <= yrs; y++){
+    for (let k = 0; k < 12; k++){ bal = bal * (1 + rm) + mo; dep += mo; }
+    Y.push({y, dep, int: bal - dep, bal});
+  }
+  const gain = bal - dep;
+  const ear = Math.pow(1 + rate / f, f) - 1;
+  let base = bal;
+  const rows = [
+    [t('r_deposited'), M(dep)],
+    [t('r_intEarned'), M(gain)],
+    [t('r_final'), M(bal), 'key'],
+    [t('r_intShare'), PC(bal > 0 ? gain / bal * 100 : NaN)],
+    [t('r_ear'), PC(ear * 100)]
+  ];
+  if (tax > 0 && gain > 0){
+    base = dep + gain * (1 - tax);
+    rows.push([t('r_netAfterTax'), M(base)]);
+  }
+  if (infl > 0) rows.push([t('r_real'), M(base / Math.pow(1 + infl, yrs))]);
+  return {
+    hero: {label: t('r_final'), value: M(bal), sub: t('r_intEarned') + ': ' + M(gain)},
+    rows,
+    chart: {
+      title: t('c_growth'), unit: t('w_year'), fmt: x => M(x),
+      layers: [
+        {name: t('l_deposits'), cls:'c-ink',    values: Y.map(y => y.dep)},
+        {name: t('l_interest'), cls:'c-accent', values: Y.map(y => y.int)}
+      ],
+      labels: Y.map(y => y.y)
+    },
+    table: {
+      title: t('t_yearly'),
+      head: [t('w_year'), t('h_deposited'), t('l_interest'), t('w_total')],
+      rows: Y.map(y => [y.y, M(y.dep), M(y.int), M(y.bal)])
+    }
+  };
+}
+
+const CALC = {convert: calcConvert, vat: calcVat, percent: calcPercent, salary: calcSalary, tax: calcTaxTab,
+              loan: calcLoan, compound: calcCompound, yield: calcYield, dividends: calcDividends};
+function calc(id){
+  const res = CALC[id]();
+  if (res) show(id, res);
+}
+
+/* ================= navigation ================= */
+function activate(id, focus){
+  tab = id;
+  TABS.forEach(x => {
+    const on = x === id;
+    const b = $('#tab-'+x);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.tabIndex = on ? 0 : -1;
+    $('#panel-'+x).hidden = !on;
+    if (on && focus) b.focus();
+  });
+  try { localStorage.setItem('fin-tab', id); } catch(e) {}
+  updateHead();
+  calc(id);
+}
+navEl.addEventListener('click', e => {
+  const b = e.target.closest('.tab');
+  if (b) activate(b.dataset.tab);
+});
+navEl.addEventListener('keydown', e => {
+  const i = TABS.indexOf(tab);
+  const rtl = document.documentElement.dir === 'rtl';
+  const next = rtl ? 'ArrowLeft' : 'ArrowRight', prev = rtl ? 'ArrowRight' : 'ArrowLeft';
+  let j = -1;
+  if (e.key === next || e.key === 'ArrowDown') j = (i + 1) % TABS.length;
+  else if (e.key === prev || e.key === 'ArrowUp') j = (i - 1 + TABS.length) % TABS.length;
+  else if (e.key === 'Home') j = 0;
+  else if (e.key === 'End') j = TABS.length - 1;
+  if (j >= 0){ e.preventDefault(); activate(TABS[j], true); }
+});
+
+/* ================= live updates ================= */
+const refresh = () => calc(tab);
+panelsEl.addEventListener('input', refresh);
+panelsEl.addEventListener('change', refresh);
+panelsEl.addEventListener('click', e => {
+  if (e.target.closest('#x_swap')){
+    const a = $('#x_from'), b = $('#x_to');
+    const tmp = a.value; a.value = b.value; b.value = tmp;
+    $('#x_rate').value = '';
+    calc(tab);
+  } else if (e.target.closest('#x_refresh')){
+    tryLive(true);
+  }
+});
+$('#cur').addEventListener('change', e => {
+  cur = e.target.value;
+  try { localStorage.setItem('fin-cur', cur); } catch(err) {}
+  $$('.u.cur').forEach(el => { el.textContent = symOf(cur); });
+  calc(tab);
+});
+$('#seg').addEventListener('click', e => {
+  const b = e.target.closest('button[data-lang]');
+  if (!b) return;
+  lang = b.dataset.lang;
+  try { localStorage.setItem('fin-lang', lang); } catch(err) {}
+  applyLang(true);
+});
+let rt;
+window.addEventListener('resize', () => {
+  clearTimeout(rt);
+  rt = setTimeout(() => { const ch = $('#ch-'+tab); if (ch) drawChart(ch); }, 120);
+});
+
+/* Where the page may call out (for example when saved and hosted elsewhere),
+   pull fresh rates; in this hosted page the request is blocked, so the stored
+   daily snapshot stays and the status line says so. */
+async function tryLive(manual){
+  const st = $('#x_status');
+  if (manual && st) st.textContent = t('st_loading');
+  let ok = false;
+  try {
+    const ctl = new AbortController();
+    const to = setTimeout(() => ctl.abort(), 6000);
+    const r = await fetch('https://open.er-api.com/v6/latest/USD', {signal: ctl.signal});
+    clearTimeout(to);
+    if (r.ok){
+      const j = await r.json();
+      if (j && j.result === 'success' && j.rates && j.rates.ILS && j.rates.USD){
+        RATES = j.rates;
+        META.live = true;
+        META.unix = j.time_last_update_unix || META.unix;
+        ok = true;
+        fillCurSelects();
+        calc(tab);
+      }
+    }
+  } catch(e) { /* keep snapshot */ }
+  if (manual && st) st.textContent = ok ? t('st_ok', {d: dateStr()}) : t('st_fail', {d: dateStr()});
+}
+
+/* ================= init ================= */
+applyLang(false);
+activate(tab);
+tryLive(false);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+:root{
+  color-scheme: dark;
+  --bg:#060C1C; --surface:#0E1830; --field:#0A1329;
+  --ink:#EEF2FB; --ink-2:#8E9DBB; --line:rgba(255,255,255,.09);
+  --navy:#070D1E; --hero-bg:#0E1830; --on-navy:#EEF2FB; --on-navy-2:#8E9DBB; --nav-line:rgba(255,255,255,.1);
+  --brass:#F2C45A; --gold:#F2C45A; --gold-2:#C9972E; --focus:#F2C45A; --green:#2FD08A;
+  --gold-ui:#F2C45A; --g1:rgba(255,255,255,.06); --g2:rgba(255,255,255,.02); --track:rgba(255,255,255,.14); --shadow:rgba(0,0,0,.28);
+  --hero-label:#BFD3C9; --hero-val:#46E3A4; --hero-grad:linear-gradient(135deg,rgba(47,208,138,.20),rgba(14,24,48,.92) 62%); --hero-bd:rgba(47,208,138,.35);
+  --c1:#4F8CFF; --c2:#F5A524; --c3:#F0705A; --c4:#2FD08A;
+}

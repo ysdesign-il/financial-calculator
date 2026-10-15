@@ -1,0 +1,149 @@
+const SEL = (id, label, val, opts, extra) => Object.assign({id, label, type:'select', val, opts}, extra || {});
+const BENCH = [['manual','o_bManual'],['ta125','o_bTa125'],['ta35','o_bTa35'],['spx','o_bSpx'],['ndx','o_bNdx'],['dji','o_bDji'],['gold','o_bGold']];
+const DEFS = {
+  convert: [
+    {id:'x_amount', label:'f_amount', val:1000, wide:true},
+    {id:'x_from',   label:'f_from', type:'cursel'},
+    {id:'x_to',     label:'f_to',   type:'cursel'},
+    {id:'x_swap',   label:'b_swap', type:'swap'},
+    {id:'x_fee',    label:'f_fee', unit:'%', val:0, wide:true, hint:'h_fee'},
+    {id:'x_rate',   label:'f_custom', val:'', wide:true, hint:'h_custom'},
+    SEL('x_list','f_listMode','common',[['common','o_listCommon'],['all','o_listAll'],['crypto','o_listCrypto']],{wide:true}),
+    {id:'x_refresh',label:'b_refresh', type:'refresh'}
+  ],
+  vat: [
+    {id:'v_amount', label:'f_amount', unit:'cur', val:1000, wide:true},
+    SEL('v_mode','f_vatMode','add',[['add','o_vatAdd'],['extract','o_vatExtract'],['fromvat','o_vatFromVat']],{wide:true}),
+    SEL('v_preset','f_vatPreset','18',[['18','o_vp18'],['17','o_vp17'],['0','o_vp0'],['16','o_vp16'],['14','o_vp14'],['15','o_vp15'],['5','o_vp5'],['19','o_vp19'],['20','o_vp20'],['c','o_vpc']],{wide:true}),
+    {id:'v_rate', label:'f_vatRate', unit:'%', val:18, wide:true, hint:'h_vatRate', when:['v_preset','c']},
+    {id:'v_qty', label:'f_qty', val:1, adv:'m_adv'},
+    {id:'v_disc', label:'f_disc', unit:'%', val:0, adv:'m_adv'}
+  ],
+  salary: [
+    {id:'s_amount', label:'f_salAmount', unit:'ils', val:15000, wide:true},
+    SEL('s_per','f_salPer','m',[['m','o_perMonth'],['y','o_perYear']]),
+    SEL('s_mode','f_salMode','g2n',[['g2n','o_g2n'],['n2g','o_n2g']]),
+    {id:'s_pension',label:'f_pension', unit:'%', val:6},
+    {id:'s_study',  label:'f_study', unit:'%', val:0},
+    {id:'s_bonus', label:'f_bonus', unit:'ils', val:0, adv:'g_benefits'},
+    {id:'s_benefit', label:'f_benefit', unit:'ils', val:0, adv:'g_benefits', hint:'h_benefit'},
+    {id:'s_erPens', label:'f_erPens', unit:'%', val:6.5, adv:'g_benefits'},
+    {id:'s_erSev', label:'f_erSev', unit:'%', val:6, adv:'g_benefits'},
+    {id:'s_erStudy', label:'f_erStudy', unit:'%', val:0, adv:'g_benefits'},
+    SEL('s_car','f_sCar','none',[['none','o_sCarNone'],['co','o_sCarCo']],{wide:true, adv:'g_salCar', hint:'h_sCar'}),
+    {id:'s_carPrice', label:'f_cbPrice', unit:'ils', val:180000, wide:true, adv:'g_salCar', hint:'h_cbPrice', when:['s_car','co']},
+    SEL('s_carKind','f_cbKind','fuel',[['fuel','o_cbFuel'],['hybrid','o_cbHybrid'],['plugin','o_cbPlugin'],['ev','o_cbEv']],{adv:'g_salCar', when:['s_car','co']}),
+    SEL('s_carGil','f_sCarGil','n',[['n','o_sCarGilN'],['y','o_sCarGilY']],{adv:'g_salCar', hint:'h_sCarGil', when:['s_car','co']}),
+    {id:'s_carPay', label:'f_cbPay', unit:'ils', val:0, adv:'g_salCar', hint:'h_sCarPay', when:['s_car','co']},
+    {id:'s_carExtra', label:'f_sCarExtra', unit:'ils', val:0, adv:'g_salCar', hint:'h_sCarExtra', when:['s_car','co']},
+    {id:'s_extra', label:'f_sExtra', unit:'ils', val:0, adv:'g_salMore', hint:'h_sExtra'},
+    SEL('s_job','f_sJob','main',[['main','o_jobMain'],['second','o_jobSecond']],{adv:'g_salMore', hint:'h_sJob'}),
+    {id:'s_otherDed', label:'f_sOtherDed', unit:'ils', val:0, adv:'g_salMore', hint:'h_sOtherDed'},
+    {id:'s_don', label:'f_sDon', unit:'ils', val:0, adv:'g_salMore', hint:'h_sDon'},
+    {id:'s_locRate', label:'f_locRate', unit:'%', val:0, adv:'g_salMore', hint:'h_sLoc'},
+    {id:'s_locCap', label:'f_locCap', unit:'ils', val:0, adv:'g_salMore', hint:'h_loc'},
+    {type:'html', id:'se_box', cls:'se-box', adv:'g_salExp'}
+  ].concat(creditDefs('s')).concat(figDefs('s')),
+  selfemp: [
+    {id:'e_rev', label:'f_revenue', unit:'ils', val:300000, wide:true},
+    {id:'e_exp', label:'f_expenses', unit:'ils', val:60000, wide:true},
+    SEL('e_dealer','f_dealer','murshe',[['murshe','o_murshe'],['patur','o_patur']],{wide:true, hint:'h_dealer'}),
+    {id:'e_pens', label:'f_selfPens', unit:'ils', val:15000, wide:true}
+  ].concat(creditDefs('e')),
+  tax: [
+    {id:'t_income', label:'f_taxIncome', unit:'ils', val:240000, wide:true, hint:'h_taxIncome'},
+    SEL('t_period','f_taxPeriod','y',[['y','o_annualP'],['m','o_monthlyP']],{wide:true}),
+    {id:'t_cap', label:'f_capInc', unit:'ils', val:0, adv:'m_adv', hint:'h_capInc'},
+    {id:'t_deduct', label:'f_deduct', unit:'ils', val:0, adv:'m_adv'},
+    {id:'t_pensDep', label:'f_pensDep', unit:'ils', val:0, adv:'m_adv'},
+    {id:'t_donation', label:'f_donation', unit:'ils', val:0, adv:'m_adv', hint:'h_donation'},
+    {id:'t_locRate', label:'f_locRate', unit:'%', val:0, adv:'m_adv'},
+    {id:'t_locCap', label:'f_locCap', unit:'ils', val:0, adv:'m_adv', hint:'h_loc'},
+    {id:'t_other', label:'f_otherCredits', unit:'ils', val:0, adv:'m_adv', hint:'h_otherCredits'}
+  ].concat(creditDefs('t')).concat(figDefs('t')),
+  rental: [
+    {id:'r_rent', label:'f_rentM', unit:'ils', val:6000, wide:true},
+    {id:'r_other', label:'f_rentOther', unit:'ils', val:180000, wide:true},
+    {id:'r_exp', label:'f_rentExp', unit:'ils', val:12000},
+    {id:'r_dep', label:'f_rentDep', unit:'ils', val:0, hint:'h_rentDep'}
+  ].concat(creditDefs('r')),
+  capital: [
+    SEL('cp_kind','f_capKind','sec',[['sec','o_ck_sec'],['sub','o_ck_sub'],['crypto','o_ck_crypto'],['div','o_ck_div'],['divsub','o_ck_divsub'],['int15','o_ck_int15'],['int25','o_ck_int25']],{wide:true}),
+    {id:'cp_buy', label:'f_buy', unit:'cur', val:100000, when:['cp_kind','sec|sub|crypto']},
+    {id:'cp_sell', label:'f_sell', unit:'cur', val:130000},
+    {id:'cp_fee', label:'f_fees', unit:'cur', val:0, when:['cp_kind','sec|sub|crypto']},
+    {id:'cp_cpi', label:'f_cpiCap', unit:'%', val:0, hint:'h_cpiCap', when:['cp_kind','sec|sub']},
+    {id:'cp_loss', label:'f_lossCf', unit:'cur', val:0, adv:'m_adv'},
+    {id:'cp_other', label:'f_otherInc', unit:'ils', val:0, adv:'m_adv'}
+  ],
+  loan: [
+    {id:'l_amount', label:'f_loanAmt', unit:'cur', val:500000},
+    {id:'l_rate',   label:'f_rate',    unit:'%',   val:4.5},
+    {id:'l_years',  label:'f_term',    unit:'yrs', val:25},
+    SEL('l_type','f_method','annuity',[['annuity','o_annuity'],['equal','o_equal'],['bullet','o_bullet']]),
+    {id:'l_grace', label:'f_grace', unit:'mo', val:0, adv:'m_adv'},
+    {id:'l_extra', label:'f_extraM', unit:'cur', val:0, adv:'m_adv'},
+    {id:'l_pre', label:'f_pre', unit:'cur', val:0, adv:'m_adv'},
+    {id:'l_preM', label:'f_preM', val:12, adv:'m_adv'},
+    SEL('l_after','f_after','shorten',[['shorten','o_shorten'],['reduce','o_reduce']],{adv:'m_adv'}),
+    {id:'l_cpi', label:'f_loanCpi', unit:'%', val:0, adv:'m_adv'},
+    {id:'l_feePct', label:'f_feePct', unit:'%', val:0, adv:'m_adv'},
+    {id:'l_feeFix', label:'f_feeFix', unit:'cur', val:0, adv:'m_adv'}
+  ],
+  mortgage: [
+    {id:'m_price', label:'f_price2', unit:'cur', val:2000000, wide:true},
+    {id:'m_down', label:'f_ownFunds', unit:'cur', val:600000, wide:true},
+    SEL('m_type','f_buyerType','first',[['first','o_bt_first'],['upg','o_bt_upg'],['inv','o_bt_inv']],{wide:true}),
+    {id:'m_income', label:'f_netIncome', unit:'cur', val:25000, wide:true},
+    {id:'m_cpi', label:'f_mCpi', unit:'%', val:2.5, wide:true},
+    {type:'sub', label:'g_track1'},
+    {id:'m_s1', label:'f_share', unit:'%', val:40}, {id:'m_r1', label:'f_tkRate', unit:'%', val:5},
+    {id:'m_y1', label:'f_tkYears', unit:'yrs', val:25}, SEL('m_k1','f_tkKind','fix',[['fix','o_tk_fix'],['cpi','o_tk_cpi'],['var','o_tk_var']]),
+    {type:'sub', label:'g_track2'},
+    {id:'m_s2', label:'f_share', unit:'%', val:30}, {id:'m_r2', label:'f_tkRate', unit:'%', val:4.5},
+    {id:'m_y2', label:'f_tkYears', unit:'yrs', val:25}, SEL('m_k2','f_tkKind','var',[['fix','o_tk_fix'],['cpi','o_tk_cpi'],['var','o_tk_var']]),
+    {type:'sub', label:'g_track3'},
+    {id:'m_s3', label:'f_share', unit:'%', val:30}, {id:'m_r3', label:'f_tkRate', unit:'%', val:3.5},
+    {id:'m_y3', label:'f_tkYears', unit:'yrs', val:25}, SEL('m_k3','f_tkKind','cpi',[['fix','o_tk_fix'],['cpi','o_tk_cpi'],['var','o_tk_var']])
+  ],
+  compound: [
+    SEL('c_mode','f_cMode','final',[['final','o_cm_final'],['dep','o_cm_dep'],['years','o_cm_years']],{wide:true}),
+    {id:'c_init',   label:'f_startAmt',   unit:'cur', val:10000},
+    {id:'c_monthly',label:'f_monthly', unit:'cur', val:1000, hint:'h_endMonth', when:['c_mode','final|years']},
+    {id:'c_goal',   label:'f_goal',    unit:'cur', val:1000000, when:['c_mode','dep|years']},
+    SEL('c_bench','f_bench','manual',BENCH,{hint:'h_bench'}),
+    {id:'c_rate',   label:'f_rate',    unit:'%',   val:6},
+    {id:'c_years',  label:'f_years',   unit:'yrs', val:20, when:['c_mode','final|dep']},
+    SEL('c_freq','f_compFreq',12,[[12,'o_cfMonthly'],[4,'o_cfQuarterly'],[1,'o_cfYearly'],[365,'o_cfDaily']]),
+    {id:'c_tax',    label:'f_taxGain', unit:'%',   val:0},
+    {id:'c_infl',   label:'f_infl',    unit:'%',   val:0},
+    {id:'c_mgmt', label:'f_mgmtFee', unit:'%', val:0, adv:'m_adv', hint:'h_mgmtFee'},
+    {id:'c_depG', label:'f_depGrowth', unit:'%', val:0, adv:'m_adv'},
+    {id:'c_yearly', label:'f_yearly', unit:'cur', val:0, adv:'m_adv'},
+    SEL('c_time','f_depTime','end',[['end','o_endM'],['start','o_startM']],{adv:'m_adv'})
+  ],
+  yield: [
+    SEL('y_mode','f_yMode','rate',[['rate','o_ym_rate'],['end','o_ym_end'],['years','o_ym_years']],{wide:true}),
+    {id:'y_start', label:'f_startAmt', unit:'cur', val:10000},
+    {id:'y_end',   label:'f_end',   unit:'cur', val:15000, when:['y_mode','rate|years']},
+    SEL('y_bench','f_bench','manual',BENCH,{hint:'h_bench', when:['y_mode','end|years']}),
+    {id:'y_rate',  label:'f_yRate', unit:'%', val:7, when:['y_mode','end|years']},
+    {id:'y_years', label:'f_duration', val:5, when:['y_mode','rate|end']},
+    SEL('y_unit','f_yUnit','y',[['y','o_u_y'],['m','o_u_m']],{when:['y_mode','rate|end']}),
+    {id:'y_dep', label:'f_yDep', unit:'cur', val:0},
+    {id:'y_tax',   label:'f_taxGain', unit:'%', val:0},
+    {id:'y_infl',  label:'f_infl',    unit:'%', val:0}
+  ],
+  dividends: [
+    {id:'d_price',  label:'f_price',  unit:'cur', val:100},
+    {id:'d_shares', label:'f_shares', val:100},
+    {id:'d_dps',    label:'f_dps',    unit:'cur', val:4},
+    SEL('d_freq','f_freq',4,[[1,'o_yearly'],[2,'o_semi'],[4,'o_quarterly'],[12,'o_monthly']]),
+    SEL('d_taxP','f_taxPreset','25',[['25','o_tp25'],['30','o_tp30'],['15','o_tp15'],['0','o_tp0'],['c','o_tpc']]),
+    {id:'d_tax', label:'f_divTax', unit:'%', val:25, when:['d_taxP','c']},
+    {id:'d_growth', label:'f_divGrowth', unit:'%', val:5},
+    {id:'d_years',  label:'f_years', unit:'yrs', val:10},
+    {id:'d_pg', label:'f_priceGrowth', unit:'%', val:5, adv:'m_adv'},
+    SEL('d_drip','f_drip','0',[['0','o_noDrip'],['1','o_yesDrip']],{adv:'m_adv'})
+  ]
+};

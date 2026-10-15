@@ -1,0 +1,41 @@
+name: Build and publish
+
+on:
+  push:
+    branches: [main]
+    paths: ['src/**', 'devcode.json', 'srcpref.json', '.github/workflows/publish.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: site-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build when the source changed
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ] || git diff --name-only "$BEFORE" HEAD | grep -q '^src/'; then
+            python src/build.py
+          fi
+      - name: Commit and publish
+        run: |
+          git config user.name "publish-bot"
+          git config user.email "publish-bot@users.noreply.github.com"
+          git add index.html version.json
+          git diff --cached --quiet || git commit -m "Build site"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          git push --force origin HEAD:gh-pages
