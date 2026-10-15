@@ -68,6 +68,9 @@ Object.assign(T, {
   w_sMinWage:['במשרה מלאה השכר נמוך משכר המינימום ({m} לחודש מאפריל 2026).','في وظيفة كاملة الراتب أقل من الحد الأدنى ({m} شهريًا منذ نيسان 2026).','For a full-time job this is below the minimum wage ({m} a month from April 2026).'],
   /* closing rates */
   cl_s_mkt:['שער סגירה של יום המסחר הקודם ({t})','سعر إغلاق يوم التداول السابق ({t})','Previous trading day close ({t})'],
+  cl_ix_snap:['שער סגירה','سعر الإغلاق','close'],
+  mk_offRefresh:['הנתונים החיים כבויים: מוצגים שערי הסגירה של {d}. להפעלת נתונים חיים – המתג "נתונים חיים".','البيانات الحية مطفأة: تظهر أسعار إغلاق {d}. لتشغيل البيانات الحية – المفتاح "بيانات حية".','Live data is off: showing the close of {d}. To turn live data on, use the "Live data" switch.'],
+  st_offClose:['נתונים חיים כבויים · שערי סגירה של {d}','البيانات الحية مطفأة · أسعار إغلاق {d}','Live data off · closing prices of {d}'],
   cl_st_mkt:['שער סגירה מ-{t}','سعر الإغلاق من {t}','closing rate from {t}'], cl_mk_mktAt:['שער סגירה · {t}','سعر الإغلاق · {t}','Closing rate · {t}'],
   mk_closeNote:['הנתונים החיים כבויים: מוצגים שערי הסגירה של יום המסחר הקודם ({d}) – מטבעות בסגירת המסחר הבין-בנקאי, ומדדים בסגירת הבורסה שלהם.','البيانات الحية مطفأة: تظهر أسعار إغلاق يوم التداول السابق ({d}) – العملات عند إغلاق التداول بين البنوك والمؤشرات عند إغلاق بورصتها.','Live data is off: showing the previous trading day\'s closing prices ({d}) – currencies at the interbank close, indices at their exchange\'s close.'],
   src_m_close:['שער סגירה של יום המסחר הקודם','سعر إغلاق يوم التداول السابق','Previous trading day close'],
