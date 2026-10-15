@@ -1787,6 +1787,10 @@ details.sub-acc .dz-h{display:none}
 /* taps respond at once (no double-tap zoom wait) */
 button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
 
+/* 8.4: the currency offer under Country of origin */
+.cty-offer{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:-4px 0 6px}
+.cty-offer .mv{min-height:34px}
+
 </style>
 </head>
 <body>
@@ -5040,6 +5044,34 @@ Object.assign(T, {
   /* 8.3 */
   w_lim:['הערך הגבוה ביותר כאן הוא {n}, ולכן החישוב לפי {n}.','أعلى قيمة هنا هي {n}، لذا يُحسب على {n}.','The highest value here is {n}, so it was calculated with {n}.']
 });
+Object.assign(T, {
+  /* 8.4: country of origin */
+  f_country:['מדינת מוצא','بلد المنشأ','Country of origin'],
+  h_country:['נשמר רק אצלכם. עוזר ל-AI להבין את ההקשר, ומציע את המטבע של המדינה.','يُحفظ لديكم فقط. يساعد الذكاء الاصطناعي على فهم السياق ويقترح عملة البلد.','Kept only on your device. Gives the AI context and suggests that country\'s currency.'],
+  o_cNone:['לא נבחרה','لم يُختر','Not chosen'],
+  cty_cur:['המטבע של {c} הוא {k}.','عملة {c} هي {k}.','The currency of {c} is {k}.'],
+  cty_use:['להציג ב-{k}','العرض بـ {k}','Show in {k}'],
+  cty_done:['מטבע התצוגה עכשיו {k}.','عملة العرض الآن {k}.','Display currency is now {k}.'],
+  o_xInapp:['{n} – עונה כאן (AI אמיתי)','{n} – يجيب هنا (ذكاء اصطناعي حقيقي)','{n} – answers here (real AI)'],
+  ai_noteInapp:['עונה {n}, מודל AI אמיתי, כאן בתוך האפליקציה. הוא רואה את המסך והמספרים שלכם ויכול למלא שדות.','يجيب {n}، نموذج ذكاء اصطناعي حقيقي، هنا داخل التطبيق. يرى الشاشة وأرقامكم ويمكنه ملء الحقول.','{n}, a real AI model, answers here in the app. It sees your screen and numbers and can fill in fields.'],
+  /* 8.4: questions about the app */
+  ai_qDesign:['איך משנים עיצוב או ערכת נושא?','كيف أغيّر التصميم أو السمة؟','How do I change the design or theme?'],
+  ai_qSaved:['איפה הקבצים ששמרתי?','أين الملفات التي حفظتها؟','Where are the files I saved?'],
+  ai_qLive:['מה קורה כשמכבים נתונים חיים?','ماذا يحدث عند إيقاف البيانات المباشرة؟','What happens when I turn live data off?'],
+  ai_qWhat:['מה אפשר לעשות באפליקציה?','ماذا يمكنني أن أفعل في التطبيق؟','What can I do in this app?'],
+  ai_qCountry:['איך משנים שפה, מטבע ומדינה?','كيف أغيّر اللغة والعملة والبلد؟','How do I change language, currency and country?'],
+  ai_qPdf:['איך משתפים או שומרים PDF?','كيف أشارك أو أحفظ PDF؟','How do I share or save a PDF?'],
+  ah_design:['**עיצוב וערכת נושא:** הגדרות ← תצוגה ושפה ← מראה. שם בוחרים אחד מ-14 עיצובים וערכת צבעים. מהר יותר: כפתור הפלטה בראש המסך. ערכת הנושא צובעת כל עיצוב, ו"לפי המכשיר" מחזיר את הצבעים המקוריים של העיצוב.','**التصميم والسمة:** الإعدادات ← العرض واللغة ← المظهر. هناك تختار أحد 14 تصميمًا وسمة ألوان. أسرع: زر لوحة الألوان أعلى الشاشة. السمة تلوّن أي تصميم، و"حسب الجهاز" يعيد ألوان التصميم الأصلية.','**Design and theme:** Settings → Display and language → Look. Pick one of 14 designs and a color theme there. Quicker: the palette button at the top. A theme colors any design; "By device" brings back the design\'s own colors.'],
+  ah_saved:['**שמורים:** כל שמירה יוצרת קובץ בתיקיית "שמורים" (סמל הסימנייה). לכל קובץ: פתיחה, הורדה, שיתוף ומחיקה מיידית. בשמירה אוטומטית יש לכל מחשבון קובץ אחד שמתעדכן לבד.','**المحفوظات:** كل حفظ ينشئ ملفًا في مجلد "المحفوظات" (رمز الإشارة المرجعية). لكل ملف: فتح، تنزيل، مشاركة وحذف فوري. في الحفظ التلقائي لكل حاسبة ملف واحد يُحدَّث وحده.','**Saved:** every save makes a file in the Saved folder (the bookmark icon). Each file can be opened, downloaded, shared or deleted at once. With automatic saving each calculator keeps one file that updates itself.'],
+  ah_live:['**נתונים חיים:** השערים מתעדכנים בזמן אמת. מכבים אותם במתג "עדכון חי" במסך הבית, או בחיפוש "נתוני שוק" בהגדרות. כשהם כבויים מוצג שער הסגירה של יום המסחר הקודם, עם התאריך. החץ העגול בראש המסך מרענן הכול.','**البيانات المباشرة:** الأسعار تتحدث لحظيًا. توقفها بمفتاح "تحديث مباشر" في الشاشة الرئيسية، أو بالبحث عن "بيانات السوق" في الإعدادات. عند إيقافها يظهر سعر إغلاق يوم التداول السابق مع التاريخ. السهم الدائري أعلى الشاشة يحدّث كل شيء.','**Live data:** rates update in real time. Turn them off with the "Live updates" switch on Home, or search "market data" in Settings. With them off you see the previous trading day\'s closing rate, with its date. The round arrow at the top refreshes everything.'],
+  ah_lang:['**שפה, מטבע ומדינה:** הגדרות ← תצוגה ושפה ← שפה ואזור. שם בוחרים את שפת הממשק, את מטבע התצוגה ואת מדינת המוצא. אחרי בחירת מדינה מוצע גם המטבע שלה. שפה אפשר להחליף גם מהכפתורים עב / عر / EN למעלה.','**اللغة والعملة والبلد:** الإعدادات ← العرض واللغة ← اللغة والمنطقة. هناك تختار لغة الواجهة وعملة العرض وبلد المنشأ، وبعد اختيار البلد تُقترح عملته. يمكن تغيير اللغة أيضًا من أزرار عب / عر / EN بالأعلى.','**Language, currency and country:** Settings → Display and language → Language and region. Choose the interface language, display currency and country of origin there; picking a country also offers its currency. The עב / عر / EN buttons at the top switch language too.'],
+  ah_sep:['**פסיקים ונקודות:** הגדרות ← תצוגה ושפה ← תצוגת מספרים וסכומים. שם בוחרים מפריד אלפים (פסיק, נקודה, רווח, גרש או בלי), ואם להוסיף מפרידים תוך כדי הקלדה.','**الفواصل:** الإعدادات ← العرض واللغة ← عرض الأرقام. هناك تختار فاصل الآلاف (فاصلة، نقطة، مسافة، فاصلة عليا أو بدون) وإضافة الفواصل أثناء الكتابة.','**Separators:** Settings → Display and language → Numbers. Choose the thousands separator (comma, dot, space, apostrophe or none) and whether to group digits while you type.'],
+  ah_pdf:['**שיתוף ו-PDF:** בכל מחשבון, מתחת לתוצאה, יש כפתורים להעתקה, לשיתוף ול-PDF. את הקבצים השמורים אפשר להוריד או לשתף גם מתיקיית "שמורים".','**المشاركة وPDF:** في كل حاسبة تحت النتيجة أزرار النسخ والمشاركة وPDF. ويمكن تنزيل الملفات المحفوظة أو مشاركتها من مجلد "المحفوظات".','**Share and PDF:** under the result on every calculator there are Copy, Share and PDF buttons. Saved files can also be downloaded or shared from the Saved folder.'],
+  ah_hol:['**אפקטים לחגים:** ערכות החגים מגיעות עם אפקטים, כמו דגלים וזיקוקים ביום העצמאות, שלג בחג המולד ופנסים ברמדאן. מכבים ב: הגדרות ← תצוגה ושפה ← מראה ← אפקטים חגיגיים. אפשר גם להפעיל מעבר אוטומטי לערכת החג.','**مؤثرات الأعياد:** سمات الأعياد تأتي بمؤثرات مثل الأعلام والألعاب النارية والثلج والفوانيس. الإيقاف من: الإعدادات ← العرض واللغة ← المظهر ← المؤثرات الاحتفالية. ويمكن تفعيل التبديل التلقائي لسمة العيد.','**Holiday effects:** holiday themes come with effects such as flags and fireworks, snow and lanterns. Turn them off in Settings → Display and language → Look → Holiday effects. Automatic switching to the holiday theme can be turned on there too.'],
+  ah_reset:['**ניקוי ואיפוס:** החץ העגול בראש מחשבון מאפס את המסך. "נקה הכל" בפס השמירה מוחק את מה שנשמר. קובץ בודד נמחק מתיקיית "שמורים". איפוס של כל האפליקציה: הגדרות ← מערכת ← נתונים ואיפוס.','**المسح وإعادة الضبط:** السهم الدائري أعلى الحاسبة يعيد ضبط الشاشة. "مسح الكل" في شريط الحفظ يحذف المحفوظ. يُحذف الملف المفرد من مجلد "المحفوظات". إعادة ضبط التطبيق كله: الإعدادات ← النظام ← البيانات وإعادة الضبط.','**Clearing and reset:** the round arrow at the top of a calculator resets that screen. "Clear all" in the save bar deletes what was saved. Single files are deleted in the Saved folder. To reset the whole app: Settings → System → Data and reset.'],
+  ah_what:['**מה יש באפליקציה:** עשרות מחשבונים פיננסיים לישראל: שכר ותלוש מלא, מס, משכנתא והלוואות, חיסכון וריבית דריבית, פנסיה, השקעות, מטבעות ושערים חיים, נדל״ן ועוד. יש גם תיקיית שמורים, שיתוף ו-PDF, 14 עיצובים, ערכות נושא לחגים, שלוש שפות, והעוזר הזה. לחצו על מחשבון בבית, או שאלו אותי איזה מחשבון מתאים לכם.','**ما في التطبيق:** عشرات الحاسبات المالية لإسرائيل: الراتب وقسيمة كاملة، الضريبة، الرهن والقروض، الادخار والفائدة المركبة، التقاعد، الاستثمار، العملات والأسعار المباشرة، العقارات وغيرها. وفيه أيضًا مجلد المحفوظات والمشاركة وPDF و14 تصميمًا وسمات الأعياد وثلاث لغات وهذا المساعد.','**What\'s in the app:** dozens of financial calculators for Israel: salary and the full payslip, tax, mortgage and loans, savings and compound interest, pension, investments, currencies and live rates, real estate and more. There\'s also a Saved folder, sharing and PDF, 14 designs, holiday themes, three languages and this assistant. Tap a calculator on Home, or ask me which one fits you.'],
+  ah_ai:['**ה-AI:** בתוך Claude העוזר הוא Claude עצמו, מודל AI אמיתי. הוא רואה את המסך ואת המספרים שלכם, ויכול גם למלא שדות. באתר אפשר לחבר מפתח Gemini חינמי: הגדרות ← עוזר AI. בלי חיבור עונה המודל האישי של האפליקציה, שעובד גם בלי אינטרנט.','**الذكاء الاصطناعي:** داخل Claude المساعد هو Claude نفسه، نموذج حقيقي يرى الشاشة وأرقامكم ويمكنه ملء الحقول. في الموقع يمكن ربط مفتاح Gemini مجاني من الإعدادات. بدون ربط يجيب النموذج الشخصي للتطبيق، ويعمل حتى بلا إنترنت.','**The AI:** inside Claude the assistant is Claude itself, a real AI model that sees your screen and numbers and can fill in fields. On the website you can connect a free Gemini key in Settings. Without one, the app\'s own personal model answers, offline too.']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -5209,7 +5241,7 @@ const RTL = new Set(['he','ar','fa','ur','yi','ps','sd','ug','ckb','dv']);
 var TOUCHED = [], TILE_F = 'all', MY_HANDLE = '';
 try { MY_HANDLE = LS.getItem('fin-handle') || ''; } catch (e) {}
 const MKT = {boi: 3.25, boiDate: '1.9.2026', boiNext: '21.10.2026', cpi: 1.5, cpiMonth: '08/2026', cpiYtd: 2.1, cpiYtdTo: 8, src: 'built'};
-const SET_DEF = {design:'default', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -5507,6 +5539,7 @@ const SICO = {
   set_data:'<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3 3 7 3s7-1.3 7-3"/>',
   set_design:'<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="16" cy="8.5" r="1.5"/>',
   set_hfx:'<path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="2.5"/>',
+  set_country:'<path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/>',
   set_theme:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',
   set_accent:'<path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/>',
   set_size:'<path d="M4 19l5-13 5 13M6 14h6M16 19h5M18.5 12v7"/>',
@@ -6315,7 +6348,8 @@ const SETDEFS = [
   ]],
   ['set_lang', [
     SEL('set_lang','f_langSel','he',LANG_LIST.map(l => [l[0], '=' + l[1]]),{wide:true, hint:'h_langFallback'}),
-    {id:'set_cur', label:'f_curSet', type:'cursel'}
+    {id:'set_cur', label:'f_curSet', type:'cursel'},
+    SEL('set_country','f_country','',[['','o_cNone'],['AD','=AD'],['AE','=AE'],['AF','=AF'],['AG','=AG'],['AI','=AI'],['AL','=AL'],['AM','=AM'],['AO','=AO'],['AQ','=AQ'],['AR','=AR'],['AS','=AS'],['AT','=AT'],['AU','=AU'],['AW','=AW'],['AX','=AX'],['AZ','=AZ'],['BA','=BA'],['BB','=BB'],['BD','=BD'],['BE','=BE'],['BF','=BF'],['BG','=BG'],['BH','=BH'],['BI','=BI'],['BJ','=BJ'],['BL','=BL'],['BM','=BM'],['BN','=BN'],['BO','=BO'],['BQ','=BQ'],['BR','=BR'],['BS','=BS'],['BT','=BT'],['BV','=BV'],['BW','=BW'],['BY','=BY'],['BZ','=BZ'],['CA','=CA'],['CC','=CC'],['CD','=CD'],['CF','=CF'],['CG','=CG'],['CH','=CH'],['CI','=CI'],['CK','=CK'],['CL','=CL'],['CM','=CM'],['CN','=CN'],['CO','=CO'],['CR','=CR'],['CU','=CU'],['CV','=CV'],['CW','=CW'],['CX','=CX'],['CY','=CY'],['CZ','=CZ'],['DE','=DE'],['DJ','=DJ'],['DK','=DK'],['DM','=DM'],['DO','=DO'],['DZ','=DZ'],['EC','=EC'],['EE','=EE'],['EG','=EG'],['EH','=EH'],['ER','=ER'],['ES','=ES'],['ET','=ET'],['FI','=FI'],['FJ','=FJ'],['FK','=FK'],['FM','=FM'],['FO','=FO'],['FR','=FR'],['GA','=GA'],['GB','=GB'],['GD','=GD'],['GE','=GE'],['GF','=GF'],['GG','=GG'],['GH','=GH'],['GI','=GI'],['GL','=GL'],['GM','=GM'],['GN','=GN'],['GP','=GP'],['GQ','=GQ'],['GR','=GR'],['GS','=GS'],['GT','=GT'],['GU','=GU'],['GW','=GW'],['GY','=GY'],['HK','=HK'],['HM','=HM'],['HN','=HN'],['HR','=HR'],['HT','=HT'],['HU','=HU'],['ID','=ID'],['IE','=IE'],['IL','=IL'],['IM','=IM'],['IN','=IN'],['IO','=IO'],['IQ','=IQ'],['IR','=IR'],['IS','=IS'],['IT','=IT'],['JE','=JE'],['JM','=JM'],['JO','=JO'],['JP','=JP'],['KE','=KE'],['KG','=KG'],['KH','=KH'],['KI','=KI'],['KM','=KM'],['KN','=KN'],['KP','=KP'],['KR','=KR'],['KW','=KW'],['KY','=KY'],['KZ','=KZ'],['LA','=LA'],['LB','=LB'],['LC','=LC'],['LI','=LI'],['LK','=LK'],['LR','=LR'],['LS','=LS'],['LT','=LT'],['LU','=LU'],['LV','=LV'],['LY','=LY'],['MA','=MA'],['MC','=MC'],['MD','=MD'],['ME','=ME'],['MF','=MF'],['MG','=MG'],['MH','=MH'],['MK','=MK'],['ML','=ML'],['MM','=MM'],['MN','=MN'],['MO','=MO'],['MP','=MP'],['MQ','=MQ'],['MR','=MR'],['MS','=MS'],['MT','=MT'],['MU','=MU'],['MV','=MV'],['MW','=MW'],['MX','=MX'],['MY','=MY'],['MZ','=MZ'],['NA','=NA'],['NC','=NC'],['NE','=NE'],['NF','=NF'],['NG','=NG'],['NI','=NI'],['NL','=NL'],['NO','=NO'],['NP','=NP'],['NR','=NR'],['NU','=NU'],['NZ','=NZ'],['OM','=OM'],['PA','=PA'],['PE','=PE'],['PF','=PF'],['PG','=PG'],['PH','=PH'],['PK','=PK'],['PL','=PL'],['PM','=PM'],['PN','=PN'],['PR','=PR'],['PS','=PS'],['PT','=PT'],['PW','=PW'],['PY','=PY'],['QA','=QA'],['RE','=RE'],['RO','=RO'],['RS','=RS'],['RU','=RU'],['RW','=RW'],['SA','=SA'],['SB','=SB'],['SC','=SC'],['SD','=SD'],['SE','=SE'],['SG','=SG'],['SH','=SH'],['SI','=SI'],['SJ','=SJ'],['SK','=SK'],['SL','=SL'],['SM','=SM'],['SN','=SN'],['SO','=SO'],['SR','=SR'],['SS','=SS'],['ST','=ST'],['SV','=SV'],['SX','=SX'],['SY','=SY'],['SZ','=SZ'],['TC','=TC'],['TD','=TD'],['TF','=TF'],['TG','=TG'],['TH','=TH'],['TJ','=TJ'],['TK','=TK'],['TL','=TL'],['TM','=TM'],['TN','=TN'],['TO','=TO'],['TR','=TR'],['TT','=TT'],['TV','=TV'],['TW','=TW'],['TZ','=TZ'],['UA','=UA'],['UG','=UG'],['US','=US'],['UY','=UY'],['UZ','=UZ'],['VA','=VA'],['VC','=VC'],['VE','=VE'],['VG','=VG'],['VI','=VI'],['VN','=VN'],['VU','=VU'],['WF','=WF'],['WS','=WS'],['XK','=XK'],['YE','=YE'],['YT','=YT'],['ZA','=ZA'],['ZM','=ZM'],['ZW','=ZW']],{wide:true, hint:'h_country'})
   ]],
   ['set_numbers', [
     SEL('set_digits','f_digits','latn',[['latn','o_dg_latn'],['native','o_dg_native']]),
@@ -6429,7 +6463,7 @@ function settingsPanelHTML(){
       <p class="fine" id="set_msg" aria-live="polite"></p><p class="fine" id="set_info"></p>`)}
   </section>`;
 }
-const SMAP = {set_design:'design', set_hfx:'hfx', set_mktLive:'mktLive', set_inGroup:'inGroup', set_ptMode:'ptMode', set_ptVal:'ptVal', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
+const SMAP = {set_design:'design', set_country:'country', set_hfx:'hfx', set_mktLive:'mktLive', set_inGroup:'inGroup', set_ptMode:'ptMode', set_ptVal:'ptVal', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
@@ -10746,7 +10780,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "8.3", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.011759';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.013451';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -16419,6 +16453,184 @@ document.addEventListener('change', e => {
 const _alPf = applyLang;
 applyLang = function(){ const r = _alPf.apply(this, arguments); try { EXL_SIG = ''; exLabels(); } catch (e) {} return r; };
 try { EXL_SIG = ''; exLabels(); } catch (e) {}
+
+/* ================= 8.4: a real AI that knows the app, and the country of origin ================= */
+
+/* ---------- 1. inside Claude the assistant is Claude itself (the real model), not the built-in keyword engine ---------- */
+(async function aiReal(){
+  if (!IN_CLAUDE) return;
+  try {
+    const s = await window.claude.use('sample'); if (!s) return;
+    CAI.fn = (input, opts) => s(input, opts);
+    try { const L = await s.limits(); CAI.tools = !!(L && L.tools); } catch (e) { CAI.tools = false; }
+    aiInappMig();
+    try { engRender(); } catch (e) {} try { aiEngSync(); } catch (e) {} try { aiFabSync(); } catch (e) {}
+  } catch (e) {}
+})();
+
+/* ---------- 2. the AI knows the app: a guide to every part of it, the screen you are on, and your settings ---------- */
+const APP_GUIDE = 'HOW THE APP WORKS (use this to answer questions about the app itself; describe the taps in the person\'s language and name buttons as they appear):\n' +
+  '- Moving around: the bottom bar on a phone (the side menu on a computer). Home shows tiles for every calculator; the search box at the top finds any calculator or setting.\n' +
+  '- Settings (gear): categories; inside a category every section is folded — tap its title to open it. "Display and language" holds: Look (14 designs: Default, ORBIT, AURUM, PULSE, AURORA, MONO, BLOCK, EMERALD, SUNSET, EDITION, PRISM, TITAN, ZEN, CLAY; color themes and holiday themes; holiday effects on/off; accent color; text size; contrast; motion; sliders), Clock and date, Language and region (interface language, display currency, country of origin), Numbers (digit style, decimals, currency sign position, thousands separator, grouping while typing).\n' +
+  '- The palette button at the top opens designs and themes quickly. A color theme colors every design; "By device" keeps the design\'s own colors.\n' +
+  '- Live data: currency and market rates update live (switch "Live updates" on Home; the "market data" option is in Settings → Calculations and profile → Calculation defaults). With live data off the app shows the previous trading day\'s closing rates with their date. The round arrow at the top refreshes everything.\n' +
+  '- Saving: each screen has a bar with Automatic / Manual / None. The Saved folder (bookmark icon) keeps a file for every save, with Open, Download, Share and an immediate Delete, plus named scenarios and a recycle bin.\n' +
+  '- On every calculator: "?" next to a field explains it, "Explain" explains the screen, the AI button at the top opens this assistant, the round arrow resets the screen, and Copy / Share / PDF share the results.\n' +
+  '- Salary calculator: gross to net and back, credit points (your own point value can be set in Settings), pension and study fund, company car from the government price list (automatic or manual tax bracket), and the whole payslip: monthly or hourly pay, overtime 125%/150%, Shabbat, vacation, sick days by law, unpaid absence, holidays, reserve duty, mourning days, bonuses, expense refunds, advances and loans, and the vacation, sick-day and recuperation balances.\n' +
+  '- Limits: year fields go up to 120 years and month fields up to 1440, so a huge number cannot freeze the app.\n' +
+  '- Holiday themes come with effects (flags and fireworks on Independence Day, snow, lanterns, sparks); they can be turned off in Settings.\n' +
+  '- Reset: the round arrow resets one screen; Settings → System → Data and reset resets the whole app. Settings → AI assistant holds the AI engine choice and (on the website) a free Gemini key for a real AI model.\n' +
+  '- Privacy: the app never asks for ID, card or bank-account numbers and clears such input.\n' +
+  'If something is not in this guide or on the screen, say you are not sure rather than guessing.';
+function aiPersonCtx(){
+  const out = [];
+  if (SET.country) out.push('country of origin: ' + ctyName(SET.country, 'en'));
+  out.push('display currency: ' + (baseCur || cur));
+  out.push('design: ' + (SET.design || 'default') + ', theme: ' + (SET.theme || 'system'));
+  out.push('live data: ' + (SET.mktLive === '0' || SET.liveFx === '0' ? 'off (closing rates)' : 'on'));
+  return 'About this person\'s app: ' + out.join('; ') + '. Current screen: ' + t('tab_' + tab) + ' (' + tab + ').';
+}
+const _aiRules84 = aiRules;
+aiRules = function(){ return _aiRules84.apply(this, arguments) + '\n\n' + APP_GUIDE + '\n' + aiPersonCtx(); };
+const _asSys84 = asSystem;
+asSystem = function(){ return _asSys84.apply(this, arguments) + '\n\n' + APP_GUIDE + '\n' + aiPersonCtx(); };
+
+/* suggested questions about the app itself, next to the ones about the screen */
+const AI_APPQ = ['ai_qDesign', 'ai_qSaved', 'ai_qLive', 'ai_qWhat', 'ai_qCountry', 'ai_qPdf'];
+const _aiChip84 = aiChipKeys;
+aiChipKeys = function(id){
+  const base = _aiChip84.apply(this, arguments);
+  const calc = base.length > 2;
+  const extra = calc ? [AI_APPQ[(new Date().getMinutes()) % AI_APPQ.length]] : AI_APPQ.slice(0, 4);
+  return base.concat(extra.filter(k => !base.includes(k)));
+};
+const _asChips84 = asChips;
+asChips = function(){
+  const r = _asChips84.apply(this, arguments), c = $('#as_chips'); if (!c) return r;
+  c.insertAdjacentHTML('beforeend', ['ai_qWhat', 'ai_qDesign', 'ai_qSaved'].map(k => `<button type="button" class="as-chip as-chip-app" data-q="${k}">${asEsc(t(k))}</button>`).join(''));
+  return r;
+};
+
+/* ---------- who answers: a real model right here in the app, when there is one ----------
+   7.5 sent every free question out to another site (Perplexity, ChatGPT…) — nothing answered inside the app. Now, when a real
+   model can answer here (Claude inside Claude; Gemini on the website with your free key), "answers here" is the choice,
+   and the outside sites stay available in the list. */
+const aiInappOk = () => (typeof claudeOk === 'function' && claudeOk()) || (!IN_CLAUDE && !!(typeof gemKey === 'function' && gemKey()));
+const aiInappName = () => (typeof claudeOk === 'function' && claudeOk()) ? 'Claude' : 'Gemini';
+const aiInappOn = () => aiInappOk() && SET.aiEngine === 'inapp';
+function aiInappMig(){ if (!SET.aiMig84 && aiInappOk()){ SET.aiMig84 = 1; SET.aiEngine = 'inapp'; saveSet(); } }
+try { aiInappMig(); } catch (e) {}
+const _xaiOpts84 = xaiOpts;
+xaiOpts = function(){
+  const base = _xaiOpts84.apply(this, arguments);
+  if (!aiInappOk()) return base;
+  const on = SET.aiEngine === 'inapp';
+  return `<option value="inapp"${on ? ' selected' : ''}>${asEsc(t('o_xInapp', {n: aiInappName()}))}</option>` + (on ? base.replace(/ selected/g, '') : base);
+};
+const _aiEng84 = aiEngSync;
+aiEngSync = function(){
+  const r = _aiEng84.apply(this, arguments);
+  const n = $('#aix_note'); if (n && aiInappOn()) n.textContent = t('ai_noteInapp', {n: aiInappName()});
+  return r;
+};
+const _engR84 = engRender;
+engRender = function(){
+  const r = _engR84.apply(this, arguments);
+  const now = $('#as_engnow'); if (now && aiInappOn()) now.textContent = t('ai_noteInapp', {n: aiInappName()});
+  return r;
+};
+/* 7.x pinned every answer to the built-in engine; with "answers here" the real model answers */
+aiPick = function(){
+  if (SET.aiEngine === 'inapp'){ if (claudeOk()) return 'claude'; if (!IN_CLAUDE && gemKey()) return 'gemini'; }
+  return 'personal';
+};
+const _aiAsk84 = aiAsk;
+aiAsk = async function(q, kind){
+  if (aiInappOn()) return aiAskX.apply(this, arguments);              // the real model, here
+  if (!kind && !AIX.fill && !AIX.busy){ const a = appHelp(q); if (a){ aiLog('user', String(q).trim()); aiLog('ai', a); return; } }
+  return _aiAsk84.apply(this, arguments);
+};
+const _asAns84 = asAnswer;
+asAnswer = async function(q){
+  if (aiInappOn()) return asAnswerX.apply(this, arguments);
+  const a = appHelp(q); if (a) return a;
+  return _asAns84.apply(this, arguments);
+};
+
+/* without a connected model, questions about the app still get a real answer from this guide */
+const APP_HELP = [
+  [/עיצוב|ערכ(ת|ות) נושא|צבע|theme|design|colou?r|skin|تصميم|سمة|ألوان/i, 'ah_design'],
+  [/שמור|שמירה|קבצ|saved|save|file|محفوظ|حفظ|ملف/i, 'ah_saved'],
+  [/נתונים חיים|בזמן אמת|שער(י)? (ה)?סגירה|live data|real.?time|closing rate|بيانات مباشرة|سعر الإغلاق/i, 'ah_live'],
+  [/שפה|מטבע|מדינ|language|currency|country|لغة|عملة|دولة|بلد/i, 'ah_lang'],
+  [/פסיק|נקודה|מפריד|separator|comma|decimal|فاصل|فاصلة/i, 'ah_sep'],
+  [/pdf|שית(ו|ף)|העתק|share|copy|export|مشاركة|نسخ/i, 'ah_pdf'],
+  [/חג|אפקט|זיקוק|דגל|holiday|effect|firework|عيد|مؤثر/i, 'ah_hol'],
+  [/מחק|איפוס|לנקות|delete|reset|clear|حذف|مسح|إعادة/i, 'ah_reset'],
+  [/מה (אפשר|יש)|מה האפליקציה|what can|what does this app|ماذا يمكن|ما الذي/i, 'ah_what'],
+  [/בינה|ai\b|מודל|claude|gemini|ذكاء|نموذج/i, 'ah_ai']
+];
+const APP_HOWTO = /איך|איפה|היכן|אפשר ל|כיצד|how|where|can i|كيف|أين|هل يمكن|מה (אפשר|יש)|what can|what does this app/i;
+function appHelp(q){
+  const s = String(q || ''); if (!APP_HOWTO.test(s)) return '';
+  const hit = APP_HELP.find(([rx]) => rx.test(s));
+  return hit ? t(hit[1]) : '';
+}
+const _aiLocal84 = aiLocal;
+aiLocal = function(id, q){ const a = appHelp(q); if (a){ aiLog('ai', a); return; } return _aiLocal84.apply(this, arguments); };
+const _pmSmart84 = pmSmart;
+pmSmart = async function(q){ const a = appHelp(q); return a || _pmSmart84.apply(this, arguments); };
+
+/* ---------- 3. country of origin (Settings → Language and region) ---------- */
+const CTY_CUR = {IL: 'ILS', PS: 'ILS', US: 'USD', GB: 'GBP', CA: 'CAD', AU: 'AUD', NZ: 'NZD', CH: 'CHF', JP: 'JPY', CN: 'CNY', IN: 'INR', TR: 'TRY', EG: 'EGP', JO: 'JOD',
+  AE: 'AED', SA: 'SAR', QA: 'QAR', KW: 'KWD', BH: 'BHD', OM: 'OMR', MA: 'MAD', TN: 'TND', DZ: 'DZD', LB: 'LBP', IQ: 'IQD', RU: 'RUB', UA: 'UAH', BY: 'BYN', GE: 'GEL', AZ: 'AZN',
+  AM: 'AMD', KZ: 'KZT', UZ: 'UZS', MD: 'MDL', PL: 'PLN', RO: 'RON', HU: 'HUF', CZ: 'CZK', BG: 'BGN', SE: 'SEK', NO: 'NOK', DK: 'DKK', IS: 'ISK', ET: 'ETB', ZA: 'ZAR',
+  NG: 'NGN', KE: 'KES', BR: 'BRL', AR: 'ARS', MX: 'MXN', CL: 'CLP', CO: 'COP', PE: 'PEN', UY: 'UYU', KR: 'KRW', TH: 'THB', PH: 'PHP', SG: 'SGD', HK: 'HKD', TW: 'TWD',
+  ID: 'IDR', MY: 'MYR', VN: 'VND', PK: 'PKR', BD: 'BDT', RS: 'RSD'};
+['AT', 'BE', 'CY', 'DE', 'EE', 'ES', 'FI', 'FR', 'GR', 'HR', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PT', 'SI', 'SK', 'MC', 'SM', 'VA', 'AD', 'ME', 'XK'].forEach(c => { CTY_CUR[c] = 'EUR'; });
+const ctyFlag = c => /^[A-Z]{2}$/.test(c) ? String.fromCodePoint(...[...c].map(x => 0x1F1E6 + x.charCodeAt(0) - 65)) : '';
+const CTY_DN = {};
+function ctyName(c, l){
+  l = l || lang; try { const d = CTY_DN[l] || (CTY_DN[l] = new Intl.DisplayNames([l], {type: 'region'})); return d.of(c) || c; } catch (e) { return c; }
+}
+function ctyUi(){
+  const s = $('#set_country'); if (!s) return;
+  const val = SET.country || '';
+  const opts = [...s.options].filter(o => o.value);
+  const coll = (() => { try { return new Intl.Collator(lang); } catch (e) { return null; } })();
+  opts.forEach(o => { o.textContent = ctyFlag(o.value) + ' ' + ctyName(o.value); });
+  opts.sort((a, b) => coll ? coll.compare(ctyName(a.value), ctyName(b.value)) : 0);
+  /* Israel first, then everyone in alphabetical order */
+  const il = opts.findIndex(o => o.value === 'IL'); if (il > 0) opts.unshift(opts.splice(il, 1)[0]);
+  opts.forEach(o => s.appendChild(o));
+  if (s.options[0] && !s.options[0].value) s.options[0].textContent = t('o_cNone');
+  s.value = val;
+  ctyOffer();
+}
+function ctyOffer(){
+  const s = $('#set_country'); if (!s) return;
+  const f = s.closest('.field'); let box = $('#cty_offer'); if (!box && f){ box = document.createElement('p'); box.id = 'cty_offer'; box.className = 'fine cty-offer'; f.insertAdjacentElement('afterend', box); }
+  if (!box) return;
+  const c = SET.country, k = c && CTY_CUR[c], now = baseCur || cur;
+  if (!k || k === now || !RATES[k]){ box.hidden = true; box.innerHTML = ''; return; }
+  box.hidden = false;
+  box.innerHTML = `${asEsc(t('cty_cur', {c: ctyName(c), k}))} <button type="button" class="mv" data-cty-cur="${k}">${asEsc(t('cty_use', {k}))}</button>`;
+}
+document.addEventListener('change', e => {
+  if (!e.target || e.target.id !== 'set_country') return;
+  SET.country = e.target.value; saveSet(); ctyOffer();
+});
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-cty-cur]'); if (!b) return;
+  const k = b.dataset.ctyCur, s = $('#set_cur') || $('#cur');
+  try { if (typeof setBase === 'function') setBase(k); else if (s){ s.value = k; s.dispatchEvent(new Event('change', {bubbles: true})); } } catch (er) {}
+  const sc = $('#set_cur'); if (sc){ sc.value = k; }
+  try { calc(tab); } catch (er) {}
+  ctyOffer(); try { toast(t('cty_done', {k})); } catch (er) {}
+});
+const _alCty = applyLang;
+applyLang = function(){ const r = _alCty.apply(this, arguments); try { ctyUi(); } catch (e) {} return r; };
+try { if (SET.country == null) SET.country = ''; ctyUi(); } catch (e) {}
 
 applyLang(false);
 activate(tab);
