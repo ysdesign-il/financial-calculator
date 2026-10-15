@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Developer Admin</title>
+    <link rel="stylesheet" href="/admin.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-wrap">
+          <div class="brand-mark">FC</div>
+          <div>
+            <strong>Financial Calculator</strong>
+            <small>Developer Portal</small>
+          </div>
+        </div>
+
+        <div class="auth-box" id="loginBox">
+          <h2>כניסה למפתח</h2>
+          <input id="passwordInput" type="password" placeholder="סיסמה" />
+          <button id="loginBtn" class="primary">התחברות</button>
+        </div>
+
+        <div class="auth-box hidden" id="loggedInBox">
+          <button id="logoutBtn" class="ghost">התנתקות</button>
+          <div class="status">מחובר</div>
+        </div>
+
+        <div class="files-box hidden" id="filesBox">
+          <div class="files-header">
+            <h3>קבצים</h3>
+            <button id="refreshFilesBtn" class="small">רענן</button>
+          </div>
+          <div id="fileTree" class="file-tree"></div>
+        </div>
+      </aside>
+
+      <main class="editor-panel hidden" id="editorPanel">
+        <header class="editor-header">
+          <div>
+            <small>קובץ נבחר</small>
+            <h1 id="selectedFileName">לא נבחר</h1>
+          </div>
+          <button id="saveFileBtn" class="primary">שמור בקובץ</button>
+        </header>
+
+        <section class="editor-toolbar">
+          <button id="loadFileBtn" class="secondary">טעינת קובץ</button>
+          <button id="previewSiteBtn" class="secondary" type="button">לצפות באתר</button>
+        </section>
+
+        <textarea id="editorTextarea" spellcheck="false"></textarea>
+
+        <section class="ai-box">
+          <h3>עוזר קוד</h3>
+          <textarea id="aiPrompt" rows="4" placeholder="כתוב כאן מה לשנות בקוד, או בקש קוד חדש..."></textarea>
+          <div class="ai-actions">
+            <button id="aiGenerateBtn" class="primary">בקש קוד מה-AI</button>
+            <button id="aiApplyBtn" class="secondary">החל קוד לעורך</button>
+          </div>
+          <div id="aiOutput" class="ai-output"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/admin.js"></script>
+  </body>
+</html>
