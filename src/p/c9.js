@@ -71,44 +71,57 @@ document.addEventListener('input', e => { if (e.target && e.target.id === 'l_boi
 
 /* ================= 8.5: comparing insurance offers, for every kind of insurance ================= */
 const INS_KINDS = ['life', 'mortlife', 'mortprop', 'health', 'critical', 'disability', 'ltc', 'accident', 'carcomp', 'car3rd', 'carmand', 'homestruct', 'homecontent', 'travel', 'dental', 'pet', 'business'];
-const INS_OFF = ['a', 'b', 'c', 'd'];
-function insOffer(k, yrs, idx){
-  const p = Math.max(0, v('ins_p' + k)), g = clamp(v('ins_g' + k), -20, 50) / 100, d = Math.max(0, v('ins_d' + k)), cov = Math.max(0, v('ins_c' + k));
-  const disc = clamp(v('ins_x' + k), 0, 90) / 100, dy = clamp(Math.round(v('ins_xy' + k)), 0, 50), extra = Math.max(0, v('ins_e' + k));
-  let total = 0, first = 0; const byYear = [];
+/* the offers are a list with no fixed size: add as many as you like, each with its insurer */
+const INS_FK = [['p', 'f_insPx', 'cur'], ['g', 'f_insGx', '%'], ['d', 'f_insDx', 'cur'], ['c', 'f_insCx', 'cur'], ['x', 'f_insXx', '%'], ['xy', 'f_insXYx', 'yrs'], ['e', 'f_insEx', 'cur']];
+function insSeed(){
+  const o = {co: '', p: 180, g: 0, d: 0, c: 1000000, x: 0, xy: 0, e: 0};
+  return [Object.assign({}, o), Object.assign({}, o, {p: 165, g: 4})];
+}
+function insList(){ if (!Array.isArray(SET.insOffers) || !SET.insOffers.length) SET.insOffers = insSeed(); return SET.insOffers; }
+function insName(o, i, L){
+  const def = t('lc_def', {n: i + 1}), own = String(o.n || '').trim();
+  if (own) return own;
+  if (!o.co) return def;
+  const same = (L || insList()).filter(x => x.co === o.co && !String(x.n || '').trim()).length > 1;
+  return t('o_insCo_' + o.co) + (same ? ' (' + def + ')' : '');
+}
+function insOffer(o, yrs, idx){
+  const n0 = x => isFinite(+x) ? +x : 0;
+  const p = Math.max(0, n0(o.p)), g = clamp(n0(o.g), -20, 50) / 100, d = Math.max(0, n0(o.d)), cov = Math.max(0, n0(o.c));
+  const disc = clamp(n0(o.x), 0, 90) / 100, dy = clamp(Math.round(n0(o.xy)), 0, 50), extra = Math.max(0, n0(o.e));
+  let total = 0, first = 0;
   for (let y = 0; y < yrs; y++){
     const m = (p * Math.pow(1 + g, y) * Math.pow(1 + idx, y)) * (y < dy ? 1 - disc : 1) + extra * Math.pow(1 + idx, y);
-    const yr = m * 12; total += yr; byYear.push(yr); if (y === 0) first = yr;
+    const yr = m * 12; total += yr; if (y === 0) first = yr;
   }
-  return {k, p, g, d, cov, disc, dy, extra, total, first, byYear};
+  return {p, g, d, cov, disc, dy, extra, total, first};
 }
 function calcInsurance(){
-  const kind = ($('#ins_kind') || {}).value || 'life', n = clamp(Math.round(+(($('#ins_n') || {}).value || 2)), 2, 4);
+  const kind = ($('#ins_kind') || {}).value || 'life';
   const yrs = clamp(Math.round(v('ins_years')), 1, 60), idx = clamp(v('ins_idx'), -5, 20) / 100, claims = Math.max(0, v('ins_claims'));
   const by = ($('#ins_by') || {}).value || 'total';
-  const L = INS_OFF.slice(0, n).map(k => insOffer(k, yrs, idx)).map(o => {
-    o.ded = o.d * claims * yrs;                                     // the deductibles you would expect to pay over the period
-    o.all = o.total + o.ded;
-    o.per1k = o.cov > 0 ? o.all / yrs / (o.cov / 1000) : NaN;       // yearly cost for each ₪1,000 of cover
-    return o;
+  insCoFilter(kind);
+  const src = insList();
+  const L = src.map((o, i) => {
+    const r = insOffer(o, yrs, idx);
+    r.name = insName(o, i, src);
+    r.ded = r.d * claims * yrs;                                     // the deductibles you would expect to pay over the period
+    r.all = r.total + r.ded;
+    r.per1k = r.cov > 0 ? r.all / yrs / (r.cov / 1000) : NaN;       // yearly cost for each ₪1,000 of cover
+    return r;
   });
   const key = o => by === 'cover' ? (isFinite(o.per1k) ? o.per1k : Infinity) : o.all;
   const sorted = L.slice().sort((a, b) => key(a) - key(b)), best = sorted[0], worst = sorted[sorted.length - 1];
-  insCoFilter(kind);
-  const co = k => ($('#ins_co' + k) || {}).value || '';
-  const name = k => { const c = co(k); if (!c) return t('o_insOff_' + k); const same = INS_OFF.slice(0, n).filter(x => co(x) === c).length > 1; return t('o_insCo_' + c) + (same ? ' (' + t('o_insOff_' + k) + ')' : ''); };
   const rows = [];
-  sorted.forEach((o, i) => {
-    rows.push([(i === 0 ? '★ ' : '') + name(o.k) + ' · ' + t('r_insTotal', {y: yrs}), M(o.all), i === 0 ? 'key' : undefined]);
-  });
-  rows.push([t('r_insSave', {a: name(best.k), b: name(worst.k)}), M(worst.all - best.all), 'key']);
+  sorted.forEach((o, i) => rows.push([(i === 0 ? '★ ' : (i + 1) + '. ') + o.name + ' · ' + t('r_insTotal', {y: yrs}), M(o.all), i === 0 ? 'key' : undefined]));
+  if (L.length > 1) rows.push([t('r_insSave', {a: best.name, b: worst.name}), M(worst.all - best.all), 'key']);
   if (claims > 0) rows.push([t('r_insClaims'), N(claims, 2) + ' ' + t('r_insPerYear')]);
-  const trows = L.map(o => [name(o.k), M(o.p, 2), M(o.first), M(o.total), M(o.ded), M(o.all), o.cov > 0 ? M(o.cov) : '—', isFinite(o.per1k) ? M(o.per1k, 2) : '—']);
+  const trows = sorted.map(o => [o.name, M(o.p, 2), M(o.first), M(o.total), M(o.ded), M(o.all), o.cov > 0 ? M(o.cov) : '—', isFinite(o.per1k) ? M(o.per1k, 2) : '—']);
   const warn = [];
-  L.forEach(o => { if (o.g > 0.06) warn.push(t('w_insGrow', {n: name(o.k), g: PC(o.g * 100)})); if (o.disc > 0 && o.dy > 0 && o.dy < yrs) warn.push(t('w_insDisc', {n: name(o.k), y: o.dy})); });
-  if (L.some(o => o.cov > 0) && L.some(o => o.cov > 0 && Math.abs(o.cov - best.cov) / Math.max(1, best.cov) > 0.1)) warn.push(t('w_insCov'));
+  L.forEach(o => { if (o.g > 0.06) warn.push(t('w_insGrow', {n: o.name, g: PC(o.g * 100)})); if (o.disc > 0 && o.dy > 0 && o.dy < yrs) warn.push(t('w_insDisc', {n: o.name, y: o.dy})); });
+  if (L.some(o => o.cov > 0 && Math.abs(o.cov - best.cov) / Math.max(1, best.cov) > 0.1)) warn.push(t('w_insCov'));
   return {
-    hero: {label: t('r_insBest', {n: name(best.k)}), value: M(best.all), sub: t('r_insBestSub', {y: yrs, s: M(worst.all - best.all), m: M(best.first / 12, 2)})},
+    hero: {label: t('r_insBest', {n: best.name}), value: M(best.all), sub: t('r_insBestSub', {y: yrs, s: M(worst.all - best.all), m: M(best.first / 12, 2)})},
     rows, warn: warn.slice(0, 4),
     table: {title: t('t_insCmp'), open: true, head: ['', t('h_insPm'), t('h_insY1'), t('h_insPrem'), t('h_insDed'), t('h_insAll'), t('h_insCov'), t('h_insPer1k')], rows: trows},
     note: t('n_ins_' + kind) + ' ' + t('n_ins')
@@ -121,10 +134,11 @@ function insCoOk(c, kind){
   if (INS_GENERAL.includes(c)) return !INS_LIFEHEALTH.includes(kind);
   return true;
 }
+var INS_KIND_SEEN = '';
 function insCoFilter(kind){
-  INS_OFF.forEach(k => { const s = $('#ins_co' + k); if (!s) return;
-    [...s.options].forEach(o => { const ok = !o.value || insCoOk(o.value, kind); o.hidden = !ok; o.disabled = !ok; });
-    if (s.value && !insCoOk(s.value, kind)) s.value = '';
-  });
+  let fixed = false;
+  insList().forEach(o => { if (o.co && !insCoOk(o.co, kind)){ o.co = ''; fixed = true; } });
+  if (fixed) try { saveSet(); } catch (e) {}
+  if (kind !== INS_KIND_SEEN || fixed){ INS_KIND_SEEN = kind; setTimeout(() => { try { insRender(); } catch (e) {} }, 0); }
 }
 Object.assign(CALC, {insurance: calcInsurance});
