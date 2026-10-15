@@ -1753,6 +1753,26 @@ input.ro{opacity:.75;cursor:not-allowed}
 :root[data-design="clay"] .bt.on{color:var(--dz-on)}
 @media (prefers-reduced-motion:reduce){:root[data-design="prism"] :is(.dz-art,.page-head,.gold-btn){animation:none}}
 
+/* ================= 8.2: Settings in folding sections ================= */
+.set-sec:has(> details.sec-acc){padding:0 !important;overflow:hidden}
+details.sec-acc > summary{list-style:none;display:flex;align-items:center;gap:10px;cursor:pointer;padding:14px 16px;min-height:56px;-webkit-tap-highlight-color:transparent}
+details.sec-acc > summary::-webkit-details-marker,details.sub-acc > summary::-webkit-details-marker{display:none}
+details.sec-acc > summary .sec-h{margin:0;flex:none;display:flex;align-items:center;gap:10px}
+details.sec-acc > summary .sec-h .sec-t{margin:0;font-size:1rem}
+.sec-sum{flex:1;min-width:0;color:var(--ink-2);font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:end}
+.acc-chev{flex:none;width:20px;height:20px;fill:none;stroke:var(--ink-2);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+details.sec-acc[open] > summary .acc-chev{transform:rotate(180deg)}
+details.sec-acc[open] > summary{border-bottom:1px solid var(--line)}
+details.sec-acc[open] > summary .sec-sum{visibility:hidden}
+.sec-body{padding:12px 16px 16px}
+details.sec-acc > summary:focus-visible,details.sub-acc > summary:focus-visible{outline:2px solid var(--gold-ui);outline-offset:-2px;border-radius:12px}
+details.sub-acc{margin:0 0 12px;border:1px solid var(--line);border-radius:14px;background:var(--g1)}
+details.sub-acc > summary{list-style:none;cursor:pointer;padding:12px 14px;font-weight:600;font-size:.92rem;display:flex;align-items:center;gap:8px}
+details.sub-acc > summary::after{content:"";margin-inline-start:auto;width:8px;height:8px;border-inline-end:2px solid var(--ink-2);border-bottom:2px solid var(--ink-2);transform:rotate(45deg);transition:transform .2s}
+details.sub-acc[open] > summary::after{transform:rotate(-135deg)}
+details.sub-acc > :not(summary){margin:0 12px 12px}
+details.sub-acc .dz-h{display:none}
+
 </style>
 </head>
 <body>
@@ -4904,6 +4924,88 @@ Object.assign(T, {
   dz_sunsetKick:['מחשבון פיננסי','حاسبة مالية','Financial calculator'],
   dz_sunsetTag:['תכנון רגוע לעתיד מואר','تخطيط هادئ لمستقبل مشرق','Calm planning for a bright future']
 });
+Object.assign(T, {
+  /* 8.2: Settings in folding sections */
+  acc_design:['עיצוב: {n}','التصميم: {n}','Design: {n}'],
+  acc_theme:['ערכת נושא: {n}','السمة: {n}','Theme: {n}'],
+  /* 8.2: the full payslip */
+  g_salTime:['שעות, ימים והיעדרויות','الساعات والأيام والغياب','Hours, days and absences'],
+  g_salBal:['יתרות: חופשה, מחלה והבראה','الأرصدة: إجازة ومرض ونقاهة','Balances: vacation, sick days and recuperation'],
+  f_sPayType:['שיטת תשלום','طريقة الدفع','Pay type'],
+  o_payMonth:['משכורת חודשית','راتب شهري','Monthly salary'], o_payHour:['שכר שעתי','أجر بالساعة','Hourly pay'],
+  h_sPayType:['בשכר שעתי מחשבים לפי שעות בפועל, ומשלמים בנפרד על חופשה, חגים ומחלה.','في الأجر بالساعة يُحسب حسب الساعات الفعلية، وتُدفع الإجازة والأعياد والمرض بشكل منفصل.','Hourly pay counts actual hours; vacation, holidays and sick days are paid separately.'],
+  f_sHourRate:['תעריף לשעה','الأجر للساعة','Hourly rate'],
+  f_sHours:['שעות עבודה בחודש','ساعات العمل في الشهر','Hours worked this month'],
+  h_sHours:['משרה מלאה היא 182 שעות בחודש.','الوظيفة الكاملة 182 ساعة في الشهر.','A full-time job is 182 hours a month.'],
+  f_sWeek:['ימי עבודה בשבוע','أيام العمل في الأسبوع','Work days per week'],
+  o_week5:['5 ימים','5 أيام','5 days'], o_week6:['6 ימים','6 أيام','6 days'],
+  f_sWdays:['ימי עבודה בחודש','أيام العمل في الشهر','Work days this month'],
+  h_sWdays:['לחישוב ערך יום עבודה במשכורת חודשית (בדרך כלל 21–23).','لحساب قيمة يوم العمل في الراتب الشهري (عادة 21–23).','Used to work out a day\'s value on a monthly salary (usually 21–23).'],
+  f_sOt125:['שעות נוספות 125%','ساعات إضافية 125%','Overtime hours at 125%'],
+  f_sOt150:['שעות נוספות 150%','ساعات إضافية 150%','Overtime hours at 150%'],
+  h_sOt:['השעתיים הראשונות ביום ב-125%, ומהשלישית ב-150%.','أول ساعتين في اليوم بـ125%، ومن الثالثة بـ150%.','The first two extra hours a day are at 125%, from the third at 150%.'],
+  f_sShab:['שעות בשבת או בחג (150%)','ساعات في السبت أو العيد (150%)','Hours on Shabbat or a holiday (150%)'],
+  h_sShab:['עבודה ביום המנוחה משולמת לפחות ב-150%.','العمل في يوم الراحة يُدفع بـ150% على الأقل.','Work on the rest day is paid at least 150%.'],
+  f_sVacD:['ימי חופשה שנוצלו החודש','أيام إجازة استُخدمت هذا الشهر','Vacation days taken this month'],
+  h_sVacD:['במשכורת חודשית החופשה כבר בתוך השכר; בשכר שעתי היא משולמת בנפרד. יורד מיתרת החופשה.','في الراتب الشهري الإجازة ضمن الراتب؛ وفي الأجر بالساعة تُدفع بشكل منفصل. تُخصم من رصيد الإجازة.','On a monthly salary vacation is already in the pay; on hourly pay it is paid separately. It comes off your vacation balance.'],
+  f_sSickD:['ימי מחלה החודש','أيام مرض هذا الشهر','Sick days this month'],
+  h_sSickD:['לפי חוק דמי מחלה: יום ראשון ללא תשלום, ימים 2–3 ב-50%, ומהיום הרביעי 100%.','حسب قانون أجر المرض: اليوم الأول بلا أجر، اليومان 2–3 بـ50%، ومن اليوم الرابع 100%.','By the Sick Pay Law: day 1 unpaid, days 2–3 at 50%, from day 4 at 100%.'],
+  f_sSickPay:['תשלום ימי מחלה','دفع أيام المرض','Sick pay'],
+  o_sickLaw:['לפי החוק','حسب القانون','By law'], o_sickFull:['מלא מהיום הראשון','كامل من اليوم الأول','Full from day 1'],
+  h_sSickPay:['יש מעסיקים והסכמים שמשלמים מלא כבר מהיום הראשון.','بعض أصحاب العمل والاتفاقيات يدفعون كاملاً من اليوم الأول.','Some employers and agreements pay in full from day 1.'],
+  f_sAbsD:['ימי היעדרות ללא תשלום','أيام غياب بلا أجر','Unpaid absence days'],
+  h_sAbsD:['ירדו מהשכר לפי ערך יום עבודה.','تُخصم من الراتب حسب قيمة يوم العمل.','Deducted from the salary at a day\'s value.'],
+  f_sHolD:['ימי חג בתשלום','أيام عيد مدفوعة','Paid holiday days'],
+  h_sHolD:['לעובד שעתי אחרי 3 חודשי עבודה: עד 9 ימי חג בשנה.','للعامل بالساعة بعد 3 أشهر عمل: حتى 9 أيام عيد في السنة.','For hourly workers after 3 months: up to 9 holiday days a year.'],
+  f_sReserveD:['ימי מילואים','أيام احتياط','Reserve duty days'],
+  h_sReserveD:['במילואים המעסיק ממשיך לשלם שכר מלא, וביטוח לאומי מחזיר לו. בשכר שעתי – לפי ערך יום.','في الاحتياط يواصل صاحب العمل دفع الراتب كاملاً ويعوّضه التأمين الوطني. بالأجر بالساعة – حسب قيمة اليوم.','During reserve duty the employer keeps paying in full and National Insurance repays it. On hourly pay – at a day\'s value.'],
+  f_sMournD:['ימי אבל','أيام حداد','Mourning days'],
+  h_sMournD:['עד 7 ימי אבל בתשלום על קרוב מדרגה ראשונה (לעובד שעתי).','حتى 7 أيام حداد مدفوعة على قريب من الدرجة الأولى (للعامل بالساعة).','Up to 7 paid mourning days for a close relative (hourly workers).'],
+  f_sVacRed:['פדיון ימי חופשה','استرداد أيام إجازة','Vacation days redeemed'],
+  h_sVacRed:['ימי חופשה שהומרו לכסף (בדרך כלל בסיום עבודה). חייבים במס.','أيام إجازة تحوّلت إلى مال (عادة عند انتهاء العمل). خاضعة للضريبة.','Vacation days paid out in cash (usually when leaving). Taxable.'],
+  f_sComm:['עמלות','عمولات','Commissions'], h_sComm:['עמלות מכירה או יעדים החודש.','عمولات بيع أو أهداف هذا الشهر.','Sales or target commissions this month.'],
+  f_sShift:['תוספת משמרות','علاوة ورديات','Shift bonus'], h_sShift:['תוספת על משמרות ערב או לילה.','علاوة على ورديات المساء أو الليل.','Extra pay for evening or night shifts.'],
+  f_sCloth:['דמי ביגוד','بدل ملابس','Clothing allowance'], h_sCloth:['החלק החודשי. חייב במס.','الجزء الشهري. خاضع للضريبة.','The monthly part. Taxable.'],
+  f_sSeniorPay:['תוספת ותק','علاوة أقدمية','Seniority bonus'], h_sSeniorPay:['תוספת קבועה לפי שנות עבודה, אם יש בהסכם.','علاوة ثابتة حسب سنوات العمل، إن وُجدت في الاتفاق.','A fixed addition for years of service, if your agreement has one.'],
+  f_sGlobalOt:['שעות נוספות גלובליות','ساعات إضافية إجمالية','Global overtime'], h_sGlobalOt:['סכום קבוע לשעות נוספות, בלי קשר לשעות בפועל.','مبلغ ثابت للساعات الإضافية بغضّ النظر عن الساعات الفعلية.','A fixed amount for overtime, regardless of actual hours.'],
+  f_sOncall:['כוננות','مناوبة','On-call pay'], h_sOncall:['תשלום על זמינות מחוץ לשעות העבודה.','دفع مقابل الجاهزية خارج ساعات العمل.','Pay for being available outside working hours.'],
+  f_sRoleAdd:['תוספת תפקיד / מקצועית','علاوة وظيفة / مهنية','Role or professional bonus'], h_sRoleAdd:['תוספת קבועה על תפקיד, אחריות או מקצוע.','علاوة ثابتة على الوظيفة أو المسؤولية أو المهنة.','A fixed addition for a role, responsibility or profession.'],
+  f_sWfh:['תוספת עבודה מהבית','علاوة العمل من البيت','Work-from-home allowance'], h_sWfh:['השתתפות באינטרנט, חשמל וכו׳. חייבת במס.','مساهمة في الإنترنت والكهرباء وغيرها. خاضعة للضريبة.','Help with internet, electricity and so on. Taxable.'],
+  f_sGift:['שווי מתנה לחג','قيمة هدية العيد','Holiday gift value'], h_sGift:['מתנה מהמעסיק נחשבת הכנסה לצורך מס (שווי), גם אם לא קיבלתם כסף.','هدية صاحب العمل تُعدّ دخلاً للضريبة (قيمة) حتى بلا نقود.','A gift from the employer counts as income for tax (a benefit), even with no cash.'],
+  f_sReimb:['החזר הוצאות (פטור ממס)','استرداد مصاريف (معفى من الضريبة)','Expense refunds (tax-free)'], h_sReimb:['החזר על הוצאות עבודה לפי קבלות, כמו אש״ל או חניה. מתווסף לנטו ולא חייב במס.','استرداد مصاريف العمل حسب الإيصالات مثل السفر أو الموقف. يُضاف للصافي ولا يخضع للضريبة.','Work expenses repaid against receipts, like travel or parking. Added to the net, not taxed.'],
+  f_sErDis:['אובדן כושר עבודה (מעסיק)','عجز عن العمل (صاحب العمل)','Disability insurance (employer)'], h_sErDis:['הפרשת המעסיק לביטוח אובדן כושר עבודה. בדרך כלל עד 2.5% מהשכר פטור ממס.','مساهمة صاحب العمل في تأمين العجز عن العمل. عادة حتى 2.5% من الراتب معفاة.','The employer\'s payment for disability insurance. Usually up to 2.5% of salary is tax-free.'],
+  f_sAdv:['מקדמה ששולמה','سلفة مدفوعة','Advance already paid'], h_sAdv:['יורדת מהנטו בתלוש הזה.','تُخصم من الصافي في هذه القسيمة.','Taken off the net on this payslip.'],
+  f_sLoanDed:['החזר הלוואה מהמעסיק','سداد قرض صاحب العمل','Employer loan repayment'], h_sLoanDed:['תשלום חודשי שיורד מהנטו.','دفعة شهرية تُخصم من الصافي.','A monthly payment taken off the net.'],
+  f_sSenior:['ותק במקום העבודה','الأقدمية في مكان العمل','Years at this workplace'], h_sSenior:['קובע כמה ימי חופשה והבראה מגיעים לכם.','تحدد عدد أيام الإجازة والنقاهة المستحقة.','Sets how many vacation and recuperation days you get.'],
+  f_sVacBal:['יתרת חופשה מהתלוש הקודם','رصيد الإجازة من القسيمة السابقة','Vacation balance from last payslip'], h_sVacBal:['כפי שמופיע בתלוש של החודש הקודם.','كما يظهر في قسيمة الشهر السابق.','As shown on last month\'s payslip.'],
+  f_sSickBal:['יתרת מחלה מהתלוש הקודם','رصيد المرض من القسيمة السابقة','Sick-day balance from last payslip'], h_sSickBal:['נצברים 1.5 ימים בחודש, עד 90 ימים.','تتراكم 1.5 يوم في الشهر حتى 90 يومًا.','You build up 1.5 days a month, up to 90.'],
+  f_sHavDay:['ערך יום הבראה','قيمة يوم النقاهة','Recuperation day value'], h_sHavDay:['במגזר הפרטי 418 ₪ ליום (מ-2023). במגזר הציבורי הסכום שונה.','في القطاع الخاص 418 ₪ لليوم (منذ 2023). في القطاع العام المبلغ مختلف.','₪418 a day in the private sector (since 2023). The public sector differs.'],
+  r_sBase:['שכר בסיס','الراتب الأساسي','Base salary'],
+  r_sHourBase:['{h} שעות × {r}','{h} ساعة × {r}','{h} hours × {r}'],
+  r_sAbs:['היעדרות ללא תשלום ({d} ימים)','غياب بلا أجر ({d} أيام)','Unpaid absence ({d} days)'],
+  r_sSickOff:['ימי מחלה ({d}) – מהשכר','أيام مرض ({d}) – من الراتب','Sick days ({d}) – off the salary'],
+  r_sSickPay:['דמי מחלה','أجر المرض','Sick pay'],
+  r_sVacPay:['דמי חופשה ({d} ימים)','أجر الإجازة ({d} أيام)','Vacation pay ({d} days)'],
+  r_sHolPay:['דמי חגים ({d} ימים)','أجر الأعياد ({d} أيام)','Holiday pay ({d} days)'],
+  r_sResPay:['מילואים ({d} ימים)','الاحتياط ({d} أيام)','Reserve duty ({d} days)'],
+  r_sMournPay:['ימי אבל ({d})','أيام الحداد ({d})','Mourning days ({d})'],
+  r_sOt125:['שעות נוספות 125%','ساعات إضافية 125%','Overtime 125%'], r_sOt150:['שעות נוספות 150%','ساعات إضافية 150%','Overtime 150%'],
+  r_sShab:['שבת / חג 150%','سبت / عيد 150%','Shabbat / holiday 150%'], r_sVacRed:['פדיון חופשה','استرداد الإجازة','Vacation redeemed'],
+  r_sComm:['עמלות','عمولات','Commissions'], r_sShift:['תוספת משמרות','علاوة ورديات','Shift bonus'], r_sCloth:['דמי ביגוד','بدل ملابس','Clothing allowance'],
+  r_sSeniorPay:['תוספת ותק','علاوة أقدمية','Seniority bonus'], r_sGlobalOt:['שעות נוספות גלובליות','ساعات إضافية إجمالية','Global overtime'], r_sOncall:['כוננות','مناوبة','On-call pay'],
+  r_sRoleAdd:['תוספת תפקיד','علاوة وظيفة','Role bonus'], r_sWfh:['עבודה מהבית','العمل من البيت','Work from home'], r_sGift:['שווי מתנה לחג','قيمة هدية العيد','Holiday gift value'],
+  r_sReimb:['החזר הוצאות (פטור)','استرداد مصاريف (معفى)','Expense refunds (tax-free)'], r_erDis:['אובדן כושר עבודה (מעסיק)','عجز عن العمل (صاحب العمل)','Disability insurance (employer)'],
+  r_sAdv:['מקדמה','سلفة','Advance'], r_sLoanDed:['החזר הלוואה','سداد قرض','Loan repayment'],
+  r_sVacYear:['ימי חופשה בשנה (שבוע של {w} ימים)','أيام الإجازة في السنة (أسبوع {w} أيام)','Vacation days a year ({w}-day week)'],
+  r_sVacAcc:['צבירת חופשה החודש','تراكم الإجازة هذا الشهر','Vacation built up this month'],
+  r_sVacBal:['יתרת חופשה','رصيد الإجازة','Vacation balance'],
+  r_sSickAcc:['צבירת מחלה החודש','تراكم المرض هذا الشهر','Sick days built up this month'],
+  r_sSickBal:['יתרת ימי מחלה','رصيد أيام المرض','Sick-day balance'],
+  r_sHavD:['ימי הבראה בשנה','أيام النقاهة في السنة','Recuperation days a year'],
+  r_sHavNone:['אחרי שנת עבודה ראשונה','بعد السنة الأولى من العمل','After your first year'],
+  r_sHavYear:['דמי הבראה לשנה','بدل النقاهة للسنة','Recuperation pay a year'],
+  r_sDays:['{d} ימים','{d} أيام','{d} days']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -5537,11 +5639,28 @@ const DEFS = {
     SEL('s_mode','f_salMode','g2n',[['g2n','o_g2n'],['n2g','o_n2g']]),
     {id:'s_pension',label:'f_pension', unit:'%', val:6},
     {id:'s_study',  label:'f_study', unit:'%', val:0},
+    SEL('s_payType','f_sPayType','month',[['month','o_payMonth'],['hour','o_payHour']],{wide:true, adv:'g_salTime', hint:'h_sPayType'}),
+    {id:'s_hourRate', label:'f_sHourRate', unit:'ils', val:40, adv:'g_salTime', when:['s_payType','hour']},
+    {id:'s_hours', label:'f_sHours', val:182, adv:'g_salTime', hint:'h_sHours', when:['s_payType','hour']},
+    SEL('s_week','f_sWeek','5',[['5','o_week5'],['6','o_week6']],{adv:'g_salTime'}),
+    {id:'s_wdays', label:'f_sWdays', val:22, adv:'g_salTime', hint:'h_sWdays'},
+    {id:'s_ot125', label:'f_sOt125', val:0, adv:'g_salTime', hint:'h_sOt'},
+    {id:'s_ot150', label:'f_sOt150', val:0, adv:'g_salTime', hint:'h_sOt'},
+    {id:'s_shab', label:'f_sShab', val:0, adv:'g_salTime', hint:'h_sShab'},
+    {id:'s_vacD', label:'f_sVacD', val:0, adv:'g_salTime', hint:'h_sVacD'},
+    {id:'s_sickD', label:'f_sSickD', val:0, adv:'g_salTime', hint:'h_sSickD'},
+    SEL('s_sickPay','f_sSickPay','law',[['law','o_sickLaw'],['full','o_sickFull']],{adv:'g_salTime', hint:'h_sSickPay'}),
+    {id:'s_absD', label:'f_sAbsD', val:0, adv:'g_salTime', hint:'h_sAbsD'},
+    {id:'s_holD', label:'f_sHolD', val:0, adv:'g_salTime', hint:'h_sHolD', when:['s_payType','hour']},
+    {id:'s_reserveD', label:'f_sReserveD', val:0, adv:'g_salTime', hint:'h_sReserveD'},
+    {id:'s_mournD', label:'f_sMournD', val:0, adv:'g_salTime', hint:'h_sMournD', when:['s_payType','hour']},
+    {id:'s_vacRed', label:'f_sVacRed', val:0, adv:'g_salTime', hint:'h_sVacRed'},
     {id:'s_bonus', label:'f_bonus', unit:'ils', val:0, adv:'g_benefits'},
     {id:'s_benefit', label:'f_benefit', unit:'ils', val:0, adv:'g_benefits', hint:'h_benefit'},
     {id:'s_erPens', label:'f_erPens', unit:'%', val:6.5, adv:'g_benefits'},
     {id:'s_erSev', label:'f_erSev', unit:'%', val:6, adv:'g_benefits'},
     {id:'s_erStudy', label:'f_erStudy', unit:'%', val:0, adv:'g_benefits'},
+    {id:'s_erDis', label:'f_sErDis', unit:'%', val:0, adv:'g_benefits', hint:'h_sErDis'},
     SEL('s_car','f_sCar','none',[['none','o_sCarNone'],['co','o_sCarCo']],{wide:true, adv:'g_salCar', hint:'h_sCar'}),
     SEL('s_carMode','f_sCarMode','price',[['list','o_carList'],['price','o_carPrice'],['value','o_carValue']],{wide:true, adv:'g_salCar', hint:'h_sCarMode', when:['s_car','co']}),
     {type:'html', id:'s_carPick', cls:'car-pick', adv:'g_salCar', when:['s_carMode','list']},
@@ -5559,6 +5678,18 @@ const DEFS = {
     SEL('s_phone','f_sPhone','0',[['0','o_no'],['1','o_yes']],{adv:'g_salMore', hint:'h_sPhone'}),
     {id:'s_phoneVal', label:'f_sPhoneVal', unit:'ils', val:105, adv:'g_salMore', when:['s_phone','1']},
     {id:'s_extra', label:'f_sExtra', unit:'ils', val:0, adv:'g_salMore', hint:'h_sExtra'},
+    {id:'s_comm', label:'f_sComm', unit:'ils', val:0, adv:'g_salMore', hint:'h_sComm'},
+    {id:'s_shift', label:'f_sShift', unit:'ils', val:0, adv:'g_salMore', hint:'h_sShift'},
+    {id:'s_cloth', label:'f_sCloth', unit:'ils', val:0, adv:'g_salMore', hint:'h_sCloth'},
+    {id:'s_seniorPay', label:'f_sSeniorPay', unit:'ils', val:0, adv:'g_salMore', hint:'h_sSeniorPay'},
+    {id:'s_globalOt', label:'f_sGlobalOt', unit:'ils', val:0, adv:'g_salMore', hint:'h_sGlobalOt'},
+    {id:'s_oncall', label:'f_sOncall', unit:'ils', val:0, adv:'g_salMore', hint:'h_sOncall'},
+    {id:'s_roleAdd', label:'f_sRoleAdd', unit:'ils', val:0, adv:'g_salMore', hint:'h_sRoleAdd'},
+    {id:'s_wfh', label:'f_sWfh', unit:'ils', val:0, adv:'g_salMore', hint:'h_sWfh'},
+    {id:'s_gift', label:'f_sGift', unit:'ils', val:0, adv:'g_salMore', hint:'h_sGift'},
+    {id:'s_reimb', label:'f_sReimb', unit:'ils', val:0, adv:'g_salMore', hint:'h_sReimb'},
+    {id:'s_adv', label:'f_sAdv', unit:'ils', val:0, adv:'g_salMore', hint:'h_sAdv'},
+    {id:'s_loanDed', label:'f_sLoanDed', unit:'ils', val:0, adv:'g_salMore', hint:'h_sLoanDed'},
     SEL('s_job','f_sJob','main',[['main','o_jobMain'],['second','o_jobSecond'],['coord','o_jobCoord']],{adv:'g_salMore', hint:'h_sJob'}),
     {id:'s_coord', label:'f_sCoord', unit:'%', val:10, adv:'g_salMore', hint:'h_sCoord', when:['s_job','coord']},
     {id:'s_union', label:'f_sUnion', unit:'%', val:0, adv:'g_salMore', hint:'h_sUnion'},
@@ -5567,6 +5698,10 @@ const DEFS = {
     {id:'s_don', label:'f_sDon', unit:'ils', val:0, adv:'g_salMore', hint:'h_sDon'},
     {id:'s_locRate', label:'f_locRate', unit:'%', val:0, adv:'g_salMore', hint:'h_sLoc'},
     {id:'s_locCap', label:'f_locCap', unit:'ils', val:0, adv:'g_salMore', hint:'h_loc'},
+    {id:'s_senior', label:'f_sSenior', unit:'yrs', val:1, adv:'g_salBal', hint:'h_sSenior'},
+    {id:'s_vacBal', label:'f_sVacBal', val:0, adv:'g_salBal', hint:'h_sVacBal'},
+    {id:'s_sickBal', label:'f_sSickBal', val:0, adv:'g_salBal', hint:'h_sSickBal'},
+    {id:'s_havDay', label:'f_sHavDay', unit:'ils', val:418, adv:'g_salBal', hint:'h_sHavDay'},
     {type:'html', id:'se_box', cls:'se-box', adv:'g_salExp'}
   ].concat(creditDefs('s')).concat([
     SEL('s_age','f_sAge','reg',[['reg','o_age_reg'],['u18','o_age_u18'],['retW','o_age_retW'],['ret67','o_age_ret67'],['pens','o_age_pens']],{wide:true, adv:'g_credits', hint:'h_sAge'}),
@@ -7173,6 +7308,35 @@ function payslipRows(r, o){
   L.push([t('r_totalDed'), -r.ded], [t('r_netMonthly'), r.net]);
   return L.map(([a, b]) => [a, MI(b), pc(Math.abs(b))]);
 }
+/* 8.2: the payslip — monthly or hourly pay, overtime, Shabbat, vacation, sick days (by law: day 1 unpaid, days 2-3 at half, from day 4 full),
+   unpaid absence, holidays, reserve duty, vacation redemption, and the balances: vacation and sick days, recuperation by seniority */
+const VAC5 = [12, 12, 12, 12, 12, 17, 17, 17, 23], VAC6 = [14, 14, 14, 14, 14, 16, 18, 19, 20, 21, 22, 23, 24];
+const HAV_DAYS = y => y < 1 ? 0 : y <= 1 ? 5 : y <= 3 ? 6 : y <= 10 ? 7 : y <= 15 ? 8 : y <= 19 ? 9 : 10;
+function salTime(amt, mode){
+  const vv = id => { const e = $('#' + id); return e ? Math.max(0, v(id) || 0) : 0; }, sel = id => ($('#' + id) || {}).value;
+  const g2n = mode === 'g2n', hourly = g2n && sel('s_payType') === 'hour';
+  const week = sel('s_week') === '6' ? 6 : 5, dayH = 42 / week, wd = Math.max(1, vv('s_wdays') || 22);
+  const rate = hourly ? vv('s_hourRate') : 0, hrs = hourly ? vv('s_hours') : 0;
+  const base0 = hourly ? rate * hrs : amt, hv = hourly ? rate : amt / 182, day = hourly ? rate * dayH : amt / wd;
+  const sickD = vv('s_sickD'), absD = vv('s_absD'), vacD = vv('s_vacD'), holD = hourly ? vv('s_holD') : 0, resD = vv('s_reserveD'), mournD = hourly ? vv('s_mournD') : 0;
+  const sickPaid = sel('s_sickPay') === 'full' ? sickD : Math.min(2, Math.max(0, sickD - 1)) * .5 + Math.max(0, sickD - 3);
+  const T = {hourly, rate, hrs, base0, hv, day, week, sickD, absD, vacD, holD, resD, mournD, sickPay: day * sickPaid, absDed: 0, sickDed: 0, vacPay: 0, holPay: 0, mournPay: 0};
+  if (g2n){
+    if (hourly){ T.vacPay = day * vacD; T.holPay = day * holD; T.resPay = day * resD; T.mournPay = day * mournD; T.base = base0 + T.vacPay + T.holPay + T.sickPay + T.resPay + T.mournPay; }
+    else { T.absDed = day * absD; T.sickDed = day * sickD; T.resPay = 0; T.base = Math.max(0, base0 - T.absDed - T.sickDed + T.sickPay); }
+  } else T.base = amt;
+  T.ot125 = hv * 1.25 * vv('s_ot125'); T.ot150 = hv * 1.5 * vv('s_ot150'); T.shab = hv * 1.5 * vv('s_shab');
+  T.vacRed = day * vv('s_vacRed'); T.comm = vv('s_comm'); T.shift = vv('s_shift'); T.cloth = vv('s_cloth');
+  T.senPay = vv('s_seniorPay'); T.globalOt = vv('s_globalOt'); T.oncall = vv('s_oncall'); T.roleAdd = vv('s_roleAdd'); T.wfh = vv('s_wfh');
+  T.extra = T.ot125 + T.ot150 + T.shab + T.vacRed + T.comm + T.shift + T.cloth + T.senPay + T.globalOt + T.oncall + T.roleAdd + T.wfh;
+  T.adv = vv('s_adv'); T.loan = vv('s_loanDed'); T.after = T.adv + T.loan;
+  const sen = vv('s_senior'), yi = Math.max(1, Math.ceil(sen || 0)), tbl = week === 6 ? VAC6 : VAC5;
+  T.sen = sen; T.vacYear = tbl[Math.min(yi, tbl.length) - 1]; T.vacM = T.vacYear / 12;
+  T.vacBal = vv('s_vacBal') + T.vacM - vacD - vv('s_vacRed'); T.sickBal = Math.min(90, vv('s_sickBal') + 1.5) - sickD;
+  T.havD = HAV_DAYS(sen); T.havDay = vv('s_havDay') || 418; T.havYear = T.havD * T.havDay;
+  T.any = hourly || T.extra > 0 || T.after > 0 || sickD || absD || vacD || holD || resD || mournD;
+  return T;
+}
 function calcSalary(){
   const k = $('#s_per').value === 'y' ? 12 : 1;
   const amt = Math.max(0, v('s_amount')) / k, mode = $('#s_mode').value;
@@ -7185,14 +7349,16 @@ function calcSalary(){
              coord: ($('#s_job') || {}).value === 'coord' ? clamp(v('s_coord'), 0, 50) : 0};
   const xp = {travel: Math.max(0, v('s_travel')), meals: Math.max(0, v('s_meals')), havraa: Math.max(0, v('s_havraa')) / 12, phone: ($('#s_phone') || {}).value === '1' ? Math.max(0, v('s_phoneVal')) : 0};
   o.extra += xp.travel + xp.meals + xp.havraa; o.benefit += xp.phone;
+  const gift = Math.max(0, v('s_gift') || 0), reimb = Math.max(0, v('s_reimb') || 0), erDis = clamp(v('s_erDis') || 0, 0, 5); o.benefit += gift;
+  const TM = salTime(amt, mode); o.extra += TM.extra; o.otherDed += TM.after;
   const car = salCar();
   const oc = gg => withCar(gg, pts, pens, study, o, car);
-  let g = amt;
+  let g = mode === 'g2n' ? TM.base : amt;
   if (mode === 'n2g'){
     let lo = 0, hi = amt * 4 + 1000 + (car ? car.val * 2 + car.pay + car.extra : 0);
     for (let i = 0; i < 80; i++){
       const mid = (lo + hi) / 2;
-      if (salaryCalc(mid, pts, pens, study, oc(mid)).net < amt) lo = mid; else hi = mid;
+      if (salaryCalc(mid, pts, pens, study, oc(mid)).net + reimb < amt) lo = mid; else hi = mid;
     }
     g = (lo + hi) / 2;
   }
@@ -7202,14 +7368,30 @@ function calcSalary(){
   const carTax = (r.tax + r.ni + r.health) - (r0.tax + r0.ni + r0.health);
   const cb = car && !o.second && !o.coord && car.rate == null ? carBrackets(r0.gross + r0.extra + o.benefit + r0.erX, car.val + (r.cash || 0), r, r0) : null;
   const marginal = (1 - (r2.net - r.net) / 100) * 100;
-  const rows = [[t('r_grossMonthly'), MI(r.gross)]];
+  /* expense refunds are paid on top of the net and are not taxed; employer disability insurance adds to the employer's cost */
+  const disAmt = r.gross * erDis / 100;
+  if (reimb > 0){ r.net += reimb; r.employer += reimb; if (r0 !== r) r0.net += reimb; }
+  if (disAmt > 0) r.employer += disAmt;
+  const rows = [];
+  if (mode === 'g2n' && (TM.hourly || TM.absDed || TM.sickDed || TM.sickPay || TM.vacPay || TM.holPay || TM.resPay || TM.mournPay)){
+    rows.push([TM.hourly ? t('r_sHourBase', {h: N(TM.hrs), r: MI(TM.rate, 2)}) : t('r_sBase'), MI(TM.base0)]);
+    if (TM.absDed > 0) rows.push([t('r_sAbs', {d: N(TM.absD)}), MI(-TM.absDed)]);
+    if (TM.sickD > 0){ if (TM.sickDed > 0) rows.push([t('r_sSickOff', {d: N(TM.sickD)}), MI(-TM.sickDed)]); rows.push([t('r_sSickPay'), MI(TM.sickPay)]); }
+    if (TM.vacPay > 0) rows.push([t('r_sVacPay', {d: N(TM.vacD)}), MI(TM.vacPay)]);
+    if (TM.holPay > 0) rows.push([t('r_sHolPay', {d: N(TM.holD)}), MI(TM.holPay)]);
+    if (TM.resPay > 0) rows.push([t('r_sResPay', {d: N(TM.resD)}), MI(TM.resPay)]);
+    if (TM.mournPay > 0) rows.push([t('r_sMournPay', {d: N(TM.mournD)}), MI(TM.mournPay)]);
+  }
+  rows.push([t('r_grossMonthly'), MI(r.gross)]);
+  [['ot125', 'r_sOt125'], ['ot150', 'r_sOt150'], ['shab', 'r_sShab'], ['vacRed', 'r_sVacRed'], ['comm', 'r_sComm'], ['shift', 'r_sShift'], ['cloth', 'r_sCloth'], ['senPay', 'r_sSeniorPay'], ['globalOt', 'r_sGlobalOt'], ['oncall', 'r_sOncall'], ['roleAdd', 'r_sRoleAdd'], ['wfh', 'r_sWfh']].forEach(([k, l]) => { if (TM[k] > 0.005) rows.push([t(l), MI(TM[k])]); });
   if (o.bonus > 0) rows.push([t('r_bonusAvg'), MI(r.bonus)]);
   if (xp.travel > 0) rows.push([t('r_sTravel'), MI(xp.travel)]);
   if (xp.meals > 0) rows.push([t('r_sMeals'), MI(xp.meals)]);
   if (xp.havraa > 0) rows.push([t('r_sHavraa'), MI(xp.havraa)]);
-  { const own = r.extra - xp.travel - xp.meals - xp.havraa; if (own > 0.005) rows.push([t('r_sExtra'), MI(own)]); }
+  { const own = r.extra - xp.travel - xp.meals - xp.havraa - TM.extra; if (own > 0.005) rows.push([t('r_sExtra'), MI(own)]); }
   if (xp.phone > 0) rows.push([t('r_sPhone'), MI(xp.phone)]);
-  if (o.benefit - xp.phone > 0.005) rows.push([t('r_benefitRow'), MI(o.benefit - xp.phone)]);
+  if (gift > 0) rows.push([t('r_sGift'), MI(gift)]);
+  if (o.benefit - xp.phone - gift > 0.005) rows.push([t('r_benefitRow'), MI(o.benefit - xp.phone - gift)]);
   if (car) rows.push([t('r_cbVal'), MI(car.val)]);
   if (r.cash > 0) rows.push([t('r_sCarGil'), MI(r.cash)]);
   if (r.erX > 0.5) rows.push([t('r_erX'), MI(r.erX)]);
@@ -7217,8 +7399,11 @@ function calcSalary(){
   if (r.pens > 0) rows.push([t('r_pensionRow'), MI(-r.pens)]);
   if (r.study > 0) rows.push([t('r_studyRow'), MI(-r.study)]);
   if (r.carPay > 0) rows.push([t('r_sCarPay'), MI(-r.carPay)]);
-  if (r.other > 0) rows.push([t('r_sOtherDed'), MI(-r.other)]);
+  if (r.other - TM.after > 0.005) rows.push([t('r_sOtherDed'), MI(-(r.other - TM.after))]);
+  if (TM.adv > 0) rows.push([t('r_sAdv'), MI(-TM.adv)]);
+  if (TM.loan > 0) rows.push([t('r_sLoanDed'), MI(-TM.loan)]);
   if (r.union > 0) rows.push([t('r_sUnion'), MI(-r.union)]);
+  if (reimb > 0) rows.push([t('r_sReimb'), MI(reimb)]);
   rows.push(
     [t('r_totalDed'), MI(-r.ded), 'key'],
     [t('r_netMonthly'), MI(r.net), 'key'],
@@ -7234,8 +7419,12 @@ function calcSalary(){
     [t('r_netAnnual'), MI(r.net * 12)],
     [t('r_erPens'), MI(r.erP)], [t('r_erSev'), MI(r.erS)]);
   if (r.erSt > 0) rows.push([t('r_erStudy'), MI(r.erSt)]);
+  if (disAmt > 0) rows.push([t('r_erDis'), MI(disAmt)]);
   rows.push([t('r_erNi'), MI(r.erNi)], [t('r_employerCost'), MI(r.employer), 'key'],
             [t('r_totalSavings'), MI(r.pens + r.erP)]);
+  rows.push([t('r_sVacYear', {w: TM.week}), t('r_sDays', {d: N(TM.vacYear)})], [t('r_sVacAcc'), t('r_sDays', {d: N(TM.vacM, 2)})], [t('r_sVacBal'), t('r_sDays', {d: N(TM.vacBal, 2)}), 'key'],
+            [t('r_sSickAcc'), t('r_sDays', {d: '1.5'})], [t('r_sSickBal'), t('r_sDays', {d: N(TM.sickBal, 1)}), 'key'],
+            [t('r_sHavD'), TM.havD ? t('r_sDays', {d: N(TM.havD)}) : t('r_sHavNone')], [t('r_sHavYear'), MI(TM.havYear)]);
   const per = k === 12 ? ' ' + t('o_perYear') : '';
   return {
     hero: mode === 'g2n'
@@ -10511,7 +10700,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "8.1", "date": "2026-10-15", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.223448';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261015.224401';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -12535,7 +12724,7 @@ applyLang = function(){ const r = _alFg.apply(this, arguments); fgRender(); lvRe
 figApply(true);
 
 /* ================= live indices: official price indices and market indices, used across the app and editable ================= */
-var IX_BUILT = {"idx":{"cpi":{"code":"120010","name":"Consumer Price Index - General","m":"2026-09","v":105.3,"base":"Average 2024","mom":-0.5,"yoy":1.6,"ytd":1.64,"hist":[["2005-01",70.6175],["2005-02",70.7588],["2005-03",70.6175],["2005-04",71.1119],["2005-05",71.3237],["2005-06",71.3943],["2005-07",72.1711],["2005-08",72.3124],["2005-09",72.383],["2005-10",72.9479],["2005-11",72.8773],["2005-12",72.7361],["2006-01",72.5242],["2006-02",72.9479],["2006-03",73.1598],["2006-04",73.7953],["2006-05",73.7953],["2006-06",73.8659],["2006-07",73.9366],["2006-08",73.9366],["2006-09",73.301],["2006-10",72.8067],["2006-11",72.6654],["2006-12",72.6654],["2007-01",72.5928],["2007-02",72.3728],["2007-03",72.5195],["2007-04",72.8861],["2007-05",72.8861],["2007-06",73.3994],["2007-07",74.206],["2007-08",74.7192],["2007-09",74.3526],["2007-10",74.4259],["2007-11",74.7192],["2007-12",75.1592],["2008-01",75.1592],["2008-02",75.0125],["2008-03",75.2325],["2008-04",76.3324],["2008-05",76.8457],["2008-06",76.919],["2008-07",77.7989],["2008-08",78.4589],["2008-09",78.4589],["2008-10",78.5322],["2008-11",78.0922],["2008-12",78.0189],["2009-01",77.6288],["2009-02",77.5517],["2009-03",77.9372],["2009-04",78.7081],["2009-05",79.0164],["2009-06",79.7102],["2009-07",80.5582],["2009-08",80.9436],["2009-09",80.7124],["2009-10",80.8666],["2009-11",81.0978],["2009-12",81.0978],["2010-01",80.5582],["2010-02",80.3269],["2010-03",80.404],["2010-04",81.0978],["2010-05",81.4062],["2010-06",81.6375],["2010-07",82.0229],["2010-08",82.4083],["2010-09",82.6396],["2010-10",82.8709],["2010-11",82.948],["2010-12",83.2563],["2011-01",83.4228],["2011-02",83.6682],["2011-03",83.8318],["2011-04",84.3225],["2011-05",84.7314],["2011-06",85.0586],["2011-07",84.8132],["2011-08",85.2222],["2011-09",85.0586],["2011-10",85.1404],["2011-11",85.0586],["2011-12",85.0586],["2012-01",85.0586],["2012-02",85.0586],["2012-03",85.3857],["2012-04",86.1218],["2012-05",86.1218],["2012-06",85.8764],["2012-07",85.9582],["2012-08",86.8579],["2012-09",86.8579],["2012-10",86.6943],["2012-11",86.2854],["2012-12",86.449],["2013-01",86.2761],["2013-02",86.2761],["2013-03",86.4481],["2013-04",86.7922],["2013-05",86.8782],["2013-06",87.5663],["2013-07",87.8244],["2013-08",87.9964],["2013-09",87.9964],["2013-10",88.2545],["2013-11",87.9104],["2013-12",87.9964],["2014-01",87.4803],["2014-02",87.3083],["2014-03",87.5663],["2014-04",87.6523],["2014-05",87.7384],["2014-06",87.9964],["2014-07",88.0824],["2014-08",87.9964],["2014-09",87.7384],["2014-10",87.9964],["2014-11",87.8244],["2014-12",87.8244],["2015-01",87.034],["2015-02",86.4198],["2015-03",86.683],["2015-04",87.2094],["2015-05",87.3849],["2015-06",87.6481],["2015-07",87.8236],["2015-08",87.6481],["2015-09",87.2972],["2015-10",87.3849],["2015-11",87.034],["2015-12",86.9462],["2016-01",86.5076],["2016-02",86.2443],["2016-03",86.0689],["2016-04",86.4198],["2016-05",86.683],["2016-06",86.9462],["2016-07",87.2972],["2016-08",87.034],["2016-09",86.9462],["2016-10",87.1217],["2016-11",86.7708],["2016-12",86.7708],["2017-01",86.5972],["2017-02",86.5972],["2017-03",86.8575],["2017-04",87.0311],["2017-05",87.3782],["2017-06",86.7708],["2017-07",86.684],["2017-08",86.9443],["2017-09",87.0311],["2017-10",87.2914],["2017-11",87.0311],["2017-12",87.1178],["2018-01",86.684],["2018-02",86.7708],["2018-03",87.0311],["2018-04",87.3782],["2018-05",87.812],["2018-06",87.8988],["2018-07",87.8988],["2018-08",87.9855],["2018-09",88.0723],["2018-10",88.3326],["2018-11",88.0723],["2018-12",87.812],["2019-01",87.7242],["2019-02",87.8118],["2019-03",88.25],["2019-04",88.5129],["2019-05",89.1264],["2019-06",88.6006],["2019-07",88.3377],["2019-08",88.5129],["2019-09",88.3377],["2019-10",88.6882],["2019-11",88.3377],["2019-12",88.3377],["2020-01",87.9871],["2020-02",87.8995],["2020-03",88.25],["2020-04",87.9871],["2020-05",87.7242],["2020-06",87.6366],["2020-07",87.8118],["2020-08",87.8118],["2020-09",87.7242],["2020-10",87.9871],["2020-11",87.8118],["2020-12",87.7242],["2021-01",87.6365],["2021-02",87.9002],["2021-03",88.4276],["2021-04",88.6913],["2021-05",89.0429],["2021-06",89.1308],["2021-07",89.4824],["2021-08",89.7461],["2021-09",89.9219],["2021-10",90.0098],["2021-11",89.9219],["2021-12",90.1856],["2022-01",90.3614],["2022-02",90.9767],["2022-03",91.5041],["2022-04",92.2073],["2022-05",92.7347],["2022-06",93.0863],["2022-07",94.1411],["2022-08",93.8774],["2022-09",94.0532],["2022-10",94.5806],["2022-11",94.6685],["2022-12",94.9322],["2023-01",95.217],["2023-02",95.6824],["2023-03",96.0547],["2023-04",96.7993],["2023-05",96.9854],["2023-06",96.9854],["2023-07",97.2647],["2023-08",97.73],["2023-09",97.637],["2023-10",98.1023],["2023-11",97.8231],["2023-12",97.73],["2024-01",97.73],["2024-02",98.1023],["2024-03",98.6608],["2024-04",99.4985],["2024-05",99.6846],["2024-06",99.7777],["2024-07",100.3362],["2024-08",101.2669],["2024-09",101.0808],["2024-10",101.5462],["2024-11",101.1739],["2024-12",100.8946],["2025-01",101.5],["2025-02",101.5],["2025-03",102.0],["2025-04",103.1],["2025-05",102.8],["2025-06",103.1],["2025-07",103.5],["2025-08",104.2],["2025-09",103.6],["2025-10",104.1],["2025-11",103.6],["2025-12",103.6],["2026-01",103.3],["2026-02",103.5],["2026-03",103.9],["2026-04",105.1],["2026-05",104.8],["2026-06",104.8],["2026-07",105.1],["2026-08",105.8],["2026-09",105.3]]},"build":{"code":"200010","name":"Price index of input in residential building - general","m":"2026-09","v":104.0,"base":"July 2025","mom":0.1,"yoy":3.6,"ytd":2.77,"hist":[["2005-01",56.8937],["2005-02",56.9482],["2005-03",57.1117],["2005-04",57.2752],["2005-05",57.3842],["2005-06",57.6566],["2005-07",59.2915],["2005-08",60.8719],["2005-09",61.0354],["2005-10",60.7084],["2005-11",60.1635],["2005-12",59.782],["2006-01",60.4904],["2006-02",60.7084],["2006-03",61.0354],["2006-04",61.4714],["2006-05",61.8528],["2006-06",62.4523],["2006-07",62.9972],["2006-08",63.4332],["2006-09",63.7057],["2006-10",63.4877],["2006-11",63.4877],["2006-12",63.3242],["2007-01",63.9237],["2007-02",64.0327],["2007-03",64.1962],["2007-04",64.1962],["2007-05",64.0872],["2007-06",64.5231],["2007-07",65.2316],["2007-08",65.3951],["2007-09",65.4496],["2007-10",65.3406],["2007-11",65.2861],["2007-12",65.2861],["2008-01",65.5585],["2008-02",65.2861],["2008-03",65.4496],["2008-04",66.3215],["2008-05",67.3569],["2008-06",68.0654],["2008-07",69.1553],["2008-08",69.2643],["2008-09",68.8283],["2008-10",67.6839],["2008-11",67.5204],["2008-12",67.4114],["2009-01",67.0844],["2009-02",67.0844],["2009-03",67.0844],["2009-04",67.1389],["2009-05",67.1389],["2009-06",67.1934],["2009-07",67.4114],["2009-08",67.3569],["2009-09",67.3569],["2009-10",67.1934],["2009-11",67.3024],["2009-12",67.4114],["2010-01",67.6294],["2010-02",67.9564],["2010-03",68.3923],["2010-04",68.9918],["2010-05",69.1553],["2010-06",68.9918],["2010-07",68.9373],["2010-08",69.2643],["2010-09",69.3733],["2010-10",69.4278],["2010-11",69.6457],["2010-12",70.0272],["2011-01",70.4632],["2011-02",70.8991],["2011-03",70.8991],["2011-04",70.8991],["2011-05",71.4441],["2011-06",71.9346],["2011-07",72.0981],["2011-08",72.3143],["2011-09",72.5306],["2011-10",72.6027],["2011-11",72.7469],["2011-12",72.6748],["2012-01",72.8911],["2012-02",73.2516],["2012-03",73.4679],["2012-04",73.9726],["2012-05",74.0447],["2012-06",74.261],["2012-07",74.4773],["2012-08",74.7657],["2012-09",74.7657],["2012-10",74.7657],["2012-11",74.982],["2012-12",75.0541],["2013-01",75.4146],["2013-02",75.5588],["2013-03",75.5588],["2013-04",75.4146],["2013-05",75.6309],["2013-06",75.7751],["2013-07",75.7751],["2013-08",75.8472],["2013-09",75.9913],["2013-10",76.0634],["2013-11",76.1355],["2013-12",76.1355],["2014-01",76.3518],["2014-02",76.3518],["2014-03",76.2797],["2014-04",76.3518],["2014-05",76.4239],["2014-06",76.3518],["2014-07",76.2797],["2014-08",76.3518],["2014-09",76.2797],["2014-10",76.496],["2014-11",76.6402],["2014-12",76.7123],["2015-01",76.7844],["2015-02",76.7123],["2015-03",76.8565],["2015-04",76.8565],["2015-05",76.8565],["2015-06",76.8565],["2015-07",76.9286],["2015-08",77.0728],["2015-09",77.1449],["2015-10",77.217],["2015-11",77.1449],["2015-12",77.4333],["2016-01",77.6496],["2016-02",77.5054],["2016-03",77.5054],["2016-04",77.7217],["2016-05",77.8659],["2016-06",77.938],["2016-07",78.2264],["2016-08",78.2264],["2016-09",78.4427],["2016-10",78.4427],["2016-11",78.5869],["2016-12",78.5869],["2017-01",78.5869],["2017-02",78.7311],["2017-03",78.7311],["2017-04",78.8753],["2017-05",78.8753],["2017-06",79.0195],["2017-07",79.1637],["2017-08",79.5242],["2017-09",79.6683],["2017-10",79.8125],["2017-11",79.8846],["2017-12",80.1009],["2018-01",80.5335],["2018-02",80.7498],["2018-03",80.8219],["2018-04",81.0382],["2018-05",81.1103],["2018-06",81.1824],["2018-07",81.3987],["2018-08",81.5429],["2018-09",81.5429],["2018-10",81.615],["2018-11",81.615],["2018-12",81.6871],["2019-01",82.1918],["2019-02",82.2639],["2019-03",82.2639],["2019-04",82.336],["2019-05",82.4081],["2019-06",82.4081],["2019-07",82.4081],["2019-08",82.4802],["2019-09",82.4802],["2019-10",82.4081],["2019-11",82.4081],["2019-12",82.5523],["2020-01",82.6965],["2020-02",82.6965],["2020-03",82.8407],["2020-04",82.7686],["2020-05",82.6965],["2020-06",82.6965],["2020-07",82.6965],["2020-08",82.7686],["2020-09",82.6965],["2020-10",82.6244],["2020-11",82.6244],["2020-12",82.9849],["2021-01",83.4895],["2021-02",83.6337],["2021-03",84.0663],["2021-04",84.7152],["2021-05",85.292],["2021-06",85.7967],["2021-07",86.013],["2021-08",86.5177],["2021-09",86.734],["2021-10",86.9503],["2021-11",87.3828],["2021-12",87.5991],["2022-01",88.3201],["2022-02",88.7527],["2022-03",89.6179],["2022-04",90.4831],["2022-05",90.9156],["2022-06",91.4203],["2022-07",91.8529],["2022-08",91.925],["2022-09",91.925],["2022-10",91.925],["2022-11",91.7808],["2022-12",91.7808],["2023-01",92.8623],["2023-02",92.7181],["2023-03",92.9344],["2023-04",93.2228],["2023-05",93.1507],["2023-06",93.4391],["2023-07",93.2228],["2023-08",93.2949],["2023-09",93.367],["2023-10",93.5112],["2023-11",93.5833],["2023-12",93.5833],["2024-01",93.8717],["2024-02",93.6554],["2024-03",93.8717],["2024-04",93.7996],["2024-05",94.2322],["2024-06",94.5926],["2024-07",94.9531],["2024-08",95.1694],["2024-09",95.5299],["2024-10",95.7462],["2024-11",96.0346],["2024-12",96.323],["2025-01",98.8464],["2025-02",99.279],["2025-03",99.6395],["2025-04",99.7837],["2025-05",99.9279],["2025-06",99.9279],["2025-07",100.0],["2025-08",100.4],["2025-09",100.4],["2025-10",100.5],["2025-11",101.1],["2025-12",101.2],["2026-01",101.3],["2026-02",101.5],["2026-03",101.7],["2026-04",102.8],["2026-05",103.4],["2026-06",103.6],["2026-07",103.5],["2026-08",103.9],["2026-09",104.0]]},"house":{"code":"40010","name":"Prices of Dwellings","m":"2026-07","v":590.0,"base":"Average 1993","mom":-0.6,"yoy":-1.8,"ytd":-1.7,"hist":[["2015-01",354.8],["2015-02",358.3],["2015-03",360.6],["2015-04",361.5],["2015-05",364.5],["2015-06",368.3],["2015-07",369.2],["2015-08",369.0],["2015-09",371.3],["2015-10",374.4],["2015-11",377.5],["2015-12",380.4],["2016-01",381.4],["2016-02",384.0],["2016-03",389.1],["2016-04",390.2],["2016-05",391.1],["2016-06",393.4],["2016-07",396.1],["2016-08",399.9],["2016-09",404.2],["2016-10",404.4],["2016-11",402.8],["2016-12",402.1],["2017-01",402.8],["2017-02",404.9],["2017-03",406.8],["2017-04",407.7],["2017-05",409.5],["2017-06",412.8],["2017-07",414.3],["2017-08",415.9],["2017-09",414.6],["2017-10",414.5],["2017-11",411.9],["2017-12",407.8],["2018-01",406.3],["2018-02",405.9],["2018-03",406.5],["2018-04",406.2],["2018-05",409.2],["2018-06",410.5],["2018-07",408.1],["2018-08",407.4],["2018-09",406.6],["2018-10",405.8],["2018-11",405.5],["2018-12",404.7],["2019-01",408.3],["2019-02",409.6],["2019-03",410.8],["2019-04",412.9],["2019-05",414.1],["2019-06",413.7],["2019-07",414.9],["2019-08",414.5],["2019-09",416.6],["2019-10",418.7],["2019-11",419.1],["2019-12",421.6],["2020-01",423.7],["2020-02",424.1],["2020-03",423.7],["2020-04",420.7],["2020-05",422.0],["2020-06",426.2],["2020-07",426.2],["2020-08",426.6],["2020-09",427.9],["2020-10",431.8],["2020-11",435.7],["2020-12",438.3],["2021-01",439.2],["2021-02",442.7],["2021-03",448.5],["2021-04",452.1],["2021-05",454.4],["2021-06",459.9],["2021-07",465.4],["2021-08",467.3],["2021-09",471.0],["2021-10",477.6],["2021-11",485.7],["2021-12",495.9],["2022-01",503.8],["2022-02",511.9],["2022-03",517.0],["2022-04",525.3],["2022-05",536.3],["2022-06",543.8],["2022-07",553.6],["2022-08",559.7],["2022-09",565.3],["2022-10",567.0],["2022-11",567.6],["2022-12",568.7],["2023-01",568.7],["2023-02",568.7],["2023-03",567.6],["2023-04",564.8],["2023-05",561.4],["2023-06",560.3],["2023-07",559.2],["2023-08",558.6],["2023-09",557.5],["2023-10",554.7],["2023-11",558.0],["2023-12",563.0],["2024-01",569.2],["2024-02",574.9],["2024-03",579.5],["2024-04",583.6],["2024-05",587.1],["2024-06",591.8],["2024-07",593.0],["2024-08",592.4],["2024-09",593.6],["2024-10",596.6],["2024-11",599.0],["2024-12",606.2],["2025-01",609.8],["2025-02",608.6],["2025-03",607.4],["2025-04",605.0],["2025-05",602.6],["2025-06",602.0],["2025-07",600.8],["2025-08",597.2],["2025-09",593.0],["2025-10",596.0],["2025-11",600.8],["2025-12",600.2],["2026-01",599.6],["2026-02",602.0],["2026-03",599.6],["2026-04",592.4],["2026-05",593.0],["2026-06",593.6],["2026-07",590.0]]}},"mkt":{"asOf":1792089491,"src":"cnbc","items":{"dji":{"n":"Dow Jones","sym":".DJI","p":52129.72,"pc":51621.48,"chp":0.98,"t":1792089491,"cur":"USD","rt":true,"a":{"y1":[1759636800,45479.6],"y5":[1633838400,35294.7561],"y10":[1479013200,18867.9348],"ye":[1766898000,48382.39]},"hAt":1792072902,"y1":14.62,"r5":8.09,"r10":10.79,"ytd":7.75},"ta35":{"n":"TA-35","sym":".TA35","p":4150.13,"pc":4162.77,"chp":-0.15,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3276.85],"y5":[1633838400,1848.07],"y10":[1479013200,1432.48],"ye":[1766898000,3695.29]},"hAt":1792072901,"y1":26.65,"r5":17.51,"r10":11.32,"ytd":12.31},"ta125":{"n":"TA-125","sym":".TA125","p":4017.15,"pc":4025.15,"chp":-0.07,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3358.13],"y5":[1633838400,1909.51],"y10":[1479013200,1251.26],"ye":[1766898000,3733.08]},"hAt":1792072901,"y1":19.62,"r5":15.99,"r10":12.48,"ytd":7.61},"spx":{"n":"S&P 500","sym":".SPX","p":7727.28,"pc":7718.94,"chp":0.11,"t":1792089491,"cur":"USD","rt":true,"a":{"y1":[1759636800,6552.51],"y5":[1633838400,4471.37],"y10":[1479013200,2181.9],"ye":[1766898000,6858.47]},"hAt":1792072901,"y1":17.93,"r5":11.53,"r10":13.59,"ytd":12.67},"ndx":{"n":"Nasdaq 100","sym":".NDX","p":29783.026,"pc":29950.816,"chp":-0.56,"t":1792089491,"cur":"USD","rt":true,"a":{"y1":[1759636800,24221.745],"y5":[1633838400,15146.921],"y10":[1479013200,4808.042],"ye":[1766898000,25206.168]},"hAt":1792072901,"y1":22.96,"r5":14.43,"r10":20.18,"ytd":18.16},"gold":{"n":"Gold","sym":"@GC.1","p":4178.5,"pc":4107.9,"chp":1.72,"t":1792088888,"cur":"USD","rt":false,"a":{"y1":[1759636800,4000.4],"y5":[1633838400,1768.3],"y10":[1479013200,1208.7],"ye":[1766898000,4329.6]},"hAt":1792072902,"y1":4.45,"r5":18.71,"r10":13.32,"ytd":-3.49},"brent":{"n":"Brent","sym":"@LCO.1","p":105.99,"pc":106.06,"chp":-0.07,"t":1792088889,"cur":"USD","rt":false,"a":{"y1":[1759636800,62.73],"y5":[1633838400,84.86],"y10":[1479013200,46.86],"ye":[1766898000,60.75]},"hAt":1792072903,"y1":68.96,"r5":4.53,"r10":8.57,"ytd":74.47}}}};
+var IX_BUILT = {"idx":{"cpi":{"code":"120010","name":"Consumer Price Index - General","m":"2026-09","v":105.3,"base":"Average 2024","mom":-0.5,"yoy":1.6,"ytd":1.64,"hist":[["2005-01",70.6175],["2005-02",70.7588],["2005-03",70.6175],["2005-04",71.1119],["2005-05",71.3237],["2005-06",71.3943],["2005-07",72.1711],["2005-08",72.3124],["2005-09",72.383],["2005-10",72.9479],["2005-11",72.8773],["2005-12",72.7361],["2006-01",72.5242],["2006-02",72.9479],["2006-03",73.1598],["2006-04",73.7953],["2006-05",73.7953],["2006-06",73.8659],["2006-07",73.9366],["2006-08",73.9366],["2006-09",73.301],["2006-10",72.8067],["2006-11",72.6654],["2006-12",72.6654],["2007-01",72.5928],["2007-02",72.3728],["2007-03",72.5195],["2007-04",72.8861],["2007-05",72.8861],["2007-06",73.3994],["2007-07",74.206],["2007-08",74.7192],["2007-09",74.3526],["2007-10",74.4259],["2007-11",74.7192],["2007-12",75.1592],["2008-01",75.1592],["2008-02",75.0125],["2008-03",75.2325],["2008-04",76.3324],["2008-05",76.8457],["2008-06",76.919],["2008-07",77.7989],["2008-08",78.4589],["2008-09",78.4589],["2008-10",78.5322],["2008-11",78.0922],["2008-12",78.0189],["2009-01",77.6288],["2009-02",77.5517],["2009-03",77.9372],["2009-04",78.7081],["2009-05",79.0164],["2009-06",79.7102],["2009-07",80.5582],["2009-08",80.9436],["2009-09",80.7124],["2009-10",80.8666],["2009-11",81.0978],["2009-12",81.0978],["2010-01",80.5582],["2010-02",80.3269],["2010-03",80.404],["2010-04",81.0978],["2010-05",81.4062],["2010-06",81.6375],["2010-07",82.0229],["2010-08",82.4083],["2010-09",82.6396],["2010-10",82.8709],["2010-11",82.948],["2010-12",83.2563],["2011-01",83.4228],["2011-02",83.6682],["2011-03",83.8318],["2011-04",84.3225],["2011-05",84.7314],["2011-06",85.0586],["2011-07",84.8132],["2011-08",85.2222],["2011-09",85.0586],["2011-10",85.1404],["2011-11",85.0586],["2011-12",85.0586],["2012-01",85.0586],["2012-02",85.0586],["2012-03",85.3857],["2012-04",86.1218],["2012-05",86.1218],["2012-06",85.8764],["2012-07",85.9582],["2012-08",86.8579],["2012-09",86.8579],["2012-10",86.6943],["2012-11",86.2854],["2012-12",86.449],["2013-01",86.2761],["2013-02",86.2761],["2013-03",86.4481],["2013-04",86.7922],["2013-05",86.8782],["2013-06",87.5663],["2013-07",87.8244],["2013-08",87.9964],["2013-09",87.9964],["2013-10",88.2545],["2013-11",87.9104],["2013-12",87.9964],["2014-01",87.4803],["2014-02",87.3083],["2014-03",87.5663],["2014-04",87.6523],["2014-05",87.7384],["2014-06",87.9964],["2014-07",88.0824],["2014-08",87.9964],["2014-09",87.7384],["2014-10",87.9964],["2014-11",87.8244],["2014-12",87.8244],["2015-01",87.034],["2015-02",86.4198],["2015-03",86.683],["2015-04",87.2094],["2015-05",87.3849],["2015-06",87.6481],["2015-07",87.8236],["2015-08",87.6481],["2015-09",87.2972],["2015-10",87.3849],["2015-11",87.034],["2015-12",86.9462],["2016-01",86.5076],["2016-02",86.2443],["2016-03",86.0689],["2016-04",86.4198],["2016-05",86.683],["2016-06",86.9462],["2016-07",87.2972],["2016-08",87.034],["2016-09",86.9462],["2016-10",87.1217],["2016-11",86.7708],["2016-12",86.7708],["2017-01",86.5972],["2017-02",86.5972],["2017-03",86.8575],["2017-04",87.0311],["2017-05",87.3782],["2017-06",86.7708],["2017-07",86.684],["2017-08",86.9443],["2017-09",87.0311],["2017-10",87.2914],["2017-11",87.0311],["2017-12",87.1178],["2018-01",86.684],["2018-02",86.7708],["2018-03",87.0311],["2018-04",87.3782],["2018-05",87.812],["2018-06",87.8988],["2018-07",87.8988],["2018-08",87.9855],["2018-09",88.0723],["2018-10",88.3326],["2018-11",88.0723],["2018-12",87.812],["2019-01",87.7242],["2019-02",87.8118],["2019-03",88.25],["2019-04",88.5129],["2019-05",89.1264],["2019-06",88.6006],["2019-07",88.3377],["2019-08",88.5129],["2019-09",88.3377],["2019-10",88.6882],["2019-11",88.3377],["2019-12",88.3377],["2020-01",87.9871],["2020-02",87.8995],["2020-03",88.25],["2020-04",87.9871],["2020-05",87.7242],["2020-06",87.6366],["2020-07",87.8118],["2020-08",87.8118],["2020-09",87.7242],["2020-10",87.9871],["2020-11",87.8118],["2020-12",87.7242],["2021-01",87.6365],["2021-02",87.9002],["2021-03",88.4276],["2021-04",88.6913],["2021-05",89.0429],["2021-06",89.1308],["2021-07",89.4824],["2021-08",89.7461],["2021-09",89.9219],["2021-10",90.0098],["2021-11",89.9219],["2021-12",90.1856],["2022-01",90.3614],["2022-02",90.9767],["2022-03",91.5041],["2022-04",92.2073],["2022-05",92.7347],["2022-06",93.0863],["2022-07",94.1411],["2022-08",93.8774],["2022-09",94.0532],["2022-10",94.5806],["2022-11",94.6685],["2022-12",94.9322],["2023-01",95.217],["2023-02",95.6824],["2023-03",96.0547],["2023-04",96.7993],["2023-05",96.9854],["2023-06",96.9854],["2023-07",97.2647],["2023-08",97.73],["2023-09",97.637],["2023-10",98.1023],["2023-11",97.8231],["2023-12",97.73],["2024-01",97.73],["2024-02",98.1023],["2024-03",98.6608],["2024-04",99.4985],["2024-05",99.6846],["2024-06",99.7777],["2024-07",100.3362],["2024-08",101.2669],["2024-09",101.0808],["2024-10",101.5462],["2024-11",101.1739],["2024-12",100.8946],["2025-01",101.5],["2025-02",101.5],["2025-03",102.0],["2025-04",103.1],["2025-05",102.8],["2025-06",103.1],["2025-07",103.5],["2025-08",104.2],["2025-09",103.6],["2025-10",104.1],["2025-11",103.6],["2025-12",103.6],["2026-01",103.3],["2026-02",103.5],["2026-03",103.9],["2026-04",105.1],["2026-05",104.8],["2026-06",104.8],["2026-07",105.1],["2026-08",105.8],["2026-09",105.3]]},"build":{"code":"200010","name":"Price index of input in residential building - general","m":"2026-09","v":104.0,"base":"July 2025","mom":0.1,"yoy":3.6,"ytd":2.77,"hist":[["2005-01",56.8937],["2005-02",56.9482],["2005-03",57.1117],["2005-04",57.2752],["2005-05",57.3842],["2005-06",57.6566],["2005-07",59.2915],["2005-08",60.8719],["2005-09",61.0354],["2005-10",60.7084],["2005-11",60.1635],["2005-12",59.782],["2006-01",60.4904],["2006-02",60.7084],["2006-03",61.0354],["2006-04",61.4714],["2006-05",61.8528],["2006-06",62.4523],["2006-07",62.9972],["2006-08",63.4332],["2006-09",63.7057],["2006-10",63.4877],["2006-11",63.4877],["2006-12",63.3242],["2007-01",63.9237],["2007-02",64.0327],["2007-03",64.1962],["2007-04",64.1962],["2007-05",64.0872],["2007-06",64.5231],["2007-07",65.2316],["2007-08",65.3951],["2007-09",65.4496],["2007-10",65.3406],["2007-11",65.2861],["2007-12",65.2861],["2008-01",65.5585],["2008-02",65.2861],["2008-03",65.4496],["2008-04",66.3215],["2008-05",67.3569],["2008-06",68.0654],["2008-07",69.1553],["2008-08",69.2643],["2008-09",68.8283],["2008-10",67.6839],["2008-11",67.5204],["2008-12",67.4114],["2009-01",67.0844],["2009-02",67.0844],["2009-03",67.0844],["2009-04",67.1389],["2009-05",67.1389],["2009-06",67.1934],["2009-07",67.4114],["2009-08",67.3569],["2009-09",67.3569],["2009-10",67.1934],["2009-11",67.3024],["2009-12",67.4114],["2010-01",67.6294],["2010-02",67.9564],["2010-03",68.3923],["2010-04",68.9918],["2010-05",69.1553],["2010-06",68.9918],["2010-07",68.9373],["2010-08",69.2643],["2010-09",69.3733],["2010-10",69.4278],["2010-11",69.6457],["2010-12",70.0272],["2011-01",70.4632],["2011-02",70.8991],["2011-03",70.8991],["2011-04",70.8991],["2011-05",71.4441],["2011-06",71.9346],["2011-07",72.0981],["2011-08",72.3143],["2011-09",72.5306],["2011-10",72.6027],["2011-11",72.7469],["2011-12",72.6748],["2012-01",72.8911],["2012-02",73.2516],["2012-03",73.4679],["2012-04",73.9726],["2012-05",74.0447],["2012-06",74.261],["2012-07",74.4773],["2012-08",74.7657],["2012-09",74.7657],["2012-10",74.7657],["2012-11",74.982],["2012-12",75.0541],["2013-01",75.4146],["2013-02",75.5588],["2013-03",75.5588],["2013-04",75.4146],["2013-05",75.6309],["2013-06",75.7751],["2013-07",75.7751],["2013-08",75.8472],["2013-09",75.9913],["2013-10",76.0634],["2013-11",76.1355],["2013-12",76.1355],["2014-01",76.3518],["2014-02",76.3518],["2014-03",76.2797],["2014-04",76.3518],["2014-05",76.4239],["2014-06",76.3518],["2014-07",76.2797],["2014-08",76.3518],["2014-09",76.2797],["2014-10",76.496],["2014-11",76.6402],["2014-12",76.7123],["2015-01",76.7844],["2015-02",76.7123],["2015-03",76.8565],["2015-04",76.8565],["2015-05",76.8565],["2015-06",76.8565],["2015-07",76.9286],["2015-08",77.0728],["2015-09",77.1449],["2015-10",77.217],["2015-11",77.1449],["2015-12",77.4333],["2016-01",77.6496],["2016-02",77.5054],["2016-03",77.5054],["2016-04",77.7217],["2016-05",77.8659],["2016-06",77.938],["2016-07",78.2264],["2016-08",78.2264],["2016-09",78.4427],["2016-10",78.4427],["2016-11",78.5869],["2016-12",78.5869],["2017-01",78.5869],["2017-02",78.7311],["2017-03",78.7311],["2017-04",78.8753],["2017-05",78.8753],["2017-06",79.0195],["2017-07",79.1637],["2017-08",79.5242],["2017-09",79.6683],["2017-10",79.8125],["2017-11",79.8846],["2017-12",80.1009],["2018-01",80.5335],["2018-02",80.7498],["2018-03",80.8219],["2018-04",81.0382],["2018-05",81.1103],["2018-06",81.1824],["2018-07",81.3987],["2018-08",81.5429],["2018-09",81.5429],["2018-10",81.615],["2018-11",81.615],["2018-12",81.6871],["2019-01",82.1918],["2019-02",82.2639],["2019-03",82.2639],["2019-04",82.336],["2019-05",82.4081],["2019-06",82.4081],["2019-07",82.4081],["2019-08",82.4802],["2019-09",82.4802],["2019-10",82.4081],["2019-11",82.4081],["2019-12",82.5523],["2020-01",82.6965],["2020-02",82.6965],["2020-03",82.8407],["2020-04",82.7686],["2020-05",82.6965],["2020-06",82.6965],["2020-07",82.6965],["2020-08",82.7686],["2020-09",82.6965],["2020-10",82.6244],["2020-11",82.6244],["2020-12",82.9849],["2021-01",83.4895],["2021-02",83.6337],["2021-03",84.0663],["2021-04",84.7152],["2021-05",85.292],["2021-06",85.7967],["2021-07",86.013],["2021-08",86.5177],["2021-09",86.734],["2021-10",86.9503],["2021-11",87.3828],["2021-12",87.5991],["2022-01",88.3201],["2022-02",88.7527],["2022-03",89.6179],["2022-04",90.4831],["2022-05",90.9156],["2022-06",91.4203],["2022-07",91.8529],["2022-08",91.925],["2022-09",91.925],["2022-10",91.925],["2022-11",91.7808],["2022-12",91.7808],["2023-01",92.8623],["2023-02",92.7181],["2023-03",92.9344],["2023-04",93.2228],["2023-05",93.1507],["2023-06",93.4391],["2023-07",93.2228],["2023-08",93.2949],["2023-09",93.367],["2023-10",93.5112],["2023-11",93.5833],["2023-12",93.5833],["2024-01",93.8717],["2024-02",93.6554],["2024-03",93.8717],["2024-04",93.7996],["2024-05",94.2322],["2024-06",94.5926],["2024-07",94.9531],["2024-08",95.1694],["2024-09",95.5299],["2024-10",95.7462],["2024-11",96.0346],["2024-12",96.323],["2025-01",98.8464],["2025-02",99.279],["2025-03",99.6395],["2025-04",99.7837],["2025-05",99.9279],["2025-06",99.9279],["2025-07",100.0],["2025-08",100.4],["2025-09",100.4],["2025-10",100.5],["2025-11",101.1],["2025-12",101.2],["2026-01",101.3],["2026-02",101.5],["2026-03",101.7],["2026-04",102.8],["2026-05",103.4],["2026-06",103.6],["2026-07",103.5],["2026-08",103.9],["2026-09",104.0]]},"house":{"code":"40010","name":"Prices of Dwellings","m":"2026-07","v":590.0,"base":"Average 1993","mom":-0.6,"yoy":-1.8,"ytd":-1.7,"hist":[["2015-01",354.8],["2015-02",358.3],["2015-03",360.6],["2015-04",361.5],["2015-05",364.5],["2015-06",368.3],["2015-07",369.2],["2015-08",369.0],["2015-09",371.3],["2015-10",374.4],["2015-11",377.5],["2015-12",380.4],["2016-01",381.4],["2016-02",384.0],["2016-03",389.1],["2016-04",390.2],["2016-05",391.1],["2016-06",393.4],["2016-07",396.1],["2016-08",399.9],["2016-09",404.2],["2016-10",404.4],["2016-11",402.8],["2016-12",402.1],["2017-01",402.8],["2017-02",404.9],["2017-03",406.8],["2017-04",407.7],["2017-05",409.5],["2017-06",412.8],["2017-07",414.3],["2017-08",415.9],["2017-09",414.6],["2017-10",414.5],["2017-11",411.9],["2017-12",407.8],["2018-01",406.3],["2018-02",405.9],["2018-03",406.5],["2018-04",406.2],["2018-05",409.2],["2018-06",410.5],["2018-07",408.1],["2018-08",407.4],["2018-09",406.6],["2018-10",405.8],["2018-11",405.5],["2018-12",404.7],["2019-01",408.3],["2019-02",409.6],["2019-03",410.8],["2019-04",412.9],["2019-05",414.1],["2019-06",413.7],["2019-07",414.9],["2019-08",414.5],["2019-09",416.6],["2019-10",418.7],["2019-11",419.1],["2019-12",421.6],["2020-01",423.7],["2020-02",424.1],["2020-03",423.7],["2020-04",420.7],["2020-05",422.0],["2020-06",426.2],["2020-07",426.2],["2020-08",426.6],["2020-09",427.9],["2020-10",431.8],["2020-11",435.7],["2020-12",438.3],["2021-01",439.2],["2021-02",442.7],["2021-03",448.5],["2021-04",452.1],["2021-05",454.4],["2021-06",459.9],["2021-07",465.4],["2021-08",467.3],["2021-09",471.0],["2021-10",477.6],["2021-11",485.7],["2021-12",495.9],["2022-01",503.8],["2022-02",511.9],["2022-03",517.0],["2022-04",525.3],["2022-05",536.3],["2022-06",543.8],["2022-07",553.6],["2022-08",559.7],["2022-09",565.3],["2022-10",567.0],["2022-11",567.6],["2022-12",568.7],["2023-01",568.7],["2023-02",568.7],["2023-03",567.6],["2023-04",564.8],["2023-05",561.4],["2023-06",560.3],["2023-07",559.2],["2023-08",558.6],["2023-09",557.5],["2023-10",554.7],["2023-11",558.0],["2023-12",563.0],["2024-01",569.2],["2024-02",574.9],["2024-03",579.5],["2024-04",583.6],["2024-05",587.1],["2024-06",591.8],["2024-07",593.0],["2024-08",592.4],["2024-09",593.6],["2024-10",596.6],["2024-11",599.0],["2024-12",606.2],["2025-01",609.8],["2025-02",608.6],["2025-03",607.4],["2025-04",605.0],["2025-05",602.6],["2025-06",602.0],["2025-07",600.8],["2025-08",597.2],["2025-09",593.0],["2025-10",596.0],["2025-11",600.8],["2025-12",600.2],["2026-01",599.6],["2026-02",602.0],["2026-03",599.6],["2026-04",592.4],["2026-05",593.0],["2026-06",593.6],["2026-07",590.0]]}},"mkt":{"asOf":1792092758,"src":"cnbc","items":{"dji":{"n":"Dow Jones","sym":".DJI","p":52206.79,"pc":51621.48,"chp":1.13,"t":1792092758,"cur":"USD","rt":true,"a":{"y1":[1759636800,45479.6],"y5":[1633838400,35294.7561],"y10":[1479013200,18867.9348],"ye":[1766898000,48382.39]},"hAt":1792072902,"y1":14.79,"r5":8.12,"r10":10.8,"ytd":7.9},"ta35":{"n":"TA-35","sym":".TA35","p":4150.13,"pc":4162.77,"chp":-0.15,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3276.85],"y5":[1633838400,1848.07],"y10":[1479013200,1432.48],"ye":[1766898000,3695.29]},"hAt":1792072901,"y1":26.65,"r5":17.51,"r10":11.32,"ytd":12.31},"ta125":{"n":"TA-125","sym":".TA125","p":4017.15,"pc":4025.15,"chp":-0.07,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3358.13],"y5":[1633838400,1909.51],"y10":[1479013200,1251.26],"ye":[1766898000,3733.08]},"hAt":1792072901,"y1":19.62,"r5":15.99,"r10":12.48,"ytd":7.61},"spx":{"n":"S&P 500","sym":".SPX","p":7745.56,"pc":7718.94,"chp":0.34,"t":1792092758,"cur":"USD","rt":true,"a":{"y1":[1759636800,6552.51],"y5":[1633838400,4471.37],"y10":[1479013200,2181.9],"ye":[1766898000,6858.47]},"hAt":1792072901,"y1":18.21,"r5":11.58,"r10":13.62,"ytd":12.93},"ndx":{"n":"Nasdaq 100","sym":".NDX","p":29928.186,"pc":29950.816,"chp":-0.08,"t":1792092758,"cur":"USD","rt":true,"a":{"y1":[1759636800,24221.745],"y5":[1633838400,15146.921],"y10":[1479013200,4808.042],"ye":[1766898000,25206.168]},"hAt":1792072901,"y1":23.56,"r5":14.55,"r10":20.24,"ytd":18.73},"gold":{"n":"Gold","sym":"@GC.1","p":4181.3,"pc":4107.9,"chp":1.79,"t":1792092152,"cur":"USD","rt":false,"a":{"y1":[1759636800,4000.4],"y5":[1633838400,1768.3],"y10":[1479013200,1208.7],"ye":[1766898000,4329.6]},"hAt":1792072902,"y1":4.52,"r5":18.72,"r10":13.33,"ytd":-3.43},"brent":{"n":"Brent","sym":"@LCO.1","p":105.73,"pc":106.06,"chp":-0.31,"t":1792092156,"cur":"USD","rt":false,"a":{"y1":[1759636800,62.73],"y5":[1633838400,84.86],"y10":[1479013200,46.86],"ye":[1766898000,60.75]},"hAt":1792072903,"y1":68.55,"r5":4.48,"r10":8.55,"ytd":74.04}}}};
 var IX = {idx: Object.assign({}, (IX_BUILT && IX_BUILT.idx) || {}), mkt: Object.assign({}, ((IX_BUILT && IX_BUILT.mkt) || {}).items || {}), src: 'built', at: 0};
 var IX_MK = ['ta35', 'ta125', 'spx', 'ndx', 'dji', 'gold', 'brent'], IX_RET = ['ta125', 'ta35', 'spx', 'ndx', 'dji', 'gold'];
 var IX_SYM = {ta35: '.TA35', ta125: '.TA125', spx: '.SPX', ndx: '.NDX', dji: '.DJI', gold: '@GC.1', brent: '@LCO.1'};
@@ -16053,6 +16242,72 @@ const _rsHx = renderStamp;
 renderStamp = function(){ const r = _rsHx.apply(this, arguments); try { if (HXS.key) hxCard(); } catch (e) {} return r; };
 document.addEventListener('click', e => { if (e.target.closest && e.target.closest('#fxGo')) hxBurst(); });
 try { if (SET.hfx == null) SET.hfx = '1'; hxSync(); } catch (e) {}
+
+/* ================= 8.2: tidy Settings — every section folds; tap the title to open it =================
+   sections start closed (a category with a single section opens it), the design and theme galleries fold too,
+   and what you opened stays open for this visit. Search still lands on the right field: it opens <details> on the way. */
+const ACC_KEY = 'fin-acc-open';
+function accOpenSet(){ try { return new Set(JSON.parse(sessionStorage.getItem(ACC_KEY) || '[]')); } catch (e) { return new Set(); } }
+function accRemember(id, open){ const s = accOpenSet(); if (open) s.add(id); else s.delete(id); try { sessionStorage.setItem(ACC_KEY, JSON.stringify([...s])); } catch (e) {} }
+function accSum(sec){
+  const k = sec.dataset.sk;
+  if (k === 'set_look'){
+    const d = (typeof dzOn === 'function' && dzOn()) || 'default', th = (typeof HOL_ACTIVE !== 'undefined' && HOL_ACTIVE) || SET.theme || 'system';
+    return t('dz_' + d) + ' · ' + t(th === 'system' ? 'o_th_sys' : 'sk_' + th);
+  }
+  const labs = $$('.sec-body .field > label, .sec-body .field label:first-child', sec).map(l => l.textContent.trim()).filter(Boolean);
+  const uniq = [...new Set(labs)];
+  return uniq.slice(0, 3).join(' · ') + (uniq.length > 3 ? ' …' : '');
+}
+function accSub(host, key, summary, nodes){
+  if (!host || !nodes.length || nodes[0].closest('details.sub-acc')) return;
+  const d = document.createElement('details'); d.className = 'sub-acc'; d.dataset.acc = key;
+  const s = document.createElement('summary'); s.className = 'sub-acc-s'; d.appendChild(s);
+  nodes[0].before(d); nodes.forEach(n => d.appendChild(n));
+  d.open = accOpenSet().has(key);
+  d.addEventListener('toggle', () => accRemember(key, d.open));
+}
+function accTexts(){
+  $$('.set-sec > details.sec-acc').forEach(d => { const sm = $('.sec-sum', d); if (sm) sm.textContent = accSum(d.parentElement); });
+  const dz = $('details.sub-acc[data-acc="dz"] > summary'), th = $('details.sub-acc[data-acc="th"] > summary');
+  if (dz) dz.textContent = t('acc_design', {n: t('dz_' + ((typeof dzOn === 'function' && dzOn()) || 'default'))});
+  if (th){ const k = (typeof HOL_ACTIVE !== 'undefined' && HOL_ACTIVE) || SET.theme || 'system'; th.textContent = t('acc_theme', {n: t(k === 'system' ? 'o_th_sys' : 'sk_' + k)}); }
+}
+function accBuild(){
+  const sp = $('#panel-settings'); if (!sp) return;
+  const open = accOpenSet();
+  $$('.set-cat .set-sec', sp).forEach(sec => {
+    if (sec.querySelector(':scope > details.sec-acc')) return;
+    const h = sec.querySelector(':scope > .sec-h'); if (!h) return;
+    const cat = sec.closest('.set-cat'), only = cat && $$('.set-sec', cat).length === 1;
+    const d = document.createElement('details'); d.className = 'sec-acc';
+    const s = document.createElement('summary'); s.className = 'sec-sumr';
+    const body = document.createElement('div'); body.className = 'sec-body';
+    [...sec.childNodes].forEach(n => { if (n !== h) body.appendChild(n); });
+    s.appendChild(h); const sm = document.createElement('small'); sm.className = 'sec-sum'; s.appendChild(sm);
+    s.insertAdjacentHTML('beforeend', '<svg class="acc-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>');
+    d.appendChild(s); d.appendChild(body); sec.appendChild(d);
+    const id = sec.dataset.sk || '';
+    d.open = only || open.has(id);
+    d.addEventListener('toggle', () => accRemember(id, d.open));
+  });
+  /* inside Look: the design gallery and the theme gallery fold on their own */
+  const look = $('.set-sec[data-sk="set_look"] .sec-body', sp);
+  if (look){
+    accSub(look, 'dz', '', [$('.dz-h', look), $('#dzGal', look)].filter(Boolean));
+    accSub(look, 'th', '', [$('#skins', look)].filter(Boolean));
+  }
+  accTexts();
+}
+/* search, links and anything that focuses a field inside a closed section opens it */
+document.addEventListener('focusin', e => { let d = e.target.closest && e.target.closest('details'); while (d){ d.open = true; d = d.parentElement && d.parentElement.closest('details'); } });
+const _actAcc = activate;
+activate = function(id){ const r = _actAcc.apply(this, arguments); if (id === 'settings') try { accBuild(); } catch (e) {} return r; };
+const _rsAcc = renderStamp;
+renderStamp = function(){ const r = _rsAcc.apply(this, arguments); try { accBuild(); } catch (e) {} return r; };
+const _atAcc = applyTheme;
+applyTheme = function(){ const r = _atAcc.apply(this, arguments); try { accTexts(); } catch (e) {} return r; };
+try { accBuild(); } catch (e) {}
 
 applyLang(false);
 activate(tab);
