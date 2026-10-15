@@ -129,9 +129,15 @@ const DEFS = {
     {id:'cp_other', label:'f_otherInc', unit:'ils', val:0, adv:'m_adv'}
   ],
   loan: [
-    {id:'l_amount', label:'f_loanAmt', unit:'cur', val:500000},
-    {id:'l_rate',   label:'f_rate',    unit:'%',   val:4.5},
-    {id:'l_years',  label:'f_term',    unit:'yrs', val:25},
+    SEL('l_mode','f_lMode','pay',[['pay','o_lmPay'],['amount','o_lmAmount'],['term','o_lmTerm']],{wide:true, hint:'h_lMode'}),
+    {id:'l_amount', label:'f_loanAmt', unit:'cur', val:500000, when:['l_mode','pay|term']},
+    {id:'l_pay', label:'f_lPay', unit:'cur', val:3000, when:['l_mode','amount|term'], hint:'h_lPay'},
+    SEL('l_rateType','f_lRateType','fixed',[['fixed','o_lrFixed'],['prime','o_lrPrime']],{wide:true, hint:'h_lRateType'}),
+    {id:'l_rate',   label:'f_rate',    unit:'%',   val:4.5, when:['l_rateType','fixed']},
+    {id:'l_boi', label:'f_lBoi', unit:'%', val:4.5, when:['l_rateType','prime'], hint:'h_lBoi'},
+    {id:'l_spread', label:'f_lSpread', unit:'%', val:1.5, when:['l_rateType','prime'], hint:'h_lSpread'},
+    {id:'l_margin', label:'f_lMargin', unit:'%', val:-0.5, when:['l_rateType','prime'], hint:'h_lMargin'},
+    {id:'l_years',  label:'f_term',    unit:'yrs', val:25, when:['l_mode','pay|amount']},
     SEL('l_type','f_method','annuity',[['annuity','o_annuity'],['equal','o_equal'],['bullet','o_bullet']]),
     {id:'l_grace', label:'f_grace', unit:'mo', val:0, adv:'m_adv'},
     {id:'l_extra', label:'f_extraM', unit:'cur', val:0, adv:'m_adv'},

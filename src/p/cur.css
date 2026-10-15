@@ -1,0 +1,23 @@
+/* ================= 8.5: a coin for every currency ================= */
+.cur-coin{display:inline-grid;place-items:center;flex:none;width:26px;height:26px;border-radius:50%;vertical-align:middle;margin-inline-end:6px;position:relative;overflow:hidden;
+  background:conic-gradient(from 210deg,#FFF1C2,#D9A441,#8A5A14,#E9C26A,#FFF1C2);box-shadow:0 2px 6px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.55)}
+.cur-coin i{font-style:normal;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;overflow:hidden;font-size:22px;line-height:1;background:#fff;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.cur-coin::after{content:"";position:absolute;inset:-40%;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.8) 50%,transparent 60%);transform:translateX(-120%);animation:coinShine 5s ease-in-out infinite;pointer-events:none}
+@keyframes coinShine{0%,72%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.cur-coin.crypto{background:conic-gradient(from 210deg,#FFD39A,#F7931A,#B35C00,#F7931A,#FFD39A)}
+.cur-coin.crypto i{background:radial-gradient(circle at 35% 30%,#3a2a12,#120c05);color:#FFC46B;font-size:13px;font-weight:800}
+.cur-coin.big{width:48px;height:48px;box-shadow:0 6px 16px rgba(0,0,0,.35),inset 0 0 0 2px rgba(255,255,255,.55)}
+.cur-coin.big i{width:40px;height:40px;font-size:44px}
+.cur-coin.big.crypto i{font-size:24px}
+.cur-coin.spin{animation:coinFlip .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes coinFlip{from{transform:rotateY(180deg) scale(.7)}to{transform:none}}
+.coin-pair{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.coin-pair b{color:var(--hero-label,var(--ink-2));font-weight:400;font-size:1.2rem}
+.coin-pair .cur-coin:last-child{animation:coinFlip .7s cubic-bezier(.2,.8,.2,1)}
+.mk .mk-l .cur-coin{width:22px;height:22px;margin-inline-end:6px}
+.mk .mk-l .cur-coin i{width:17px;height:17px;font-size:19px}
+.mk .mk-l .cur-coin.crypto i{font-size:11px}
+.rail-ctrls .coin-pick{align-self:center}
+.ledger .row dt .cur-coin{width:20px;height:20px;margin-inline-end:6px}.ledger .row dt .cur-coin i{width:15px;height:15px;font-size:17px}
+@media (prefers-reduced-motion:reduce){.cur-coin::after,.cur-coin.spin,.coin-pair .cur-coin:last-child{animation:none}}
+:root[data-motion="reduced"] .cur-coin::after{animation:none}
