@@ -334,3 +334,90 @@ aiFabSync = function(){
   return r;
 };
 try { aiFabSync(); } catch (e) {}
+
+/* ---------- live data off means off: nothing updates, every price stays at the previous trading day's close, with its date ---------- */
+const liveOff = () => SET.mktLive === '0' || SET.liveFx === '0';
+function liveSync(off){                                    // the home switch, the converter switch and the settings choice are one switch
+  SET.mktLive = off ? '0' : '1'; SET.liveFx = off ? '0' : '1';
+  $$('#fx_live, .fx-live-cb').forEach(c => { c.checked = !off; });
+  const s1 = $('#set_mktLive'); if (s1) s1.value = SET.mktLive; const s2 = $('#set_liveFx'); if (s2) s2.value = SET.liveFx;
+}
+if (liveOff()) liveSync(true);
+var CLOSE_OK = false;                                      // set while the close itself is being applied
+const ixLiveTickOff = ixLiveTick;
+ixLiveTick = async function(){ if (liveOff()){ clearTimeout(IXL.timer); IXL.timer = null; return false; } return ixLiveTickOff.apply(this, arguments); };
+const fxCoinbaseOnceOff = fxCoinbaseOnce;
+fxCoinbaseOnce = async function(){ return liveOff() ? false : fxCoinbaseOnceOff.apply(this, arguments); };
+const tryLiveGeminiOff = tryLiveGemini;
+tryLiveGemini = async function(){ return liveOff() ? false : tryLiveGeminiOff.apply(this, arguments); };
+const pullBoiFxOff = pullBoiFx, pullEcbOff = pullEcb;
+pullBoiFx = async function(){ if (liveOff()){ SRC_ST.boiFx = 'off'; return; } return pullBoiFxOff.apply(this, arguments); };
+pullEcb = async function(){ if (liveOff()){ SRC_ST.ecb = 'off'; return; } return pullEcbOff.apply(this, arguments); };
+const applyUsdOff = applyUsd;
+applyUsd = function(){ return liveOff() ? 0 : applyUsdOff.apply(this, arguments); };
+const applyDbRatesOff = applyDbRates;
+applyDbRates = function(d){
+  if (liveOff() && !CLOSE_OK){ try { if (d && d.usd && +d.asOf >= (+(OFFDOC || {}).asOf || 0)) OFFDOC = {usd: d.usd, asOf: +d.asOf}; } catch (e) {} return; }
+  return applyDbRatesOff.apply(this, arguments);
+};
+/* where the close comes from: the app's data file (kept by the scheduled updater), and on the website the quote feed itself */
+async function closeLoad(){
+  let got = false;
+  try {
+    const r = await fetch((IN_CLAUDE ? IX_GH : 'rates.json') + '?c=' + Math.floor(Date.now() / 300000), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'});
+    if (r.ok){
+      const d = await r.json(), L = d && d.live, it = d && d.mkt && d.mkt.items;
+      if (L && L.close && Object.keys(L.close).length >= 3){ CLOSE.usd = L.close; CLOSE.at = +L.asOf || 0; got = true; }
+      if (it) Object.keys(it).forEach(k => { if (+it[k].pc > 0) CLOSE.pc[k] = +it[k].pc; });
+      if (d && d.usd && d.asOf) OFFDOC = {usd: d.usd, asOf: +d.asOf};
+    }
+  } catch (e) {}
+  if (!got) got = await closeFetchLive();
+  return got;
+}
+const closeApplyOff = closeApply;
+closeApply = function(){
+  if (!liveOff()) return;
+  SET.mktLive = '0';
+  CLOSE_OK = true;
+  try {
+    META.live = false; META.cryptoLive = false;
+    if (fxTimer){ clearTimeout(fxTimer); fxTimer = null; } if (binTimer){ clearTimeout(binTimer); binTimer = null; } clearTimeout(IXL.timer); IXL.timer = null;
+    closeApplyOff.apply(this, arguments);
+    T.mk_mktAt = [0, 1, 2].map(i => (T.cl_mk_mktAt[i] || '').replace('{t}', closeLabel()));
+    if (CLOSE.T) CLOSE.T.ix_snap = CLOSE.T.ix_snap || T.ix_snap; else CLOSE.T = {ix_snap: T.ix_snap};
+    T.ix_snap = T.cl_ix_snap;
+    try { if (tab === 'home') renderMarket(); renderStamp(); } catch (e) {}
+  } finally { CLOSE_OK = false; }
+};
+const closeTextsOff = closeTexts;
+closeTexts = function(on){ if (!on && CLOSE.T && CLOSE.T.ix_snap){ T.ix_snap = CLOSE.T.ix_snap; delete CLOSE.T.ix_snap; } return closeTextsOff.apply(this, arguments); };
+/* refreshing while live data is off brings the latest close, never a live price */
+const refreshEverythingOff = refreshEverything;
+refreshEverything = async function(manual){
+  if (!liveOff()) return refreshEverythingOff.apply(this, arguments);
+  const btns = $$('#gRefresh, .rf-btn'); btns.forEach(b => b.classList.add('spin'));
+  try { await closeLoad(); closeApply(); } finally { btns.forEach(b => b.classList.remove('spin')); }
+  if (manual){ const m = t('mk_offRefresh', {d: closeLabel()}); toast(m); const st = $('#x_status'); if (st) st.textContent = m; }
+  return false;
+};
+tryLive = function(manual){ return refreshEverything(!!manual); };
+const renderStampOff = renderStamp;
+renderStamp = function(){
+  const r = renderStampOff.apply(this, arguments);
+  if (liveOff()){ const g = $('#gStamp'); if (g) g.textContent = t('st_offClose', {d: closeLabel()}); $$('#fx_st, .fx-st').forEach(s => { s.textContent = t('st_offClose', {d: closeLabel()}); }); }
+  return r;
+};
+const mktApplyOff = mktApply;
+mktApply = function(quiet){
+  liveSync(SET.mktLive === '0'); saveSet();
+  if (liveOff()){ closeLoad().then(closeApply, closeApply); }
+  return mktApplyOff.apply(this, arguments);
+};
+/* every live switch in the app now turns the same thing on and off */
+document.addEventListener('change', e => {
+  const el = e.target; if (!el) return;
+  if (el.id === 'fx_live' || (el.classList && el.classList.contains('fx-live-cb'))){ const off = !el.checked; setTimeout(() => { SET.mktLive = off ? '0' : '1'; mktApply(); }, 0); }
+  else if (el.id === 'set_liveFx'){ const off = el.value === '0'; setTimeout(() => { SET.mktLive = off ? '0' : '1'; mktApply(); }, 0); }
+});
+if (liveOff()) setTimeout(() => { closeLoad().then(closeApply, closeApply); }, 300);
