@@ -68,28 +68,28 @@ def fuel_kind(s):
 
 
 def wltp_kinds(probe):
-    """engine technology by (make code, model code, year) from the WLTP list, when it can be read"""
-    out = {}
+    """engine technology, trim level and engine size by (make code, model code, year) from the WLTP list"""
+    out, tech_c, fuel_c = {}, {}, {}
     try:
-        r = call("datastore_search", resource_id=WLTP, limit=1)
-        fields = [f["id"] for f in r.get("fields", [])]
-        probe["wltp_fields"] = fields
-        probe["wltp_sample"] = r.get("records", [])[:1]
-        tc, dc, yr = pick(fields, r"^tozeret_cd$"), pick(fields, r"^degem_cd$"), pick(fields, r"shnat")
-        fl = pick(fields, r"technologi", r"hanaa", r"delek", avoid=r"tzrich|cd$")
-        if not (tc and dc and fl):
-            return out
+        cols = ["tozeret_cd", "degem_cd", "shnat_yitzur", "technologiat_hanaa_nm", "delek_nm", "ramat_gimur", "nefah_manoa", "koah_sus"]
         off = 0
         while True:
-            r = call("datastore_search", resource_id=WLTP, limit=32000, offset=off, fields=",".join(x for x in [tc, dc, yr, fl] if x))
+            r = call("datastore_search", resource_id=WLTP, limit=32000, offset=off, fields=",".join(cols))
             recs = r.get("records", [])
             for x in recs:
-                out[(str(x.get(tc)), str(x.get(dc)), str(x.get(yr) or ""))] = fuel_kind(x.get(fl))
-                out.setdefault((str(x.get(tc)), str(x.get(dc)), ""), fuel_kind(x.get(fl)))
+                tech, fuel = str(x.get("technologiat_hanaa_nm") or "").strip(), str(x.get("delek_nm") or "").strip()
+                tech_c[tech] = tech_c.get(tech, 0) + 1
+                fuel_c[fuel] = fuel_c.get(fuel, 0) + 1
+                kind = "ev" if re.search(r"חשמל", fuel) and not re.search(r"בנזין|דיזל|סולר|גז", fuel) else fuel_kind(tech + " " + fuel)
+                info = {"k": kind, "trim": str(x.get("ramat_gimur") or "").strip(), "cc": x.get("nefah_manoa"), "hp": x.get("koah_sus")}
+                out[(str(x.get("tozeret_cd")), str(x.get("degem_cd")), str(x.get("shnat_yitzur") or ""))] = info
+                out.setdefault((str(x.get("tozeret_cd")), str(x.get("degem_cd")), ""), info)
             off += len(recs)
             if not recs or off >= r.get("total", 0):
                 break
         probe["wltp_rows"] = off
+        probe["wltp_tech"] = tech_c
+        probe["wltp_fuel"] = fuel_c
     except Exception as e:
         probe["wltp_err"] = str(e)[:200]
     return out
@@ -152,9 +152,20 @@ def main():
             year = 0
         if year and year < this_year - 7:            # the benefit uses the price when new; keep the last eight model years
             continue
-        trim = str(x.get("degem_nm") or (x.get(F["trim"]) if F["trim"] else "") or "").strip()
+        if not re.search(r"[A-Za-zא-ת]", model):              # placeholder rows such as "11111"
+            continue
         tc, dc = str(x.get("tozeret_cd")), str(x.get("degem_cd"))
-        kind = kinds.get((tc, dc, str(year))) or kinds.get((tc, dc, "")) or fuel_kind(model + " " + trim)
+        w = kinds.get((tc, dc, str(year))) or kinds.get((tc, dc, "")) or {}
+        parts = [w.get("trim") or str(x.get("degem_nm") or "").strip()]
+        try:
+            if w.get("cc") and float(w["cc"]) > 0:
+                parts.append("%d cc" % int(float(w["cc"])))
+            if w.get("hp") and float(w["hp"]) > 0:
+                parts.append("%d hp" % int(float(w["hp"])))
+        except (TypeError, ValueError):
+            pass
+        trim = " · ".join(p for p in parts if p)
+        kind = w.get("k") or fuel_kind(model + " " + str(x.get("degem_nm") or ""))
         makes.setdefault(make, {}).setdefault(model, []).append([trim, year, int(round(price)), kind])
     out = {"asOf": int(time.time()), "src": "data.gov.il", "rid": rid, "n": 0, "makes": {}}
     for mk in sorted(makes):
