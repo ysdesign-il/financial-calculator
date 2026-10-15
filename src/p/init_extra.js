@@ -912,7 +912,19 @@ function exDecorate(){
     });
   });
 }
-function exLabels(){ $$('.qbtn').forEach(b => { const l = $('label[for="' + b.dataset.exf + '"]'); b.setAttribute('aria-label', t('ex_what', {n: l ? exClean(l.textContent) : ''})); }); const e = $('#explainBtn'); if (e) e.setAttribute('aria-label', t('b_explainA')); }
+/* 8.3: the label sits right before its "?" button, so no page-wide search per button; and the work runs only when the language or the buttons change */
+var EXL_SIG = '';
+function exLabels(){
+  const bs = document.getElementsByClassName('qbtn'), sig = lang + ':' + bs.length;
+  if (sig !== EXL_SIG){
+    EXL_SIG = sig;
+    for (const b of bs){
+      const p = b.previousElementSibling, l = p && p.tagName === 'LABEL' ? p : document.getElementById(b.dataset.exf) && $('label[for="' + b.dataset.exf + '"]', b.parentElement.parentElement || document);
+      const v = t('ex_what', {n: l ? exClean(l.textContent) : ''}); if (b.getAttribute('aria-label') !== v) b.setAttribute('aria-label', v);
+    }
+  }
+  const e = $('#explainBtn'); if (e) e.setAttribute('aria-label', t('b_explainA'));
+}
 document.addEventListener('click', e => {
   if (e.target.closest('#explainBtn')){ if (!EX_SKIP.includes(tab)) exOpen(tab, 'all'); return; }
   const q = e.target.closest('.qbtn');
