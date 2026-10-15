@@ -1,0 +1,62 @@
+{
+ "at": 1792086673,
+ "tried": [
+  {
+   "id": "39f455bf-6db0-4926-859d-017f34eacbcb",
+   "fields": [
+    "_id",
+    "semel_yevuan",
+    "shem_yevuan",
+    "sug_degem",
+    "tozeret_cd",
+    "tozeret_nm",
+    "degem_cd",
+    "degem_nm",
+    "shnat_yitzur",
+    "mehir",
+    "kinuy_mishari"
+   ],
+   "total": 101938
+  }
+ ],
+ "resource": "39f455bf-6db0-4926-859d-017f34eacbcb",
+ "fields": [
+  "_id",
+  "semel_yevuan",
+  "shem_yevuan",
+  "sug_degem",
+  "tozeret_cd",
+  "tozeret_nm",
+  "degem_cd",
+  "degem_nm",
+  "shnat_yitzur",
+  "mehir",
+  "kinuy_mishari"
+ ],
+ "map": {
+  "make": "tozeret_nm",
+  "model": "kinuy_mishari",
+  "trim": null,
+  "year": "shnat_yitzur",
+  "price": "mehir",
+  "fuel": null,
+  "code": "degem_cd"
+ },
+ "sample": [
+  {
+   "_id": 1,
+   "semel_yevuan": 1,
+   "shem_yevuan": "קרסו מוטורס בע\"מ",
+   "sug_degem": "P",
+   "tozeret_cd": 928,
+   "tozeret_nm": "רנו צרפת",
+   "degem_cd": 1000,
+   "degem_nm": "C0635P R TWINGO EP",
+   "shnat_yitzur": 1996,
+   "mehir": 54950,
+   "kinuy_mishari": "טווינגו 2.1 YSAE"
+  }
+ ],
+ "rows": 101938,
+ "kept": 33040
+}
