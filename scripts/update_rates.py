@@ -151,7 +151,10 @@ def official_indices(prev, log):
 
 # ---------- market indices: public quote feed (the same one the website reads live) ----------
 MARKETS = [("ta35", ".TA35", "TA-35"), ("ta125", ".TA125", "TA-125"), ("spx", ".SPX", "S&P 500"), ("ndx", ".NDX", "Nasdaq 100"),
-           ("dji", ".DJI", "Dow Jones"), ("gold", "@GC.1", "Gold"), ("brent", "@LCO.1", "Brent")]
+           ("dji", ".DJI", "Dow Jones"), ("ixic", ".IXIC", "Nasdaq Composite"), ("rut", ".RUT", "Russell 2000"), ("vix", ".VIX", "VIX"),
+           ("ftse", ".FTSE", "FTSE 100"), ("dax", ".GDAXI", "DAX"), ("stoxx", ".STOXX50E", "Euro Stoxx 50"), ("nikkei", ".N225", "Nikkei 225"),
+           ("gold", "@GC.1", "Gold"), ("silver", "@SI.1", "Silver"), ("platinum", "@PL.1", "Platinum"), ("copper", "@HG.1", "Copper"),
+           ("brent", "@LCO.1", "Brent"), ("wti", "@CL.1", "WTI crude"), ("natgas", "@NG.1", "Natural gas")]
 QUOTE_URL = "https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=%s&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1"
 CHART_URL = "https://ts-api.cnbc.com/harmony/app/charts/10Y.json?symbol=%s"
 

@@ -3412,8 +3412,9 @@ figApply(true);
 /* ================= live indices: official price indices and market indices, used across the app and editable ================= */
 var IX_BUILT = __IX_BUILT__;
 var IX = {idx: Object.assign({}, (IX_BUILT && IX_BUILT.idx) || {}), mkt: Object.assign({}, ((IX_BUILT && IX_BUILT.mkt) || {}).items || {}), src: 'built', at: 0};
-var IX_MK = ['ta35', 'ta125', 'spx', 'ndx', 'dji', 'gold', 'brent'], IX_RET = ['ta125', 'ta35', 'spx', 'ndx', 'dji', 'gold'];
-var IX_SYM = {ta35: '.TA35', ta125: '.TA125', spx: '.SPX', ndx: '.NDX', dji: '.DJI', gold: '@GC.1', brent: '@LCO.1'};
+var IX_MK = ['ta35', 'ta125', 'spx', 'ndx', 'dji', 'ixic', 'rut', 'vix', 'ftse', 'dax', 'stoxx', 'nikkei', 'gold', 'silver', 'platinum', 'copper', 'brent', 'wti', 'natgas'], IX_COM = ['gold', 'silver', 'platinum', 'copper', 'brent', 'wti', 'natgas'], IX_RET = ['ta125', 'ta35', 'spx', 'ndx', 'dji', 'gold'];
+var IX_SYM = {ta35: '.TA35', ta125: '.TA125', spx: '.SPX', ndx: '.NDX', dji: '.DJI', ixic: '.IXIC', rut: '.RUT', vix: '.VIX', ftse: '.FTSE', dax: '.GDAXI', stoxx: '.STOXX50E', nikkei: '.N225',
+  gold: '@GC.1', silver: '@SI.1', platinum: '@PL.1', copper: '@HG.1', brent: '@LCO.1', wti: '@CL.1', natgas: '@NG.1'};
 var IXE = {};
 function ixOffVal(id){
   const c = IX.idx.cpi, b = IX.idx.build, h = IX.idx.house;
@@ -3544,9 +3545,10 @@ function ixBoard(){
     h += card(k, N(+d.v, 1), ixCh(+d.mom), meta, go);
   });
   h += `</div><h4 class="ix-g">${asEsc(t('ix_gMkt'))}${IXL.ok && srcOk('mkt', 'live') ? ` <span class="lv-pill on"><i></i>${asEsc(t('lv_live'))}</span>` : ''}</h4><div class="mkt">`;
-  IX_MK.forEach(k => {
+  IX_MK.forEach((k, i) => {
+    if (k === IX_COM[0]) h += `</div><h4 class="ix-g">${asEsc(t('ix_gCom'))}</h4><div class="mkt">`;      // indices first, then commodities
     const d = IX.mkt[k]; if (!d || !(d.p > 0)) return;
-    const val = (k === 'gold' || k === 'brent' ? '$' : '') + N(d.p, null, d.p >= 1000 ? 0 : 2);
+    const val = (IX_COM.includes(k) ? '$' : '') + N(d.p, null, d.p >= 1000 ? 0 : 2);
     const meta = asEsc(ixDay(d.t)) + ' · ' + asEsc(t(!d.live ? 'ix_snap' : d.rt ? 'ix_rt' : 'ix_delay')) + (isFinite(+d.ytd) ? ' · ' + asEsc(t('ix_ytd', {v: ixSg(+d.ytd)})) : '');
     h += card(k, val, ixCh(+d.chp), meta, IX_RET.includes(k) ? 'compound:' + k : 'none');
   });
