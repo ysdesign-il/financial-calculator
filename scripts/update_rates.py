@@ -240,9 +240,14 @@ def live_fx(prev, log):
     q = json.loads(get_raw(QUOTE_URL % "%7C".join(urllib.request.quote(v[0]) for v in FX_SYMS.values()), BROWSER, 25))
     rows = {r.get("symbol"): r for r in q["FormattedQuoteResult"]["FormattedQuote"]}
     base = prev.get("usd") or {}
-    usd, ts = {}, 0
+    usd, close, ts = {}, {}, 0
     for k, (sym, inv) in FX_SYMS.items():
         r = rows.get(sym) or {}
+        pc = fnum(r.get("previous_day_closing"))
+        if pc and pc > 0:
+            c = 1 / pc if inv else pc
+            if not base.get(k) or plausible(c, base[k], 0.8, 1.25):
+                close[k] = round(c, 6)
         p = fnum(r.get("last"))
         if not p or p <= 0:
             continue
@@ -252,7 +257,10 @@ def live_fx(prev, log):
         usd[k] = round(v, 6)
         ts = max(ts, iso_ts(r.get("last_time")))
     log.append("live fx %d" % len(usd))
-    return {"asOf": ts or int(time.time()), "src": "cnbc", "usd": usd} if len(usd) >= 3 else prev.get("live")
+    res = {"asOf": ts or int(time.time()), "src": "cnbc", "usd": usd} if len(usd) >= 3 else prev.get("live")
+    if res is not None and len(close) >= 3:            # the previous trading day's closing rates, used when live data is switched off
+        res = dict(res, close=close)
+    return res
 
 
 def main():
