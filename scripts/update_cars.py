@@ -8,6 +8,7 @@ import json, re, time, urllib.request, urllib.parse
 
 API = "https://data.gov.il/api/3/action/"
 KNOWN = ["39f455bf-6db0-4926-859d-017f34eacbcb"]          # new-car list prices (מחירון רכב חדש)
+WLTP = "142afde2-6228-49f9-8a29-9b6c3a0cbe40"             # WLTP models: engine technology (petrol, hybrid, plug-in, electric)
 UA = {"User-Agent": "Mozilla/5.0 (fincalc price-list updater)", "Accept": "application/json"}
 
 
@@ -57,6 +58,45 @@ def pick(fields, *pats, avoid=None):
 
 def fuel_kind(s):
     s = str(s or "").lower()
+    if re.search(r"phev|plug|פלאג|נטען", s):
+        return "plugin"
+    if re.search(r"(^|[^a-z])(bev|ev)([^a-z]|$)|חשמלי טהור|^חשמל$|electric", s) and not re.search(r"היבריד|hybrid|hev", s):
+        return "ev"
+    if re.search(r"hybrid|היבריד|(^|[^a-z])(hev|mhev)([^a-z]|$)", s):
+        return "hybrid"
+    return "fuel"
+
+
+def wltp_kinds(probe):
+    """engine technology by (make code, model code, year) from the WLTP list, when it can be read"""
+    out = {}
+    try:
+        r = call("datastore_search", resource_id=WLTP, limit=1)
+        fields = [f["id"] for f in r.get("fields", [])]
+        probe["wltp_fields"] = fields
+        probe["wltp_sample"] = r.get("records", [])[:1]
+        tc, dc, yr = pick(fields, r"^tozeret_cd$"), pick(fields, r"^degem_cd$"), pick(fields, r"shnat")
+        fl = pick(fields, r"technologi", r"hanaa", r"delek", avoid=r"tzrich|cd$")
+        if not (tc and dc and fl):
+            return out
+        off = 0
+        while True:
+            r = call("datastore_search", resource_id=WLTP, limit=32000, offset=off, fields=",".join(x for x in [tc, dc, yr, fl] if x))
+            recs = r.get("records", [])
+            for x in recs:
+                out[(str(x.get(tc)), str(x.get(dc)), str(x.get(yr) or ""))] = fuel_kind(x.get(fl))
+                out.setdefault((str(x.get(tc)), str(x.get(dc)), ""), fuel_kind(x.get(fl)))
+            off += len(recs)
+            if not recs or off >= r.get("total", 0):
+                break
+        probe["wltp_rows"] = off
+    except Exception as e:
+        probe["wltp_err"] = str(e)[:200]
+    return out
+
+
+def _unused(s):
+    s = str(s or "").lower()
     if re.search(r"חשמל(?!.*בנזין)|electric|^ev$", s) and not re.search(r"היבריד|hybrid|plug", s):
         return "ev"
     if re.search(r"פלאג|plug|נטען", s):
@@ -94,6 +134,7 @@ def main():
             break
     makes = {}
     this_year = time.gmtime().tm_year
+    kinds = wltp_kinds(probe)
     for x in rows:
         try:
             price = float(str(x.get(F["price"]) or "").replace(",", ""))
@@ -109,10 +150,11 @@ def main():
             year = int(float(x.get(F["year"]) or 0)) if F["year"] else 0
         except ValueError:
             year = 0
-        if year and year < this_year - 9:            # the benefit uses the price when new; keep the last ten model years
+        if year and year < this_year - 7:            # the benefit uses the price when new; keep the last eight model years
             continue
-        trim = str(x.get(F["trim"]) or "").strip() if F["trim"] else ""
-        kind = fuel_kind(x.get(F["fuel"])) if F["fuel"] else "fuel"
+        trim = str(x.get("degem_nm") or (x.get(F["trim"]) if F["trim"] else "") or "").strip()
+        tc, dc = str(x.get("tozeret_cd")), str(x.get("degem_cd"))
+        kind = kinds.get((tc, dc, str(year))) or kinds.get((tc, dc, "")) or fuel_kind(model + " " + trim)
         makes.setdefault(make, {}).setdefault(model, []).append([trim, year, int(round(price)), kind])
     out = {"asOf": int(time.time()), "src": "data.gov.il", "rid": rid, "n": 0, "makes": {}}
     for mk in sorted(makes):
