@@ -94,7 +94,7 @@ function ibDraw(){
     </div>`).join('') : `<p class="fine">${E95(t('fb_none'))}</p>`}</div>`;
 }
 async function ibOpen(){
-  if (!$('#ibx')) document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="ibx" hidden><div class="cp-box ib-box" role="dialog" aria-modal="true" aria-labelledby="ibx_t"><div class="cp-top"><h3 id="ibx_t"></h3><button type="button" class="fg-x" id="ibx_r">🔄</button><button type="button" class="cp-x" id="ibx_x">×</button></div><div id="ibx_b"><p class="fine">…</p></div></div></div>`);
+  if (!$('#ibx')) document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="ibx" hidden><div class="cp-box ib-box" role="dialog" aria-modal="true" aria-labelledby="ibx_t"><div class="cp-top"><h3 id="ibx_t"></h3><button type="button" class="lc-add ib-ref" id="ibx_r">🔄 <span>${E95(t('ci_ref'))}</span></button><button type="button" class="cp-x" id="ibx_x">×</button></div><div id="ibx_b"><p class="fine">…</p></div></div></div>`);
   $('#ibx_t').textContent = '📥 ' + t('ib_title'); $('#ibx_x').setAttribute('aria-label', t('cp_close')); $('#ibx_r').setAttribute('aria-label', t('ci_ref'));
   $('#ibx').hidden = false; document.body.classList.add('cp-lock');
   await ibLoad(); ibDraw();
@@ -105,7 +105,7 @@ document.addEventListener('click', async e => {
   if (e.target.closest('#ib_open, [data-ibgo]')) return ibOpen();
   const o = $('#ibx'); if (!o || o.hidden) return;
   if (e.target === o || e.target.closest('#ibx_x')){ o.hidden = true; document.body.classList.remove('cp-lock'); return; }
-  if (e.target.closest('#ibx_r')){ await ibLoad(); return ibDraw(); }
+  if (e.target.closest('#ibx_r')){ const b = $('#ibx_r'); if (b) b.classList.add('spin'); IB.key = IB.key || null; await ibLoad(); ibDraw(); if (b) b.classList.remove('spin'); SET.ibSeen = Math.max(+SET.ibSeen || 0, ...IB.list.map(i => i.at || 0)); try { saveSet(); } catch (er) {} ibBtn(); return toast(t('ib_refreshed', {n: IB.list.length})); }
   const f = e.target.closest('[data-ibf]'); if (f){ IB.f = f.dataset.ibf; return ibDraw(); }
   const d = e.target.closest('[data-ibdel]'); if (d){ SET.ibHide = (SET.ibHide || []).concat(d.dataset.ibdel).slice(-2000); try { saveSet(); } catch (er) {} IB.list = IB.list.filter(i => i.id !== d.dataset.ibdel); return ibDraw(); }
   if (e.target.closest('[data-fbsend]')) setTimeout(async () => { await ibLoad(); ibDraw(); }, 900);
@@ -174,3 +174,6 @@ document.addEventListener('click', async e => {
   }
 });
 if (location.hostname === 'localhost') window.__fin95b = {ibUnwrap};
+
+/* while the inbox is open it refreshes itself every minute */
+setInterval(async () => { const o = $('#ibx'); if (o && !o.hidden && !document.hidden && liveOwner()){ await ibLoad(); ibDraw(); ibBtn(); } }, 60000);

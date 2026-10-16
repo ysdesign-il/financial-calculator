@@ -84,10 +84,10 @@ document.addEventListener('click', e => {
 var PH = {s: null, ok: false};
 (async function phInit(){
   if (!IN_CLAUDE || !window.claude) return;
-  try { const s = await window.claude.use('sample'); if (!s) return; PH.s = s; const L = await s.limits().catch(() => null); PH.ok = !!(L && L.images); if (PH.ok) phAll(); } catch (e) {}
+  try { const s = await window.claude.use('sample'); if (!s) return; PH.s = s; const L = await s.limits().catch(() => null); PH.ok = !!(L && L.images); if (PH.ok) phRenderAll(); } catch (e) {}
 })();
 function phBtn(kind){ return PH.ok ? `<div class="ph-row"><button type="button" class="ph-btn" data-ph="${kind}"><span aria-hidden="true">📷</span> ${E91(t('ph_btn'))}</button><span class="ph-st" data-phst="${kind}"></span></div>` : ''; }
-function phAll(){ try { insRender(); } catch (e) {} try { lcRender(); } catch (e) {} try { mcRender(); } catch (e) {} try { pcRender(); } catch (e) {} }
+function phRenderAll(){ try { insRender(); } catch (e) {} try { lcRender(); } catch (e) {} try { mcRender(); } catch (e) {} try { pcRender(); } catch (e) {} }
 const _lcR91 = lcRender;
 lcRender = function(){ const r = _lcR91.apply(this, arguments); const b = $('#lc_box'); if (b && PH.ok && !b.querySelector('.ph-row')) b.insertAdjacentHTML('afterbegin', phBtn('loancmp')); return r; };
 const _insR91 = insRender;

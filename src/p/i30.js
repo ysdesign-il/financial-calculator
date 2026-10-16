@@ -35,5 +35,6 @@ Object.assign(T, {
   ib_linkedCopy:['קוד החיבור הועתק – הדבק אותו באינבוקס באתר (במצב מפתח)','نُسخ رمز الربط – ألصقه في صندوق الوارد في الموقع','Connection code copied – paste it in the website inbox (developer mode)'],
   ib_needKey:['כדי לקרוא כאן הודעות מהאתר: באפליקציה, במצב מפתח, פתח את האינבוקס ולחץ "חיבור האינבוקס לאתר", ואז הדבק כאן את הקוד.','لقراءة رسائل الموقع هنا: في التطبيق افتح صندوق الوارد واضغط "ربط"، ثم ألصق الرمز هنا.','To read website messages here: in the app (developer mode) open the inbox, tap "Connect the website inbox", then paste the code here.'],
   ib_keySet:['חיבור','ربط','Connect'], ib_keyOk:['מחובר – ההודעות נפתחו','تم الربط – فُتحت الرسائل','Connected – messages unlocked'], ib_keyBad:['הקוד לא מתאים למצב המפתח במכשיר הזה','الرمز لا يطابق وضع المطوّر على هذا الجهاز','That code does not match developer mode on this device'],
-  ib_siteNote:['באתר מוצגות הודעות שנשלחו מהאתר. הודעות מהאפליקציה – באינבוקס שבאפליקציה.','يعرض الموقع رسائل الموقع فقط. رسائل التطبيق في صندوق التطبيق.','The website shows messages sent from the website. App messages are in the app\'s inbox.']
+  ib_siteNote:['באתר מוצגות הודעות שנשלחו מהאתר. הודעות מהאפליקציה – באינבוקס שבאפליקציה.','يعرض الموقع رسائل الموقع فقط. رسائل التطبيق في صندوق التطبيق.','The website shows messages sent from the website. App messages are in the app\'s inbox.'],
+  ib_refreshed:['האינבוקס רוענן – {n} הודעות','تم تحديث صندوق الوارد – {n} رسائل','Inbox refreshed – {n} messages']
 });
