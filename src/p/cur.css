@@ -107,3 +107,15 @@
 #panel-markets .svbar{display:none}
 .ib-bt{position:relative}.ib-badge{position:absolute;top:2px;inset-inline-end:18%;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#e2b33c;color:#1b1400;font:700 .7rem/18px system-ui;font-style:normal}
 .ib-keybox input{width:100%;box-sizing:border-box;font:inherit;padding:9px;border-radius:10px;border:1px solid var(--line);background:transparent;color:inherit;margin:6px 0}
+/* 9.6: phone search */
+.phs-cmp{margin-bottom:10px}.phs-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.phs-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 6px 6px 12px;border-radius:999px;background:rgba(226,179,60,.15);border:1px solid #e2b33c;font-size:.88rem;font-weight:600}
+.phs-chip button{border:0;background:transparent;color:inherit;cursor:pointer;font-size:.85rem;width:22px;height:22px;border-radius:50%}
+.phs-search{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:14px;padding:4px 12px;background:var(--card,transparent)}
+.phs-search input{flex:1;min-width:0;border:0;background:transparent;color:inherit;font:inherit;padding:10px 0;outline:none}
+.phs-res{display:grid;gap:6px;margin-top:8px}
+.phs-it{display:grid;grid-template-columns:1fr auto auto;grid-template-areas:"n p a" "s p a";align-items:center;gap:2px 10px;text-align:start;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:transparent;color:inherit;font:inherit;cursor:pointer}
+.phs-it .phs-n{grid-area:n;font-weight:700}.phs-it small{grid-area:s;opacity:.7}.phs-it .phs-p{grid-area:p;font-weight:600;font-size:.9rem}.phs-it .phs-a{grid-area:a;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#e2b33c;color:#1b1400;font-weight:800}
+.phs-it.on{border-color:#2fbf71}.phs-it.on .phs-a{background:#2fbf71;color:#fff}.phs-it[disabled]{opacity:.45}
+.phs-my{margin-top:12px}.phs-mcard{margin-top:10px}
+.ib-ref{width:auto;padding:6px 12px;margin-inline-start:auto;font-size:.88rem}.ib-ref.spin{opacity:.6}
