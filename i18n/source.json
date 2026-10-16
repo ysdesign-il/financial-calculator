@@ -4675,6 +4675,26 @@
 "o_ksBoy": "Boy (grant at 13)",
 "o_ksGirl": "Girl (grant at 12)",
 "w_figYear": "Calculated with {y} figures. Amounts and brackets may have changed since.",
-"w_dataOld": "Prices were checked on {d} and may be out of date. Check with the company before deciding."
+"w_dataOld": "Prices were checked on {d} and may be out of date. Check with the company before deciding.",
+"sec_k_push": "An unknown account pushed changes to {r}",
+"sec_k_force": "Force push to {r} – history was rewritten",
+"sec_k_workflow": "Automation files changed: {f}",
+"sec_k_code": "Developer code or the security watch was changed",
+"sec_k_create": "A new branch or tag was created: {r}",
+"sec_k_delete": "A branch or tag was deleted: {r}",
+"sec_k_fork": "Someone copied the repository: {r}",
+"sec_k_public": "The repository was made public",
+"sec_k_rules": "Branch protection rules changed ({r})",
+"sec_k_release": "Action on a published release: {r}",
+"sec_k_collab": "Other accounts have access to the repository: {r}",
+"sec_new": "{n} new security alerts",
+"sec_view": "View",
+"sec_title": "Security alerts",
+"sec_none": "No alerts. All quiet.",
+"sec_ack": "Mark as read",
+"sec_ntf": "Also notify me on this device",
+"sec_help": "Alerts come from GitHub: who pushed changes, automation file changes, permission changes, repository copies and more. Serious ones also open a GitHub issue and reach you by email. If it was not you: change your GitHub password and check who has access.",
+"sec_devFail": "Attempt to enter developer mode with a wrong code ({w})",
+"fb_k_sec": "🛡️ Security"
 }
 }

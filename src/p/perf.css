@@ -39,3 +39,9 @@ button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
 .pchips{margin-bottom:4px}
 .pchips .ps-l{flex:0 0 100%;font-size:.8rem;color:var(--ink-2);margin:2px 2px 0}
 .ps-my{grid-column:1/-1;margin:8px 2px 0}
+.sec-bar{border-color:rgba(240,112,90,.7)!important}
+.sec-bar.sec-high{background:#3a0f0b;color:#ffe5e0}
+.sec-list{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:8px}
+.sec-list li{padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--g1);display:flex;flex-direction:column;gap:3px}
+.sec-list li.new{border-color:rgba(240,112,90,.7)}
+.sec-list small{color:var(--ink-2)}
