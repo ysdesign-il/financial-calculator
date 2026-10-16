@@ -14,7 +14,10 @@ const spFee = () => Math.max(0, +spFx().fee || 0) / 100;
 function spFxRender(){
   const box = $('#sp_fx'); if (!box) return;
   const X = spFx(), b = spBill(), p = spPay(), r = spRate(b, p), act = document.activeElement, keep = act && box.contains(act) ? act.id : null;
-  box.innerHTML = `<label class="sp-fxon"><input type="checkbox" id="spx_on"${X.on ? ' checked' : ''}> 💱 <b>${E100(t('spx_on'))}</b></label>
+  box.innerHTML = `<div class="sp-modes" role="radiogroup" aria-label="${E100(t('spx_modeL'))}">
+      <button type="button" role="radio" data-spxm="0" class="${X.on ? '' : 'on'}" aria-checked="${!X.on}">🧾 ${E100(t('spx_normal'))}</button>
+      <button type="button" role="radio" data-spxm="1" class="${X.on ? 'on' : ''}" aria-checked="${!!X.on}">💱 ${E100(t('spx_conv'))}</button></div>
+    ${X.on ? `<p class="fine sp-fxhint">${E100(t('spx_on'))}</p>` : ''}
     ${X.on ? `<div class="fields">
       <div class="field"><label for="spx_bill">${E100(t('spx_bill'))}</label><div class="control"><select id="spx_bill">${curOptions(b, true)}</select></div></div>
       <div class="field"><label for="spx_pay">${E100(t('spx_pay'))}</label><div class="control"><select id="spx_pay">${curOptions(p, true)}</select></div></div>
@@ -28,8 +31,7 @@ function spFxRender(){
 const spRe = () => { try { saveSet(); } catch (e) {} spFxRender(); spRender(); if (tab === 'split') calc(tab); };
 document.addEventListener('change', e => {
   const el = e.target; if (!el || !el.closest || !el.closest('#sp_fx')) return; const X = spFx();
-  if (el.id === 'spx_on') X.on = el.checked ? 1 : 0;
-  else if (el.id === 'spx_bill') X.bill = el.value; else if (el.id === 'spx_pay') X.pay = el.value; else if (el.id === 'spx_mode') X.mode = el.value; else return;
+  if (el.id === 'spx_bill') X.bill = el.value; else if (el.id === 'spx_pay') X.pay = el.value; else if (el.id === 'spx_mode') X.mode = el.value; else return;
   spRe();
 }, true);
 var SPX_T = null;
@@ -96,3 +98,5 @@ calc = function(id){
 const _al100 = applyLang;
 applyLang = function(){ const r = _al100.apply(this, arguments); try { spFxRender(); } catch (e) {} return r; };
 try { spFxRender(); } catch (e) {}
+
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-spxm]'); if (!b) return; const X = spFx(), on = b.dataset.spxm === '1' ? 1 : 0; if (X.on === on) return; X.on = on; spRe(); toast(t(on ? 'spx_toConv' : 'spx_toNormal')); });

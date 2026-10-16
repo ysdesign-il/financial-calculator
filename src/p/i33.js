@@ -9,5 +9,7 @@ Object.assign(T, {
   spx_rateRow:['שער ההמרה','سعر التحويل','Exchange rate'], spx_billOrig:['החשבון במטבע המקורי','الفاتورة بالعملة الأصلية','Bill in its own currency'],
   spx_billPay:['החשבון אחרי המרה','الفاتورة بعد التحويل','Bill after conversion'], spx_feeCost:['מזה עמלת המרה ({f})','منها عمولة التحويل ({f})','Of which conversion fee ({f})'],
   spx_eachOrig:['לכל אחד במטבע המקורי','لكل شخص بالعملة الأصلية','Each, in the bill\'s currency'],
-  n_spx:['הסכומים הומרו למטבע ההתחשבנות לפי השער שבחרתם, כולל עמלת ההמרה. מי ששילם במטבע ההתחשבנות – בלי עמלה.','حُوّلت المبالغ لعملة التسوية حسب السعر المختار مع العمولة.','Amounts are converted to the settling currency at your chosen rate, with the fee. Payments already in that currency have no fee.']
+  n_spx:['הסכומים הומרו למטבע ההתחשבנות לפי השער שבחרתם, כולל עמלת ההמרה. מי ששילם במטבע ההתחשבנות – בלי עמלה.','حُوّلت المبالغ لعملة التسوية حسب السعر المختار مع العمولة.','Amounts are converted to the settling currency at your chosen rate, with the fee. Payments already in that currency have no fee.'],
+  spx_modeL:['מצב החלוקה','وضع التقسيم','Split mode'], spx_normal:['רגיל','عادي','Normal'], spx_conv:['המרת מטבע','تحويل عملة','Currency conversion'],
+  spx_toConv:['💱 מצב המרת מטבע','💱 وضع تحويل العملة','💱 Currency conversion mode'], spx_toNormal:['🧾 מצב רגיל','🧾 الوضع العادي','🧾 Normal mode']
 });
