@@ -1,15 +1,4 @@
 {
- "alerts": [
-  {
-   "at": 1792163915,
-   "level": "high",
-   "kind": "force",
-   "actor": "dependabot[bot]",
-   "msg": "Force push to refs/heads/dependabot/github_actions/actions/checkout-7.0.1 — history was rewritten",
-   "p": {
-    "r": "refs/heads/dependabot/github_actions/actions/checkout-7.0.1"
-   }
-  }
- ],
+ "alerts": [],
  "updated": 1792163915
 }
