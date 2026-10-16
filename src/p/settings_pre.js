@@ -9,6 +9,22 @@ const RTL = new Set(['he','ar','fa','ur','yi','ps','sd','ug','ckb','dv']);
 var TOUCHED = [], TILE_F = 'all', MY_HANDLE = '';
 try { MY_HANDLE = localStorage.getItem('fin-handle') || ''; } catch (e) {}
 const MKT = {boi: 3.25, boiDate: '1.9.2026', boiNext: '21.10.2026', cpi: 1.5, cpiMonth: '08/2026', cpiYtd: 2.1, cpiYtdTo: 8, src: 'built'};
+/* the interface follows the phone's language until a language is picked by hand (then it is kept in fin-lang) */
+function devLang(){
+  const has = c => LANG_LIST.some(l => l[0] === c);
+  let list = []; try { list = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || '']).filter(Boolean); } catch (e) {}
+  for (const raw of list){
+    const tag = String(raw).replace('_', '-'), low = tag.toLowerCase(), base = low.split('-')[0];
+    let c = '';
+    if (base === 'iw') c = 'he'; else if (base === 'ji') c = 'yi'; else if (base === 'no' || base === 'nn' || base === 'nb') c = 'nb'; else if (base === 'tl' || base === 'fil') c = 'fil'; else if (base === 'in') c = 'id';
+    else if (base === 'zh') c = /hant|-tw|-hk|-mo/.test(low) ? 'zh-TW' : 'zh-CN';
+    else if (base === 'pt') c = /-pt|-ao|-mz/.test(low) ? 'pt-PT' : 'pt-BR';
+    else c = has(tag) ? tag : base;
+    if (has(c)) return c;
+  }
+  return 'he';
+}
+function langAuto(){ try { return !localStorage.getItem('fin-lang'); } catch (e) { return true; } }
 const SET_DEF = {sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',

@@ -28,7 +28,7 @@ panelsEl.addEventListener('change', e => {
     if (k === 'boiDb'){ saveSet(); dbSub(); }
     if (k === 'autoRef'){ saveSet(); schedRef(); }
   } else if (id.indexOf('set_p_') === 0){ SET.prof[id.slice(6)] = val; applyDefaults(); }
-  else if (id === 'set_lang'){ lang = val; try { localStorage.setItem('fin-lang', lang); } catch(err) {} saveSet(); applyLang(true); return; }
+  else if (id === 'set_lang'){ if (val === 'auto'){ lang = devLang(); try { localStorage.removeItem('fin-lang'); } catch(err) {} } else { lang = val; try { localStorage.setItem('fin-lang', lang); } catch(err) {} } saveSet(); applyLang(true); return; }
   else if (id === 'set_cur'){ setBase(val); }
   else if (id.indexOf('set_cb_') === 0){ const tb = id.slice(7); if (val) SET.curBy[tb] = val; else delete SET.curBy[tb]; applyEffCur(tab); }
   else if (id === 'set_favCur'){ SET.favCur = [...e.target.selectedOptions].map(o => o.value); fillCurSelects(); fillCB(); }
@@ -71,12 +71,12 @@ panelsEl.addEventListener('click', e => {
   }
   else if (T_.closest('#set_resetcalcs')){ TABS.forEach(resetPanel); TOUCHED = []; calc(tab); msg.textContent = t('st_resetCalcs'); }
   else if (T_.closest('#set_reset')){
-    SET = cloneDef(); saveSet(); lang = 'he'; try { localStorage.setItem('fin-lang', lang); } catch(err) {}
+    SET = cloneDef(); saveSet(); lang = devLang(); try { localStorage.removeItem('fin-lang'); } catch(err) {}
     setBase('ILS'); applyTheme(); applySize(); applyDefaults(); applyLang(true); rebuildNav(); msg.textContent = t('st_resetDone');
   }
   else if (T_.closest('#set_clear')){
     ['fin-set','fin-vals','fin-scn','fin-lang','fin-cur','fin-tab'].forEach(k => { try { localStorage.removeItem(k); } catch(err) {} });
-    SET = cloneDef(); SCN = {}; lang = 'he'; setBase('ILS'); applyTheme(); applySize(); TABS.forEach(resetPanel); TOUCHED = [];
+    SET = cloneDef(); SCN = {}; lang = devLang(); setBase('ILS'); applyTheme(); applySize(); TABS.forEach(resetPanel); TOUCHED = [];
     applyLang(true); rebuildNav(); msg.textContent = t('st_cleared');
   }
 });
