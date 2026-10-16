@@ -1,4 +1,15 @@
 {
- "alerts": [],
- "updated": 1792163915
+ "alerts": [
+  {
+   "at": 1792164357,
+   "level": "medium",
+   "kind": "workflow",
+   "actor": "ysdesign-il",
+   "msg": "Automation files changed: .github/workflows/security.yml",
+   "p": {
+    "f": ".github/workflows/security.yml"
+   }
+  }
+ ],
+ "updated": 1792164358
 }
