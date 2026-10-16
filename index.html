@@ -1804,6 +1804,13 @@ button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
 .mic-b{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink-2);display:grid;place-items:center;cursor:pointer;padding:0}
 .trf-now{margin:2px 0 12px;padding:8px 10px;border-radius:10px;background:var(--g1);border:1px solid var(--line)}
 #trf_in{direction:auto;font-family:inherit;font-size:.95rem}
+@media (max-width:959px){
+  body.hero-min .panel .hero{padding:8px 14px 9px}
+  body.hero-min .panel .hero .hero-words,body.hero-min .panel .hero .hero-sub{display:none}
+  body.hero-min .panel .hero .hero-label{font-size:.78rem}
+  body.hero-min .panel .hero .hero-value{font-size:1.55rem}
+  body.hero-min .panel .hero .hero-say{top:6px;width:30px;height:30px}
+}
 
 /* ================= 8.5: a coin for every currency ================= */
 .cur-coin{display:inline-grid;place-items:center;flex:none;width:26px;height:26px;border-radius:50%;vertical-align:middle;margin-inline-end:6px;position:relative;overflow:hidden;
@@ -5705,6 +5712,11 @@ Object.assign(T, {
   pl_vat:['מס שנוסף למחיר של רוב המוצרים והשירותים בישראל.','ضريبة تضاف إلى سعر معظم السلع والخدمات في إسرائيل.','A tax added to the price of most goods and services in Israel.'],
   pl_gross:['השכר המלא, לפני שמורידים מס, ביטוח לאומי ופנסיה.','الراتب الكامل قبل خصم الضريبة والتأمين الوطني والتقاعد.','Your full pay, before tax, national insurance and pension come off.'],
   pl_net:['מה שנכנס בפועל לחשבון אחרי כל הניכויים.','ما يدخل فعليًا إلى الحساب بعد كل الخصومات.','What actually reaches your account after everything is taken off.']
+});
+/* 10.9 texts */
+Object.assign(T, {
+  w_figYear:['החישוב לפי נתוני {y}. ייתכן שהסכומים והמדרגות השתנו מאז.','الحساب وفق بيانات {y}. قد تكون المبالغ والشرائح قد تغيرت منذ ذلك الحين.','Calculated with {y} figures. Amounts and brackets may have changed since.'],
+  w_dataOld:['המחירים נבדקו ב־{d} ועלולים להיות לא עדכניים. כדאי לבדוק מול החברה לפני שמחליטים.','تم فحص الأسعار في {d} وقد لا تكون محدّثة. يُفضّل التحقق مع الشركة قبل القرار.','Prices were checked on {d} and may be out of date. Check with the company before deciding.']
 });
 
 const t = (k, p) => {
@@ -12110,7 +12122,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "10.8", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.113314';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.121122';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -20170,6 +20182,36 @@ document.addEventListener('change', e => {
   if (id === 'set_voiceIn' && e.target.value === '1' && !SR_OK) setTimeout(() => toast(t('voice_na')), 0);
 });
 try { lxDecorate(); } catch (e) {}
+
+/* ================= 10.8+: improvements — compact result while scrolling, warnings on data that may be out of date ================= */
+const E108 = s => asEsc(String(s == null ? '' : s));
+
+/* ---------- on a phone the result card stays on top while you scroll; once you scroll it shrinks to the number itself ---------- */
+(function heroCompact(){
+  let on = false, raf = 0;
+  const upd = () => { raf = 0; const v = window.scrollY > 260; if (v !== on){ on = v; document.body.classList.toggle('hero-min', v); } };
+  window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(upd); }, {passive: true});
+  upd();
+})();
+
+/* ---------- figures that age: say so on the result ---------- */
+const FIG_YEAR = 2026;
+const YEAR_TABS = ['salary', 'empcost', 'selfemp', 'freelance', 'overtime', 'leave', 'notice', 'severance', 'benefits', 'carbenefit', 'joboffer', 'tax', 'taxrefund',
+  'capital', 'rental', 'purchasetax', 'landtax', 'hishtalmut', 'mortcap', 'kidsave', 'workgrant', 'reserve', 'pensfix', 'childallow', 'oldage'];
+function daysSince(iso){ const d = Date.parse(String(iso || '').slice(0, 10)); return isFinite(d) ? Math.floor((Date.now() - d) / 864e5) : 0; }
+const show108 = show;
+show = function(id, res){
+  try {
+    if (res && typeof res === 'object'){
+      const w = [];
+      if (YEAR_TABS.includes(id) && new Date().getFullYear() > FIG_YEAR) w.push(t('w_figYear', {y: FIG_YEAR}));
+      const at = id === 'cellcmp' && typeof CELL === 'object' ? CELL.at : id === 'phonecmp' && typeof PHONES === 'object' ? PHONES.at : '';
+      if (at && daysSince(at) > 45) w.push(t('w_dataOld', {d: at.slice(0, 10)}));
+      if (w.length) res = Object.assign({}, res, {warn: (res.warn || []).concat(w)});
+    }
+  } catch (e) {}
+  return show108.apply(this, [id, res].concat([].slice.call(arguments, 2)));
+};
 
 applyLang(false);
 activate(tab);
