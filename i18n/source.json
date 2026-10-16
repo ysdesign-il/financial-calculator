@@ -4057,6 +4057,8 @@
 "rf_fail": "Refresh failed. Showing the last data (from {t}).",
 "rf_ok": "All data refreshed live · {t}",
 "rf_part": "There is no live connection to the sources here, so the latest data available is shown (rates from {t}).",
+"rp_fromSite": "You can reply to this message from the inbox on the website (developer mode).",
+"rp_sentWeb": "Reply sent – the sender will see it on the site within minutes",
 "s_fromGross": "from gross {g}",
 "s_live": "Live",
 "s_manual": "Manual rate",
