@@ -1,5 +1,6 @@
 /* 10.3 texts */
 Object.assign(T, {
+  upd_avail:['עדכון חדש זמין','يتوفر تحديث جديد','New update available'],
   upd_newT:['עדכון חדש זמין – גרסה {v}','تحديث جديد متاح – الإصدار {v}','A new update is available – version {v}'],
   src_w_snap:['אין חיבור חי כרגע, ולכן מוצג השער האחרון שנשמר. העותק השמור מתחדש 6 פעמים ביום.','لا يوجد اتصال مباشر حاليًا، لذا يُعرض آخر سعر محفوظ. تتجدد النسخة المحفوظة 6 مرات في اليوم.','No live connection right now, so the last saved rate is shown. The saved copy renews 6 times a day.'],
   src_w_cbs:['מדד חודשי שמתפרסם ב-15 לחודש הבא בשעה 18:30. המדד הבא צפוי ב-{n}, ואז הוא נכנס לאפליקציה לבד תוך כמה שעות.','مؤشر شهري يُنشر في 15 من الشهر التالي الساعة 18:30. المتوقع التالي في {n}، ويدخل التطبيق تلقائيًا خلال بضع ساعات.','A monthly index published on the 15th of the next month at 18:30. The next one is due {n} and reaches the app by itself within a few hours.'],
