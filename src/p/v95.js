@@ -26,9 +26,29 @@ async function ibSendWeb(it){
 /* ---------- the inbox (developer mode, inside the app) ---------- */
 var IB = {key: null, list: [], f: 'all'};
 async function ibKey(){
-  if (IB.key || !FB.db) return IB.key;
-  try { const d = await FB.db.doc('devkeys/inbox').get(); if (d && d.exists) IB.key = (d.data() || {}).jwk || null; } catch (e) {}
-  return IB.key;
+  if (IB.key) return IB.key;
+  if (FB.db){ try { const d = await FB.db.doc('devkeys/inbox').get(); if (d && d.exists) IB.key = (d.data() || {}).jwk || null; } catch (e) {} return IB.key; }
+  /* on the website: the key, locked with this device's developer secret — from the site's file, or pasted once from the app */
+  const sec = (() => { try { return RAWLS.getItem('fin-dev') || ''; } catch (e) { return ''; } })(); if (!sec) return null;
+  const tries = [];
+  try { const w = RAWLS.getItem('fin-ibkey'); if (w) tries.push(w); } catch (e) {}
+  try { const r = await fetch('inboxkey.json?v=' + Date.now(), {cache: 'no-store'}); if (r.ok){ const j = await r.json(); if (j && j.w) tries.push(j.w); } } catch (e) {}
+  for (const w of tries){ try { IB.key = await ibUnwrap(w, sec); if (IB.key) return IB.key; } catch (e) {} }
+  return null;
+}
+/* the private key travels only locked with the developer secret (PBKDF2 → AES-GCM): useless to anyone without developer mode */
+async function ibWrapKey(sec){
+  const S = crypto.subtle, salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  const base = await S.importKey('raw', new TextEncoder().encode(sec), 'PBKDF2', false, ['deriveKey']);
+  const k = await S.deriveKey({name: 'PBKDF2', hash: 'SHA-256', salt, iterations: 200000}, base, {name: 'AES-GCM', length: 256}, false, ['encrypt']);
+  const c = await S.encrypt({name: 'AES-GCM', iv}, k, new TextEncoder().encode(JSON.stringify(await ibKey())));
+  return 'fck1.' + ib64(salt) + '.' + ib64(iv) + '.' + ib64(c);
+}
+async function ibUnwrap(w, sec){
+  const p = String(w || '').trim().split('.'); if (p[0] !== 'fck1' || p.length !== 4) throw new Error('fmt');
+  const S = crypto.subtle, base = await S.importKey('raw', new TextEncoder().encode(sec), 'PBKDF2', false, ['deriveKey']);
+  const k = await S.deriveKey({name: 'PBKDF2', hash: 'SHA-256', salt: ibUn64(p[1]), iterations: 200000}, base, {name: 'AES-GCM', length: 256}, false, ['decrypt']);
+  return JSON.parse(new TextDecoder().decode(await S.decrypt({name: 'AES-GCM', iv: ibUn64(p[2])}, k, ibUn64(p[3]))));
 }
 async function ibLoad(){
   const all = [];
@@ -51,7 +71,7 @@ async function ibLoad(){
 const ibUnread = () => IB.list.filter(i => (i.at || 0) > (+SET.ibSeen || 0)).length;
 function ibBtn(){
   const brand = $('.rail .brand'); let b = $('#ib_open');
-  if (!IN_CLAUDE || !liveOwner() || !brand){ if (b) b.remove(); return; }
+  if (!liveOwner() || !brand){ if (b) b.remove(); return; }
   const n = ibUnread(), html = `📥 ${E95(t('ib_title'))}${n ? ` <span class="al-n">${n}</span>` : ''}`;
   if (!b){ (($('#pwa_inst')) || brand).insertAdjacentHTML('afterend', `<button type="button" class="pwa-inst ib-open" id="ib_open">${html}</button>`); }
   else if (b.innerHTML !== html) b.innerHTML = html;
@@ -61,7 +81,8 @@ function ibDraw(){
   const box = $('#ibx_b'); if (!box) return;
   const L = IB.list.filter(i => IB.f === 'all' || i.src === IB.f), seen = +SET.ibSeen || 0;
   box.innerHTML = `<div class="ch-rng" role="tablist">${['all', 'app', 'web'].map(f => `<button type="button" role="tab" data-ibf="${f}" class="${f === IB.f ? 'on' : ''}">${E95(t('ib_f_' + f))} (${IB.list.filter(i => f === 'all' || i.src === f).length})</button>`).join('')}</div>
-    ${IB.list.some(i => i.locked) ? `<p class="fine bad">${E95(t('ib_nokey'))}</p>` : ''}
+    ${IB.list.some(i => i.locked) ? (IN_CLAUDE ? `<p class="fine bad">${E95(t('ib_nokey'))}</p>` : `<div class="bk-box ib-keybox"><p class="fine">🔑 ${E95(t('ib_needKey'))}</p><input id="ib_keyin" dir="ltr" autocomplete="off" spellcheck="false" data-pii-ok placeholder="fck1.…"><button type="button" class="lc-add" id="ib_keyset">${E95(t('ib_keySet'))}</button></div>`) : ''}
+    ${IN_CLAUDE ? `<div class="bk-acts"><button type="button" class="lc-add" id="ib_link">🔗 ${E95(t('ib_link'))}</button></div>` : `<p class="fine">${E95(t('ib_siteNote'))}</p>`}
     <div class="fb-list ib-list">${L.length ? L.map(i => `<div class="fb-it${(i.at || 0) > seen ? ' ib-new' : ''}">
       <div class="ib-h"><b>${i.locked ? '🔒' : E95(t('fb_k_' + i.k) || i.k || '')}</b>${i.r ? ` <span class="fb-r">${'★'.repeat(i.r)}</span>` : ''}<span class="ib-src">${E95(t('ib_s_' + i.src))}</span>
       <button type="button" class="lc-del" data-ibdel="${E95(i.id)}" aria-label="${E95(t('ins_del'))}">✕</button></div>
@@ -96,10 +117,10 @@ fbOwner = async function(){
   sys.insertAdjacentHTML('beforeend', `<div class="bk-box" id="fb_own"><h4>📥 ${E95(t('ib_title'))}</h4><p class="fine">${E95(t('ib_note'))}</p><div class="bk-acts"><button type="button" class="lc-add" data-ibgo="1">📥 ${E95(t('ib_openB'))}</button></div></div>`);
 };
 (async function ibStart(){
-  if (!IN_CLAUDE) return;
-  /* the database and the owner check both arrive a moment after the page opens: wait for them (up to two minutes) */
-  for (let i = 0; i < 240 && !(FB.db && liveOwner()); i++) await new Promise(r => setTimeout(r, 500));
-  if (!FB.db || !liveOwner()) return;
+  /* inside the app the database and the owner check arrive a moment after the page opens: wait for them (up to two minutes) */
+  const ready = () => liveOwner() && (!IN_CLAUDE || FB.db);
+  for (let i = 0; i < 240 && !ready(); i++) await new Promise(r => setTimeout(r, 500));
+  if (!ready()) return;
   try { ibBottom(); ibBtn(); } catch (e) {}
   await ibLoad(); ibBtn();
   setInterval(async () => { if (!document.hidden && liveOwner()){ await ibLoad(); ibBtn(); } }, 300000);
@@ -112,7 +133,7 @@ const IB_ICON = ic('<path d="M3 13l2.5-8h13L21 13v6H3z"/><path d="M3 13h5l1.5 2.
 function ibBottom(){
   const el = $('#bottom'); if (!el) return;
   const s = el.querySelector('.bt[data-tab="salary"]'), cur = el.querySelector('#ib_bt');
-  if (!(IN_CLAUDE && liveOwner())){ if (cur){ try { renderBottom(); } catch (e) {} } return; }
+  if (!liveOwner()){ if (cur){ try { renderBottom(); } catch (e) {} } return; }
   const n = ibUnread(), html = `${IB_ICON}<span>${E95(t('ib_title'))}</span>${n ? `<i class="ib-badge">${n > 99 ? '99+' : n}</i>` : ''}`;
   if (s){ s.outerHTML = `<button type="button" class="bt ib-bt" id="ib_bt" data-ibgo="1" aria-label="${E95(t('ib_title'))}">${html}</button>`; return; }
   if (cur && cur.innerHTML !== html) cur.innerHTML = html;
@@ -133,3 +154,23 @@ const _calc95 = calc;
 calc = function(id){ if (!id || !document.getElementById('panel-' + id)) return; return _calc95.apply(this, arguments); };
 /* the inbox button in the bottom bar opens the inbox and is not a screen to switch to */
 document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('#ib_bt'); if (!b) return; e.stopPropagation(); e.preventDefault(); ibOpen(); }, true);
+
+/* connecting the website's inbox: the app locks the key with the developer secret and puts it on the site (or copies it) */
+document.addEventListener('click', async e => {
+  if (!e.target.closest) return;
+  if (e.target.closest('#ib_link')){
+    const sec = (() => { try { return RAWLS.getItem('fin-dev') || ''; } catch (er) { return ''; } })();
+    if (!sec || !(await ibKey())) return toast(t('ib_nokey'));
+    try {
+      const w = await ibWrapKey(sec);
+      if (typeof ghTok === 'function' && ghTok()){ await ghPut('inboxkey.json', JSON.stringify({v: 1, w}), 'Inbox key (locked)'); toast(t('ib_linkedGh')); }
+      else { copyText(w); toast(t('ib_linkedCopy')); }
+    } catch (er) { toast(t('fb_fail')); }
+    return;
+  }
+  if (e.target.closest('#ib_keyset')){
+    const w = String(($('#ib_keyin') || {}).value || '').trim(), sec = (() => { try { return RAWLS.getItem('fin-dev') || ''; } catch (er) { return ''; } })();
+    try { IB.key = await ibUnwrap(w, sec); try { RAWLS.setItem('fin-ibkey', w); } catch (er) {} toast(t('ib_keyOk')); await ibLoad(); ibDraw(); } catch (er) { toast(t('ib_keyBad')); }
+  }
+});
+if (location.hostname === 'localhost') window.__fin95b = {ibUnwrap};
