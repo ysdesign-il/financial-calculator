@@ -11965,8 +11965,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "10.1", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.055122';
+var CHANGELOG = [{"v": "10.2", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.055414';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -19676,6 +19676,29 @@ applyLang = function(){ const r = _al100.apply(this, arguments); try { spFxRende
 try { spFxRender(); } catch (e) {}
 
 document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-spxm]'); if (!b) return; const X = spFx(), on = b.dataset.spxm === '1' ? 1 : 0; if (X.on === on) return; X.on = on; spRe(); toast(t(on ? 'spx_toConv' : 'spx_toNormal')); });
+
+/* ================= 10.1: when holidays overlap, the country decides which theme comes first ================= */
+/* Israel (or no country chosen): Jewish holidays first. Muslim-majority countries: Muslim first. Everyone else: Christian first. */
+const HOL_MUSLIM_CTY = 'AF AL AZ BH BD BN BF DZ DJ EG GM GN ID IR IQ JO KZ KM KW KG LB LY MV ML MR MA MY NE OM PK PS QA SA SN SL SO SD SY TJ TD TN TR TM AE UZ YE XK'.split(' ');
+function holOrder(c){
+  if (!c || c === 'IL') return ['jewish', 'muslim', 'christian'];
+  if (HOL_MUSLIM_CTY.includes(c)) return ['muslim', 'christian', 'jewish'];
+  return ['christian', 'jewish', 'muslim'];
+}
+const holidayNow101 = holidayNow;
+holidayNow = function(d){
+  const pick = SET.holAuto;
+  if (pick !== 'all') return holidayNow101.apply(this, arguments);
+  try {
+    for (const g of holOrder(SET.country)){ SET.holAuto = g; const r = holidayNow101.call(this, d); if (r) return r; }
+    return '';
+  } finally { SET.holAuto = pick; }
+};
+document.addEventListener('change', e => {
+  if (!e.target || e.target.id !== 'set_country') return;
+  setTimeout(() => { try { const was = HOL_ACTIVE; applyTheme(); if (was !== HOL_ACTIVE && typeof skRender === 'function') skRender(); } catch (er) {} }, 0);
+});
+try { applyTheme(); if (typeof skRender === 'function') skRender(); } catch (e) {}
 
 applyLang(false);
 activate(tab);
