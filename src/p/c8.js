@@ -143,7 +143,7 @@ function calcKidSave(){
   let grants = 0;
   const born = new Date().getFullYear() - Math.floor(age), y17 = born >= 2017;                    // born from 2017: grants at 3 and at bar/bat mitzvah instead of 18
   const grantAt = (atAge, amt) => { if (age >= atAge) return; const k = Math.round((atAge - age) * 12); let g = amt; for (let m = k; m < n; m++){ g *= (1 + rm); g -= g * fm; } bal += g; grants += amt; };
-  if (y17){ grantAt(3, IL26.kidGrant3); grantAt(13, IL26.kidGrant13); } else { bal += IL26.kidGrant18; grants += IL26.kidGrant18; }
+  if (y17){ grantAt(3, IL26.kidGrant3); grantAt(($('#ks_sex') || {}).value === 'g' ? 12 : 13, IL26.kidGrant13); }       // bat mitzvah at 12, bar mitzvah at 13 else { bal += IL26.kidGrant18; grants += IL26.kidGrant18; }
   const at18 = bal;
   if (to === 21){ for (let m = 0; m < 36; m++){ bal *= (1 + rm); bal -= bal * fm; } bal += IL26.kidGrant21; grants += IL26.kidGrant21; }
   const gain = Math.max(0, bal - gov - parent - grants - Math.max(0, v('ks_bal')));
