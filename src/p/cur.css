@@ -142,3 +142,4 @@
 .sp-fxon{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px dashed var(--line);border-radius:12px;cursor:pointer}
 .sp-fxw .fields{margin-top:10px}.sp-fxline{margin:8px 2px 0;font-weight:600;font-size:.92rem}
 .sp-v{display:flex;align-items:center;gap:6px}.sp-cur{font:inherit;font-size:.85rem;padding:6px;border-radius:10px;border:1px solid var(--line);background:transparent;color:inherit;max-width:96px}
+.sp-row:has(.sp-cur){grid-template-columns:28px minmax(0,.85fr) minmax(0,1.6fr) 34px}.sp-row .sp-v:has(.sp-cur){display:grid;grid-template-columns:minmax(0,1fr) 74px;gap:6px}.sp-v .sp-cur{max-width:none;width:74px;padding:6px 4px}
