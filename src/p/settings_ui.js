@@ -25,6 +25,17 @@ const SETDEFS = [
     {id:'set_cur', label:'f_curSet', type:'cursel'},
     SEL('set_country','f_country','',[['','o_cNone'],['AD','=AD'],['AE','=AE'],['AF','=AF'],['AG','=AG'],['AI','=AI'],['AL','=AL'],['AM','=AM'],['AO','=AO'],['AQ','=AQ'],['AR','=AR'],['AS','=AS'],['AT','=AT'],['AU','=AU'],['AW','=AW'],['AX','=AX'],['AZ','=AZ'],['BA','=BA'],['BB','=BB'],['BD','=BD'],['BE','=BE'],['BF','=BF'],['BG','=BG'],['BH','=BH'],['BI','=BI'],['BJ','=BJ'],['BL','=BL'],['BM','=BM'],['BN','=BN'],['BO','=BO'],['BQ','=BQ'],['BR','=BR'],['BS','=BS'],['BT','=BT'],['BV','=BV'],['BW','=BW'],['BY','=BY'],['BZ','=BZ'],['CA','=CA'],['CC','=CC'],['CD','=CD'],['CF','=CF'],['CG','=CG'],['CH','=CH'],['CI','=CI'],['CK','=CK'],['CL','=CL'],['CM','=CM'],['CN','=CN'],['CO','=CO'],['CR','=CR'],['CU','=CU'],['CV','=CV'],['CW','=CW'],['CX','=CX'],['CY','=CY'],['CZ','=CZ'],['DE','=DE'],['DJ','=DJ'],['DK','=DK'],['DM','=DM'],['DO','=DO'],['DZ','=DZ'],['EC','=EC'],['EE','=EE'],['EG','=EG'],['EH','=EH'],['ER','=ER'],['ES','=ES'],['ET','=ET'],['FI','=FI'],['FJ','=FJ'],['FK','=FK'],['FM','=FM'],['FO','=FO'],['FR','=FR'],['GA','=GA'],['GB','=GB'],['GD','=GD'],['GE','=GE'],['GF','=GF'],['GG','=GG'],['GH','=GH'],['GI','=GI'],['GL','=GL'],['GM','=GM'],['GN','=GN'],['GP','=GP'],['GQ','=GQ'],['GR','=GR'],['GS','=GS'],['GT','=GT'],['GU','=GU'],['GW','=GW'],['GY','=GY'],['HK','=HK'],['HM','=HM'],['HN','=HN'],['HR','=HR'],['HT','=HT'],['HU','=HU'],['ID','=ID'],['IE','=IE'],['IL','=IL'],['IM','=IM'],['IN','=IN'],['IO','=IO'],['IQ','=IQ'],['IR','=IR'],['IS','=IS'],['IT','=IT'],['JE','=JE'],['JM','=JM'],['JO','=JO'],['JP','=JP'],['KE','=KE'],['KG','=KG'],['KH','=KH'],['KI','=KI'],['KM','=KM'],['KN','=KN'],['KP','=KP'],['KR','=KR'],['KW','=KW'],['KY','=KY'],['KZ','=KZ'],['LA','=LA'],['LB','=LB'],['LC','=LC'],['LI','=LI'],['LK','=LK'],['LR','=LR'],['LS','=LS'],['LT','=LT'],['LU','=LU'],['LV','=LV'],['LY','=LY'],['MA','=MA'],['MC','=MC'],['MD','=MD'],['ME','=ME'],['MF','=MF'],['MG','=MG'],['MH','=MH'],['MK','=MK'],['ML','=ML'],['MM','=MM'],['MN','=MN'],['MO','=MO'],['MP','=MP'],['MQ','=MQ'],['MR','=MR'],['MS','=MS'],['MT','=MT'],['MU','=MU'],['MV','=MV'],['MW','=MW'],['MX','=MX'],['MY','=MY'],['MZ','=MZ'],['NA','=NA'],['NC','=NC'],['NE','=NE'],['NF','=NF'],['NG','=NG'],['NI','=NI'],['NL','=NL'],['NO','=NO'],['NP','=NP'],['NR','=NR'],['NU','=NU'],['NZ','=NZ'],['OM','=OM'],['PA','=PA'],['PE','=PE'],['PF','=PF'],['PG','=PG'],['PH','=PH'],['PK','=PK'],['PL','=PL'],['PM','=PM'],['PN','=PN'],['PR','=PR'],['PS','=PS'],['PT','=PT'],['PW','=PW'],['PY','=PY'],['QA','=QA'],['RE','=RE'],['RO','=RO'],['RS','=RS'],['RU','=RU'],['RW','=RW'],['SA','=SA'],['SB','=SB'],['SC','=SC'],['SD','=SD'],['SE','=SE'],['SG','=SG'],['SH','=SH'],['SI','=SI'],['SJ','=SJ'],['SK','=SK'],['SL','=SL'],['SM','=SM'],['SN','=SN'],['SO','=SO'],['SR','=SR'],['SS','=SS'],['ST','=ST'],['SV','=SV'],['SX','=SX'],['SY','=SY'],['SZ','=SZ'],['TC','=TC'],['TD','=TD'],['TF','=TF'],['TG','=TG'],['TH','=TH'],['TJ','=TJ'],['TK','=TK'],['TL','=TL'],['TM','=TM'],['TN','=TN'],['TO','=TO'],['TR','=TR'],['TT','=TT'],['TV','=TV'],['TW','=TW'],['TZ','=TZ'],['UA','=UA'],['UG','=UG'],['US','=US'],['UY','=UY'],['UZ','=UZ'],['VA','=VA'],['VC','=VC'],['VE','=VE'],['VG','=VG'],['VI','=VI'],['VN','=VN'],['VU','=VU'],['WF','=WF'],['WS','=WS'],['XK','=XK'],['YE','=YE'],['YT','=YT'],['ZA','=ZA'],['ZM','=ZM'],['ZW','=ZW']],{wide:true, hint:'h_country'})
   ]],
+  ['set_langX', [
+    SEL('set_shareLang','f_shareLang','ui',[['ui','o_shUi'],['he','=עברית'],['ar','=العربية'],['en','=English']],{wide:true, hint:'h_shareLang'}),
+    SEL('set_words','f_words','1',ONOFF,{wide:true, hint:'h_words'}),
+    SEL('set_enTerms','f_enTerms','0',[['0','o_off'],['1','o_on']],{wide:true, hint:'h_enTerms'}),
+    SEL('set_plain','f_plain','0',[['0','o_off'],['1','o_on']],{wide:true, hint:'h_plain'}),
+    SEL('set_tts','f_tts','1',ONOFF,{wide:true, hint:'h_tts'}),
+    SEL('set_voiceIn','f_voiceIn','0',[['0','o_off'],['1','o_on']],{wide:true, hint:'h_voiceIn'}),
+    SEL('set_dfmt','f_dfmt','auto',[['auto','o_df_auto'],['dmy','o_df_dmy'],['mdy','o_df_mdy'],['ymd','o_df_ymd']]),
+    SEL('set_wkStart','f_wkStart','auto',[['auto','o_wk_auto'],['sun','o_wk_sun'],['mon','o_wk_mon']],{hint:'h_wkStart'}),
+    SEL('set_trFix','f_trFix','1',ONOFF,{wide:true, hint:'h_trFix'})
+  ]],
   ['set_numbers', [
     SEL('set_digits','f_digits','latn',[['latn','o_dg_latn'],['native','o_dg_native']]),
     SEL('set_dec','f_dec','auto',[['auto','o_dec_auto'],['0','o_dec_0'],['2','o_dec_2']]),
@@ -103,9 +114,10 @@ function settingsPanelHTML(){
       SEL('set_clockSec','f_clockSec','0',[['1','o_on'],['0','o_off']]),
       SEL('set_clockHeb','f_clockHeb','1',[['1','o_on'],['0','o_off']],{hint:'h_clockHeb'}),
       SEL('set_clockHijri','f_clockHijri','0',[['1','o_on'],['0','o_off']])].map(fieldHTML).join('') + '</div>')}
-    ${sec('set_numbers', fl(SETDEFS[2][1]))}
-    ${sec('set_calc', fl(SETDEFS[3][1]))}
-    ${sec('set_profile', fl(SETDEFS[4][1]))}
+    ${sec('set_langX', fl(SETDEFS.find(x => x[0] === 'set_langX')[1]))}
+    ${sec('set_numbers', fl(SETDEFS.find(x => x[0] === 'set_numbers')[1]))}
+    ${sec('set_calc', fl(SETDEFS.find(x => x[0] === 'set_calc')[1]))}
+    ${sec('set_profile', fl(SETDEFS.find(x => x[0] === 'set_profile')[1]))}
     ${sec('set_tabs', `<div class="fields">${fieldHTML(SEL('set_sort','f_sort','groups',[['groups','o_sortGroups'],['groupsAlpha','o_sortGroupsAlpha'],['alpha','o_sortAlpha']],{wide:true}))}</div><p class="fine" data-i="h_sort"></p><p class="fine" data-i="h_tabs"></p><div id="set_tabs" class="tabs-list"></div>`)}
     ${sec('set_curBy', `<div class="fields">${cb}</div>`)}
     ${sec('set_ai', `<div id="ai_sec"><div class="fields">${[
@@ -144,6 +156,7 @@ const SMAP = {set_sound:'sound', set_tapSnd:'tapSnd', set_mvAlert:'mvAlert', set
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
   set_dtax:'dtax', set_deptime:'deptime', set_capkind:'capkind', set_remember:'remember', set_saveMode:'saveMode', set_aiNet:'aiNet', set_rateSrc:'rateSrc', set_gkey:'gkey', set_stale:'stale', set_sort:'sort', set_liveFx:'liveFx', set_fxInt:'fxInt', set_liveFiat:'liveFiat', set_liveCrypto:'liveCrypto', set_boiDb:'boiDb', set_autoRef:'autoRef', set_autoUpd:'autoUpd', set_holAuto:'holAuto', set_clock24:'clock24', set_clockSec:'clockSec', set_clockHeb:'clockHeb', set_clockHijri:'clockHijri', set_aiEngine:'aiEngine', set_pmName:'pmName', set_pmStyle:'pmStyle'};
+Object.assign(SMAP, {set_shareLang:'shareLang', set_words:'words', set_enTerms:'enTerms', set_plain:'plain', set_tts:'tts', set_voiceIn:'voiceIn', set_dfmt:'dfmt', set_wkStart:'wkStart', set_trFix:'trFix'});
 const DEFKEYS = ['vat','sex','fee','pens','study','erPens','erSev','erStudy','loanRate','invRate','cpi','infl','gainTax','dealer','buyer','dtax','deptime','capkind'];
 function fillCB(){
   CUR_TABS.forEach(id => {

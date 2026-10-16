@@ -276,12 +276,13 @@ function calcWorkDays(){
   let a = wdParse('wd_from'), b = wdParse('wd_to');
   if (!a || !b) return {hero: {label: t('r_wdWork'), value: '—'}, rows: [], note: t('n_wd')};
   if (b < a){ const x = a; a = b; b = x; }
+  const wkMon = (typeof wkStart === 'function' ? wkStart() : 'sun') === 'mon';
   const six = $('#wd_week').value === '6', hol = $('#wd_hol').value === '1', incl = $('#wd_end').value === '1';
   const indep = {}; for (let y = a.getFullYear(); y <= b.getFullYear(); y++){ const d = wdIndep(y); if (d) indep[d.toDateString()] = 1; }
   let cal = 0, work = 0, wkend = 0; const hols = [];
   const end = new Date(b); if (!incl) end.setDate(end.getDate() - 1);
   for (let d = new Date(a); d <= end && cal < 3700; d.setDate(d.getDate() + 1)){
-    cal++; const dow = d.getDay(), isWork = six ? dow !== 6 : dow <= 4;
+    cal++; const dow = d.getDay(), isWork = wkMon ? (six ? dow !== 0 : dow >= 1 && dow <= 5) : (six ? dow !== 6 : dow <= 4);
     if (!isWork){ wkend++; continue; }
     let hk = '';
     if (hol){ const h = holHeb(d); const f = h && WD_HOL.find(x => x[0] === h[0] && x[1] === h[1]); if (f) hk = f[2]; else if (indep[d.toDateString()]) hk = 'hol_ind'; }

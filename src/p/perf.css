@@ -15,3 +15,17 @@ button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
 /* 8.4: the currency offer under Country of origin */
 .cty-offer{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:-4px 0 6px}
 .cty-offer .mv{min-height:34px}
+/* 10.7 language options */
+.hero{position:relative}
+.hero-words{margin-top:4px;font-size:.8rem;line-height:1.45;color:var(--hero-label);opacity:.95;overflow-wrap:anywhere;padding-inline-end:40px}
+.hero-say{position:absolute;top:10px;inset-inline-end:10px;width:34px;height:34px;border-radius:50%;border:1px solid var(--hero-bd);background:color-mix(in srgb,var(--surface) 60%,transparent);color:var(--hero-val);display:grid;place-items:center;cursor:pointer;padding:0;z-index:1}
+.hero-say svg,.mic-b svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hero-say.on,.mic-b.on{background:var(--gold-ui);color:#1a1202;border-color:var(--gold-ui)}
+.hero-say:focus-visible,.mic-b:focus-visible{outline:2px solid var(--gold-ui);outline-offset:2px}
+.panel .hero .hero-label{padding-inline-end:40px}
+.field label[data-en]::after{content:attr(data-en);display:block;direction:ltr;text-align:start;font-size:.72rem;font-weight:400;opacity:.7;margin-top:1px}
+:root[dir="rtl"] .field label[data-en]::after{text-align:right}
+.plain-x{display:block;margin-top:6px;font-size:.78rem;line-height:1.45;color:var(--ink);background:color-mix(in srgb,var(--gold-ui) 10%,transparent);border-radius:10px;padding:6px 9px}
+.mic-b{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink-2);display:grid;place-items:center;cursor:pointer;padding:0}
+.trf-now{margin:2px 0 12px;padding:8px 10px;border-radius:10px;background:var(--g1);border:1px solid var(--line)}
+#trf_in{direction:auto;font-family:inherit;font-size:.95rem}
