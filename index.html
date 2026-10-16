@@ -1838,13 +1838,40 @@ button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
 .mk-l .mk-ic,.mk-l .mk-flag{vertical-align:middle;margin-inline-end:7px}
 .mk-ic{display:inline-flex;width:36px;height:36px;position:relative;filter:drop-shadow(0 2px 3px rgba(0,0,0,.28))}
 .mk-ic svg{width:100%;height:100%}
-.mk-ic-gold::after,.mk-ic-silver::after,.mk-ic-platinum::after,.mk-ic-copper::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%);background-size:250% 100%;mix-blend-mode:screen;animation:mkShine 3.6s ease-in-out infinite;-webkit-mask:linear-gradient(#000,#000);clip-path:polygon(12% 82%,88% 82%,75% 30%,25% 30%)}
+.mk-sh{position:absolute;inset:0;overflow:hidden;clip-path:polygon(12% 82%,88% 82%,75% 30%,25% 30%);pointer-events:none}
+.mk-sh i{position:absolute;top:0;bottom:0;left:-100%;width:300%;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.75) 50%,transparent 58%);transform:translateX(-35%);animation:mkSh 3.6s ease-in-out infinite;will-change:transform}
 .mk-ic-natgas svg{animation:mkFlick 1.8s ease-in-out infinite;transform-origin:50% 90%}
 .mk-l .mk-flag{width:32px;height:32px}.mk-l .mk-flag i{width:25px;height:25px;font-size:28px}
-@keyframes mkShine{0%,60%{background-position:150% 0}100%{background-position:-50% 0}}
+@keyframes mkSh{0%,60%{transform:translateX(-35%)}100%{transform:translateX(35%)}}
 @keyframes mkFlick{0%,100%{transform:scale(1)}50%{transform:scale(1.06,.95)}}
-@media (prefers-reduced-motion:reduce){.mk-ic::after,.mk-ic-natgas svg{animation:none}}
-:root[data-motion="reduced"] .mk-ic::after,:root[data-motion="reduced"] .mk-ic-natgas svg{animation:none}
+@media (prefers-reduced-motion:reduce){.mk-sh i,.mk-ic-natgas svg{animation:none}}
+:root[data-motion="reduced"] .mk-sh i,:root[data-motion="reduced"] .mk-ic-natgas svg{animation:none}
+/* 8.9 */
+.lc-card .fields.fields3,.fields.fields3{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+.mc-tr{border:1px dashed var(--line);border-radius:12px;padding:8px 10px;margin:8px 0}
+.mc-trh{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;font-weight:600;font-size:.9rem}
+.mc-trh select{font:inherit;font-size:.85rem;padding:6px 8px;border-radius:10px;border:1px solid var(--line);background:transparent;color:inherit;max-width:65%}
+.ph-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 10px}
+.ph-btn{border:0;border-radius:14px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer;color:#1b1400;background:linear-gradient(135deg,#ffe08a,#e2b33c);box-shadow:0 3px 10px rgba(226,179,60,.35)}
+.ph-st{font-size:.85rem;opacity:.85}.ph-st.ok{color:#1f9d55}.ph-st.bad{color:#d64545}
+.lc-card.ph-new{animation:phNew 1.6s ease}@keyframes phNew{0%{box-shadow:0 0 0 3px #e2b33c}100%{box-shadow:none}}
+.ch-box{max-width:520px}.ch-rng{display:flex;gap:6px;padding:4px;border-radius:14px;background:var(--line,rgba(127,127,127,.15));margin-bottom:12px}
+.ch-rng button{flex:1;border:0;border-radius:10px;padding:8px 4px;font:inherit;font-weight:600;background:transparent;color:inherit;cursor:pointer}.ch-rng button.on{background:var(--card,#fff);box-shadow:0 1px 6px rgba(0,0,0,.15)}
+.ch-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}.ch-top b{font-size:1.6rem}.ch-top small{opacity:.7}
+.ch-wrap{position:relative}.ch-svg{width:100%;height:200px;display:block;touch-action:none}
+.ch-tip{position:absolute;top:4px;width:120px;text-align:center;font-size:.8rem;padding:4px 6px;border-radius:8px;background:var(--card,#fff);box-shadow:0 2px 8px rgba(0,0,0,.2);pointer-events:none}
+.ch-ax,.ch-mm{display:flex;justify-content:space-between;font-size:.8rem;opacity:.75;margin-top:4px}.ch-mm{opacity:.9}
+.ch-empty{padding:40px 10px;text-align:center;opacity:.75}.ch-go{margin-top:12px}
+.al-row{margin:10px 0 4px}.al-open{border:1px solid var(--line);border-radius:14px;padding:9px 14px;font:inherit;font-weight:700;background:transparent;color:inherit;cursor:pointer}
+.al-n{display:inline-block;min-width:20px;padding:0 6px;border-radius:10px;background:#e2b33c;color:#1b1400;font-size:.8rem}.al-n.hit{background:#2fbf71;color:#fff}
+.al-list{display:grid;gap:8px;margin-bottom:14px}.al-it{display:flex;align-items:center;gap:8px;padding:10px;border:1px solid var(--line);border-radius:12px}.al-it>div{flex:1;min-width:0;display:grid}.al-it small{opacity:.75}.al-it.hit{border-color:#2fbf71}
+.al-add{display:grid;gap:8px}.al-add select,.al-add input{font:inherit;padding:9px 10px;border-radius:12px;border:1px solid var(--line);background:transparent;color:inherit;min-width:0}.al-line{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dsb{margin:6px 0 18px}.ds-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.ds-inst{border:0;border-radius:12px;padding:8px 12px;font:inherit;font-weight:700;cursor:pointer;color:#1b1400;background:linear-gradient(135deg,#ffe08a,#e2b33c)}
+.ds-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ds-c{display:grid;gap:2px;text-align:start;padding:12px;border-radius:16px;border:1px solid var(--line);background:var(--card,transparent);color:inherit;font:inherit;cursor:pointer}
+.ds-c .ds-ic{font-size:1.3rem}.ds-c .ds-l{font-size:.85rem;opacity:.75}.ds-c b{font-size:1.15rem}.ds-c small{font-size:.75rem;opacity:.7;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bk-box{margin-top:18px;padding:14px;border:1px solid var(--line);border-radius:16px}.bk-box h4{margin:0 0 4px}.bk-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
 
 </style>
 </head>
@@ -5295,6 +5322,63 @@ Object.assign(T, {
   shr_imgHint:['"שיתוף התמונה" פותח את רשימת האפליקציות – וואטסאפ, טלגרם, מייל ועוד. התמונה נוצרת במכשיר שלך בלבד.','"مشاركة الصورة" يفتح قائمة التطبيقات – واتساب وتيليغرام والبريد. تُنشأ الصورة على جهازك فقط.','"Share image" opens your apps – WhatsApp, Telegram, mail and more. The image is made on your device only.'],
   shr_imgHint2:['שמרו את התמונה ושלחו אותה מהגלריה בכל אפליקציה. התמונה נוצרת במכשיר שלך בלבד.','احفظوا الصورة وأرسلوها من المعرض بأي تطبيق. تُنشأ الصورة على جهازك فقط.','Save the image and send it from your gallery in any app. The image is made on your device only.']
 });
+/* 8.9 texts */
+Object.assign(T, {
+  tab_mortcmp:['השוואת משכנתאות','مقارنة الرهون العقارية','Mortgage comparison'], d_mortcmp:['הצעות של בנקים לפי מסלולים – מה הכי זול לאורך כל התקופה','عروض البنوك حسب المسارات – الأرخص على كامل المدة','Bank offers by tracks – cheapest over the whole term'],
+  tab_pencmp:['השוואת פנסיה וקופות','مقارنة التقاعد والصناديق','Pension & fund comparison'], d_pencmp:['דמי ניהול ותשואה בין חברות – כמה יישאר לכם','رسوم الإدارة والعائد بين الشركات – كم سيبقى لكم','Fees and returns across companies – what you keep'],
+  f_mcAmt:['סכום המשכנתא','مبلغ الرهن','Mortgage amount'], h_mcCpi:['תחזית אינפלציה שנתית – משפיעה על מסלולים צמודים','توقع التضخم السنوي – يؤثر على المسارات المرتبطة','Yearly inflation forecast – affects CPI-linked tracks'],
+  mc_offers:['הצעות הבנקים','عروض البنوك','Bank offers'], mc_bank:['בנק','بنك','Bank'], mc_pick:['🏦 בחירת בנק…','🏦 اختيار بنك…','🏦 Pick a bank…'], mc_namePh:['שם הבנק או היועץ','اسم البنك أو المستشار','Bank or adviser name'],
+  mc_track:['מסלול {n}','مسار {n}','Track {n}'], mc_fee:['עמלות פתיחה ושמאות','عمولات فتح وتخمين','Opening and appraisal fees'],
+  h_mc:['בכל הצעה עד 3 מסלולים – החלק (%), הריבית והתקופה. מסלול עם 0% לא נספר. המשתנה מחושב כאילו הריבית לא תשתנה.','في كل عرض حتى 3 مسارات – الحصة والفائدة والمدة. مسار بنسبة 0% لا يُحتسب. المتغير يُحسب كأن الفائدة لا تتغير.','Up to 3 tracks per offer – share, rate and term. A 0% track is skipped. Variable tracks assume the rate stays the same.'],
+  r_mcBest:['הכי משתלמת: {n}','الأوفر: {n}','Best value: {n}'], r_mcTotal:['סך כל ההחזרים','مجموع الدفعات','Total repaid'],
+  r_mcSub:['החזר ראשון {m} · חוסכים {s} מול היקרה','الدفعة الأولى {m} · توفير {s} مقابل الأغلى','First payment {m} · saves {s} vs the dearest'],
+  w_mcShare:['ב{n} חלקי המסלולים מסתכמים ב-{s}% – החישוב מחלק לפי היחס.','في {n} مجموع الحصص {s}% – يُوزّع الحساب بالنسبة.','{n}: the shares add up to {s}% – split proportionally.'],
+  t_mcCmp:['השוואת ההצעות','مقارنة العروض','Offers compared'], h_mcFirst:['החזר ראשון','الدفعة الأولى','First payment'], h_mcPaid:['סך ההחזרים','مجموع الدفعات','Total repaid'], h_mcCost:['עלות המימון','تكلفة التمويل','Cost of credit'], h_mcRatio:['החזר לכל ₪1','سداد لكل 1','Repaid per 1'],
+  n_mc:['חישוב לפי שפיצר בכל מסלול. צמוד מדד גדל עם תחזית האינפלציה. לא כולל ביטוח חיים ומבנה. בפועל הריבית במסלול משתנה תשתנה.','حساب شبيتسر لكل مسار. المرتبط بالمؤشر ينمو مع التضخم المتوقع. لا يشمل التأمين. الفائدة المتغيرة ستتغير فعليًا.','Annuity per track. CPI-linked tracks grow with the forecast. Excludes life and building insurance. Variable rates will change in practice.'],
+  f_pcKind:['סוג המוצר','نوع المنتج','Product'], o_pc_pension:['קרן פנסיה','صندوق تقاعد','Pension fund'], o_pc_gemel:['קופת גמל','صندوق ادخار','Provident fund'], o_pc_hish:['קרן השתלמות','صندوق استكمال','Study fund'], o_pc_invg:['גמל להשקעה','صندوق ادخار للاستثمار','Investment provident fund'], o_pc_policy:['פוליסת חיסכון','بوليصة ادخار','Savings policy'],
+  h_pcRet:['תשואה שנתית משוערת לפני דמי ניהול. אפשר לשנות לכל הצעה בנפרד.','عائد سنوي متوقع قبل الرسوم. يمكن تغييره لكل عرض.','Expected yearly return before fees. Can be set per offer.'],
+  pc_offers:['ההצעות שקיבלתם','العروض التي حصلتم عليها','Your offers'], pc_co:['חברה','شركة','Company'], pc_pick:['📈 בחירת חברה…','📈 اختيار شركة…','📈 Pick a company…'], pc_namePh:['שם החברה או המסלול','اسم الشركة أو المسار','Company or track name'],
+  pc_ret:['תשואה (אם שונה)','العائد (إن اختلف)','Return (if different)'], pc_retPh:['כללי','عام','general'],
+  h_pc:['הזינו את דמי הניהול שקיבלתם בהצעה. השמות לנוחות בלבד – אין כאן מחירון של החברות. אפשר לבדוק ב"גמל נט" של משרד האוצר.','أدخلوا الرسوم من العرض. الأسماء للتسهيل فقط. يمكن الفحص في "غيمل نت".','Type the fees from your offer. Names are for convenience only. Check "Gemel Net" by the Ministry of Finance.'],
+  pc_co_harel:['הראל','هرئيل','Harel'], pc_co_migdal:['מגדל מקפת','مجدال مكيفت','Migdal Makefet'], pc_co_clal:['כלל','كلال','Clal'], pc_co_phoenix:['הפניקס','هفينيكس','The Phoenix'], pc_co_menora:['מנורה מבטחים','مينورا مفطاحيم','Menora Mivtachim'],
+  pc_co_altshuler:['אלטשולר שחם','ألتشولر شاحم','Altshuler Shaham'], pc_co_meitav:['מיטב','ميتاف','Meitav'], pc_co_more:['מור','مور','More'], pc_co_analyst:['אנליסט','أناليست','Analyst'], pc_co_infinity:['אינפיניטי','إنفينيتي','Infinity'],
+  pc_co_psagot:['פסגות','بسجوت','Psagot'], pc_co_yelin:['ילין לפידות','يلين لبيدوت','Yelin Lapidot'], pc_co_ayalon:['איילון','أيالون','Ayalon'], pc_co_other:['✍️ הזנה ידנית / אחר','✍️ إدخال يدوي / أخرى','✍️ Type it / other'],
+  r_pcBest:['הכי משתלמת: {n}','الأوفر: {n}','Best value: {n}'], r_pcEnd:['יתרה אחרי {y} שנים','الرصيد بعد {y} سنة','Balance after {y} years'], r_pcGap:['הפער: {a} לעומת {b}','الفرق: {a} مقابل {b}','Gap: {a} vs {b}'],
+  r_pcSub:['אחרי {y} שנים · {s} יותר מהחלשה · דמי ניהול {f}','بعد {y} سنة · {s} أكثر من الأضعف · رسوم {f}','After {y} years · {s} more than the weakest · fees {f}'],
+  t_pcCmp:['השוואת ההצעות','مقارنة العروض','Offers compared'], h_pcDep:['מהפקדה','من الإيداع','From deposits'], h_pcAcc:['מצבירה','من التراكم','From savings'], h_pcRet:['תשואה','العائد','Return'], h_pcFees:['דמי ניהול','الرسوم','Fees'], h_pcEnd:['יתרה בסוף','الرصيد النهائي','Final balance'],
+  n_pc:['חישוב חודשי: תשואה פחות דמי ניהול מצבירה, והפקדה פחות דמי ניהול מהפקדה. לא כולל מס, ביטוחים בפנסיה ושינוי בהפקדות. תשואת עבר אינה מבטיחה תשואה בעתיד.','حساب شهري: العائد ناقص رسوم التراكم والإيداع ناقص رسوم الإيداع. لا يشمل الضريبة والتأمين. العائد السابق لا يضمن المستقبل.','Monthly: return minus savings fee, deposit minus deposit fee. Excludes tax, pension insurance and deposit changes. Past returns don\'t guarantee future ones.'],
+  n_pc_pension:['קרן פנסיה: התקרה בחוק היא 6% מהפקדה ו-0.5% מצבירה.','صندوق تقاعد: السقف القانوني 6% من الإيداع و0.5% من التراكم.','Pension fund: the legal cap is 6% of deposits and 0.5% of savings.'],
+  n_pc_gemel:['קופת גמל: התקרה היא 4% מהפקדה ו-1.05% מצבירה.','صندوق ادخار: السقف 4% من الإيداع و1.05% من التراكم.','Provident fund: cap 4% of deposits and 1.05% of savings.'],
+  n_pc_hish:['קרן השתלמות: בדרך כלל אין דמי ניהול מהפקדה, רק מצבירה.','صندوق استكمال: عادة لا رسوم على الإيداع، فقط على التراكم.','Study fund: usually no deposit fee, only on savings.'],
+  n_pc_invg:['גמל להשקעה: תקרת הפקדה שנתית, משיכה בכל עת עם מס רווחי הון.','صندوق ادخار للاستثمار: سقف إيداع سنوي، سحب في أي وقت مع ضريبة أرباح.','Investment provident fund: yearly deposit cap, withdraw anytime with capital-gains tax.'],
+  n_pc_policy:['פוליסת חיסכון: בדקו גם דמי ניהול מהפקדה וקנסות על משיכה.','بوليصة ادخار: افحصوا رسوم الإيداع وغرامات السحب.','Savings policy: check deposit fees and withdrawal penalties too.'],
+  ins_del:['מחיקה','حذف','Delete'],
+  ph_btn:['מילוי מצילום הצעה','تعبئة من صورة العرض','Fill from a photo of the offer'], ph_reading:['קורא את ההצעה…','جارٍ قراءة العرض…','Reading the offer…'], ph_done:['נוספה הצעה מהתמונה – בדקו את המספרים','أُضيف عرض من الصورة – افحصوا الأرقام','Offer added from the photo – check the numbers'],
+  ph_fail:['לא הצלחנו לקרוא את ההצעה. נסו תמונה חדה יותר.','تعذّرت قراءة العرض. جرّبوا صورة أوضح.','Could not read the offer. Try a sharper photo.'], ph_denied:['צריך לאשר שימוש ב-Claude כדי לקרוא תמונות.','يلزم السماح باستخدام Claude لقراءة الصور.','Allow Claude to read photos.'],
+  ch_1m:['חודש','شهر','1M'], ch_6m:['חצי שנה','6 أشهر','6M'], ch_1y:['שנה','سنة','1Y'], ch_5y:['5 שנים','5 سنوات','5Y'], ch_over:['ב{r} האחרונה','خلال {r} الأخيرة','over the last {r}'],
+  ch_min:['נמוך','أدنى','Low'], ch_max:['גבוה','أعلى','High'], ch_go:['לחישוב תשואה במחשבון','لحساب العائد في الحاسبة','Calculate returns'],
+  ch_none:['עוד אין היסטוריה למדד הזה. השרת אוסף אותה – היא תופיע אחרי העדכון הקרוב.','لا يوجد تاريخ لهذا المؤشر بعد. سيظهر بعد التحديث القادم.','No history for this yet. The server is collecting it – it will appear after the next update.'],
+  ch_loading:['טוען היסטוריה…','جارٍ تحميل التاريخ…','Loading history…'], ch_src:['סגירות יומיות מהשרת של האתר, והמחיר החי כנקודה האחרונה. לא ייעוץ השקעות.','إغلاقات يومية من خادم الموقع، والسعر الحي كنقطة أخيرة. ليس نصيحة استثمارية.','Daily closes from the site\'s server, with the live price as the last point. Not investment advice.'],
+  al_btn:['התראות מחיר','تنبيهات الأسعار','Price alerts'], al_title:['התראות מחיר','تنبيهات الأسعار','Price alerts'], al_new:['התראה חדשה','تنبيه جديد','New alert'], al_what:['על מה','على ماذا','What'], al_when:['מתי','متى','When'], al_val:['מחיר יעד','السعر المستهدف','Target price'],
+  al_up:['עולה מעל','يرتفع فوق','rises above'], al_dn:['יורד מתחת','ينخفض تحت','falls below'], al_now:['עכשיו','الآن','now'], al_addB:['הוספת התראה','إضافة تنبيه','Add alert'], al_added:['ההתראה נוספה','أُضيف التنبيه','Alert added'], al_bad:['בחרו מחיר יעד','اختاروا سعرًا مستهدفًا','Choose a target price'],
+  al_empty:['אין התראות עדיין.','لا تنبيهات بعد.','No alerts yet.'], al_rearm:['להפעיל שוב','تفعيل مجددًا','Re-arm'],
+  al_fired:['{n} {op} {t} – עכשיו {v}','{n} {op} {t} – الآن {v}','{n} {op} {t} – now {v}'],
+  al_noteApp:['ההתראה קופצת כשהאפליקציה פתוחה. אי אפשר לשלוח התראה לטלפון כשהיא סגורה.','يظهر التنبيه عندما يكون التطبيق مفتوحًا.','Alerts pop up while the app is open; they cannot reach your phone when it is closed.'],
+  al_noteWeb:['ההתראה קופצת כשהאתר פתוח (גם בלשונית ברקע, אם אישרתם התראות). כשהאתר סגור לגמרי – לא.','يظهر التنبيه عندما يكون الموقع مفتوحًا (حتى في الخلفية إن سمحتم بالإشعارات).','Alerts fire while the site is open (also in a background tab if you allow notifications), not when it is fully closed.'],
+  ds_title:['תמונת מצב','لمحة سريعة','At a glance'], ds_exp:['הוצאות החודש','مصاريف الشهر','This month\'s spending'], ds_expN:['{n} הוצאות','{n} مصاريف','{n} items'], ds_nw:['שווי נקי','صافي الثروة','Net worth'],
+  ds_ins:['הביטוח הזול','التأمين الأرخص','Cheapest insurance'], ds_loan:['ההלוואה הזולה','القرض الأرخص','Cheapest loan'], ds_mort:['המשכנתא הזולה','الرهن الأرخص','Cheapest mortgage'], ds_pen:['הקופה המשתלמת','الصندوق الأوفر','Best fund'],
+  ds_saved:['קבצים שמורים','ملفات محفوظة','Saved files'], ds_al:['התראות פעילות','تنبيهات نشطة','Active alerts'],
+  ds_empty:['כאן יופיעו הנתונים שלכם – הוצאות, השוואות, שווי נקי והתראות – אחרי שתשתמשו במחשבונים.','هنا ستظهر بياناتكم بعد استخدام الحاسبات.','Your spending, comparisons, net worth and alerts will show here once you use the calculators.'],
+  pwa_btn:['התקנה כאפליקציה','تثبيت كتطبيق','Install as app'], pwa_done:['האפליקציה הותקנה','تم تثبيت التطبيق','Installed'],
+  pwa_ios:['באייפון: לחצו על כפתור השיתוף ⬆️ בספארי ואז "הוספה למסך הבית".','في آيفون: اضغطوا زر المشاركة ⬆️ في سفاري ثم "إضافة إلى الشاشة الرئيسية".','On iPhone: tap Share ⬆️ in Safari, then "Add to Home Screen".'],
+  bk_title:['גיבוי ושחזור','نسخ احتياطي واستعادة','Backup and restore'], bk_note:['שומר לקובץ את ההגדרות, החישובים, ההשוואות, ההוצאות והקבצים השמורים – בלי מפתחות וסיסמאות. אפשר לשחזר במכשיר אחר.','يحفظ الإعدادات والحسابات والمقارنات والمصاريف في ملف – بدون مفاتيح أو كلمات مرور.','Saves settings, calculations, comparisons, spending and saved files to a file – no keys or passwords. Restore on any device.'],
+  bk_saveB:['שמירת גיבוי','حفظ نسخة','Save backup'], bk_loadB:['שחזור מקובץ','استعادة من ملف','Restore from file'], bk_saved:['הגיבוי נשמר','تم حفظ النسخة','Backup saved'], bk_fail:['השמירה לא הצליחה','فشل الحفظ','Could not save'],
+  bk_sure:['לשחזר את הגיבוי מ-{d}? הנתונים הנוכחיים במכשיר יוחלפו.','استعادة النسخة من {d}؟ ستُستبدل البيانات الحالية.','Restore the backup from {d}? Current data on this device will be replaced.'], bk_done:['שוחזר – טוען מחדש…','تمت الاستعادة – إعادة التحميل…','Restored – reloading…'], bk_bad:['זה לא קובץ גיבוי של המחשבון','هذا ليس ملف نسخة للحاسبة','Not a backup file from this calculator'],
+  ci_title:['בדיקות אוטומטיות','فحوصات تلقائية','Automatic checks'], ci_note:['רץ ב-GitHub רק כשאתה מפעיל: בודק שהקוד תקין, שיש תרגום לכל טקסט, שאין מפתחות סודיים, ופותח את כל המסכים בדפדפן אמיתי. מוצג במצב מפתח בלבד.','يعمل في GitHub فقط عند تشغيلك: يفحص الكود والترجمات والمفاتيح ويفتح كل الشاشات. يظهر في وضع المطور فقط.','Runs on GitHub only when you start it: checks the code, translations and secrets, and opens every screen in a real browser. Developer mode only.'],
+  ci_go:['הרצת בדיקה','تشغيل الفحص','Run checks'], ci_ref:['רענון','تحديث','Refresh'], ci_run:['רץ עכשיו','قيد التشغيل','Running'], ci_ok:['עבר','نجح','Passed'], ci_bad:['נכשל','فشل','Failed'],
+  ci_none:['עוד לא הורצו בדיקות','لم تُشغّل فحوصات بعد','No checks yet'], ci_err:['לא הצלחנו להגיע ל-GitHub','تعذّر الوصول إلى GitHub','Could not reach GitHub'],
+  ci_tok:['צריך טוקן GitHub בהגדרות המפתח','يلزم رمز GitHub في إعدادات المطور','A GitHub token is needed in developer settings'], ci_started:['הבדיקה התחילה – התוצאה תופיע תוך כמה דקות','بدأ الفحص – النتيجة خلال دقائق','Started – the result appears in a few minutes']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -5446,9 +5530,9 @@ META.unix = 1791894003; META.official = true;
 
 const GROUPS = [
   ['g_main',  ['home','saved','assist','settings']],
-  ['g_save',  ['expenses','freedom','networth','debtplan','savegoal','compound','yield','dividends','avgcost','retire','fire','mgmtfees','hishtalmut','kidsave']],
+  ['g_save',  ['expenses','freedom','networth','debtplan','savegoal','compound','yield','dividends','avgcost','retire','fire','mgmtfees','pencmp','hishtalmut','kidsave']],
   ['g_work2', ['clients','salary','selfemp','tax','capital','rental','severance','notice','leave','overtime','taxrefund','joboffer','freelance','empcost','carbenefit','benefits']],
-  ['g_loans', ['prime','loan','loancmp','prepay','creditcard','carlease','mortgage','refi','rentbuy','purchasetax','landtax','mortcap','evfuel']],
+  ['g_loans', ['prime','loan','loancmp','prepay','creditcard','carlease','mortgage','mortcmp','refi','rentbuy','purchasetax','landtax','mortcap','evfuel']],
   ['g_tools', ['convert','vat','percent','inflation','cpilink','split','breakeven','unitprice','discount','workdays','appliance','insurance']]
 ];
 const TABS = GROUPS.flatMap(g => g[1]);
@@ -6431,6 +6515,23 @@ Object.assign(DEFS, {
   ]
 });
 Object.assign(ICON, {insurance: ic('<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>')});
+/* 8.9: mortgage and pension comparisons */
+Object.assign(DEFS, {
+  mortcmp: [
+    F('mc_amt','f_mcAmt','cur',1200000,{wide:true}),
+    F('mc_cpi','f_mCpi','%',2.5,{hint:'h_mcCpi'}),
+    {type:'html', id:'mc_box', cls:'lc-wrap mc-wrap'}
+  ],
+  pencmp: [
+    SEL('pc_kind','f_pcKind','pension',[['pension','o_pc_pension'],['gemel','o_pc_gemel'],['hish','o_pc_hish'],['invg','o_pc_invg'],['policy','o_pc_policy']],{wide:true}),
+    F('pc_bal','f_mfBal','cur',150000), F('pc_dep','f_mfDep','cur',2000), F('pc_yrs','f_term','yrs',25), F('pc_ret','f_mfRet','%',5,{hint:'h_pcRet'}),
+    {type:'html', id:'pc_box', cls:'lc-wrap pc-wrap'}
+  ]
+});
+Object.assign(ICON, {
+  mortcmp: ic('<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-5h6v5"/><path d="M17 4v3"/>'),
+  pencmp: ic('<path d="M4 20V10M10 20V6M16 20v-8M21 20H3"/><path d="M14 4l3 3 3-3"/>')
+});
 
 /* ================= home + bottom nav + sliders ================= */
 const ICO = {
@@ -9590,6 +9691,76 @@ function insCoFilter(kind){
   if (kind !== INS_KIND_SEEN || fixed){ INS_KIND_SEEN = kind; setTimeout(() => { try { insRender(); } catch (e) {} }, 0); }
 }
 Object.assign(CALC, {insurance: calcInsurance});
+/* ================= 8.9: mortgage offers by bank, and pension / provident fund offers by company ================= */
+/* ---------- mortgage: each bank's offer is a mix of up to three tracks ---------- */
+const MC_BANKS = ['leumi', 'hapoalim', 'discount', 'mizrahi', 'fibi', 'mercantile', 'jerusalem', 'yahav', 'otsar', 'nonother'];
+function mcSeed(){
+  const tr = (k, s, r, y) => ({k, s, r, y});
+  return [{bank: '', n: '', fee: 0, tr: [tr('fix', 34, 5.1, 25), tr('cpi', 33, 3.6, 25), tr('var', 33, 5.5, 25)]},
+          {bank: '', n: '', fee: 0, tr: [tr('fix', 34, 5.0, 25), tr('cpi', 33, 3.8, 25), tr('var', 33, 5.3, 25)]}];
+}
+function mcList(){ if (!Array.isArray(SET.mcOffers) || !SET.mcOffers.length) SET.mcOffers = mcSeed(); return SET.mcOffers; }
+function mcName(o, i){ const own = String(o.n || '').trim(); if (own) return own; return o.bank && o.bank !== 'nonother' ? t('lend_' + o.bank) : t('lc_def', {n: i + 1}); }
+/* one track, month by month: CPI-linked tracks grow with the index, the rest are plain annuities */
+function mcTrack(amt, tr, cpi){
+  const n = Math.max(1, Math.round(clamp(+tr.y || 0, 1, 40) * 12)), r = Math.max(0, +tr.r || 0) / 1200, ci = tr.k === 'cpi' ? Math.pow(1 + cpi, 1 / 12) - 1 : 0;
+  let bal = amt, paid = 0, first = 0;
+  for (let m = 0; m < n && bal > 0.005; m++){
+    bal *= 1 + ci;                                                   // indexation first
+    const left = n - m, pay = r > 0 ? bal * r / (1 - Math.pow(1 + r, -left)) : bal / left;
+    const int = bal * r; bal = Math.max(0, bal - (pay - int)); paid += pay; if (!m) first = pay;
+  }
+  return {first, paid, n};
+}
+function calcMortCmp(){
+  const L = mcList(), amt = Math.max(0, v('mc_amt')), cpi = clamp(v('mc_cpi'), -5, 20) / 100;
+  if (!(amt > 0)) return {hero: {label: t('r_mcBest'), value: '—'}, rows: []};
+  const R = L.map((o, i) => {
+    const trs = (o.tr || []).filter(x => (+x.s || 0) > 0), share = trs.reduce((s, x) => s + (+x.s || 0), 0) || 1;
+    let first = 0, paid = 0, maxN = 0;
+    trs.forEach(x => { const a = amt * (+x.s || 0) / share, r = mcTrack(a, x, cpi); first += r.first; paid += r.paid; maxN = Math.max(maxN, r.n); });
+    paid += Math.max(0, +o.fee || 0);
+    return {name: mcName(o, i), first, paid, cost: paid - amt, share, maxN};
+  });
+  const S = R.slice().sort((a, b) => a.paid - b.paid), best = S[0], worst = S[S.length - 1];
+  const rows = S.map((o, i) => [(i ? (i + 1) + '. ' : '★ ') + o.name + ' · ' + t('r_mcTotal'), M(o.paid), i ? undefined : 'key']);
+  if (S.length > 1) rows.push([t('r_insSave', {a: best.name, b: worst.name}), M(worst.paid - best.paid), 'key']);
+  const warn = []; R.forEach(o => { if (Math.abs(o.share - 100) > 0.5) warn.push(t('w_mcShare', {n: o.name, s: N(o.share, 0)})); });
+  return {
+    hero: {label: t('r_mcBest', {n: best.name}), value: M(best.paid), sub: t('r_mcSub', {m: M(best.first, 0), s: M(worst.paid - best.paid)})},
+    rows, warn: warn.slice(0, 3),
+    table: {title: t('t_mcCmp'), open: true, head: ['', t('h_mcFirst'), t('h_mcPaid'), t('h_mcCost'), t('h_mcRatio')], rows: S.map(o => [o.name, M(o.first), M(o.paid), M(o.cost), N(o.paid / amt, 2)])},
+    note: t('n_mc')
+  };
+}
+/* ---------- pension, provident and study funds: same money, different fees ---------- */
+const PC_COS = ['harel', 'migdal', 'clal', 'phoenix', 'menora', 'altshuler', 'meitav', 'more', 'analyst', 'infinity', 'psagot', 'yelin', 'ayalon', 'other'];
+function pcSeed(){ return [{co: '', n: '', dep: 1.5, acc: 0.22, ret: ''}, {co: '', n: '', dep: 0, acc: 0.5, ret: ''}]; }
+function pcList(){ if (!Array.isArray(SET.pcOffers) || !SET.pcOffers.length) SET.pcOffers = pcSeed(); return SET.pcOffers; }
+function pcName(o, i){ const own = String(o.n || '').trim(); if (own) return own; return o.co && o.co !== 'other' ? t('pc_co_' + o.co) : t('lc_def', {n: i + 1}); }
+function calcPenCmp(){
+  const bal0 = Math.max(0, v('pc_bal')), dep = Math.max(0, v('pc_dep')), yrs = clamp(Math.round(v('pc_yrs')), 1, 50), R0 = clamp(v('pc_ret'), -10, 20);
+  const L = pcList().map((o, i) => {
+    const ret = o.ret === '' || o.ret == null || !isFinite(+o.ret) ? R0 : clamp(+o.ret, -10, 20);
+    const df = clamp(+o.dep || 0, 0, 6) / 100, af = clamp(+o.acc || 0, 0, 3) / 100;
+    let b = bal0, fees = 0;
+    for (let m = 0; m < yrs * 12; m++){
+      const g = b * ret / 1200, fa = b * af / 12, fd = dep * df;
+      b = b + g - fa + dep - fd; fees += fa + fd;
+    }
+    return {name: pcName(o, i), b, fees, df, af, ret};
+  });
+  const S = L.slice().sort((a, b) => b.b - a.b), best = S[0], worst = S[S.length - 1];
+  const rows = S.map((o, i) => [(i ? (i + 1) + '. ' : '★ ') + o.name + ' · ' + t('r_pcEnd', {y: yrs}), M(o.b), i ? undefined : 'key']);
+  if (S.length > 1) rows.push([t('r_pcGap', {a: best.name, b: worst.name}), M(best.b - worst.b), 'key']);
+  return {
+    hero: {label: t('r_pcBest', {n: best.name}), value: M(best.b), sub: t('r_pcSub', {y: yrs, s: M(best.b - worst.b), f: M(best.fees)})},
+    rows,
+    table: {title: t('t_pcCmp'), open: true, head: ['', t('h_pcDep'), t('h_pcAcc'), t('h_pcRet'), t('h_pcFees'), t('h_pcEnd')], rows: S.map(o => [o.name, PC(o.df * 100), PC(o.af * 100), PC(o.ret), M(o.fees), M(o.b)])},
+    note: t('n_pc_' + (($('#pc_kind') || {}).value || 'pension')) + ' ' + t('n_pc')
+  };
+}
+Object.assign(CALC, {mortcmp: calcMortCmp, pencmp: calcPenCmp});
 
 /* ================= navigation ================= */
 function activate(id, focus){
@@ -11166,8 +11337,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "8.8", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.024723';
+var CHANGELOG = [{"v": "8.9", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.031136';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -11778,7 +11949,7 @@ function clockRender(){
   const d = new Date(), p = ckParts(d), key = [style, lang, SET.clockHeb, SET.clockHijri, SET.clock24, SET.clockSec, SET.digits, SET.clockNum].join('|');
   ckLook(box);
   if (style !== 'off'){ if (CK_KEY !== key){ CK_KEY = key; box.innerHTML = ckHTML(style, p); } ckFill(box, p, d); }
-  csRender();
+  if (tab === 'settings') csRender();      // the style previews only matter while Settings is open
 }
 function csRender(){
   const box = $('#cstyles'); if (!box) return;
@@ -13191,7 +13362,7 @@ applyLang = function(){ const r = _alFg.apply(this, arguments); fgRender(); lvRe
 figApply(true);
 
 /* ================= live indices: official price indices and market indices, used across the app and editable ================= */
-var IX_BUILT = {"idx":{"cpi":{"code":"120010","name":"Consumer Price Index - General","m":"2026-09","v":105.3,"base":"Average 2024","mom":-0.5,"yoy":1.6,"ytd":1.64,"hist":[["2005-01",70.6175],["2005-02",70.7588],["2005-03",70.6175],["2005-04",71.1119],["2005-05",71.3237],["2005-06",71.3943],["2005-07",72.1711],["2005-08",72.3124],["2005-09",72.383],["2005-10",72.9479],["2005-11",72.8773],["2005-12",72.7361],["2006-01",72.5242],["2006-02",72.9479],["2006-03",73.1598],["2006-04",73.7953],["2006-05",73.7953],["2006-06",73.8659],["2006-07",73.9366],["2006-08",73.9366],["2006-09",73.301],["2006-10",72.8067],["2006-11",72.6654],["2006-12",72.6654],["2007-01",72.5928],["2007-02",72.3728],["2007-03",72.5195],["2007-04",72.8861],["2007-05",72.8861],["2007-06",73.3994],["2007-07",74.206],["2007-08",74.7192],["2007-09",74.3526],["2007-10",74.4259],["2007-11",74.7192],["2007-12",75.1592],["2008-01",75.1592],["2008-02",75.0125],["2008-03",75.2325],["2008-04",76.3324],["2008-05",76.8457],["2008-06",76.919],["2008-07",77.7989],["2008-08",78.4589],["2008-09",78.4589],["2008-10",78.5322],["2008-11",78.0922],["2008-12",78.0189],["2009-01",77.6288],["2009-02",77.5517],["2009-03",77.9372],["2009-04",78.7081],["2009-05",79.0164],["2009-06",79.7102],["2009-07",80.5582],["2009-08",80.9436],["2009-09",80.7124],["2009-10",80.8666],["2009-11",81.0978],["2009-12",81.0978],["2010-01",80.5582],["2010-02",80.3269],["2010-03",80.404],["2010-04",81.0978],["2010-05",81.4062],["2010-06",81.6375],["2010-07",82.0229],["2010-08",82.4083],["2010-09",82.6396],["2010-10",82.8709],["2010-11",82.948],["2010-12",83.2563],["2011-01",83.4228],["2011-02",83.6682],["2011-03",83.8318],["2011-04",84.3225],["2011-05",84.7314],["2011-06",85.0586],["2011-07",84.8132],["2011-08",85.2222],["2011-09",85.0586],["2011-10",85.1404],["2011-11",85.0586],["2011-12",85.0586],["2012-01",85.0586],["2012-02",85.0586],["2012-03",85.3857],["2012-04",86.1218],["2012-05",86.1218],["2012-06",85.8764],["2012-07",85.9582],["2012-08",86.8579],["2012-09",86.8579],["2012-10",86.6943],["2012-11",86.2854],["2012-12",86.449],["2013-01",86.2761],["2013-02",86.2761],["2013-03",86.4481],["2013-04",86.7922],["2013-05",86.8782],["2013-06",87.5663],["2013-07",87.8244],["2013-08",87.9964],["2013-09",87.9964],["2013-10",88.2545],["2013-11",87.9104],["2013-12",87.9964],["2014-01",87.4803],["2014-02",87.3083],["2014-03",87.5663],["2014-04",87.6523],["2014-05",87.7384],["2014-06",87.9964],["2014-07",88.0824],["2014-08",87.9964],["2014-09",87.7384],["2014-10",87.9964],["2014-11",87.8244],["2014-12",87.8244],["2015-01",87.034],["2015-02",86.4198],["2015-03",86.683],["2015-04",87.2094],["2015-05",87.3849],["2015-06",87.6481],["2015-07",87.8236],["2015-08",87.6481],["2015-09",87.2972],["2015-10",87.3849],["2015-11",87.034],["2015-12",86.9462],["2016-01",86.5076],["2016-02",86.2443],["2016-03",86.0689],["2016-04",86.4198],["2016-05",86.683],["2016-06",86.9462],["2016-07",87.2972],["2016-08",87.034],["2016-09",86.9462],["2016-10",87.1217],["2016-11",86.7708],["2016-12",86.7708],["2017-01",86.5972],["2017-02",86.5972],["2017-03",86.8575],["2017-04",87.0311],["2017-05",87.3782],["2017-06",86.7708],["2017-07",86.684],["2017-08",86.9443],["2017-09",87.0311],["2017-10",87.2914],["2017-11",87.0311],["2017-12",87.1178],["2018-01",86.684],["2018-02",86.7708],["2018-03",87.0311],["2018-04",87.3782],["2018-05",87.812],["2018-06",87.8988],["2018-07",87.8988],["2018-08",87.9855],["2018-09",88.0723],["2018-10",88.3326],["2018-11",88.0723],["2018-12",87.812],["2019-01",87.7242],["2019-02",87.8118],["2019-03",88.25],["2019-04",88.5129],["2019-05",89.1264],["2019-06",88.6006],["2019-07",88.3377],["2019-08",88.5129],["2019-09",88.3377],["2019-10",88.6882],["2019-11",88.3377],["2019-12",88.3377],["2020-01",87.9871],["2020-02",87.8995],["2020-03",88.25],["2020-04",87.9871],["2020-05",87.7242],["2020-06",87.6366],["2020-07",87.8118],["2020-08",87.8118],["2020-09",87.7242],["2020-10",87.9871],["2020-11",87.8118],["2020-12",87.7242],["2021-01",87.6365],["2021-02",87.9002],["2021-03",88.4276],["2021-04",88.6913],["2021-05",89.0429],["2021-06",89.1308],["2021-07",89.4824],["2021-08",89.7461],["2021-09",89.9219],["2021-10",90.0098],["2021-11",89.9219],["2021-12",90.1856],["2022-01",90.3614],["2022-02",90.9767],["2022-03",91.5041],["2022-04",92.2073],["2022-05",92.7347],["2022-06",93.0863],["2022-07",94.1411],["2022-08",93.8774],["2022-09",94.0532],["2022-10",94.5806],["2022-11",94.6685],["2022-12",94.9322],["2023-01",95.217],["2023-02",95.6824],["2023-03",96.0547],["2023-04",96.7993],["2023-05",96.9854],["2023-06",96.9854],["2023-07",97.2647],["2023-08",97.73],["2023-09",97.637],["2023-10",98.1023],["2023-11",97.8231],["2023-12",97.73],["2024-01",97.73],["2024-02",98.1023],["2024-03",98.6608],["2024-04",99.4985],["2024-05",99.6846],["2024-06",99.7777],["2024-07",100.3362],["2024-08",101.2669],["2024-09",101.0808],["2024-10",101.5462],["2024-11",101.1739],["2024-12",100.8946],["2025-01",101.5],["2025-02",101.5],["2025-03",102.0],["2025-04",103.1],["2025-05",102.8],["2025-06",103.1],["2025-07",103.5],["2025-08",104.2],["2025-09",103.6],["2025-10",104.1],["2025-11",103.6],["2025-12",103.6],["2026-01",103.3],["2026-02",103.5],["2026-03",103.9],["2026-04",105.1],["2026-05",104.8],["2026-06",104.8],["2026-07",105.1],["2026-08",105.8],["2026-09",105.3]]},"build":{"code":"200010","name":"Price index of input in residential building - general","m":"2026-09","v":104.0,"base":"July 2025","mom":0.1,"yoy":3.6,"ytd":2.77,"hist":[["2005-01",56.8937],["2005-02",56.9482],["2005-03",57.1117],["2005-04",57.2752],["2005-05",57.3842],["2005-06",57.6566],["2005-07",59.2915],["2005-08",60.8719],["2005-09",61.0354],["2005-10",60.7084],["2005-11",60.1635],["2005-12",59.782],["2006-01",60.4904],["2006-02",60.7084],["2006-03",61.0354],["2006-04",61.4714],["2006-05",61.8528],["2006-06",62.4523],["2006-07",62.9972],["2006-08",63.4332],["2006-09",63.7057],["2006-10",63.4877],["2006-11",63.4877],["2006-12",63.3242],["2007-01",63.9237],["2007-02",64.0327],["2007-03",64.1962],["2007-04",64.1962],["2007-05",64.0872],["2007-06",64.5231],["2007-07",65.2316],["2007-08",65.3951],["2007-09",65.4496],["2007-10",65.3406],["2007-11",65.2861],["2007-12",65.2861],["2008-01",65.5585],["2008-02",65.2861],["2008-03",65.4496],["2008-04",66.3215],["2008-05",67.3569],["2008-06",68.0654],["2008-07",69.1553],["2008-08",69.2643],["2008-09",68.8283],["2008-10",67.6839],["2008-11",67.5204],["2008-12",67.4114],["2009-01",67.0844],["2009-02",67.0844],["2009-03",67.0844],["2009-04",67.1389],["2009-05",67.1389],["2009-06",67.1934],["2009-07",67.4114],["2009-08",67.3569],["2009-09",67.3569],["2009-10",67.1934],["2009-11",67.3024],["2009-12",67.4114],["2010-01",67.6294],["2010-02",67.9564],["2010-03",68.3923],["2010-04",68.9918],["2010-05",69.1553],["2010-06",68.9918],["2010-07",68.9373],["2010-08",69.2643],["2010-09",69.3733],["2010-10",69.4278],["2010-11",69.6457],["2010-12",70.0272],["2011-01",70.4632],["2011-02",70.8991],["2011-03",70.8991],["2011-04",70.8991],["2011-05",71.4441],["2011-06",71.9346],["2011-07",72.0981],["2011-08",72.3143],["2011-09",72.5306],["2011-10",72.6027],["2011-11",72.7469],["2011-12",72.6748],["2012-01",72.8911],["2012-02",73.2516],["2012-03",73.4679],["2012-04",73.9726],["2012-05",74.0447],["2012-06",74.261],["2012-07",74.4773],["2012-08",74.7657],["2012-09",74.7657],["2012-10",74.7657],["2012-11",74.982],["2012-12",75.0541],["2013-01",75.4146],["2013-02",75.5588],["2013-03",75.5588],["2013-04",75.4146],["2013-05",75.6309],["2013-06",75.7751],["2013-07",75.7751],["2013-08",75.8472],["2013-09",75.9913],["2013-10",76.0634],["2013-11",76.1355],["2013-12",76.1355],["2014-01",76.3518],["2014-02",76.3518],["2014-03",76.2797],["2014-04",76.3518],["2014-05",76.4239],["2014-06",76.3518],["2014-07",76.2797],["2014-08",76.3518],["2014-09",76.2797],["2014-10",76.496],["2014-11",76.6402],["2014-12",76.7123],["2015-01",76.7844],["2015-02",76.7123],["2015-03",76.8565],["2015-04",76.8565],["2015-05",76.8565],["2015-06",76.8565],["2015-07",76.9286],["2015-08",77.0728],["2015-09",77.1449],["2015-10",77.217],["2015-11",77.1449],["2015-12",77.4333],["2016-01",77.6496],["2016-02",77.5054],["2016-03",77.5054],["2016-04",77.7217],["2016-05",77.8659],["2016-06",77.938],["2016-07",78.2264],["2016-08",78.2264],["2016-09",78.4427],["2016-10",78.4427],["2016-11",78.5869],["2016-12",78.5869],["2017-01",78.5869],["2017-02",78.7311],["2017-03",78.7311],["2017-04",78.8753],["2017-05",78.8753],["2017-06",79.0195],["2017-07",79.1637],["2017-08",79.5242],["2017-09",79.6683],["2017-10",79.8125],["2017-11",79.8846],["2017-12",80.1009],["2018-01",80.5335],["2018-02",80.7498],["2018-03",80.8219],["2018-04",81.0382],["2018-05",81.1103],["2018-06",81.1824],["2018-07",81.3987],["2018-08",81.5429],["2018-09",81.5429],["2018-10",81.615],["2018-11",81.615],["2018-12",81.6871],["2019-01",82.1918],["2019-02",82.2639],["2019-03",82.2639],["2019-04",82.336],["2019-05",82.4081],["2019-06",82.4081],["2019-07",82.4081],["2019-08",82.4802],["2019-09",82.4802],["2019-10",82.4081],["2019-11",82.4081],["2019-12",82.5523],["2020-01",82.6965],["2020-02",82.6965],["2020-03",82.8407],["2020-04",82.7686],["2020-05",82.6965],["2020-06",82.6965],["2020-07",82.6965],["2020-08",82.7686],["2020-09",82.6965],["2020-10",82.6244],["2020-11",82.6244],["2020-12",82.9849],["2021-01",83.4895],["2021-02",83.6337],["2021-03",84.0663],["2021-04",84.7152],["2021-05",85.292],["2021-06",85.7967],["2021-07",86.013],["2021-08",86.5177],["2021-09",86.734],["2021-10",86.9503],["2021-11",87.3828],["2021-12",87.5991],["2022-01",88.3201],["2022-02",88.7527],["2022-03",89.6179],["2022-04",90.4831],["2022-05",90.9156],["2022-06",91.4203],["2022-07",91.8529],["2022-08",91.925],["2022-09",91.925],["2022-10",91.925],["2022-11",91.7808],["2022-12",91.7808],["2023-01",92.8623],["2023-02",92.7181],["2023-03",92.9344],["2023-04",93.2228],["2023-05",93.1507],["2023-06",93.4391],["2023-07",93.2228],["2023-08",93.2949],["2023-09",93.367],["2023-10",93.5112],["2023-11",93.5833],["2023-12",93.5833],["2024-01",93.8717],["2024-02",93.6554],["2024-03",93.8717],["2024-04",93.7996],["2024-05",94.2322],["2024-06",94.5926],["2024-07",94.9531],["2024-08",95.1694],["2024-09",95.5299],["2024-10",95.7462],["2024-11",96.0346],["2024-12",96.323],["2025-01",98.8464],["2025-02",99.279],["2025-03",99.6395],["2025-04",99.7837],["2025-05",99.9279],["2025-06",99.9279],["2025-07",100.0],["2025-08",100.4],["2025-09",100.4],["2025-10",100.5],["2025-11",101.1],["2025-12",101.2],["2026-01",101.3],["2026-02",101.5],["2026-03",101.7],["2026-04",102.8],["2026-05",103.4],["2026-06",103.6],["2026-07",103.5],["2026-08",103.9],["2026-09",104.0]]},"house":{"code":"40010","name":"Prices of Dwellings","m":"2026-07","v":590.0,"base":"Average 1993","mom":-0.6,"yoy":-1.8,"ytd":-1.7,"hist":[["2015-01",354.8],["2015-02",358.3],["2015-03",360.6],["2015-04",361.5],["2015-05",364.5],["2015-06",368.3],["2015-07",369.2],["2015-08",369.0],["2015-09",371.3],["2015-10",374.4],["2015-11",377.5],["2015-12",380.4],["2016-01",381.4],["2016-02",384.0],["2016-03",389.1],["2016-04",390.2],["2016-05",391.1],["2016-06",393.4],["2016-07",396.1],["2016-08",399.9],["2016-09",404.2],["2016-10",404.4],["2016-11",402.8],["2016-12",402.1],["2017-01",402.8],["2017-02",404.9],["2017-03",406.8],["2017-04",407.7],["2017-05",409.5],["2017-06",412.8],["2017-07",414.3],["2017-08",415.9],["2017-09",414.6],["2017-10",414.5],["2017-11",411.9],["2017-12",407.8],["2018-01",406.3],["2018-02",405.9],["2018-03",406.5],["2018-04",406.2],["2018-05",409.2],["2018-06",410.5],["2018-07",408.1],["2018-08",407.4],["2018-09",406.6],["2018-10",405.8],["2018-11",405.5],["2018-12",404.7],["2019-01",408.3],["2019-02",409.6],["2019-03",410.8],["2019-04",412.9],["2019-05",414.1],["2019-06",413.7],["2019-07",414.9],["2019-08",414.5],["2019-09",416.6],["2019-10",418.7],["2019-11",419.1],["2019-12",421.6],["2020-01",423.7],["2020-02",424.1],["2020-03",423.7],["2020-04",420.7],["2020-05",422.0],["2020-06",426.2],["2020-07",426.2],["2020-08",426.6],["2020-09",427.9],["2020-10",431.8],["2020-11",435.7],["2020-12",438.3],["2021-01",439.2],["2021-02",442.7],["2021-03",448.5],["2021-04",452.1],["2021-05",454.4],["2021-06",459.9],["2021-07",465.4],["2021-08",467.3],["2021-09",471.0],["2021-10",477.6],["2021-11",485.7],["2021-12",495.9],["2022-01",503.8],["2022-02",511.9],["2022-03",517.0],["2022-04",525.3],["2022-05",536.3],["2022-06",543.8],["2022-07",553.6],["2022-08",559.7],["2022-09",565.3],["2022-10",567.0],["2022-11",567.6],["2022-12",568.7],["2023-01",568.7],["2023-02",568.7],["2023-03",567.6],["2023-04",564.8],["2023-05",561.4],["2023-06",560.3],["2023-07",559.2],["2023-08",558.6],["2023-09",557.5],["2023-10",554.7],["2023-11",558.0],["2023-12",563.0],["2024-01",569.2],["2024-02",574.9],["2024-03",579.5],["2024-04",583.6],["2024-05",587.1],["2024-06",591.8],["2024-07",593.0],["2024-08",592.4],["2024-09",593.6],["2024-10",596.6],["2024-11",599.0],["2024-12",606.2],["2025-01",609.8],["2025-02",608.6],["2025-03",607.4],["2025-04",605.0],["2025-05",602.6],["2025-06",602.0],["2025-07",600.8],["2025-08",597.2],["2025-09",593.0],["2025-10",596.0],["2025-11",600.8],["2025-12",600.2],["2026-01",599.6],["2026-02",602.0],["2026-03",599.6],["2026-04",592.4],["2026-05",593.0],["2026-06",593.6],["2026-07",590.0]]}},"mkt":{"asOf":1792106252,"src":"cnbc","items":{"dji":{"n":"Dow Jones","sym":".DJI","p":52177.69,"pc":51621.48,"chp":1.08,"t":1792096445,"cur":"USD","rt":true,"a":{"y1":[1759636800,45479.6],"y5":[1633838400,35294.7561],"y10":[1479013200,18867.9348],"ye":[1766898000,48382.39]},"hAt":1792072902,"y1":14.73,"r5":8.11,"r10":10.8,"ytd":7.84},"ta35":{"n":"TA-35","sym":".TA35","p":4150.13,"pc":4162.77,"chp":-0.15,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3276.85],"y5":[1633838400,1848.07],"y10":[1479013200,1432.48],"ye":[1766898000,3695.29]},"hAt":1792072901,"y1":26.65,"r5":17.51,"r10":11.32,"ytd":12.31},"ta125":{"n":"TA-125","sym":".TA125","p":4017.15,"pc":4025.15,"chp":-0.07,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3358.13],"y5":[1633838400,1909.51],"y10":[1479013200,1251.26],"ye":[1766898000,3733.08]},"hAt":1792072901,"y1":19.62,"r5":15.99,"r10":12.48,"ytd":7.61},"spx":{"n":"S&P 500","sym":".SPX","p":7744.06,"pc":7718.94,"chp":0.33,"t":1792096433,"cur":"USD","rt":true,"a":{"y1":[1759636800,6552.51],"y5":[1633838400,4471.37],"y10":[1479013200,2181.9],"ye":[1766898000,6858.47]},"hAt":1792072901,"y1":18.18,"r5":11.57,"r10":13.62,"ytd":12.91},"ndx":{"n":"Nasdaq 100","sym":".NDX","p":29935.595,"pc":29950.816,"chp":-0.05,"t":1792098959,"cur":"USD","rt":true,"a":{"y1":[1759636800,24221.745],"y5":[1633838400,15146.921],"y10":[1479013200,4808.042],"ye":[1766898000,25206.168]},"hAt":1792072901,"y1":23.59,"r5":14.55,"r10":20.24,"ytd":18.76},"gold":{"n":"Gold","sym":"@GC.1","p":4184.1,"pc":4170.1,"chp":0.34,"t":1792106252,"cur":"USD","rt":false,"a":{"y1":[1759636800,4000.4],"y5":[1633838400,1768.3],"y10":[1479013200,1208.7],"ye":[1766898000,4329.6]},"hAt":1792072902,"y1":4.59,"r5":18.74,"r10":13.33,"ytd":-3.36},"brent":{"n":"Brent","sym":"@LCO.1","p":105.92,"pc":105.92,"chp":null,"t":1792104902,"cur":"USD","rt":false,"a":{"y1":[1759636800,62.73],"y5":[1633838400,84.86],"y10":[1479013200,46.86],"ye":[1766898000,60.75]},"hAt":1792072903,"y1":68.85,"r5":4.52,"r10":8.57,"ytd":74.35},"ixic":{"n":"Nasdaq Composite","sym":".IXIC","p":26713.026,"pc":26692.868,"chp":0.08,"t":1792098959,"cur":"USD","rt":true,"a":{"y1":[1759636800,22204.43],"y5":[1633838400,14897.34],"y10":[1479013200,5321.513],"ye":[1766898000,23235.629]},"hAt":1792106858,"y1":20.3,"r5":12.35,"r10":17.66,"ytd":14.97},"rut":{"n":"Russell 2000","sym":".RUT","p":2767.269,"pc":2767.269,"chp":1.38,"t":1792096200,"cur":"USD","rt":false,"a":{"y1":[1759636800,2394.595],"y5":[1633838400,2265.6544],"y10":[1479013200,1315.642],"ye":[1766898000,2508.2233]},"hAt":1792106859,"y1":15.56,"r5":4.07,"r10":7.78,"ytd":10.33},"vix":{"n":"VIX","sym":".VIX","p":16.46,"pc":16.87,"chp":-2.43,"t":1792095301,"cur":"USD","rt":true,"a":{"y1":[1759636800,21.66],"y5":[1633838400,16.3],"y10":[1479013200,12.85],"ye":[1766898000,14.51]},"hAt":1792106860,"y1":-24.01,"r5":0.19,"r10":2.53,"ytd":13.44},"ftse":{"n":"FTSE 100","sym":".FTSE","p":10840.35,"pc":10724.86,"chp":1.08,"t":1792078500,"cur":"GBP","rt":false,"a":{"y1":[1759636800,9427.47],"y5":[1633838400,7234.03],"y10":[1479013200,6775.77],"ye":[1766898000,9951.14]},"hAt":1792106860,"y1":14.99,"r5":8.4,"r10":4.85,"ytd":8.94},"dax":{"n":"DAX","sym":".GDAXI","p":25382.62,"pc":25298.61,"chp":0.33,"t":1792080000,"cur":"EUR","rt":false,"a":{"y1":[1759636800,24241.46],"y5":[1633838400,15587.36],"y10":[1479013200,10664.56],"ye":[1766898000,24539.34]},"hAt":1792106861,"y1":4.71,"r5":10.21,"r10":9.13,"ytd":3.44},"stoxx":{"n":"Euro Stoxx 50","sym":".STOXX50E","p":6168.26,"pc":6190.37,"chp":-0.36,"t":1792080000,"cur":"EUR","rt":false,"a":{"y1":[1759636800,5531.32],"y5":[1633838400,4182.91],"y10":[1479013200,3020.83],"ye":[1766898000,5850.38]},"hAt":1792106862,"y1":11.52,"r5":8.05,"r10":7.46,"ytd":5.43},"nikkei":{"n":"Nikkei 225","sym":".N225","p":64425.95,"pc":64425.95,"chp":null,"t":1792022400,"cur":"JPY","rt":false,"a":{"y1":[1759636800,48088.8],"y5":[1633838400,29068.63],"y10":[1479013200,17967.41],"ye":[1766898000,50339.48]},"hAt":1792106863,"y1":33.97,"r5":17.21,"r10":13.74,"ytd":27.98},"silver":{"n":"Silver","sym":"@SI.1","p":57.38,"pc":57.156,"chp":0.39,"t":1792106220,"cur":"USD","rt":false,"a":{"y1":[1759636800,47.247],"y5":[1633838400,23.349],"y10":[1479013200,16.624],"ye":[1766898000,71.015]},"hAt":1792106863,"y1":21.45,"r5":19.64,"r10":13.3,"ytd":-19.2},"platinum":{"n":"Platinum","sym":"@PL.1","p":1634.0,"pc":1621.5,"chp":0.77,"t":1792106213,"cur":"USD","rt":false,"a":{"y1":[1759636800,1623.0],"y5":[1633838400,1058.9],"y10":[1479013200,922.0],"ye":[1766898000,2129.3]},"hAt":1792106865,"y1":0.68,"r5":9.03,"r10":5.94,"ytd":-23.26},"copper":{"n":"Copper","sym":"@HG.1","p":6.5595,"pc":6.5565,"chp":0.05,"t":1792106229,"cur":"USD","rt":false,"a":{"y1":[1759636800,4.894],"y5":[1633838400,4.7295],"y10":[1479013200,2.4675],"ye":[1766898000,5.6915]},"hAt":1792106867,"y1":34.03,"r5":6.74,"r10":10.36,"ytd":15.25},"wti":{"n":"WTI crude","sym":"@CL.1","p":97.59,"pc":97.97,"chp":-0.39,"t":1792106205,"cur":"USD","rt":false,"a":{"y1":[1759636800,58.9],"y5":[1633838400,82.28],"y10":[1479013200,45.69],"ye":[1766898000,57.32]},"hAt":1792106868,"y1":65.69,"r5":3.46,"r10":7.95,"ytd":70.25},"natgas":{"n":"Natural gas","sym":"@NG.1","p":3.216,"pc":3.236,"chp":-0.62,"t":1792106052,"cur":"USD","rt":false,"a":{"y1":[1759636800,3.106],"y5":[1633838400,5.41],"y10":[1479013200,2.843],"ye":[1766898000,3.618]},"hAt":1792106869,"y1":3.54,"r5":-9.85,"r10":1.25,"ytd":-11.11}}}};
+var IX_BUILT = {"idx":{"cpi":{"code":"120010","name":"Consumer Price Index - General","m":"2026-09","v":105.3,"base":"Average 2024","mom":-0.5,"yoy":1.6,"ytd":1.64,"hist":[["2005-01",70.6175],["2005-02",70.7588],["2005-03",70.6175],["2005-04",71.1119],["2005-05",71.3237],["2005-06",71.3943],["2005-07",72.1711],["2005-08",72.3124],["2005-09",72.383],["2005-10",72.9479],["2005-11",72.8773],["2005-12",72.7361],["2006-01",72.5242],["2006-02",72.9479],["2006-03",73.1598],["2006-04",73.7953],["2006-05",73.7953],["2006-06",73.8659],["2006-07",73.9366],["2006-08",73.9366],["2006-09",73.301],["2006-10",72.8067],["2006-11",72.6654],["2006-12",72.6654],["2007-01",72.5928],["2007-02",72.3728],["2007-03",72.5195],["2007-04",72.8861],["2007-05",72.8861],["2007-06",73.3994],["2007-07",74.206],["2007-08",74.7192],["2007-09",74.3526],["2007-10",74.4259],["2007-11",74.7192],["2007-12",75.1592],["2008-01",75.1592],["2008-02",75.0125],["2008-03",75.2325],["2008-04",76.3324],["2008-05",76.8457],["2008-06",76.919],["2008-07",77.7989],["2008-08",78.4589],["2008-09",78.4589],["2008-10",78.5322],["2008-11",78.0922],["2008-12",78.0189],["2009-01",77.6288],["2009-02",77.5517],["2009-03",77.9372],["2009-04",78.7081],["2009-05",79.0164],["2009-06",79.7102],["2009-07",80.5582],["2009-08",80.9436],["2009-09",80.7124],["2009-10",80.8666],["2009-11",81.0978],["2009-12",81.0978],["2010-01",80.5582],["2010-02",80.3269],["2010-03",80.404],["2010-04",81.0978],["2010-05",81.4062],["2010-06",81.6375],["2010-07",82.0229],["2010-08",82.4083],["2010-09",82.6396],["2010-10",82.8709],["2010-11",82.948],["2010-12",83.2563],["2011-01",83.4228],["2011-02",83.6682],["2011-03",83.8318],["2011-04",84.3225],["2011-05",84.7314],["2011-06",85.0586],["2011-07",84.8132],["2011-08",85.2222],["2011-09",85.0586],["2011-10",85.1404],["2011-11",85.0586],["2011-12",85.0586],["2012-01",85.0586],["2012-02",85.0586],["2012-03",85.3857],["2012-04",86.1218],["2012-05",86.1218],["2012-06",85.8764],["2012-07",85.9582],["2012-08",86.8579],["2012-09",86.8579],["2012-10",86.6943],["2012-11",86.2854],["2012-12",86.449],["2013-01",86.2761],["2013-02",86.2761],["2013-03",86.4481],["2013-04",86.7922],["2013-05",86.8782],["2013-06",87.5663],["2013-07",87.8244],["2013-08",87.9964],["2013-09",87.9964],["2013-10",88.2545],["2013-11",87.9104],["2013-12",87.9964],["2014-01",87.4803],["2014-02",87.3083],["2014-03",87.5663],["2014-04",87.6523],["2014-05",87.7384],["2014-06",87.9964],["2014-07",88.0824],["2014-08",87.9964],["2014-09",87.7384],["2014-10",87.9964],["2014-11",87.8244],["2014-12",87.8244],["2015-01",87.034],["2015-02",86.4198],["2015-03",86.683],["2015-04",87.2094],["2015-05",87.3849],["2015-06",87.6481],["2015-07",87.8236],["2015-08",87.6481],["2015-09",87.2972],["2015-10",87.3849],["2015-11",87.034],["2015-12",86.9462],["2016-01",86.5076],["2016-02",86.2443],["2016-03",86.0689],["2016-04",86.4198],["2016-05",86.683],["2016-06",86.9462],["2016-07",87.2972],["2016-08",87.034],["2016-09",86.9462],["2016-10",87.1217],["2016-11",86.7708],["2016-12",86.7708],["2017-01",86.5972],["2017-02",86.5972],["2017-03",86.8575],["2017-04",87.0311],["2017-05",87.3782],["2017-06",86.7708],["2017-07",86.684],["2017-08",86.9443],["2017-09",87.0311],["2017-10",87.2914],["2017-11",87.0311],["2017-12",87.1178],["2018-01",86.684],["2018-02",86.7708],["2018-03",87.0311],["2018-04",87.3782],["2018-05",87.812],["2018-06",87.8988],["2018-07",87.8988],["2018-08",87.9855],["2018-09",88.0723],["2018-10",88.3326],["2018-11",88.0723],["2018-12",87.812],["2019-01",87.7242],["2019-02",87.8118],["2019-03",88.25],["2019-04",88.5129],["2019-05",89.1264],["2019-06",88.6006],["2019-07",88.3377],["2019-08",88.5129],["2019-09",88.3377],["2019-10",88.6882],["2019-11",88.3377],["2019-12",88.3377],["2020-01",87.9871],["2020-02",87.8995],["2020-03",88.25],["2020-04",87.9871],["2020-05",87.7242],["2020-06",87.6366],["2020-07",87.8118],["2020-08",87.8118],["2020-09",87.7242],["2020-10",87.9871],["2020-11",87.8118],["2020-12",87.7242],["2021-01",87.6365],["2021-02",87.9002],["2021-03",88.4276],["2021-04",88.6913],["2021-05",89.0429],["2021-06",89.1308],["2021-07",89.4824],["2021-08",89.7461],["2021-09",89.9219],["2021-10",90.0098],["2021-11",89.9219],["2021-12",90.1856],["2022-01",90.3614],["2022-02",90.9767],["2022-03",91.5041],["2022-04",92.2073],["2022-05",92.7347],["2022-06",93.0863],["2022-07",94.1411],["2022-08",93.8774],["2022-09",94.0532],["2022-10",94.5806],["2022-11",94.6685],["2022-12",94.9322],["2023-01",95.217],["2023-02",95.6824],["2023-03",96.0547],["2023-04",96.7993],["2023-05",96.9854],["2023-06",96.9854],["2023-07",97.2647],["2023-08",97.73],["2023-09",97.637],["2023-10",98.1023],["2023-11",97.8231],["2023-12",97.73],["2024-01",97.73],["2024-02",98.1023],["2024-03",98.6608],["2024-04",99.4985],["2024-05",99.6846],["2024-06",99.7777],["2024-07",100.3362],["2024-08",101.2669],["2024-09",101.0808],["2024-10",101.5462],["2024-11",101.1739],["2024-12",100.8946],["2025-01",101.5],["2025-02",101.5],["2025-03",102.0],["2025-04",103.1],["2025-05",102.8],["2025-06",103.1],["2025-07",103.5],["2025-08",104.2],["2025-09",103.6],["2025-10",104.1],["2025-11",103.6],["2025-12",103.6],["2026-01",103.3],["2026-02",103.5],["2026-03",103.9],["2026-04",105.1],["2026-05",104.8],["2026-06",104.8],["2026-07",105.1],["2026-08",105.8],["2026-09",105.3]]},"build":{"code":"200010","name":"Price index of input in residential building - general","m":"2026-09","v":104.0,"base":"July 2025","mom":0.1,"yoy":3.6,"ytd":2.77,"hist":[["2005-01",56.8937],["2005-02",56.9482],["2005-03",57.1117],["2005-04",57.2752],["2005-05",57.3842],["2005-06",57.6566],["2005-07",59.2915],["2005-08",60.8719],["2005-09",61.0354],["2005-10",60.7084],["2005-11",60.1635],["2005-12",59.782],["2006-01",60.4904],["2006-02",60.7084],["2006-03",61.0354],["2006-04",61.4714],["2006-05",61.8528],["2006-06",62.4523],["2006-07",62.9972],["2006-08",63.4332],["2006-09",63.7057],["2006-10",63.4877],["2006-11",63.4877],["2006-12",63.3242],["2007-01",63.9237],["2007-02",64.0327],["2007-03",64.1962],["2007-04",64.1962],["2007-05",64.0872],["2007-06",64.5231],["2007-07",65.2316],["2007-08",65.3951],["2007-09",65.4496],["2007-10",65.3406],["2007-11",65.2861],["2007-12",65.2861],["2008-01",65.5585],["2008-02",65.2861],["2008-03",65.4496],["2008-04",66.3215],["2008-05",67.3569],["2008-06",68.0654],["2008-07",69.1553],["2008-08",69.2643],["2008-09",68.8283],["2008-10",67.6839],["2008-11",67.5204],["2008-12",67.4114],["2009-01",67.0844],["2009-02",67.0844],["2009-03",67.0844],["2009-04",67.1389],["2009-05",67.1389],["2009-06",67.1934],["2009-07",67.4114],["2009-08",67.3569],["2009-09",67.3569],["2009-10",67.1934],["2009-11",67.3024],["2009-12",67.4114],["2010-01",67.6294],["2010-02",67.9564],["2010-03",68.3923],["2010-04",68.9918],["2010-05",69.1553],["2010-06",68.9918],["2010-07",68.9373],["2010-08",69.2643],["2010-09",69.3733],["2010-10",69.4278],["2010-11",69.6457],["2010-12",70.0272],["2011-01",70.4632],["2011-02",70.8991],["2011-03",70.8991],["2011-04",70.8991],["2011-05",71.4441],["2011-06",71.9346],["2011-07",72.0981],["2011-08",72.3143],["2011-09",72.5306],["2011-10",72.6027],["2011-11",72.7469],["2011-12",72.6748],["2012-01",72.8911],["2012-02",73.2516],["2012-03",73.4679],["2012-04",73.9726],["2012-05",74.0447],["2012-06",74.261],["2012-07",74.4773],["2012-08",74.7657],["2012-09",74.7657],["2012-10",74.7657],["2012-11",74.982],["2012-12",75.0541],["2013-01",75.4146],["2013-02",75.5588],["2013-03",75.5588],["2013-04",75.4146],["2013-05",75.6309],["2013-06",75.7751],["2013-07",75.7751],["2013-08",75.8472],["2013-09",75.9913],["2013-10",76.0634],["2013-11",76.1355],["2013-12",76.1355],["2014-01",76.3518],["2014-02",76.3518],["2014-03",76.2797],["2014-04",76.3518],["2014-05",76.4239],["2014-06",76.3518],["2014-07",76.2797],["2014-08",76.3518],["2014-09",76.2797],["2014-10",76.496],["2014-11",76.6402],["2014-12",76.7123],["2015-01",76.7844],["2015-02",76.7123],["2015-03",76.8565],["2015-04",76.8565],["2015-05",76.8565],["2015-06",76.8565],["2015-07",76.9286],["2015-08",77.0728],["2015-09",77.1449],["2015-10",77.217],["2015-11",77.1449],["2015-12",77.4333],["2016-01",77.6496],["2016-02",77.5054],["2016-03",77.5054],["2016-04",77.7217],["2016-05",77.8659],["2016-06",77.938],["2016-07",78.2264],["2016-08",78.2264],["2016-09",78.4427],["2016-10",78.4427],["2016-11",78.5869],["2016-12",78.5869],["2017-01",78.5869],["2017-02",78.7311],["2017-03",78.7311],["2017-04",78.8753],["2017-05",78.8753],["2017-06",79.0195],["2017-07",79.1637],["2017-08",79.5242],["2017-09",79.6683],["2017-10",79.8125],["2017-11",79.8846],["2017-12",80.1009],["2018-01",80.5335],["2018-02",80.7498],["2018-03",80.8219],["2018-04",81.0382],["2018-05",81.1103],["2018-06",81.1824],["2018-07",81.3987],["2018-08",81.5429],["2018-09",81.5429],["2018-10",81.615],["2018-11",81.615],["2018-12",81.6871],["2019-01",82.1918],["2019-02",82.2639],["2019-03",82.2639],["2019-04",82.336],["2019-05",82.4081],["2019-06",82.4081],["2019-07",82.4081],["2019-08",82.4802],["2019-09",82.4802],["2019-10",82.4081],["2019-11",82.4081],["2019-12",82.5523],["2020-01",82.6965],["2020-02",82.6965],["2020-03",82.8407],["2020-04",82.7686],["2020-05",82.6965],["2020-06",82.6965],["2020-07",82.6965],["2020-08",82.7686],["2020-09",82.6965],["2020-10",82.6244],["2020-11",82.6244],["2020-12",82.9849],["2021-01",83.4895],["2021-02",83.6337],["2021-03",84.0663],["2021-04",84.7152],["2021-05",85.292],["2021-06",85.7967],["2021-07",86.013],["2021-08",86.5177],["2021-09",86.734],["2021-10",86.9503],["2021-11",87.3828],["2021-12",87.5991],["2022-01",88.3201],["2022-02",88.7527],["2022-03",89.6179],["2022-04",90.4831],["2022-05",90.9156],["2022-06",91.4203],["2022-07",91.8529],["2022-08",91.925],["2022-09",91.925],["2022-10",91.925],["2022-11",91.7808],["2022-12",91.7808],["2023-01",92.8623],["2023-02",92.7181],["2023-03",92.9344],["2023-04",93.2228],["2023-05",93.1507],["2023-06",93.4391],["2023-07",93.2228],["2023-08",93.2949],["2023-09",93.367],["2023-10",93.5112],["2023-11",93.5833],["2023-12",93.5833],["2024-01",93.8717],["2024-02",93.6554],["2024-03",93.8717],["2024-04",93.7996],["2024-05",94.2322],["2024-06",94.5926],["2024-07",94.9531],["2024-08",95.1694],["2024-09",95.5299],["2024-10",95.7462],["2024-11",96.0346],["2024-12",96.323],["2025-01",98.8464],["2025-02",99.279],["2025-03",99.6395],["2025-04",99.7837],["2025-05",99.9279],["2025-06",99.9279],["2025-07",100.0],["2025-08",100.4],["2025-09",100.4],["2025-10",100.5],["2025-11",101.1],["2025-12",101.2],["2026-01",101.3],["2026-02",101.5],["2026-03",101.7],["2026-04",102.8],["2026-05",103.4],["2026-06",103.6],["2026-07",103.5],["2026-08",103.9],["2026-09",104.0]]},"house":{"code":"40010","name":"Prices of Dwellings","m":"2026-07","v":590.0,"base":"Average 1993","mom":-0.6,"yoy":-1.8,"ytd":-1.7,"hist":[["2015-01",354.8],["2015-02",358.3],["2015-03",360.6],["2015-04",361.5],["2015-05",364.5],["2015-06",368.3],["2015-07",369.2],["2015-08",369.0],["2015-09",371.3],["2015-10",374.4],["2015-11",377.5],["2015-12",380.4],["2016-01",381.4],["2016-02",384.0],["2016-03",389.1],["2016-04",390.2],["2016-05",391.1],["2016-06",393.4],["2016-07",396.1],["2016-08",399.9],["2016-09",404.2],["2016-10",404.4],["2016-11",402.8],["2016-12",402.1],["2017-01",402.8],["2017-02",404.9],["2017-03",406.8],["2017-04",407.7],["2017-05",409.5],["2017-06",412.8],["2017-07",414.3],["2017-08",415.9],["2017-09",414.6],["2017-10",414.5],["2017-11",411.9],["2017-12",407.8],["2018-01",406.3],["2018-02",405.9],["2018-03",406.5],["2018-04",406.2],["2018-05",409.2],["2018-06",410.5],["2018-07",408.1],["2018-08",407.4],["2018-09",406.6],["2018-10",405.8],["2018-11",405.5],["2018-12",404.7],["2019-01",408.3],["2019-02",409.6],["2019-03",410.8],["2019-04",412.9],["2019-05",414.1],["2019-06",413.7],["2019-07",414.9],["2019-08",414.5],["2019-09",416.6],["2019-10",418.7],["2019-11",419.1],["2019-12",421.6],["2020-01",423.7],["2020-02",424.1],["2020-03",423.7],["2020-04",420.7],["2020-05",422.0],["2020-06",426.2],["2020-07",426.2],["2020-08",426.6],["2020-09",427.9],["2020-10",431.8],["2020-11",435.7],["2020-12",438.3],["2021-01",439.2],["2021-02",442.7],["2021-03",448.5],["2021-04",452.1],["2021-05",454.4],["2021-06",459.9],["2021-07",465.4],["2021-08",467.3],["2021-09",471.0],["2021-10",477.6],["2021-11",485.7],["2021-12",495.9],["2022-01",503.8],["2022-02",511.9],["2022-03",517.0],["2022-04",525.3],["2022-05",536.3],["2022-06",543.8],["2022-07",553.6],["2022-08",559.7],["2022-09",565.3],["2022-10",567.0],["2022-11",567.6],["2022-12",568.7],["2023-01",568.7],["2023-02",568.7],["2023-03",567.6],["2023-04",564.8],["2023-05",561.4],["2023-06",560.3],["2023-07",559.2],["2023-08",558.6],["2023-09",557.5],["2023-10",554.7],["2023-11",558.0],["2023-12",563.0],["2024-01",569.2],["2024-02",574.9],["2024-03",579.5],["2024-04",583.6],["2024-05",587.1],["2024-06",591.8],["2024-07",593.0],["2024-08",592.4],["2024-09",593.6],["2024-10",596.6],["2024-11",599.0],["2024-12",606.2],["2025-01",609.8],["2025-02",608.6],["2025-03",607.4],["2025-04",605.0],["2025-05",602.6],["2025-06",602.0],["2025-07",600.8],["2025-08",597.2],["2025-09",593.0],["2025-10",596.0],["2025-11",600.8],["2025-12",600.2],["2026-01",599.6],["2026-02",602.0],["2026-03",599.6],["2026-04",592.4],["2026-05",593.0],["2026-06",593.6],["2026-07",590.0]]}},"mkt":{"asOf":1792107888,"src":"cnbc","items":{"dji":{"n":"Dow Jones","sym":".DJI","p":52177.69,"pc":51621.48,"chp":1.08,"t":1792096445,"cur":"USD","rt":true,"a":{"y1":[1759636800,45479.6],"y5":[1633838400,35294.7561],"y10":[1479013200,18867.9348],"ye":[1766898000,48382.39]},"hAt":1792072902,"y1":14.73,"r5":8.11,"r10":10.8,"ytd":7.84},"ta35":{"n":"TA-35","sym":".TA35","p":4150.13,"pc":4162.77,"chp":-0.15,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3276.85],"y5":[1633838400,1848.07],"y10":[1479013200,1432.48],"ye":[1766898000,3695.29]},"hAt":1792072901,"y1":26.65,"r5":17.51,"r10":11.32,"ytd":12.31},"ta125":{"n":"TA-125","sym":".TA125","p":4017.15,"pc":4025.15,"chp":-0.07,"t":1792073637,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3358.13],"y5":[1633838400,1909.51],"y10":[1479013200,1251.26],"ye":[1766898000,3733.08]},"hAt":1792072901,"y1":19.62,"r5":15.99,"r10":12.48,"ytd":7.61},"spx":{"n":"S&P 500","sym":".SPX","p":7744.06,"pc":7718.94,"chp":0.33,"t":1792096433,"cur":"USD","rt":true,"a":{"y1":[1759636800,6552.51],"y5":[1633838400,4471.37],"y10":[1479013200,2181.9],"ye":[1766898000,6858.47]},"hAt":1792072901,"y1":18.18,"r5":11.57,"r10":13.62,"ytd":12.91},"ndx":{"n":"Nasdaq 100","sym":".NDX","p":29935.595,"pc":29950.816,"chp":-0.05,"t":1792098959,"cur":"USD","rt":true,"a":{"y1":[1759636800,24221.745],"y5":[1633838400,15146.921],"y10":[1479013200,4808.042],"ye":[1766898000,25206.168]},"hAt":1792072901,"y1":23.59,"r5":14.55,"r10":20.24,"ytd":18.76},"gold":{"n":"Gold","sym":"@GC.1","p":4178.6,"pc":4170.1,"chp":0.2,"t":1792107887,"cur":"USD","rt":false,"a":{"y1":[1759636800,4000.4],"y5":[1633838400,1768.3],"y10":[1479013200,1208.7],"ye":[1766898000,4329.6]},"hAt":1792072902,"y1":4.45,"r5":18.7,"r10":13.32,"ytd":-3.49},"brent":{"n":"Brent","sym":"@LCO.1","p":105.92,"pc":105.92,"chp":null,"t":1792104902,"cur":"USD","rt":false,"a":{"y1":[1759636800,62.73],"y5":[1633838400,84.86],"y10":[1479013200,46.86],"ye":[1766898000,60.75]},"hAt":1792072903,"y1":68.85,"r5":4.52,"r10":8.57,"ytd":74.35},"ixic":{"n":"Nasdaq Composite","sym":".IXIC","p":26713.026,"pc":26692.868,"chp":0.08,"t":1792098959,"cur":"USD","rt":true,"a":{"y1":[1759636800,22204.43],"y5":[1633838400,14897.34],"y10":[1479013200,5321.513],"ye":[1766898000,23235.629]},"hAt":1792106858,"y1":20.3,"r5":12.35,"r10":17.66,"ytd":14.97},"rut":{"n":"Russell 2000","sym":".RUT","p":2767.269,"pc":2767.269,"chp":1.38,"t":1792096200,"cur":"USD","rt":false,"a":{"y1":[1759636800,2394.595],"y5":[1633838400,2265.6544],"y10":[1479013200,1315.642],"ye":[1766898000,2508.2233]},"hAt":1792106859,"y1":15.56,"r5":4.07,"r10":7.78,"ytd":10.33},"vix":{"n":"VIX","sym":".VIX","p":16.46,"pc":16.87,"chp":-2.43,"t":1792095301,"cur":"USD","rt":true,"a":{"y1":[1759636800,21.66],"y5":[1633838400,16.3],"y10":[1479013200,12.85],"ye":[1766898000,14.51]},"hAt":1792106860,"y1":-24.01,"r5":0.19,"r10":2.53,"ytd":13.44},"ftse":{"n":"FTSE 100","sym":".FTSE","p":10840.35,"pc":10724.86,"chp":1.08,"t":1792078500,"cur":"GBP","rt":false,"a":{"y1":[1759636800,9427.47],"y5":[1633838400,7234.03],"y10":[1479013200,6775.77],"ye":[1766898000,9951.14]},"hAt":1792106860,"y1":14.99,"r5":8.4,"r10":4.85,"ytd":8.94},"dax":{"n":"DAX","sym":".GDAXI","p":25382.62,"pc":25298.61,"chp":0.33,"t":1792080000,"cur":"EUR","rt":false,"a":{"y1":[1759636800,24241.46],"y5":[1633838400,15587.36],"y10":[1479013200,10664.56],"ye":[1766898000,24539.34]},"hAt":1792106861,"y1":4.71,"r5":10.21,"r10":9.13,"ytd":3.44},"stoxx":{"n":"Euro Stoxx 50","sym":".STOXX50E","p":6168.26,"pc":6190.37,"chp":-0.36,"t":1792080000,"cur":"EUR","rt":false,"a":{"y1":[1759636800,5531.32],"y5":[1633838400,4182.91],"y10":[1479013200,3020.83],"ye":[1766898000,5850.38]},"hAt":1792106862,"y1":11.52,"r5":8.05,"r10":7.46,"ytd":5.43},"nikkei":{"n":"Nikkei 225","sym":".N225","p":64425.95,"pc":64425.95,"chp":null,"t":1792022400,"cur":"JPY","rt":false,"a":{"y1":[1759636800,48088.8],"y5":[1633838400,29068.63],"y10":[1479013200,17967.41],"ye":[1766898000,50339.48]},"hAt":1792106863,"y1":33.97,"r5":17.21,"r10":13.74,"ytd":27.98},"silver":{"n":"Silver","sym":"@SI.1","p":57.265,"pc":57.156,"chp":0.19,"t":1792107888,"cur":"USD","rt":false,"a":{"y1":[1759636800,47.247],"y5":[1633838400,23.349],"y10":[1479013200,16.624],"ye":[1766898000,71.015]},"hAt":1792106863,"y1":21.2,"r5":19.59,"r10":13.28,"ytd":-19.36},"platinum":{"n":"Platinum","sym":"@PL.1","p":1629.8,"pc":1621.5,"chp":0.51,"t":1792107879,"cur":"USD","rt":false,"a":{"y1":[1759636800,1623.0],"y5":[1633838400,1058.9],"y10":[1479013200,922.0],"ye":[1766898000,2129.3]},"hAt":1792106865,"y1":0.42,"r5":8.98,"r10":5.91,"ytd":-23.46},"copper":{"n":"Copper","sym":"@HG.1","p":6.5515,"pc":6.5565,"chp":-0.08,"t":1792107880,"cur":"USD","rt":false,"a":{"y1":[1759636800,4.894],"y5":[1633838400,4.7295],"y10":[1479013200,2.4675],"ye":[1766898000,5.6915]},"hAt":1792106867,"y1":33.87,"r5":6.71,"r10":10.34,"ytd":15.11},"wti":{"n":"WTI crude","sym":"@CL.1","p":97.6,"pc":97.97,"chp":-0.38,"t":1792107858,"cur":"USD","rt":false,"a":{"y1":[1759636800,58.9],"y5":[1633838400,82.28],"y10":[1479013200,45.69],"ye":[1766898000,57.32]},"hAt":1792106868,"y1":65.7,"r5":3.46,"r10":7.95,"ytd":70.27},"natgas":{"n":"Natural gas","sym":"@NG.1","p":3.216,"pc":3.236,"chp":-0.62,"t":1792107885,"cur":"USD","rt":false,"a":{"y1":[1759636800,3.106],"y5":[1633838400,5.41],"y10":[1479013200,2.843],"ye":[1766898000,3.618]},"hAt":1792106869,"y1":3.54,"r5":-9.85,"r10":1.25,"ytd":-11.11}}}};
 var IX = {idx: Object.assign({}, (IX_BUILT && IX_BUILT.idx) || {}), mkt: Object.assign({}, ((IX_BUILT && IX_BUILT.mkt) || {}).items || {}), src: 'built', at: 0};
 var IX_MK = ['ta35', 'ta125', 'spx', 'ndx', 'dji', 'ixic', 'rut', 'vix', 'ftse', 'dax', 'stoxx', 'nikkei', 'gold', 'silver', 'platinum', 'copper', 'brent', 'wti', 'natgas'], IX_COM = ['gold', 'silver', 'platinum', 'copper', 'brent', 'wti', 'natgas'], IX_RET = ['ta125', 'ta35', 'spx', 'ndx', 'dji', 'gold'];
 var IX_SYM = {ta35: '.TA35', ta125: '.TA125', spx: '.SPX', ndx: '.NDX', dji: '.DJI', ixic: '.IXIC', rut: '.RUT', vix: '.VIX', ftse: '.FTSE', dax: '.GDAXI', stoxx: '.STOXX50E', nikkei: '.N225',
@@ -17501,7 +17672,7 @@ const MK_SVG = {
 };
 const MK_FLAG = {ta35: '🇮🇱', ta125: '🇮🇱', spx: '🇺🇸', ndx: '🇺🇸', dji: '🇺🇸', ixic: '🇺🇸', rut: '🇺🇸', ftse: '🇬🇧', dax: '🇩🇪', stoxx: '🇪🇺', nikkei: '🇯🇵'};
 function mkIcon(k){
-  if (MK_SVG[k]) return `<span class="mk-ic mk-ic-${k}" aria-hidden="true">${MK_SVG[k]}</span>`;
+  if (MK_SVG[k]) return `<span class="mk-ic mk-ic-${k}" aria-hidden="true">${MK_SVG[k]}${['gold', 'silver', 'platinum', 'copper'].includes(k) ? '<span class="mk-sh"><i></i></span>' : ''}</span>`;
   if (MK_FLAG[k]) return `<span class="cur-coin mk-flag" aria-hidden="true"><i>${MK_FLAG[k]}</i></span>`;
   return '';
 }
@@ -17514,6 +17685,449 @@ function mkIconsAll(){
 const _ixBoard90 = ixBoard;
 ixBoard = function(){ const r = _ixBoard90.apply(this, arguments); try { mkIconsAll(); } catch (e) {} return r; };
 try { mkIconsAll(); } catch (e) {}
+
+/* ================= 8.9: photo fill, index charts, price alerts, install, mortgage and pension comparisons, a personal summary, backup ================= */
+const E91 = s => asEsc(String(s == null ? '' : s));
+const numIn = (lab, u, attrs, val, ph) => `<div class="field"><span class="lc-l" aria-hidden="true">${E91(lab)}</span><div class="control"><input type="number" inputmode="decimal" step="any" ${attrs} value="${val == null ? '' : E91(val)}"${ph != null ? ` placeholder="${E91(ph)}"` : ''} aria-label="${E91(lab)}">${unitHTML(u)}</div></div>`;
+const cardTop = (i, sel, pre, L) => `<div class="lc-top"><span class="lc-num" aria-hidden="true">${i + 1}</span>${sel}
+  <button type="button" class="lc-del ins-dup" data-${pre}edit="${i}" aria-label="${E91(t('ins_edit'))}" title="${E91(t('ins_edit'))}">✏️</button>
+  <button type="button" class="lc-del ins-dup" data-${pre}dup="${i}" aria-label="${E91(t('ins_dup'))}" title="${E91(t('ins_dup'))}">⧉</button>
+  ${L.length > 1 ? `<button type="button" class="lc-del" data-${pre}del="${i}" aria-label="${E91(t('ins_del'))}">✕</button>` : ''}</div>`;
+
+/* ---------- 1. mortgage offers ---------- */
+var MC_EDIT = {};
+function mcRender(){
+  const box = $('#mc_box'); if (!box) return;
+  const L = mcList(), act = document.activeElement, keep = act && box.contains(act) ? act.getAttribute('data-k91') : null;
+  const kinds = ['fix', 'cpi', 'var'];
+  box.innerHTML = phBtn('mortcmp') + `<div class="ins-head"><b>${E91(t('mc_offers'))}</b><span class="ins-count">${E91(t('ins_count', {n: L.length}))}</span></div>` +
+    L.map((o, i) => `<div class="lc-card mc-card">
+      ${cardTop(i, `<select class="lc-name ins-co" data-mci="${i}" data-mck="bank" data-k91="mc${i}bank" aria-label="${E91(t('mc_bank'))}"><option value="">${E91(t('mc_pick'))}</option>${MC_BANKS.map(b => `<option value="${b}"${b === o.bank ? ' selected' : ''}>${E91(t('lend_' + b))}</option>`).join('')}</select>`, 'mc', L)}
+      ${o.bank === 'nonother' || MC_EDIT[i] || String(o.n || '').trim() ? `<input class="lc-name ins-nm" type="text" maxlength="30" dir="auto" data-mci="${i}" data-mck="n" data-k91="mc${i}n" value="${E91(o.n || '')}" placeholder="${E91(t('mc_namePh'))}" aria-label="${E91(t('lc_name'))}">` : ''}
+      ${(o.tr || []).map((x, j) => `<div class="mc-tr"><div class="mc-trh"><span>${E91(t('mc_track', {n: j + 1}))}</span>
+        <select data-mci="${i}" data-mct="${j}" data-mck="k" data-k91="mc${i}t${j}k" aria-label="${E91(t('f_tkKind'))}">${kinds.map(k => `<option value="${k}"${k === x.k ? ' selected' : ''}>${E91(t('o_tk_' + k))}</option>`).join('')}</select></div>
+        <div class="fields fields3">${numIn(t('f_share'), '%', `data-mci="${i}" data-mct="${j}" data-mck="s" data-k91="mc${i}t${j}s"`, x.s)}${numIn(t('f_tkRate'), '%', `data-mci="${i}" data-mct="${j}" data-mck="r" data-k91="mc${i}t${j}r"`, x.r)}${numIn(t('f_tkYears'), 'yrs', `data-mci="${i}" data-mct="${j}" data-mck="y" data-k91="mc${i}t${j}y"`, x.y)}</div></div>`).join('')}
+      <div class="fields">${numIn(t('mc_fee'), 'cur', `data-mci="${i}" data-mck="fee" data-k91="mc${i}fee"`, o.fee)}</div>
+    </div>`).join('') +
+    `<button type="button" class="lc-add" id="mc_add"><span aria-hidden="true">＋</span> ${E91(t('lc_add'))}</button><p class="fine lc-hint">${E91(t('h_mc'))}</p>`;
+  if (keep){ const el = box.querySelector(`[data-k91="${keep}"]`); if (el) el.focus(); }
+}
+/* ---------- 2. pension / provident fund offers ---------- */
+var PC_EDIT = {};
+function pcRender(){
+  const box = $('#pc_box'); if (!box) return;
+  const L = pcList(), act = document.activeElement, keep = act && box.contains(act) ? act.getAttribute('data-k91') : null;
+  box.innerHTML = phBtn('pencmp') + `<div class="ins-head"><b>${E91(t('pc_offers'))}</b><span class="ins-count">${E91(t('ins_count', {n: L.length}))}</span></div>` +
+    L.map((o, i) => `<div class="lc-card pc-card">
+      ${cardTop(i, `<select class="lc-name ins-co" data-pci="${i}" data-pck="co" data-k91="pc${i}co" aria-label="${E91(t('pc_co'))}"><option value="">${E91(t('pc_pick'))}</option>${PC_COS.map(c => `<option value="${c}"${c === o.co ? ' selected' : ''}>${E91(t('pc_co_' + c))}</option>`).join('')}</select>`, 'pc', L)}
+      ${o.co === 'other' || PC_EDIT[i] || String(o.n || '').trim() ? `<input class="lc-name ins-nm" type="text" maxlength="30" dir="auto" data-pci="${i}" data-pck="n" data-k91="pc${i}n" value="${E91(o.n || '')}" placeholder="${E91(t('pc_namePh'))}" aria-label="${E91(t('lc_name'))}">` : ''}
+      <div class="fields fields3">${numIn(t('f_mfDepFee'), '%', `data-pci="${i}" data-pck="dep" data-k91="pc${i}dep"`, o.dep)}${numIn(t('f_mfAccFee'), '%', `data-pci="${i}" data-pck="acc" data-k91="pc${i}acc"`, o.acc)}${numIn(t('pc_ret'), '%', `data-pci="${i}" data-pck="ret" data-k91="pc${i}ret"`, o.ret, t('pc_retPh'))}</div>
+    </div>`).join('') +
+    `<button type="button" class="lc-add" id="pc_add"><span aria-hidden="true">＋</span> ${E91(t('lc_add'))}</button><p class="fine lc-hint">${E91(t('h_pc'))}</p>`;
+  if (keep){ const el = box.querySelector(`[data-k91="${keep}"]`); if (el) el.focus(); }
+}
+var T91 = null;
+const re91 = () => { clearTimeout(T91); T91 = setTimeout(() => { try { saveSet(); } catch (e) {} if (tab === 'mortcmp' || tab === 'pencmp') calc(tab); }, 250); };
+document.addEventListener('input', e => {
+  const el = e.target; if (!el.dataset) return;
+  if (el.dataset.mck != null && el.closest('#mc_box')){
+    const o = mcList()[+el.dataset.mci]; if (!o) return; const k = el.dataset.mck;
+    if (el.dataset.mct != null){ const x = o.tr[+el.dataset.mct]; if (x && k !== 'k') x[k] = el.value === '' ? 0 : +el.value; }
+    else if (k === 'n') o.n = el.value.slice(0, 30); else if (k === 'fee') o.fee = el.value === '' ? 0 : +el.value;
+    re91();
+  } else if (el.dataset.pck != null && el.closest('#pc_box')){
+    const o = pcList()[+el.dataset.pci]; if (!o) return; const k = el.dataset.pck;
+    if (k === 'n') o.n = el.value.slice(0, 30); else if (k === 'ret') o.ret = el.value === '' ? '' : +el.value; else if (k !== 'co') o[k] = el.value === '' ? 0 : +el.value;
+    re91();
+  }
+}, true);
+document.addEventListener('change', e => {
+  const el = e.target; if (!el.dataset || el.tagName !== 'SELECT') return;
+  if (el.dataset.mck && el.closest('#mc_box')){
+    const o = mcList()[+el.dataset.mci]; if (!o) return;
+    if (el.dataset.mct != null){ o.tr[+el.dataset.mct].k = el.value; }
+    else { o.bank = el.value; if (o.bank !== 'nonother' && !MC_EDIT[el.dataset.mci]) o.n = ''; }
+    saveSet(); mcRender(); calc(tab);
+    if (o.bank === 'nonother'){ const n = $(`#mc_box .ins-nm[data-mci="${el.dataset.mci}"]`); if (n) n.focus(); }
+  } else if (el.dataset.pck === 'co' && el.closest('#pc_box')){
+    const o = pcList()[+el.dataset.pci]; if (!o) return;
+    o.co = el.value; if (o.co !== 'other' && !PC_EDIT[el.dataset.pci]) o.n = '';
+    saveSet(); pcRender(); calc(tab);
+    if (o.co === 'other'){ const n = $(`#pc_box .ins-nm[data-pci="${el.dataset.pci}"]`); if (n) n.focus(); }
+  }
+}, true);
+document.addEventListener('click', e => {
+  if (!e.target.closest) return;
+  const sets = [['mc', mcList, mcRender, MC_EDIT, o => o.bank && o.bank !== 'nonother' ? t('lend_' + o.bank) : '', () => mcSeed()[0]], ['pc', pcList, pcRender, PC_EDIT, o => o.co && o.co !== 'other' ? t('pc_co_' + o.co) : '', () => pcSeed()[0]]];
+  for (const [p, list, render, EDIT, autoName, seed] of sets){
+    const L = list();
+    if (e.target.closest('#' + p + '_add')){ const last = L[L.length - 1] || seed(); L.push(JSON.parse(JSON.stringify(Object.assign({}, last, {n: '', bank: '', co: ''})))); saveSet(); render(); calc(tab); const s = $$(`#${p}_box .ins-co`).pop(); if (s){ s.focus(); s.scrollIntoView({block: 'center'}); } return; }
+    const ed = e.target.closest(`[data-${p}edit]`); if (ed){ const i = +ed.dataset[p + 'edit']; EDIT[i] = true; const o = L[i]; if (o && !String(o.n || '').trim()) o.n = autoName(o); render(); const n = $(`#${p}_box .ins-nm[data-${p}i="${i}"]`); if (n){ n.focus(); n.select(); } return; }
+    const du = e.target.closest(`[data-${p}dup]`); if (du){ const i = +du.dataset[p + 'dup']; if (!L[i]) return; L.splice(i + 1, 0, JSON.parse(JSON.stringify(L[i]))); saveSet(); render(); calc(tab); return; }
+    const de = e.target.closest(`[data-${p}del]`); if (de){ if (L.length <= 1) return; L.splice(+de.dataset[p + 'del'], 1); for (const k in EDIT) delete EDIT[k]; saveSet(); render(); calc(tab); return; }
+  }
+});
+
+/* ---------- 3. fill an offer from a photo (inside the app, with the real AI) ---------- */
+var PH = {s: null, ok: false};
+(async function phInit(){
+  if (!IN_CLAUDE || !window.claude) return;
+  try { const s = await window.claude.use('sample'); if (!s) return; PH.s = s; const L = await s.limits().catch(() => null); PH.ok = !!(L && L.images); if (PH.ok) phAll(); } catch (e) {}
+})();
+function phBtn(kind){ return PH.ok ? `<div class="ph-row"><button type="button" class="ph-btn" data-ph="${kind}"><span aria-hidden="true">📷</span> ${E91(t('ph_btn'))}</button><span class="ph-st" data-phst="${kind}"></span></div>` : ''; }
+function phAll(){ try { insRender(); } catch (e) {} try { lcRender(); } catch (e) {} try { mcRender(); } catch (e) {} try { pcRender(); } catch (e) {} }
+const _lcR91 = lcRender;
+lcRender = function(){ const r = _lcR91.apply(this, arguments); const b = $('#lc_box'); if (b && PH.ok && !b.querySelector('.ph-row')) b.insertAdjacentHTML('afterbegin', phBtn('loancmp')); return r; };
+const _insR91 = insRender;
+insRender = function(){ const r = _insR91.apply(this, arguments); const b = $('#ins_box'); if (b && PH.ok && !b.querySelector('.ph-row')) b.insertAdjacentHTML('afterbegin', phBtn('insurance')); return r; };
+function phShrink(file){
+  return new Promise((res, rej) => {
+    const img = new Image(), u = URL.createObjectURL(file);
+    img.onload = () => { const k = Math.min(1, 1600 / Math.max(img.width, img.height)), c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(u); c.toBlob(b => b ? res(b) : rej(new Error('img')), 'image/jpeg', 0.85); };
+    img.onerror = () => { URL.revokeObjectURL(u); rej(new Error('img')); };
+    img.src = u;
+  });
+}
+const PH_ASK = {
+  insurance: () => `Read this insurance offer/quote image. Return ONLY JSON: {"insurer": one of ${JSON.stringify(INS_COS.filter(c => c !== 'other'))} or "" if not one of them, "name": insurer or plan name as written (short), "monthlyPremium": number (per month, convert yearly to monthly), "yearlyIncreasePct": number or 0, "deductible": number or 0, "cover": sum insured number or 0, "discountPct": number or 0, "discountYears": number or 0, "addonsMonthly": number or 0}. Use numbers only, no currency signs. If a value is missing use 0.`,
+  loancmp: () => `Read this loan offer image. Return ONLY JSON: {"lender": one of ${JSON.stringify(LEND.flatMap(g => g[1]).filter(c => c !== 'nonother'))} or "", "name": lender name as written (short), "amount": number, "annualRatePct": nominal yearly interest %, "years": number (convert months to years), "openingFee": number in money or 0, "feePct": fee as % of the loan or 0, "monthlyFee": number or 0}. Numbers only. Missing → 0.`,
+  mortcmp: () => `Read this mortgage offer image (a mix of tracks). Return ONLY JSON: {"bank": one of ${JSON.stringify(MC_BANKS.filter(c => c !== 'nonother'))} or "", "name": bank name as written, "fees": total opening/appraisal fees or 0, "tracks": [ up to 3 items {"kind": "fix" for fixed not linked, "cpi" for linked to the CPI (צמודה), "var" for prime or variable, "sharePct": share of the mortgage %, "ratePct": yearly rate %, "years": number} ]}. Numbers only.`,
+  pencmp: () => `Read this pension / provident / study fund offer image. Return ONLY JSON: {"company": one of ${JSON.stringify(PC_COS.filter(c => c !== 'other'))} or "", "name": company/track name as written, "depositFeePct": management fee from deposits %, "accumulationFeePct": management fee from savings %, "returnPct": expected or past yearly return % if shown, else null}. Numbers only.`
+};
+const n91 = x => { const v = typeof x === 'string' ? parseFloat(x.replace(/[^\d.\-]/g, '')) : +x; return isFinite(v) ? v : 0; };
+function phApply(kind, j){
+  if (!j || typeof j !== 'object') throw new Error('empty');
+  if (kind === 'insurance'){
+    const co = INS_COS.includes(j.insurer) ? j.insurer : '';
+    insList().push({co, n: co ? '' : String(j.name || '').slice(0, 30), p: n91(j.monthlyPremium), g: n91(j.yearlyIncreasePct), d: n91(j.deductible), c: n91(j.cover), x: n91(j.discountPct), xy: n91(j.discountYears), e: n91(j.addonsMonthly)});
+    insRender();
+  } else if (kind === 'loancmp'){
+    const all = LEND.flatMap(g => g[1]), lend = all.includes(j.lender) ? j.lender : '';
+    lcList().push({n: lend ? t('lend_' + lend) : String(j.name || '').slice(0, 30), nAuto: !!lend, lend, amt: n91(j.amount), rate: n91(j.annualRatePct), yrs: n91(j.years) || 1, fee: n91(j.openingFee), pct: n91(j.feePct), mon: n91(j.monthlyFee)});
+    lcRender();
+  } else if (kind === 'mortcmp'){
+    const bank = MC_BANKS.includes(j.bank) ? j.bank : '';
+    const tr = (Array.isArray(j.tracks) ? j.tracks : []).slice(0, 3).map(x => ({k: ['fix', 'cpi', 'var'].includes(x && x.kind) ? x.kind : 'fix', s: n91(x && x.sharePct), r: n91(x && x.ratePct), y: n91(x && x.years) || 25}));
+    while (tr.length < 3) tr.push({k: 'var', s: 0, r: 5, y: 25});
+    mcList().push({bank, n: bank ? '' : String(j.name || '').slice(0, 30), fee: n91(j.fees), tr});
+    mcRender();
+  } else if (kind === 'pencmp'){
+    const co = PC_COS.includes(j.company) ? j.company : '';
+    pcList().push({co, n: co ? '' : String(j.name || '').slice(0, 30), dep: n91(j.depositFeePct), acc: n91(j.accumulationFeePct), ret: j.returnPct == null || j.returnPct === '' ? '' : n91(j.returnPct)});
+    pcRender();
+  }
+  saveSet(); calc(tab);
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-ph]'); if (!b || !PH.ok) return;
+  const kind = b.dataset.ph, inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = 'image/*';
+  inp.onchange = async () => {
+    const f = inp.files && inp.files[0]; if (!f) return;
+    const st = () => $(`[data-phst="${kind}"]`), say = (k, cls) => { const s = st(); if (s){ s.textContent = t(k); s.className = 'ph-st ' + (cls || ''); } };
+    say('ph_reading');
+    try {
+      const blob = await phShrink(f);
+      const j = await PH.s.json(PH_ASK[kind](), {images: [blob], cache: false, modelTier: 'default'});
+      phApply(kind, j); toast(t('ph_done')); say('ph_done', 'ok');
+      const cards = $$('.lc-card', b.closest('.lc-wrap') || document); const last = cards[cards.length - 1]; if (last){ last.classList.add('ph-new'); last.scrollIntoView({block: 'center'}); }
+    } catch (er) { say(er && er.code === 'not_granted' ? 'ph_denied' : 'ph_fail', 'bad'); }
+  };
+  inp.click();
+});
+
+/* ---------- 4. a chart for every live index and commodity ---------- */
+const HIST_URL = IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/history.json' : 'history.json';
+var HIST = {d: null, at: 0, p: null};
+function histLoad(){
+  if (HIST.d && Date.now() - HIST.at < 3600e3) return Promise.resolve(HIST.d);
+  if (HIST.p) return HIST.p;
+  HIST.p = fetch(HIST_URL + '?v=' + Math.floor(Date.now() / 3600e3), {credentials: 'omit', referrerPolicy: 'no-referrer'}).then(r => r.ok ? r.json() : null).catch(() => null)
+    .then(j => { HIST.p = null; if (j && j.s){ HIST.d = j; HIST.at = Date.now(); } return HIST.d; });
+  return HIST.p;
+}
+const CH_R = [['1m', 31], ['6m', 183], ['1y', 366], ['5y', 1830]];
+var CH = {k: '', r: '1y', go: 'none'};
+function chOpen(k, go){
+  CH = {k, r: SET.chRange || '1y', go: go || 'none'};
+  if (!$('#chx')) document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="chx" hidden><div class="cp-box ch-box" role="dialog" aria-modal="true" aria-labelledby="chx_t"><div class="cp-top"><h3 id="chx_t"></h3><button type="button" class="cp-x" id="chx_x">×</button></div><div id="chx_b"></div></div></div>`);
+  $('#chx_x').setAttribute('aria-label', t('cp_close'));
+  $('#chx').hidden = false; document.body.classList.add('cp-lock');
+  chDraw(); histLoad().then(chDraw);
+}
+function chClose(){ const o = $('#chx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); } }
+function chSeries(){
+  const k = CH.k, d = HIST.d && HIST.d.s && HIST.d.s[k];
+  let pts = Array.isArray(d) ? d.map(x => [x[0] * 864e5, +x[1]]).filter(x => x[1] > 0) : [];
+  const live = IX.mkt[k]; if (live && live.p > 0){ const ts = (live.t ? live.t * 1000 : Date.now()); if (!pts.length || ts > pts[pts.length - 1][0] + 36e5) pts.push([ts, live.p]); else pts[pts.length - 1] = [pts[pts.length - 1][0], live.p]; }
+  const days = (CH_R.find(r => r[0] === CH.r) || CH_R[2])[1], from = Date.now() - days * 864e5;
+  return pts.filter(x => x[0] >= from);
+}
+function chDraw(){
+  const box = $('#chx_b'); if (!box || $('#chx').hidden) return;
+  $('#chx_t').innerHTML = (typeof mkIcon === 'function' ? mkIcon(CH.k) : '') + ' ' + E91(ixName(CH.k));
+  const P = chSeries(), com = IX_COM.includes(CH.k), fmt = x => (com ? '$' : '') + N(x, null, x >= 1000 ? 0 : 2);
+  const head = `<div class="ch-rng" role="tablist">${CH_R.map(([r]) => `<button type="button" role="tab" data-chr="${r}" class="${r === CH.r ? 'on' : ''}" aria-selected="${r === CH.r}">${E91(t('ch_' + r))}</button>`).join('')}</div>`;
+  const go = CH.go && CH.go !== 'none' ? `<button type="button" class="lc-add ch-go" data-chgo="1">🧮 ${E91(t('ch_go'))}</button>` : '';
+  if (P.length < 2){
+    box.innerHTML = head + `<div class="ch-empty">${E91(t(HIST.p ? 'ch_loading' : 'ch_none'))}</div>` + go; return;
+  }
+  const W = 340, H = 190, pad = 6, xs = P.map(p => p[0]), ys = P.map(p => p[1]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys), dy = (y1 - y0) || 1;
+  const X = x => pad + (x - x0) / ((x1 - x0) || 1) * (W - 2 * pad), Y = y => pad + (1 - (y - y0) / dy) * (H - 2 * pad);
+  const path = P.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1)).join(' ');
+  const first = P[0][1], last = P[P.length - 1][1], ch = (last / first - 1) * 100, up = ch >= 0, col = up ? 'var(--ch-up,#1f9d55)' : 'var(--ch-dn,#d64545)';
+  const dl = ms => new Date(ms).toLocaleDateString(typeof langLocale === 'function' ? langLocale() : (document.documentElement.lang || undefined), {day: 'numeric', month: 'short', year: '2-digit'});
+  box.innerHTML = head + `<div class="ch-top"><b class="num">${E91(fmt(last))}</b><span class="ix-ch ${up ? 'up' : 'down'}">${up ? '▲' : '▼'} ${E91(sgnPC(ch))}</span><small>${E91(t('ch_over', {r: t('ch_' + CH.r)}))}</small></div>
+    <div class="ch-wrap" dir="ltr"><svg class="ch-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="${E91(ixName(CH.k) + ' ' + fmt(first) + ' → ' + fmt(last))}">
+      <defs><linearGradient id="chg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${up ? '#2fbf71' : '#e05252'}" stop-opacity=".35"/><stop offset="1" stop-color="${up ? '#2fbf71' : '#e05252'}" stop-opacity="0"/></linearGradient></defs>
+      <path d="${path} L${X(x1).toFixed(1)} ${H} L${X(x0).toFixed(1)} ${H} Z" fill="url(#chg)"/>
+      <path d="${path}" fill="none" stroke="${col}" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+      <line class="ch-cur" x1="0" x2="0" y1="0" y2="${H}" stroke="currentColor" stroke-opacity=".35" vector-effect="non-scaling-stroke" hidden/>
+    </svg><div class="ch-tip" hidden></div>
+    <div class="ch-ax"><span>${E91(dl(x0))}</span><span>${E91(dl(x1))}</span></div>
+    <div class="ch-mm"><span>${E91(t('ch_min'))}: <b>${E91(fmt(y0))}</b></span><span>${E91(t('ch_max'))}: <b>${E91(fmt(y1))}</b></span></div></div>
+    <p class="fine">${E91(t('ch_src'))}</p>` + go;
+  const svg = box.querySelector('.ch-svg'), tip = box.querySelector('.ch-tip'), cur = box.querySelector('.ch-cur');
+  const move = ev => {
+    const r = svg.getBoundingClientRect(), fx = (ev.clientX - r.left) / r.width, tx = x0 + fx * (x1 - x0);
+    let bi = 0, bd = Infinity; P.forEach((p, i) => { const d = Math.abs(p[0] - tx); if (d < bd){ bd = d; bi = i; } });
+    const p = P[bi]; cur.removeAttribute('hidden'); cur.setAttribute('x1', X(p[0])); cur.setAttribute('x2', X(p[0]));
+    tip.hidden = false; tip.textContent = dl(p[0]) + ' · ' + fmt(p[1]); tip.style.left = Math.min(r.width - 120, Math.max(0, fx * r.width - 60)) + 'px';
+  };
+  svg.addEventListener('pointermove', move); svg.addEventListener('pointerdown', move);
+  svg.addEventListener('pointerleave', () => { tip.hidden = true; cur.setAttribute('hidden', ''); });
+}
+var CH_PASS = false;
+document.addEventListener('click', e => {
+  if (!e.target.closest) return;
+  const o = $('#chx');
+  if (o && !o.hidden){
+    if (e.target === o || e.target.closest('#chx_x')) return chClose();
+    const r = e.target.closest('[data-chr]'); if (r){ CH.r = r.dataset.chr; SET.chRange = CH.r; try { saveSet(); } catch (er) {} chDraw(); return; }
+    if (e.target.closest('[data-chgo]')){ const card = $(`#hmx .ix-card[data-ixk="${CH.k}"]`); chClose(); if (card){ CH_PASS = true; card.click(); CH_PASS = false; } return; }
+  }
+  const c = e.target.closest('#hmx .ix-card[data-ixk]');
+  if (c && !CH_PASS && IX_MK.includes(c.dataset.ixk)){ e.stopPropagation(); e.preventDefault(); chOpen(c.dataset.ixk, c.dataset.ixgo); }
+}, true);
+document.addEventListener('keydown', e => { if (e.key === 'Escape'){ const o = $('#chx'); if (o && !o.hidden){ e.preventDefault(); chClose(); } } });
+
+/* ---------- 5. price alerts ---------- */
+const AL_CUR = ['USD', 'EUR', 'GBP', 'JPY', 'CHF', 'BTC', 'ETH'];
+function alList(){ if (!Array.isArray(SET.alerts)) SET.alerts = []; return SET.alerts; }
+function alName(k){ return IX_MK.includes(k) ? ixName(k) : (typeof curFlag === 'function' ? curFlag(k) + ' ' : '') + k + ' → ' + baseCur; }
+function alNow(k){
+  if (IX_MK.includes(k)){ const d = IX.mkt[k]; return d && d.p > 0 ? d.p : NaN; }
+  const a = RATES[baseCur], b = RATES[k]; return a > 0 && b > 0 ? a / b : NaN;
+}
+const alFmt = (k, x) => !isFinite(x) ? '—' : IX_MK.includes(k) ? (IX_COM.includes(k) ? '$' : '') + N(x, null, x >= 1000 ? 0 : 2) : M(x, x >= 100 ? 0 : x >= 1 ? 3 : 6, baseCur);
+function alCheck(){
+  const L = alList(); let hit = 0;
+  L.forEach(a => {
+    if (!a.on || a.hit) return; const x = alNow(a.k); if (!isFinite(x)) return;
+    if ((a.op === '>' && x >= a.v) || (a.op === '<' && x <= a.v)){
+      a.hit = Date.now(); hit++;
+      const msg = t('al_fired', {n: alName(a.k), v: alFmt(a.k, x), op: t(a.op === '>' ? 'al_up' : 'al_dn'), t: alFmt(a.k, a.v)});
+      try { toast('🔔 ' + msg); } catch (e) {}
+      try { if (!IN_CLAUDE && 'Notification' in window && Notification.permission === 'granted') new Notification(t('al_title'), {body: msg, icon: 'icon-192.png', tag: 'al-' + a.id}); } catch (e) {}
+    }
+  });
+  if (hit){ try { saveSet(); } catch (e) {} alBtn(); if ($('#alx') && !$('#alx').hidden) alDraw(); }
+}
+function alBtn(){
+  const note = $('#hmx .mkt-note'); if (!note) return;
+  let b = $('#al_open');
+  const n = alList().filter(a => a.on && !a.hit).length, fired = alList().filter(a => a.hit).length;
+  const html = `🔔 ${E91(t('al_btn'))}${n ? ` <span class="al-n">${n}</span>` : ''}${fired ? ` <span class="al-n hit">${fired}</span>` : ''}`;
+  if (!b){ note.insertAdjacentHTML('beforebegin', `<div class="al-row"><button type="button" class="al-open" id="al_open">${html}</button></div>`); }
+  else if (b.innerHTML !== html) b.innerHTML = html;
+}
+function alOpen(){
+  if (!$('#alx')) document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="alx" hidden><div class="cp-box" role="dialog" aria-modal="true" aria-labelledby="alx_t"><div class="cp-top"><h3 id="alx_t"></h3><button type="button" class="cp-x" id="alx_x">×</button></div><div id="alx_b"></div></div></div>`);
+  $('#alx_t').textContent = t('al_title'); $('#alx_x').setAttribute('aria-label', t('cp_close'));
+  $('#alx').hidden = false; document.body.classList.add('cp-lock'); alDraw();
+}
+function alDraw(){
+  const box = $('#alx_b'); if (!box) return;
+  const L = alList(), keys = IX_MK.filter(k => IX.mkt[k] && IX.mkt[k].p > 0).concat(AL_CUR.filter(c => c !== baseCur && RATES[c]));
+  const sel = box.querySelector('#al_k') ? box.querySelector('#al_k').value : (keys[0] || 'gold');
+  box.innerHTML = `<div class="al-list">${L.length ? L.map((a, i) => `<div class="al-it${a.hit ? ' hit' : ''}"><div><b>${a.hit ? '✅' : '🔔'} ${E91(alName(a.k))}</b><small>${E91(t(a.op === '>' ? 'al_up' : 'al_dn'))} ${E91(alFmt(a.k, a.v))} · ${E91(t('al_now'))} ${E91(alFmt(a.k, alNow(a.k)))}</small></div>
+      ${a.hit ? `<button type="button" class="fg-x" data-alre="${i}">${E91(t('al_rearm'))}</button>` : ''}<button type="button" class="lc-del" data-aldel="${i}" aria-label="${E91(t('ins_del'))}">✕</button></div>`).join('') : `<p class="fine">${E91(t('al_empty'))}</p>`}</div>
+    <div class="al-add"><b>${E91(t('al_new'))}</b>
+      <select id="al_k" aria-label="${E91(t('al_what'))}">${keys.map(k => `<option value="${k}"${k === sel ? ' selected' : ''}>${E91(alName(k))}</option>`).join('')}</select>
+      <div class="al-line"><select id="al_op" aria-label="${E91(t('al_when'))}"><option value=">">${E91(t('al_up'))}</option><option value="<">${E91(t('al_dn'))}</option></select>
+      <input id="al_v" type="number" inputmode="decimal" step="any" aria-label="${E91(t('al_val'))}" placeholder="${E91(alFmt(sel, alNow(sel)))}"></div>
+      <button type="button" class="lc-add" id="al_add">＋ ${E91(t('al_addB'))}</button>
+      <p class="fine">${E91(t(IN_CLAUDE ? 'al_noteApp' : 'al_noteWeb'))}</p></div>`;
+  const v = $('#al_v'); const now = alNow(sel); if (v && isFinite(now)) v.value = String(+now.toPrecision(5));
+}
+document.addEventListener('change', e => { if (e.target && e.target.id === 'al_k'){ const v = $('#al_v'), now = alNow(e.target.value); if (v){ v.value = isFinite(now) ? String(+now.toPrecision(5)) : ''; v.placeholder = alFmt(e.target.value, now); } } });
+document.addEventListener('click', async e => {
+  if (!e.target.closest) return;
+  if (e.target.closest('#al_open')){ alOpen(); return; }
+  const o = $('#alx'); if (!o || o.hidden) return;
+  if (e.target === o || e.target.closest('#alx_x')){ o.hidden = true; document.body.classList.remove('cp-lock'); return; }
+  if (e.target.closest('#al_add')){
+    const k = $('#al_k').value, op = $('#al_op').value, v = +$('#al_v').value; if (!k || !(v > 0)) return toast(t('al_bad'));
+    alList().push({id: Date.now().toString(36), k, op, v, on: true, hit: 0}); saveSet();
+    try { if (!IN_CLAUDE && 'Notification' in window && Notification.permission === 'default') await Notification.requestPermission(); } catch (er) {}
+    alDraw(); alBtn(); toast(t('al_added')); alCheck(); return;
+  }
+  const d = e.target.closest('[data-aldel]'); if (d){ alList().splice(+d.dataset.aldel, 1); saveSet(); alDraw(); alBtn(); return; }
+  const r = e.target.closest('[data-alre]'); if (r){ const a = alList()[+r.dataset.alre]; if (a){ a.hit = 0; saveSet(); alDraw(); alBtn(); alCheck(); } }
+});
+setInterval(() => { try { alCheck(); } catch (e) {} }, 60000);
+
+/* ---------- 6. a personal summary on Home ---------- */
+function dsCard(id, ic, lab, val, sub){ return `<button type="button" class="ds-c" data-dsgo="${id}"><span class="ds-ic" aria-hidden="true">${ic}</span><span class="ds-l">${E91(lab)}</span><b class="num">${E91(val)}</b>${sub ? `<small>${E91(sub)}</small>` : ''}</button>`; }
+function dsBest(id){ try { const r = (CALC[id] || (() => null))(); return r && r.hero ? [strip(r.hero.label), strip(r.hero.value)] : null; } catch (e) { return null; } }
+function dsRender(){
+  const hm = $('#hm'); if (!hm || tab !== 'home') return;
+  const sec = hm.closest('section') || hm.parentNode;
+  let box = $('#dsb'); if (!box){ box = document.createElement('div'); box.id = 'dsb'; box.className = 'dsb'; const head = sec.querySelector('.mk-head'); (head || hm).parentNode.insertBefore(box, head || hm); }
+  const C = [];
+  try { const d = expData(), ym = new Date().toISOString().slice(0, 7), it = d.items.filter(x => String(x.date || '').slice(0, 7) === ym); if (it.length) C.push(dsCard('expenses', '🧾', t('ds_exp'), M(it.reduce((s, x) => s + (+x.amt || 0), 0), 0, expCur()), t('ds_expN', {n: it.length}))); } catch (e) {}
+  try { const vals = JSON.parse(LS.getItem('fin-vals') || '{}') || {}; if (vals.nw_cash != null || vals.nw_inv != null){ const b = dsBest('networth'); if (b) C.push(dsCard('networth', '💎', t('ds_nw'), b[1], '')); } } catch (e) {}
+  [['insOffers', 'insurance', '🛡️', 'ds_ins'], ['lcOffers', 'loancmp', '🏦', 'ds_loan'], ['mcOffers', 'mortcmp', '🏠', 'ds_mort'], ['pcOffers', 'pencmp', '📈', 'ds_pen']].forEach(([k, id, ic, lab]) => {
+    if (Array.isArray(SET[k]) && SET[k].length){ const b = dsBest(id); if (b){ const nm = String(b[0]).split(/[:：]/).slice(1).join(':').split(/[,،]/)[0].trim() || b[0]; C.push(dsCard(id, ic, t(lab), nm, b[1])); } }
+  });
+  try { const n = (JSON.parse(LS.getItem('fin-files') || '[]') || []).length; if (n) C.push(dsCard('saved', '📁', t('ds_saved'), N(n, 0), '')); } catch (e) {}
+  const al = alList().filter(a => a.on && !a.hit).length; if (al) C.push(`<button type="button" class="ds-c" data-dsal="1"><span class="ds-ic" aria-hidden="true">🔔</span><span class="ds-l">${E91(t('ds_al'))}</span><b class="num">${N(al, 0)}</b></button>`);
+  const inst = insCan();
+  box.innerHTML = `<div class="ds-head"><h3 class="sec-t">${E91(t('ds_title'))}</h3>${inst ? `<button type="button" class="ds-inst" id="pwa_inst">📲 ${E91(t('pwa_btn'))}</button>` : ''}</div>` +
+    (C.length ? `<div class="ds-grid">${C.join('')}</div>` : `<p class="fine ds-empty">${E91(t('ds_empty'))}</p>`);
+}
+document.addEventListener('click', e => {
+  const c = e.target.closest && e.target.closest('[data-dsgo],[data-dsal]'); if (!c) return;
+  if (c.dataset.dsal){ alOpen(); return; }
+  try { activate(c.dataset.dsgo); } catch (er) {}
+});
+
+/* ---------- 7. install as an app (the website) ---------- */
+var PWA = {ev: null};
+const isStandalone = () => { try { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; } catch (e) { return false; } };
+const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '');
+function insCan(){ return !IN_CLAUDE && !isStandalone() && (PWA.ev || isIOS()); }
+(function pwaInit(){
+  if (IN_CLAUDE || !/^https?:$/.test(location.protocol)) return;
+  const head = document.head;
+  if (!head.querySelector('link[rel=manifest]')) head.insertAdjacentHTML('beforeend', '<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">');
+  if ('serviceWorker' in navigator && location.protocol === 'https:') window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); PWA.ev = e; try { dsRender(); } catch (er) {} });
+  window.addEventListener('appinstalled', () => { PWA.ev = null; toast(t('pwa_done')); try { dsRender(); } catch (er) {} });
+})();
+document.addEventListener('click', async e => {
+  if (!e.target.closest || !e.target.closest('#pwa_inst')) return;
+  if (PWA.ev){ try { PWA.ev.prompt(); await PWA.ev.userChoice; } catch (er) {} PWA.ev = null; dsRender(); }
+  else if (isIOS()) alert(t('pwa_ios'));
+});
+
+/* ---------- 8. backup and restore (in Saved) ---------- */
+const BK_SKIP = /key|tok|secret|pass|pin/i;
+function bkMake(){
+  const o = {app: 'financial-calculator', v: 1, ver: APP_VER, at: new Date().toISOString(), data: {}};
+  DATA_KEYS.forEach(k => {
+    let v = LS.getItem(k); if (v == null) return;
+    if (k === 'fin-set'){ try { const s = JSON.parse(v); Object.keys(s).forEach(x => { if (BK_SKIP.test(x)) delete s[x]; }); v = JSON.stringify(s); } catch (e) {} }
+    o.data[k] = v;
+  });
+  return o;
+}
+async function bkSave(){
+  const blob = new Blob([JSON.stringify(bkMake(), null, 1)], {type: 'application/json'});
+  const r = await fileSave(blob, 'financial-calculator-backup-' + new Date().toISOString().slice(0, 10) + '.json', 'application/json');
+  toast(t(r === 'saved' ? 'bk_saved' : r === 'declined' ? 'pdf_declined' : 'bk_fail'));
+}
+function bkLoad(){
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'application/json,.json';
+  inp.onchange = async () => {
+    const f = inp.files && inp.files[0]; if (!f) return;
+    try {
+      if (f.size > 5e6) throw new Error('big');
+      const j = JSON.parse(await f.text());
+      if (!j || j.app !== 'financial-calculator' || !j.data || typeof j.data !== 'object') throw new Error('bad');
+      if (!confirm(t('bk_sure', {d: String(j.at || '').slice(0, 10)}))) return;
+      const keep = {}; try { const cur0 = JSON.parse(LS.getItem('fin-set') || '{}'); Object.keys(cur0).forEach(x => { if (BK_SKIP.test(x)) keep[x] = cur0[x]; }); } catch (e) {}
+      Object.keys(j.data).forEach(k => {
+        if (!DATA_KEYS.includes(k) || typeof j.data[k] !== 'string') return;
+        let v = j.data[k];
+        if (k === 'fin-set'){ try { const s = JSON.parse(v); Object.keys(s).forEach(x => { if (BK_SKIP.test(x)) delete s[x]; }); v = JSON.stringify(Object.assign(s, keep)); } catch (e) { return; } }
+        try { JSON.parse(v); } catch (e) { if (!['fin-lang', 'fin-cur', 'fin-tab'].includes(k)) return; }
+        SV.direct = true; try { LS.setItem(k, v); } finally { SV.direct = false; }
+        try { if (k === 'fin-exp' || k === 'fin-clients') LS.setItem(k, v); } catch (e) {}
+      });
+      toast(t('bk_done')); setTimeout(() => location.reload(), 900);
+    } catch (er) { toast(t('bk_bad')); }
+  };
+  inp.click();
+}
+const _svdR91 = svdRender;
+svdRender = function(){
+  const r = _svdR91.apply(this, arguments);
+  const root = $('#svd_root'); if (root && !root.querySelector('.bk-box')) root.insertAdjacentHTML('beforeend', `<div class="bk-box"><h4>💾 ${E91(t('bk_title'))}</h4><p class="fine">${E91(t('bk_note'))}</p><div class="bk-acts"><button type="button" class="lc-add" id="bk_save">⬇️ ${E91(t('bk_saveB'))}</button><button type="button" class="lc-add" id="bk_load">⬆️ ${E91(t('bk_loadB'))}</button></div></div>`);
+  return r;
+};
+document.addEventListener('click', e => { if (!e.target.closest) return; if (e.target.closest('#bk_save')) bkSave(); else if (e.target.closest('#bk_load')) bkLoad(); });
+
+/* ---------- start ---------- */
+const _ixB91 = ixBoard;
+ixBoard = function(){ const r = _ixB91.apply(this, arguments); try { alBtn(); alCheck(); } catch (e) {} try { dsRender(); } catch (e) {} return r; };
+const _al91 = applyLang;
+applyLang = function(){ const r = _al91.apply(this, arguments); try { mcRender(); pcRender(); } catch (e) {} return r; };
+const _calc91 = calc;
+calc = function(id){ if (id === 'mortcmp' && $('#mc_box') && !$('#mc_box').children.length) mcRender(); if (id === 'pencmp' && $('#pc_box') && !$('#pc_box').children.length) pcRender(); return _calc91.apply(this, arguments); };
+try { mcRender(); pcRender(); if (tab === 'home') dsRender(); else if (tab === 'mortcmp' || tab === 'pencmp') calc(tab); } catch (e) {}
+
+/* ---------- 9. lighter Settings: the 13 per-calculator currency lists hold one option until you open them ---------- */
+var LZ = new Map();
+function lzCollapse(){
+  $$('select[id^="set_cb_"]').forEach(s => {
+    LZ.set(s.id, s.innerHTML); const v = s.value, o = s.selectedOptions[0];
+    s.innerHTML = o ? o.outerHTML : `<option value="">${E91(t('f_curDefault'))}</option>`; s.value = v; s.dataset.lz = '1';
+  });
+}
+function lzOpen(s){ if (!s || !s.dataset.lz) return; const v = s.value, h = LZ.get(s.id); if (h){ s.innerHTML = h; s.value = v; } delete s.dataset.lz; }
+['pointerdown', 'focusin', 'keydown', 'touchstart'].forEach(ev => document.addEventListener(ev, e => { const s = e.target && e.target.closest && e.target.closest('select[data-lz]'); if (s) lzOpen(s); }, {capture: true, passive: true}));
+const _fillCB91 = fillCB;
+fillCB = function(){ $$('select[data-lz]').forEach(s => delete s.dataset.lz); const r = _fillCB91.apply(this, arguments); try { lzCollapse(); } catch (e) {} return r; };
+try { lzCollapse(); } catch (e) {}
+/* ---------- 10. the automatic checks: developer mode only ---------- */
+const CI_API = 'https://api.github.com/repos/' + DC_REPO + '/actions/workflows/test.yml';
+async function ciLoad(){
+  const box = $('#ci_box'); if (!box || !liveOwner()) return;
+  const H = {Accept: 'application/vnd.github+json'}; const tok = ghTok(); if (tok) H.Authorization = 'Bearer ' + tok;
+  let html = '';
+  try {
+    const r = await fetch(CI_API + '/runs?per_page=3', {headers: H, cache: 'no-store'});
+    if (!r.ok) throw new Error('gh' + r.status);
+    const j = await r.json(), L = (j.workflow_runs || []);
+    html = L.length ? L.map(x => { const st = x.status !== 'completed' ? '⏳ ' + t('ci_run') : x.conclusion === 'success' ? '✅ ' + t('ci_ok') : '❌ ' + t('ci_bad'); return `<li><a href="${E91(x.html_url)}" target="_blank" rel="noopener noreferrer">${E91(st)}</a> · ${E91(svdDate(Date.parse(x.created_at)))}</li>`; }).join('') : `<li>${E91(t('ci_none'))}</li>`;
+  } catch (e) { html = `<li>${E91(t('ci_err'))}</li>`; }
+  const l = $('#ci_list'); if (l) l.innerHTML = html;
+}
+function ciBox(){
+  const dc = $('#dc_box'); if (!dc || !liveOwner()) { const o = $('#ci_box'); if (o) o.remove(); return; }
+  if ($('#ci_box')) return;
+  dc.insertAdjacentHTML('afterend', `<div class="bk-box" id="ci_box"><h4>🧪 ${E91(t('ci_title'))}</h4><p class="fine">${E91(t('ci_note'))}</p><ul class="ci-list" id="ci_list"><li>…</li></ul>
+    <div class="bk-acts"><button type="button" class="lc-add" id="ci_go">▶️ ${E91(t('ci_go'))}</button><button type="button" class="lc-add" id="ci_ref">🔄 ${E91(t('ci_ref'))}</button></div></div>`);
+  ciLoad();
+}
+const _dcR91 = dcRender;
+dcRender = function(){ const r = _dcR91.apply(this, arguments); try { ciBox(); } catch (e) {} return r; };
+document.addEventListener('click', async e => {
+  if (!e.target.closest) return;
+  if (e.target.closest('#ci_ref')) return ciLoad();
+  if (!e.target.closest('#ci_go') || !liveOwner()) return;
+  const tok = ghTok(); if (!tok) return toast(t('ci_tok'));
+  try {
+    const r = await fetch(CI_API + '/dispatches', {method: 'POST', headers: {Authorization: 'Bearer ' + tok, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json'}, body: JSON.stringify({ref: 'main'})});
+    if (!r.ok) throw new Error('gh' + r.status);
+    toast(t('ci_started')); setTimeout(ciLoad, 4000);
+  } catch (er) { toast(t('ci_err')); }
+});
+
+/* for the automatic tests only (local copy) */
+if (location.hostname === 'localhost') window.__fin91 = {phApply, insList, mcList, lcList, pcList, alList, bkMake, setTab: x => { tab = x; }};
 
 applyLang(false);
 activate(tab);
