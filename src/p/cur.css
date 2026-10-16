@@ -101,3 +101,4 @@
 #fb_msg{width:100%;box-sizing:border-box;font:inherit;padding:10px;border-radius:12px;border:1px solid var(--line);background:transparent;color:inherit;resize:vertical}
 .fb-list{display:grid;gap:8px;max-height:60vh;overflow:auto}.fb-it{border:1px solid var(--line);border-radius:12px;padding:10px}.fb-it small{display:block;opacity:.7}.fb-it p{margin:6px 0 0;white-space:pre-wrap}.fb-r{color:#e2b33c}
 .rail-top .pwa-br{flex-basis:100%;height:0}.rail-top .pwa-inst{margin:-4px 0 0}
+#fb_mail{width:100%;box-sizing:border-box;font:inherit;padding:10px;border-radius:12px;border:1px solid var(--line);background:transparent;color:inherit;margin-bottom:8px}.fb-mail{display:inline-block;margin-top:4px;font-size:.85rem}
