@@ -20,7 +20,7 @@ function mcTrack(amt, tr, cpi){
   return {first, paid, n};
 }
 function calcMortCmp(){
-  const L = mcList(), amt = Math.max(0, v('mc_amt')), cpi = clamp(v('mc_cpi'), -5, 20) / 100;
+  const L = mcList(), amt = Math.max(0, v('mc_amt')), cpi = Math.max(-99, v('mc_cpi')) / 100;
   if (!(amt > 0)) return {hero: {label: t('r_mcBest'), value: '—'}, rows: []};
   const R = L.map((o, i) => {
     const trs = (o.tr || []).filter(x => (+x.s || 0) > 0), share = trs.reduce((s, x) => s + (+x.s || 0), 0) || 1;
@@ -46,10 +46,10 @@ function pcSeed(){ return [{co: '', n: '', dep: 1.5, acc: 0.22, ret: ''}, {co: '
 function pcList(){ if (!Array.isArray(SET.pcOffers) || !SET.pcOffers.length) SET.pcOffers = pcSeed(); return SET.pcOffers; }
 function pcName(o, i){ const own = String(o.n || '').trim(); if (own) return own; return o.co && o.co !== 'other' ? t('pc_co_' + o.co) : t('lc_def', {n: i + 1}); }
 function calcPenCmp(){
-  const bal0 = Math.max(0, v('pc_bal')), dep = Math.max(0, v('pc_dep')), yrs = clamp(Math.round(v('pc_yrs')), 1, 50), R0 = clamp(v('pc_ret'), -10, 20);
+  const bal0 = Math.max(0, v('pc_bal')), dep = Math.max(0, v('pc_dep')), yrs = clamp(Math.round(v('pc_yrs')), 1, 50), R0 = Math.max(-99, v('pc_ret'));
   const L = pcList().map((o, i) => {
-    const ret = o.ret === '' || o.ret == null || !isFinite(+o.ret) ? R0 : clamp(+o.ret, -10, 20);
-    const df = clamp(+o.dep || 0, 0, 6) / 100, af = clamp(+o.acc || 0, 0, 3) / 100;
+    const ret = o.ret === '' || o.ret == null || !isFinite(+o.ret) ? R0 : Math.max(-99, +o.ret);
+    const df = Math.max(0, +o.dep || 0) / 100, af = Math.max(0, +o.acc || 0) / 100;
     let b = bal0, fees = 0;
     for (let m = 0; m < yrs * 12; m++){
       const g = b * ret / 1200, fa = b * af / 12, fd = dep * df;

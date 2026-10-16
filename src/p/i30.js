@@ -1,0 +1,23 @@
+/* 9.1 texts */
+Object.assign(T, {
+  g_job:['שכר ועבודה','الراتب والعمل','Salary & work'], gs_job:['שכר','الراتب','Salary'],
+  g_taxes:['מסים','الضرائب','Taxes'], gs_taxes:['מסים','ضرائب','Taxes'],
+  g_credit:['הלוואות ואשראי','القروض والائتمان','Loans & credit'], gs_credit:['הלוואות','قروض','Loans'],
+  g_realty:['משכנתא ודיור','الرهن والسكن','Mortgage & housing'], gs_realty:['משכנתא','رهن','Mortgage'],
+  g_invest:['חיסכון והשקעות','الادخار والاستثمار','Saving & investing'], gs_invest:['חיסכון','ادخار','Saving'],
+  g_retire:['פנסיה וחופש כלכלי','التقاعد والحرية المالية','Pension & financial freedom'], gs_retire:['פנסיה','تقاعد','Pension'],
+  g_budget:['תקציב וצריכה','الميزانية والاستهلاك','Budget & spending'], gs_budget:['תקציב','ميزانية','Budget'],
+  g_compare:['ביטוח וסלולר','التأمين والهاتف','Insurance & mobile'], gs_compare:['השוואות','مقارنات','Compare'],
+  g_fxtools:['מטבע, מדד ואחוזים','العملة والمؤشر والنسب','Currency, CPI & percent'], gs_fxtools:['מטבע','عملة','Currency'],
+  f_kbLang:['שינוי שפה לפי המקלדת','تغيير اللغة حسب لوحة المفاتيح','Language follows the keyboard'],
+  h_kbLang:['כבוי כברירת מחדל. כשמופעל: אם מקלידים בעברית, בערבית או באנגלית בשדה טקסט – האפליקציה עוברת לשפה הזו. דפדפן לא יכול לדעת איזו מקלדת פתוחה, לכן זה לפי האותיות שמוקלדות.','مطفأ افتراضيًا. عند التشغيل: الكتابة بالعبرية أو العربية أو الإنجليزية في حقل نصي تغيّر لغة التطبيق. لا يستطيع المتصفح معرفة لوحة المفاتيح، لذا يعتمد على الحروف المكتوبة.','Off by default. When on: typing Hebrew, Arabic or English letters in a text field switches the app to that language. A browser cannot see which keyboard is open, so it goes by the letters you type.'],
+  kb_switched:['השפה הוחלפה לפי המקלדת','تم تغيير اللغة حسب لوحة المفاتيح','Language switched to match your keyboard'],
+  fb_title:['משוב למפתח','ملاحظات للمطوّر','Feedback to the developer'],
+  fb_note:['ספרו מה לשפר או מה לא עובד. נשלח רק מה שכתבתם, גרסת האפליקציה והשפה – בלי שם, מייל או טלפון (גם אם תכתבו כאלה, הם יוסרו). פרטי המפתח לא מוצגים לאף אחד.','أخبرونا ما يجب تحسينه. يُرسل فقط ما كتبتم والإصدار واللغة – بدون اسم أو بريد أو هاتف (وتُحذف إن كُتبت). بيانات المطوّر لا تظهر لأحد.','Tell us what to improve. Only your text, the app version and language are sent – no name, email or phone (they are removed if typed). The developer\'s details are never shown.'],
+  fb_kind:['סוג המשוב','نوع الملاحظة','Kind'], fb_k_idea:['💡 רעיון','💡 فكرة','💡 Idea'], fb_k_bug:['🐞 תקלה','🐞 خلل','🐞 Bug'], fb_k_q:['❓ שאלה','❓ سؤال','❓ Question'], fb_k_other:['✍️ אחר','✍️ أخرى','✍️ Other'],
+  fb_rate:['דירוג','التقييم','Rating'], fb_ph:['מה הייתם רוצים לראות באפליקציה?','ماذا تودّون أن تروا في التطبيق؟','What would you like to see in the app?'],
+  fb_send:['שליחה','إرسال','Send'], fb_empty:['כתבו משהו או בחרו דירוג','اكتبوا شيئًا أو اختاروا تقييمًا','Write something or pick a rating'],
+  fb_ok:['תודה! המשוב נשלח','شكرًا! أُرسلت الملاحظة','Thanks! Feedback sent'], fb_fail:['השליחה לא הצליחה – נסו שוב','فشل الإرسال – حاولوا مجددًا','Could not send – try again'],
+  fb_web:['באתר אפשר רק להעתיק את המשוב. שליחה ישירה למפתח עובדת מתוך האפליקציה.','في الموقع يمكن نسخ الملاحظة فقط. الإرسال المباشر يعمل داخل التطبيق.','On the website you can only copy your note. Sending directly works inside the app.'],
+  fb_inbox:['משוב מהמשתמשים (רק אתה רואה)','ملاحظات المستخدمين (أنت فقط ترى)','User feedback (only you see this)'], fb_none:['אין משוב עדיין','لا ملاحظات بعد','No feedback yet']
+});
