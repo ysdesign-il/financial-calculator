@@ -14,7 +14,7 @@ function calcConvert(){
   if (!RATES[from] || !RATES[to]) return null;
   const raw = parseFloat($('#x_rate').value);
   const manual = isFinite(raw) && raw > 0 ? raw : null;
-  const fee = clamp(v('x_fee'), 0, 50) / 100;
+  const fee = Math.max(0, v('x_fee')) / 100;
   const r = manual != null ? manual : rateOf(from, to);
   const gross = amt * r, out = gross * (1 - fee);
   const rows = [
@@ -49,7 +49,7 @@ function calcConvert(){
 function calcVat(){
   const amt = Math.max(0, v('v_amount')), mode = $('#v_mode').value, preset = $('#v_preset').value;
   const rate = Math.max(0, preset === 'c' ? v('v_rate') : parseFloat(preset)) / 100;
-  const qty = v('v_qty') > 0 ? v('v_qty') : 1, disc = clamp(v('v_disc'), 0, 100) / 100;
+  const qty = v('v_qty') > 0 ? v('v_qty') : 1, disc = Math.max(0, v('v_disc')) / 100;
   let uNet, uVat, preNet;
   if (mode === 'add'){ preNet = amt; uNet = amt * (1 - disc); uVat = uNet * rate; }
   else if (mode === 'extract'){ preNet = amt / (1 + rate); uNet = amt * (1 - disc) / (1 + rate); uVat = uNet * rate; }
@@ -144,7 +144,7 @@ function salaryCalc(g, pts, pensPct, studyPct, o){
   const b0 = taxByBrackets((taxBase - cf) * 12);
   if (cf) b0.tax += cf * 12 * o.carRate;
   const top = TAX.brackets[TAX.brackets.length - 1][1];
-  const coord = o.coord > 0 ? clamp(o.coord, 0, 100) / 100 : 0;                // tax coordination: the rate the Tax Authority approved for this job
+  const coord = o.coord > 0 ? o.coord / 100 : 0;                // tax coordination: the rate the Tax Authority approved for this job
   const b = coord ? {tax: taxBase * 12 * coord, sur: 0} : o.second ? {tax: taxBase * 12 * top, sur: b0.sur} : b0;   // a second job without tax coordination: the top rate, no credit points
   const pens = base * pensPct / 100;
   const qual = Math.min(pens, TAX.pensDepRate * Math.min(base, TAX.pensSalaryCap));
@@ -255,16 +255,16 @@ function salTime(amt, mode){
 function calcSalary(){
   const k = $('#s_per').value === 'y' ? 12 : 1;
   const amt = Math.max(0, v('s_amount')) / k, mode = $('#s_mode').value;
-  const pts = pointsOf('s'), pens = clamp(v('s_pension'), 0, 30), study = clamp(v('s_study'), 0, 30);
+  const pts = pointsOf('s'), pens = Math.max(0, v('s_pension')), study = Math.max(0, v('s_study'));
   const o = {bonus: Math.max(0, v('s_bonus')), benefit: Math.max(0, v('s_benefit')),
-             erPens: clamp(v('s_erPens'), 0, 30), erSev: clamp(v('s_erSev'), 0, 30), erStudy: clamp(v('s_erStudy'), 0, 30),
+             erPens: Math.max(0, v('s_erPens')), erSev: Math.max(0, v('s_erSev')), erStudy: Math.max(0, v('s_erStudy')),
              extra: Math.max(0, v('s_extra')), otherDed: Math.max(0, v('s_otherDed')), don: Math.max(0, v('s_don')),
-             locRate: clamp(v('s_locRate'), 0, 100), locCap: Math.max(0, v('s_locCap')), second: ($('#s_job') || {}).value === 'second',
-             age: ($('#s_age') || {}).value || 'reg', union: clamp(v('s_union'), 0, 5), lifeIns: Math.max(0, v('s_life')),
-             coord: ($('#s_job') || {}).value === 'coord' ? clamp(v('s_coord'), 0, 50) : 0};
+             locRate: Math.max(0, v('s_locRate')), locCap: Math.max(0, v('s_locCap')), second: ($('#s_job') || {}).value === 'second',
+             age: ($('#s_age') || {}).value || 'reg', union: Math.max(0, v('s_union')), lifeIns: Math.max(0, v('s_life')),
+             coord: ($('#s_job') || {}).value === 'coord' ? Math.max(0, v('s_coord')) : 0};
   const xp = {travel: Math.max(0, v('s_travel')), meals: Math.max(0, v('s_meals')), havraa: Math.max(0, v('s_havraa')) / 12, phone: ($('#s_phone') || {}).value === '1' ? Math.max(0, v('s_phoneVal')) : 0};
   o.extra += xp.travel + xp.meals + xp.havraa; o.benefit += xp.phone;
-  const gift = Math.max(0, v('s_gift') || 0), reimb = Math.max(0, v('s_reimb') || 0), erDis = clamp(v('s_erDis') || 0, 0, 5); o.benefit += gift;
+  const gift = Math.max(0, v('s_gift') || 0), reimb = Math.max(0, v('s_reimb') || 0), erDis = Math.max(0, v('s_erDis') || 0); o.benefit += gift;
   const TM = salTime(amt, mode); o.extra += TM.extra; o.otherDed += TM.after;
   const car = salCar();
   const oc = gg => withCar(gg, pts, pens, study, o, car);
@@ -374,7 +374,7 @@ function calcTaxTab(){
   const ptsCred = pts * TAX.point;
   const pensCred = TAX.pensCreditRate * Math.min(Math.max(0, v('t_pensDep')), TAX.pensDepRate * Math.min(earned, TAX.pensSalaryCap * 12));
   const don = Math.max(0, v('t_donation')), donCred = don > TAX.donMin ? 0.35 * Math.min(don, 0.3 * income, TAX.donMax) : 0;
-  const locCred = clamp(v('t_locRate'), 0, 100) / 100 * Math.min(income, Math.max(0, v('t_locCap')));
+  const locCred = Math.max(0, v('t_locRate')) / 100 * Math.min(income, Math.max(0, v('t_locCap')));
   const other = Math.max(0, v('t_other'));
   const credits = ptsCred + pensCred + donCred + locCred + other;
   const used = Math.min(credits, b.tax);

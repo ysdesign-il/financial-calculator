@@ -21,7 +21,7 @@ function calcCompound(){
              f: parseInt($('#c_freq').value, 10) || 12, g: v('c_depG') / 100, yearly: Math.max(0, v('c_yearly')),
              start: $('#c_time').value === 'start'};
   const goal = Math.max(0, v('c_goal'));
-  const tax = clamp(v('c_tax'), 0, 100) / 100, infl = v('c_infl') / 100;
+  const tax = Math.max(0, v('c_tax')) / 100, infl = v('c_infl') / 100;
   let months = clamp(Math.round(v('c_years')), 1, 60) * 12, sim, reached = true;
   if (mode === 'dep'){
     const s0 = compSim(Object.assign({}, o, {mo: 0}), months).bal;
@@ -83,7 +83,7 @@ function solveRate(A, D, B, M){
 function calcYield(){
   const mode = $('#y_mode').value;
   const A = Math.max(0, v('y_start')), D = Math.max(0, v('y_dep'));
-  const tax = clamp(v('y_tax'), 0, 100) / 100, infl = v('y_infl') / 100;
+  const tax = Math.max(0, v('y_tax')) / 100, infl = v('y_infl') / 100;
   let B = Math.max(0, v('y_end')), R = v('y_rate') / 100;
   let M = v('y_years') * ($('#y_unit').value === 'y' ? 12 : 1);
   if (!(A + D > 0) || (mode !== 'years' && !(M > 0))) return {hero:{label: t('r_avgAnnual'), value:'—'}, rows:[[t('r_invalidY'), '—']]};
@@ -119,7 +119,7 @@ function calcDividends(){
   const price = v('d_price'), shares0 = v('d_shares'), dps = v('d_dps');
   const f = parseInt($('#d_freq').value, 10) || 1;
   const tp = $('#d_taxP').value;
-  const tax = clamp(tp === 'c' ? v('d_tax') : parseFloat(tp), 0, 100) / 100;
+  const tax = Math.max(0, tp === 'c' ? v('d_tax') : parseFloat(tp)) / 100;
   const years = clamp(Math.round(v('d_years')), 1, 60);
   const g = v('d_growth') / 100, pg = v('d_pg') / 100, drip = $('#d_drip').value === '1';
   const invest = price * shares0, yld = price > 0 ? dps / price : NaN;

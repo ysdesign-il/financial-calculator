@@ -87,8 +87,8 @@ function insName(o, i, L){
 }
 function insOffer(o, yrs, idx){
   const n0 = x => isFinite(+x) ? +x : 0;
-  const p = Math.max(0, n0(o.p)), g = clamp(n0(o.g), -20, 50) / 100, d = Math.max(0, n0(o.d)), cov = Math.max(0, n0(o.c));
-  const disc = clamp(n0(o.x), 0, 90) / 100, dy = clamp(Math.round(n0(o.xy)), 0, 50), extra = Math.max(0, n0(o.e));
+  const p = Math.max(0, n0(o.p)), g = Math.max(-99, n0(o.g)) / 100, d = Math.max(0, n0(o.d)), cov = Math.max(0, n0(o.c));
+  const disc = Math.max(0, n0(o.x)) / 100, dy = clamp(Math.round(n0(o.xy)), 0, 50), extra = Math.max(0, n0(o.e));
   let total = 0, first = 0;
   for (let y = 0; y < yrs; y++){
     const m = (p * Math.pow(1 + g, y) * Math.pow(1 + idx, y)) * (y < dy ? 1 - disc : 1) + extra * Math.pow(1 + idx, y);
@@ -98,7 +98,7 @@ function insOffer(o, yrs, idx){
 }
 function calcInsurance(){
   const kind = ($('#ins_kind') || {}).value || 'life';
-  const yrs = clamp(Math.round(v('ins_years')), 1, 60), idx = clamp(v('ins_idx'), -5, 20) / 100, claims = Math.max(0, v('ins_claims'));
+  const yrs = clamp(Math.round(v('ins_years')), 1, 60), idx = Math.max(-99, v('ins_idx')) / 100, claims = Math.max(0, v('ins_claims'));
   const by = ($('#ins_by') || {}).value || 'total';
   insCoFilter(kind);
   const src = insList();

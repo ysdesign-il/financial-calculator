@@ -67,11 +67,11 @@ function selfNet(profit, pts){
 }
 function calcFreelance(){
   const want = Math.max(0, v('fl_net')) * 12, exp = Math.max(0, v('fl_exp')) * 12, pts = Math.max(0, v('fl_pts'));
-  const days = Math.max(0, 52 * 5 - 9 - Math.max(0, v('fl_off'))), hpd = Math.max(0, v('fl_hpd')), bill = clamp(v('fl_bill'), 1, 100) / 100;
+  const days = Math.max(0, 52 * 5 - 9 - Math.max(0, v('fl_off'))), hpd = Math.max(0, v('fl_hpd')), bill = Math.max(1, v('fl_bill')) / 100;
   const hrs = days * hpd * bill;
   let lo = 0, hi = want * 3 + 100000;
   for (let i = 0; i < 80; i++){ const mid = (lo + hi) / 2; if (selfNet(mid, pts).net < want) lo = mid; else hi = mid; }
-  const buf = clamp(v('fl_buf'), 0, 200) / 100, profit = (lo + hi) / 2, s = selfNet(profit, pts), rev0 = profit + exp, rate0 = hrs > 0 ? rev0 / hrs : 0;
+  const buf = Math.max(0, v('fl_buf')) / 100, profit = (lo + hi) / 2, s = selfNet(profit, pts), rev0 = profit + exp, rate0 = hrs > 0 ? rev0 / hrs : 0;
   const rev = rev0 * (1 + buf), rate = rate0 * (1 + buf);
   const murshe = $('#fl_vat').value === 'murshe';
   const rows = [[t('r_flRate'), M(rate)], [t('r_flDay'), M(rate * hpd * bill)], [t('r_flRevM'), M(rev / 12)], [t('r_flRevY'), M(rev), 'key'],
@@ -84,7 +84,7 @@ function calcFreelance(){
 /* --- employer cost --- */
 function calcEmpCost(){
   const g = Math.max(0, v('ec_gross'));
-  const r = salaryCalc(g, 2.25, 6, 0, {bonus: 0, benefit: 0, erPens: clamp(v('ec_pens'), 0, 30), erSev: clamp(v('ec_sev'), 0, 30), erStudy: clamp(v('ec_hish'), 0, 30)});
+  const r = salaryCalc(g, 2.25, 6, 0, {bonus: 0, benefit: 0, erPens: Math.max(0, v('ec_pens')), erSev: Math.max(0, v('ec_sev')), erStudy: Math.max(0, v('ec_hish'))});
   const other = Math.max(0, v('ec_other')), over = g * Math.max(0, v('ec_over')) / 100, total = r.employer + other + over;
   const rows = [[t('r_ecGross'), MI(g)], [t('r_erNi'), MI(r.erNi)], [t('r_erPens'), MI(r.erP)], [t('r_erSev'), MI(r.erS)]];
   if (r.erSt) rows.push([t('r_erStudy'), MI(r.erSt)]);
@@ -179,7 +179,7 @@ function calcBenefits(){
 /* --- how big a mortgage can I get --- */
 function calcMortCap(){
   const inc = Math.max(0, v('mc_inc')), other = Math.max(0, v('mc_other')), eq = Math.max(0, v('mc_eq')), rate = Math.max(0, v('mc_rate'));
-  const n = Math.round(clamp(v('mc_yrs'), 1, 30) * 12), pti = clamp(v('mc_pti'), 1, 100), ltv = {first: 0.75, upgrade: 0.7, invest: 0.5}[$('#mc_type').value] || 0.75;
+  const n = Math.round(clamp(v('mc_yrs'), 1, 30) * 12), pti = Math.max(1, v('mc_pti')), ltv = {first: 0.75, upgrade: 0.7, invest: 0.5}[$('#mc_type').value] || 0.75;
   const pay = Math.max(0, inc * pti / 100 - other), byPay = pvOf(pay, rate, n), byEq = eq * ltv / (1 - ltv);
   const loan = Math.min(byPay, byEq), price = loan + eq, pm = pmtOf(loan, rate, n);
   const warn = [];
@@ -204,7 +204,7 @@ function calcCarBenefit(){
 /* --- electric vs petrol --- */
 function calcEvFuel(){
   const km = Math.max(0, v('ev_km')), fp = Math.max(0, v('ev_fp')), fc = Math.max(0, v('ev_fc')), kwh = Math.max(0, v('ev_kwh')), ec = Math.max(0, v('ev_ec'));
-  const pub = clamp(v('ev_pub'), 0, 100) / 100, pubp = Math.max(0, v('ev_pubp')), diff = v('ev_diff');
+  const pub = Math.max(0, v('ev_pub')) / 100, pubp = Math.max(0, v('ev_pubp')), diff = v('ev_diff');
   const fuel = km / 100 * fc * fp + Math.max(0, v('ev_mf')), elec = km / 100 * ec * ((1 - pub) * kwh + pub * pubp) + Math.max(0, v('ev_me'));
   const save = fuel - elec, be = save > 0 && diff > 0 ? diff / save : NaN, hz = clamp(v('ev_hz') || 5, 1, 30);
   return {hero: {label: t(save >= 0 ? 'r_evSave' : 'r_evMore'), value: M(Math.abs(save)), sub: isFinite(be) ? t('r_evBe', {n: N(be, 1)}) : t('r_evPerMonth', {m: M(Math.abs(save) / 12)})},
@@ -250,10 +250,10 @@ function calcUnitPrice(){
 function calcDiscount(){
   const mode = $('#ds_mode').value, p = Math.max(0, v('ds_price')), q = Math.max(1, Math.round(v('ds_qty')));
   let pay = p * q, units = q, label = '';
-  if (mode === 'pct'){ pay = p * q * (1 - clamp(v('ds_pct'), 0, 100) / 100); }
-  else if (mode === 'stack'){ pay = p * q * (1 - clamp(v('ds_pct'), 0, 100) / 100) * (1 - clamp(v('ds_pct2'), 0, 100) / 100); }
+  if (mode === 'pct'){ pay = p * q * (1 - Math.max(0, v('ds_pct')) / 100); }
+  else if (mode === 'stack'){ pay = p * q * (1 - Math.max(0, v('ds_pct')) / 100) * (1 - Math.max(0, v('ds_pct2')) / 100); }
   else if (mode === 'bogo'){ const buy = Math.max(1, Math.round(v('ds_buy'))), free = Math.max(0, Math.round(v('ds_free'))); units = buy + free; pay = p * buy; label = t('r_dsBogo', {b: buy, f: free}); }
-  else if (mode === 'second'){ units = 2; pay = p + p * (1 - clamp(v('ds_pct'), 0, 100) / 100); }
+  else if (mode === 'second'){ units = 2; pay = p + p * (1 - Math.max(0, v('ds_pct')) / 100); }
   else if (mode === 'nfor'){ units = Math.max(1, Math.round(v('ds_n'))); pay = Math.max(0, v('ds_deal')); }
   else if (mode === 'coupon'){ const c = Math.max(0, v('ds_coupon')), min = Math.max(0, v('ds_min')); pay = p * q >= min ? Math.max(0, p * q - c) : p * q; }
   const full = p * units, save = full - pay, each = units ? pay / units : 0;

@@ -305,8 +305,7 @@ function dsRender(){
   });
   try { const n = (JSON.parse(LS.getItem('fin-files') || '[]') || []).length; if (n) C.push(dsCard('saved', '📁', t('ds_saved'), N(n, 0), '')); } catch (e) {}
   const al = alList().filter(a => a.on && !a.hit).length; if (al) C.push(`<button type="button" class="ds-c" data-dsal="1"><span class="ds-ic" aria-hidden="true">🔔</span><span class="ds-l">${E91(t('ds_al'))}</span><b class="num">${N(al, 0)}</b></button>`);
-  const inst = insCan();
-  box.innerHTML = `<div class="ds-head"><h3 class="sec-t">${E91(t('ds_title'))}</h3>${inst ? `<button type="button" class="ds-inst" id="pwa_inst">📲 ${E91(t('pwa_btn'))}</button>` : ''}</div>` +
+  box.innerHTML = `<div class="ds-head"><h3 class="sec-t">${E91(t('ds_title'))}</h3></div>` +
     (C.length ? `<div class="ds-grid">${C.join('')}</div>` : `<p class="fine ds-empty">${E91(t('ds_empty'))}</p>`);
 }
 document.addEventListener('click', e => {
@@ -325,12 +324,12 @@ function insCan(){ return !IN_CLAUDE && !isStandalone() && (PWA.ev || isIOS()); 
   const head = document.head;
   if (!head.querySelector('link[rel=manifest]')) head.insertAdjacentHTML('beforeend', '<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">');
   if ('serviceWorker' in navigator && location.protocol === 'https:') window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
-  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); PWA.ev = e; try { dsRender(); } catch (er) {} });
-  window.addEventListener('appinstalled', () => { PWA.ev = null; toast(t('pwa_done')); try { dsRender(); } catch (er) {} });
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); PWA.ev = e; try { instSync(); } catch (er) {} });
+  window.addEventListener('appinstalled', () => { PWA.ev = null; toast(t('pwa_done')); try { instSync(); } catch (er) {} });
 })();
 document.addEventListener('click', async e => {
   if (!e.target.closest || !e.target.closest('#pwa_inst')) return;
-  if (PWA.ev){ try { PWA.ev.prompt(); await PWA.ev.userChoice; } catch (er) {} PWA.ev = null; dsRender(); }
+  if (PWA.ev){ try { PWA.ev.prompt(); await PWA.ev.userChoice; } catch (er) {} PWA.ev = null; instSync(); }
   else if (isIOS()) alert(t('pwa_ios'));
 });
 
