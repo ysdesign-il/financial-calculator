@@ -22,6 +22,32 @@ try { const sv = JSON.parse(localStorage.getItem('fin-set') || '{}'); Object.ass
 } catch(e) {}
 SET.remember = '1'; SET.saveMode = SV.mode;                 // values are always kept now; when they are written is up to the save mode
 const saveSet = () => { try { localStorage.setItem('fin-set', JSON.stringify(SET)); } catch(e) {} };
+/* data that has no live source comes from the data file 6 times a day: slots start 01:25, 05:25, 09:25, 13:25, 17:25, 21:25 UTC,
+   a few minutes after the scheduled updater writes rates.json */
+const RJ_SLOT = () => Math.floor((Date.now() - 85 * 60000) / 144e5);
+var RJ_UPD = 0;                                            // when the data file was last written (its "updated" field)
+function rjSeen(d){ try { const u = Date.parse(d && d.updated); if (u > RJ_UPD) RJ_UPD = u; } catch (e) {} }
+var RJ_LAST = {s: RJ_SLOT(), at: Date.now()}, RJ_FNS = [];
+/* one download of the data file is shared by everything that reads it at the same moment */
+var RJ_C = {};
+function rjFetch(u, o){
+  const c = RJ_C[u]; if (c && Date.now() - c.at < 30000) return c.p.then(r => r.clone());
+  const p = fetch(u, o); RJ_C[u] = {at: Date.now(), p}; p.catch(() => { delete RJ_C[u]; });
+  return p.then(r => r.clone());
+}
+/* due once per slot; if the scheduled job ran late and the file is still from the previous run, again every 15 minutes
+   for up to 2.5 hours into the slot */
+function rjDue(L){
+  L = L || RJ_LAST; const n = RJ_SLOT(), now = Date.now(), start = n * 144e5 + 85 * 60000;
+  return n !== L.s || !!(RJ_UPD && RJ_UPD < start - 18 * 60000 && now - start < 150 * 60000 && now - L.at >= 15 * 60000);
+}
+function rjMark(L){ L = L || RJ_LAST; L.s = RJ_SLOT(); L.at = Date.now(); }
+function rjEvery(fn){
+  RJ_FNS.push(fn);
+  if (RJ_FNS.length > 1) return;
+  const tick = () => { if (document.hidden || !rjDue()) return; rjMark(); RJ_FNS.forEach(f => { try { f(); } catch (e) {} }); };
+  setInterval(tick, 60000); document.addEventListener('visibilitychange', tick);
+}
 const mq = window.matchMedia ? matchMedia('(prefers-color-scheme: light)') : null;
 const AC = {gold:['#F2C45A','#9A6A06'], blue:['#6FA8FF','#2A5FD6'], green:['#46E3A4','#0D8A5B'], violet:['#B79CFF','#6B46D6']};
 /* ---- themes: each one is a complete look (palette, chrome, home card), switchable at any time ---- */

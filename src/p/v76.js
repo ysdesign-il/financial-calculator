@@ -367,9 +367,9 @@ applyDbRates = function(d){
 async function closeLoad(){
   let got = false;
   try {
-    const r = await fetch((IN_CLAUDE ? IX_GH : 'rates.json') + '?c=' + Math.floor(Date.now() / 300000), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'});
+    const r = await rjFetch((IN_CLAUDE ? IX_GH : 'rates.json') + '?s=' + RJ_SLOT(), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'});
     if (r.ok){
-      const d = await r.json(), L = d && d.live, it = d && d.mkt && d.mkt.items;
+      const d = await r.json(), L = d && d.live, it = d && d.mkt && d.mkt.items; rjSeen(d);
       if (L && L.close && Object.keys(L.close).length >= 3){ CLOSE.usd = L.close; CLOSE.at = +L.asOf || 0; got = true; }
       if (it) Object.keys(it).forEach(k => { if (+it[k].pc > 0) CLOSE.pc[k] = +it[k].pc; });
       if (d && d.usd && d.asOf) OFFDOC = {usd: d.usd, asOf: +d.asOf};
