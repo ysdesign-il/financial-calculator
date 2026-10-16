@@ -87,7 +87,12 @@ CALC.split = function(){
   return res;
 };
 const _calc100 = calc;
-calc = function(id){ if (id === 'split' && $('#sp_fx') && !$('#sp_fx').children.length) spFxRender(); return _calc100.apply(this, arguments); };
+calc = function(id){
+  if (id === 'split' && $('#sp_fx') && !$('#sp_fx').children.length) spFxRender();
+  const r = _calc100.apply(this, arguments);
+  if (id === 'split'){ const u = $('#sp_total') && $('#sp_total').parentNode.querySelector('.u.cur'); if (u){ const want = spFx().on ? symOf(spBill()) : symOf(cur); if (u.textContent !== want) u.textContent = want; } }
+  return r;
+};
 const _al100 = applyLang;
 applyLang = function(){ const r = _al100.apply(this, arguments); try { spFxRender(); } catch (e) {} return r; };
 try { spFxRender(); } catch (e) {}
