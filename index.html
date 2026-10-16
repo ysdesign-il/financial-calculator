@@ -1912,6 +1912,22 @@ button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
 .phs-it.on{border-color:#2fbf71}.phs-it.on .phs-a{background:#2fbf71;color:#fff}.phs-it[disabled]{opacity:.45}
 .phs-my{margin-top:12px}.phs-mcard{margin-top:10px}
 .ib-ref{width:auto;padding:6px 12px;margin-inline-start:auto;font-size:.88rem}.ib-ref.spin{opacity:.6}
+/* 9.7: mute button, inbox readable in every theme */
+.snd-mute{width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:inherit;font-size:1.1rem;cursor:pointer}
+#ibx .cp-box{background:var(--surface,#fff);color:var(--ink,#141821)}
+#ibx .ch-rng{background:rgba(127,127,127,.18)}
+#ibx .ch-rng button{color:var(--ink,#141821);opacity:.85}
+#ibx .ch-rng button.on{background:#e2b33c;color:#1b1400;opacity:1;box-shadow:0 1px 6px rgba(0,0,0,.2)}
+#ibx .fb-it{background:var(--card,rgba(127,127,127,.06));color:var(--ink,#141821);border-color:rgba(127,127,127,.35)}
+#ibx .fb-it small,#ibx .ib-src{color:var(--muted,#5b6170);opacity:1}
+#ibx .fb-it.ib-new{border-color:#e2b33c;box-shadow:0 0 0 2px rgba(226,179,60,.55)}
+#ibx .fb-mail{color:#2563eb}
+:root[data-theme="dark"] #ibx .fb-mail,:root.dark #ibx .fb-mail{color:#8ab4ff}
+#ibx .fb-ans summary{color:var(--ink,#141821)}
+#ibx .fb-ans textarea{color:var(--ink,#141821);background:var(--surface,#fff)}
+#ibx .fb-rp{color:var(--ink,#141821)}
+#ibx .ib-ref,#ibx .lc-add{color:var(--ink,#141821)}
+#ibx button:active,#ibx .fb-it:active{filter:none}
 
 </style>
 </head>
@@ -5559,6 +5575,17 @@ Object.assign(T, {
   ib_siteNote:['באתר מוצגות הודעות שנשלחו מהאתר. הודעות מהאפליקציה – באינבוקס שבאפליקציה.','يعرض الموقع رسائل الموقع فقط. رسائل التطبيق في صندوق التطبيق.','The website shows messages sent from the website. App messages are in the app\'s inbox.'],
   ib_refreshed:['האינבוקס רוענן – {n} הודעות','تم تحديث صندوق الوارد – {n} رسائل','Inbox refreshed – {n} messages']
 });
+/* 9.7 texts */
+Object.assign(T, {
+  f_sound:['צלילי האפליקציה','أصوات التطبيق','App sounds'], o_snd_soft:['עדינים','هادئة','Soft'], o_snd_full:['רגילים','عادية','Normal'], o_snd_off:['השתק','كتم','Muted'],
+  h_sound:['צלילים קצרים בסגנון מטבע: שמירה, התראת מחיר, תנועה חדה במדדים והודעה חדשה. אפשר להשתיק גם בכפתור 🔊 למעלה.','أصوات قصيرة بنمط العملة. يمكن الكتم بزر 🔊 في الأعلى.','Short coin-style sounds for saving, price alerts, big market moves and new messages. Mute with 🔊 at the top too.'],
+  f_tapSnd:['צליל בכל לחיצה','صوت عند كل نقرة','Sound on every tap'],
+  snd_mute:['השתקת צלילים','كتم الأصوات','Mute sounds'], snd_unmute:['הפעלת צלילים','تشغيل الأصوات','Unmute sounds'], snd_offT:['🔇 הצלילים הושתקו','🔇 تم كتم الأصوات','🔇 Sounds muted'], snd_onT:['🔊 הצלילים פועלים','🔊 الأصوات مفعّلة','🔊 Sounds on'],
+  f_mvAlert:['התראה על תנועה חדה במדדים','تنبيه عند حركة حادة في المؤشرات','Alert on big market moves'],
+  h_mvAlert:['כשמדד, סחורה או בורסה עולים או יורדים היום יותר מהאחוז שבחרת – התראה עם צליל (פעם ביום לכל מדד). עובד כשהעדכון החי פועל והאפליקציה או האתר פתוחים.','عند صعود أو هبوط مؤشر أكثر من النسبة المختارة – تنبيه مع صوت مرة يوميًا.','When an index or commodity moves more than your threshold today – an alert with a sound (once a day each). Works while live data is on and the app or site is open.'],
+  f_mvPct:['מאיזה שינוי יומי להתריע','من أي تغيير يومي للتنبيه','Alert from a daily change of'],
+  mv_today:['תנועה חדה היום: {x}','حركة حادة اليوم: {x}','Big move today: {x}'], mv_title:['תנועה חדה בשוק','حركة حادة في السوق','Big market move']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -5733,7 +5760,7 @@ const RTL = new Set(['he','ar','fa','ur','yi','ps','sd','ug','ckb','dv']);
 var TOUCHED = [], TILE_F = 'all', MY_HANDLE = '';
 try { MY_HANDLE = LS.getItem('fin-handle') || ''; } catch (e) {}
 const MKT = {boi: 3.25, boiDate: '1.9.2026', boiNext: '21.10.2026', cpi: 1.5, cpiMonth: '08/2026', cpiYtd: 2.1, cpiYtdTo: 8, src: 'built'};
-const SET_DEF = {kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -6937,7 +6964,9 @@ const SETDEFS = [
     SEL('set_contrast','f_contrast','normal',[['normal','o_ct_normal'],['high','o_ct_high']]),
     SEL('set_motion','f_motion','full',[['full','o_mo_full'],['reduced','o_mo_reduced']]),
     SEL('set_font','f_font','default',[['default','o_fn_default'],['readable','o_fn_readable']]),
-    SEL('set_sliders','f_sliders','1',ONOFF)
+    SEL('set_sliders','f_sliders','1',ONOFF),
+    SEL('set_sound','f_sound','soft',[['soft','o_snd_soft'],['full','o_snd_full'],['off','o_snd_off']],{wide:true, hint:'h_sound'}),
+    SEL('set_tapSnd','f_tapSnd','0',[['0','o_off'],['1','o_on']])
   ]],
   ['set_lang', [
     SEL('set_lang','f_langSel','he',LANG_LIST.map(l => [l[0], '=' + l[1]]),{wide:true, hint:'h_langFallback'}),
@@ -6959,6 +6988,8 @@ const SETDEFS = [
     {id:'set_ptVal', label:'f_ptVal', unit:'ils', val:'', wide:true, hint:'h_ptVal'},
     SEL('set_saveMode','f_saveMode','auto',[['auto','o_saveAuto'],['manual','o_saveManual'],['none','o_saveNone']],{wide:true}),
     SEL('set_mktLive','f_mktLive','1',[['1','o_mktAuto'],['0','o_mktManual']],{wide:true, hint:'h_mktLive'}),
+    SEL('set_mvAlert','f_mvAlert','1',[['1','o_on'],['0','o_off']],{wide:true, hint:'h_mvAlert'}),
+    {id:'set_mvPct', label:'f_mvPct', unit:'%', val:2},
     SEL('set_vat','f_vatDef','18',[['18','o_vp18'],['17','o_vp17'],['0','o_vp0'],['16','o_vp16'],['14','o_vp14'],['15','o_vp15'],['5','o_vp5'],['19','o_vp19'],['20','o_vp20']],{wide:true}),
     SEL('set_dealer','f_dealer','murshe',[['murshe','o_murshe'],['patur','o_patur']],{wide:true}),
     SEL('set_buyer','f_buyerType','first',[['first','o_bt_first'],['upg','o_bt_upg'],['inv','o_bt_inv']],{wide:true}),
@@ -7057,7 +7088,7 @@ function settingsPanelHTML(){
       <p class="fine" id="set_msg" aria-live="polite"></p><p class="fine" id="set_info"></p>`)}
   </section>`;
 }
-const SMAP = {set_kbLang:'kbLang', set_design:'design', set_country:'country', set_hfx:'hfx', set_mktLive:'mktLive', set_inGroup:'inGroup', set_ptMode:'ptMode', set_ptVal:'ptVal', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
+const SMAP = {set_sound:'sound', set_tapSnd:'tapSnd', set_mvAlert:'mvAlert', set_mvPct:'mvPct', set_kbLang:'kbLang', set_design:'design', set_country:'country', set_hfx:'hfx', set_mktLive:'mktLive', set_inGroup:'inGroup', set_ptMode:'ptMode', set_ptVal:'ptVal', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
@@ -11890,8 +11921,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "9.6", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.044646';
+var CHANGELOG = [{"v": "9.7", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.045350';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -19194,6 +19225,106 @@ const _al96 = applyLang;
 applyLang = function(){ const r = _al96.apply(this, arguments); try { phsRender(); } catch (e) {} return r; };
 try { phsRender(); } catch (e) {}
 if (location.hostname === 'localhost') window.__fin96 = {phFind: q => phFind(q).map(p => p.n)};
+
+/* ================= 9.7: the app's own sounds (made here, no files), mute, and alerts when an index moves a lot ================= */
+const E97 = s => asEsc(String(s == null ? '' : s));
+var SND = {ctx: null, last: 0};
+const sndLevel = () => SET.sound === 'off' ? 0 : SET.sound === 'full' ? 0.16 : 0.07;
+function sndCtx(){
+  if (!SND.ctx){ try { const A = window.AudioContext || window.webkitAudioContext; if (A) SND.ctx = new A(); } catch (e) {} }
+  if (SND.ctx && SND.ctx.state === 'suspended') try { SND.ctx.resume(); } catch (e) {}
+  return SND.ctx;
+}
+/* one note: a soft "coin" tone — a triangle wave with a bright overtone and a quick fade */
+function sndNote(c, f, at, dur, vol, type){
+  const o = c.createOscillator(), o2 = c.createOscillator(), g = c.createGain(), g2 = c.createGain();
+  o.type = type || 'triangle'; o.frequency.value = f; o2.type = 'sine'; o2.frequency.value = f * 2.01;
+  g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(vol, at + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+  g2.gain.setValueAtTime(0.0001, at); g2.gain.exponentialRampToValueAtTime(vol * 0.35, at + 0.01); g2.gain.exponentialRampToValueAtTime(0.0001, at + dur * 0.6);
+  o.connect(g).connect(c.destination); o2.connect(g2).connect(c.destination);
+  o.start(at); o2.start(at); o.stop(at + dur + 0.05); o2.stop(at + dur + 0.05);
+}
+const SND_KIND = {
+  tap:  [[1320, 0, 0.05]],
+  ok:   [[1318.5, 0, 0.16], [1975.5, 0.07, 0.28]],                 // coin: E6 → B6
+  up:   [[784, 0, 0.18], [987.8, 0.09, 0.18], [1318.5, 0.18, 0.34]], // rising
+  down: [[1318.5, 0, 0.18], [987.8, 0.09, 0.18], [784, 0.18, 0.34]], // falling
+  alert:[[1046.5, 0, 0.14], [1568, 0.12, 0.14], [1046.5, 0.24, 0.14], [1568, 0.36, 0.3]],
+  mail: [[880, 0, 0.2], [1174.7, 0.11, 0.32]],
+  err:  [[392, 0, 0.16, 'sine'], [311.1, 0.12, 0.26, 'sine']]
+};
+function snd(kind){
+  const vol = sndLevel(); if (!vol) return;
+  const now = Date.now(); if (kind === 'tap' && now - SND.last < 60) return; SND.last = now;
+  const c = sndCtx(); if (!c) return;
+  const t0 = c.currentTime + 0.01, k = kind === 'tap' ? vol * 0.5 : vol;
+  try { (SND_KIND[kind] || SND_KIND.ok).forEach(([f, d, len, type]) => sndNote(c, f, t0 + d, len, k, type)); } catch (e) {}
+}
+/* sounds on the moments that matter */
+['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, () => sndCtx(), {capture: true, passive: true, once: true}));
+document.addEventListener('pointerdown', e => {
+  if (SET.tapSnd !== '1' || !e.target.closest) return;
+  if (e.target.closest('button, .bt, .tile, a, [role=tab], [role=radio], select')) snd('tap');
+}, {capture: true, passive: true});
+const _toast97 = toast;
+toast = function(msg){
+  const m = String(msg || '');
+  if (!SND.quiet){
+    if (/^🔔/.test(m)) snd('alert');
+    else if (/^📈/.test(m)) snd('up'); else if (/^📉/.test(m)) snd('down');
+    else if (/^📬|^📥/.test(m)) snd('mail');
+    else if (/לא הצליח|נכשל|שגיאה|fail|error|تعذّر|فشل/i.test(m)) snd('err');
+    else snd('ok');
+  }
+  return _toast97.apply(this, arguments);
+};
+/* a mute button next to the other controls at the top */
+function muteBtn(){
+  const box = $('.rail-ctrls'); if (!box) return;
+  let b = $('#snd_mute'); const off = SET.sound === 'off';
+  const html = off ? '🔇' : '🔊', lab = t(off ? 'snd_unmute' : 'snd_mute');
+  if (!b){ box.insertAdjacentHTML('afterbegin', `<button type="button" class="snd-mute" id="snd_mute" aria-pressed="${off}" aria-label="${E97(lab)}" title="${E97(lab)}">${html}</button>`); return; }
+  b.textContent = html; b.setAttribute('aria-label', lab); b.title = lab; b.setAttribute('aria-pressed', off);
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest || !e.target.closest('#snd_mute')) return;
+  if (SET.sound === 'off'){ SET.sound = SET.soundWas && SET.soundWas !== 'off' ? SET.soundWas : 'soft'; } else { SET.soundWas = SET.sound; SET.sound = 'off'; }
+  try { saveSet(); } catch (er) {} const s = $('#set_sound'); if (s) s.value = SET.sound;
+  muteBtn(); SND.quiet = true; toast(t(SET.sound === 'off' ? 'snd_offT' : 'snd_onT')); SND.quiet = false; if (SET.sound !== 'off') snd('ok');
+});
+document.addEventListener('change', e => { if (e.target && e.target.id === 'set_sound'){ setTimeout(() => { muteBtn(); snd('ok'); }, 0); } });
+
+/* ---------- alerts when an index or commodity moves a lot today ---------- */
+function mvCheck(){
+  if (SET.mvAlert === '0' || typeof IX !== 'object' || !IX.mkt) return;
+  const lim = Math.max(0.1, +SET.mvPct || 2), day = new Date().toISOString().slice(0, 10);
+  const seen = SET.mvSeen && typeof SET.mvSeen === 'object' ? SET.mvSeen : (SET.mvSeen = {});
+  const hits = [];
+  IX_MK.forEach(k => {
+    const d = IX.mkt[k]; if (!d || !(d.p > 0) || !isFinite(+d.chp) || !d.live) return;
+    const ch = +d.chp; if (Math.abs(ch) < lim) return;
+    const key = k + (ch > 0 ? '+' : '-'); if (seen[key] === day) return;
+    seen[key] = day; hits.push([k, ch]);
+  });
+  Object.keys(seen).forEach(x => { if (seen[x] !== day) delete seen[x]; });
+  if (!hits.length) return;
+  try { saveSet(); } catch (e) {}
+  hits.sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
+  const up = hits[0][1] > 0, txt = hits.slice(0, 3).map(([k, ch]) => ixName(k) + ' ' + sgnPC(ch)).join(' · ') + (hits.length > 3 ? ' …' : '');
+  toast((up ? '📈 ' : '📉 ') + t('mv_today', {x: txt}));
+  try { if (!IN_CLAUDE && 'Notification' in window && Notification.permission === 'granted') new Notification(t('mv_title'), {body: txt, icon: 'icon-192.png', tag: 'mv-' + day}); } catch (e) {}
+}
+const _ixB97 = ixBoard;
+ixBoard = function(){ const r = _ixB97.apply(this, arguments); try { mvCheck(); } catch (e) {} return r; };
+setInterval(() => { if (!document.hidden) try { mvCheck(); } catch (e) {} }, 120000);
+/* a new message in the inbox rings once */
+var IBN = -1;
+const _ibBtn97 = ibBtn;
+ibBtn = function(){ const r = _ibBtn97.apply(this, arguments); try { const n = ibUnread(); if (IBN >= 0 && n > IBN) snd('mail'); IBN = n; } catch (e) {} return r; };
+const _al97 = applyLang;
+applyLang = function(){ const r = _al97.apply(this, arguments); try { muteBtn(); } catch (e) {} return r; };
+try { muteBtn(); } catch (e) {}
+if (location.hostname === 'localhost') window.__fin97 = {snd, mvCheck};
 
 applyLang(false);
 activate(tab);
