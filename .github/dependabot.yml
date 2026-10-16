@@ -1,0 +1,8 @@
+# Keeps the GitHub Actions used by the workflows up to date (security fixes arrive as pull requests).
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
