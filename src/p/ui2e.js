@@ -10,7 +10,7 @@ const IL26 = {
 };
 /* 2026: self-employed contributions (Bituach Leumi + health), employer deposits that stay tax-free, donation credit limits */
 Object.assign(TAX, {sNiLow: .0447, sNiHigh: .1283, sHLow: .0323, sHHigh: .0517, sMinBase: 3442,
-  erPensCap: 33290, erPensRate: .075, erSevCap: 44100, erSevRate: .0833, donMin: 207, donMax: 10354816});
+  erPensCap: 34423, erPensRate: .075, erSevCap: 45600, erSevRate: .0833, donMin: 207, donMax: 10354816});
 const isoDay = off => { const d = new Date(); d.setDate(d.getDate() + (off || 0)); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
 /* --- fields --- */
 Object.assign(DEFS, {
