@@ -16,8 +16,8 @@ Object.assign(T, {
   fb_note:['ספרו מה לשפר או מה לא עובד. נשלח רק מה שכתבתם, גרסת האפליקציה והשפה – בלי שם, מייל או טלפון (גם אם תכתבו כאלה, הם יוסרו). פרטי המפתח לא מוצגים לאף אחד.','أخبرونا ما يجب تحسينه. يُرسل فقط ما كتبتم والإصدار واللغة – بدون اسم أو بريد أو هاتف (وتُحذف إن كُتبت). بيانات المطوّر لا تظهر لأحد.','Tell us what to improve. Only your text, the app version and language are sent – no name, email or phone (they are removed if typed). The developer\'s details are never shown.'],
   fb_kind:['סוג המשוב','نوع الملاحظة','Kind'], fb_k_idea:['💡 רעיון','💡 فكرة','💡 Idea'], fb_k_bug:['🐞 תקלה','🐞 خلل','🐞 Bug'], fb_k_q:['❓ שאלה','❓ سؤال','❓ Question'], fb_k_other:['✍️ אחר','✍️ أخرى','✍️ Other'],
   fb_rate:['דירוג','التقييم','Rating'], fb_ph:['מה הייתם רוצים לראות באפליקציה?','ماذا تودّون أن تروا في التطبيق؟','What would you like to see in the app?'],
-  fb_send:['שליחה','إرسال','Send'], fb_sendGh:['שליחה דרך GitHub','إرسال عبر GitHub','Send via GitHub'], fb_empty:['כתבו משהו או בחרו דירוג','اكتبوا شيئًا أو اختاروا تقييمًا','Write something or pick a rating'],
+  fb_send:['שליחה','إرسال','Send'], fb_empty:['כתבו משהו או בחרו דירוג','اكتبوا شيئًا أو اختاروا تقييمًا','Write something or pick a rating'],
   fb_ok:['תודה! המשוב נשלח','شكرًا! أُرسلت الملاحظة','Thanks! Feedback sent'], fb_fail:['השליחה לא הצליחה – נסו שוב','فشل الإرسال – حاولوا مجددًا','Could not send – try again'],
-  fb_gh:['נפתח דף ב-GitHub – בדקו ושלחו משם. שימו לב: שם הוא ציבורי ומוצג עם שם המשתמש שלכם ב-GitHub.','فُتحت صفحة GitHub – راجعوا وأرسلوا من هناك. هي عامة وتظهر باسم مستخدمكم في GitHub.','A GitHub page opened – review and send it there. It is public and shows your GitHub username.'],
+  fb_web:['באתר אפשר רק להעתיק את המשוב. שליחה ישירה למפתח עובדת מתוך האפליקציה.','في الموقع يمكن نسخ الملاحظة فقط. الإرسال المباشر يعمل داخل التطبيق.','On the website you can only copy your note. Sending directly works inside the app.'],
   fb_inbox:['משוב מהמשתמשים (רק אתה רואה)','ملاحظات المستخدمين (أنت فقط ترى)','User feedback (only you see this)'], fb_none:['אין משוב עדיין','لا ملاحظات بعد','No feedback yet']
 });
