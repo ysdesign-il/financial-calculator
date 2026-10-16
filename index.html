@@ -1900,6 +1900,18 @@ button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
 #panel-markets .svbar{display:none}
 .ib-bt{position:relative}.ib-badge{position:absolute;top:2px;inset-inline-end:18%;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#e2b33c;color:#1b1400;font:700 .7rem/18px system-ui;font-style:normal}
 .ib-keybox input{width:100%;box-sizing:border-box;font:inherit;padding:9px;border-radius:10px;border:1px solid var(--line);background:transparent;color:inherit;margin:6px 0}
+/* 9.6: phone search */
+.phs-cmp{margin-bottom:10px}.phs-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.phs-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 6px 6px 12px;border-radius:999px;background:rgba(226,179,60,.15);border:1px solid #e2b33c;font-size:.88rem;font-weight:600}
+.phs-chip button{border:0;background:transparent;color:inherit;cursor:pointer;font-size:.85rem;width:22px;height:22px;border-radius:50%}
+.phs-search{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:14px;padding:4px 12px;background:var(--card,transparent)}
+.phs-search input{flex:1;min-width:0;border:0;background:transparent;color:inherit;font:inherit;padding:10px 0;outline:none}
+.phs-res{display:grid;gap:6px;margin-top:8px}
+.phs-it{display:grid;grid-template-columns:1fr auto auto;grid-template-areas:"n p a" "s p a";align-items:center;gap:2px 10px;text-align:start;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:transparent;color:inherit;font:inherit;cursor:pointer}
+.phs-it .phs-n{grid-area:n;font-weight:700}.phs-it small{grid-area:s;opacity:.7}.phs-it .phs-p{grid-area:p;font-weight:600;font-size:.9rem}.phs-it .phs-a{grid-area:a;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#e2b33c;color:#1b1400;font-weight:800}
+.phs-it.on{border-color:#2fbf71}.phs-it.on .phs-a{background:#2fbf71;color:#fff}.phs-it[disabled]{opacity:.45}
+.phs-my{margin-top:12px}.phs-mcard{margin-top:10px}
+.ib-ref{width:auto;padding:6px 12px;margin-inline-start:auto;font-size:.88rem}.ib-ref.spin{opacity:.6}
 
 </style>
 </head>
@@ -5493,7 +5505,19 @@ Object.assign(T, {
   ph_count:['{n} מכשירים מתוך {a}','{n} أجهزة من {a}','{n} of {a} phones'], t_phSide:['השוואה זה לצד זה','مقارنة جنبًا إلى جنب','Side by side'], t_phAll:['כל המכשירים','كل الأجهزة','All phones'],
   w_phEst:['מחיר עם ≈ הוא מחיר ההשקה הרשמי בחו"ל, מומר לשקלים לפי השער היום – בארץ המחיר בדרך כלל גבוה יותר (מכס, מע"מ, יבואן). הקלידו את המחיר שמצאתם ב"מחירים בארץ".','السعر مع ≈ هو سعر الإطلاق في الخارج محوّلًا – في إسرائيل عادة أعلى. اكتبوا السعر الذي وجدتموه.','Prices with ≈ are official launch prices abroad, converted at today\'s rate – in Israel they are usually higher. Type the price you found.'],
   ph_ownT:['מחירים בארץ – הזנה ידנית','الأسعار في إسرائيل – إدخال يدوي','Israeli prices – type your own'], ph_ownN:['מחיר שמצאתם בחנות או אצל היבואן מחליף את ההערכה, ונשמר אצלכם.','السعر الذي وجدتموه يحل محل التقدير ويُحفظ لديكم.','A price you found replaces the estimate and is kept on your device.'], ph_ownL:['המחיר בארץ של {n}','السعر في إسرائيل لـ{n}','Israeli price of {n}'],
-  n_ph:['מפרט ומחירי השקה רשמיים, נבדק ב-{d} (Apple, PhoneArena, GSMArena, MySmartPrice ועוד). אין מקור ציבורי שמעדכן מחירי מכשירים בארץ בזמן אמת, לכן המחיר המקומי הוא מה שאתם מזינים. נתון שלא פורסם מסומן כך.','مواصفات وأسعار إطلاق رسمية، فُحصت في {d}. لا يوجد مصدر عام لأسعار الأجهزة في إسرائيل في الوقت الحقيقي.','Official specs and launch prices, checked {d}. There is no public live source for Israeli phone prices, so the local price is what you type. Unpublished figures are marked.']
+  n_ph:['מפרט ומחירי השקה רשמיים, נבדק ב-{d} (Apple, PhoneArena, GSMArena, MySmartPrice ועוד). אין מקור ציבורי שמעדכן מחירי מכשירים בארץ בזמן אמת, לכן המחיר המקומי הוא מה שאתם מזינים. נתון שלא פורסם מסומן כך.','مواصفات وأسعار إطلاق رسمية، فُحصت في {d}. لا يوجد مصدر عام لأسعار الأجهزة في إسرائيل في الوقت الحقيقي.','Official specs and launch prices, checked {d}. There is no public live source for Israeli phone prices, so the local price is what you type. Unpublished figures are marked.'],
+  o_ph_mine:['המכשירים שלי','أجهزتي','My phones'], ph_myDef:['מכשיר שלי {n}','جهازي {n}','My phone {n}'], ph_mineSrc:['הוזן ידנית','إدخال يدوي','Typed by you'],
+  phs_cmpT:['בהשוואה ({n} מתוך 4)','في المقارنة ({n} من 4)','Comparing ({n} of 4)'], phs_none:['חפשו מכשיר והוסיפו אותו','ابحثوا عن جهاز وأضيفوه','Search for a phone and add it'],
+  phs_ph:['חיפוש מכשיר: אייפון 17, גלקסי S26, רדמי…','بحث: آيفون 17، جالكسي S26…','Search: iPhone 17, Galaxy S26, Redmi…'], phs_noRes:['לא נמצא – אפשר להוסיף אותו ידנית למטה','لم يُعثر عليه – يمكن إضافته يدويًا','Not found – add it yourself below'],
+  phs_max:['אפשר להשוות עד 4 מכשירים','يمكن مقارنة حتى 4 أجهزة','Up to 4 phones'],
+  phs_myT:['הוספת מכשיר ידנית ({n})','إضافة جهاز يدويًا ({n})','Add a phone yourself ({n})'], phs_myN:['מכשיר שלא ברשימה, או מכשיר שקיבלתם הצעה עליו. רק השם והמחיר חובה – כל השאר לפי מה שיודעים.','جهاز غير موجود في القائمة. الاسم والسعر فقط إلزاميان.','A phone that is not listed, or one you got an offer for. Only a name and price are needed – fill in what you know.'],
+  phs_myAdd:['הוספת מכשיר','إضافة جهاز','Add a phone'], phs_nPh:['שם המכשיר','اسم الجهاز','Phone name'],
+  phs_d:['מסך (אינץ׳)','الشاشة (إنش)','Screen (inch)'], phs_hz:['רענון (Hz)','التحديث (Hz)','Refresh (Hz)'], phs_ram:['RAM (GB)','RAM (GB)','RAM (GB)'], phs_st:['נפח (GB)','السعة (GB)','Storage (GB)'],
+  phs_bat:['סוללה (mAh)','البطارية (mAh)','Battery (mAh)'], phs_w:['טעינה (W)','الشحن (W)','Charging (W)'], phs_g:['משקל (גרם)','الوزن (غ)','Weight (g)'], phs_cam:['מצלמות (MP)','الكاميرات (MP)','Cameras (MP)'],
+  f_phMinBat:['סוללה לפחות (mAh)','بطارية على الأقل (mAh)','Battery at least (mAh)'], f_phMinRam:['RAM לפחות (GB)','RAM على الأقل','RAM at least (GB)'], f_phMinSt:['נפח לפחות (GB)','سعة على الأقل','Storage at least (GB)'],
+  f_phMaxD:['מסך עד (אינץ׳)','شاشة حتى (إنش)','Screen up to (inch)'], f_phMaxG:['משקל עד (גרם)','وزن حتى (غ)','Weight up to (g)'], f_phMinHz:['רענון לפחות (Hz)','تحديث على الأقل','Refresh at least (Hz)'],
+  f_phMinW:['טעינה לפחות (W)','شحن على الأقل (W)','Charging at least (W)'], f_phFromY:['הושק משנת','أُطلق منذ سنة','Launched from year'], h_phFromY:['למשל 2025 – רק דגמים חדשים','مثلًا 2025','e.g. 2025 – newer models only'],
+  f_phIp:['עמידות במים','مقاومة الماء','Water resistance']
 });
 /* 9.1 texts */
 Object.assign(T, {
@@ -5532,7 +5556,8 @@ Object.assign(T, {
   ib_linkedCopy:['קוד החיבור הועתק – הדבק אותו באינבוקס באתר (במצב מפתח)','نُسخ رمز الربط – ألصقه في صندوق الوارد في الموقع','Connection code copied – paste it in the website inbox (developer mode)'],
   ib_needKey:['כדי לקרוא כאן הודעות מהאתר: באפליקציה, במצב מפתח, פתח את האינבוקס ולחץ "חיבור האינבוקס לאתר", ואז הדבק כאן את הקוד.','لقراءة رسائل الموقع هنا: في التطبيق افتح صندوق الوارد واضغط "ربط"، ثم ألصق الرمز هنا.','To read website messages here: in the app (developer mode) open the inbox, tap "Connect the website inbox", then paste the code here.'],
   ib_keySet:['חיבור','ربط','Connect'], ib_keyOk:['מחובר – ההודעות נפתחו','تم الربط – فُتحت الرسائل','Connected – messages unlocked'], ib_keyBad:['הקוד לא מתאים למצב המפתח במכשיר הזה','الرمز لا يطابق وضع المطوّر على هذا الجهاز','That code does not match developer mode on this device'],
-  ib_siteNote:['באתר מוצגות הודעות שנשלחו מהאתר. הודעות מהאפליקציה – באינבוקס שבאפליקציה.','يعرض الموقع رسائل الموقع فقط. رسائل التطبيق في صندوق التطبيق.','The website shows messages sent from the website. App messages are in the app\'s inbox.']
+  ib_siteNote:['באתר מוצגות הודעות שנשלחו מהאתר. הודעות מהאפליקציה – באינבוקס שבאפליקציה.','يعرض الموقع رسائل الموقع فقط. رسائل التطبيق في صندوق التطبيق.','The website shows messages sent from the website. App messages are in the app\'s inbox.'],
+  ib_refreshed:['האינבוקס רוענן – {n} הודעות','تم تحديث صندوق الوارد – {n} رسائل','Inbox refreshed – {n} messages']
 });
 
 const t = (k, p) => {
@@ -6745,9 +6770,13 @@ const PHONES_IDS = [['ip18p', 'iPhone 18 Pro'], ['ip18pm', 'iPhone 18 Pro Max'],
   const opts = [['none', 'o_ph_noneSel']].concat(PHONES_IDS.map(x => [x[0], '=' + x[1]]));
   DEFS.phonecmp = [
     SEL('ph_by','f_phBy','balanced',[['balanced','o_ph_balanced'],['price','o_ph_price'],['camera','o_ph_camera'],['battery','o_ph_battery'],['small','o_ph_small'],['big','o_ph_big']],{wide:true}),
-    SEL('ph_brand','f_phBrand','all',[['all','o_ph_all'],['apple','=Apple'],['samsung','=Samsung'],['google','=Google'],['xiaomi','=Xiaomi']]),
+    SEL('ph_brand','f_phBrand','all',[['all','o_ph_all'],['apple','=Apple'],['samsung','=Samsung'],['google','=Google'],['xiaomi','=Xiaomi'],['mine','o_ph_mine']]),
     F('ph_budget','f_phBudget','cur',0,{hint:'h_phBudget'}),
-    SEL('ph_a','f_phA','ip17',opts), SEL('ph_b','f_phB','s26',opts), SEL('ph_c','f_phC','px11',opts),
+    {type:'html', id:'ph_sbox', cls:'lc-wrap ph-swrap'},
+    F('ph_minBat','f_phMinBat','',0,{adv:'m_adv'}), F('ph_minRam','f_phMinRam','',0,{adv:'m_adv'}), F('ph_minSt','f_phMinSt','',0,{adv:'m_adv'}),
+    F('ph_maxD','f_phMaxD','',0,{adv:'m_adv'}), F('ph_maxG','f_phMaxG','',0,{adv:'m_adv'}), F('ph_minHz','f_phMinHz','',0,{adv:'m_adv'}),
+    F('ph_minW','f_phMinW','',0,{adv:'m_adv'}), F('ph_fromY','f_phFromY','',0,{adv:'m_adv',hint:'h_phFromY'}),
+    SEL('ph_ip','f_phIp','any',[['any','o_clAny'],['ip68','=IP68'],['ip67','=IP67+']],{adv:'m_adv'}),
     {type:'html', id:'ph_box', cls:'lc-wrap ph-wrap'}
   ];
   ICON.phonecmp = ic('<rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 5h4"/><circle cx="12" cy="18" r="1"/>');
@@ -10221,10 +10250,20 @@ function phMine(){ if (!SET.phPrice || typeof SET.phPrice !== 'object') SET.phPr
 /* the price in shekels: what you typed (a real Israeli price), or the launch price converted at today's rate (marked as an estimate) */
 function phIls(p){
   const own = +phMine()[p.id]; if (own > 0) return {v: own, own: 1};
+  if (p.mine) return p.pr[0] > 0 ? {v: p.pr[0], own: 1} : {v: NaN};
   const [x, c] = p.pr; if (!(x > 0) || !RATES[c] || !RATES.ILS) return {v: NaN};
   return {v: x * RATES.ILS / RATES[c], own: 0};
 }
-const phById = id => PHONES.list.find(p => p.id === id);
+/* the phones you typed yourself join the list, everywhere */
+function phMineList(){ if (!Array.isArray(SET.phMine)) SET.phMine = []; return SET.phMine; }
+function phAll(){
+  return PHONES.list.concat(phMineList().map((o, i) => ({id: 'my' + i, mine: 1, b: 'mine', n: String(o.n || '').trim() || t('ph_myDef', {n: i + 1}), d: +o.d || 0, hz: +o.hz || 60, chip: String(o.chip || '—'), ram: +o.ram || 0, st: +o.st || 0,
+    cam: String(o.cam || '').split(/[+,\s]+/).map(Number).filter(x => x > 0).length ? String(o.cam).split(/[+,\s]+/).map(Number).filter(x => x > 0) : [0], bat: +o.bat || 0, w: +o.w || 0, g: +o.g || 0, ip: String(o.ip || ''),
+    pr: [+o.price || 0, 'ILS', 'IL'], rel: String(o.rel || ''), src: t('ph_mineSrc')})));
+}
+const phById = id => phAll().find(p => p.id === id);
+/* the phones picked to compare (up to 4) */
+function phCmpList(){ if (!Array.isArray(SET.phCmp)) SET.phCmp = ['ip17', 's26', 'px11']; SET.phCmp = SET.phCmp.filter(id => phById(id)).slice(0, 4); return SET.phCmp; }
 const phCam = p => p.cam.length + ' · ' + p.cam.map(x => N(x, x % 1 ? 1 : 0)).join('+') + 'MP';
 function phScore(p, by){
   const pr = phIls(p).v;
@@ -10239,28 +10278,37 @@ function phScore(p, by){
 }
 function calcPhoneCmp(){
   const by = ($('#ph_by') || {}).value || 'balanced', brand = ($('#ph_brand') || {}).value || 'all', budget = Math.max(0, v('ph_budget'));
-  const pick = ['ph_a', 'ph_b', 'ph_c'].map(id => ($('#' + id) || {}).value).filter(x => x && x !== 'none').map(phById).filter(Boolean);
-  let L = PHONES.list.filter(p => brand === 'all' || p.b === brand);
+  const pick = phCmpList().map(phById).filter(Boolean);
+  const f = id => Math.max(0, v(id)), ipSel = ($('#ph_ip') || {}).value || 'any';
+  const F = {bat: f('ph_minBat'), ram: f('ph_minRam'), st: f('ph_minSt'), d: f('ph_maxD'), g: f('ph_maxG'), hz: f('ph_minHz'), w: f('ph_minW'), y: f('ph_fromY')};
+  const ipN = s => +(String(s || '').match(/IP\d(\d)/) || [0, 0])[1];
+  let L = phAll().filter(p => brand === 'all' || p.b === brand || (p.mine && brand === 'mine'));
   if (budget > 0) L = L.filter(p => { const x = phIls(p).v; return !isFinite(x) || x <= budget; });
+  L = L.filter(p => (!F.bat || p.bat >= F.bat) && (!F.ram || p.ram >= F.ram) && (!F.st || p.st >= F.st) && (!F.d || p.d <= F.d) && (!F.g || (p.g && p.g <= F.g)) && (!F.hz || p.hz >= F.hz) && (!F.w || p.w >= F.w)
+    && (!F.y || +String(p.rel).slice(0, 4) >= F.y) && (ipSel === 'any' || (ipSel === 'ip68' ? ipN(p.ip) >= 8 : ipN(p.ip) >= 7)));
   const S = L.slice().sort((a, b) => phScore(b, by) - phScore(a, by));
   const pr = p => { const x = phIls(p); return isFinite(x.v) ? (x.own ? '' : '≈') + M(x.v) : '—'; };
   const note = t('n_ph', {d: PHONES.at});
   const best = S[0];
   /* the phones you picked, side by side */
-  const cmp = pick.length >= 2 ? pick : S.slice(0, 3);
+  const cmp = pick.length >= 1 ? pick : S.slice(0, 3);
   const spec = [[t('ph_price'), p => pr(p)], [t('ph_launch'), p => p.pr[0] > 0 ? N(p.pr[0], 0) + ' ' + p.pr[1] + ' (' + p.pr[2] + ')' : t('ph_na')], [t('ph_screen'), p => N(p.d, 1) + '″ · ' + p.hz + 'Hz'],
     [t('ph_chip'), p => p.chip], [t('ph_ram'), p => p.ram ? p.ram + 'GB' : t('ph_na')], [t('ph_storage'), p => p.st >= 1000 ? p.st / 1024 + 'TB' : p.st + 'GB'], [t('ph_cam'), phCam],
     [t('ph_bat'), p => p.bat ? N(p.bat, 0) + ' mAh' : t('ph_na')], [t('ph_charge'), p => p.w ? p.w + 'W' : t('ph_na')], [t('ph_weight'), p => p.g ? p.g + 'g' : t('ph_na')], [t('ph_water'), p => p.ip || '—'], [t('ph_rel'), p => p.rel]];
   const rows = [];
   if (best) rows.push([t('ph_bestBy', {b: t('o_ph_' + by)}), best.n + ' · ' + pr(best), 'key']);
   S.slice(1, 5).forEach((p, i) => rows.push([(i + 2) + '. ' + p.n, pr(p)]));
-  rows.push([t('ph_count', {n: S.length, a: PHONES.list.length}), '']);
+  rows.push([t('ph_count', {n: S.length, a: phAll().length}), '']);
   const warn = [];
   if (cmp.some(p => !phIls(p).own)) warn.push(t('w_phEst'));
   return {
     hero: best ? {label: t('ph_hero', {b: t('o_ph_' + by)}), value: best.n, sub: pr(best) + ' · ' + N(best.d, 1) + '″ · ' + (best.bat ? N(best.bat, 0) + ' mAh · ' : '') + phCam(best)} : {label: t('ph_none'), value: '—'},
     rows, warn,
-    table2: {title: t('t_phSide'), open: true, head: [''].concat(cmp.map(p => p.n)), rows: spec.map(([lab, f]) => ({c: [lab].concat(cmp.map(f))}))},
+    table2: {title: t('t_phSide'), open: true, head: [''].concat(cmp.map(p => p.n)), rows: spec.map(([lab, fn], ri) => {
+      const keyF = [p => -phIls(p).v, null, p => p.hz, null, p => p.ram, p => p.st, p => Math.max(...p.cam) + p.cam.length * 30, p => p.bat, p => p.w, p => p.g ? -p.g : NaN, p => +(String(p.ip).match(/IP\d(\d)/) || [0, 0])[1], null][ri];
+      let bestI = -1; if (keyF && cmp.length > 1){ let bv = -Infinity; cmp.forEach((p, i) => { const x = keyF(p); if (isFinite(x) && x > bv){ bv = x; bestI = i; } }); const ties = cmp.filter(p => keyF(p) === bv).length; if (ties > 1 || !(bv > 0 || ri === 0 || ri === 9)) bestI = -1; }
+      return {c: [lab].concat(cmp.map((p, i) => (i === bestI ? '✅ ' : '') + fn(p)))};
+    })},
     table: {title: t('t_phAll'), head: ['', t('ph_price'), t('ph_screen'), t('ph_bat'), t('ph_cam'), t('ph_chip')], rows: S.map(p => [p.n, pr(p), N(p.d, 1) + '″', p.bat ? N(p.bat, 0) : '—', phCam(p), p.chip])},
     note
   };
@@ -11842,8 +11890,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "9.5", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.043607';
+var CHANGELOG = [{"v": "9.6", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.044611';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -18277,10 +18325,10 @@ document.addEventListener('click', e => {
 var PH = {s: null, ok: false};
 (async function phInit(){
   if (!IN_CLAUDE || !window.claude) return;
-  try { const s = await window.claude.use('sample'); if (!s) return; PH.s = s; const L = await s.limits().catch(() => null); PH.ok = !!(L && L.images); if (PH.ok) phAll(); } catch (e) {}
+  try { const s = await window.claude.use('sample'); if (!s) return; PH.s = s; const L = await s.limits().catch(() => null); PH.ok = !!(L && L.images); if (PH.ok) phRenderAll(); } catch (e) {}
 })();
 function phBtn(kind){ return PH.ok ? `<div class="ph-row"><button type="button" class="ph-btn" data-ph="${kind}"><span aria-hidden="true">📷</span> ${E91(t('ph_btn'))}</button><span class="ph-st" data-phst="${kind}"></span></div>` : ''; }
-function phAll(){ try { insRender(); } catch (e) {} try { lcRender(); } catch (e) {} try { mcRender(); } catch (e) {} try { pcRender(); } catch (e) {} }
+function phRenderAll(){ try { insRender(); } catch (e) {} try { lcRender(); } catch (e) {} try { mcRender(); } catch (e) {} try { pcRender(); } catch (e) {} }
 const _lcR91 = lcRender;
 lcRender = function(){ const r = _lcR91.apply(this, arguments); const b = $('#lc_box'); if (b && PH.ok && !b.querySelector('.ph-row')) b.insertAdjacentHTML('afterbegin', phBtn('loancmp')); return r; };
 const _insR91 = insRender;
@@ -19007,7 +19055,7 @@ function ibDraw(){
     </div>`).join('') : `<p class="fine">${E95(t('fb_none'))}</p>`}</div>`;
 }
 async function ibOpen(){
-  if (!$('#ibx')) document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="ibx" hidden><div class="cp-box ib-box" role="dialog" aria-modal="true" aria-labelledby="ibx_t"><div class="cp-top"><h3 id="ibx_t"></h3><button type="button" class="fg-x" id="ibx_r">🔄</button><button type="button" class="cp-x" id="ibx_x">×</button></div><div id="ibx_b"><p class="fine">…</p></div></div></div>`);
+  if (!$('#ibx')) document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="ibx" hidden><div class="cp-box ib-box" role="dialog" aria-modal="true" aria-labelledby="ibx_t"><div class="cp-top"><h3 id="ibx_t"></h3><button type="button" class="lc-add ib-ref" id="ibx_r">🔄 <span>${E95(t('ci_ref'))}</span></button><button type="button" class="cp-x" id="ibx_x">×</button></div><div id="ibx_b"><p class="fine">…</p></div></div></div>`);
   $('#ibx_t').textContent = '📥 ' + t('ib_title'); $('#ibx_x').setAttribute('aria-label', t('cp_close')); $('#ibx_r').setAttribute('aria-label', t('ci_ref'));
   $('#ibx').hidden = false; document.body.classList.add('cp-lock');
   await ibLoad(); ibDraw();
@@ -19018,7 +19066,7 @@ document.addEventListener('click', async e => {
   if (e.target.closest('#ib_open, [data-ibgo]')) return ibOpen();
   const o = $('#ibx'); if (!o || o.hidden) return;
   if (e.target === o || e.target.closest('#ibx_x')){ o.hidden = true; document.body.classList.remove('cp-lock'); return; }
-  if (e.target.closest('#ibx_r')){ await ibLoad(); return ibDraw(); }
+  if (e.target.closest('#ibx_r')){ const b = $('#ibx_r'); if (b) b.classList.add('spin'); IB.key = IB.key || null; await ibLoad(); ibDraw(); if (b) b.classList.remove('spin'); SET.ibSeen = Math.max(+SET.ibSeen || 0, ...IB.list.map(i => i.at || 0)); try { saveSet(); } catch (er) {} ibBtn(); return toast(t('ib_refreshed', {n: IB.list.length})); }
   const f = e.target.closest('[data-ibf]'); if (f){ IB.f = f.dataset.ibf; return ibDraw(); }
   const d = e.target.closest('[data-ibdel]'); if (d){ SET.ibHide = (SET.ibHide || []).concat(d.dataset.ibdel).slice(-2000); try { saveSet(); } catch (er) {} IB.list = IB.list.filter(i => i.id !== d.dataset.ibdel); return ibDraw(); }
   if (e.target.closest('[data-fbsend]')) setTimeout(async () => { await ibLoad(); ibDraw(); }, 900);
@@ -19087,6 +19135,65 @@ document.addEventListener('click', async e => {
   }
 });
 if (location.hostname === 'localhost') window.__fin95b = {ibUnwrap};
+
+/* while the inbox is open it refreshes itself every minute */
+setInterval(async () => { const o = $('#ibx'); if (o && !o.hidden && !document.hidden && liveOwner()){ await ibLoad(); ibDraw(); ibBtn(); } }, 60000);
+
+/* ================= 9.6: phones — a search engine, phones you type yourself, filters and up to four side by side ================= */
+const E96 = s => asEsc(String(s == null ? '' : s));
+const PH_ALIAS = [[/אייפון|ايفون|آيفون/g, 'iphone'], [/סמסונג|سامسونج/g, 'samsung'], [/גלקסי|جالكسي|غالاكسي/g, 'galaxy'], [/שיאומי|שאומי|شاومي/g, 'xiaomi'], [/פיקסל|بكسل/g, 'pixel'],
+  [/רדמי|ريدمي/g, 'redmi'], [/פוקו|بوكو/g, 'poco'], [/אפל|ابل|آبل/g, 'apple'], [/גוגל|جوجل/g, 'google'], [/פרו/g, 'pro'], [/מקס/g, 'max'], [/אולטרה|אולטרא/g, 'ultra'], [/פלוס/g, 'plus'], [/נוט/g, 'note'], [/פולד/g, 'fold'], [/פליפ/g, 'flip']];
+const phNorm = s => { let x = String(s || '').toLowerCase(); PH_ALIAS.forEach(([rx, to]) => { x = x.replace(rx, ' ' + to + ' '); }); return x.replace(/\+/g, ' plus ').replace(/[^a-z0-9א-ת؀-ۿ]+/g, ' ').trim(); };
+function phFind(q){
+  const words = phNorm(q).split(' ').filter(Boolean); if (!words.length) return [];
+  return phAll().map(p => {
+    const hay = phNorm(p.n + ' ' + p.b + ' ' + p.chip + ' ' + (p.b === 'apple' ? 'iphone apple' : p.b === 'samsung' ? 'galaxy samsung' : p.b === 'google' ? 'pixel google' : p.b === 'xiaomi' ? 'xiaomi redmi poco' : ''));
+    let sc = 0; for (const w of words){ if (hay.split(' ').some(h => h === w)) sc += 3; else if (hay.includes(w)) sc += 1; else return null; }
+    if (phNorm(p.n).startsWith(words.join(' '))) sc += 4;
+    return {p, sc: sc + (+String(p.rel).slice(0, 4) || 2000) / 1e4};
+  }).filter(Boolean).sort((a, b) => b.sc - a.sc).slice(0, 8).map(x => x.p);
+}
+const phBrief = p => [p.d ? N(p.d, 1) + '″' : '', p.bat ? N(p.bat, 0) + 'mAh' : '', p.ram ? p.ram + 'GB RAM' : '', p.st ? p.st + 'GB' : ''].filter(Boolean).join(' · ');
+const phPriceTxt = p => { const x = phIls(p); return isFinite(x.v) ? (x.own ? '' : '≈') + M(x.v) : ''; };
+var PHS = {q: '', open: false};
+function phsRender(){
+  const box = $('#ph_sbox'); if (!box) return;
+  const C = phCmpList(), act = document.activeElement, keepQ = act && act.id === 'phs_q', pos = keepQ ? act.selectionStart : 0;
+  const res = phFind(PHS.q), mine = phMineList();
+  box.innerHTML = `<div class="phs-cmp"><b>${E96(t('phs_cmpT', {n: C.length}))}</b><div class="phs-chips">${C.map(id => { const p = phById(id); return p ? `<span class="phs-chip">${E96(p.n)}<button type="button" data-phsrm="${E96(id)}" aria-label="${E96(t('ins_del'))}">✕</button></span>` : ''; }).join('') || `<span class="fine">${E96(t('phs_none'))}</span>`}</div></div>
+    <div class="phs-search"><span aria-hidden="true">🔍</span><input id="phs_q" type="search" autocomplete="off" dir="auto" value="${E96(PHS.q)}" placeholder="${E96(t('phs_ph'))}" aria-label="${E96(t('phs_ph'))}" data-pii-ok></div>
+    ${PHS.q ? `<div class="phs-res" role="listbox">${res.length ? res.map(p => { const on = C.includes(p.id); return `<button type="button" class="phs-it${on ? ' on' : ''}" data-phsadd="${E96(p.id)}" role="option" aria-selected="${on}"${!on && C.length >= 4 ? ' disabled' : ''}>
+        <span class="phs-n">${p.mine ? '✍️ ' : ''}${E96(p.n)}</span><small>${E96(phBrief(p))}</small><span class="phs-p">${E96(phPriceTxt(p))}</span><span class="phs-a">${on ? '✓' : '＋'}</span></button>`; }).join('') : `<p class="fine">${E96(t('phs_noRes'))}</p>`}</div>` : ''}
+    <details class="adv phs-my"${mine.length ? ' open' : ''}><summary>✍️ ${E96(t('phs_myT', {n: mine.length}))}</summary><p class="fine">${E96(t('phs_myN'))}</p>
+      ${mine.map((o, i) => `<div class="lc-card phs-mcard"><div class="lc-top"><span class="lc-num" aria-hidden="true">✍️</span><input class="lc-name" type="text" maxlength="40" dir="auto" data-phm="${i}" data-phk="n" value="${E96(o.n || '')}" placeholder="${E96(t('phs_nPh'))}" aria-label="${E96(t('lc_name'))}"><button type="button" class="lc-del" data-phmdel="${i}" aria-label="${E96(t('ins_del'))}">✕</button></div>
+        <div class="fields fields3">${[['price', 'ph_price', 'cur'], ['d', 'phs_d', ''], ['hz', 'phs_hz', ''], ['ram', 'phs_ram', ''], ['st', 'phs_st', ''], ['bat', 'phs_bat', ''], ['w', 'phs_w', ''], ['g', 'phs_g', '']].map(([k, lab, u]) => `<div class="field"><span class="lc-l" aria-hidden="true">${E96(t(lab))}</span><div class="control"><input type="number" inputmode="decimal" step="any" data-phm="${i}" data-phk="${k}" value="${o[k] == null || o[k] === '' ? '' : E96(o[k])}" aria-label="${E96(t(lab))}">${u ? unitHTML(u) : ''}</div></div>`).join('')}</div>
+        <div class="fields fields3">${[['chip', 'ph_chip', 'Snapdragon…'], ['cam', 'phs_cam', '50+12+10'], ['ip', 'ph_water', 'IP68'], ['rel', 'ph_rel', '2026-09']].map(([k, lab, ph]) => `<div class="field"><span class="lc-l" aria-hidden="true">${E96(t(lab))}</span><div class="control"><input type="text" dir="ltr" data-phm="${i}" data-phk="${k}" value="${E96(o[k] || '')}" placeholder="${E96(ph)}" aria-label="${E96(t(lab))}" data-pii-ok></div></div>`).join('')}</div>
+      </div>`).join('')}
+      <button type="button" class="lc-add" id="phs_myAdd"><span aria-hidden="true">＋</span> ${E96(t('phs_myAdd'))}</button></details>`;
+  if (keepQ){ const q = $('#phs_q'); if (q){ q.focus(); try { q.setSelectionRange(pos, pos); } catch (e) {} } }
+}
+var PHS_T = null;
+const phsRe = () => { clearTimeout(PHS_T); PHS_T = setTimeout(() => { try { saveSet(); } catch (e) {} if (tab === 'phonecmp') calc(tab); }, 300); };
+document.addEventListener('input', e => {
+  const el = e.target; if (!el) return;
+  if (el.id === 'phs_q'){ PHS.q = el.value; phsRender(); return; }
+  if (el.dataset && el.dataset.phm != null && el.closest('#ph_sbox')){ const o = phMineList()[+el.dataset.phm]; if (!o) return; const k = el.dataset.phk; o[k] = el.type === 'number' ? (el.value === '' ? '' : +el.value) : el.value.slice(0, 60); phsRe(); }
+}, true);
+document.addEventListener('click', e => {
+  if (!e.target.closest) return;
+  const a = e.target.closest('[data-phsadd]'); if (a){ const C = phCmpList(), id = a.dataset.phsadd; if (C.includes(id)) SET.phCmp = C.filter(x => x !== id); else if (C.length < 4) C.push(id); else return toast(t('phs_max')); saveSet(); phsRender(); calc(tab); return; }
+  const r = e.target.closest('[data-phsrm]'); if (r){ SET.phCmp = phCmpList().filter(x => x !== r.dataset.phsrm); saveSet(); phsRender(); calc(tab); return; }
+  if (e.target.closest('#phs_myAdd')){ const L = phMineList(); L.push({n: '', price: '', d: '', hz: 120, ram: '', st: '', bat: '', w: '', g: '', chip: '', cam: '', ip: '', rel: ''}); const C = phCmpList(); if (C.length >= 4) C.pop(); C.push('my' + (L.length - 1)); saveSet(); phsRender(); calc(tab); const n = $$('#ph_sbox .phs-mcard .lc-name').pop(); if (n) n.focus(); return; }
+  const d = e.target.closest('[data-phmdel]'); if (d){ const i = +d.dataset.phmdel, L = phMineList(); L.splice(i, 1);
+    SET.phCmp = (SET.phCmp || []).filter(x => x !== 'my' + i).map(x => /^my\d+$/.test(x) && +x.slice(2) > i ? 'my' + (+x.slice(2) - 1) : x); saveSet(); phsRender(); calc(tab); }
+});
+document.addEventListener('keydown', e => { if (e.target && e.target.id === 'phs_q' && e.key === 'Enter'){ e.preventDefault(); const b = $('#ph_sbox [data-phsadd]:not([disabled])'); if (b) b.click(); } });
+const _calc96 = calc;
+calc = function(id){ if (id === 'phonecmp' && $('#ph_sbox') && !$('#ph_sbox').children.length) phsRender(); return _calc96.apply(this, arguments); };
+const _al96 = applyLang;
+applyLang = function(){ const r = _al96.apply(this, arguments); try { phsRender(); } catch (e) {} return r; };
+try { phsRender(); } catch (e) {}
+if (location.hostname === 'localhost') window.__fin96 = {phFind: q => phFind(q).map(p => p.n)};
 
 applyLang(false);
 activate(tab);
