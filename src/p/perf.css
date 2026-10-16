@@ -29,3 +29,10 @@ button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
 .mic-b{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink-2);display:grid;place-items:center;cursor:pointer;padding:0}
 .trf-now{margin:2px 0 12px;padding:8px 10px;border-radius:10px;background:var(--g1);border:1px solid var(--line)}
 #trf_in{direction:auto;font-family:inherit;font-size:.95rem}
+@media (max-width:959px){
+  body.hero-min .panel .hero{padding:8px 14px 9px}
+  body.hero-min .panel .hero .hero-words,body.hero-min .panel .hero .hero-sub{display:none}
+  body.hero-min .panel .hero .hero-label{font-size:.78rem}
+  body.hero-min .panel .hero .hero-value{font-size:1.55rem}
+  body.hero-min .panel .hero .hero-say{top:6px;width:30px;height:30px}
+}
