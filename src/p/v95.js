@@ -97,8 +97,10 @@ fbOwner = async function(){
 };
 (async function ibStart(){
   if (!IN_CLAUDE) return;
-  for (let i = 0; i < 20 && !FB.db; i++) await new Promise(r => setTimeout(r, 500));
+  /* the database and the owner check both arrive a moment after the page opens: wait for them (up to two minutes) */
+  for (let i = 0; i < 240 && !(FB.db && liveOwner()); i++) await new Promise(r => setTimeout(r, 500));
   if (!FB.db || !liveOwner()) return;
+  try { ibBottom(); ibBtn(); } catch (e) {}
   await ibLoad(); ibBtn();
   setInterval(async () => { if (!document.hidden && liveOwner()){ await ibLoad(); ibBtn(); } }, 300000);
 })();
@@ -120,3 +122,14 @@ renderBottom = function(){ const r = _rb95.apply(this, arguments); try { ibBotto
 const _ibBtn95 = ibBtn;
 ibBtn = function(){ const r = _ibBtn95.apply(this, arguments); try { ibBottom(); } catch (e) {} return r; };
 try { ibBottom(); } catch (e) {}
+
+/* whenever the owner check or developer mode changes, update the bar at once */
+const _pr95 = permRender;
+permRender = function(){ const r = _pr95.apply(this, arguments); try { ibBottom(); ibBtn(); } catch (e) {} return r; };
+const _la95 = liveApply;
+liveApply = function(){ const r = _la95.apply(this, arguments); try { ibBottom(); ibBtn(); } catch (e) {} return r; };
+/* a recalculation for a screen that has no page (e.g. a developer tool) is simply skipped */
+const _calc95 = calc;
+calc = function(id){ if (!id || !document.getElementById('panel-' + id)) return; return _calc95.apply(this, arguments); };
+/* the inbox button in the bottom bar opens the inbox and is not a screen to switch to */
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('#ib_bt'); if (!b) return; e.stopPropagation(); e.preventDefault(); ibOpen(); }, true);
