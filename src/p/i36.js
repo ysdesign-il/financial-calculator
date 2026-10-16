@@ -1,5 +1,16 @@
 /* 10.9 texts */
 Object.assign(T, {
+  sec_k_push:['מישהו לא מוכר דחף שינויים ל־{r}','حساب غير معروف دفع تغييرات إلى {r}','An unknown account pushed changes to {r}'], sec_k_force:['דחיפה בכוח ל־{r} – ההיסטוריה שוכתבה','دفع قسري إلى {r} – أُعيدت كتابة السجل','Force push to {r} – history was rewritten'],
+  sec_k_workflow:['שונו קובצי האוטומציה: {f}','تم تغيير ملفات الأتمتة: {f}','Automation files changed: {f}'], sec_k_code:['שונה קוד המפתח או מנגנון האבטחה','تم تغيير كود المطوّر أو آلية الأمان','Developer code or the security watch was changed'],
+  sec_k_create:['נוצר ענף או תג חדש: {r}','تم إنشاء فرع أو وسم جديد: {r}','A new branch or tag was created: {r}'], sec_k_delete:['נמחק ענף או תג: {r}','تم حذف فرع أو وسم: {r}','A branch or tag was deleted: {r}'],
+  sec_k_fork:['מישהו העתיק את המאגר: {r}','شخص ما نسخ المستودع: {r}','Someone copied the repository: {r}'], sec_k_public:['המאגר הפך לציבורי','أصبح المستودع عامًا','The repository was made public'],
+  sec_k_rules:['שונו כללי ההגנה על הענף ({r})','تم تغيير قواعد حماية الفرع ({r})','Branch protection rules changed ({r})'], sec_k_release:['פעולה על גרסה מפורסמת: {r}','إجراء على إصدار منشور: {r}','Action on a published release: {r}'],
+  sec_k_collab:['יש גישה למאגר לחשבונות נוספים: {r}','حسابات أخرى لديها وصول إلى المستودع: {r}','Other accounts have access to the repository: {r}'],
+  sec_new:['{n} התראות אבטחה חדשות','{n} تنبيهات أمان جديدة','{n} new security alerts'], sec_view:['לצפייה','عرض','View'], sec_title:['התראות אבטחה','تنبيهات الأمان','Security alerts'],
+  sec_none:['אין התראות. הכל שקט.','لا توجد تنبيهات. كل شيء هادئ.','No alerts. All quiet.'], sec_ack:['סימון כנקרא','وضع علامة كمقروء','Mark as read'], sec_ntf:['לקבל התראה גם במכשיר','تلقي تنبيه على الجهاز أيضًا','Also notify me on this device'],
+  sec_help:['ההתראות מגיעות מ־GitHub: מי דחף שינויים, שינוי בקובצי האוטומציה, שינוי הרשאות, העתקת המאגר ועוד. התראה חמורה נפתחת גם כ־Issue ב־GitHub ונשלחת אליך במייל. אם זה לא היית אתה: החלף סיסמה ב־GitHub ובדוק מי מורשה.','تأتي التنبيهات من GitHub: من دفع تغييرات، تغيير ملفات الأتمتة، تغيير الصلاحيات، نسخ المستودع وغيرها. التنبيه الخطير يُفتح أيضًا كـ Issue ويُرسل إليك بالبريد. إن لم تكن أنت: غيّر كلمة مرور GitHub وتحقق من المصرّح لهم.','Alerts come from GitHub: who pushed changes, automation file changes, permission changes, repository copies and more. Serious ones also open a GitHub issue and reach you by email. If it was not you: change your GitHub password and check who has access.'],
+  sec_devFail:['ניסיון כניסה למצב מפתח עם קוד שגוי ({w})','محاولة دخول إلى وضع المطوّر برمز خاطئ ({w})','Attempt to enter developer mode with a wrong code ({w})'],
+  fb_k_sec:['🛡️ אבטחה','🛡️ أمان','🛡️ Security'],
   set_my:['הנתונים שלי','بياناتي','My numbers'],
   f_myGross:['שכר חודשי ברוטו','الراتب الشهري الإجمالي','Monthly gross salary'], h_myGross:['ממלא אוטומטית את השכר, הנטו וההכנסה בכל המחשבונים שעוד לא שיניתם.','يملأ تلقائيًا الراتب والصافي والدخل في كل الحاسبات التي لم تغيّرها بعد.','Fills in salary, net and income in every calculator you have not changed yet.'],
   f_myKids:['מספר ילדים','عدد الأولاد','Number of children'], h_myKids:['לקצבת ילדים ולמחשבונים משפחתיים.','لمخصصات الأولاد والحاسبات العائلية.','For the child allowance and family calculators.'],

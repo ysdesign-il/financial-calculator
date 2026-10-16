@@ -86,3 +86,73 @@ document.addEventListener('click', e => {
   if (e.target.closest && e.target.closest('[data-psmy]')){ try { activate('settings'); setTimeout(() => { if (typeof setCat === 'function') setCat('calc'); const f = $('#set_myGross'); if (f){ f.scrollIntoView({block: 'center'}); f.focus(); } }, 150); } catch (er) {} }
 });
 try { renderTiles(); } catch (e) {}
+
+/* ---------- developer mode: security alerts from GitHub, and failed attempts to unlock developer mode ---------- */
+var SEC = {list: [], at: 0};
+async function secLoad(){
+  if (typeof DEV_ON === 'undefined' || !DEV_ON) return;
+  try {
+    const u = IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/security.json' : 'security.json';
+    const r = await fetch(u + '?t=' + Date.now(), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'});
+    if (!r.ok) return;
+    const d = await r.json(); SEC.list = Array.isArray(d && d.alerts) ? d.alerts : []; SEC.at = Date.now(); secRender();
+  } catch (e) {}
+}
+function secMsg(a){ const k = 'sec_k_' + (a && a.kind); return T[k] ? t(k, Object.assign({r: '', f: ''}, a.p || {})) : (a && a.msg) || ''; }
+function secNew(){ const seen = +SET.secSeen || 0; return SEC.list.filter(a => (+a.at || 0) * 1000 > seen); }
+function secRender(){
+  let b = $('#sec_bar'); const n = (typeof DEV_ON !== 'undefined' && DEV_ON) ? secNew() : [];
+  if (!n.length){ if (b) b.remove(); return; }
+  const high = n.some(a => a.level === 'high');
+  if (!b){ b = document.createElement('div'); b.id = 'sec_bar'; b.className = 'upd-bar sec-bar'; b.setAttribute('role', 'alert'); document.body.appendChild(b); }
+  b.classList.toggle('sec-high', high);
+  b.innerHTML = `<span>🛡️ <b>${E108(t('sec_new', {n: n.length}))}</b> ${E108(secMsg(n[0]))}</span><button type="button" class="gold-btn" id="sec_open">${E108(t('sec_view'))}</button>`;
+  const key = 'fin-sec-ntf', top = String(n[0].at);
+  try { if (RAWLS.getItem(key) !== top){ RAWLS.setItem(key, top); if ('Notification' in window && Notification.permission === 'granted') new Notification(t('sec_new', {n: n.length}), {body: secMsg(n[0]), icon: 'icon-192.png', tag: 'sec-' + top}); } } catch (e) {}
+}
+function secOpen(){
+  let o = $('#secx');
+  if (!o){ document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="secx" hidden><div class="cp-box" role="dialog" aria-modal="true" aria-labelledby="secx_t"><div class="cp-top"><h3 id="secx_t"></h3><button type="button" class="cp-x" id="secx_x">×</button></div><div id="secx_b" class="ex-body"></div></div></div>`); o = $('#secx'); }
+  const seen = +SET.secSeen || 0, lv = {high: '🔴', medium: '🟠', low: '🟢'};
+  $('#secx_t').textContent = t('sec_title'); $('#secx_x').setAttribute('aria-label', t('cp_close'));
+  $('#secx_b').innerHTML = (SEC.list.length ? '<ul class="sec-list">' + SEC.list.slice(0, 50).map(a => `<li class="${(+a.at || 0) * 1000 > seen ? 'new' : ''}">${lv[a.level] || '⚪'} <b dir="auto">${E108(secMsg(a))}</b><small>${E108(svdDate((+a.at || 0) * 1000))}${a.actor ? ' · ' + E108(a.actor) : ''}</small></li>`).join('') + '</ul>' : `<p>${E108(t('sec_none'))}</p>`) +
+    `<p class="fine">${E108(t('sec_help'))}</p><div class="btnrow"><button type="button" class="gold-btn" id="secx_ok">${E108(t('sec_ack'))}</button>` +
+    ('Notification' in window && !IN_CLAUDE && Notification.permission === 'default' ? `<button type="button" class="btn" id="secx_ntf">${E108(t('sec_ntf'))}</button>` : '') + '</div>';
+  o.hidden = false; document.body.classList.add('cp-lock');
+}
+function secClose(){ const o = $('#secx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); } }
+document.addEventListener('click', e => {
+  if (!e.target.closest) return;
+  if (e.target.closest('#sec_open')) return secOpen();
+  const o = $('#secx'); if (!o || o.hidden) return;
+  if (e.target === o || e.target.closest('#secx_x')) return secClose();
+  if (e.target.closest('#secx_ok')){ SET.secSeen = Date.now(); try { saveSet(); } catch (er) {} secClose(); secRender(); }
+  if (e.target.closest('#secx_ntf')){ try { Notification.requestPermission(); } catch (er) {} }
+});
+setTimeout(secLoad, 2500);
+setInterval(() => { if (!document.hidden) secLoad(); }, 30 * 60000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden && Date.now() - SEC.at > 5 * 60000) secLoad(); });
+
+/* a wrong developer code is reported to the developer's inbox (at most once an hour from a device; never the code itself) */
+async function secReport(msg){
+  try {
+    const k = 'fin-sec-rep', last = +(RAWLS.getItem(k) || 0); if (Date.now() - last < 3600e3) return; RAWLS.setItem(k, String(Date.now()));
+    const it = {k: 'sec', r: 0, m: msg, v: APP_VER, l: lang, s: '', at: Date.now()};
+    if (typeof FB !== 'undefined' && FB.db && FB.uid){
+      let mine = []; try { const d = await FB.db.doc('feedback/' + FB.uid).get(); if (d && d.exists) mine = (d.data() || {}).items || []; } catch (er) {}
+      mine = mine.concat(it).slice(-20); const ref = FB.db.doc('feedback/' + FB.uid);
+      try { await ref.update({items: mine, at: Date.now()}); } catch (er) { await ref.set({items: mine, at: Date.now()}); }
+    } else if (typeof ibSendWeb === 'function') await ibSendWeb(it);
+  } catch (e) {}
+}
+if (typeof devTry === 'function'){
+  const devTry108 = devTry;
+  devTry = async function(rawName, rawCode, quiet){
+    const ok = await devTry108.apply(this, arguments);
+    try {
+      if (!ok && !quiet){ const ci = $('#dev_code'), code = String(rawCode != null ? rawCode : ci && ci.value || ''); if (code.replace(/[^0-9a-z]/gi, '').length >= 6) secReport(t('sec_devFail', {w: IN_CLAUDE ? 'Claude' : location.hostname})); }
+      if (ok) setTimeout(secLoad, 500);
+    } catch (e) {}
+    return ok;
+  };
+}
