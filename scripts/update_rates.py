@@ -176,6 +176,36 @@ def iso_ts(s):
         return 0
 
 
+INBOX_TOPIC = "fc-in-318ca4899cb6f959f4e4de51"   # the relay topic the website sends locked (encrypted) feedback to
+INBOX_PATH = "inbox.json"
+
+
+def inbox_pull(log):
+    """collect locked feedback from the relay (it keeps messages ~12 hours; we run twice an hour). Only the app can unlock them."""
+    try:
+        box = json.load(open(INBOX_PATH, encoding="utf-8"))
+    except Exception:
+        box = {"v": 1, "m": []}
+    have = {m.get("id") for m in box.get("m", [])}
+    raw = get_raw("https://ntfy.sh/%s/json?poll=1&since=all" % INBOX_TOPIC, {"User-Agent": "financial-calculator-inbox/1.0"}, 25)
+    n = 0
+    for line in raw.splitlines():
+        try:
+            e = json.loads(line)
+        except Exception:
+            continue
+        msg = str(e.get("message") or "")
+        if e.get("event") != "message" or e.get("id") in have or not msg.startswith("fc1.") or len(msg) > 6000:
+            continue
+        box["m"].append({"id": e["id"], "t": int(e.get("time") or 0), "c": msg})
+        have.add(e["id"]); n += 1
+    if n:
+        box["m"] = box["m"][-1000:]
+        with open(INBOX_PATH, "w", encoding="utf-8") as f:
+            json.dump(box, f, separators=(",", ":"))
+    log.append("inbox +%d" % n)
+
+
 HIST_PATH = "history.json"
 HIST = {"v": 1, "s": {}}
 HIST_DIRTY = [False]
@@ -413,6 +443,10 @@ def main():
             out["live"] = lv
     except Exception as e:
         log.append("live fx failed: %s" % e)
+    try:
+        inbox_pull(log)
+    except Exception as e:
+        log.append("inbox failed: %s" % e)
     if HIST_DIRTY[0]:
         HIST["at"] = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
         with open(HIST_PATH, "w", encoding="utf-8") as f:

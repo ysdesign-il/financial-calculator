@@ -13,11 +13,21 @@ Object.assign(T, {
   h_kbLang:['כבוי כברירת מחדל. כשמופעל: אם מקלידים בעברית, בערבית או באנגלית בשדה טקסט – האפליקציה עוברת לשפה הזו. דפדפן לא יכול לדעת איזו מקלדת פתוחה, לכן זה לפי האותיות שמוקלדות.','مطفأ افتراضيًا. عند التشغيل: الكتابة بالعبرية أو العربية أو الإنجليزية في حقل نصي تغيّر لغة التطبيق. لا يستطيع المتصفح معرفة لوحة المفاتيح، لذا يعتمد على الحروف المكتوبة.','Off by default. When on: typing Hebrew, Arabic or English letters in a text field switches the app to that language. A browser cannot see which keyboard is open, so it goes by the letters you type.'],
   kb_switched:['השפה הוחלפה לפי המקלדת','تم تغيير اللغة حسب لوحة المفاتيح','Language switched to match your keyboard'],
   fb_title:['משוב למפתח','ملاحظات للمطوّر','Feedback to the developer'],
-  fb_note:['ספרו מה לשפר או מה לא עובד. נשלח רק מה שכתבתם, גרסת האפליקציה והשפה – בלי שם, מייל או טלפון (גם אם תכתבו כאלה, הם יוסרו). פרטי המפתח לא מוצגים לאף אחד.','أخبرونا ما يجب تحسينه. يُرسل فقط ما كتبتم والإصدار واللغة – بدون اسم أو بريد أو هاتف (وتُحذف إن كُتبت). بيانات المطوّر لا تظهر لأحد.','Tell us what to improve. Only your text, the app version and language are sent – no name, email or phone (they are removed if typed). The developer\'s details are never shown.'],
+  fb_note:['ספרו מה לשפר או מה לא עובד.','أخبرونا ما يجب تحسينه أو ما لا يعمل.','Tell us what to improve or what isn\'t working.'],
+  fb_mail:['מייל לחזרה (לא חובה)','بريد للرد (اختياري)','Email for a reply (optional)'], fb_mailPh:['מייל לחזרה (לא חובה)','بريد للرد (اختياري)','Email for a reply (optional)'], fb_badMail:['כתובת המייל לא תקינה','عنوان البريد غير صالح','That email address isn\'t valid'],
   fb_kind:['סוג המשוב','نوع الملاحظة','Kind'], fb_k_idea:['💡 רעיון','💡 فكرة','💡 Idea'], fb_k_bug:['🐞 תקלה','🐞 خلل','🐞 Bug'], fb_k_q:['❓ שאלה','❓ سؤال','❓ Question'], fb_k_other:['✍️ אחר','✍️ أخرى','✍️ Other'],
   fb_rate:['דירוג','التقييم','Rating'], fb_ph:['מה הייתם רוצים לראות באפליקציה?','ماذا تودّون أن تروا في التطبيق؟','What would you like to see in the app?'],
   fb_send:['שליחה','إرسال','Send'], fb_empty:['כתבו משהו או בחרו דירוג','اكتبوا شيئًا أو اختاروا تقييمًا','Write something or pick a rating'],
   fb_ok:['תודה! המשוב נשלח','شكرًا! أُرسلت الملاحظة','Thanks! Feedback sent'], fb_fail:['השליחה לא הצליחה – נסו שוב','فشل الإرسال – حاولوا مجددًا','Could not send – try again'],
   fb_web:['באתר אפשר רק להעתיק את המשוב. שליחה ישירה למפתח עובדת מתוך האפליקציה.','في الموقع يمكن نسخ الملاحظة فقط. الإرسال المباشر يعمل داخل التطبيق.','On the website you can only copy your note. Sending directly works inside the app.'],
-  fb_inbox:['משוב מהמשתמשים (רק אתה רואה)','ملاحظات المستخدمين (أنت فقط ترى)','User feedback (only you see this)'], fb_none:['אין משוב עדיין','لا ملاحظات بعد','No feedback yet']
+  fb_inbox:['משוב מהמשתמשים (רק אתה רואה)','ملاحظات المستخدمين (أنت فقط ترى)','User feedback (only you see this)'], fb_none:['אין משוב עדיין','لا ملاحظات بعد','No feedback yet'],
+  fb_reply:['מענה','رد','Reply'], fb_editReply:['עריכת המענה','تعديل الرد','Edit reply'], fb_sendReply:['שליחת המענה','إرسال الرد','Send reply'], fb_yourReply:['המענה שלך','ردّك','Your reply'],
+  fb_replied:['המענה נשלח – המשתמש יראה אותו באפליקציה','أُرسل الرد – سيراه المستخدم في التطبيق','Reply sent – they will see it in the app'],
+  fb_replies:['תשובות מהמפתח','ردود المطوّر','Replies from the developer'], fb_devReply:['תשובת המפתח','رد المطوّر','Developer\'s reply'], fb_newReply:['יש תשובה חדשה למשוב שלך (הגדרות ← מערכת)','يوجد رد جديد على ملاحظتك (الإعدادات ← النظام)','You have a new reply to your feedback (Settings → System)'],
+  ib_title:['אינבוקס','صندوق الوارد','Inbox'], ib_openB:['פתיחת האינבוקס','فتح صندوق الوارد','Open inbox'],
+  ib_note:['כל ההודעות שמשתמשים שולחים – מהאפליקציה ומהאתר – במקום אחד. רק אתה רואה אותו.','كل الرسائل من التطبيق والموقع في مكان واحد. أنت فقط ترى ذلك.','Every message users send – from the app and the website – in one place. Only you see it.'],
+  ib_f_all:['הכול','الكل','All'], ib_f_app:['מהאפליקציה','من التطبيق','From the app'], ib_f_web:['מהאתר','من الموقع','From the website'],
+  ib_s_app:['אפליקציה','تطبيق','App'], ib_s_web:['אתר','موقع','Website'],
+  ib_webReply:['הודעה מהאתר – אפשר לענות רק במייל שהשאירו.','رسالة من الموقع – يمكن الرد عبر البريد فقط.','From the website – reply by the email they left.'],
+  ib_nokey:['חסר מפתח הפענוח בבסיס הנתונים, ולכן הודעות מהאתר נעולות.','مفتاح فك التشفير غير موجود، لذا رسائل الموقع مقفلة.','The decryption key is missing, so website messages stay locked.']
 });

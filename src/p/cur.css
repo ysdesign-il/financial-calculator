@@ -101,3 +101,7 @@
 #fb_msg{width:100%;box-sizing:border-box;font:inherit;padding:10px;border-radius:12px;border:1px solid var(--line);background:transparent;color:inherit;resize:vertical}
 .fb-list{display:grid;gap:8px;max-height:60vh;overflow:auto}.fb-it{border:1px solid var(--line);border-radius:12px;padding:10px}.fb-it small{display:block;opacity:.7}.fb-it p{margin:6px 0 0;white-space:pre-wrap}.fb-r{color:#e2b33c}
 .rail-top .pwa-br{flex-basis:100%;height:0}.rail-top .pwa-inst{margin:-4px 0 0}
+#fb_mail{width:100%;box-sizing:border-box;font:inherit;padding:10px;border-radius:12px;border:1px solid var(--line);background:transparent;color:inherit;margin-bottom:8px}.fb-mail{display:inline-block;margin-top:4px;font-size:.85rem}
+.fb-rp{margin-top:8px;padding:8px 10px;border-radius:10px;background:rgba(226,179,60,.12);border-inline-start:3px solid #e2b33c}.fb-rp p{margin:4px 0 0;white-space:pre-wrap}.fb-ans{margin-top:8px}.fb-ans summary{cursor:pointer;font-weight:600;font-size:.9rem}.fb-ans textarea{width:100%;box-sizing:border-box;font:inherit;padding:8px;border-radius:10px;border:1px solid var(--line);background:transparent;color:inherit;margin:6px 0}#fb_rps{margin-top:14px}
+.ib-box{max-width:560px}.ib-list{max-height:none}.ib-h{display:flex;align-items:center;gap:8px}.ib-h .lc-del{margin-inline-start:auto}.ib-src{font-size:.75rem;padding:1px 8px;border-radius:10px;border:1px solid var(--line);opacity:.8}.fb-it.ib-new{border-color:#e2b33c;box-shadow:0 0 0 1px #e2b33c}.ib-open{margin-inline-start:8px}
+#panel-markets .svbar{display:none}
