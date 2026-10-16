@@ -73,15 +73,7 @@ if not alerts:
     print('Nothing unusual.'); raise SystemExit(0)
 
 path = os.path.join(ROOT, 'security.json')
-try:
-    data = json.load(open(path, encoding='utf-8'))
-except Exception:
-    data = {'alerts': []}
-data['alerts'] = (alerts + data.get('alerts', []))[:100]
-data['updated'] = int(time.time())
-json.dump(data, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 for a in alerts: print('ALERT', a)
-
 serious = [a for a in alerts if a['level'] == 'high']
 if serious and TOKEN:
     try:
@@ -90,9 +82,23 @@ if serious and TOKEN:
                                         '\n\nIf this was not you: change your GitHub password, review Settings → Collaborators and deploy keys, and revoke unknown tokens.'})
     except Exception as e:
         print('issue not created:', e)
-sh = lambda *a: subprocess.run(list(a), cwd=ROOT)
-sh('git', 'config', 'user.name', 'security-bot'); sh('git', 'config', 'user.email', 'security-bot@users.noreply.github.com')
-sh('git', 'add', 'security.json'); sh('git', 'commit', '-m', 'Security alert')
-if subprocess.run(['git', 'pull', '--rebase', '-X', 'theirs', 'origin', 'main'], cwd=ROOT).returncode != 0:
-    sh('git', 'rebase', '--abort'); raise SystemExit(1)
-sh('git', 'push', 'origin', 'HEAD:main'); sh('git', 'push', '--force', 'origin', 'HEAD:gh-pages')
+run = lambda *a: subprocess.run(list(a), cwd=ROOT, capture_output=True, text=True)
+run('git', 'config', 'user.name', 'security-bot'); run('git', 'config', 'user.email', 'security-bot@users.noreply.github.com')
+for attempt in range(5):                       # always start from the newest main, so no alert is ever lost or overwritten
+    run('git', 'fetch', '--depth=1', 'origin', 'main'); run('git', 'checkout', '-B', 'main', 'origin/main')
+    try:
+        data = json.load(open(path, encoding='utf-8'))
+    except Exception:
+        data = {'alerts': []}
+    old = data.get('alerts', [])
+    sig = {(a.get('at'), a.get('kind'), a.get('msg')) for a in old}
+    data['alerts'] = ([a for a in alerts if (a['at'], a['kind'], a['msg']) not in sig] + old)[:100]
+    data['updated'] = int(time.time())
+    json.dump(data, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    run('git', 'add', 'security.json'); run('git', 'commit', '-m', 'Security alert')
+    r = run('git', 'push', 'origin', 'HEAD:main')
+    if r.returncode == 0:
+        run('git', 'push', '--force', 'origin', 'HEAD:gh-pages'); print('saved'); break
+    print('push retry', attempt + 1, r.stderr[-200:]); time.sleep(5 + attempt * 5)
+else:
+    raise SystemExit('could not save the alert')
