@@ -1,18 +1,21 @@
 {
- "started": "2026-10-16 01:04:10 UTC",
+ "started": "2026-10-16 01:12:43 UTC",
  "events": [
-  "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
+  "  gemini gemini-flash-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
   "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
+  "published ru",
+  "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
   "  gemini gemini-flash-lite-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
   "  gemini: gemini quota used up",
-  "published ru"
+  "published am"
  ],
  "langs": {
-  "ru": 3973
+  "ru": 4274,
+  "am": 3517
  },
- "finished": "2026-10-16 01:04:13 UTC",
+ "finished": "2026-10-16 01:13:35 UTC",
  "coverage": {
-  "am": 3524,
+  "am": 3517,
   "sq": 3111,
   "hy": 3110,
   "az": 3111,
@@ -68,7 +71,7 @@
   "pa": 0,
   "ps": 0,
   "ro": 3111,
-  "ru": 3973,
+  "ru": 4274,
   "sr": 0,
   "si": 0,
   "sk": 0,
