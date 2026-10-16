@@ -78,8 +78,9 @@ if (typeof FG_SKIP !== 'undefined' && !FG_SKIP.includes('markets')) FG_SKIP.push
 if (typeof DASH_SKIP !== 'undefined' && !DASH_SKIP.includes('markets')) DASH_SKIP.push('markets');
 const _svK92 = svKind;
 svKind = function(id){ return id === 'markets' ? '' : _svK92.apply(this, arguments); };
-if (!SET.mktInit){ SET.mktInit = 1; if (!Array.isArray(SET.hidden)) SET.hidden = []; if (!SET.hidden.includes('markets')) SET.hidden.push('markets'); try { saveSet(); } catch (e) {} }
-const mkOn = () => Array.isArray(SET.hidden) && !SET.hidden.includes('markets');
+/* 9.1: the market data always lives on its own page, never on Home */
+if (Array.isArray(SET.hidden) && SET.hidden.includes('markets')){ SET.hidden = SET.hidden.filter(x => x !== 'markets'); try { saveSet(); } catch (e) {} }
+const mkOn = () => true;
 const MK_PARTS = ['.mk-head', '#fx_st', '#hm', '#hm_n', '#hmx'];
 function mkSync(){
   const home = $('#panel-home'), root = $('#mkp_root'); if (!home || !root) return;
@@ -88,9 +89,6 @@ function mkSync(){
   const els = MK_PARTS.map(s => document.querySelector(s)).filter(Boolean);
   if (mkOn()){ if (!root.querySelector('#hm')){ root.innerHTML = `<p class="home-sub mkp-sub">${E92(t('mkp_sub'))}</p>`; els.forEach(e => root.appendChild(e)); } }
   else if (!home.querySelector('#hm')){ const ref = anchor.nextSibling; els.forEach(e => anchor.parentNode.insertBefore(e, ref)); const sub = root.querySelector('.mkp-sub'); if (sub) sub.remove(); }
-  const b = $('#mkp_tog'), acts = $('.mk-acts');
-  const html = mkOn() ? `🏠 ${E92(t('mkp_back'))}` : `📊 ${E92(t('mkp_go'))}`;
-  if (!b && acts) acts.insertAdjacentHTML('afterbegin', `<button type="button" class="rf-btn" id="mkp_tog">${html}</button>`); else if (b) b.innerHTML = html;
   const d = $('#dsb'); if (d && d.parentNode !== home && anchor.parentNode) anchor.parentNode.insertBefore(d, anchor);
 }
 function mkToggle(){
