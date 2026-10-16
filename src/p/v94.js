@@ -1,6 +1,6 @@
 /* ================= 9.1: feedback — users write to the developer; nobody sees anyone's private details ================= */
 /* Inside the app: each person's notes go to their own slot in the app's database (feedback/<their id>); only the owner can read them.
-   On the website there is no server of ours, so a note goes as a public GitHub issue (the person sees it before sending) or is copied.
+   On the website there is no server of ours, so the note can only be copied (sending works inside the app).
    Emails, phone numbers and long digit runs are removed from the text before it is sent. The developer's details are never shown. */
 const E94 = s => asEsc(String(s == null ? '' : s));
 var FB = {db: null, uid: null};
@@ -11,12 +11,12 @@ var FB = {db: null, uid: null};
 const fbClean = s => String(s || '').replace(/[\w.+-]+@[\w-]+\.[\w.-]+/g, '[•]').replace(/\+?\d[\d\s\-()]{7,}\d/g, '[•]').slice(0, 1500);
 function fbBox(){
   const sys = $('.set-cat[data-cat="system"]'); if (!sys) return;
-  let box = $('#fb_box'); if (box) return;
-  sys.insertAdjacentHTML('beforeend', `<div class="bk-box fb-box" id="fb_box"><h4>💬 ${E94(t('fb_title'))}</h4><p class="fine">${E94(t('fb_note'))}</p>
+  let box = $('#fb_box'); if (box){ if (box.dataset.db === String(!!FB.db)) return; box.remove(); }
+  sys.insertAdjacentHTML('beforeend', `<div class="bk-box fb-box" id="fb_box" data-db="${!!FB.db}"><h4>💬 ${E94(t('fb_title'))}</h4><p class="fine">${E94(t('fb_note'))}</p>${FB.db ? '' : `<p class="fine fb-web">ℹ️ ${E94(t('fb_web'))}</p>`}
     <div class="fb-kinds" role="radiogroup" aria-label="${E94(t('fb_kind'))}">${['idea', 'bug', 'q', 'other'].map((k, i) => `<button type="button" role="radio" data-fbk="${k}" aria-checked="${i ? 'false' : 'true'}" class="${i ? '' : 'on'}">${E94(t('fb_k_' + k))}</button>`).join('')}</div>
     <div class="fb-stars" role="radiogroup" aria-label="${E94(t('fb_rate'))}">${[1, 2, 3, 4, 5].map(n => `<button type="button" role="radio" data-fbr="${n}" aria-label="${n}" aria-checked="false">★</button>`).join('')}</div>
     <textarea id="fb_msg" rows="4" maxlength="1500" dir="auto" placeholder="${E94(t('fb_ph'))}" aria-label="${E94(t('fb_title'))}"></textarea>
-    <div class="bk-acts"><button type="button" class="lc-add" id="fb_send">📨 ${E94(t(FB.db ? 'fb_send' : 'fb_sendGh'))}</button><button type="button" class="lc-add" id="fb_copy">📋 ${E94(t('b_copy'))}</button></div>
+    <div class="bk-acts">${FB.db ? `<button type="button" class="lc-add" id="fb_send">📨 ${E94(t('fb_send'))}</button>` : ''}<button type="button" class="lc-add" id="fb_copy">📋 ${E94(t('b_copy'))}</button></div>
     <p class="fine fb-st" id="fb_st" aria-live="polite"></p></div>`);
 }
 var FBV = {k: 'idea', r: 0};
@@ -29,7 +29,8 @@ document.addEventListener('click', async e => {
   if (e.target.closest('#fb_copy')){ const it = fbItem(); if (!it.m) return st('fb_empty'); copyText(t('fb_k_' + it.k) + (it.r ? ' ' + '★'.repeat(it.r) : '') + '\n' + it.m + '\n— ' + APP_VER); toast(t('st_copied')); return; }
   if (!e.target.closest('#fb_send')) return;
   const it = fbItem(); if (!it.m && !it.r) return st('fb_empty');
-  if (FB.db && FB.uid){
+  if (!(FB.db && FB.uid)) return st('fb_fail');
+  {
     st('m_wait');
     try {
       let mine = []; try { mine = JSON.parse(LS.getItem('fin-fb') || '[]') || []; } catch (er) {}
@@ -40,11 +41,6 @@ document.addEventListener('click', async e => {
     } catch (er) { st('fb_fail'); }
     return;
   }
-  /* the website: a GitHub issue the person reviews before sending */
-  const title = (t('fb_k_' + it.k) + ': ' + it.m.split('\n')[0]).slice(0, 80);
-  const body = it.m + '\n\n' + (it.r ? '★'.repeat(it.r) + '\n' : '') + '— ' + APP_VER + ' · ' + lang;
-  window.open('https://github.com/' + DC_REPO + '/issues/new?title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(body) + '&labels=feedback', '_blank', 'noopener');
-  st('fb_gh');
 });
 /* the owner reads everyone's notes here (developer mode, inside the app) */
 async function fbOwner(){
