@@ -127,7 +127,7 @@ function calcLoan(){
   const n = Math.max(1, Math.round(yrs * 12));
   const grace = clamp(Math.round(v('l_grace')), 0, n - 1);
   const extra = Math.max(0, v('l_extra')), pre = Math.max(0, v('l_pre')), preM = clamp(Math.round(v('l_preM')), 1, n);
-  const cpi = clamp(v('l_cpi'), 0, 30), feePct = Math.max(0, v('l_feePct')), feeFix = Math.max(0, v('l_feeFix'));
+  const cpi = Math.max(0, v('l_cpi')), feePct = Math.max(0, v('l_feePct')), feeFix = Math.max(0, v('l_feeFix'));
   const cfg = {amt, rate, n, type, grace, ci: cpi, extra: 0, pre: 0, preM};
   const base = loanSim(cfg);
   const has = extra > 0 || pre > 0;
@@ -183,7 +183,7 @@ function calcMortgage(){
   const price = Math.max(0, v('m_price')), down = Math.max(0, v('m_down'));
   const loan = Math.max(0, price - down), ltv = price > 0 ? loan / price * 100 : 0;
   const lim = {first:75, upg:70, inv:50}[$('#m_type').value];
-  const income = Math.max(0, v('m_income')), cpi = clamp(v('m_cpi'), 0, 30);
+  const income = Math.max(0, v('m_income')), cpi = Math.max(0, v('m_cpi'));
   const rows = [[t('r_mLoan'), M(loan)], [t('r_ltv'), PC(ltv)], [t('r_ltvLimit'), PC(lim)]];
   const sims = [], shareSum = [1,2,3].reduce((s, i) => s + Math.max(0, v('m_s' + i)), 0);
   let varShare = 0, firstTotal = 0;

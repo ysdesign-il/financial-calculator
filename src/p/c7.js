@@ -47,7 +47,7 @@ function calcPrime(){
     };
   }
   if (mode === 'deposit'){
-    const mo = clamp(Math.round(v('pr_months')), 1, 600), tax = clamp(v('pr_tax'), 0, 100) / 100, comp = $('#pr_comp').value === 'm';
+    const mo = clamp(Math.round(v('pr_months')), 1, 600), tax = Math.max(0, v('pr_tax')) / 100, comp = $('#pr_comp').value === 'm';
     const Y = []; let b = amt;
     for (let m = 1; m <= mo; m++){
       b = comp ? b * (1 + base / 1200) : amt * (1 + base / 1200 * m);

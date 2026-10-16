@@ -63,7 +63,7 @@ function calcLeave(){
   const accrued = ent * mo / 12;
   const bal = Math.max(0, carry + accrued - used);
   const vacVal = bal * daily;
-  const yrs = Math.max(1, Math.floor(v('lv_yrs'))), hd = havDays(yrs), scope = clamp(v('lv_scope'), 0, 100) / 100;
+  const yrs = Math.max(1, Math.floor(v('lv_yrs'))), hd = havDays(yrs), scope = Math.max(0, v('lv_scope')) / 100;
   const hav = hd * HAV_RATE * (mo / 12) * scope;
   const havLeft = Math.max(0, hav - Math.max(0, v('lv_hpaid')));
   const tmo = Math.max(0, v('lv_tmo')), sick = Math.min(90, 1.5 * tmo);
@@ -225,7 +225,7 @@ function calcLoanCmp(){
 function calcPrepay(){
   const bal = Math.max(0, v('pp_bal')), rate = Math.max(0, v('pp_rate')), n = Math.max(1, Math.round(v('pp_yrs') * 12));
   const fee = Math.max(0, v('pp_fee')), lump = clamp(v('pp_lump'), 0, bal + fee), pre = Math.min(bal, Math.max(0, lump - fee));
-  const ret = v('pp_ret'), tax = clamp(v('pp_tax'), 0, 60) / 100, short = ($('#pp_after') || {}).value === 'short';
+  const ret = v('pp_ret'), tax = Math.max(0, v('pp_tax')) / 100, short = ($('#pp_after') || {}).value === 'short';
   const p0 = pmtOf(bal, rate, n), p1 = short ? p0 : pmtOf(bal - pre, rate, n), r = rate / 1200, rm = mRate(ret);
   /* A: prepay, invest whatever the loan no longer takes each month */
   let b = bal - pre, wA = 0, put = 0, paid = 0, end = 0;
@@ -255,7 +255,7 @@ function calcPrepay(){
 /* --- savings goal --- */
 function calcSaveGoal(){
   const mode = $('#sg_mode').value, goal = Math.max(0, v('sg_goal')), now = Math.max(0, v('sg_now')), rate = v('sg_rate'), infl = Math.max(0, v('sg_infl'));
-  const tax = clamp(v('sg_tax'), 0, 60) / 100, fee = clamp(v('sg_fee'), 0, 10) / 1200;
+  const tax = Math.max(0, v('sg_tax')) / 100, fee = Math.max(0, v('sg_fee')) / 1200;
   const rm = mRate(rate), g = (1 + rm) * (1 - fee);
   const run = (dep, n) => { let b = now, f = 0; for (let m = 1; m <= n; m++){ const gr = b * (1 + rm); f += gr * fee; b = gr * (1 - fee) + dep; } const total = now + dep * n, tx = Math.max(0, b - total) * tax; return {b, f, total, tx, net: b - tx}; };
   let n, dep;
@@ -307,7 +307,7 @@ function calcRetire(){
   const have = Math.max(0, v('rt_have')), dep = Math.max(0, v('rt_dep')), r1 = v('rt_r1'), r2 = v('rt_r2');
   const need = Math.max(0, v('rt_need')), other = Math.max(0, v('rt_other')), infl = Math.max(0, v('rt_infl'));
   const y = ret - age, n = Math.round(y * 12), m = Math.round((life - ret) * 12);
-  const rfee = clamp(v('rt_fee'), 0, 10) / 1200, coef = Math.max(0, v('rt_coef'));
+  const rfee = Math.max(0, v('rt_fee')) / 1200, coef = Math.max(0, v('rt_coef'));
   const rm = (1 + mRate(r1)) * (1 - rfee) - 1;
   const fv = have * Math.pow(1 + rm, n) + fvAnn(dep, rm, n);
   const f = Math.pow(1 + infl / 100, y);
@@ -403,7 +403,7 @@ function calcRentBuy(){
 /* --- car lease vs buy --- */
 function calcCar(){
   const price = Math.max(0, v('cl_price')), down = clamp(v('cl_down'), 0, price), rate = Math.max(0, v('cl_rate')), n = Math.max(1, Math.round(v('cl_n')));
-  const resale = price * clamp(v('cl_resale'), 0, 100) / 100, brun = Math.max(0, v('cl_brun')), lrun = Math.max(0, v('cl_lrun'));
+  const resale = price * Math.max(0, v('cl_resale')) / 100, brun = Math.max(0, v('cl_brun')), lrun = Math.max(0, v('cl_lrun'));
   const lm = Math.max(0, v('cl_lm')), lup = Math.max(0, v('cl_lup')), opp = v('cl_opp'), yrs = n / 12;
   const pm = pmtOf(price - down, rate, n);
   const og = x => x * (Math.pow(1 + opp / 100, yrs) - 1);
@@ -444,7 +444,7 @@ function calcAvgCost(){
 /* --- break-even --- */
 function calcBreakEven(){
   const fix = Math.max(0, v('be_fix')), price = Math.max(0, v('be_price')), vc = Math.max(0, v('be_var')), tg = Math.max(0, v('be_target')), cu = Math.max(0, v('be_units'));
-  const tax = clamp(v('be_tax'), 0, 90) / 100;
+  const tax = Math.max(0, v('be_tax')) / 100;
   const cm = price - vc;
   if (cm <= 0) return {hero: {label: t('r_beUnits'), value: '—'}, rows: [], warn: [t('w_beCm')], note: t('n_be')};
   const u = fix / cm, ut = (fix + tg / (1 - tax)) / cm, profit = cu * cm - fix, net = profit > 0 ? profit * (1 - tax) : profit;

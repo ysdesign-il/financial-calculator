@@ -60,7 +60,7 @@ function calcCellCmp(){
 function calcSmartSplit(){
   const inc0 = Math.max(0, v('ss_inc')), P = ['need', 'want', 'inv', 'safe'].map(k => Math.max(0, v('ss_' + k)));
   const sum = P.reduce((s, x) => s + x, 0), yrs = clamp(Math.round(v('ss_years')), 1, 50);
-  const ret = v('ss_ret') / 100, sret = v('ss_safeRet') / 100, infl = v('ss_infl') / 100, grow = v('ss_grow') / 100, tax = clamp(v('ss_tax'), 0, 50) / 100, fee = clamp(v('ss_fee'), 0, 3) / 100;
+  const ret = v('ss_ret') / 100, sret = v('ss_safeRet') / 100, infl = v('ss_infl') / 100, grow = v('ss_grow') / 100, tax = Math.max(0, v('ss_tax')) / 100, fee = Math.max(0, v('ss_fee')) / 100;
   const mr = Math.pow(1 + ret - fee, 1 / 12) - 1, ms = Math.pow(1 + sret, 1 / 12) - 1;
   let inv = 0, safe = 0, putI = 0, putS = 0, inc = inc0; const yrRows = [];
   for (let y = 1; y <= yrs; y++){
@@ -101,7 +101,7 @@ function calcGoodDebt(){
   const valAt = mo => {
     const y = mo / 12;
     if (use === 'invest' || use === 'property') return amt * Math.pow(1 + v('gd_ret') / 100, y);
-    if (use === 'car') return amt * Math.pow(1 - clamp(v('gd_dep'), 0, 90) / 100, y);
+    if (use === 'car') return amt * Math.pow(1 - Math.max(0, v('gd_dep')) / 100, y);
     if (use === 'study'){ let s = 0; const inc = Math.max(0, v('gd_inc')); for (let m = 1; m <= mo; m++) s += inc * Math.pow(1 + ma, mo - m); return s; }
     return 0;
   };
@@ -128,7 +128,7 @@ function calcGoodDebt(){
 
 /* ---------- employer cost: from gross, or from the net you want to pay ---------- */
 function ecRun(g){
-  return salaryCalc(g, Math.max(0, v('ec_pts')), clamp(v('ec_eeP'), 0, 30), clamp(v('ec_eeS'), 0, 30), {bonus: 0, benefit: 0, erPens: clamp(v('ec_pens'), 0, 30), erSev: clamp(v('ec_sev'), 0, 30), erStudy: clamp(v('ec_hish'), 0, 30)});
+  return salaryCalc(g, Math.max(0, v('ec_pts')), Math.max(0, v('ec_eeP')), Math.max(0, v('ec_eeS')), {bonus: 0, benefit: 0, erPens: Math.max(0, v('ec_pens')), erSev: Math.max(0, v('ec_sev')), erStudy: Math.max(0, v('ec_hish'))});
 }
 function calcEmpCost2(){
   const fromNet = ($('#ec_mode') || {}).value === 'net';

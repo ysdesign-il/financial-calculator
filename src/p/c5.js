@@ -11,7 +11,7 @@ function calcNetWorth(){
   const inc = g('nw_inc'), exp = g('nw_exp'), save = inc - exp;
   const liquid = A.cash + A.inv, bad = Lb.loan + Lb.card + Lb.oth;
   const runway = exp > 0 ? A.cash / exp : NaN;
-  const wdr = clamp(v('nw_wd') || 4, 0.5, 10), passive = A.inv * wdr / 100 / 12;
+  const wdr = Math.max(0.01, v('nw_wd') || 4), passive = A.inv * wdr / 100 / 12;
   const stage = nw < 0 ? 0 : bad > 0 ? 1 : (exp > 0 && A.cash < exp * 3) ? 2 : (exp > 0 && passive < exp) ? 3 : 4;
   return {
     hero: {label: t('r_nwNet'), value: M(nw), sub: t('r_nwStage', {s: t(STAGE_KEYS[stage])})},
