@@ -34,7 +34,7 @@ if EV == 'push':
     for c in E.get('commits') or []:
         files.update(c.get('added', []) + c.get('modified', []) + c.get('removed', []))
     before, after = E.get('before', ''), E.get('after', '')
-    if not files and before and after and not before.startswith('0000000'):
+    if before and after and not before.startswith('0000000'):            # the exact change of this push, whatever the payload lists
         try: files.update(f.get('filename', '') for f in (api(f'/compare/{before}...{after}') or {}).get('files', []))
         except Exception as e: print('compare skipped:', e)
     print('push', ref, 'by', actor, 'files:', sorted(files)[:30])
