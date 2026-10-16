@@ -5715,6 +5715,7 @@ Object.assign(T, {
 });
 /* 10.9 texts */
 Object.assign(T, {
+  f_ksSex:['הילד/ה','الطفل/ة','Child'], o_ksBoy:['בן (מענק בגיל 13)','ولد (منحة في سن 13)','Boy (grant at 13)'], o_ksGirl:['בת (מענק בגיל 12)','بنت (منحة في سن 12)','Girl (grant at 12)'],
   w_figYear:['החישוב לפי נתוני {y}. ייתכן שהסכומים והמדרגות השתנו מאז.','الحساب وفق بيانات {y}. قد تكون المبالغ والشرائح قد تغيرت منذ ذلك الحين.','Calculated with {y} figures. Amounts and brackets may have changed since.'],
   w_dataOld:['המחירים נבדקו ב־{d} ועלולים להיות לא עדכניים. כדאי לבדוק מול החברה לפני שמחליטים.','تم فحص الأسعار في {d} وقد لا تكون محدّثة. يُفضّل التحقق مع الشركة قبل القرار.','Prices were checked on {d} and may be out of date. Check with the company before deciding.']
 });
@@ -6837,7 +6838,7 @@ Object.assign(DEFS, {
     F('kh_yrs','f_term','yrs',6), F('kh_ret','f_mfRet','%',5), F('kh_bal','f_khBal','ils',0,{adv:'m_adv'}), F('kh_fee','f_mfAccFee','%',0.5,{adv:'m_adv'})
   ],
   kidsave: [
-    F('ks_age','f_ksAge','yrs',0), SEL('ks_par','f_ksPar','1',[['1','o_ksPar1'],['0','o_ksPar0']],{wide:true}),
+    F('ks_age','f_ksAge','yrs',0), SEL('ks_sex','f_ksSex','b',[['b','o_ksBoy'],['g','o_ksGirl']]), SEL('ks_par','f_ksPar','1',[['1','o_ksPar1'],['0','o_ksPar0']],{wide:true}),
     SEL('ks_to','f_ksTo','21',[['18','o_ks18'],['21','o_ks21']]), F('ks_ret','f_mfRet','%',4,{hint:'h_ksRet'}),
     F('ks_bal','f_khBal','ils',0,{adv:'m_adv'}), F('ks_fee','f_mfAccFee','%',0,{adv:'m_adv'})
   ],
@@ -9833,7 +9834,7 @@ function calcKidSave(){
   let grants = 0;
   const born = new Date().getFullYear() - Math.floor(age), y17 = born >= 2017;                    // born from 2017: grants at 3 and at bar/bat mitzvah instead of 18
   const grantAt = (atAge, amt) => { if (age >= atAge) return; const k = Math.round((atAge - age) * 12); let g = amt; for (let m = k; m < n; m++){ g *= (1 + rm); g -= g * fm; } bal += g; grants += amt; };
-  if (y17){ grantAt(3, IL26.kidGrant3); grantAt(13, IL26.kidGrant13); } else { bal += IL26.kidGrant18; grants += IL26.kidGrant18; }
+  if (y17){ grantAt(3, IL26.kidGrant3); grantAt(($('#ks_sex') || {}).value === 'g' ? 12 : 13, IL26.kidGrant13); }       // bat mitzvah at 12, bar mitzvah at 13 else { bal += IL26.kidGrant18; grants += IL26.kidGrant18; }
   const at18 = bal;
   if (to === 21){ for (let m = 0; m < 36; m++){ bal *= (1 + rm); bal -= bal * fm; } bal += IL26.kidGrant21; grants += IL26.kidGrant21; }
   const gain = Math.max(0, bal - gov - parent - grants - Math.max(0, v('ks_bal')));
@@ -12122,7 +12123,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "10.8", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.121122';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.121703';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }

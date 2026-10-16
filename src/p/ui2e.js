@@ -58,7 +58,7 @@ Object.assign(DEFS, {
     F('kh_yrs','f_term','yrs',6), F('kh_ret','f_mfRet','%',5), F('kh_bal','f_khBal','ils',0,{adv:'m_adv'}), F('kh_fee','f_mfAccFee','%',0.5,{adv:'m_adv'})
   ],
   kidsave: [
-    F('ks_age','f_ksAge','yrs',0), SEL('ks_par','f_ksPar','1',[['1','o_ksPar1'],['0','o_ksPar0']],{wide:true}),
+    F('ks_age','f_ksAge','yrs',0), SEL('ks_sex','f_ksSex','b',[['b','o_ksBoy'],['g','o_ksGirl']]), SEL('ks_par','f_ksPar','1',[['1','o_ksPar1'],['0','o_ksPar0']],{wide:true}),
     SEL('ks_to','f_ksTo','21',[['18','o_ks18'],['21','o_ks21']]), F('ks_ret','f_mfRet','%',4,{hint:'h_ksRet'}),
     F('ks_bal','f_khBal','ils',0,{adv:'m_adv'}), F('ks_fee','f_mfAccFee','%',0,{adv:'m_adv'})
   ],
