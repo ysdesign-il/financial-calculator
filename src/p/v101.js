@@ -20,3 +20,15 @@ document.addEventListener('change', e => {
   setTimeout(() => { try { const was = HOL_ACTIVE; applyTheme(); if (was !== HOL_ACTIVE && typeof skRender === 'function') skRender(); } catch (er) {} }, 0);
 });
 try { applyTheme(); if (typeof skRender === 'function') skRender(); } catch (e) {}
+
+/* ---------- the data file (and, inside Claude, the app's database) is pulled 6 times a day; live sources keep their own pace ---------- */
+var RJ_MAN = false;
+const refreshEverything101 = refreshEverything;
+refreshEverything = async function(manual){ RJ_MAN = !!manual; try { return await refreshEverything101.apply(this, arguments); } finally { RJ_MAN = false; } };
+const rfOfficial101 = rfOfficial;
+rfOfficial = async function(){
+  /* on open the data comes in by itself (and inside Claude the database pushes every change), then 6 times a day;
+     an automatic refresh only renews the live quotes, while the refresh button always pulls everything */
+  if (!RJ_MAN) return !!(META && META.unix);
+  rjMark(); return rfOfficial101.apply(this, arguments);
+};

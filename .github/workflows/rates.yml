@@ -2,7 +2,7 @@ name: Update rates
 
 on:
   schedule:
-    - cron: '7,37 * * * *'   # twice an hour; the website also reads market quotes live in the browser
+    - cron: '7 1,5,9,13,17,21 * * *'   # 6 times a day (every 4 hours); live quotes are read in the browser
   workflow_dispatch:
   push:
     branches: [main]

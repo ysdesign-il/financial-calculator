@@ -1367,9 +1367,9 @@ var SITE_RATES = false;
 async function siteRates(){
   if (dbState === 'ok' && !SITE_RATES) return;                 // claude.ai database already feeds the page
   try {
-    const r = await fetch('rates.json?v=' + Math.floor(Date.now() / 600000), {cache: 'no-store'});
+    const r = await rjFetch('rates.json?s=' + RJ_SLOT(), {cache: 'no-store'});
     if (!r.ok) return;
-    const d = await r.json(); if (!d || !d.usd) return;
+    const d = await r.json(); rjSeen(d); if (!d || !d.usd) return;
     SITE_RATES = true;
     if (SET.boiDb !== '0'){
       applyDbRates({usd: d.usd, asOf: d.asOf, crypto: d.crypto, cryptoAsOf: d.cryptoAsOf});
@@ -1379,19 +1379,23 @@ async function siteRates(){
   } catch (e) { /* not a standalone site */ }
 }
 setTimeout(siteRates, 1200);
-setInterval(() => { if (!document.hidden) siteRates(); }, 5 * 60000);
-var siteRatesAt = Date.now();
-document.addEventListener('visibilitychange', () => { if (!document.hidden && SITE_RATES && Date.now() - siteRatesAt > 60000){ siteRatesAt = Date.now(); siteRates(); } });
+rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = __CHANGELOG__;
 var APP_VER = CHANGELOG[0].v, APP_BUILD = '__APP_BUILD__';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
-var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
+var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
 function verDate(d){ const m = String(d || '').match(/^(\d{4})-(\d\d)-(\d\d)/); return m ? +m[3] + '.' + +m[2] + '.' + m[1] : ''; }
-function updNewer(r){ return !!(r && r.build && String(r.build) > APP_BUILD); }
+function verCmp(a, b){ const x = String(a || '').split('.').map(Number), y = String(b || '').split('.').map(Number); for (let i = 0; i < Math.max(x.length, y.length); i++){ const d = (x[i] || 0) - (y[i] || 0); if (d) return d; } return 0; }
+function updTried(r){ try { return !!r && (SS.getItem('fin-upd-try') || '') === String(r.build); } catch (e) { return false; } }
+function updNewer(r){
+  if (!r || !r.build) return false;
+  const nw = IN_CLAUDE ? verCmp(r.v, APP_VER) > 0 : String(r.build) > APP_BUILD;
+  return nw && !(updTried(r) && UPD.loadedTry);        // already reloaded for it and it is still not here: do not ask again
+}
 function updBanner(){
   let b = $('#upd_bar');
   const r = UPD.remote, show = updNewer(r) && UPD.hide !== r.build;
@@ -1428,12 +1432,16 @@ function updMaybeAuto(r){
   if (!updNewer(r) || SET.autoUpd === '0' || UPD.touched) return;
   let tried = ''; try { tried = SS.getItem('fin-upd-try') || ''; } catch (e) {}
   if (tried !== String(r.build)) updApply();          // once per version, so a stale cache can never loop
+  else updRender();
 }
 async function updCheck(manual){
   if (manual){ UPD.st = 'wait'; updRender(); }
   let r = null;
   if (!IN_CLAUDE && /^https?:$/.test(location.protocol)){
     try { const x = await fetch('version.json?t=' + Date.now(), {cache: 'no-store'}); if (x.ok) r = await x.json(); } catch (e) {}
+  }
+  if (!r && IN_CLAUDE){
+    try { const x = await fetch('https://ysdesign-il.github.io/financial-calculator/version.json?t=' + Date.now(), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); if (x.ok) r = await x.json(); } catch (e) {}
   }
   if (!r && UPD.dbv) r = UPD.dbv;
   if (r && r.build){ UPD.remote = r; UPD.st = 'ok'; }
@@ -3319,11 +3327,10 @@ applyMacro = function(d){
 var FG_DB = null, FG_SITE_AT = 0;
 async function figSite(){
   if (IN_CLAUDE) return;
-  try { const r = await fetch('figures.json?v=' + Math.floor(Date.now() / 300000), {cache: 'no-store'}); if (!r.ok) return; const d = await r.json(); FG_SITE_AT = Date.now(); if (d && typeof d === 'object') figOfficialSet(d, 'site'); } catch (e) {}
+  try { const r = await fetch('figures.json?s=' + RJ_SLOT(), {cache: 'no-store'}); if (!r.ok) return; const d = await r.json(); FG_SITE_AT = Date.now(); if (d && typeof d === 'object') figOfficialSet(d, 'site'); } catch (e) {}
 }
 setTimeout(figSite, 1500);
-setInterval(() => { if (!document.hidden) figSite(); }, 5 * 60000);
-document.addEventListener('visibilitychange', () => { if (!document.hidden && FG_SITE_AT && Date.now() - FG_SITE_AT > 60000) figSite(); });
+rjEvery(figSite);
 /* calculators that rely on these figures say so when you changed any */
 var FG_SKIP = ['home', 'settings', 'convert', 'percent', 'expenses', 'clients', 'split', 'discount', 'unitprice', 'workdays', 'appliance', 'compound', 'yield', 'dividends', 'evfuel'];
 const showFg = show;
@@ -3466,18 +3473,17 @@ var IX_SITE_AT = 0;
 async function ixSite(){
   if (IN_CLAUDE) return;
   IX_SITE_AT = Date.now();
-  try { const x = await fetch('rates.json?v=' + Math.floor(Date.now() / 60000), {cache: 'no-store'}); if (x.ok){ const d = await x.json(); ixApply(d, 'site'); fxApplySnap(d.live); } } catch (e) {}
+  try { const x = await rjFetch('rates.json?s=' + RJ_SLOT(), {cache: 'no-store'}); if (x.ok){ const d = await x.json(); rjSeen(d); ixApply(d, 'site'); fxApplySnap(d.live); } } catch (e) {}
 }
 setTimeout(ixSite, 1400);
-setInterval(() => { if (!document.hidden) ixSite(); }, 5 * 60000);
-document.addEventListener('visibilitychange', () => { if (!document.hidden && Date.now() - IX_SITE_AT > 60000) ixSite(); });
+rjEvery(ixSite);
 var IX_GH = 'https://ysdesign-il.github.io/financial-calculator/rates.json', IX_GH_OK = null;
 async function ixRemote(){
   if (!IN_CLAUDE || IX_GH_OK === false) return;
   try {
-    const r = await fetch(IX_GH + '?v=' + Math.floor(Date.now() / 300000), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'});
+    const r = await rjFetch(IX_GH + '?s=' + RJ_SLOT(), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'});
     if (!r.ok) throw 0;
-    const d = await r.json(); IX_GH_OK = true;
+    const d = await r.json(); rjSeen(d); IX_GH_OK = true;
     if (d && d.usd && SET.boiDb !== '0'){ try { applyDbRates({usd: d.usd, asOf: d.asOf, crypto: d.crypto, cryptoAsOf: d.cryptoAsOf}); if (d.macro) applyMacro(Object.assign({asOf: d.asOf}, d.macro)); } catch (e) {} }
     ixApply(d, 'gh'); fxApplySnap(d.live);
   } catch (e) { IX_GH_OK = false; }
@@ -3485,7 +3491,7 @@ async function ixRemote(){
 (async () => {
   if (!IN_CLAUDE) return;
   try { const db = await window.claude.use('db'); if (db){ IX_DB = db; db.doc('rates/indices').onSnapshot(s => { if (s && s.exists) ixApply(s.data(), 'db'); }, () => {}); db.doc('rates/live').onSnapshot(s => { if (s && s.exists) fxApplySnap(s.data()); }, () => {}); } } catch (e) {}
-  setTimeout(ixRemote, 2500); setInterval(() => { if (!document.hidden) ixRemote(); }, 10 * 60000);
+  setTimeout(ixRemote, 2500); rjEvery(() => { IX_GH_OK = null; ixRemote(); });
 })();
 /* live market quotes straight from the public quote feed while the screen is open (no account, no key, nothing sent about you) */
 var IXL = {timer: null, ok: null, fails: 0, at: 0};
