@@ -12,7 +12,7 @@ STR, LANGS = SRC['strings'], SRC['langs']
 TOKEN = os.environ.get('GITHUB_TOKEN', '').strip()
 GKEY = os.environ.get('GEMINI_API_KEY', '').strip()
 DEADLINE = time.time() + float(os.environ.get('MAX_MINUTES', '45')) * 60
-PRIORITY = ['es', 'fr', 'ru', 'pt-BR', 'zh-CN', 'hi', 'bn']
+PRIORITY = ['es', 'fr', 'ru', 'pt-BR', 'it', 'zh-CN', 'hi']
 PH = re.compile(r'\{[A-Za-z0-9_]+\}')
 LOG = {'started': time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime()), 'events': [], 'langs': {}}
 def note(msg):
