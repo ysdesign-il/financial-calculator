@@ -105,3 +105,18 @@ fbOwner = async function(){
 const _act95 = activate;
 activate = function(){ const r = _act95.apply(this, arguments); try { ibBtn(); } catch (e) {} return r; };
 if (location.hostname === 'localhost') window.__fin95 = {ibLock, ibUnlock};
+/* in developer mode (inside the app) the bottom bar's "Salary" button becomes the inbox */
+const IB_ICON = ic('<path d="M3 13l2.5-8h13L21 13v6H3z"/><path d="M3 13h5l1.5 2.5h5L16 13h5"/>');
+function ibBottom(){
+  const el = $('#bottom'); if (!el) return;
+  const s = el.querySelector('.bt[data-tab="salary"]'), cur = el.querySelector('#ib_bt');
+  if (!(IN_CLAUDE && liveOwner())){ if (cur){ try { renderBottom(); } catch (e) {} } return; }
+  const n = ibUnread(), html = `${IB_ICON}<span>${E95(t('ib_title'))}</span>${n ? `<i class="ib-badge">${n > 99 ? '99+' : n}</i>` : ''}`;
+  if (s){ s.outerHTML = `<button type="button" class="bt ib-bt" id="ib_bt" data-ibgo="1" aria-label="${E95(t('ib_title'))}">${html}</button>`; return; }
+  if (cur && cur.innerHTML !== html) cur.innerHTML = html;
+}
+const _rb95 = renderBottom;
+renderBottom = function(){ const r = _rb95.apply(this, arguments); try { ibBottom(); } catch (e) {} return r; };
+const _ibBtn95 = ibBtn;
+ibBtn = function(){ const r = _ibBtn95.apply(this, arguments); try { ibBottom(); } catch (e) {} return r; };
+try { ibBottom(); } catch (e) {}
