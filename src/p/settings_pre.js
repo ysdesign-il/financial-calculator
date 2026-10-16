@@ -134,7 +134,7 @@ const locOf = () => {
   return SET.digits === 'latn' ? base + '-u-nu-latn' : base;
 };
 const pinList = () => (SET.favCur || []).filter(c => RATES[c]).concat(PIN.filter(c => !(SET.favCur || []).includes(c)));
-const NOHIDE = ['home', 'settings'];
+const NOHIDE = ['home', 'markets', 'settings'];
 function normOrder(){
   if (SET.orderV !== 2){ SET.order = null; SET.orderV = 2; }
   const o = (SET.order || []).filter(id => TABS.includes(id));

@@ -8,17 +8,17 @@ var FB = {db: null, uid: null};
   if (!IN_CLAUDE || !window.claude) return;
   try { const db = await window.claude.use('db'); if (!db) return; FB.db = db; const u = await window.claude.use('user'); if (u && u.id) FB.uid = await u.id(); fbBox(); fbOwner(); fbReplies(); } catch (e) {}
 })();
-const fbClean = s => String(s || '').slice(0, 1500);
+const fbClean = s => String(s || '').slice(0, 900);
 const fbMail = s => { s = String(s || '').trim().slice(0, 120); return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s) ? s : ''; };
 function fbBox(){
   const sys = $('.set-cat[data-cat="system"]'); if (!sys) return;
   let box = $('#fb_box'); if (box){ if (box.dataset.db === String(!!FB.db)) return; box.remove(); }
-  sys.insertAdjacentHTML('beforeend', `<div class="bk-box fb-box" id="fb_box" data-db="${!!FB.db}"><h4>💬 ${E94(t('fb_title'))}</h4><p class="fine">${E94(t('fb_note'))}</p>${FB.db ? '' : `<p class="fine fb-web">ℹ️ ${E94(t('fb_web'))}</p>`}
+  sys.insertAdjacentHTML('beforeend', `<div class="bk-box fb-box" id="fb_box" data-db="${!!FB.db}"><h4>💬 ${E94(t('fb_title'))}</h4><p class="fine">${E94(t('fb_note'))}</p>
     <div class="fb-kinds" role="radiogroup" aria-label="${E94(t('fb_kind'))}">${['idea', 'bug', 'q', 'other'].map((k, i) => `<button type="button" role="radio" data-fbk="${k}" aria-checked="${i ? 'false' : 'true'}" class="${i ? '' : 'on'}">${E94(t('fb_k_' + k))}</button>`).join('')}</div>
     <div class="fb-stars" role="radiogroup" aria-label="${E94(t('fb_rate'))}">${[1, 2, 3, 4, 5].map(n => `<button type="button" role="radio" data-fbr="${n}" aria-label="${n}" aria-checked="false">★</button>`).join('')}</div>
     <input id="fb_mail" type="email" inputmode="email" autocomplete="email" dir="ltr" maxlength="120" placeholder="${E94(t('fb_mailPh'))}" aria-label="${E94(t('fb_mail'))}" data-pii-ok>
-    <textarea id="fb_msg" rows="4" maxlength="1500" dir="auto" placeholder="${E94(t('fb_ph'))}" aria-label="${E94(t('fb_title'))}"></textarea>
-    <div class="bk-acts">${FB.db ? `<button type="button" class="lc-add" id="fb_send">📨 ${E94(t('fb_send'))}</button>` : ''}<button type="button" class="lc-add" id="fb_copy">📋 ${E94(t('b_copy'))}</button></div>
+    <textarea id="fb_msg" rows="4" maxlength="900" dir="auto" placeholder="${E94(t('fb_ph'))}" aria-label="${E94(t('fb_title'))}"></textarea>
+    <div class="bk-acts"><button type="button" class="lc-add" id="fb_send">📨 ${E94(t('fb_send'))}</button><button type="button" class="lc-add" id="fb_copy">📋 ${E94(t('b_copy'))}</button></div>
     <p class="fine fb-st" id="fb_st" aria-live="polite"></p></div>`);
 }
 var FBV = {k: 'idea', r: 0};
@@ -32,7 +32,11 @@ document.addEventListener('click', async e => {
   if (!e.target.closest('#fb_send')) return;
   const raw = (($('#fb_mail') || {}).value || '').trim(); if (raw && !fbMail(raw)) return st('fb_badMail');
   const it = fbItem(); if (!it.m && !it.r) return st('fb_empty');
-  if (!(FB.db && FB.uid)) return st('fb_fail');
+  if (!(FB.db && FB.uid)){
+    st('m_wait');
+    try { await ibSendWeb(it); $('#fb_msg').value = ''; st('fb_ok'); toast(t('fb_ok')); } catch (er) { st('fb_fail'); }
+    return;
+  }
   {
     st('m_wait');
     try {

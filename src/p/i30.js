@@ -23,5 +23,11 @@ Object.assign(T, {
   fb_inbox:['משוב מהמשתמשים (רק אתה רואה)','ملاحظات المستخدمين (أنت فقط ترى)','User feedback (only you see this)'], fb_none:['אין משוב עדיין','لا ملاحظات بعد','No feedback yet'],
   fb_reply:['מענה','رد','Reply'], fb_editReply:['עריכת המענה','تعديل الرد','Edit reply'], fb_sendReply:['שליחת המענה','إرسال الرد','Send reply'], fb_yourReply:['המענה שלך','ردّك','Your reply'],
   fb_replied:['המענה נשלח – המשתמש יראה אותו באפליקציה','أُرسل الرد – سيراه المستخدم في التطبيق','Reply sent – they will see it in the app'],
-  fb_replies:['תשובות מהמפתח','ردود المطوّر','Replies from the developer'], fb_devReply:['תשובת המפתח','رد المطوّر','Developer\'s reply'], fb_newReply:['יש תשובה חדשה למשוב שלך (הגדרות ← מערכת)','يوجد رد جديد على ملاحظتك (الإعدادات ← النظام)','You have a new reply to your feedback (Settings → System)']
+  fb_replies:['תשובות מהמפתח','ردود المطوّر','Replies from the developer'], fb_devReply:['תשובת המפתח','رد المطوّر','Developer\'s reply'], fb_newReply:['יש תשובה חדשה למשוב שלך (הגדרות ← מערכת)','يوجد رد جديد على ملاحظتك (الإعدادات ← النظام)','You have a new reply to your feedback (Settings → System)'],
+  ib_title:['אינבוקס','صندوق الوارد','Inbox'], ib_openB:['פתיחת האינבוקס','فتح صندوق الوارد','Open inbox'],
+  ib_note:['כל ההודעות שמשתמשים שולחים – מהאפליקציה ומהאתר – במקום אחד. רק אתה רואה אותו.','كل الرسائل من التطبيق والموقع في مكان واحد. أنت فقط ترى ذلك.','Every message users send – from the app and the website – in one place. Only you see it.'],
+  ib_f_all:['הכול','الكل','All'], ib_f_app:['מהאפליקציה','من التطبيق','From the app'], ib_f_web:['מהאתר','من الموقع','From the website'],
+  ib_s_app:['אפליקציה','تطبيق','App'], ib_s_web:['אתר','موقع','Website'],
+  ib_webReply:['הודעה מהאתר – אפשר לענות רק במייל שהשאירו.','رسالة من الموقع – يمكن الرد عبر البريد فقط.','From the website – reply by the email they left.'],
+  ib_nokey:['חסר מפתח הפענוח בבסיס הנתונים, ולכן הודעות מהאתר נעולות.','مفتاح فك التشفير غير موجود، لذا رسائل الموقع مقفلة.','The decryption key is missing, so website messages stay locked.']
 });
