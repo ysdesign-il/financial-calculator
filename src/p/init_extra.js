@@ -1485,7 +1485,7 @@ renderStamp = function(){ _rsUpd.apply(this, arguments); updRender(); };
 var SET_CATS = [
   {id: 'account', c: 'c-blue',   ic: 'set_account', g: 0, secs: ['set_account', 'set_sync']},
   {id: 'security', c: 'c-red',   ic: 'set_security', g: 0, secs: ['set_security']},
-  {id: 'display', c: 'c-violet', ic: 'set_look',    g: 1, secs: ['set_look', 'set_clock', 'set_lang', 'set_numbers', 'set_tabs']},
+  {id: 'display', c: 'c-violet', ic: 'set_look',    g: 1, secs: ['set_look', 'set_clock', 'set_lang', 'set_langX', 'set_numbers', 'set_tabs']},
   {id: 'calc',    c: 'c-gold',   ic: 'set_calc',    g: 1, secs: ['set_calc', 'set_figs', 'set_profile', 'set_curBy']},
   {id: 'conn',    c: 'c-green',  ic: 'set_live',    g: 2, secs: ['set_links', 'set_src', 'set_live', 'set_ai']},
   {id: 'system',  c: 'c-gray',   ic: 'set_upd',     g: 3, secs: ['set_upd', 'set_data']}
