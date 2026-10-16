@@ -16,7 +16,7 @@ button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
 .cty-offer{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:-4px 0 6px}
 .cty-offer .mv{min-height:34px}
 /* 10.7 language options */
-.hero{position:relative}
+/* the result card keeps its own position (sticky on phones); sticky already anchors the speaker button */
 .hero-words{margin-top:4px;font-size:.8rem;line-height:1.45;color:var(--hero-label);opacity:.95;overflow-wrap:anywhere;padding-inline-end:40px}
 .hero-say{position:absolute;top:10px;inset-inline-end:10px;width:34px;height:34px;border-radius:50%;border:1px solid var(--hero-bd);background:color-mix(in srgb,var(--surface) 60%,transparent);color:var(--hero-val);display:grid;place-items:center;cursor:pointer;padding:0;z-index:1}
 .hero-say svg,.mic-b svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -36,3 +36,6 @@ button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
   body.hero-min .panel .hero .hero-value{font-size:1.55rem}
   body.hero-min .panel .hero .hero-say{top:6px;width:30px;height:30px}
 }
+.pchips{margin-bottom:4px}
+.pchips .ps-l{flex:0 0 100%;font-size:.8rem;color:var(--ink-2);margin:2px 2px 0}
+.ps-my{grid-column:1/-1;margin:8px 2px 0}

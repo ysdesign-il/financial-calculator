@@ -36,6 +36,12 @@ const SETDEFS = [
     SEL('set_wkStart','f_wkStart','auto',[['auto','o_wk_auto'],['sun','o_wk_sun'],['mon','o_wk_mon']],{hint:'h_wkStart'}),
     SEL('set_trFix','f_trFix','1',ONOFF,{wide:true, hint:'h_trFix'})
   ]],
+  ['set_my', [
+    {id:'set_myGross', label:'f_myGross', unit:'ils', val:'', wide:true, hint:'h_myGross'},
+    {id:'set_myKids', label:'f_myKids', unit:'', val:'', hint:'h_myKids'},
+    {id:'set_myBYear', label:'f_oaBYear', unit:'', val:''},
+    {id:'set_myEq', label:'f_myEq', unit:'ils', val:'', wide:true, hint:'h_myEq'}
+  ]],
   ['set_numbers', [
     SEL('set_digits','f_digits','latn',[['latn','o_dg_latn'],['native','o_dg_native']]),
     SEL('set_dec','f_dec','auto',[['auto','o_dec_auto'],['0','o_dec_0'],['2','o_dec_2']]),
@@ -116,6 +122,7 @@ function settingsPanelHTML(){
       SEL('set_clockHijri','f_clockHijri','0',[['1','o_on'],['0','o_off']])].map(fieldHTML).join('') + '</div>')}
     ${sec('set_langX', fl(SETDEFS.find(x => x[0] === 'set_langX')[1]))}
     ${sec('set_numbers', fl(SETDEFS.find(x => x[0] === 'set_numbers')[1]))}
+    ${sec('set_my', fl(SETDEFS.find(x => x[0] === 'set_my')[1]))}
     ${sec('set_calc', fl(SETDEFS.find(x => x[0] === 'set_calc')[1]))}
     ${sec('set_profile', fl(SETDEFS.find(x => x[0] === 'set_profile')[1]))}
     ${sec('set_tabs', `<div class="fields">${fieldHTML(SEL('set_sort','f_sort','groups',[['groups','o_sortGroups'],['groupsAlpha','o_sortGroupsAlpha'],['alpha','o_sortAlpha']],{wide:true}))}</div><p class="fine" data-i="h_sort"></p><p class="fine" data-i="h_tabs"></p><div id="set_tabs" class="tabs-list"></div>`)}
@@ -156,7 +163,7 @@ const SMAP = {set_sound:'sound', set_tapSnd:'tapSnd', set_mvAlert:'mvAlert', set
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
   set_dtax:'dtax', set_deptime:'deptime', set_capkind:'capkind', set_remember:'remember', set_saveMode:'saveMode', set_aiNet:'aiNet', set_rateSrc:'rateSrc', set_gkey:'gkey', set_stale:'stale', set_sort:'sort', set_liveFx:'liveFx', set_fxInt:'fxInt', set_liveFiat:'liveFiat', set_liveCrypto:'liveCrypto', set_boiDb:'boiDb', set_autoRef:'autoRef', set_autoUpd:'autoUpd', set_holAuto:'holAuto', set_clock24:'clock24', set_clockSec:'clockSec', set_clockHeb:'clockHeb', set_clockHijri:'clockHijri', set_aiEngine:'aiEngine', set_pmName:'pmName', set_pmStyle:'pmStyle'};
-Object.assign(SMAP, {set_shareLang:'shareLang', set_words:'words', set_enTerms:'enTerms', set_plain:'plain', set_tts:'tts', set_voiceIn:'voiceIn', set_dfmt:'dfmt', set_wkStart:'wkStart', set_trFix:'trFix'});
+Object.assign(SMAP, {set_myGross:'myGross', set_myKids:'myKids', set_myBYear:'myBYear', set_myEq:'myEq', set_shareLang:'shareLang', set_words:'words', set_enTerms:'enTerms', set_plain:'plain', set_tts:'tts', set_voiceIn:'voiceIn', set_dfmt:'dfmt', set_wkStart:'wkStart', set_trFix:'trFix'});
 const DEFKEYS = ['vat','sex','fee','pens','study','erPens','erSev','erStudy','loanRate','invRate','cpi','infl','gainTax','dealer','buyer','dtax','deptime','capkind'];
 function fillCB(){
   CUR_TABS.forEach(id => {
