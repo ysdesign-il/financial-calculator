@@ -5800,7 +5800,7 @@ const RTL = new Set(['he','ar','fa','ur','yi','ps','sd','ug','ckb','dv']);
 var TOUCHED = [], TILE_F = 'all', MY_HANDLE = '';
 try { MY_HANDLE = LS.getItem('fin-handle') || ''; } catch (e) {}
 const MKT = {boi: 3.25, boiDate: '1.9.2026', boiNext: '21.10.2026', cpi: 1.5, cpiMonth: '08/2026', cpiYtd: 2.1, cpiYtdTo: 8, src: 'built'};
-const SET_DEF = {sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'0', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -5808,7 +5808,9 @@ const SET_DEF = {sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', d
   remember:'1', saveMode:'auto', curBy:{}, rateSrc:'er', gkey:'', aiProv:'claude', aiModel:'', okey:'', stale:'1', favCur:[], order:null, hidden:[], pins:[], sort:'groups'};
 const cloneDef = () => JSON.parse(JSON.stringify(SET_DEF));
 let SET = cloneDef();
-try { const sv = JSON.parse(LS.getItem('fin-set') || '{}'); Object.assign(SET, sv); SET.prof = Object.assign({}, SET_DEF.prof, sv.prof || {}); } catch(e) {}
+try { const sv = JSON.parse(LS.getItem('fin-set') || '{}'); Object.assign(SET, sv); SET.prof = Object.assign({}, SET_DEF.prof, sv.prof || {});
+  if (sv.holMig !== '1'){ SET.holAuto = 'all'; SET.holMig = '1'; try { LS.setItem('fin-set', JSON.stringify(SET)); } catch(e2) {} }   // one time: holiday themes on for everyone; users can turn it off later
+} catch(e) {}
 SET.remember = '1'; SET.saveMode = SV.mode;                 // values are always kept now; when they are written is up to the save mode
 const saveSet = () => { try { LS.setItem('fin-set', JSON.stringify(SET)); } catch(e) {} };
 const mq = window.matchMedia ? matchMedia('(prefers-color-scheme: light)') : null;
@@ -6999,7 +7001,7 @@ const SETDEFS = [
   ['set_look', [
     SEL('set_design','f_design','default',[['default','dz_default'],['orbit','dz_orbit'],['aurum','dz_aurum'],['pulse','dz_pulse'],['aurora','dz_aurora'],['mono','dz_mono'],['block','dz_block'],['emerald','dz_emerald'],['sunset','dz_sunset'],['edition','dz_edition'],['prism','dz_prism'],['titan','dz_titan'],['zen','dz_zen'],['clay','dz_clay']],{wide:true, hint:'h_design'}),
     SEL('set_theme','f_theme','system',[['system','o_th_sys'],['dark','sk_dark'],['light','sk_light'],['telaviv','sk_telaviv'],['jerusalem','sk_jerusalem'],['banknote','sk_banknote'],['deadsea','sk_deadsea'],['eilat','sk_eilat'],['terminal','sk_terminal'],['roshhashana','sk_roshhashana'],['hanukkah','sk_hanukkah'],['passover','sk_passover'],['christmas','sk_christmas'],['easter','sk_easter'],['newyear','sk_newyear'],['ramadan','sk_ramadan'],['eidfitr','sk_eidfitr'],['eidadha','sk_eidadha'],['yomkippur','sk_yomkippur'],['sukkot','sk_sukkot'],['simchattorah','sk_simchattorah'],['tubishvat','sk_tubishvat'],['purim','sk_purim'],['atzmaut','sk_atzmaut'],['lagbaomer','sk_lagbaomer'],['yomyerushalayim','sk_yomyerushalayim'],['shavuot','sk_shavuot'],['tubeav','sk_tubeav'],['advent','sk_advent'],['epiphany','sk_epiphany'],['valentine','sk_valentine'],['palmsunday','sk_palmsunday'],['ascension','sk_ascension'],['pentecost','sk_pentecost'],['assumption','sk_assumption'],['allsaints','sk_allsaints']],{wide:true, hint:'h_theme'}),
-    SEL('set_holAuto','f_holAuto','0',[['0','o_off'],['all','o_holAll'],['jewish','o_holJ'],['christian','o_holC'],['muslim','o_holM']],{wide:true, hint:'h_holAuto'}),
+    SEL('set_holAuto','f_holAuto','all',[['0','o_off'],['all','o_holAll'],['jewish','o_holJ'],['christian','o_holC'],['muslim','o_holM']],{wide:true, hint:'h_holAuto'}),
     SEL('set_hfx','f_hfx','1',ONOFF,{wide:true, hint:'h_hfx'}),
     SEL('set_accent','f_accent','gold',[['gold','o_ac_gold'],['blue','o_ac_blue'],['green','o_ac_green'],['violet','o_ac_violet']]),
     SEL('set_size','f_size','m',[['s','o_sz_s'],['m','o_sz_m'],['l','o_sz_l']]),
@@ -11963,8 +11965,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "10.0", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.053955';
+var CHANGELOG = [{"v": "10.1", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.054952';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
