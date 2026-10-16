@@ -33,7 +33,7 @@ function cellAll(){
   return CELL.plans.concat(cellMineList().map((o, i) => ({mine: 1, i, p: 'other', n: String(o.n || '').trim() || t('cl_mineDef', {n: i + 1}), gb: +o.gb > 0 ? +o.gb : 1e6, g5: o.g5 ? 1 : 0, ab: o.ab ? 1 : 0,
     s: (+o.pm > 0 && +o.pp > 0) ? [[1, +o.pp], [+o.pm + 1, +o.price || 0]] : [[1, +o.price || 0]]})));
 }
-const cellName = pl => (pl.mine ? '✍️ ' : '') + (pl.p === 'other' ? '' : t('cp_' + pl.p) + ' · ') + pl.n;
+var cellName = pl => (pl.mine ? '✍️ ' : '') + (pl.p === 'other' ? '' : t('cp_' + pl.p) + ' · ') + pl.n;
 function calcCellCmp(){
   const need = Math.max(0, v('cl_gb')), MO = clamp(Math.round(v('cl_months')), 1, 60), lines = clamp(Math.round(v('cl_lines')), 1, 10), now = Math.max(0, v('cl_now'));
   const w5 = ($('#cl_5g') || {}).value === 'yes', wab = ($('#cl_abroad') || {}).value === 'yes', calls = ($('#cl_calls') || {}).value !== 'no';
