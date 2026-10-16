@@ -1872,6 +1872,20 @@ button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
 .ds-c{display:grid;gap:2px;text-align:start;padding:12px;border-radius:16px;border:1px solid var(--line);background:var(--card,transparent);color:inherit;font:inherit;cursor:pointer}
 .ds-c .ds-ic{font-size:1.3rem}.ds-c .ds-l{font-size:.85rem;opacity:.75}.ds-c b{font-size:1.15rem}.ds-c small{font-size:.75rem;opacity:.7;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bk-box{margin-top:18px;padding:14px;border:1px solid var(--line);border-radius:16px}.bk-box h4{margin:0 0 4px}.bk-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+/* 9.0 */
+.tz-bar{display:flex;align-items:center;gap:8px;margin:2px 0 10px;font-size:.9rem}
+.tz-bar input[type=range]{flex:1;min-width:0}
+.tz-b{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:transparent;color:inherit;font:inherit;font-size:1.15rem;line-height:1;cursor:pointer}
+.tz-bar output{min-width:44px;text-align:center;font-variant-numeric:tabular-nums;opacity:.8}
+#tiles .tile{zoom:var(--tz,1)}
+#tiles[data-tz="s"]{grid-template-columns:repeat(4,1fr)}
+#tiles[data-tz="l"]{grid-template-columns:repeat(2,1fr)}
+#tiles[data-tz="xl"]{grid-template-columns:repeat(2,1fr)}
+#tiles{touch-action:pan-y}
+.cl-src{font-size:.82rem;opacity:.85;margin:0 0 10px}.cl-src a{color:inherit}
+.cl-chk{display:flex;gap:16px;margin-top:8px;font-size:.9rem}.cl-chk label{display:flex;align-items:center;gap:6px}
+.cl-card + .cl-card{margin-top:10px}
+.mkp-sub{margin:0 0 12px}
 
 </style>
 </head>
@@ -5379,6 +5393,94 @@ Object.assign(T, {
   ci_none:['עוד לא הורצו בדיקות','لم تُشغّل فحوصات بعد','No checks yet'], ci_err:['לא הצלחנו להגיע ל-GitHub','تعذّر الوصول إلى GitHub','Could not reach GitHub'],
   ci_tok:['צריך טוקן GitHub בהגדרות המפתח','يلزم رمز GitHub في إعدادات المطور','A GitHub token is needed in developer settings'], ci_started:['הבדיקה התחילה – התוצאה תופיע תוך כמה דקות','بدأ الفحص – النتيجة خلال دقائق','Started – the result appears in a few minutes']
 });
+/* 9.0 texts */
+Object.assign(T, {
+  tab_cellcmp:['השוואת חבילות סלולר','مقارنة باقات الخلوي','Mobile plan comparison'], d_cellcmp:['כל החברות בישראל – מה הכי זול לפי הגלישה שלכם, כולל המחיר אחרי המבצע','كل الشركات في إسرائيل – الأرخص حسب استخدامكم، بما في ذلك السعر بعد العرض','Every Israeli carrier – the cheapest for your usage, including the price after the promo'],
+  f_clGb:['כמה גלישה בחודש (GB)','كم تصفح شهريًا (GB)','Data a month (GB)'], h_clGb:['רוב האנשים צורכים 10–50GB. צפייה רבה בסרטונים: 100GB ומעלה.','معظم الناس 10–50GB. مشاهدة فيديو كثيرة: 100GB فأكثر.','Most people use 10–50GB; heavy video 100GB+.'],
+  f_cl5g:['דור 5 (5G)','الجيل الخامس (5G)','5G'], o_clAny:['לא משנה','لا يهم','Any'], o_clYes:['חובה','ضروري','Required'], f_clAbroad:['כולל גלישה בחו"ל','يشمل التصفح في الخارج','Includes roaming'],
+  f_clMonths:['לכמה חודשים להשוות','لكم شهرًا المقارنة','Compare over'], h_clMonths:['המחיר הממוצע לאורך התקופה – כולל העלייה אחרי חודשי המבצע.','متوسط السعر على المدة – مع الارتفاع بعد العرض.','Average price over the period – including the rise after the promo.'],
+  f_clLines:['מספר קווים','عدد الخطوط','Lines'], f_clNow:['כמה אתם משלמים היום בחודש','كم تدفعون اليوم شهريًا','What you pay now a month'], h_clNow:['על כל הקווים יחד – כדי לראות כמה תחסכו.','لكل الخطوط معًا – لمعرفة التوفير.','All lines together – to see the saving.'],
+  f_clCalls:['צריך שיחות','بحاجة لمكالمات','Need calls'], o_clCallsYes:['כן – שיחות וגלישה','نعم – مكالمات وتصفح','Yes – calls and data'], o_clCallsNo:['גלישה בלבד','تصفح فقط','Data only'],
+  cl_mineDef:['החבילה שלי {n}','باقتي {n}','My plan {n}'],
+  cp_019:['019 מובייל','019 موبايل','019 Mobile'], cp_pelephone:['פלאפון','بيلفون','Pelephone'], cp_cellcom:['סלקום','سيلكوم','Cellcom'], cp_partner:['פרטנר','بارتنر','Partner'], cp_golan:['גולן טלקום','جولان تيليكوم','Golan Telecom'],
+  cp_hot:['הוט מובייל','هوت موبايل','HOT Mobile'], cp_wecom:['וי-קום','وي-كوم','wecom'], cp_xphone:['אקספון','إكسفون','Xphone'], cp_ramilevy:['רמי לוי תקשורת','رامي ليفي للاتصالات','Rami Levy Telecom'],
+  n_cl:['המחירים כפי שפרסמו החברות (נבדקו ב-{d}). לחברות הסלולר אין שירות ציבורי של מחירים בזמן אמת, ולכן המפתח מעדכן את הרשימה בשרת והאפליקציה מקבלת אותה לבד. בדקו את התנאים באתר החברה לפני מעבר. מקורות:','الأسعار كما نشرتها الشركات (فُحصت في {d}). لا توجد خدمة أسعار فورية من الشركات، لذلك يحدّث المطور القائمة. افحصوا الشروط قبل الانتقال. المصادر:','Prices as published by the carriers (checked {d}). Carriers offer no public live price feed, so the developer updates the list on the server and the app picks it up. Check the terms before switching. Sources:'],
+  r_clNone:['אין חבילה שמתאימה','لا باقة مناسبة','No plan fits'], w_clNone:['נסו פחות גלישה, או בלי דור 5 / חו"ל.','جرّبوا تصفحًا أقل أو بدون 5G/الخارج.','Try less data, or drop 5G/roaming.'],
+  r_clPerMo:['בחודש','شهريًا','/mo'], r_clSave:['חיסכון בשנה מול מה שאתם משלמים','التوفير السنوي مقارنة بما تدفعون','Yearly saving vs what you pay'], r_clMatch:['{n} חבילות מתאימות מתוך {a}','{n} باقات مناسبة من {a}','{n} of {a} plans fit'],
+  w_clUnk:['ב{n} לא פורסם כמה חודשים נמשך המבצע – החישוב מניח שנה.','في {n} لم تُنشر مدة العرض – الحساب يفترض سنة.','{n}: the promo length is not published – assumed a year.'],
+  w_clPromo:['המחיר עולה אחרי המבצע: {a} בהתחלה, {b} בהמשך.','السعر يرتفع بعد العرض: {a} ثم {b}.','The price rises after the promo: {a} at first, then {b}.'],
+  r_clBest:['הכי משתלמת: {n}','الأوفر: {n}','Best value: {n}'], r_clSub:['ממוצע לחודש ל-{m} חודשים · {l} קווים · סה"כ {t}','متوسط شهري لـ{m} شهرًا · {l} خطوط · المجموع {t}','Monthly average over {m} months · {l} lines · total {t}'],
+  t_clCmp:['כל החבילות המתאימות ({m} חודשים)','كل الباقات المناسبة ({m} شهرًا)','All fitting plans ({m} months)'], h_clGb:['גלישה GB','تصفح GB','Data GB'], h_clFirst:['חודש ראשון','الشهر الأول','First month'], h_clLater:['בסוף התקופה','في نهاية المدة','At the end'], h_clAvg:['ממוצע','المتوسط','Average'], h_clTot:['סה"כ','المجموع','Total'],
+  cl_srcAt:['מחירים נכון ל-{d} ·','الأسعار حتى {d} ·','Prices as of {d} ·'], cl_mine:['החבילות שלכם / הצעות שקיבלתם','باقاتكم / عروض حصلتم عليها','Your plans / offers you got'], cl_mineN:['{n}','{n}','{n}'],
+  cl_namePh:['שם החבילה או החברה','اسم الباقة أو الشركة','Plan or carrier name'], cl_price:['מחיר רגיל לחודש','السعر العادي شهريًا','Regular price a month'], cl_pp:['מחיר מבצע','سعر العرض','Promo price'], cl_pm:['חודשי מבצע','أشهر العرض','Promo months'], cl_ab:['כולל חו"ל','يشمل الخارج','Roaming'],
+  cl_add:['הוספת חבילה משלכם','إضافة باقة خاصة','Add your own plan'], h_cl:['הוסיפו את החבילה הנוכחית או הצעה שקיבלתם בטלפון – היא תושווה מול כל החבילות.','أضيفوا باقتكم الحالية أو عرضًا – ستُقارن بكل الباقات.','Add your current plan or an offer you got – it is compared with all plans.'],
+  tab_smartsplit:['חלוקה חכמה של הכסף','تقسيم ذكي للمال','Smart money split'], d_smartsplit:['צרכים, רצונות, השקעות וביטחון – כמה לכל אחד ומה יהיה לכם בעוד שנים','احتياجات، رغبات، استثمار وأمان – كم لكل منها وماذا سيكون لكم','Needs, wants, investing and safety – how much each, and what you will have'],
+  f_ssInc:['הכנסה נטו בחודש','الدخل الصافي شهريًا','Net income a month'], h_ssInc:['מה שנכנס לחשבון אחרי מס.','ما يدخل الحساب بعد الضريبة.','What lands in your account after tax.'],
+  f_ssPlan:['שיטת חלוקה','طريقة التقسيم','Split method'], o_ss50202010:['50/20/20/10 – צרכים / רצונות / השקעות / ביטחון','50/20/20/10 – احتياجات / رغبات / استثمار / أمان','50/20/20/10 – needs / wants / invest / safety'],
+  o_ss503020:['50/30/20 הקלאסית (20 = 15 השקעות + 5 ביטחון)','50/30/20 الكلاسيكية (20 = 15 استثمار + 5 أمان)','Classic 50/30/20 (20 = 15 invest + 5 safety)'], o_ss60201010:['60/20/10/10 – כשהמחיה יקרה','60/20/10/10 – عندما تكون المعيشة مكلفة','60/20/10/10 – when living costs are high'],
+  o_ss70101010:['70/10/10/10 – תקופה צפופה','70/10/10/10 – فترة ضيقة','70/10/10/10 – a tight period'], o_ssCustom:['חלוקה משלכם','تقسيم خاص','Your own split'],
+  f_ssNeed:['צרכים (דיור, אוכל, חשבונות)','احتياجات (سكن، طعام، فواتير)','Needs (housing, food, bills)'], f_ssWant:['רצונות (בילויים, קניות)','رغبات (ترفيه، تسوق)','Wants (fun, shopping)'], f_ssInv:['השקעות (מניות, קרנות)','استثمار (أسهم، صناديق)','Investing (stocks, funds)'], f_ssSafe:['ביטחון עתידי (קרן חירום)','أمان مستقبلي (صندوق طوارئ)','Future safety (emergency fund)'],
+  f_ssRet:['תשואה שנתית על ההשקעות','العائد السنوي على الاستثمار','Yearly return on investing'], h_ssRet:['מדד מניות רחב הניב בממוצע כ-7%–9% בשנה לאורך עשורים, עם ירידות בדרך.','مؤشر أسهم واسع حقق 7%–9% سنويًا تاريخيًا مع تراجعات.','A broad stock index returned about 7–9% a year over decades, with drops along the way.'],
+  f_ssSafeRet:['תשואה על כסף הביטחון','العائد على مال الأمان','Return on the safety money'], h_ssSafeRet:['פיקדון או קרן כספית – בערך כמו ריבית בנק ישראל.','وديعة أو صندوق نقدي – قريب من فائدة بنك إسرائيل.','A deposit or money-market fund – about the Bank of Israel rate.'],
+  f_ssGrow:['עליית הכנסה בשנה','ارتفاع الدخل سنويًا','Income rise a year'], h_ssGrow:['העלאות שכר – החלוקה נשארת באחוזים.','زيادات الراتب – التقسيم يبقى بالنسب.','Pay rises – the split stays in percent.'], f_ssTax:['מס רווחי הון','ضريبة أرباح رأس المال','Capital gains tax'], h_ssTax:['בישראל 25% על הרווח. בקרן השתלמות או גמל להשקעה יש הטבות.','في إسرائيل 25% على الربح، مع مزايا في صناديق الاستكمال.','25% on gains in Israel; study funds have breaks.'], f_ssFee:['דמי ניהול בשנה','رسوم الإدارة سنويًا','Yearly fees'],
+  r_ssNeed:['צרכים ({p}%)','احتياجات ({p}%)','Needs ({p}%)'], r_ssWant:['רצונות ({p}%)','رغبات ({p}%)','Wants ({p}%)'], r_ssInv:['השקעות ({p}%) בחודש','استثمار ({p}%) شهريًا','Investing ({p}%) a month'], r_ssSafe:['ביטחון ({p}%) בחודש','أمان ({p}%) شهريًا','Safety ({p}%) a month'],
+  r_ssPut:['סך מה שהפקדתם','مجموع الإيداعات','Total you put in'], r_ssGain:['הרווח מהתשואה','الربح من العائد','Gain from returns'], r_ssTaxed:['מס על הרווח','ضريبة على الربح','Tax on the gain'], r_ssEnd:['יהיה לכם בעוד {y} שנים (אחרי מס)','سيكون لكم بعد {y} سنة (بعد الضريبة)','You will have in {y} years (after tax)'],
+  r_ssReal:['בכסף של היום (אחרי אינפלציה)','بقيمة اليوم (بعد التضخم)','In today\'s money (after inflation)'], r_ssEmerg:['קרן החירום תכסה','صندوق الطوارئ يغطي','The emergency fund covers'], r_ssMonths:['{n} חודשי צרכים','{n} أشهر احتياجات','{n} months of needs'],
+  w_ssOver:['החלוקה עוברת את ההכנסה ב-{p}% ({m} בחודש).','التقسيم يتجاوز الدخل بـ{p}% ({m} شهريًا).','The split is {p}% over your income ({m} a month).'], w_ssUnder:['נשארו {p}% ({m} בחודש) בלי שיוך – כדאי להוסיף להשקעות או לביטחון.','بقي {p}% ({m} شهريًا) بلا تخصيص.','{p}% ({m} a month) is unassigned – add it to investing or safety.'],
+  w_ssNeed:['הצרכים מעל 60% – כדאי לבדוק דיור, ביטוחים וחבילות (סלולר, אינטרנט).','الاحتياجات فوق 60% – افحصوا السكن والتأمين والباقات.','Needs above 60% – review housing, insurance and plans (mobile, internet).'], w_ssReal:['התשואה אחרי דמי ניהול לא עוברת את האינפלציה – הכסף מאבד ערך.','العائد بعد الرسوم لا يتجاوز التضخم – المال يفقد قيمته.','Returns after fees do not beat inflation – the money loses value.'],
+  r_ssHero:['בעוד {y} שנים יהיו לכם','بعد {y} سنة سيكون لكم','In {y} years you will have'], r_ssSub:['בכסף של היום: {r} · חוסכים {i} בחודש','بقيمة اليوم: {r} · تدّخرون {i} شهريًا','In today\'s money: {r} · saving {i} a month'], r_ssSplitT:['החלוקה החודשית','التقسيم الشهري','Monthly split'],
+  o_ssNeedN:['צרכים','احتياجات','Needs'], o_ssWantN:['רצונות','رغبات','Wants'], o_ssInvN:['השקעות','استثمار','Investing'], o_ssSafeN:['ביטחון','أمان','Safety'],
+  t_ssYears:['איך הכסף גדל שנה אחרי שנה','كيف ينمو المال سنة بعد سنة','How the money grows, year by year'], h_year:['שנה','سنة','Year'], h_ssTotal:['סה"כ','المجموع','Total'], h_ssReal:['בכסף של היום','بقيمة اليوم','Today\'s money'],
+  n_ss:['קודם ביטחון: מומלץ קרן חירום של 3–6 חודשי צרכים לפני השקעות בסיכון. ריבית דריבית עושה את רוב העבודה בשנים המאוחרות – לכן מתחילים מוקדם. תשואות אינן מובטחות, וזה לא ייעוץ השקעות.','الأمان أولًا: صندوق طوارئ 3–6 أشهر قبل الاستثمار. الفائدة المركبة تعمل أكثر في السنوات المتأخرة. العوائد غير مضمونة وليست نصيحة استثمارية.','Safety first: an emergency fund of 3–6 months of needs before risky investing. Compounding does most of the work in later years – so start early. Returns are not guaranteed; not investment advice.'],
+  tab_gooddebt:['הלוואה חיובית מול שלילית','قرض إيجابي مقابل سلبي','Good loan vs bad loan'], d_gooddebt:['מתי הלוואה מעשירה אתכם ומתי היא עולה לכם – ואיך הכסף עובד בפועל','متى يُغنيكم القرض ومتى يكلفكم – وكيف يعمل المال فعليًا','When a loan makes you richer and when it costs you – and how money really works'],
+  f_gdAmt:['סכום ההלוואה','مبلغ القرض','Loan amount'], f_gdRate:['ריבית שנתית (כולל עמלות)','الفائدة السنوية (مع العمولات)','Yearly rate (with fees)'], h_gdRate:['הכניסו את העלות השנתית האמיתית – כולל עמלות.','أدخلوا التكلفة السنوية الحقيقية مع العمولات.','Use the true yearly cost, fees included.'],
+  f_gdUse:['על מה הכסף הולך','على ماذا يُصرف المال','What the money is for'], o_gdInvest:['השקעה שמניבה (עסק, ניירות ערך)','استثمار مُدرّ (مصلحة، أوراق مالية)','An investment that earns (business, securities)'], o_gdProperty:['נדל"ן שעולה ומניב שכירות','عقار يرتفع ويُدرّ إيجارًا','Property that rises and earns rent'],
+  o_gdStudy:['לימודים / הכשרה שמעלים שכר','دراسة / تأهيل يرفع الراتب','Study / training that raises pay'], o_gdCar:['רכב (יורד בערכו)','سيارة (تنخفض قيمتها)','A car (loses value)'], o_gdConsume:['צריכה (חופשה, מוצרים, חתונה)','استهلاك (عطلة، منتجات، زفاف)','Spending (holiday, goods, wedding)'],
+  h_gdUse:['השאלה היא לא "הלוואה כן או לא", אלא אם מה שקונים בה מכניס יותר ממה שהיא עולה.','السؤال: هل ما تشترونه يُدرّ أكثر مما يكلّف القرض؟','The question is not loan or no loan, but whether what it buys earns more than it costs.'],
+  f_gdRet:['תשואה שנתית של מה שקניתם','العائد السنوي لما اشتريتم','Yearly return of what you bought'], h_gdRet:['עליית ערך + הכנסה (שכירות, רווח) בשנה, אחרי הוצאות.','ارتفاع القيمة + الدخل سنويًا بعد المصاريف.','Value growth + income (rent, profit) a year, after costs.'],
+  f_gdInc:['תוספת לשכר נטו בחודש','زيادة الراتب الصافي شهريًا','Extra net pay a month'], h_gdInc:['כמה תרוויחו יותר בזכות הלימודים. נבדק על 10 שנים לפחות.','كم ستربحون أكثر بفضل الدراسة. يُفحص على 10 سنوات.','How much more you will earn thanks to the study; checked over at least 10 years.'],
+  f_gdDep:['ירידת ערך בשנה','انخفاض القيمة سنويًا','Value lost a year'], h_gdDep:['רכב חדש מאבד כ-15%–20% בשנה בשנים הראשונות.','السيارة الجديدة تفقد 15%–20% سنويًا في البداية.','A new car loses about 15–20% a year at first.'],
+  f_gdAlt:['תשואה חלופית על הכסף','عائد بديل على المال','Alternative return on the money'], h_gdAlt:['מה הייתם מרוויחים על התשלומים אילו חסכתם אותם (פיקדון/קרן כספית).','ما كنتم ستربحونه على الدفعات لو ادخرتموها.','What the payments would earn if you saved them instead (deposit / money-market).'],
+  r_gdPay:['החזר חודשי','القسط الشهري','Monthly payment'], r_gdPaid:['סך התשלומים','مجموع الدفعات','Total payments'], r_gdInt:['הריבית שתשלמו','الفائدة التي ستدفعونها','Interest you pay'], r_gdEnd:['שווי מה שקניתם בעוד {y} שנים','قيمة ما اشتريتم بعد {y} سنة','Value of what you bought in {y} years'],
+  r_gdCost:['העלות האמיתית של התשלומים (בעוד {y} שנים)','التكلفة الحقيقية للدفعات (بعد {y} سنة)','True cost of the payments (in {y} years)'], r_gdGain:['ההלוואה הרוויחה לכם','القرض ربّحكم','The loan earned you'], r_gdLoss:['ההלוואה עלתה לכם','القرض كلّفكم','The loan cost you'],
+  r_gdReal:['בכסף של היום','بقيمة اليوم','In today\'s money'], r_gdVs:['תשואה מול ריבית','العائد مقابل الفائدة','Return vs interest'], r_gdSave:['לחסוך קודם ולקנות במזומן','الادخار أولًا والشراء نقدًا','Save first and pay cash'], r_gdSaveV:['תוך {m} – וחוסכים ריבית של {i}','خلال {m} – وتوفّرون فائدة {i}','in {m} – and skip {i} of interest'],
+  r_gdGood:['✅ הלוואה חיובית – הכסף עובד בשבילכם','✅ قرض إيجابي – المال يعمل لصالحكم','✅ A good loan – money works for you'], r_gdBad:['⚠️ הלוואה שלילית – הכסף עובד נגדכם','⚠️ قرض سلبي – المال يعمل ضدكم','⚠️ A bad loan – money works against you'],
+  r_gdGoodSub:['אחרי {y} שנים נשאר לכם יותר, גם אחרי ריבית של {i}','بعد {y} سنة يبقى لكم أكثر حتى بعد فائدة {i}','After {y} years you are ahead, even after {i} of interest'], r_gdBadSub:['אחרי {y} שנים יש לכם פחות – שילמתם {i} ריבית על משהו שלא מחזיר את עצמו','بعد {y} سنة لديكم أقل – دفعتم {i} فائدة على شيء لا يعوّض نفسه','After {y} years you have less – {i} of interest on something that does not pay for itself'],
+  w_gdRisk:['תשואה של השקעה לא מובטחת, אבל ההחזר החודשי כן. אם ההשקעה יורדת – ממשיכים לשלם.','عائد الاستثمار غير مضمون لكن القسط مضمون.','An investment\'s return is not guaranteed, but the payment is. If it falls you still pay.'],
+  w_gdBad_invest:['התשואה נמוכה מהריבית – ההלוואה אוכלת את הרווח.','العائد أقل من الفائدة – القرض يأكل الربح.','The return is below the rate – the loan eats the profit.'], w_gdBad_property:['התשואה נמוכה מהריבית – בדקו שכירות, הוצאות והון עצמי.','العائد أقل من الفائدة – افحصوا الإيجار والمصاريف.','The return is below the rate – check rent, costs and equity.'],
+  w_gdBad_study:['תוספת השכר לא מכסה את עלות ההלוואה בטווח הזה.','زيادة الراتب لا تغطي تكلفة القرض في هذه المدة.','The extra pay does not cover the loan in this period.'], w_gdBad_car:['רכב יורד בערכו – משלמים ריבית על נכס שמתכווץ. שקלו רכב זול יותר או לחסוך קודם.','السيارة تفقد قيمتها – تدفعون فائدة على أصل يتقلص.','A car loses value – you pay interest on a shrinking asset. Consider a cheaper car or saving first.'],
+  w_gdBad_consume:['על צריכה – כל שקל ריבית הוא מחיר נוסף על מה שקניתם. עדיף לחסוך קודם.','على الاستهلاك – كل فائدة هي سعر إضافي. الأفضل الادخار أولًا.','For spending, every shekel of interest raises the price of what you bought. Saving first is better.'],
+  t_gdYears:['החוב מול השווי, שנה אחרי שנה','الدين مقابل القيمة سنة بعد سنة','Debt vs value, year by year'], h_gdDebt:['יתרת החוב','رصيد الدين','Debt left'], h_gdVal:['שווי הנכס','قيمة الأصل','Asset value'], h_gdNet:['שלכם נטו','صافي لكم','Yours, net'],
+  n_gd:['איך זה עובד: הלוואה חיובית קונה משהו שמכניס או עולה בערך יותר מהריבית – כמו עסק, נכס מניב או לימודים שמעלים שכר. הלוואה שלילית מממנת צריכה או נכס שיורד בערכו – משלמים ריבית ונשארים עם פחות. העלות האמיתית היא לא רק הריבית: גם מה שהתשלומים היו מרוויחים אילו נחסכו. ריבית דריבית עובדת בשני הכיוונים – בהשקעה היא בונה לכם, בחוב צרכני היא בונה לבנק.','القرض الإيجابي يشتري شيئًا يُدرّ أو ترتفع قيمته أكثر من الفائدة. القرض السلبي يموّل استهلاكًا أو أصلًا تنخفض قيمته. التكلفة الحقيقية تشمل ما كانت الدفعات ستربحه. الفائدة المركبة تعمل في الاتجاهين.','How it works: a good loan buys something that earns or grows faster than its interest – a business, an income property, study that raises pay. A bad loan funds spending or an asset that loses value – you pay interest and end up with less. The true cost is not just the interest but also what the payments would have earned if saved. Compounding works both ways – in investing it builds for you, in consumer debt it builds for the bank.'],
+  f_ecMode:['איך לחשב','طريقة الحساب','Calculate from'], o_ecFromGross:['מהברוטו – כמה העובד עולה','من الإجمالي – كم يكلف الموظف','Gross – what the employee costs'], o_ecFromNet:['מהנטו – איזה ברוטו צריך כדי שיקבל נטו','من الصافي – أي إجمالي يلزم ليحصل على صافٍ','Net – the gross needed for a given net'],
+  h_ecMode:['מנטו לברוטו: מחשבים בדיוק לפי מדרגות המס, נקודות הזיכוי, ביטוח לאומי, בריאות ופנסיה של 2026.','من الصافي للإجمالي حسب شرائح 2026 ونقاط الاعتبار والتأمين والتقاعد.','Net to gross: worked out exactly with 2026 tax brackets, credit points, NI, health and pension.'],
+  f_ecNet:['נטו שהעובד יקבל','الصافي الذي سيحصل عليه الموظف','Net the employee gets'], f_ecPts:['נקודות זיכוי','نقاط الاعتبار','Credit points'], h_ecPts:['תושב ישראל 2.25, אישה 2.75, ועוד לפי ילדים, תואר ועוד.','مقيم 2.25، امرأة 2.75، وأكثر حسب الأطفال والشهادة.','Resident 2.25, a woman 2.75, more for children, degree etc.'],
+  f_ecEeP:['פנסיה – חלק העובד','تقاعد – حصة الموظف','Pension – employee part'], f_ecEeS:['קרן השתלמות – חלק העובד','صندوق استكمال – حصة الموظف','Study fund – employee part'], h_ecEeS:['בדרך כלל 2.5% כשהמעסיק מפריש 7.5%.','عادة 2.5% عندما يودع صاحب العمل 7.5%.','Usually 2.5% when the employer puts in 7.5%.'],
+  r_ecNeedGross:['הברוטו הדרוש','الإجمالي المطلوب','Gross needed'], r_ecTax:['מס הכנסה','ضريبة الدخل','Income tax'], r_ecNi:['ביטוח לאומי ובריאות (עובד)','التأمين الوطني والصحة (موظف)','NI and health (employee)'], r_ecEeP:['פנסיה (עובד)','تقاعد (موظف)','Pension (employee)'], r_ecEeS:['קרן השתלמות (עובד)','صندوق استكمال (موظف)','Study fund (employee)'],
+  r_ecNetShare:['מתוך העלות מגיע לעובד נטו','من التكلفة يصل للموظف صافيًا','Share of the cost the employee nets'], r_ecHeroNet:['כדי שיקבל {n} נטו – העלות למעסיק','ليحصل على {n} صافيًا – التكلفة على صاحب العمل','For {n} net – the employer\'s cost'],
+  r_ecSubNet:['ברוטו {g} → נטו {n}','إجمالي {g} ← صافٍ {n}','Gross {g} → net {n}'], r_ecDedAll:['ניכויים מהעובד','اقتطاعات من الموظف','Employee deductions'],
+  n_ec2:['הנטו מחושב לעובד יחיד בלי הטבות, רכב או זיכויים נוספים. לחישוב מלא של תלוש – מחשבון השכר.','الصافي لموظف بدون مزايا أو سيارة. للحساب الكامل – حاسبة الراتب.','Net is for a single job without benefits, car or extra credits. For a full payslip use the salary calculator.'],
+  tab_markets:['שווקים ומדדים','الأسواق والمؤشرات','Markets'], d_markets:['כל המדדים, הסחורות והמטבעות בדף אחד','كل المؤشرات والسلع والعملات في صفحة واحدة','All indices, commodities and currencies on one page'],
+  mkp_sub:['המדדים בדף משלהם. לחיצה על מדד פותחת גרף.','المؤشرات في صفحتها. اضغط على مؤشر لفتح الرسم.','Markets on their own page. Tap one for its chart.'], mkp_go:['דף נפרד','صفحة منفصلة','Own page'], mkp_back:['בחזרה לבית','العودة للرئيسية','Back to Home'],
+  mkp_onT:['המדדים עברו לדף "שווקים ומדדים"','انتقلت المؤشرات إلى صفحة "الأسواق"','Markets moved to their own page'], mkp_offT:['המדדים חזרו למסך הבית','عادت المؤشرات للرئيسية','Markets are back on Home'],
+  tz_label:['גודל האייקונים','حجم الأيقونات','Icon size'], tz_less:['הקטנה','تصغير','Smaller'], tz_more:['הגדלה','تكبير','Larger'], tz_reset:['איפוס','إعادة','Reset']
+});
+/* 9.0 texts: phones */
+Object.assign(T, {
+  tab_phonecmp:['השוואת מכשירים','مقارنة الهواتف','Phone comparison'], d_phonecmp:['אייפון, סמסונג, פיקסל ושיאומי – מפרט מלא זה לצד זה','آيفون وسامسونج وبكسل وشاومي – مواصفات جنبًا إلى جنب','iPhone, Samsung, Pixel and Xiaomi – full specs side by side'],
+  f_phBy:['מה הכי חשוב לכם','ما الأهم لكم','What matters most'], o_ph_balanced:['תמורה למחיר','القيمة مقابل السعر','Value for money'], o_ph_price:['הכי זול','الأرخص','Cheapest'], o_ph_camera:['מצלמה','الكاميرا','Camera'],
+  o_ph_battery:['סוללה וטעינה','البطارية والشحن','Battery & charging'], o_ph_small:['קטן וקל','صغير وخفيف','Small & light'], o_ph_big:['מסך גדול','شاشة كبيرة','Big screen'],
+  f_phBrand:['יצרן','الشركة المصنعة','Brand'], o_ph_all:['כל היצרנים','كل الشركات','All brands'], f_phBudget:['תקציב (אפשר להשאיר 0)','الميزانية (يمكن ترك 0)','Budget (0 = any)'], h_phBudget:['מסנן מכשירים שהמחיר שלהם מעל התקציב','يستبعد الأجهزة فوق الميزانية','Hides phones above this price'],
+  f_phA:['מכשיר א','جهاز أ','Phone A'], f_phB:['מכשיר ב','جهاز ب','Phone B'], f_phC:['מכשיר ג','جهاز ج','Phone C'], o_ph_noneSel:['— בלי —','— بدون —','— none —'],
+  ph_price:['מחיר','السعر','Price'], ph_launch:['מחיר השקה רשמי','سعر الإطلاق الرسمي','Official launch price'], ph_screen:['מסך','الشاشة','Screen'], ph_chip:['מעבד','المعالج','Chip'], ph_ram:['זיכרון RAM','ذاكرة RAM','RAM'],
+  ph_storage:['נפח בסיס','السعة الأساسية','Base storage'], ph_cam:['מצלמות אחוריות','الكاميرات الخلفية','Rear cameras'], ph_bat:['סוללה','البطارية','Battery'], ph_charge:['טעינה מהירה','الشحن السريع','Fast charging'],
+  ph_weight:['משקל','الوزن','Weight'], ph_water:['עמידות במים','مقاومة الماء','Water resistance'], ph_rel:['הושק','الإطلاق','Launched'], ph_na:['לא פורסם','غير منشور','not published'],
+  ph_bestBy:['הכי טוב לפי {b}','الأفضل حسب {b}','Best for {b}'], ph_hero:['ההמלצה לפי {b}','التوصية حسب {b}','Pick for {b}'], ph_none:['אין מכשיר שמתאים לסינון','لا جهاز يطابق التصفية','No phone matches'],
+  ph_count:['{n} מכשירים מתוך {a}','{n} أجهزة من {a}','{n} of {a} phones'], t_phSide:['השוואה זה לצד זה','مقارنة جنبًا إلى جنب','Side by side'], t_phAll:['כל המכשירים','كل الأجهزة','All phones'],
+  w_phEst:['מחיר עם ≈ הוא מחיר ההשקה הרשמי בחו"ל, מומר לשקלים לפי השער היום – בארץ המחיר בדרך כלל גבוה יותר (מכס, מע"מ, יבואן). הקלידו את המחיר שמצאתם ב"מחירים בארץ".','السعر مع ≈ هو سعر الإطلاق في الخارج محوّلًا – في إسرائيل عادة أعلى. اكتبوا السعر الذي وجدتموه.','Prices with ≈ are official launch prices abroad, converted at today\'s rate – in Israel they are usually higher. Type the price you found.'],
+  ph_ownT:['מחירים בארץ – הזנה ידנית','الأسعار في إسرائيل – إدخال يدوي','Israeli prices – type your own'], ph_ownN:['מחיר שמצאתם בחנות או אצל היבואן מחליף את ההערכה, ונשמר אצלכם.','السعر الذي وجدتموه يحل محل التقدير ويُحفظ لديكم.','A price you found replaces the estimate and is kept on your device.'], ph_ownL:['המחיר בארץ של {n}','السعر في إسرائيل لـ{n}','Israeli price of {n}'],
+  n_ph:['מפרט ומחירי השקה רשמיים, נבדק ב-{d} (Apple, PhoneArena, GSMArena, MySmartPrice ועוד). אין מקור ציבורי שמעדכן מחירי מכשירים בארץ בזמן אמת, לכן המחיר המקומי הוא מה שאתם מזינים. נתון שלא פורסם מסומן כך.','مواصفات وأسعار إطلاق رسمية، فُحصت في {d}. لا يوجد مصدر عام لأسعار الأجهزة في إسرائيل في الوقت الحقيقي.','Official specs and launch prices, checked {d}. There is no public live source for Israeli phone prices, so the local price is what you type. Unpublished figures are marked.']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -5529,11 +5631,11 @@ Object.assign(RATES, {"AUD":1.4331,"BRL":5.0165,"CAD":1.4241,"CHF":0.83232,"CNY"
 META.unix = 1791894003; META.official = true;
 
 const GROUPS = [
-  ['g_main',  ['home','saved','assist','settings']],
-  ['g_save',  ['expenses','freedom','networth','debtplan','savegoal','compound','yield','dividends','avgcost','retire','fire','mgmtfees','pencmp','hishtalmut','kidsave']],
+  ['g_main',  ['home','markets','saved','assist','settings']],
+  ['g_save',  ['expenses','freedom','networth','debtplan','savegoal','compound','yield','dividends','avgcost','retire','fire','smartsplit','mgmtfees','pencmp','hishtalmut','kidsave']],
   ['g_work2', ['clients','salary','selfemp','tax','capital','rental','severance','notice','leave','overtime','taxrefund','joboffer','freelance','empcost','carbenefit','benefits']],
-  ['g_loans', ['prime','loan','loancmp','prepay','creditcard','carlease','mortgage','mortcmp','refi','rentbuy','purchasetax','landtax','mortcap','evfuel']],
-  ['g_tools', ['convert','vat','percent','inflation','cpilink','split','breakeven','unitprice','discount','workdays','appliance','insurance']]
+  ['g_loans', ['prime','loan','loancmp','gooddebt','prepay','creditcard','carlease','mortgage','mortcmp','refi','rentbuy','purchasetax','landtax','mortcap','evfuel']],
+  ['g_tools', ['convert','vat','percent','inflation','cpilink','split','breakeven','unitprice','discount','workdays','appliance','insurance','cellcmp','phonecmp']]
 ];
 const TABS = GROUPS.flatMap(g => g[1]);
 
@@ -6532,6 +6634,66 @@ Object.assign(ICON, {
   mortcmp: ic('<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-5h6v5"/><path d="M17 4v3"/>'),
   pencmp: ic('<path d="M4 20V10M10 20V6M16 20v-8M21 20H3"/><path d="M14 4l3 3 3-3"/>')
 });
+/* 9.0: phone plans, smart split, good and bad loans, employer cost from net */
+Object.assign(DEFS, {
+  cellcmp: [
+    F('cl_gb','f_clGb','',50,{hint:'h_clGb'}),
+    SEL('cl_5g','f_cl5g','any',[['any','o_clAny'],['yes','o_clYes']]),
+    SEL('cl_abroad','f_clAbroad','any',[['any','o_clAny'],['yes','o_clYes']]),
+    F('cl_months','f_clMonths','mo',24,{hint:'h_clMonths'}),
+    F('cl_lines','f_clLines','',1),
+    F('cl_now','f_clNow','cur',0,{hint:'h_clNow'}),
+    SEL('cl_calls','f_clCalls','yes',[['yes','o_clCallsYes'],['no','o_clCallsNo']],{adv:'m_adv'}),
+    {type:'html', id:'cl_box', cls:'lc-wrap cl-wrap'}
+  ],
+  smartsplit: [
+    F('ss_inc','f_ssInc','cur',14000,{wide:true,hint:'h_ssInc'}),
+    SEL('ss_plan','f_ssPlan','50202010',[['50202010','o_ss50202010'],['503020','o_ss503020'],['60201010','o_ss60201010'],['70101010','o_ss70101010'],['custom','o_ssCustom']],{wide:true}),
+    F('ss_need','f_ssNeed','%',50), F('ss_want','f_ssWant','%',20), F('ss_inv','f_ssInv','%',20), F('ss_safe','f_ssSafe','%',10),
+    F('ss_years','f_years','yrs',20),
+    F('ss_ret','f_ssRet','%',7,{hint:'h_ssRet'}), F('ss_safeRet','f_ssSafeRet','%',4,{hint:'h_ssSafeRet'}),
+    F('ss_infl','f_inflation','%',2.5),
+    F('ss_grow','f_ssGrow','%',2,{adv:'m_adv',hint:'h_ssGrow'}), F('ss_tax','f_ssTax','%',25,{adv:'m_adv',hint:'h_ssTax'}), F('ss_fee','f_ssFee','%',0.5,{adv:'m_adv'})
+  ],
+  gooddebt: [
+    F('gd_amt','f_gdAmt','cur',100000,{wide:true}),
+    F('gd_rate','f_gdRate','%',7,{hint:'h_gdRate'}), F('gd_years','f_years','yrs',5),
+    SEL('gd_use','f_gdUse','invest',[['invest','o_gdInvest'],['property','o_gdProperty'],['study','o_gdStudy'],['car','o_gdCar'],['consume','o_gdConsume']],{wide:true,hint:'h_gdUse'}),
+    F('gd_ret','f_gdRet','%',8,{when:['gd_use','invest|property'],hint:'h_gdRet'}),
+    F('gd_inc','f_gdInc','cur',800,{when:['gd_use','study'],hint:'h_gdInc'}),
+    F('gd_dep','f_gdDep','%',15,{when:['gd_use','car'],hint:'h_gdDep'}),
+    F('gd_alt','f_gdAlt','%',4,{hint:'h_gdAlt'}),
+    F('gd_infl','f_inflation','%',2.5)
+  ]
+});
+DEFS.empcost = [
+  SEL('ec_mode','f_ecMode','gross',[['gross','o_ecFromGross'],['net','o_ecFromNet']],{wide:true,hint:'h_ecMode'}),
+  F('ec_net','f_ecNet','ils',10000,{wide:true,when:['ec_mode','net']}),
+  F('ec_gross','f_ecGross','ils',12000,{wide:true,when:['ec_mode','gross']}),
+  F('ec_pts','f_ecPts','',2.25,{hint:'h_ecPts'}),
+  F('ec_eeP','f_ecEeP','%',6), F('ec_eeS','f_ecEeS','%',0,{hint:'h_ecEeS'}),
+  F('ec_pens','f_erPens','%',6.5), F('ec_sev','f_erSev','%',8.33),
+  F('ec_hish','f_erStudy','%',0), F('ec_other','f_ecOther','ils',0,{hint:'h_ecOther'}), F('ec_over','f_ecOver','%',0,{adv:'m_adv',hint:'h_ecOver'})
+];
+Object.assign(ICON, {
+  cellcmp: ic('<rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/><path d="M3.5 8a6 6 0 0 1 0 8M20.5 8a6 6 0 0 1 0 8"/>'),
+  smartsplit: ic('<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5V12l6 6"/><path d="M12 12H3.5"/>'),
+  gooddebt: ic('<path d="M4 17l5-5 4 3 7-8"/><path d="M4 7l5 5"/><path d="M15 7h5v5"/>'),
+  markets: ic('<path d="M4 20V10M9 20V4M14 20v-7M19 20V8"/><path d="M2 20h20"/>')
+});
+/* 9.0: phones */
+const PHONES_IDS = [['ip18pm', 'iPhone 18 Pro Max'], ['ip18p', 'iPhone 18 Pro'], ['ipair', 'iPhone Air'], ['ip17', 'iPhone 17'], ['ip17e', 'iPhone 17e'], ['s26u', 'Galaxy S26 Ultra'], ['s26p', 'Galaxy S26+'], ['s26', 'Galaxy S26'], ['a57', 'Galaxy A57 5G'], ['px11xl', 'Pixel 11 Pro XL'], ['px11p', 'Pixel 11 Pro'], ['px11', 'Pixel 11'], ['x17u', 'Xiaomi 17 Ultra'], ['x17p', 'Xiaomi 17 Pro'], ['rn15p', 'Redmi Note 15 Pro 5G']];
+(function(){
+  const opts = [['none', 'o_ph_noneSel']].concat(PHONES_IDS.map(x => [x[0], '=' + x[1]]));
+  DEFS.phonecmp = [
+    SEL('ph_by','f_phBy','balanced',[['balanced','o_ph_balanced'],['price','o_ph_price'],['camera','o_ph_camera'],['battery','o_ph_battery'],['small','o_ph_small'],['big','o_ph_big']],{wide:true}),
+    SEL('ph_brand','f_phBrand','all',[['all','o_ph_all'],['apple','=Apple'],['samsung','=Samsung'],['google','=Google'],['xiaomi','=Xiaomi']]),
+    F('ph_budget','f_phBudget','cur',0,{hint:'h_phBudget'}),
+    SEL('ph_a','f_phA','ip17',opts), SEL('ph_b','f_phB','s26',opts), SEL('ph_c','f_phC','px11',opts),
+    {type:'html', id:'ph_box', cls:'lc-wrap ph-wrap'}
+  ];
+  ICON.phonecmp = ic('<rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 5h4"/><circle cx="12" cy="18" r="1"/>');
+})();
 
 /* ================= home + bottom nav + sliders ================= */
 const ICO = {
@@ -7357,6 +7519,11 @@ function savedPanelHTML(){
 }
 Object.assign(ICON, {saved: ic('<path d="M6 3h12v18l-6-4-6 4z"/><path d="M9 8h6"/>')});
 
+/* 9.0: the markets on a page of their own (when chosen) */
+function marketsPanelHTML(){
+  return `<section class="panel panel-flat tool-panel" id="panel-markets" role="tabpanel" aria-labelledby="tab-markets" hidden><div id="mkp_root"></div></section>`;
+}
+
 const navEl = $('#nav'), panelsEl = $('#panels');
 function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
   `<div class="grp" role="presentation"><span class="grp-l" data-i="${gk}"></span>${
@@ -7364,7 +7531,7 @@ function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
   }</div>`
 ).join(''); }
 renderNav();
-panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'saved' ? savedPanelHTML() : id === 'clients' ? clientsPanelHTML() : panelHTML(id)).join('');
+panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'saved' ? savedPanelHTML() : id === 'markets' ? marketsPanelHTML() : id === 'clients' ? clientsPanelHTML() : panelHTML(id)).join('');
 
 /* ================= language ================= */
 function updateHead(){
@@ -9761,6 +9928,236 @@ function calcPenCmp(){
   };
 }
 Object.assign(CALC, {mortcmp: calcMortCmp, pencmp: calcPenCmp});
+/* ================= 9.0: phone plans, smart split, good and bad loans, employer cost from net ================= */
+/* ---------- phone plans: prices as published by the companies (checked October 2026), updated from the site's server ---------- */
+var CELL = {
+  at: '2026-10-07',
+  src: [['Poenta', 'https://www.poenta.co.il/article/cheap-cellular-plans/'], ['PackWise', 'https://packwise.co.il/category/mobile/']],
+  plans: [
+    {p: '019', n: '170GB דור 5', gb: 170, g5: 1, s: [[1, 25.9]]},
+    {p: '019', n: 'BIG DATA 300GB', gb: 300, g5: 1, s: [[1, 39.9]]},
+    {p: '019', n: 'לכל החיים 12GB', gb: 12, g5: 0, s: [[1, 19.8]]},
+    {p: '019', n: 'WE IT 100GB + חו"ל', gb: 100, g5: 0, ab: 1, s: [[1, 29.9]]},
+    {p: 'pelephone', n: '5G 1000GB', gb: 1000, g5: 1, s: [[1, 39.9], [3, 49.9]]},
+    {p: 'pelephone', n: '5G MAX 2000GB', gb: 2000, g5: 1, s: [[1, 49.9], [3, 64.9], [25, 99]]},
+    {p: 'cellcom', n: '5G 800GB', gb: 800, g5: 1, s: [[1, 39.9], [3, 50], [13, 60]]},
+    {p: 'cellcom', n: '4G 400GB', gb: 400, g5: 0, s: [[1, 39.9]]},
+    {p: 'partner', n: 'Queen 5G 500GB', gb: 500, g5: 1, s: [[1, 39.9], [13, 49.9]], unk: 1},
+    {p: 'golan', n: 'מתגלגלת 300GB', gb: 300, g5: 0, s: [[1, 34.9]]},
+    {p: 'golan', n: '400GB עם חו"ל', gb: 400, g5: 0, ab: 1, s: [[1, 39]]},
+    {p: 'golan', n: 'דור 5 750GB', gb: 750, g5: 1, s: [[1, 39], [4, 49]]},
+    {p: 'golan', n: 'דור 5 + תיקונים 1500GB', gb: 1500, g5: 1, s: [[1, 49], [3, 59]]},
+    {p: 'golan', n: 'DATA ONLY 500GB', gb: 500, g5: 1, data: 1, s: [[1, 40]]},
+    {p: 'hot', n: 'TOP 250GB', gb: 250, g5: 0, l2: 25, s: [[1, 29.9]]},
+    {p: 'wecom', n: '5G ללא הגבלה', gb: 1e6, g5: 1, s: [[1, 35]]},
+    {p: 'wecom', n: 'משפחתית 500GB', gb: 500, g5: 0, s: [[1, 30]]},
+    {p: 'wecom', n: '5G + חו"ל 5GB', gb: 1e6, g5: 1, ab: 1, fee: 79.9, s: [[1, 60]]},
+    {p: 'xphone', n: '500GB', gb: 500, g5: 0, s: [[1, 29.9], [13, 39.9]]},
+    {p: 'xphone', n: '750GB 5G', gb: 750, g5: 1, s: [[1, 40], [13, 45]]},
+    {p: 'ramilevy', n: '200GB', gb: 200, g5: 0, s: [[1, 25.9]]}
+  ]
+};
+function cellPrice(pl, m, lines){ let pr = 0; (pl.s || []).forEach(([from, x]) => { if (m >= from) pr = x; }); if (lines >= 2 && pl.l2) pr = Math.min(pr, pl.l2); return pr; }
+function cellMineList(){ if (!Array.isArray(SET.cellMine)) SET.cellMine = []; return SET.cellMine; }
+function cellAll(){
+  return CELL.plans.concat(cellMineList().map((o, i) => ({mine: 1, i, p: 'other', n: String(o.n || '').trim() || t('cl_mineDef', {n: i + 1}), gb: +o.gb > 0 ? +o.gb : 1e6, g5: o.g5 ? 1 : 0, ab: o.ab ? 1 : 0,
+    s: (+o.pm > 0 && +o.pp > 0) ? [[1, +o.pp], [+o.pm + 1, +o.price || 0]] : [[1, +o.price || 0]]})));
+}
+const cellName = pl => (pl.mine ? '✍️ ' : '') + (pl.p === 'other' ? '' : t('cp_' + pl.p) + ' · ') + pl.n;
+function calcCellCmp(){
+  const need = Math.max(0, v('cl_gb')), MO = clamp(Math.round(v('cl_months')), 1, 60), lines = clamp(Math.round(v('cl_lines')), 1, 10), now = Math.max(0, v('cl_now'));
+  const w5 = ($('#cl_5g') || {}).value === 'yes', wab = ($('#cl_abroad') || {}).value === 'yes', calls = ($('#cl_calls') || {}).value !== 'no';
+  const all = cellAll(), ok = all.filter(pl => pl.gb >= need && (!w5 || pl.g5) && (!wab || pl.ab) && (!calls || !pl.data));
+  const R = ok.map(pl => { let tot = (pl.fee || 0); for (let m = 1; m <= MO; m++) tot += cellPrice(pl, m, lines) * lines; return {pl, tot, avg: tot / MO, first: cellPrice(pl, 1, lines), later: cellPrice(pl, MO, lines)}; }).sort((a, b) => a.avg - b.avg);
+  const note = t('n_cl', {d: CELL.at.slice(0, 7)}) + ' ' + CELL.src.map(s => s[0]).join(' · ');
+  if (!R.length) return {hero: {label: t('r_clNone'), value: '—'}, rows: [], warn: [t('w_clNone')], note};
+  const best = R[0], rows = R.slice(0, 6).map((r, i) => [(i ? (i + 1) + '. ' : '★ ') + cellName(r.pl), M(r.avg, 2) + ' ' + t('r_clPerMo'), i ? undefined : 'key']);
+  if (now > 0) rows.push([t('r_clSave'), M(Math.max(0, (now - best.avg) * 12)), 'key']);       // what you pay now (all lines) against the best plan
+  rows.push([t('r_clMatch', {n: R.length, a: all.length}), '']);
+  const warn = [];
+  if (best.pl.unk) warn.push(t('w_clUnk', {n: cellName(best.pl)}));
+  if (best.first !== best.later) warn.push(t('w_clPromo', {a: M(best.first, 2), b: M(best.later, 2)}));
+  return {
+    hero: {label: t('r_clBest', {n: cellName(best.pl)}), value: M(best.avg, 2), sub: t('r_clSub', {m: MO, l: lines, t: M(best.tot)})},
+    rows, warn,
+    table: {title: t('t_clCmp', {m: MO}), open: true, head: ['', t('h_clGb'), '5G', t('h_clFirst'), t('h_clLater'), t('h_clAvg'), t('h_clTot')],
+      rows: R.map(r => [cellName(r.pl), r.pl.gb >= 1e6 ? '∞' : N(r.pl.gb, 0), r.pl.g5 ? '✓' : '—', M(r.first, 2), M(r.later, 2), M(r.avg, 2), M(r.tot)])},
+    note
+  };
+}
+
+/* ---------- smart split of your income: needs, wants, investing, safety ---------- */
+function calcSmartSplit(){
+  const inc0 = Math.max(0, v('ss_inc')), P = ['need', 'want', 'inv', 'safe'].map(k => Math.max(0, v('ss_' + k)));
+  const sum = P.reduce((s, x) => s + x, 0), yrs = clamp(Math.round(v('ss_years')), 1, 50);
+  const ret = v('ss_ret') / 100, sret = v('ss_safeRet') / 100, infl = v('ss_infl') / 100, grow = v('ss_grow') / 100, tax = clamp(v('ss_tax'), 0, 50) / 100, fee = clamp(v('ss_fee'), 0, 3) / 100;
+  const mr = Math.pow(1 + ret - fee, 1 / 12) - 1, ms = Math.pow(1 + sret, 1 / 12) - 1;
+  let inv = 0, safe = 0, putI = 0, putS = 0, inc = inc0; const yrRows = [];
+  for (let y = 1; y <= yrs; y++){
+    for (let m = 0; m < 12; m++){
+      inv = inv * (1 + mr) + inc * P[2] / 100; safe = safe * (1 + ms) + inc * P[3] / 100;
+      putI += inc * P[2] / 100; putS += inc * P[3] / 100;
+    }
+    const real = (inv + safe) / Math.pow(1 + infl, y);
+    if (y <= 10 || y % 5 === 0 || y === yrs) yrRows.push([String(y), MI(inv), MI(safe), MI(inv + safe), MI(real)]);
+    inc *= 1 + grow;
+  }
+  const gains = Math.max(0, inv - putI) + Math.max(0, safe - putS), net = inv + safe - gains * tax, realNet = net / Math.pow(1 + infl, yrs);
+  const amt = P.map(p => inc0 * p / 100), needM = amt[0] || 1;
+  const rows = [[t('r_ssNeed', {p: N(P[0], 0)}), MI(amt[0])], [t('r_ssWant', {p: N(P[1], 0)}), MI(amt[1])], [t('r_ssInv', {p: N(P[2], 0)}), MI(amt[2]), 'key'], [t('r_ssSafe', {p: N(P[3], 0)}), MI(amt[3]), 'key'],
+    [t('r_ssPut'), MI(putI + putS)], [t('r_ssGain'), MI(gains)], [t('r_ssTaxed'), MI(gains * tax)], [t('r_ssEnd', {y: yrs}), MI(net), 'key'], [t('r_ssReal'), MI(realNet), 'key'],
+    [t('r_ssEmerg'), t('r_ssMonths', {n: N(Math.min(safe / needM, 999), 1)})]];
+  const warn = [];
+  if (Math.abs(sum - 100) > 0.01) warn.push(t(sum > 100 ? 'w_ssOver' : 'w_ssUnder', {p: N(Math.abs(sum - 100), 0), m: MI(Math.abs(inc0 * (sum - 100) / 100))}));
+  if (P[0] > 60) warn.push(t('w_ssNeed'));
+  if (ret - fee <= infl) warn.push(t('w_ssReal'));
+  return {
+    hero: {label: t('r_ssHero', {y: yrs}), value: MI(net), sub: t('r_ssSub', {r: MI(realNet), i: MI(amt[2] + amt[3])})},
+    rows, warn,
+    split: {title: t('r_ssSplitT'), items: [{name: t('o_ssNeedN'), v: amt[0], cls: 'c-ink', fmt: MI(amt[0])}, {name: t('o_ssWantN'), v: amt[1], cls: 'c-soft', fmt: MI(amt[1])}, {name: t('o_ssInvN'), v: amt[2], cls: 'c-accent', fmt: MI(amt[2])}, {name: t('o_ssSafeN'), v: amt[3], cls: 'c-warm', fmt: MI(amt[3])}]},
+    table: {title: t('t_ssYears'), head: [t('h_year'), t('o_ssInvN'), t('o_ssSafeN'), t('h_ssTotal'), t('h_ssReal')], rows: yrRows},
+    note: t('n_ss')
+  };
+}
+
+/* ---------- a loan that works for you, and a loan that works against you ---------- */
+function calcGoodDebt(){
+  const amt = Math.max(0, v('gd_amt')), rate = Math.max(0, v('gd_rate')), yrs = clamp(v('gd_years'), 0.25, 40), n = Math.max(1, Math.round(yrs * 12));
+  const use = ($('#gd_use') || {}).value || 'invest', alt = v('gd_alt') / 100, infl = v('gd_infl') / 100;
+  const r = rate / 1200, pay = r > 0 ? amt * r / (1 - Math.pow(1 + r, -n)) : amt / n, paid = pay * n, interest = paid - amt;
+  const H = use === 'study' ? Math.max(n, 120) : n, ma = Math.pow(1 + alt, 1 / 12) - 1;
+  /* what the payments would have grown to if you had kept them (the true cost, in money at the end) */
+  let fvPay = 0; for (let m = 1; m <= n; m++) fvPay += pay * Math.pow(1 + ma, H - m);
+  const valAt = mo => {
+    const y = mo / 12;
+    if (use === 'invest' || use === 'property') return amt * Math.pow(1 + v('gd_ret') / 100, y);
+    if (use === 'car') return amt * Math.pow(1 - clamp(v('gd_dep'), 0, 90) / 100, y);
+    if (use === 'study'){ let s = 0; const inc = Math.max(0, v('gd_inc')); for (let m = 1; m <= mo; m++) s += inc * Math.pow(1 + ma, mo - m); return s; }
+    return 0;
+  };
+  const end = valAt(H), gain = end - fvPay, good = gain > 0, realGain = gain / Math.pow(1 + infl, H / 12);
+  /* the same money, saved first: how long until you have it, and the interest you never pay */
+  let saveM = 0, bal = 0; while (bal < amt && saveM < 600){ bal = bal * (1 + ma) + pay; saveM++; }
+  const yrRows = []; let debt = amt;
+  for (let m = 1; m <= H; m++){
+    if (m <= n){ debt = debt * (1 + r) - pay; if (debt < 0.01) debt = 0; }
+    if (m % 12 === 0 || m === H){ const vA = valAt(m); yrRows.push([N(m / 12, m % 12 ? 1 : 0), MI(debt), MI(vA), MI(vA - debt)]); }
+  }
+  const effRet = use === 'invest' || use === 'property' ? v('gd_ret') : use === 'car' ? -v('gd_dep') : use === 'consume' ? -100 : NaN;
+  const rows = [[t('r_gdPay'), MI(pay)], [t('r_gdPaid'), MI(paid)], [t('r_gdInt'), MI(interest), 'key'], [t('r_gdEnd', {y: N(H / 12, 0)}), MI(end)],
+    [t('r_gdCost', {y: N(H / 12, 0)}), MI(fvPay)], [t(good ? 'r_gdGain' : 'r_gdLoss'), MI(Math.abs(gain)), 'key'], [t('r_gdReal'), MI(realGain)]];
+  if (isFinite(effRet)) rows.push([t('r_gdVs'), PC(effRet) + ' / ' + PC(rate)]);
+  if (saveM < 600) rows.push([t('r_gdSave'), t('r_gdSaveV', {m: fmtDur(saveM), i: MI(interest)})]);
+  return {
+    hero: {label: t(good ? 'r_gdGood' : 'r_gdBad'), value: (good ? '+' : '−') + MI(Math.abs(gain)), sub: t(good ? 'r_gdGoodSub' : 'r_gdBadSub', {y: N(H / 12, 0), i: MI(interest)})},
+    rows, warn: good ? (use === 'invest' ? [t('w_gdRisk')] : []) : [t('w_gdBad_' + use)],
+    table: {title: t('t_gdYears'), head: [t('h_year'), t('h_gdDebt'), t('h_gdVal'), t('h_gdNet')], rows: yrRows},
+    note: t('n_gd')
+  };
+}
+
+/* ---------- employer cost: from gross, or from the net you want to pay ---------- */
+function ecRun(g){
+  return salaryCalc(g, Math.max(0, v('ec_pts')), clamp(v('ec_eeP'), 0, 30), clamp(v('ec_eeS'), 0, 30), {bonus: 0, benefit: 0, erPens: clamp(v('ec_pens'), 0, 30), erSev: clamp(v('ec_sev'), 0, 30), erStudy: clamp(v('ec_hish'), 0, 30)});
+}
+function calcEmpCost2(){
+  const fromNet = ($('#ec_mode') || {}).value === 'net';
+  let g = Math.max(0, v('ec_gross'));
+  if (fromNet){
+    const want = Math.max(0, v('ec_net')); let lo = 0, hi = Math.max(1000, want * 3);
+    while (ecRun(hi).net < want && hi < 1e7) hi *= 2;
+    for (let i = 0; i < 60; i++){ const mid = (lo + hi) / 2; if (ecRun(mid).net < want) lo = mid; else hi = mid; }
+    g = hi;
+  }
+  const r = ecRun(g), other = Math.max(0, v('ec_other')), over = g * Math.max(0, v('ec_over')) / 100, total = r.employer + other + over;
+  const rows = [];
+  if (fromNet) rows.push([t('r_ecNeedGross'), MI(g), 'key']);
+  rows.push([t('r_ecGross'), MI(g)], [t('r_ecTax'), MI(r.tax)], [t('r_ecNi'), MI(r.ni + r.health)], [t('r_ecEeP'), MI(r.pens)]);
+  if (r.study) rows.push([t('r_ecEeS'), MI(r.study)]);
+  rows.push([t('r_ecNet'), MI(r.net), 'key'], [t('r_erNi'), MI(r.erNi)], [t('r_erPens'), MI(r.erP)], [t('r_erSev'), MI(r.erS)]);
+  if (r.erSt) rows.push([t('r_erStudy'), MI(r.erSt)]);
+  if (other) rows.push([t('r_ecOther'), MI(other)]);
+  if (over) rows.push([t('r_ecOver'), MI(over)]);
+  rows.push([t('r_ecTotal'), MI(total), 'key'], [t('r_ecYear'), MI(total * 12), 'key'], [t('r_ecRatio'), PC(g ? (total / g - 1) * 100 : NaN)], [t('r_ecNetShare'), PC(total ? r.net / total * 100 : NaN)]);
+  return {
+    hero: {label: t(fromNet ? 'r_ecHeroNet' : 'r_ecTotal', {n: MI(r.net)}), value: MI(total), sub: fromNet ? t('r_ecSubNet', {g: MI(g), n: MI(r.net)}) : t('r_ecSub', {g: MI(g), p: PC(g ? (total / g - 1) * 100 : NaN)})},
+    rows, note: t('n_ec') + ' ' + t('n_ec2'),
+    split: {title: t('r_ecTotal'), items: [{name: t('r_ecNet'), v: r.net, cls: 'c-ink', fmt: MI(r.net)}, {name: t('r_ecDedAll'), v: r.tax + r.ni + r.health + r.pens + r.study, cls: 'c-soft', fmt: MI(r.tax + r.ni + r.health + r.pens + r.study)}, {name: t('r_erNi'), v: r.erNi, cls: 'c-accent', fmt: MI(r.erNi)}, {name: t('l_ecSave'), v: r.erP + r.erS + r.erSt, cls: 'c-warm', fmt: MI(r.erP + r.erS + r.erSt)}]}
+  };
+}
+Object.assign(CALC, {cellcmp: calcCellCmp, smartsplit: calcSmartSplit, gooddebt: calcGoodDebt, empcost: calcEmpCost2});
+/* ================= 9.0: phones side by side — official specs and launch prices (checked October 2026) ================= */
+/* d: display ", hz: refresh, chip, ram GB (0 = not published), st: base storage GB, cam: rear cameras MP, bat: mAh (0 = not published), w: wired W, g: grams,
+   pr: [launch price, currency, country], rel: launch month, src: where the figures come from */
+var PHONES = {
+  at: '2026-10-16',
+  list: [
+    {id: 'ip18pm', b: 'apple', n: 'iPhone 18 Pro Max', d: 6.9, hz: 120, chip: 'A20 Pro (2nm)', ram: 0, st: 256, cam: [48], bat: 0, w: 0, g: 249, ip: 'IP68', pr: [1299, 'USD', 'US'], rel: '2026-09', src: 'Apple'},
+    {id: 'ip18p', b: 'apple', n: 'iPhone 18 Pro', d: 6.3, hz: 120, chip: 'A20 Pro (2nm)', ram: 0, st: 256, cam: [48], bat: 0, w: 0, g: 211, ip: 'IP68', pr: [1199, 'USD', 'US'], rel: '2026-09', src: 'Apple'},
+    {id: 'ipair', b: 'apple', n: 'iPhone Air', d: 6.5, hz: 120, chip: 'A19 Pro', ram: 12, st: 256, cam: [48], bat: 3149, w: 20, g: 165, ip: 'IP68', pr: [999, 'USD', 'US'], rel: '2025-09', src: 'PhoneArena'},
+    {id: 'ip17', b: 'apple', n: 'iPhone 17', d: 6.3, hz: 120, chip: 'A19', ram: 8, st: 256, cam: [48, 48], bat: 3692, w: 0, g: 177, ip: 'IP68', pr: [799, 'USD', 'US'], rel: '2025-09', src: 'TechCrunch'},
+    {id: 'ip17e', b: 'apple', n: 'iPhone 17e', d: 6.1, hz: 60, chip: 'A19', ram: 8, st: 256, cam: [48], bat: 4005, w: 20, g: 169, ip: 'IP68', pr: [599, 'USD', 'US'], rel: '2026-02', src: 'PhoneArena'},
+    {id: 's26u', b: 'samsung', n: 'Galaxy S26 Ultra', d: 6.9, hz: 120, chip: 'Snapdragon 8 Elite Gen 5', ram: 12, st: 256, cam: [200, 50, 10, 50], bat: 5000, w: 60, g: 214, ip: 'IP68', pr: [139999, 'INR', 'IN'], rel: '2026-02', src: 'Free Press Journal'},
+    {id: 's26p', b: 'samsung', n: 'Galaxy S26+', d: 6.7, hz: 120, chip: 'Snapdragon 8 Elite Gen 5 / Exynos 2600', ram: 12, st: 256, cam: [50, 12, 10], bat: 4900, w: 45, g: 190, ip: 'IP68', pr: [119999, 'INR', 'IN'], rel: '2026-02', src: 'Free Press Journal'},
+    {id: 's26', b: 'samsung', n: 'Galaxy S26', d: 6.3, hz: 120, chip: 'Snapdragon 8 Elite Gen 5 / Exynos 2600', ram: 12, st: 256, cam: [50, 12, 10], bat: 4300, w: 25, g: 167, ip: 'IP68', pr: [87999, 'INR', 'IN'], rel: '2026-02', src: 'Free Press Journal'},
+    {id: 'a57', b: 'samsung', n: 'Galaxy A57 5G', d: 6.7, hz: 120, chip: 'Exynos 1680', ram: 8, st: 128, cam: [50, 13, 5], bat: 5000, w: 45, g: 179, ip: '', pr: [550, 'USD', 'US'], rel: '2026-03', src: 'PhoneArena'},
+    {id: 'px11xl', b: 'google', n: 'Pixel 11 Pro XL', d: 6.8, hz: 120, chip: 'Tensor G6 (2nm)', ram: 16, st: 128, cam: [50, 48, 48], bat: 5115, w: 45, g: 0, ip: 'IP68', pr: [134999, 'INR', 'IN'], rel: '2026-08', src: 'MySmartPrice'},
+    {id: 'px11p', b: 'google', n: 'Pixel 11 Pro', d: 6.3, hz: 120, chip: 'Tensor G6 (2nm)', ram: 16, st: 128, cam: [50, 48, 48], bat: 4850, w: 30, g: 0, ip: 'IP68', pr: [119999, 'INR', 'IN'], rel: '2026-08', src: 'MySmartPrice'},
+    {id: 'px11', b: 'google', n: 'Pixel 11', d: 6.3, hz: 120, chip: 'Tensor G6 (2nm)', ram: 12, st: 128, cam: [48, 13, 10.8], bat: 4985, w: 30, g: 0, ip: 'IP68', pr: [89999, 'INR', 'IN'], rel: '2026-08', src: 'MySmartPrice'},
+    {id: 'x17u', b: 'xiaomi', n: 'Xiaomi 17 Ultra', d: 6.9, hz: 120, chip: 'Snapdragon 8 Elite Gen 5', ram: 16, st: 512, cam: [50, 50, 200], bat: 6000, w: 90, g: 0, ip: 'IP68', pr: [1499, 'EUR', 'EU'], rel: '2026-03', src: 'GSMArena'},
+    {id: 'x17p', b: 'xiaomi', n: 'Xiaomi 17 Pro', d: 6.3, hz: 144, chip: 'Snapdragon 8 Elite Gen 5', ram: 12, st: 256, cam: [50, 50, 50], bat: 6300, w: 100, g: 192, ip: 'IP68', pr: [0, '', ''], rel: '2025-09', src: 'Smartprix'},
+    {id: 'rn15p', b: 'xiaomi', n: 'Redmi Note 15 Pro 5G', d: 6.8, hz: 120, chip: 'Dimensity 7400 Ultra', ram: 8, st: 256, cam: [200, 8], bat: 6580, w: 45, g: 210, ip: '', pr: [449, 'EUR', 'EU'], rel: '2026-01', src: 'PhoneArena'}
+  ]
+};
+function phMine(){ if (!SET.phPrice || typeof SET.phPrice !== 'object') SET.phPrice = {}; return SET.phPrice; }
+/* the price in shekels: what you typed (a real Israeli price), or the launch price converted at today's rate (marked as an estimate) */
+function phIls(p){
+  const own = +phMine()[p.id]; if (own > 0) return {v: own, own: 1};
+  const [x, c] = p.pr; if (!(x > 0) || !RATES[c] || !RATES.ILS) return {v: NaN};
+  return {v: x * RATES.ILS / RATES[c], own: 0};
+}
+const phById = id => PHONES.list.find(p => p.id === id);
+const phCam = p => p.cam.length + ' · ' + p.cam.map(x => N(x, x % 1 ? 1 : 0)).join('+') + 'MP';
+function phScore(p, by){
+  const pr = phIls(p).v;
+  if (by === 'price') return isFinite(pr) ? -pr : -1e9;
+  if (by === 'battery') return (p.bat || 0) + (p.w || 0) * 10;
+  if (by === 'camera') return Math.max(...p.cam) / 4 + p.cam.length * 40 + (p.cam.length > 2 ? 30 : 0);
+  if (by === 'small') return -(p.d * 100 + (p.g || 200) / 2);
+  if (by === 'big') return p.d * 100 + p.hz;
+  /* balanced: the specs per shekel */
+  const spec = (p.bat || 4500) / 50 + p.cam.length * 25 + (p.ram || 8) * 4 + p.hz / 2 + p.st / 16;
+  return isFinite(pr) && pr > 0 ? spec / pr * 1000 : spec / 10;
+}
+function calcPhoneCmp(){
+  const by = ($('#ph_by') || {}).value || 'balanced', brand = ($('#ph_brand') || {}).value || 'all', budget = Math.max(0, v('ph_budget'));
+  const pick = ['ph_a', 'ph_b', 'ph_c'].map(id => ($('#' + id) || {}).value).filter(x => x && x !== 'none').map(phById).filter(Boolean);
+  let L = PHONES.list.filter(p => brand === 'all' || p.b === brand);
+  if (budget > 0) L = L.filter(p => { const x = phIls(p).v; return !isFinite(x) || x <= budget; });
+  const S = L.slice().sort((a, b) => phScore(b, by) - phScore(a, by));
+  const pr = p => { const x = phIls(p); return isFinite(x.v) ? (x.own ? '' : '≈') + M(x.v) : '—'; };
+  const note = t('n_ph', {d: PHONES.at});
+  const best = S[0];
+  /* the phones you picked, side by side */
+  const cmp = pick.length >= 2 ? pick : S.slice(0, 3);
+  const spec = [[t('ph_price'), p => pr(p)], [t('ph_launch'), p => p.pr[0] > 0 ? N(p.pr[0], 0) + ' ' + p.pr[1] + ' (' + p.pr[2] + ')' : t('ph_na')], [t('ph_screen'), p => N(p.d, 1) + '″ · ' + p.hz + 'Hz'],
+    [t('ph_chip'), p => p.chip], [t('ph_ram'), p => p.ram ? p.ram + 'GB' : t('ph_na')], [t('ph_storage'), p => p.st >= 1000 ? p.st / 1024 + 'TB' : p.st + 'GB'], [t('ph_cam'), phCam],
+    [t('ph_bat'), p => p.bat ? N(p.bat, 0) + ' mAh' : t('ph_na')], [t('ph_charge'), p => p.w ? p.w + 'W' : t('ph_na')], [t('ph_weight'), p => p.g ? p.g + 'g' : t('ph_na')], [t('ph_water'), p => p.ip || '—'], [t('ph_rel'), p => p.rel]];
+  const rows = [];
+  if (best) rows.push([t('ph_bestBy', {b: t('o_ph_' + by)}), best.n + ' · ' + pr(best), 'key']);
+  S.slice(1, 5).forEach((p, i) => rows.push([(i + 2) + '. ' + p.n, pr(p)]));
+  rows.push([t('ph_count', {n: S.length, a: PHONES.list.length}), '']);
+  const warn = [];
+  if (cmp.some(p => !phIls(p).own)) warn.push(t('w_phEst'));
+  return {
+    hero: best ? {label: t('ph_hero', {b: t('o_ph_' + by)}), value: best.n, sub: pr(best) + ' · ' + N(best.d, 1) + '″ · ' + (best.bat ? N(best.bat, 0) + ' mAh · ' : '') + phCam(best)} : {label: t('ph_none'), value: '—'},
+    rows, warn,
+    table2: {title: t('t_phSide'), open: true, head: [''].concat(cmp.map(p => p.n)), rows: spec.map(([lab, f]) => ({c: [lab].concat(cmp.map(f))}))},
+    table: {title: t('t_phAll'), head: ['', t('ph_price'), t('ph_screen'), t('ph_bat'), t('ph_cam'), t('ph_chip')], rows: S.map(p => [p.n, pr(p), N(p.d, 1) + '″', p.bat ? N(p.bat, 0) : '—', phCam(p), p.chip])},
+    note
+  };
+}
+Object.assign(CALC, {phonecmp: calcPhoneCmp});
 
 /* ================= navigation ================= */
 function activate(id, focus){
@@ -11337,8 +11734,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && SI
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "8.9", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.031211';
+var CHANGELOG = [{"v": "9.0", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.033519';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -18128,6 +18525,152 @@ document.addEventListener('click', async e => {
 
 /* for the automatic tests only (local copy) */
 if (location.hostname === 'localhost') window.__fin91 = {phApply, insList, mcList, lcList, pcList, alList, bkMake, setTab: x => { tab = x; }};
+
+/* ================= 9.0: phone plans, tile size, markets on their own page, smart split presets ================= */
+const E92 = s => asEsc(String(s == null ? '' : s));
+
+/* ---------- 1. phone plans: your own plans next to the published ones, and fresher prices from the site ---------- */
+const CELL_URL = IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/cell.json' : 'cell.json';
+fetch(CELL_URL + '?v=' + Math.floor(Date.now() / 3600e3), {credentials: 'omit', referrerPolicy: 'no-referrer'}).then(r => r.ok ? r.json() : null).then(j => {
+  if (j && Array.isArray(j.plans) && j.plans.length && String(j.at || '') > CELL.at){ CELL = j; if (tab === 'cellcmp') calc(tab); clRender(); }
+}).catch(() => {});
+function clRender(){
+  const box = $('#cl_box'); if (!box) return;
+  const L = cellMineList(), act = document.activeElement, keep = act && box.contains(act) ? act.getAttribute('data-k92') : null;
+  const num = (lab, u, i, k, val) => `<div class="field"><span class="lc-l" aria-hidden="true">${E92(lab)}</span><div class="control"><input type="number" inputmode="decimal" step="any" data-cli="${i}" data-clk="${k}" data-k92="cl${i}${k}" value="${val == null ? '' : E92(val)}" aria-label="${E92(lab)}">${unitHTML(u)}</div></div>`;
+  box.innerHTML = `<p class="cl-src">📅 ${E92(t('cl_srcAt', {d: CELL.at}))} ${CELL.src.map(s => `<a href="${E92(s[1])}" target="_blank" rel="noopener noreferrer">${E92(s[0])}</a>`).join(' · ')}</p>
+    <div class="ins-head"><b>${E92(t('cl_mine'))}</b><span class="ins-count">${E92(t('cl_mineN', {n: L.length}))}</span></div>` +
+    L.map((o, i) => `<div class="lc-card cl-card"><div class="lc-top"><span class="lc-num" aria-hidden="true">✍️</span>
+        <input class="lc-name" type="text" maxlength="40" dir="auto" data-cli="${i}" data-clk="n" data-k92="cl${i}n" value="${E92(o.n || '')}" placeholder="${E92(t('cl_namePh'))}" aria-label="${E92(t('lc_name'))}">
+        <button type="button" class="lc-del" data-cldel="${i}" aria-label="${E92(t('ins_del'))}">✕</button></div>
+      <div class="fields">${num(t('cl_price'), 'cur', i, 'price', o.price)}${num(t('h_clGb'), '', i, 'gb', o.gb)}${num(t('cl_pp'), 'cur', i, 'pp', o.pp)}${num(t('cl_pm'), 'mo', i, 'pm', o.pm)}</div>
+      <div class="cl-chk"><label><input type="checkbox" data-cli="${i}" data-clk="g5"${o.g5 ? ' checked' : ''}> 5G</label><label><input type="checkbox" data-cli="${i}" data-clk="ab"${o.ab ? ' checked' : ''}> ${E92(t('cl_ab'))}</label></div>
+    </div>`).join('') +
+    `<button type="button" class="lc-add" id="cl_add"><span aria-hidden="true">＋</span> ${E92(t('cl_add'))}</button><p class="fine lc-hint">${E92(t('h_cl'))}</p>`;
+  if (keep){ const el = box.querySelector(`[data-k92="${keep}"]`); if (el) el.focus(); }
+}
+var CL_T = null;
+document.addEventListener('input', e => {
+  const el = e.target; if (!el.dataset || el.dataset.clk == null || !el.closest('#cl_box')) return;
+  const o = cellMineList()[+el.dataset.cli]; if (!o) return; const k = el.dataset.clk;
+  if (k === 'n') o.n = el.value.slice(0, 40); else if (k === 'g5' || k === 'ab') o[k] = el.checked ? 1 : 0; else o[k] = el.value === '' ? 0 : +el.value;
+  clearTimeout(CL_T); CL_T = setTimeout(() => { try { saveSet(); } catch (er) {} if (tab === 'cellcmp') calc(tab); }, 250);
+}, true);
+document.addEventListener('change', e => { const el = e.target; if (el.type === 'checkbox' && el.dataset && el.dataset.clk && el.closest('#cl_box')) el.dispatchEvent(new Event('input', {bubbles: true})); });
+document.addEventListener('click', e => {
+  if (!e.target.closest) return;
+  if (e.target.closest('#cl_add')){ cellMineList().push({n: '', price: 0, gb: 0, pp: 0, pm: 0, g5: 0, ab: 0}); saveSet(); clRender(); calc(tab); const n = $$('#cl_box .cl-card .lc-name').pop(); if (n) n.focus(); return; }
+  const d = e.target.closest('[data-cldel]'); if (d){ cellMineList().splice(+d.dataset.cldel, 1); saveSet(); clRender(); calc(tab); }
+});
+
+/* ---------- 2. smart split: a preset fills the four shares, any change makes it your own ---------- */
+const SS_PRE = {'50202010': [50, 20, 20, 10], '503020': [50, 30, 15, 5], '60201010': [60, 20, 10, 10], '70101010': [70, 10, 10, 10]};
+document.addEventListener('change', e => {
+  const el = e.target; if (!el || !el.id) return;
+  if (el.id === 'ss_plan' && SS_PRE[el.value]){ ['need', 'want', 'inv', 'safe'].forEach((k, i) => { const f = $('#ss_' + k); if (f){ f.value = SS_PRE[el.value][i]; f.dispatchEvent(new Event('input', {bubbles: true})); } }); }
+});
+document.addEventListener('input', e => {
+  const el = e.target; if (!el || !/^ss_(need|want|inv|safe)$/.test(el.id) || !e.isTrusted) return;
+  const p = $('#ss_plan'); if (p && p.value !== 'custom'){ p.value = 'custom'; p.dispatchEvent(new Event('change', {bubbles: true})); }
+});
+
+/* ---------- 3. the size of the calculator icons on Home: a slider, and two fingers on the icons ---------- */
+const TZ = [0.7, 1.8];
+function tzApply(){
+  const z = clamp(+SET.tileZoom || 1, TZ[0], TZ[1]), box = $('#tiles'); if (!box) return;
+  box.style.setProperty('--tz', z);
+  box.dataset.tz = z < 0.85 ? 's' : z > 1.35 ? 'xl' : z > 1.1 ? 'l' : 'm';
+  const r = $('#tz_r'); if (r && +r.value !== z){ r.value = z; rangeFill(r); }
+  const o = $('#tz_v'); if (o) o.textContent = Math.round(z * 100) + '%';
+}
+function tzBar(){
+  const tiles = $('#tiles'); if (!tiles || $('#tz_bar')) return;
+  tiles.insertAdjacentHTML('beforebegin', `<div class="tz-bar" id="tz_bar"><span aria-hidden="true">🔍</span><button type="button" class="tz-b" data-tz="-" aria-label="${E92(t('tz_less'))}">−</button>
+    <input type="range" id="tz_r" min="${TZ[0]}" max="${TZ[1]}" step="0.05" value="${clamp(+SET.tileZoom || 1, TZ[0], TZ[1])}" aria-label="${E92(t('tz_label'))}">
+    <button type="button" class="tz-b" data-tz="+" aria-label="${E92(t('tz_more'))}">+</button><output id="tz_v"></output><button type="button" class="fg-x" data-tz="0">${E92(t('tz_reset'))}</button></div>`);
+  tzApply();
+}
+const tzSet = z => { SET.tileZoom = Math.round(clamp(z, TZ[0], TZ[1]) * 100) / 100; tzApply(); clearTimeout(tzSet.t); tzSet.t = setTimeout(() => { try { saveSet(); } catch (e) {} }, 300); };
+document.addEventListener('input', e => { if (e.target && e.target.id === 'tz_r') tzSet(+e.target.value); });
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-tz]'); if (!b) return; const z = +SET.tileZoom || 1; tzSet(b.dataset.tz === '0' ? 1 : z + (b.dataset.tz === '+' ? 0.1 : -0.1)); });
+var TZP = null;
+document.addEventListener('touchstart', e => { if (e.touches.length === 2 && e.target.closest && e.target.closest('#tiles')){ const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY); TZP = {d, z: +SET.tileZoom || 1}; } }, {passive: true});
+document.addEventListener('touchmove', e => { if (TZP && e.touches.length === 2){ e.preventDefault(); const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY); tzSet(TZP.z * d / TZP.d); } }, {passive: false});
+document.addEventListener('touchend', e => { if (e.touches.length < 2) TZP = null; }, {passive: true});
+const _rt92 = renderTiles;
+renderTiles = function(){ const r = _rt92.apply(this, arguments); try { tzBar(); tzApply(); } catch (e) {} return r; };
+
+/* ---------- 4. the markets on a page of their own ---------- */
+if (!EX_SKIP.includes('markets')) EX_SKIP.push('markets');
+if (typeof FG_SKIP !== 'undefined' && !FG_SKIP.includes('markets')) FG_SKIP.push('markets');
+if (typeof DASH_SKIP !== 'undefined' && !DASH_SKIP.includes('markets')) DASH_SKIP.push('markets');
+const _svK92 = svKind;
+svKind = function(id){ return id === 'markets' ? '' : _svK92.apply(this, arguments); };
+if (!SET.mktInit){ SET.mktInit = 1; if (!Array.isArray(SET.hidden)) SET.hidden = []; if (!SET.hidden.includes('markets')) SET.hidden.push('markets'); try { saveSet(); } catch (e) {} }
+const mkOn = () => Array.isArray(SET.hidden) && !SET.hidden.includes('markets');
+const MK_PARTS = ['.mk-head', '#fx_st', '#hm', '#hm_n', '#hmx'];
+function mkSync(){
+  const home = $('#panel-home'), root = $('#mkp_root'); if (!home || !root) return;
+  let anchor = $('#mk_anchor');
+  if (!anchor){ const h = home.querySelector('.mk-head'); if (!h) return; anchor = document.createElement('div'); anchor.id = 'mk_anchor'; h.parentNode.insertBefore(anchor, h); }
+  const els = MK_PARTS.map(s => document.querySelector(s)).filter(Boolean);
+  if (mkOn()){ if (!root.querySelector('#hm')){ root.innerHTML = `<p class="home-sub mkp-sub">${E92(t('mkp_sub'))}</p>`; els.forEach(e => root.appendChild(e)); } }
+  else if (!home.querySelector('#hm')){ const ref = anchor.nextSibling; els.forEach(e => anchor.parentNode.insertBefore(e, ref)); const sub = root.querySelector('.mkp-sub'); if (sub) sub.remove(); }
+  const b = $('#mkp_tog'), acts = $('.mk-acts');
+  const html = mkOn() ? `🏠 ${E92(t('mkp_back'))}` : `📊 ${E92(t('mkp_go'))}`;
+  if (!b && acts) acts.insertAdjacentHTML('afterbegin', `<button type="button" class="rf-btn" id="mkp_tog">${html}</button>`); else if (b) b.innerHTML = html;
+  const d = $('#dsb'); if (d && d.parentNode !== home && anchor.parentNode) anchor.parentNode.insertBefore(d, anchor);
+}
+function mkToggle(){
+  if (!Array.isArray(SET.hidden)) SET.hidden = [];
+  if (mkOn()) SET.hidden = SET.hidden.concat('markets'); else SET.hidden = SET.hidden.filter(x => x !== 'markets');
+  saveSet(); mkSync();
+  try { renderNav(); $$('#nav [data-i]').forEach(e => { e.textContent = t(e.dataset.i); }); } catch (e) {}
+  try { renderTiles(); } catch (e) {}
+  toast(t(mkOn() ? 'mkp_onT' : 'mkp_offT'));
+  activate(mkOn() ? 'markets' : 'home');
+}
+document.addEventListener('click', e => { if (e.target.closest && e.target.closest('#mkp_tog')){ e.preventDefault(); mkToggle(); } });
+const _act92 = activate;
+activate = function(id){
+  if (id === 'markets' && !mkOn()) id = 'home';
+  const r = _act92.apply(this, [id].concat([].slice.call(arguments, 1)));
+  if (id === 'markets' || id === 'home'){ try { mkSync(); renderMarket(); } catch (e) {} }
+  return r;
+};
+setInterval(() => { if (tab === 'markets' && !document.hidden) try { renderMarket(); } catch (e) {} }, 20000);
+const _al92 = applyLang;
+applyLang = function(){ const r = _al92.apply(this, arguments); try { const p = $('.mkp-sub'); if (p) p.textContent = t('mkp_sub'); mkSync(); clRender(); const bar = $('#tz_bar'); if (bar){ bar.remove(); tzBar(); } } catch (e) {} return r; };
+
+const _dsR92 = dsRender;
+dsRender = function(){ const r = _dsR92.apply(this, arguments); try { const d = $('#dsb'), an = $('#mk_anchor'), home = $('#panel-home'); if (d && an && home && !home.contains(d)) an.parentNode.insertBefore(d, an); } catch (e) {} return r; };
+/* ---------- start ---------- */
+const _calc92 = calc;
+calc = function(id){ if (id === 'cellcmp' && $('#cl_box') && !$('#cl_box').children.length) clRender(); return _calc92.apply(this, arguments); };
+try { clRender(); tzBar(); mkSync(); if (tab === 'markets'){ if (mkOn()) renderMarket(); else activate('home'); } } catch (e) {}
+
+/* ---------- 5. phones: type the price you found in Israel, and it replaces the converted launch price ---------- */
+function phRender(){
+  const box = $('#ph_box'); if (!box) return;
+  const P = phMine(), act = document.activeElement, keep = act && box.contains(act) ? act.dataset.php : null;
+  box.innerHTML = `<details class="adv ph-own"${Object.keys(P).some(k => +P[k] > 0) ? ' open' : ''}><summary>✍️ ${E92(t('ph_ownT'))}</summary><p class="fine">${E92(t('ph_ownN'))}</p>
+    <div class="ph-list">${PHONES.list.map(p => { const x = phIls(p); return `<label class="ph-it"><span>${E92(p.n)}</span><span class="control"><input type="number" inputmode="decimal" step="any" data-php="${p.id}" value="${+P[p.id] > 0 ? +P[p.id] : ''}" placeholder="${isFinite(x.v) && !x.own ? '≈' + Math.round(x.v) : ''}" aria-label="${E92(t('ph_ownL', {n: p.n}))}">${unitHTML('cur')}</span></label>`; }).join('')}</div></details>`;
+  if (keep){ const el = box.querySelector(`[data-php="${keep}"]`); if (el) el.focus(); }
+}
+var PH_T = null;
+document.addEventListener('input', e => {
+  const el = e.target; if (!el.dataset || !el.dataset.php) return;
+  const P = phMine(); if (+el.value > 0) P[el.dataset.php] = +el.value; else delete P[el.dataset.php];
+  clearTimeout(PH_T); PH_T = setTimeout(() => { try { saveSet(); } catch (er) {} if (tab === 'phonecmp') calc(tab); }, 300);
+}, true);
+const _calc92b = calc;
+calc = function(id){ if (id === 'phonecmp' && $('#ph_box') && !$('#ph_box').children.length) phRender(); return _calc92b.apply(this, arguments); };
+const _al92b = applyLang;
+applyLang = function(){ const r = _al92b.apply(this, arguments); try { phRender(); } catch (e) {} return r; };
+try { phRender(); } catch (e) {}
+/* the markets page has no calculator: anything that recalculates "the current screen" just refreshes the board */
+const _calc92m = calc;
+calc = function(id){ if (id === 'markets'){ try { renderMarket(); } catch (e) {} return; } return _calc92m.apply(this, arguments); };
 
 applyLang(false);
 activate(tab);
