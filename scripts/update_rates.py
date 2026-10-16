@@ -186,7 +186,12 @@ def inbox_pull(log):
         box = json.load(open(INBOX_PATH, encoding="utf-8"))
     except Exception:
         box = {"v": 1, "m": []}
-    have = {m.get("id") for m in box.get("m", [])}
+    try:
+        reps = json.load(open("replies.json", encoding="utf-8"))
+    except Exception:
+        reps = {"v": 1, "r": []}
+    have = {m.get("id") for m in box.get("m", [])} | {x.get("e") for x in reps.get("r", [])}
+    nr = 0
     raw = get_raw("https://ntfy.sh/%s/json?poll=1&since=all" % INBOX_TOPIC, {"User-Agent": "financial-calculator-inbox/1.0"}, 25)
     n = 0
     for line in raw.splitlines():
@@ -195,7 +200,15 @@ def inbox_pull(log):
         except Exception:
             continue
         msg = str(e.get("message") or "")
-        if e.get("event") != "message" or e.get("id") in have or not msg.startswith("fc1.") or len(msg) > 6000:
+        if e.get("event") != "message" or e.get("id") in have or len(msg) > 6000:
+            continue
+        if msg.startswith("fr1."):                     # a developer reply, locked for one sender
+            p = msg.split(".")
+            if len(p) == 4:
+                reps.setdefault("r", []).append({"id": p[1][:24], "c": p[2] + "." + p[3], "t": int(e.get("time") or 0), "e": e["id"]})
+                have.add(e["id"]); nr += 1
+            continue
+        if not msg.startswith("fc1."):
             continue
         box["m"].append({"id": e["id"], "t": int(e.get("time") or 0), "c": msg})
         have.add(e["id"]); n += 1
@@ -203,7 +216,11 @@ def inbox_pull(log):
         box["m"] = box["m"][-1000:]
         with open(INBOX_PATH, "w", encoding="utf-8") as f:
             json.dump(box, f, separators=(",", ":"))
-    log.append("inbox +%d" % n)
+    if nr:
+        reps["r"] = reps["r"][-1000:]
+        with open("replies.json", "w", encoding="utf-8") as f:
+            json.dump(reps, f, separators=(",", ":"))
+    log.append("inbox +%d, replies +%d" % (n, nr))
 
 
 HIST_PATH = "history.json"
