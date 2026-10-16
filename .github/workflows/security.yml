@@ -1,0 +1,32 @@
+name: Security watch
+# Unusual activity in the repository becomes an alert in the app's developer mode (and a GitHub issue when serious).
+on:
+  push:
+  create:
+  delete:
+  fork:
+  public:
+  branch_protection_rule:
+  release:
+  schedule:
+    - cron: '23 6 * * *'   # daily: who has access
+  workflow_dispatch:
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: site-publish
+  cancel-in-progress: false
+jobs:
+  watch:
+    if: github.actor != 'security-bot'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+      - name: Look for unusual activity
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/security_watch.py

@@ -2,7 +2,7 @@ name: Inbox
 
 on:
   schedule:
-    - cron: '*/5 * * * *'   # messages from the website reach the developer's inbox within minutes
+    - cron: '12 * * * *'   # hourly: messages from the website reach the developer's inbox within an hour
   workflow_dispatch:
 
 permissions:

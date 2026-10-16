@@ -1,7 +1,7 @@
 name: Translate interface
 on:
   schedule:
-    - cron: '41 */3 * * *'
+    - cron: '41 */6 * * *'
   workflow_dispatch:
   push:
     branches: [main]
@@ -14,7 +14,7 @@ concurrency:
 jobs:
   translate:
     runs-on: ubuntu-latest
-    timeout-minutes: 55
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -25,7 +25,7 @@ jobs:
       - name: Translate missing interface texts
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          MAX_MINUTES: '45'
+          MAX_MINUTES: '20'
           PUBLISH: '1'
         run: python scripts/translate_ui.py
       - name: Commit and publish
