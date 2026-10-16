@@ -1,10 +1,7 @@
 name: Check
 
 on:
-  pull_request:
-  push:
-    branches-ignore: [gh-pages]
-    paths-ignore: ['rates.json', 'history.json', 'cars.json']
+  workflow_dispatch:      # runs only when the developer starts it (from developer mode in the app, or from GitHub)
 
 permissions:
   contents: read

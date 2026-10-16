@@ -403,5 +403,40 @@ function lzOpen(s){ if (!s || !s.dataset.lz) return; const v = s.value, h = LZ.g
 const _fillCB91 = fillCB;
 fillCB = function(){ $$('select[data-lz]').forEach(s => delete s.dataset.lz); const r = _fillCB91.apply(this, arguments); try { lzCollapse(); } catch (e) {} return r; };
 try { lzCollapse(); } catch (e) {}
+/* ---------- 10. the automatic checks: developer mode only ---------- */
+const CI_API = 'https://api.github.com/repos/' + DC_REPO + '/actions/workflows/test.yml';
+async function ciLoad(){
+  const box = $('#ci_box'); if (!box || !liveOwner()) return;
+  const H = {Accept: 'application/vnd.github+json'}; const tok = ghTok(); if (tok) H.Authorization = 'Bearer ' + tok;
+  let html = '';
+  try {
+    const r = await fetch(CI_API + '/runs?per_page=3', {headers: H, cache: 'no-store'});
+    if (!r.ok) throw new Error('gh' + r.status);
+    const j = await r.json(), L = (j.workflow_runs || []);
+    html = L.length ? L.map(x => { const st = x.status !== 'completed' ? '⏳ ' + t('ci_run') : x.conclusion === 'success' ? '✅ ' + t('ci_ok') : '❌ ' + t('ci_bad'); return `<li><a href="${E91(x.html_url)}" target="_blank" rel="noopener noreferrer">${E91(st)}</a> · ${E91(svdDate(Date.parse(x.created_at)))}</li>`; }).join('') : `<li>${E91(t('ci_none'))}</li>`;
+  } catch (e) { html = `<li>${E91(t('ci_err'))}</li>`; }
+  const l = $('#ci_list'); if (l) l.innerHTML = html;
+}
+function ciBox(){
+  const dc = $('#dc_box'); if (!dc || !liveOwner()) { const o = $('#ci_box'); if (o) o.remove(); return; }
+  if ($('#ci_box')) return;
+  dc.insertAdjacentHTML('afterend', `<div class="bk-box" id="ci_box"><h4>🧪 ${E91(t('ci_title'))}</h4><p class="fine">${E91(t('ci_note'))}</p><ul class="ci-list" id="ci_list"><li>…</li></ul>
+    <div class="bk-acts"><button type="button" class="lc-add" id="ci_go">▶️ ${E91(t('ci_go'))}</button><button type="button" class="lc-add" id="ci_ref">🔄 ${E91(t('ci_ref'))}</button></div></div>`);
+  ciLoad();
+}
+const _dcR91 = dcRender;
+dcRender = function(){ const r = _dcR91.apply(this, arguments); try { ciBox(); } catch (e) {} return r; };
+document.addEventListener('click', async e => {
+  if (!e.target.closest) return;
+  if (e.target.closest('#ci_ref')) return ciLoad();
+  if (!e.target.closest('#ci_go') || !liveOwner()) return;
+  const tok = ghTok(); if (!tok) return toast(t('ci_tok'));
+  try {
+    const r = await fetch(CI_API + '/dispatches', {method: 'POST', headers: {Authorization: 'Bearer ' + tok, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json'}, body: JSON.stringify({ref: 'main'})});
+    if (!r.ok) throw new Error('gh' + r.status);
+    toast(t('ci_started')); setTimeout(ciLoad, 4000);
+  } catch (er) { toast(t('ci_err')); }
+});
+
 /* for the automatic tests only (local copy) */
 if (location.hostname === 'localhost') window.__fin91 = {phApply, insList, mcList, lcList, pcList, alList, bkMake, setTab: x => { tab = x; }};
