@@ -32,3 +32,9 @@ rfOfficial = async function(){
   if (!RJ_MAN) return !!(META && META.unix);
   rjMark(); return rfOfficial101.apply(this, arguments);
 };
+
+/* ---------- the interface follows the phone's language (until one is picked by hand); a change on the phone applies right away ---------- */
+window.addEventListener('languagechange', () => {
+  if (!langAuto()) return; const L = devLang(); if (L === lang) return;
+  lang = L; try { applyLang(true); } catch (e) {}
+});

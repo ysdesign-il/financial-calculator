@@ -1,5 +1,6 @@
 /* 10.3 texts */
 Object.assign(T, {
+  o_langDev:['לפי שפת המכשיר','حسب لغة الجهاز','Same as my device'],
   upd_avail:['עדכון חדש זמין','يتوفر تحديث جديد','New update available'],
   upd_newT:['עדכון חדש זמין – גרסה {v}','تحديث جديد متاح – الإصدار {v}','A new update is available – version {v}'],
   src_w_snap:['אין חיבור חי כרגע, ולכן מוצג השער האחרון שנשמר. העותק השמור מתחדש 6 פעמים ביום.','لا يوجد اتصال مباشر حاليًا، لذا يُعرض آخر سعر محفوظ. تتجدد النسخة المحفوظة 6 مرات في اليوم.','No live connection right now, so the last saved rate is shown. The saved copy renews 6 times a day.'],

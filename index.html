@@ -5628,6 +5628,7 @@ Object.assign(T, {
 });
 /* 10.3 texts */
 Object.assign(T, {
+  o_langDev:['לפי שפת המכשיר','حسب لغة الجهاز','Same as my device'],
   upd_avail:['עדכון חדש זמין','يتوفر تحديث جديد','New update available'],
   upd_newT:['עדכון חדש זמין – גרסה {v}','تحديث جديد متاح – الإصدار {v}','A new update is available – version {v}'],
   src_w_snap:['אין חיבור חי כרגע, ולכן מוצג השער האחרון שנשמר. העותק השמור מתחדש 6 פעמים ביום.','لا يوجد اتصال مباشر حاليًا، لذا يُعرض آخر سعر محفوظ. تتجدد النسخة المحفوظة 6 مرات في اليوم.','No live connection right now, so the last saved rate is shown. The saved copy renews 6 times a day.'],
@@ -5809,6 +5810,22 @@ const RTL = new Set(['he','ar','fa','ur','yi','ps','sd','ug','ckb','dv']);
 var TOUCHED = [], TILE_F = 'all', MY_HANDLE = '';
 try { MY_HANDLE = LS.getItem('fin-handle') || ''; } catch (e) {}
 const MKT = {boi: 3.25, boiDate: '1.9.2026', boiNext: '21.10.2026', cpi: 1.5, cpiMonth: '08/2026', cpiYtd: 2.1, cpiYtdTo: 8, src: 'built'};
+/* the interface follows the phone's language until a language is picked by hand (then it is kept in fin-lang) */
+function devLang(){
+  const has = c => LANG_LIST.some(l => l[0] === c);
+  let list = []; try { list = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || '']).filter(Boolean); } catch (e) {}
+  for (const raw of list){
+    const tag = String(raw).replace('_', '-'), low = tag.toLowerCase(), base = low.split('-')[0];
+    let c = '';
+    if (base === 'iw') c = 'he'; else if (base === 'ji') c = 'yi'; else if (base === 'no' || base === 'nn' || base === 'nb') c = 'nb'; else if (base === 'tl' || base === 'fil') c = 'fil'; else if (base === 'in') c = 'id';
+    else if (base === 'zh') c = /hant|-tw|-hk|-mo/.test(low) ? 'zh-TW' : 'zh-CN';
+    else if (base === 'pt') c = /-pt|-ao|-mz/.test(low) ? 'pt-PT' : 'pt-BR';
+    else c = has(tag) ? tag : base;
+    if (has(c)) return c;
+  }
+  return 'he';
+}
+function langAuto(){ try { return !LS.getItem('fin-lang'); } catch (e) { return true; } }
 const SET_DEF = {sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
@@ -5987,7 +6004,7 @@ function viewGroups(){
 }
 let baseCur = null;
 const effCur = id => { const c = SET.curBy && SET.curBy[id]; return c && RATES[c] ? c : baseCur; };
-let lang = 'he', cur = 'ILS', tab = 'home';
+let lang = devLang(), cur = 'ILS', tab = 'home';
 try {
   lang = LS.getItem('fin-lang') || lang;
   cur  = LS.getItem('fin-cur')  || cur;
@@ -7048,7 +7065,7 @@ const SETDEFS = [
     SEL('set_tapSnd','f_tapSnd','0',[['0','o_off'],['1','o_on']])
   ]],
   ['set_lang', [
-    SEL('set_lang','f_langSel','he',LANG_LIST.map(l => [l[0], '=' + l[1]]),{wide:true, hint:'h_langFallback'}),
+    SEL('set_lang','f_langSel','auto',[['auto','o_langDev']].concat(LANG_LIST.map(l => [l[0], '=' + l[1]])),{wide:true, hint:'h_langFallback'}),
     SEL('set_kbLang','f_kbLang','0',[['0','o_off'],['1','o_on']],{wide:true, hint:'h_kbLang'}),
     {id:'set_cur', label:'f_curSet', type:'cursel'},
     SEL('set_country','f_country','',[['','o_cNone'],['AD','=AD'],['AE','=AE'],['AF','=AF'],['AG','=AG'],['AI','=AI'],['AL','=AL'],['AM','=AM'],['AO','=AO'],['AQ','=AQ'],['AR','=AR'],['AS','=AS'],['AT','=AT'],['AU','=AU'],['AW','=AW'],['AX','=AX'],['AZ','=AZ'],['BA','=BA'],['BB','=BB'],['BD','=BD'],['BE','=BE'],['BF','=BF'],['BG','=BG'],['BH','=BH'],['BI','=BI'],['BJ','=BJ'],['BL','=BL'],['BM','=BM'],['BN','=BN'],['BO','=BO'],['BQ','=BQ'],['BR','=BR'],['BS','=BS'],['BT','=BT'],['BV','=BV'],['BW','=BW'],['BY','=BY'],['BZ','=BZ'],['CA','=CA'],['CC','=CC'],['CD','=CD'],['CF','=CF'],['CG','=CG'],['CH','=CH'],['CI','=CI'],['CK','=CK'],['CL','=CL'],['CM','=CM'],['CN','=CN'],['CO','=CO'],['CR','=CR'],['CU','=CU'],['CV','=CV'],['CW','=CW'],['CX','=CX'],['CY','=CY'],['CZ','=CZ'],['DE','=DE'],['DJ','=DJ'],['DK','=DK'],['DM','=DM'],['DO','=DO'],['DZ','=DZ'],['EC','=EC'],['EE','=EE'],['EG','=EG'],['EH','=EH'],['ER','=ER'],['ES','=ES'],['ET','=ET'],['FI','=FI'],['FJ','=FJ'],['FK','=FK'],['FM','=FM'],['FO','=FO'],['FR','=FR'],['GA','=GA'],['GB','=GB'],['GD','=GD'],['GE','=GE'],['GF','=GF'],['GG','=GG'],['GH','=GH'],['GI','=GI'],['GL','=GL'],['GM','=GM'],['GN','=GN'],['GP','=GP'],['GQ','=GQ'],['GR','=GR'],['GS','=GS'],['GT','=GT'],['GU','=GU'],['GW','=GW'],['GY','=GY'],['HK','=HK'],['HM','=HM'],['HN','=HN'],['HR','=HR'],['HT','=HT'],['HU','=HU'],['ID','=ID'],['IE','=IE'],['IL','=IL'],['IM','=IM'],['IN','=IN'],['IO','=IO'],['IQ','=IQ'],['IR','=IR'],['IS','=IS'],['IT','=IT'],['JE','=JE'],['JM','=JM'],['JO','=JO'],['JP','=JP'],['KE','=KE'],['KG','=KG'],['KH','=KH'],['KI','=KI'],['KM','=KM'],['KN','=KN'],['KP','=KP'],['KR','=KR'],['KW','=KW'],['KY','=KY'],['KZ','=KZ'],['LA','=LA'],['LB','=LB'],['LC','=LC'],['LI','=LI'],['LK','=LK'],['LR','=LR'],['LS','=LS'],['LT','=LT'],['LU','=LU'],['LV','=LV'],['LY','=LY'],['MA','=MA'],['MC','=MC'],['MD','=MD'],['ME','=ME'],['MF','=MF'],['MG','=MG'],['MH','=MH'],['MK','=MK'],['ML','=ML'],['MM','=MM'],['MN','=MN'],['MO','=MO'],['MP','=MP'],['MQ','=MQ'],['MR','=MR'],['MS','=MS'],['MT','=MT'],['MU','=MU'],['MV','=MV'],['MW','=MW'],['MX','=MX'],['MY','=MY'],['MZ','=MZ'],['NA','=NA'],['NC','=NC'],['NE','=NE'],['NF','=NF'],['NG','=NG'],['NI','=NI'],['NL','=NL'],['NO','=NO'],['NP','=NP'],['NR','=NR'],['NU','=NU'],['NZ','=NZ'],['OM','=OM'],['PA','=PA'],['PE','=PE'],['PF','=PF'],['PG','=PG'],['PH','=PH'],['PK','=PK'],['PL','=PL'],['PM','=PM'],['PN','=PN'],['PR','=PR'],['PS','=PS'],['PT','=PT'],['PW','=PW'],['PY','=PY'],['QA','=QA'],['RE','=RE'],['RO','=RO'],['RS','=RS'],['RU','=RU'],['RW','=RW'],['SA','=SA'],['SB','=SB'],['SC','=SC'],['SD','=SD'],['SE','=SE'],['SG','=SG'],['SH','=SH'],['SI','=SI'],['SJ','=SJ'],['SK','=SK'],['SL','=SL'],['SM','=SM'],['SN','=SN'],['SO','=SO'],['SR','=SR'],['SS','=SS'],['ST','=ST'],['SV','=SV'],['SX','=SX'],['SY','=SY'],['SZ','=SZ'],['TC','=TC'],['TD','=TD'],['TF','=TF'],['TG','=TG'],['TH','=TH'],['TJ','=TJ'],['TK','=TK'],['TL','=TL'],['TM','=TM'],['TN','=TN'],['TO','=TO'],['TR','=TR'],['TT','=TT'],['TV','=TV'],['TW','=TW'],['TZ','=TZ'],['UA','=UA'],['UG','=UG'],['US','=US'],['UY','=UY'],['UZ','=UZ'],['VA','=VA'],['VC','=VC'],['VE','=VE'],['VG','=VG'],['VI','=VI'],['VN','=VN'],['VU','=VU'],['WF','=WF'],['WS','=WS'],['XK','=XK'],['YE','=YE'],['YT','=YT'],['ZA','=ZA'],['ZM','=ZM'],['ZW','=ZW']],{wide:true, hint:'h_country'})
@@ -7188,7 +7205,7 @@ function fillCB(){
 function syncSettingsUI(){
   const set = (id, val) => { const e = $('#' + id); if (e) e.value = val; };
   Object.keys(SMAP).forEach(id => set(id, SET[SMAP[id]]));
-  set('set_lang', lang); set('set_cur', baseCur || cur);
+  set('set_lang', langAuto() ? 'auto' : lang); set('set_cur', baseCur || cur);
   set('set_p_single', SET.prof.single); set('set_p_sold', SET.prof.sold); set('set_p_deg', SET.prof.deg);
   PROFK.forEach(([k]) => set('set_p_' + k, SET.prof[k])); set('set_p_xp', SET.prof.xp); set('set_p_res', SET.prof.res == null ? '' : SET.prof.res);
   fillCB(); renderTabsList(); renderTiles(); renderBottom();
@@ -10564,7 +10581,7 @@ panelsEl.addEventListener('change', e => {
     if (k === 'boiDb'){ saveSet(); dbSub(); }
     if (k === 'autoRef'){ saveSet(); schedRef(); }
   } else if (id.indexOf('set_p_') === 0){ SET.prof[id.slice(6)] = val; applyDefaults(); }
-  else if (id === 'set_lang'){ lang = val; try { LS.setItem('fin-lang', lang); } catch(err) {} saveSet(); applyLang(true); return; }
+  else if (id === 'set_lang'){ if (val === 'auto'){ lang = devLang(); try { LS.removeItem('fin-lang'); } catch(err) {} } else { lang = val; try { LS.setItem('fin-lang', lang); } catch(err) {} } saveSet(); applyLang(true); return; }
   else if (id === 'set_cur'){ setBase(val); }
   else if (id.indexOf('set_cb_') === 0){ const tb = id.slice(7); if (val) SET.curBy[tb] = val; else delete SET.curBy[tb]; applyEffCur(tab); }
   else if (id === 'set_favCur'){ SET.favCur = [...e.target.selectedOptions].map(o => o.value); fillCurSelects(); fillCB(); }
@@ -10607,12 +10624,12 @@ panelsEl.addEventListener('click', e => {
   }
   else if (T_.closest('#set_resetcalcs')){ TABS.forEach(resetPanel); TOUCHED = []; calc(tab); msg.textContent = t('st_resetCalcs'); }
   else if (T_.closest('#set_reset')){
-    SET = cloneDef(); saveSet(); lang = 'he'; try { LS.setItem('fin-lang', lang); } catch(err) {}
+    SET = cloneDef(); saveSet(); lang = devLang(); try { LS.removeItem('fin-lang'); } catch(err) {}
     setBase('ILS'); applyTheme(); applySize(); applyDefaults(); applyLang(true); rebuildNav(); msg.textContent = t('st_resetDone');
   }
   else if (T_.closest('#set_clear')){
     ['fin-set','fin-vals','fin-scn','fin-lang','fin-cur','fin-tab'].forEach(k => { try { LS.removeItem(k); } catch(err) {} });
-    SET = cloneDef(); SCN = {}; lang = 'he'; setBase('ILS'); applyTheme(); applySize(); TABS.forEach(resetPanel); TOUCHED = [];
+    SET = cloneDef(); SCN = {}; lang = devLang(); setBase('ILS'); applyTheme(); applySize(); TABS.forEach(resetPanel); TOUCHED = [];
     applyLang(true); rebuildNav(); msg.textContent = t('st_cleared');
   }
 });
@@ -11998,8 +12015,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "10.5", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.070421';
+var CHANGELOG = [{"v": "10.6", "date": "2026-10-16", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261016.070717';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -19759,6 +19776,12 @@ rfOfficial = async function(){
   if (!RJ_MAN) return !!(META && META.unix);
   rjMark(); return rfOfficial101.apply(this, arguments);
 };
+
+/* ---------- the interface follows the phone's language (until one is picked by hand); a change on the phone applies right away ---------- */
+window.addEventListener('languagechange', () => {
+  if (!langAuto()) return; const L = devLang(); if (L === lang) return;
+  lang = L; try { applyLang(true); } catch (e) {}
+});
 
 applyLang(false);
 activate(tab);
