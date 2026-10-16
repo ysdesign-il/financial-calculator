@@ -74,10 +74,20 @@ function phMine(){ if (!SET.phPrice || typeof SET.phPrice !== 'object') SET.phPr
 /* the price in shekels: what you typed (a real Israeli price), or the launch price converted at today's rate (marked as an estimate) */
 function phIls(p){
   const own = +phMine()[p.id]; if (own > 0) return {v: own, own: 1};
+  if (p.mine) return p.pr[0] > 0 ? {v: p.pr[0], own: 1} : {v: NaN};
   const [x, c] = p.pr; if (!(x > 0) || !RATES[c] || !RATES.ILS) return {v: NaN};
   return {v: x * RATES.ILS / RATES[c], own: 0};
 }
-const phById = id => PHONES.list.find(p => p.id === id);
+/* the phones you typed yourself join the list, everywhere */
+function phMineList(){ if (!Array.isArray(SET.phMine)) SET.phMine = []; return SET.phMine; }
+function phAll(){
+  return PHONES.list.concat(phMineList().map((o, i) => ({id: 'my' + i, mine: 1, b: 'mine', n: String(o.n || '').trim() || t('ph_myDef', {n: i + 1}), d: +o.d || 0, hz: +o.hz || 60, chip: String(o.chip || '—'), ram: +o.ram || 0, st: +o.st || 0,
+    cam: String(o.cam || '').split(/[+,\s]+/).map(Number).filter(x => x > 0).length ? String(o.cam).split(/[+,\s]+/).map(Number).filter(x => x > 0) : [0], bat: +o.bat || 0, w: +o.w || 0, g: +o.g || 0, ip: String(o.ip || ''),
+    pr: [+o.price || 0, 'ILS', 'IL'], rel: String(o.rel || ''), src: t('ph_mineSrc')})));
+}
+const phById = id => phAll().find(p => p.id === id);
+/* the phones picked to compare (up to 4) */
+function phCmpList(){ if (!Array.isArray(SET.phCmp)) SET.phCmp = ['ip17', 's26', 'px11']; SET.phCmp = SET.phCmp.filter(id => phById(id)).slice(0, 4); return SET.phCmp; }
 const phCam = p => p.cam.length + ' · ' + p.cam.map(x => N(x, x % 1 ? 1 : 0)).join('+') + 'MP';
 function phScore(p, by){
   const pr = phIls(p).v;
@@ -92,28 +102,37 @@ function phScore(p, by){
 }
 function calcPhoneCmp(){
   const by = ($('#ph_by') || {}).value || 'balanced', brand = ($('#ph_brand') || {}).value || 'all', budget = Math.max(0, v('ph_budget'));
-  const pick = ['ph_a', 'ph_b', 'ph_c'].map(id => ($('#' + id) || {}).value).filter(x => x && x !== 'none').map(phById).filter(Boolean);
-  let L = PHONES.list.filter(p => brand === 'all' || p.b === brand);
+  const pick = phCmpList().map(phById).filter(Boolean);
+  const f = id => Math.max(0, v(id)), ipSel = ($('#ph_ip') || {}).value || 'any';
+  const F = {bat: f('ph_minBat'), ram: f('ph_minRam'), st: f('ph_minSt'), d: f('ph_maxD'), g: f('ph_maxG'), hz: f('ph_minHz'), w: f('ph_minW'), y: f('ph_fromY')};
+  const ipN = s => +(String(s || '').match(/IP\d(\d)/) || [0, 0])[1];
+  let L = phAll().filter(p => brand === 'all' || p.b === brand || (p.mine && brand === 'mine'));
   if (budget > 0) L = L.filter(p => { const x = phIls(p).v; return !isFinite(x) || x <= budget; });
+  L = L.filter(p => (!F.bat || p.bat >= F.bat) && (!F.ram || p.ram >= F.ram) && (!F.st || p.st >= F.st) && (!F.d || p.d <= F.d) && (!F.g || (p.g && p.g <= F.g)) && (!F.hz || p.hz >= F.hz) && (!F.w || p.w >= F.w)
+    && (!F.y || +String(p.rel).slice(0, 4) >= F.y) && (ipSel === 'any' || (ipSel === 'ip68' ? ipN(p.ip) >= 8 : ipN(p.ip) >= 7)));
   const S = L.slice().sort((a, b) => phScore(b, by) - phScore(a, by));
   const pr = p => { const x = phIls(p); return isFinite(x.v) ? (x.own ? '' : '≈') + M(x.v) : '—'; };
   const note = t('n_ph', {d: PHONES.at});
   const best = S[0];
   /* the phones you picked, side by side */
-  const cmp = pick.length >= 2 ? pick : S.slice(0, 3);
+  const cmp = pick.length >= 1 ? pick : S.slice(0, 3);
   const spec = [[t('ph_price'), p => pr(p)], [t('ph_launch'), p => p.pr[0] > 0 ? N(p.pr[0], 0) + ' ' + p.pr[1] + ' (' + p.pr[2] + ')' : t('ph_na')], [t('ph_screen'), p => N(p.d, 1) + '″ · ' + p.hz + 'Hz'],
     [t('ph_chip'), p => p.chip], [t('ph_ram'), p => p.ram ? p.ram + 'GB' : t('ph_na')], [t('ph_storage'), p => p.st >= 1000 ? p.st / 1024 + 'TB' : p.st + 'GB'], [t('ph_cam'), phCam],
     [t('ph_bat'), p => p.bat ? N(p.bat, 0) + ' mAh' : t('ph_na')], [t('ph_charge'), p => p.w ? p.w + 'W' : t('ph_na')], [t('ph_weight'), p => p.g ? p.g + 'g' : t('ph_na')], [t('ph_water'), p => p.ip || '—'], [t('ph_rel'), p => p.rel]];
   const rows = [];
   if (best) rows.push([t('ph_bestBy', {b: t('o_ph_' + by)}), best.n + ' · ' + pr(best), 'key']);
   S.slice(1, 5).forEach((p, i) => rows.push([(i + 2) + '. ' + p.n, pr(p)]));
-  rows.push([t('ph_count', {n: S.length, a: PHONES.list.length}), '']);
+  rows.push([t('ph_count', {n: S.length, a: phAll().length}), '']);
   const warn = [];
   if (cmp.some(p => !phIls(p).own)) warn.push(t('w_phEst'));
   return {
     hero: best ? {label: t('ph_hero', {b: t('o_ph_' + by)}), value: best.n, sub: pr(best) + ' · ' + N(best.d, 1) + '″ · ' + (best.bat ? N(best.bat, 0) + ' mAh · ' : '') + phCam(best)} : {label: t('ph_none'), value: '—'},
     rows, warn,
-    table2: {title: t('t_phSide'), open: true, head: [''].concat(cmp.map(p => p.n)), rows: spec.map(([lab, f]) => ({c: [lab].concat(cmp.map(f))}))},
+    table2: {title: t('t_phSide'), open: true, head: [''].concat(cmp.map(p => p.n)), rows: spec.map(([lab, fn], ri) => {
+      const keyF = [p => -phIls(p).v, null, p => p.hz, null, p => p.ram, p => p.st, p => Math.max(...p.cam) + p.cam.length * 30, p => p.bat, p => p.w, p => p.g ? -p.g : NaN, p => +(String(p.ip).match(/IP\d(\d)/) || [0, 0])[1], null][ri];
+      let bestI = -1; if (keyF && cmp.length > 1){ let bv = -Infinity; cmp.forEach((p, i) => { const x = keyF(p); if (isFinite(x) && x > bv){ bv = x; bestI = i; } }); const ties = cmp.filter(p => keyF(p) === bv).length; if (ties > 1 || !(bv > 0 || ri === 0 || ri === 9)) bestI = -1; }
+      return {c: [lab].concat(cmp.map((p, i) => (i === bestI ? '✅ ' : '') + fn(p)))};
+    })},
     table: {title: t('t_phAll'), head: ['', t('ph_price'), t('ph_screen'), t('ph_bat'), t('ph_cam'), t('ph_chip')], rows: S.map(p => [p.n, pr(p), N(p.d, 1) + '″', p.bat ? N(p.bat, 0) : '—', phCam(p), p.chip])},
     note
   };

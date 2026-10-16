@@ -51,9 +51,13 @@ const PHONES_IDS = [['ip18p', 'iPhone 18 Pro'], ['ip18pm', 'iPhone 18 Pro Max'],
   const opts = [['none', 'o_ph_noneSel']].concat(PHONES_IDS.map(x => [x[0], '=' + x[1]]));
   DEFS.phonecmp = [
     SEL('ph_by','f_phBy','balanced',[['balanced','o_ph_balanced'],['price','o_ph_price'],['camera','o_ph_camera'],['battery','o_ph_battery'],['small','o_ph_small'],['big','o_ph_big']],{wide:true}),
-    SEL('ph_brand','f_phBrand','all',[['all','o_ph_all'],['apple','=Apple'],['samsung','=Samsung'],['google','=Google'],['xiaomi','=Xiaomi']]),
+    SEL('ph_brand','f_phBrand','all',[['all','o_ph_all'],['apple','=Apple'],['samsung','=Samsung'],['google','=Google'],['xiaomi','=Xiaomi'],['mine','o_ph_mine']]),
     F('ph_budget','f_phBudget','cur',0,{hint:'h_phBudget'}),
-    SEL('ph_a','f_phA','ip17',opts), SEL('ph_b','f_phB','s26',opts), SEL('ph_c','f_phC','px11',opts),
+    {type:'html', id:'ph_sbox', cls:'lc-wrap ph-swrap'},
+    F('ph_minBat','f_phMinBat','',0,{adv:'m_adv'}), F('ph_minRam','f_phMinRam','',0,{adv:'m_adv'}), F('ph_minSt','f_phMinSt','',0,{adv:'m_adv'}),
+    F('ph_maxD','f_phMaxD','',0,{adv:'m_adv'}), F('ph_maxG','f_phMaxG','',0,{adv:'m_adv'}), F('ph_minHz','f_phMinHz','',0,{adv:'m_adv'}),
+    F('ph_minW','f_phMinW','',0,{adv:'m_adv'}), F('ph_fromY','f_phFromY','',0,{adv:'m_adv',hint:'h_phFromY'}),
+    SEL('ph_ip','f_phIp','any',[['any','o_clAny'],['ip68','=IP68'],['ip67','=IP67+']],{adv:'m_adv'}),
     {type:'html', id:'ph_box', cls:'lc-wrap ph-wrap'}
   ];
   ICON.phonecmp = ic('<rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 5h4"/><circle cx="12" cy="18" r="1"/>');
