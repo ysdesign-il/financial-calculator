@@ -1396,9 +1396,16 @@ function updNewer(r){
   const nw = IN_CLAUDE ? verCmp(r.v, APP_VER) > 0 : String(r.build) > APP_BUILD;
   return nw && !(updTried(r) && UPD.loadedTry);        // already reloaded for it and it is still not here: do not ask again
 }
+/* auto-update off: tell the user once per version that a new update is available (banner + system notification outside Claude) */
+function updNotify(r){
+  try { if (RAWLS.getItem('fin-upd-ntf') === String(r.build)) return; RAWLS.setItem('fin-upd-ntf', String(r.build)); } catch (e) {}
+  try { if (!IN_CLAUDE && 'Notification' in window && Notification.permission === 'granted') new Notification(t('upd_avail'), {body: (r.v ? r.v + ' · ' : '') + verNote(r), icon: 'icon-192.png', tag: 'upd-' + r.build}); } catch (e) {}
+}
+document.addEventListener('change', e => { if (e.target && e.target.id === 'set_autoUpd' && e.target.value === '0'){ try { if (!IN_CLAUDE && 'Notification' in window && Notification.permission === 'default') Notification.requestPermission(); } catch (er) {} } });
 function updBanner(){
   let b = $('#upd_bar');
   const r = UPD.remote, show = updNewer(r) && UPD.hide !== r.build;
+  if (show && SET.autoUpd === '0') updNotify(r);
   if (!show && !UPD.whatsNew){ if (b) b.remove(); return; }
   if (!b){ b = document.createElement('div'); b.id = 'upd_bar'; b.className = 'upd-bar'; b.setAttribute('role', 'status'); document.body.appendChild(b); }
   b.innerHTML = show

@@ -13,7 +13,7 @@ const RANGES = {
   y_start:[0,1000000,1000], y_rate:[0,30,.1], y_dep:[0,50000,100],
   d_price:[1,1000,1], d_shares:[1,10000,10], d_dps:[0,100,.1], d_growth:[0,20,.5], d_years:[1,40,1]
 };
-const BOTTOM = ['home','markets','mortgage','salary','settings'];
+const BOTTOM = ['home','markets','saved','salary','settings'];
 function rangeFill(r){
   const p = (r.value - r.min) / (r.max - r.min) * 100;
   r.style.setProperty('--p', clamp(p, 0, 100) + '%');
