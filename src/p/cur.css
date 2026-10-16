@@ -119,3 +119,19 @@
 .phs-it.on{border-color:#2fbf71}.phs-it.on .phs-a{background:#2fbf71;color:#fff}.phs-it[disabled]{opacity:.45}
 .phs-my{margin-top:12px}.phs-mcard{margin-top:10px}
 .ib-ref{width:auto;padding:6px 12px;margin-inline-start:auto;font-size:.88rem}.ib-ref.spin{opacity:.6}
+/* 9.7: mute button, inbox readable in every theme */
+.snd-mute{width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:inherit;font-size:1.1rem;cursor:pointer}
+#ibx .cp-box{background:var(--surface,#fff);color:var(--ink,#141821)}
+#ibx .ch-rng{background:rgba(127,127,127,.18)}
+#ibx .ch-rng button{color:var(--ink,#141821);opacity:.85}
+#ibx .ch-rng button.on{background:#e2b33c;color:#1b1400;opacity:1;box-shadow:0 1px 6px rgba(0,0,0,.2)}
+#ibx .fb-it{background:var(--card,rgba(127,127,127,.06));color:var(--ink,#141821);border-color:rgba(127,127,127,.35)}
+#ibx .fb-it small,#ibx .ib-src{color:var(--muted,#5b6170);opacity:1}
+#ibx .fb-it.ib-new{border-color:#e2b33c;box-shadow:0 0 0 2px rgba(226,179,60,.55)}
+#ibx .fb-mail{color:#2563eb}
+:root[data-theme="dark"] #ibx .fb-mail,:root.dark #ibx .fb-mail{color:#8ab4ff}
+#ibx .fb-ans summary{color:var(--ink,#141821)}
+#ibx .fb-ans textarea{color:var(--ink,#141821);background:var(--surface,#fff)}
+#ibx .fb-rp{color:var(--ink,#141821)}
+#ibx .ib-ref,#ibx .lc-add{color:var(--ink,#141821)}
+#ibx button:active,#ibx .fb-it:active{filter:none}
