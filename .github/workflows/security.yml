@@ -19,7 +19,6 @@ concurrency:
   cancel-in-progress: false
 jobs:
   watch:
-    if: github.actor != 'security-bot'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

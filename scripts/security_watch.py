@@ -33,12 +33,17 @@ if EV == 'push':
     files = set()
     for c in E.get('commits') or []:
         files.update(c.get('added', []) + c.get('modified', []) + c.get('removed', []))
+    before, after = E.get('before', ''), E.get('after', '')
+    if not files and before and after and not before.startswith('0000000'):
+        try: files.update(f.get('filename', '') for f in (api(f'/compare/{before}...{after}') or {}).get('files', []))
+        except Exception as e: print('compare skipped:', e)
+    print('push', ref, 'by', actor, 'files:', sorted(files)[:30])
     if actor not in TRUSTED:
         add('high', 'push', f'Push to {ref} by an unknown account', r=ref)
-    if E.get('forced') and actor != 'github-actions[bot]':
+    if E.get('forced') and (ref == 'refs/heads/main' or actor not in TRUSTED):      # bots rebasing their own pull-request branches is normal
         add('high', 'force', f'Force push to {ref} — history was rewritten', r=ref)
     wf = sorted(f for f in files if f.startswith('.github/'))
-    if wf and actor != 'dependabot[bot]':
+    if wf and actor != 'dependabot[bot]' and ref == 'refs/heads/main':
         add('medium', 'workflow', 'Automation files changed: ' + ', '.join(wf)[:200], f=', '.join(wf))
     if any(f in files for f in ('devcode.json', 'scripts/security_watch.py')) and actor != OWNER:
         add('high', 'code', 'Developer code or the security watch was changed')
