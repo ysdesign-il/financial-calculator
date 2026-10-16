@@ -15,7 +15,9 @@ const SETDEFS = [
     SEL('set_contrast','f_contrast','normal',[['normal','o_ct_normal'],['high','o_ct_high']]),
     SEL('set_motion','f_motion','full',[['full','o_mo_full'],['reduced','o_mo_reduced']]),
     SEL('set_font','f_font','default',[['default','o_fn_default'],['readable','o_fn_readable']]),
-    SEL('set_sliders','f_sliders','1',ONOFF)
+    SEL('set_sliders','f_sliders','1',ONOFF),
+    SEL('set_sound','f_sound','soft',[['soft','o_snd_soft'],['full','o_snd_full'],['off','o_snd_off']],{wide:true, hint:'h_sound'}),
+    SEL('set_tapSnd','f_tapSnd','0',[['0','o_off'],['1','o_on']])
   ]],
   ['set_lang', [
     SEL('set_lang','f_langSel','he',LANG_LIST.map(l => [l[0], '=' + l[1]]),{wide:true, hint:'h_langFallback'}),
@@ -37,6 +39,8 @@ const SETDEFS = [
     {id:'set_ptVal', label:'f_ptVal', unit:'ils', val:'', wide:true, hint:'h_ptVal'},
     SEL('set_saveMode','f_saveMode','auto',[['auto','o_saveAuto'],['manual','o_saveManual'],['none','o_saveNone']],{wide:true}),
     SEL('set_mktLive','f_mktLive','1',[['1','o_mktAuto'],['0','o_mktManual']],{wide:true, hint:'h_mktLive'}),
+    SEL('set_mvAlert','f_mvAlert','1',[['1','o_on'],['0','o_off']],{wide:true, hint:'h_mvAlert'}),
+    {id:'set_mvPct', label:'f_mvPct', unit:'%', val:2},
     SEL('set_vat','f_vatDef','18',[['18','o_vp18'],['17','o_vp17'],['0','o_vp0'],['16','o_vp16'],['14','o_vp14'],['15','o_vp15'],['5','o_vp5'],['19','o_vp19'],['20','o_vp20']],{wide:true}),
     SEL('set_dealer','f_dealer','murshe',[['murshe','o_murshe'],['patur','o_patur']],{wide:true}),
     SEL('set_buyer','f_buyerType','first',[['first','o_bt_first'],['upg','o_bt_upg'],['inv','o_bt_inv']],{wide:true}),
@@ -135,7 +139,7 @@ function settingsPanelHTML(){
       <p class="fine" id="set_msg" aria-live="polite"></p><p class="fine" id="set_info"></p>`)}
   </section>`;
 }
-const SMAP = {set_kbLang:'kbLang', set_design:'design', set_country:'country', set_hfx:'hfx', set_mktLive:'mktLive', set_inGroup:'inGroup', set_ptMode:'ptMode', set_ptVal:'ptVal', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
+const SMAP = {set_sound:'sound', set_tapSnd:'tapSnd', set_mvAlert:'mvAlert', set_mvPct:'mvPct', set_kbLang:'kbLang', set_design:'design', set_country:'country', set_hfx:'hfx', set_mktLive:'mktLive', set_inGroup:'inGroup', set_ptMode:'ptMode', set_ptVal:'ptVal', set_theme:'theme', set_size:'size', set_digits:'digits', set_dec:'dec', set_start:'start', set_vat:'vat', set_sex:'sex',
   set_accent:'accent', set_motion:'motion', set_contrast:'contrast', set_font:'font', set_sliders:'sliders', set_cpos:'cpos', set_sep:'sep',
   set_compact:'compact', set_fee:'fee', set_pens:'pens', set_study:'study', set_erPens:'erPens', set_erSev:'erSev', set_erStudy:'erStudy',
   set_loanRate:'loanRate', set_invRate:'invRate', set_cpi:'cpi', set_infl:'infl', set_gainTax:'gainTax', set_dealer:'dealer', set_buyer:'buyer',
