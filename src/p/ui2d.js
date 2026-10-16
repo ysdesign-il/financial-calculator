@@ -77,6 +77,7 @@ Object.assign(DEFS, {
   ],
   split: [
     SEL('sp_mode','f_spMode','eq',[['eq','o_spEq'],['inc','o_spInc'],['pct','o_spPct'],['sh','o_spSh'],['ex','o_spEx'],['paid','o_spPaid']],{wide:true}),
+    {type:'html', id:'sp_fx', cls:'lc-wrap sp-fxw'},
     F('sp_total','f_spTotal','cur',600,{wide:true,when:['sp_mode','eq|inc|pct|sh|ex']}), F('sp_tip','f_spTip','%',10,{when:['sp_mode','eq|inc|pct|sh|ex']}),
     F('sp_n','f_spN','',4,{when:['sp_mode','eq']}),
     SEL('sp_round','f_spRound','0',[['0','o_rnd0'],['1','o_rnd1'],['5','o_rnd5'],['10','o_rnd10']],{when:['sp_mode','eq|inc|pct|sh|ex']}),
