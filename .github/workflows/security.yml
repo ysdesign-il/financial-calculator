@@ -14,9 +14,6 @@ on:
 permissions:
   contents: write
   issues: write
-concurrency:
-  group: site-publish
-  cancel-in-progress: false
 jobs:
   watch:
     runs-on: ubuntu-latest
@@ -25,6 +22,7 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: main
+          fetch-depth: 1
       - name: Look for unusual activity
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
