@@ -1,11 +1,6 @@
 {
 "langs": [
 {
-"code": "bn",
-"name": "Bangla",
-"native": "বাংলা"
-},
-{
 "code": "zh-CN",
 "name": "Chinese (China)",
 "native": "简体中文"
@@ -34,6 +29,11 @@
 "code": "es",
 "name": "Spanish",
 "native": "Español"
+},
+{
+"code": "it",
+"name": "Italian",
+"native": "Italiano"
 }
 ],
 "strings": {
