@@ -24,7 +24,7 @@ const MK_SVG = {
 };
 const MK_FLAG = {ta35: '🇮🇱', ta125: '🇮🇱', spx: '🇺🇸', ndx: '🇺🇸', dji: '🇺🇸', ixic: '🇺🇸', rut: '🇺🇸', ftse: '🇬🇧', dax: '🇩🇪', stoxx: '🇪🇺', nikkei: '🇯🇵'};
 function mkIcon(k){
-  if (MK_SVG[k]) return `<span class="mk-ic mk-ic-${k}" aria-hidden="true">${MK_SVG[k]}</span>`;
+  if (MK_SVG[k]) return `<span class="mk-ic mk-ic-${k}" aria-hidden="true">${MK_SVG[k]}${['gold', 'silver', 'platinum', 'copper'].includes(k) ? '<span class="mk-sh"><i></i></span>' : ''}</span>`;
   if (MK_FLAG[k]) return `<span class="cur-coin mk-flag" aria-hidden="true"><i>${MK_FLAG[k]}</i></span>`;
   return '';
 }

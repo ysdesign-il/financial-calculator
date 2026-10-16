@@ -176,10 +176,36 @@ def iso_ts(s):
         return 0
 
 
-def anchors(sym):
+HIST_PATH = "history.json"
+HIST = {"v": 1, "s": {}}
+HIST_DIRTY = [False]
+
+
+def chart_bars(sym, rng):
+    j = json.loads(get_raw(CHART_URL.replace("10Y", rng) % urllib.request.quote(sym), BROWSER, 25))
+    return [(int(b["tradeTimeinMills"]) // 1000, fnum(b["close"])) for b in j["barData"]["priceBars"] if fnum(b.get("close"))]
+
+
+def hist_add(key, bars):
+    """daily closes for the charts in the app: [day number since 1970, close], the last 5 years"""
+    old = {d: c for d, c in HIST["s"].get(key, [])}
+    for t, c in bars:
+        old[int(t // 86400)] = float("%.6g" % c)
+    cut = int(time.time() // 86400) - 5 * 366
+    HIST["s"][key] = sorted([[d, c] for d, c in old.items() if d >= cut])
+    HIST_DIRTY[0] = True
+
+
+def anchors(sym, key=None):
     j = json.loads(get_raw(CHART_URL % urllib.request.quote(sym), BROWSER, 25))
     bars = [(int(b["tradeTimeinMills"]) // 1000, fnum(b["close"])) for b in j["barData"]["priceBars"] if fnum(b.get("close"))]
     bars.sort()
+    if key:
+        try:
+            hist_add(key, [b for b in bars if b[0] >= time.time() - 5 * 366 * 86400])
+            hist_add(key, chart_bars(sym, "1Y"))          # daily detail for the last year
+        except Exception:
+            pass
     if len(bars) < 30:
         raise ValueError("short history")
     now = bars[-1][0]
@@ -220,9 +246,9 @@ def markets(prev, log):
             continue
         it = {"n": name, "sym": sym, "p": p, "pc": pc, "chp": fnum(r.get("change_pct")), "t": iso_ts(r.get("last_time")), "cur": r.get("currencyCode") or "",
               "rt": str(r.get("realTime")) == "true", "a": old.get("a"), "hAt": old.get("hAt", 0)}
-        if not it["a"] or time.time() - (it["hAt"] or 0) > 20 * 3600:     # long-run anchors once a day
+        if not it["a"] or time.time() - (it["hAt"] or 0) > 20 * 3600 or key not in HIST["s"]:     # long-run anchors (and the chart history) once a day
             try:
-                it["a"], it["hAt"] = anchors(sym), int(time.time())
+                it["a"], it["hAt"] = anchors(sym, key), int(time.time())
             except Exception as e:
                 log.append("%s history failed" % key)
         it.update(returns(p, it["t"], it["a"]))
@@ -269,6 +295,12 @@ def live_fx(prev, log):
 def main():
     prev = json.load(open(PATH, encoding="utf-8"))
     out = json.loads(json.dumps(prev))
+    try:
+        h = json.load(open(HIST_PATH, encoding="utf-8"))
+        if isinstance(h.get("s"), dict):
+            HIST["s"] = h["s"]
+    except Exception:
+        pass
     log = []
 
     # --- exchange rates: ECB first, then the Bank of Israel shekel rate on top ---
@@ -381,6 +413,10 @@ def main():
             out["live"] = lv
     except Exception as e:
         log.append("live fx failed: %s" % e)
+    if HIST_DIRTY[0]:
+        HIST["at"] = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+        with open(HIST_PATH, "w", encoding="utf-8") as f:
+            json.dump(HIST, f, separators=(",", ":"))
     if os.environ.get("RATES_DIAG", "0") == "1":
         DIAG["log"] = log
         with open("diag.json", "w", encoding="utf-8") as f:
