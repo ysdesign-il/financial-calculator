@@ -1,0 +1,26 @@
+name: Check
+
+on:
+  workflow_dispatch:      # runs only when the developer starts it (from developer mode in the app, or from GitHub)
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check the page
+        run: python scripts/check.py
+      - name: Smoke test in a real browser
+        run: |
+          npm i --no-save playwright@1.47.2 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+          node scripts/smoke.js

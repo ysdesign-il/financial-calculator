@@ -1997,7 +1997,7 @@ function clockRender(){
   const d = new Date(), p = ckParts(d), key = [style, lang, SET.clockHeb, SET.clockHijri, SET.clock24, SET.clockSec, SET.digits, SET.clockNum].join('|');
   ckLook(box);
   if (style !== 'off'){ if (CK_KEY !== key){ CK_KEY = key; box.innerHTML = ckHTML(style, p); } ckFill(box, p, d); }
-  csRender();
+  if (tab === 'settings') csRender();      // the style previews only matter while Settings is open
 }
 function csRender(){
   const box = $('#cstyles'); if (!box) return;
