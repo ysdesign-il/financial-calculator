@@ -20,7 +20,7 @@ i0 = s.index('function M(x, d=0, c=cur){'); i1 = s.index('const MI = ')
 s = s[:i0] + open('p/m_fn.js', encoding='utf-8').read() + s[i1:]
 rep("root.dir = lang === 'en' ? 'ltr' : 'rtl';", "root.dir = isRtl() ? 'rtl' : 'ltr';")
 rep("  fillCurSelects();\n  updateHead();\n  if (recalc)", "  fillCurSelects();\n  syncSettingsUI();\n  updateHead();\n  if (recalc)")
-rep("if (!LANGS.includes(lang)) lang = 'he';", "if (!LANG_LIST.some(l => l[0] === lang)) lang = 'he';")
+rep("if (!LANGS.includes(lang)) lang = 'he';", "if (!LANG_LIST.some(l => l[0] === lang)){ lang = devLang(); try { localStorage.removeItem('fin-lang'); } catch (e) {} }")
 rep("if (!TABS.includes(tab)) tab = 'home';", "if (!TABS.includes(tab)) tab = 'home';\nif (SET.start !== 'last') tab = TABS.includes(SET.start) ? SET.start : 'home';")
 rep("id === 'home' ? homePanelHTML() :", "id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() :")
 rep("[['cur', cur], ['x_from','ILS'], ['x_to','USD']]", "[['cur', cur], ['set_cur', cur], ['x_from','ILS'], ['x_to','USD']]")

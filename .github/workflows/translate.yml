@@ -35,6 +35,6 @@ jobs:
           git config user.email "translate-bot@users.noreply.github.com"
           git add lang i18n/status.json
           git commit -m "Update interface translations"
-          git pull --rebase origin main
+          git pull --rebase -X theirs origin main || { git rebase --abort; echo 'Could not merge with main'; exit 1; }
           git push origin HEAD:main
           git push --force origin HEAD:gh-pages

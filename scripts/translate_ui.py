@@ -12,7 +12,7 @@ STR, LANGS = SRC['strings'], SRC['langs']
 TOKEN = os.environ.get('GITHUB_TOKEN', '').strip()
 GKEY = os.environ.get('GEMINI_API_KEY', '').strip()
 DEADLINE = time.time() + float(os.environ.get('MAX_MINUTES', '45')) * 60
-PRIORITY = ['ru', 'am', 'fr', 'es', 'uk', 'de', 'pt-BR', 'it', 'tr', 'fa', 'zh-CN', 'hi', 'ja', 'ko', 'pl', 'ro', 'yi', 'pt-PT', 'nl', 'hu']
+PRIORITY = ['es', 'fr', 'ru', 'pt-BR', 'zh-CN', 'hi', 'id', 'bn']
 PH = re.compile(r'\{[A-Za-z0-9_]+\}')
 LOG = {'started': time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime()), 'events': [], 'langs': {}}
 def note(msg):
@@ -164,7 +164,8 @@ def publish(code):
     sh('git', 'add', 'lang')
     if sh('git', 'diff', '--cached', '--quiet').returncode == 0: return
     sh('git', 'commit', '-m', f'Translate interface: {code}')
-    sh('git', 'pull', '--rebase', 'origin', 'main')
+    if sh('git', 'pull', '--rebase', '-X', 'theirs', 'origin', 'main').returncode != 0:   # on a clash our fresh pack wins; never commit a half-merged file
+        sh('git', 'rebase', '--abort'); note(f'publish {code} skipped: could not merge with main'); return
     r = sh('git', 'push', 'origin', 'HEAD:main')
     if r.returncode == 0: sh('git', 'push', '--force', 'origin', 'HEAD:gh-pages'); note(f'published {code}')
     else: note(f'publish {code} failed: {r.stderr[-200:]}')
