@@ -10,5 +10,7 @@ Object.assign(T, {
   cl_copied:['החבילה הועתקה – שנו בה מה שתרצו','نُسخت الباقة – عدّلوها كما تشاؤون','Plan copied – change anything you like'],
   h_cl2:['בחרו חברה מהרשימה או "חברה אחרת" והקלידו שם (✏️ לשינוי השם). חבילה שהעתקתם אפשר לשנות – מחיר, גיגה, מבצע – והיא נכנסת להשוואה.','اختاروا شركة أو "أخرى" واكتبوا اسمًا. يمكن تعديل الباقة المنسوخة.','Pick a company or "Other" and type a name (✏️ to rename). A copied plan can be changed – price, GB, promo – and joins the comparison.'],
   fb_k_rate:['⭐ דירוג','⭐ تقييم','⭐ Rating'], fb_rated:['תודה על הדירוג – נשלח','شكرًا على التقييم – أُرسل','Thanks for rating – sent'],
-  fb_whoL:['איך לחתום','كيف توقّع','How to sign'], fb_anon:['אנונימי','مجهول','Anonymous'], fb_signed:['עם שם','باسم','With my name'], fb_namePh:['השם שלך','اسمك','Your name']
+  fb_whoL:['איך לחתום','كيف توقّع','How to sign'], fb_anon:['אנונימי','مجهول','Anonymous'], fb_signed:['עם שם','باسم','With my name'], fb_namePh:['השם שלך','اسمك','Your name'],
+  rp_fromSite:['אפשר לענות להודעה הזו מהאינבוקס באתר (במצב מפתח).','يمكن الرد على هذه الرسالة من صندوق الوارد في الموقع.','You can reply to this message from the inbox on the website (developer mode).'],
+  rp_sentWeb:['המענה נשלח – השולח יראה אותו באתר תוך כמה דקות','أُرسل الرد – سيراه المرسل خلال دقائق','Reply sent – the sender will see it on the site within minutes']
 });
