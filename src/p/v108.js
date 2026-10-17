@@ -290,6 +290,17 @@ async function famSave(list, msg){                 // only through the app, with
   await ghPut('family.json', text + '\n', msg);
   FAM.list = list; try { RAWLS.setItem('fin-fam-list', text); } catch (e) {}
 }
+/* say what actually went wrong: blocked connection (e.g. inside the Claude app), bad token, missing permission, or no access to the repo */
+function famErrKey(er){
+  const m = String(er && er.message || '');
+  if (m === 'notoken') return 'fam_needTok';
+  if (m === 'gh401') return 'fam_errTok';
+  if (m === 'gh403') return 'fam_errPerm';
+  if (m === 'gh404') return 'fam_errRepo';
+  if (m === 'gh409' || m === 'gh422') return 'fam_errBusy';
+  if (!/^gh\d/.test(m)) return IN_CLAUDE ? 'fam_errBlocked' : 'fam_errNet';
+  return 'fam_saveFail';
+}
 function famDevRender(){
   const cat = $('.set-cat[data-cat="conn"]'); let s = $('#fam_sec');
   if (!(typeof DEV_ON !== 'undefined' && DEV_ON) || !cat){ if (s) s.remove(); return; }
@@ -297,7 +308,8 @@ function famDevRender(){
   const L = FAM.list || famCached() || {v: 1, m: []}, N = famNames();
   const tok = typeof ghTok === 'function' && ghTok(), open = !!FAM.formOpen;
   s.innerHTML = `<div class="sec-h fam-h"><h3 class="sec-t">👨‍👩‍👧 ${E108(t('fam_title'))}</h3><button type="button" class="gold-btn fam-plus${open ? ' on' : ''}" id="fam_plus" aria-expanded="${open}" aria-label="${E108(t('fam_plusA'))}" title="${E108(t('fam_plusA'))}">+</button></div><p class="fine">${E108(t('fam_help'))}</p>
-    ${typeof ghTok === 'function' && ghTok() ? '' : `<div class="gk-st bad">${E108(t('fam_needTok'))}</div><label class="scn-l" for="fam_tok">${E108(t('dc_tok'))}</label><div class="as-box"><input id="fam_tok" type="password" autocomplete="off" dir="ltr" placeholder="github_pat_…"><button type="button" class="btn" id="fam_tokSave">${E108(t('fam_tokSave'))}</button></div><p class="fine">${E108(t('dc_tokH'))} <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">${E108(t('fam_tokNew'))}</a></p>`}
+    ${IN_CLAUDE ? `<div class="gk-st new">${E108(t('fam_errBlocked'))}</div>` : ''}
+    ${typeof ghTok === 'function' && ghTok() ? `<button type="button" class="mv wide" id="fam_tokDel">🗑️ ${E108(t('fam_tokDelete'))}</button>` : `<div class="gk-st bad">${E108(t('fam_needTok'))}</div><label class="scn-l" for="fam_tok">${E108(t('dc_tok'))}</label><div class="as-box"><input id="fam_tok" type="password" autocomplete="off" dir="ltr" placeholder="github_pat_…"><button type="button" class="btn" id="fam_tokSave">${E108(t('fam_tokSave'))}</button></div><p class="fine">${E108(t('dc_tokH'))} <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">${E108(t('fam_tokNew'))}</a></p>`}
     <div class="fam-form" id="fam_form"${open ? '' : ' hidden'}><div class="as-box"><input id="fam_new" type="text" maxlength="30" dir="auto" placeholder="${E108(t('fam_namePh'))}" autocomplete="off"><button type="button" class="gold-btn" id="fam_add"${tok ? '' : ' disabled'}>${E108(t('fam_add'))}</button></div></div>
     <div id="fam_out"></div>
     ${famPwBox(L, tok)}
@@ -330,6 +342,7 @@ document.addEventListener('click', async e => {
     if (FAM.formOpen) setTimeout(() => { const i = $('#fam_new'); if (i) i.focus(); }, 60);
     return;
   }
+  if (e.target.closest('#fam_tokDel')){ try { RAWLS.removeItem('fin-gh-tok'); } catch (er) {} toast(t('fam_tokDelete') + ' ✓'); famDevRender(); return; }
   if (e.target.closest('#fam_tokSave')){
     const v = String(($('#fam_tok') || {}).value || '').trim(); if (!v) return;
     try { RAWLS.setItem('fin-gh-tok', v); } catch (er) {} toast(t('dc_tokSaved')); famDevRender(); return;
@@ -341,7 +354,7 @@ document.addEventListener('click', async e => {
     const code = famCode(), h = await famHash(nm, code), id = Math.random().toString(36).slice(2, 10);
     const L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []})); L.m = (L.m || []).concat({id, h, at: Date.now()});
     try { await famSave(L, 'Family member added'); }
-    catch (er){ add.disabled = false; const o = $('#fam_out'); if (o) o.innerHTML = `<div class="gk-st bad">${E108(t(String(er && er.message) === 'notoken' ? 'fam_needTok' : 'fam_saveFail'))}</div>`; return; }
+    catch (er){ add.disabled = false; const o = $('#fam_out'); if (o) o.innerHTML = `<div class="gk-st bad">${E108(t(famErrKey(er)))}</div>`; return; }
     famNames()[id] = nm; try { saveSet(); } catch (er) {}
     const link = (IN_CLAUDE ? FAM_SITE : location.origin + location.pathname) + '#fam=' + encodeURIComponent(nm.replace(/[~:]/g, ' ') + '~' + code);
     FAM.msg = t('fam_msg', {n: nm, l: link, c: code}); FAM.link = link;
@@ -372,7 +385,7 @@ document.addEventListener('click', async e => {
     const L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []}));
     L.m = (L.m || []).filter(x => !x.p).concat({id: 'p', p: 1, h, at});
     try { await famSave(L, 'Family sign-in updated'); }
-    catch (er){ ps.disabled = false; if (st) st.textContent = t(String(er && er.message) === 'notoken' ? 'fam_needTok' : 'fam_saveFail'); return; }
+    catch (er){ ps.disabled = false; if (st) st.textContent = t(famErrKey(er)); return; }
     try { RAWLS.setItem('fin-fam-u', u); RAWLS.setItem('fin-fam-pw', pw); RAWLS.setItem('fin-fam-pwat', String(at)); } catch (er) {}
     famDevRender(); toast(t('fam_pwDone')); return;
   }
@@ -386,7 +399,7 @@ document.addEventListener('click', async e => {
   if (del){
     const id = del.dataset.famdel, L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []}));
     L.m = (L.m || []).filter(x => x.id !== id);
-    try { await famSave(L, 'Family member removed'); } catch (er){ toast(t(String(er && er.message) === 'notoken' ? 'fam_needTok' : 'fam_saveFail')); return; }
+    try { await famSave(L, 'Family member removed'); } catch (er){ toast(t(famErrKey(er))); return; }
     delete famNames()[id]; try { saveSet(); } catch (er) {}
     famDevRender(); toast(t('fam_delDone'));
   }
