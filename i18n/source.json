@@ -4755,6 +4755,11 @@
   "fam_errPerm": "The token has no write permission. In the token settings on GitHub, give Contents Read and write access.",
   "fam_errRepo": "The token cannot reach the app repository. In the token settings, select the financial-calculator repository.",
   "fam_errBusy": "The file just changed. Try again.",
-  "fam_tokDelete": "Remove token from this device"
+  "fam_tokDelete": "Remove token from this device",
+  "fam_relayNote": "Changing the family username and password works from here without a token: it is sent signed and takes effect within about an hour. Adding a personal code with the plus still needs a token and the site in a browser.",
+  "fam_pwPend": "Change sent. It takes effect within about an hour – until then the previous username and password still work.",
+  "fam_pwSent": "Sent! The new username and password work within about an hour.",
+  "fam_noKey": "This device does not have the developer inbox key. Open family mode in the Claude app and save there.",
+  "fam_pwQueued": "Saved, but the sending channel is blocked here. Tell Claude in the chat: \"apply the family change\", and it will update it."
  }
 }
