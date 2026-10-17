@@ -558,14 +558,14 @@ async function cvBg(file){
 function cvPick(cam){ const f = $(`#cv_root [data-cvfile="photo"]${cam ? '[data-cam]' : ':not([data-cam])'}`); if (f) f.click(); }
 function cvPhotoAsk(){
   const m = SET.photoAccess || 'ask';
-  if (m === 'never'){ toast(t('ph_blocked')); return; }
+  if (m === 'never'){ toast(t('pha_blocked')); return; }
   if (m === 'always'){ cvPick(false); return; }
   let o = $('#phx');
   if (!o){ document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="phx" hidden><div class="cp-box" role="dialog" aria-modal="true" aria-labelledby="phx_t"><div class="cp-top"><h3 id="phx_t"></h3><button type="button" class="cp-x" id="phx_x">×</button></div><div id="phx_b"></div></div></div>`); o = $('#phx'); }
-  $('#phx_t').textContent = t('ph_title'); $('#phx_x').setAttribute('aria-label', t('cp_close'));
-  $('#phx_b').innerHTML = `<p class="mb-ic">🖼️</p><p>${cvE(t('ph_why'))}</p>
-    <div class="ph-opts"><button type="button" class="gold-btn" data-ph="once">${cvE(t('ph_once'))}</button><button type="button" class="btn" data-ph="always">${cvE(t('ph_always'))}</button><button type="button" class="btn" data-ph="cam">📷 ${cvE(t('ph_cam'))}</button><button type="button" class="mv" data-ph="no">${cvE(t('ph_no'))}</button></div>
-    <p class="fine">${cvE(t('ph_note'))}</p>`;
+  $('#phx_t').textContent = t('pha_title'); $('#phx_x').setAttribute('aria-label', t('cp_close'));
+  $('#phx_b').innerHTML = `<p class="mb-ic">🖼️</p><p>${cvE(t('pha_why'))}</p>
+    <div class="ph-opts"><button type="button" class="gold-btn" data-ph="once">${cvE(t('pha_once'))}</button><button type="button" class="btn" data-ph="always">${cvE(t('pha_always'))}</button><button type="button" class="btn" data-ph="cam">📷 ${cvE(t('pha_cam'))}</button><button type="button" class="mv" data-ph="no">${cvE(t('pha_no'))}</button></div>
+    <p class="fine">${cvE(t('pha_note'))}</p>`;
   o.hidden = false; document.body.classList.add('cp-lock');
 }
 function cvPhClose(){ const o = $('#phx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); } }
@@ -574,7 +574,7 @@ document.addEventListener('click', e => {
   if (e.target.closest('#phx_x') || e.target.id === 'phx'){ cvPhClose(); return; }
   const b = e.target.closest('[data-ph]'); if (!b) return;
   const k = b.dataset.ph; cvPhClose();
-  if (k === 'always'){ SET.photoAccess = 'always'; try { saveSet(); } catch (er) {} toast(t('ph_alwaysOk')); phSetRender(); cvPick(false); }
+  if (k === 'always'){ SET.photoAccess = 'always'; try { saveSet(); } catch (er) {} toast(t('pha_alwaysOk')); phSetRender(); cvPick(false); }
   else if (k === 'once') cvPick(false);
   else if (k === 'cam') cvPick(true);
 });
@@ -583,10 +583,10 @@ function phSetRender(){
   const cat = $('.set-cat[data-cat="security"]'); if (!cat) return; let s = $('#ph_sec');
   if (!s){ cat.insertAdjacentHTML('beforeend', `<section class="set-sec" id="ph_sec"></section>`); s = $('#ph_sec'); }
   const v = SET.photoAccess || 'ask';
-  s.innerHTML = `<div class="sec-h"><h3 class="sec-t">🖼️ ${cvE(t('ph_set'))}</h3></div><p class="fine">${cvE(t('ph_setH'))}</p>
-    <div class="field wide"><label for="set_photoAccess">${cvE(t('ph_set'))}</label><select id="set_photoAccess">${[['ask', 'ph_o_ask'], ['always', 'ph_o_always'], ['never', 'ph_o_never']].map(([k, l]) => `<option value="${k}"${v === k ? ' selected' : ''}>${cvE(t(l))}</option>`).join('')}</select></div>`;
+  s.innerHTML = `<div class="sec-h"><h3 class="sec-t">🖼️ ${cvE(t('pha_set'))}</h3></div><p class="fine">${cvE(t('pha_setH'))}</p>
+    <div class="field wide"><label for="set_photoAccess">${cvE(t('pha_set'))}</label><select id="set_photoAccess">${[['ask', 'pha_o_ask'], ['always', 'pha_o_always'], ['never', 'pha_o_never']].map(([k, l]) => `<option value="${k}"${v === k ? ' selected' : ''}>${cvE(t(l))}</option>`).join('')}</select></div>`;
 }
-document.addEventListener('change', e => { if (e.target && e.target.id === 'set_photoAccess'){ SET.photoAccess = e.target.value; try { saveSet(); } catch (er) {} toast(t('ph_saved')); } });
+document.addEventListener('change', e => { if (e.target && e.target.id === 'set_photoAccess'){ SET.photoAccess = e.target.value; try { saveSet(); } catch (er) {} toast(t('pha_saved')); } });
 document.addEventListener('click', e => { if (e.target.closest && e.target.closest('.sh-row[data-scat="security"]')) setTimeout(phSetRender, 150); });
 setTimeout(phSetRender, 900);
 
