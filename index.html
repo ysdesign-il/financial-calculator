@@ -5749,6 +5749,13 @@ Object.assign(T, {
   fam_needTok:['כדי להוסיף או להסיר בני משפחה מתוך האפליקציה צריך טוקן GitHub במכשיר הזה. מדביקים אותו פעם אחת, והוא נשמר רק כאן.','لإضافة أو إزالة أفراد العائلة من داخل التطبيق يلزم رمز GitHub على هذا الجهاز. الصقه مرة واحدة ويُحفظ هنا فقط.','To add or remove family members from the app, this device needs a GitHub token. Paste it once; it stays only here.'],
   fam_tokSave:['שמירת טוקן','حفظ الرمز','Save token'], fam_tokNew:['ליצירת טוקן ב־GitHub','لإنشاء رمز في GitHub','Create a token on GitHub'],
   fam_saveFail:['השמירה ב־GitHub לא הצליחה. בדקו שהטוקן תקף ושיש לו הרשאת Contents לכתיבה, ונסו שוב.','فشل الحفظ في GitHub. تحقق من صلاحية الرمز وأن لديه إذن الكتابة على Contents ثم حاول مجددًا.','Saving to GitHub failed. Check the token is valid with Contents write access, and try again.'],
+  fam_errBlocked:['אפליקציית Claude חוסמת חיבור ישיר ל־GitHub, ולכן אי אפשר לשמור מכאן – הטוקן לא אשם. פתחו את האתר בדפדפן ושמרו משם, או בקשו מ־Claude בשיחה לעדכן.','تطبيق Claude يحظر الاتصال المباشر بـ GitHub، لذا لا يمكن الحفظ من هنا – الرمز ليس السبب. افتح الموقع في المتصفح واحفظ من هناك، أو اطلب من Claude في المحادثة التحديث.','The Claude app blocks direct connections to GitHub, so saving from here is not possible – the token is not the problem. Open the site in a browser and save there, or ask Claude in the chat to update it.'],
+  fam_errNet:['אין חיבור ל־GitHub כרגע. בדקו את האינטרנט ונסו שוב.','لا يوجد اتصال بـ GitHub حاليًا. تحقق من الإنترنت وحاول مجددًا.','No connection to GitHub right now. Check the internet and try again.'],
+  fam_errTok:['GitHub דחה את הטוקן: הוא שגוי, פג תוקף או בוטל. צרו טוקן חדש והדביקו אותו.','رفض GitHub الرمز: خاطئ أو منتهي أو ملغى. أنشئ رمزًا جديدًا والصقه.','GitHub rejected the token: it is wrong, expired or revoked. Create a new token and paste it.'],
+  fam_errPerm:['לטוקן אין הרשאת כתיבה. ב־GitHub, בהגדרות הטוקן, תנו ל־Contents הרשאת Read and write.','الرمز بلا إذن كتابة. في GitHub، ضمن إعدادات الرمز، امنح Contents إذن Read and write.','The token has no write permission. In the token settings on GitHub, give Contents Read and write access.'],
+  fam_errRepo:['לטוקן אין גישה לריפו של האפליקציה. בהגדרות הטוקן בחרו את הריפו financial-calculator.','الرمز لا يصل إلى مستودع التطبيق. في إعدادات الرمز اختر المستودع financial-calculator.','The token cannot reach the app repository. In the token settings, select the financial-calculator repository.'],
+  fam_errBusy:['הקובץ השתנה בדיוק עכשיו. נסו שוב.','تغيّر الملف للتو. حاول مجددًا.','The file just changed. Try again.'],
+  fam_tokDelete:['מחיקת הטוקן מהמכשיר','حذف الرمز من الجهاز','Remove token from this device'],
   fam_pwTitle:['שם משתמש וסיסמה למשפחה','اسم مستخدم وكلمة مرور للعائلة','Family username and password'],
   fam_pwHelp:['שם משתמש וסיסמה אחד לכל המשפחה. נכנסים איתם במסך הכניסה הרגיל (הגדרות ← חשבון והרשאות), מכל מכשיר, והכניסה נשמרת במכשיר. שינוי הסיסמה מוציא את כולם עד שייכנסו עם החדשה.','اسم مستخدم وكلمة مرور واحدة لكل العائلة. يُدخلان في شاشة الدخول العادية (الإعدادات ← الحساب والصلاحيات) من أي جهاز ويُحفظ الدخول. تغيير كلمة المرور يُخرج الجميع حتى يدخلوا بالجديدة.','One username and password for the whole family. Sign in on the normal sign-in screen (Settings → Account & access) from any device; it stays signed in. Changing the password signs everyone out until they use the new one.'],
   fam_pwU:['שם משתמש','اسم المستخدم','Username'], fam_pwP:['סיסמה','كلمة المرور','Password'], fam_pwEye:['הצגת הסיסמה','إظهار كلمة المرور','Show password'],
@@ -12413,8 +12420,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "11.4", "date": "2026-10-17", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261017.212313';
+var CHANGELOG = [{"v": "11.5", "date": "2026-10-17", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261017.213840';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -20767,6 +20774,17 @@ async function famSave(list, msg){                 // only through the app, with
   await ghPut('family.json', text + '\n', msg);
   FAM.list = list; try { RAWLS.setItem('fin-fam-list', text); } catch (e) {}
 }
+/* say what actually went wrong: blocked connection (e.g. inside the Claude app), bad token, missing permission, or no access to the repo */
+function famErrKey(er){
+  const m = String(er && er.message || '');
+  if (m === 'notoken') return 'fam_needTok';
+  if (m === 'gh401') return 'fam_errTok';
+  if (m === 'gh403') return 'fam_errPerm';
+  if (m === 'gh404') return 'fam_errRepo';
+  if (m === 'gh409' || m === 'gh422') return 'fam_errBusy';
+  if (!/^gh\d/.test(m)) return IN_CLAUDE ? 'fam_errBlocked' : 'fam_errNet';
+  return 'fam_saveFail';
+}
 function famDevRender(){
   const cat = $('.set-cat[data-cat="conn"]'); let s = $('#fam_sec');
   if (!(typeof DEV_ON !== 'undefined' && DEV_ON) || !cat){ if (s) s.remove(); return; }
@@ -20774,7 +20792,8 @@ function famDevRender(){
   const L = FAM.list || famCached() || {v: 1, m: []}, N = famNames();
   const tok = typeof ghTok === 'function' && ghTok(), open = !!FAM.formOpen;
   s.innerHTML = `<div class="sec-h fam-h"><h3 class="sec-t">👨‍👩‍👧 ${E108(t('fam_title'))}</h3><button type="button" class="gold-btn fam-plus${open ? ' on' : ''}" id="fam_plus" aria-expanded="${open}" aria-label="${E108(t('fam_plusA'))}" title="${E108(t('fam_plusA'))}">+</button></div><p class="fine">${E108(t('fam_help'))}</p>
-    ${typeof ghTok === 'function' && ghTok() ? '' : `<div class="gk-st bad">${E108(t('fam_needTok'))}</div><label class="scn-l" for="fam_tok">${E108(t('dc_tok'))}</label><div class="as-box"><input id="fam_tok" type="password" autocomplete="off" dir="ltr" placeholder="github_pat_…"><button type="button" class="btn" id="fam_tokSave">${E108(t('fam_tokSave'))}</button></div><p class="fine">${E108(t('dc_tokH'))} <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">${E108(t('fam_tokNew'))}</a></p>`}
+    ${IN_CLAUDE ? `<div class="gk-st new">${E108(t('fam_errBlocked'))}</div>` : ''}
+    ${typeof ghTok === 'function' && ghTok() ? `<button type="button" class="mv wide" id="fam_tokDel">🗑️ ${E108(t('fam_tokDelete'))}</button>` : `<div class="gk-st bad">${E108(t('fam_needTok'))}</div><label class="scn-l" for="fam_tok">${E108(t('dc_tok'))}</label><div class="as-box"><input id="fam_tok" type="password" autocomplete="off" dir="ltr" placeholder="github_pat_…"><button type="button" class="btn" id="fam_tokSave">${E108(t('fam_tokSave'))}</button></div><p class="fine">${E108(t('dc_tokH'))} <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">${E108(t('fam_tokNew'))}</a></p>`}
     <div class="fam-form" id="fam_form"${open ? '' : ' hidden'}><div class="as-box"><input id="fam_new" type="text" maxlength="30" dir="auto" placeholder="${E108(t('fam_namePh'))}" autocomplete="off"><button type="button" class="gold-btn" id="fam_add"${tok ? '' : ' disabled'}>${E108(t('fam_add'))}</button></div></div>
     <div id="fam_out"></div>
     ${famPwBox(L, tok)}
@@ -20807,6 +20826,7 @@ document.addEventListener('click', async e => {
     if (FAM.formOpen) setTimeout(() => { const i = $('#fam_new'); if (i) i.focus(); }, 60);
     return;
   }
+  if (e.target.closest('#fam_tokDel')){ try { RAWLS.removeItem('fin-gh-tok'); } catch (er) {} toast(t('fam_tokDelete') + ' ✓'); famDevRender(); return; }
   if (e.target.closest('#fam_tokSave')){
     const v = String(($('#fam_tok') || {}).value || '').trim(); if (!v) return;
     try { RAWLS.setItem('fin-gh-tok', v); } catch (er) {} toast(t('dc_tokSaved')); famDevRender(); return;
@@ -20818,7 +20838,7 @@ document.addEventListener('click', async e => {
     const code = famCode(), h = await famHash(nm, code), id = Math.random().toString(36).slice(2, 10);
     const L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []})); L.m = (L.m || []).concat({id, h, at: Date.now()});
     try { await famSave(L, 'Family member added'); }
-    catch (er){ add.disabled = false; const o = $('#fam_out'); if (o) o.innerHTML = `<div class="gk-st bad">${E108(t(String(er && er.message) === 'notoken' ? 'fam_needTok' : 'fam_saveFail'))}</div>`; return; }
+    catch (er){ add.disabled = false; const o = $('#fam_out'); if (o) o.innerHTML = `<div class="gk-st bad">${E108(t(famErrKey(er)))}</div>`; return; }
     famNames()[id] = nm; try { saveSet(); } catch (er) {}
     const link = (IN_CLAUDE ? FAM_SITE : location.origin + location.pathname) + '#fam=' + encodeURIComponent(nm.replace(/[~:]/g, ' ') + '~' + code);
     FAM.msg = t('fam_msg', {n: nm, l: link, c: code}); FAM.link = link;
@@ -20849,7 +20869,7 @@ document.addEventListener('click', async e => {
     const L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []}));
     L.m = (L.m || []).filter(x => !x.p).concat({id: 'p', p: 1, h, at});
     try { await famSave(L, 'Family sign-in updated'); }
-    catch (er){ ps.disabled = false; if (st) st.textContent = t(String(er && er.message) === 'notoken' ? 'fam_needTok' : 'fam_saveFail'); return; }
+    catch (er){ ps.disabled = false; if (st) st.textContent = t(famErrKey(er)); return; }
     try { RAWLS.setItem('fin-fam-u', u); RAWLS.setItem('fin-fam-pw', pw); RAWLS.setItem('fin-fam-pwat', String(at)); } catch (er) {}
     famDevRender(); toast(t('fam_pwDone')); return;
   }
@@ -20863,7 +20883,7 @@ document.addEventListener('click', async e => {
   if (del){
     const id = del.dataset.famdel, L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []}));
     L.m = (L.m || []).filter(x => x.id !== id);
-    try { await famSave(L, 'Family member removed'); } catch (er){ toast(t(String(er && er.message) === 'notoken' ? 'fam_needTok' : 'fam_saveFail')); return; }
+    try { await famSave(L, 'Family member removed'); } catch (er){ toast(t(famErrKey(er))); return; }
     delete famNames()[id]; try { saveSet(); } catch (er) {}
     famDevRender(); toast(t('fam_delDone'));
   }

@@ -4748,6 +4748,13 @@
   "fam_pwOther": "A username and password were set on another device. Saving here replaces them.",
   "fam_pwDone": "Saved. Sign-in works within a few minutes.",
   "fam_pwMsg": "Sign-in to the financial calculator (family mode):\n{l}\nSign in under Settings → Account & access\nUsername: {u}\nPassword: {p}",
-  "fam_inOk": "Hi {n}! You are in family mode – everything is open."
+  "fam_inOk": "Hi {n}! You are in family mode – everything is open.",
+  "fam_errBlocked": "The Claude app blocks direct connections to GitHub, so saving from here is not possible – the token is not the problem. Open the site in a browser and save there, or ask Claude in the chat to update it.",
+  "fam_errNet": "No connection to GitHub right now. Check the internet and try again.",
+  "fam_errTok": "GitHub rejected the token: it is wrong, expired or revoked. Create a new token and paste it.",
+  "fam_errPerm": "The token has no write permission. In the token settings on GitHub, give Contents Read and write access.",
+  "fam_errRepo": "The token cannot reach the app repository. In the token settings, select the financial-calculator repository.",
+  "fam_errBusy": "The file just changed. Try again.",
+  "fam_tokDelete": "Remove token from this device"
  }
 }
