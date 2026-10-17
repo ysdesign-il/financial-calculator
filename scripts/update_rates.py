@@ -9,7 +9,7 @@ Sources (all public, no keys):
   - Market indices (TA-35, TA-125, S&P 500, Nasdaq 100, Dow Jones, gold, Brent) via the public CNBC quote feed, with 1/5/10-year anchors
 Every value is sanity-checked against the previous file; anything implausible is skipped.
 """
-import json, time, datetime, urllib.request, os, csv, io, math
+import json, time, datetime, urllib.request, os, csv, io, math, base64, hashlib, hmac
 
 PATH = "rates.json"
 UA = {"User-Agent": "financial-calculator-rates/1.0 (+https://github.com)", "Accept": "application/json"}
@@ -180,6 +180,56 @@ INBOX_TOPIC = "fc-in-318ca4899cb6f959f4e4de51"   # the relay topic the website s
 INBOX_PATH = "inbox.json"
 
 
+# the inbox public key (also in the app): the developer signs family sign-in changes with its private half, so no GitHub token is needed
+INBOX_PUB_N = "wxtR5meXd5lblZDdURSscmj48iXULVTtEJtrqAj6Lsm6GnSd18JVzEuhQfgRZJZ-3BXPJNaUWFEwRh2YAYsNpeceOWkrKeq3R4vigswqUDVSphAe-v_UUQoCpRXT3vypPYbBps_6ndsVcn96UjdW1Azz12ZrIn0JJprYVhZEh7UDpVoXM0WUHOxItdNHWfeOJ_D9dZXrYPlup9GANJsPMygFPbIv2bdIwHjoPxhir3ZmmGilH5yqTvOJw1Rc504ofLc9JY3oM1cR0pedexJbU8vZwrU2i5atTNvFRNvlh31HH7HrR5FZ1NZxHnRlyMit-lqGIlxA2THDeLLkqr_INQ"
+FAMILY_PATH = "family.json"
+
+
+def _b64u(s):
+    s = s.replace("-", "+").replace("_", "/")
+    return base64.b64decode(s + "=" * (-len(s) % 4))
+
+
+def rsa_verify(n_b64u, msg, sig, e=65537):
+    """RSASSA-PKCS1-v1_5 with SHA-256, using only the standard library"""
+    n = int.from_bytes(_b64u(n_b64u), "big"); k = (n.bit_length() + 7) // 8
+    if len(sig) != k:
+        return False
+    m = pow(int.from_bytes(sig, "big"), e, n).to_bytes(k, "big")
+    di = bytes.fromhex("3031300d060960864801650304020105000420") + hashlib.sha256(msg).digest()
+    want = b"\x00\x01" + b"\xff" * (k - 3 - len(di)) + b"\x00" + di
+    return hmac.compare_digest(m, want)
+
+
+def family_cmd(msg, log, n_b64u=None, now=None):
+    """fcs1.<payload>.<signature>: a signed family sign-in change from developer mode. Returns True if family.json changed."""
+    try:
+        _, pb, sb = msg.split(".")
+        raw = base64.b64decode(pb); sig = base64.b64decode(sb)
+        if not rsa_verify(n_b64u or INBOX_PUB_N, raw, sig):
+            log.append("family: bad signature"); return False
+        c = json.loads(raw.decode("utf-8"))
+        h, at = str(c.get("h") or ""), int(c.get("at") or 0)
+        if c.get("k") != "famset" or len(h) != 64 or any(ch not in "0123456789abcdef" for ch in h):
+            return False
+        now = now or time.time() * 1000
+        if abs(now - at) > 3 * 86400 * 1000:
+            log.append("family: too old"); return False
+        try:
+            fam = json.load(open(FAMILY_PATH, encoding="utf-8"))
+        except Exception:
+            fam = {"v": 1, "m": []}
+        cur = next((x for x in fam.get("m", []) if x.get("p")), None)
+        if cur and int(cur.get("at") or 0) >= at:   # replays and older changes never win
+            return False
+        fam["m"] = [x for x in fam.get("m", []) if not x.get("p")] + [{"id": "p", "p": 1, "h": h, "at": at}]
+        with open(FAMILY_PATH, "w", encoding="utf-8") as f:
+            f.write(json.dumps(fam, indent=1) + "\n")
+        log.append("family sign-in updated"); return True
+    except Exception as ex:
+        log.append("family: %s" % type(ex).__name__); return False
+
+
 def inbox_pull(log):
     """collect locked feedback from the relay (it keeps messages ~12 hours; we run twice an hour). Only the app can unlock them."""
     try:
@@ -207,6 +257,9 @@ def inbox_pull(log):
             if len(p) == 4:
                 reps.setdefault("r", []).append({"id": p[1][:24], "c": p[2] + "." + p[3], "t": int(e.get("time") or 0), "e": e["id"]})
                 have.add(e["id"]); nr += 1
+            continue
+        if msg.startswith("fcs1."):                    # a signed family sign-in change
+            family_cmd(msg, log)
             continue
         if not msg.startswith("fc1."):
             continue

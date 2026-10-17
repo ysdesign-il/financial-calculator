@@ -31,7 +31,7 @@ jobs:
         run: |
           git config user.name "rates-bot"
           git config user.email "rates-bot@users.noreply.github.com"
-          git add rates.json; for f in history.json inbox.json replies.json; do [ -f "$f" ] && git add "$f"; done
+          git add rates.json; for f in history.json inbox.json replies.json family.json; do [ -f "$f" ] && git add "$f"; done
           git diff --cached --quiet && { echo "No changes"; exit 0; }
           git commit -m "Update rates"
           git pull --rebase origin main

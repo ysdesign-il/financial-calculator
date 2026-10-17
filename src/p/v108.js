@@ -308,25 +308,44 @@ function famDevRender(){
   const L = FAM.list || famCached() || {v: 1, m: []}, N = famNames();
   const tok = typeof ghTok === 'function' && ghTok(), open = !!FAM.formOpen;
   s.innerHTML = `<div class="sec-h fam-h"><h3 class="sec-t">👨‍👩‍👧 ${E108(t('fam_title'))}</h3><button type="button" class="gold-btn fam-plus${open ? ' on' : ''}" id="fam_plus" aria-expanded="${open}" aria-label="${E108(t('fam_plusA'))}" title="${E108(t('fam_plusA'))}">+</button></div><p class="fine">${E108(t('fam_help'))}</p>
-    ${IN_CLAUDE ? `<div class="gk-st new">${E108(t('fam_errBlocked'))}</div>` : ''}
+    ${IN_CLAUDE ? `<div class="gk-st new">${E108(t('fam_relayNote'))}</div>` : ''}
     ${typeof ghTok === 'function' && ghTok() ? `<button type="button" class="mv wide" id="fam_tokDel">🗑️ ${E108(t('fam_tokDelete'))}</button>` : `<div class="gk-st bad">${E108(t('fam_needTok'))}</div><label class="scn-l" for="fam_tok">${E108(t('dc_tok'))}</label><div class="as-box"><input id="fam_tok" type="password" autocomplete="off" dir="ltr" placeholder="github_pat_…"><button type="button" class="btn" id="fam_tokSave">${E108(t('fam_tokSave'))}</button></div><p class="fine">${E108(t('dc_tokH'))} <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">${E108(t('fam_tokNew'))}</a></p>`}
     <div class="fam-form" id="fam_form"${open ? '' : ' hidden'}><div class="as-box"><input id="fam_new" type="text" maxlength="30" dir="auto" placeholder="${E108(t('fam_namePh'))}" autocomplete="off"><button type="button" class="gold-btn" id="fam_add"${tok ? '' : ' disabled'}>${E108(t('fam_add'))}</button></div></div>
     <div id="fam_out"></div>
     ${famPwBox(L, tok)}
     <ul class="sec-list">${(L.m || []).filter(x => !x.p).map(x => `<li><b dir="auto">${E108(N[x.id] || t('fam_unknown'))}</b><small>${E108(svdDate(x.at || 0))}</small><button type="button" class="mv wide" data-famdel="${E108(x.id)}">${E108(t('fam_del'))}</button></li>`).join('') || `<li>${E108(t('fam_none'))}</li>`}</ul>`;
 }
+/* without a GitHub token: sign the change with the inbox key (only developer mode has it) and send it through the relay; the bot verifies and applies it */
+async function famRelaySet(h, at){
+  if (typeof ibKey !== 'function' || typeof ib64 !== 'function') throw new Error('nokey');
+  const jwk = await ibKey(); if (!jwk || !jwk.d) throw new Error('nokey');
+  const j = {kty: jwk.kty, n: jwk.n, e: jwk.e, d: jwk.d, p: jwk.p, q: jwk.q, dp: jwk.dp, dq: jwk.dq, qi: jwk.qi};
+  const k = await crypto.subtle.importKey('jwk', j, {name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256'}, false, ['sign']);
+  const raw = new TextEncoder().encode(JSON.stringify({k: 'famset', h, at}));
+  const sig = await crypto.subtle.sign('RSASSA-PKCS1-v1_5', k, raw);
+  const body = 'fcs1.' + ib64(raw) + '.' + ib64(sig);
+  try {
+    const r = await fetch('https://ntfy.sh/' + INBOX_TOPIC, {method: 'POST', body, credentials: 'omit', referrerPolicy: 'no-referrer'});
+    if (r.ok) return 'sent';
+  } catch (e) {}
+  /* the relay is unreachable here: keep the signed change in the app's private developer storage, so Claude can apply it from the chat */
+  if (typeof FB === 'object' && FB && FB.db){ try { await FB.db.doc('devkeys/famcmd').set({m: body, at}); return 'queued'; } catch (e) {} }
+  throw new Error('relay');
+}
 function famPwLocal(){ let u = '', p = ''; try { u = RAWLS.getItem('fin-fam-u') || ''; p = RAWLS.getItem('fin-fam-pw') || ''; } catch (e) {} return {u, p}; }
 function famPwMsg(u, p){ return t('fam_pwMsg', {l: IN_CLAUDE ? FAM_SITE : location.origin + location.pathname, u, p}); }
 function famPwBox(L, tok){
-  const e = famPwEntry(L), loc = famPwLocal(), mine = !!(e && loc.u && e.at === Number(RAWLS.getItem('fin-fam-pwat') || 0));
+  const e = famPwEntry(L), loc = famPwLocal(), at0 = Number(RAWLS.getItem('fin-fam-pwat') || 0);
+  const live = !!(e && e.at === at0), pend = !live && !!at0 && Number(RAWLS.getItem('fin-fam-pend') || 0) === at0 && Date.now() - at0 < 3 * 864e5;
+  const mine = !!(loc.u && (live || pend));
   const head = `<small>🔑 ${E108(t('fam_pwTitle'))}</small><p class="fine">${E108(t('fam_pwHelp'))}</p>`;
   const form = (show) => `<div id="fam_pwForm"${show ? '' : ' hidden'}>
       <div class="field wide"><label for="fam_pwU">${E108(t('fam_pwU'))}</label><input id="fam_pwU" class="lookup" type="text" maxlength="30" dir="auto" autocomplete="off" autocapitalize="none" spellcheck="false" value="${E108(loc.u)}"></div>
       <div class="field wide"><label for="fam_pwP">${E108(t('fam_pwP'))}</label><input id="fam_pwP" class="lookup" type="text" maxlength="40" dir="ltr" autocomplete="off" autocapitalize="none" spellcheck="false"></div>
       <p class="fine" id="fam_pwSt"></p>
-      <button type="button" class="gold-btn" id="fam_pwSave"${tok ? '' : ' disabled'}>${E108(t('fam_pwSave'))}</button></div>`;
+      <button type="button" class="gold-btn" id="fam_pwSave">${E108(t('fam_pwSave'))}</button></div>`;
   if (mine){
-    return `<div class="fam-linkbox" id="fam_pwbox">${head}
+    return `<div class="fam-linkbox" id="fam_pwbox">${head}${pend ? `<div class="gk-st new">⏳ ${E108(t('fam_pwPend'))}</div>` : ''}
       <div class="fam-cred"><span>${E108(t('fam_pwU'))}</span><b dir="auto">${E108(loc.u)}</b></div>
       <div class="fam-cred"><span>${E108(t('fam_pwP'))}</span><b dir="ltr" id="fam_pwShow" data-p="${E108(loc.p)}">••••••</b><button type="button" class="mv" id="fam_pwEye" aria-label="${E108(t('fam_pwEye'))}">👁</button></div>
       <div class="btnrow fam-send"><button type="button" class="gold-btn" id="fam_pwShare">📤 ${E108(t('fam_share'))}</button><button type="button" class="btn" id="fam_pwCopy">📋 ${E108(t('fam_copy'))}</button></div>
@@ -384,10 +403,14 @@ document.addEventListener('click', async e => {
     const at = Date.now(), h = await famPwHash(u, pw);
     const L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []}));
     L.m = (L.m || []).filter(x => !x.p).concat({id: 'p', p: 1, h, at});
-    try { await famSave(L, 'Family sign-in updated'); }
-    catch (er){ ps.disabled = false; if (st) st.textContent = t(famErrKey(er)); return; }
-    try { RAWLS.setItem('fin-fam-u', u); RAWLS.setItem('fin-fam-pw', pw); RAWLS.setItem('fin-fam-pwat', String(at)); } catch (er) {}
-    famDevRender(); toast(t('fam_pwDone')); return;
+    let relay = false;
+    const tokOk = typeof ghTok === 'function' && ghTok() && !IN_CLAUDE;
+    try {
+      if (tokOk){ try { await famSave(L, 'Family sign-in updated'); } catch (er){ if (/^gh\d/.test(String(er && er.message))) throw er; relay = await famRelaySet(h, at); } }
+      else relay = await famRelaySet(h, at);
+    } catch (er){ ps.disabled = false; if (st) st.textContent = t(String(er && er.message) === 'nokey' ? 'fam_noKey' : String(er && er.message) === 'relay' ? 'fam_errNet' : famErrKey(er)); return; }
+    try { RAWLS.setItem('fin-fam-u', u); RAWLS.setItem('fin-fam-pw', pw); RAWLS.setItem('fin-fam-pwat', String(at)); if (relay) RAWLS.setItem('fin-fam-pend', String(at)); } catch (er) {}
+    famDevRender(); toast(t(relay === 'queued' ? 'fam_pwQueued' : relay ? 'fam_pwSent' : 'fam_pwDone')); return;
   }
   if (e.target.closest('#fam_copyLink') && FAM.link){ copyText(FAM.link); toast(t('st_copied')); return; }
   if (e.target.closest('#fam_copy') && FAM.msg){ copyText(FAM.msg); toast(t('st_copied')); return; }
