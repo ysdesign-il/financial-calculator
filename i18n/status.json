@@ -1,27 +1,28 @@
 {
- "started": "2026-10-16 19:09:27 UTC",
+ "started": "2026-10-17 01:13:37 UTC",
  "events": [
-  "published fr",
-  "  gemini gemini-flash-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
-  "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
   "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
-  "  gemini gemini-flash-lite-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
-  "  gemini: gemini quota used up",
-  "published pt-BR"
+  "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
+  "published pt-BR",
+  "published it",
+  "published zh-CN",
+  "published hi"
  ],
  "langs": {
-  "fr": 4659,
-  "pt-BR": 3720
+  "pt-BR": 4658,
+  "it": 4656,
+  "zh-CN": 4651,
+  "hi": 4512
  },
- "finished": "2026-10-16 19:12:09 UTC",
+ "finished": "2026-10-17 01:18:47 UTC",
  "coverage": {
-  "zh-CN": 3104,
+  "zh-CN": 4651,
   "fr": 4659,
-  "hi": 3111,
-  "pt-BR": 3720,
+  "hi": 4512,
+  "pt-BR": 4658,
   "ru": 4659,
   "es": 4659,
-  "it": 3111
+  "it": 4656
  },
  "total": 4659
 }
