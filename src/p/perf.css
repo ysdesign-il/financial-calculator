@@ -56,3 +56,5 @@ body.no-member .ai-fab{opacity:.7}
 .fam-form{margin:6px 0 10px}
 .fam-msg{white-space:pre-line;overflow-wrap:anywhere;font-size:13px;opacity:.85;margin:8px 0 0;padding:8px;border-radius:8px;background:rgba(0,0,0,.12)}
 .fam-send{display:flex;gap:8px}.fam-send>*{flex:1}
+.fam-linkbox{display:flex;flex-direction:column;gap:6px;margin:10px 0;padding:10px;border:1px dashed var(--line,rgba(127,127,127,.4));border-radius:10px}
+.fam-link{font-size:13px;overflow-wrap:anywhere;text-decoration:underline;color:var(--c1,#2A5FD6);text-align:left}
