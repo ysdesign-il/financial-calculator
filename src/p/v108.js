@@ -216,6 +216,33 @@ async function famTry(name, code){
   try { RAWLS.setItem('fin-fam', h); RAWLS.setItem('fin-fam-n', String(name).trim().slice(0, 30)); } catch (e) {}
   FAM.on = true; FAM.name = String(name).trim().slice(0, 30); famApply(); toast(t('fam_on', {n: FAM.name})); return true;
 }
+/* one shared family username + password, chosen by the developer; works on the normal sign-in screen from any device */
+async function famPwHash(user, pass){
+  const b = await pbk(famNameNorm(user) + ':' + String(pass || ''), new TextEncoder().encode('fincalc-family-pw-v1'), 150000, 256);
+  return Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join('');
+}
+function famPwEntry(L){ L = L || FAM.list || famCached(); return L && Array.isArray(L.m) ? L.m.find(x => x && x.p) : null; }
+async function famPwTry(user, pass){
+  if (!user || !pass) return false;
+  if (!famPwEntry()) await famFetch();
+  const e = famPwEntry(); if (!e) return false;
+  const h = await famPwHash(user, pass); if (h !== e.h) return false;
+  const nm = String(user).trim().slice(0, 30);
+  try { RAWLS.setItem('fin-fam', h); RAWLS.setItem('fin-fam-n', nm); } catch (er) {}
+  FAM.on = true; FAM.name = nm; famApply(); toast(t('fam_on', {n: nm})); return true;
+}
+if (typeof doLogin === 'function'){
+  const doLoginFam = doLogin;
+  doLogin = async function(){
+    const ui = $('#acc_user'), pi = $('#acc_pass'), u = String((ui || {}).value || '').trim(), pw = String((pi || {}).value || '');
+    const local = (() => { try { return typeof getAcc === 'function' && !!getAcc(hdNorm(u)); } catch (e) { return false; } })();
+    if (u && pw && !local && window.crypto && crypto.subtle){
+      try { accMsg('m_wait', null, true); } catch (e) {}
+      if (await famPwTry(u, pw)){ if (pi) pi.value = ''; try { accMsg('fam_inOk', {n: u}, true); } catch (e) {} try { activate('home'); } catch (e) {} return; }
+    }
+    return doLoginFam.apply(this, arguments);
+  };
+}
 /* the same hidden entry as developer mode accepts a family code too; or open the link the developer sends: #fam=NAME~CODE */
 if (typeof devTry === 'function'){
   const devTryFam = devTry;
@@ -273,7 +300,27 @@ function famDevRender(){
     ${typeof ghTok === 'function' && ghTok() ? '' : `<div class="gk-st bad">${E108(t('fam_needTok'))}</div><label class="scn-l" for="fam_tok">${E108(t('dc_tok'))}</label><div class="as-box"><input id="fam_tok" type="password" autocomplete="off" dir="ltr" placeholder="github_pat_…"><button type="button" class="btn" id="fam_tokSave">${E108(t('fam_tokSave'))}</button></div><p class="fine">${E108(t('dc_tokH'))} <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">${E108(t('fam_tokNew'))}</a></p>`}
     <div class="fam-form" id="fam_form"${open ? '' : ' hidden'}><div class="as-box"><input id="fam_new" type="text" maxlength="30" dir="auto" placeholder="${E108(t('fam_namePh'))}" autocomplete="off"><button type="button" class="gold-btn" id="fam_add"${tok ? '' : ' disabled'}>${E108(t('fam_add'))}</button></div></div>
     <div id="fam_out"></div>
-    <ul class="sec-list">${(L.m || []).map(x => `<li><b dir="auto">${E108(N[x.id] || t('fam_unknown'))}</b><small>${E108(svdDate(x.at || 0))}</small><button type="button" class="mv wide" data-famdel="${E108(x.id)}">${E108(t('fam_del'))}</button></li>`).join('') || `<li>${E108(t('fam_none'))}</li>`}</ul>`;
+    ${famPwBox(L, tok)}
+    <ul class="sec-list">${(L.m || []).filter(x => !x.p).map(x => `<li><b dir="auto">${E108(N[x.id] || t('fam_unknown'))}</b><small>${E108(svdDate(x.at || 0))}</small><button type="button" class="mv wide" data-famdel="${E108(x.id)}">${E108(t('fam_del'))}</button></li>`).join('') || `<li>${E108(t('fam_none'))}</li>`}</ul>`;
+}
+function famPwLocal(){ let u = '', p = ''; try { u = RAWLS.getItem('fin-fam-u') || ''; p = RAWLS.getItem('fin-fam-pw') || ''; } catch (e) {} return {u, p}; }
+function famPwMsg(u, p){ return t('fam_pwMsg', {l: IN_CLAUDE ? FAM_SITE : location.origin + location.pathname, u, p}); }
+function famPwBox(L, tok){
+  const e = famPwEntry(L), loc = famPwLocal(), mine = !!(e && loc.u && e.at === Number(RAWLS.getItem('fin-fam-pwat') || 0));
+  const head = `<small>🔑 ${E108(t('fam_pwTitle'))}</small><p class="fine">${E108(t('fam_pwHelp'))}</p>`;
+  const form = (show) => `<div id="fam_pwForm"${show ? '' : ' hidden'}>
+      <div class="field wide"><label for="fam_pwU">${E108(t('fam_pwU'))}</label><input id="fam_pwU" class="lookup" type="text" maxlength="30" dir="auto" autocomplete="off" autocapitalize="none" spellcheck="false" value="${E108(loc.u)}"></div>
+      <div class="field wide"><label for="fam_pwP">${E108(t('fam_pwP'))}</label><input id="fam_pwP" class="lookup" type="text" maxlength="40" dir="ltr" autocomplete="off" autocapitalize="none" spellcheck="false"></div>
+      <p class="fine" id="fam_pwSt"></p>
+      <button type="button" class="gold-btn" id="fam_pwSave"${tok ? '' : ' disabled'}>${E108(t('fam_pwSave'))}</button></div>`;
+  if (mine){
+    return `<div class="fam-linkbox" id="fam_pwbox">${head}
+      <div class="fam-cred"><span>${E108(t('fam_pwU'))}</span><b dir="auto">${E108(loc.u)}</b></div>
+      <div class="fam-cred"><span>${E108(t('fam_pwP'))}</span><b dir="ltr" id="fam_pwShow" data-p="${E108(loc.p)}">••••••</b><button type="button" class="mv" id="fam_pwEye" aria-label="${E108(t('fam_pwEye'))}">👁</button></div>
+      <div class="btnrow fam-send"><button type="button" class="gold-btn" id="fam_pwShare">📤 ${E108(t('fam_share'))}</button><button type="button" class="btn" id="fam_pwCopy">📋 ${E108(t('fam_copy'))}</button></div>
+      <button type="button" class="mv wide" id="fam_pwEdit">${E108(t('fam_pwChange'))}</button>${form(false)}</div>`;
+  }
+  return `<div class="fam-linkbox" id="fam_pwbox">${head}${e ? `<p class="fine">${E108(t('fam_pwOther'))}</p>` : ''}${form(true)}</div>`;
 }
 document.addEventListener('click', async e => {
   if (!e.target.closest) return;
@@ -305,6 +352,29 @@ document.addEventListener('click', async e => {
       <p class="fine">${E108(t('fam_savedGh'))}</p>`;
     FAM.formOpen = false; famDevRender(); const o2 = $('#fam_out'); if (o2) o2.innerHTML = html;
     return;
+  }
+  if (e.target.closest('#fam_pwEdit')){ const f = $('#fam_pwForm'); if (f){ f.hidden = !f.hidden; if (!f.hidden){ const i = $('#fam_pwP'); if (i) i.focus(); } } return; }
+  if (e.target.closest('#fam_pwEye')){ const b = $('#fam_pwShow'); if (b) b.textContent = b.textContent.startsWith('•') ? b.dataset.p : '••••••'; return; }
+  if (e.target.closest('#fam_pwCopy')){ const c = famPwLocal(); if (c.u){ copyText(famPwMsg(c.u, c.p)); toast(t('st_copied')); } return; }
+  if (e.target.closest('#fam_pwShare')){
+    const c = famPwLocal(); if (!c.u) return; const msg = famPwMsg(c.u, c.p);
+    if (navigator.share){ try { await navigator.share({title: t('fam_title'), text: msg}); return; } catch (er) { if (er && er.name === 'AbortError') return; } }
+    copyText(msg); toast(t('shr_copiedInstead')); return;
+  }
+  const ps = e.target.closest('#fam_pwSave');
+  if (ps && !ps.disabled){
+    const u = String(($('#fam_pwU') || {}).value || '').trim(), pw = String(($('#fam_pwP') || {}).value || ''), st = $('#fam_pwSt');
+    if (u.length < 2){ if (st) st.textContent = t('fam_pwShortU'); return; }
+    if (pw.length < 6){ if (st) st.textContent = t('fam_pwShortP'); return; }
+    try { if (typeof getAcc === 'function' && getAcc(hdNorm(u))){ if (st) st.textContent = t('fam_pwTaken'); return; } } catch (er) {}
+    ps.disabled = true; if (st) st.textContent = t('m_wait');
+    const at = Date.now(), h = await famPwHash(u, pw);
+    const L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []}));
+    L.m = (L.m || []).filter(x => !x.p).concat({id: 'p', p: 1, h, at});
+    try { await famSave(L, 'Family sign-in updated'); }
+    catch (er){ ps.disabled = false; if (st) st.textContent = t(String(er && er.message) === 'notoken' ? 'fam_needTok' : 'fam_saveFail'); return; }
+    try { RAWLS.setItem('fin-fam-u', u); RAWLS.setItem('fin-fam-pw', pw); RAWLS.setItem('fin-fam-pwat', String(at)); } catch (er) {}
+    famDevRender(); toast(t('fam_pwDone')); return;
   }
   if (e.target.closest('#fam_copyLink') && FAM.link){ copyText(FAM.link); toast(t('st_copied')); return; }
   if (e.target.closest('#fam_copy') && FAM.msg){ copyText(FAM.msg); toast(t('st_copied')); return; }

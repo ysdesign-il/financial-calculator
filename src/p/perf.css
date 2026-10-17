@@ -58,3 +58,5 @@ body.no-member .ai-fab{opacity:.7}
 .fam-send{display:flex;gap:8px}.fam-send>*{flex:1}
 .fam-linkbox{display:flex;flex-direction:column;gap:6px;margin:10px 0;padding:10px;border:1px dashed var(--line,rgba(127,127,127,.4));border-radius:10px}
 .fam-link{font-size:13px;overflow-wrap:anywhere;text-decoration:underline;color:var(--c1,#2A5FD6);text-align:left}
+.fam-cred{display:flex;align-items:center;gap:8px;padding:4px 0}.fam-cred span{opacity:.7;min-width:80px}.fam-cred b{flex:1}
+#fam_pwForm .field{margin-bottom:8px}
