@@ -9,14 +9,6 @@
    "p": {}
   },
   {
-   "at": 1792164472,
-   "level": "high",
-   "kind": "code",
-   "actor": "dependabot[bot]",
-   "msg": "Developer code or the security watch was changed",
-   "p": {}
-  },
-  {
    "at": 1792164357,
    "level": "medium",
    "kind": "workflow",
