@@ -210,8 +210,6 @@ def family_cmd(msg, log, n_b64u=None, now=None):
             log.append("family: bad signature"); return False
         c = json.loads(raw.decode("utf-8"))
         h, at = str(c.get("h") or ""), int(c.get("at") or 0)
-        if c.get("k") != "famset" or len(h) != 64 or any(ch not in "0123456789abcdef" for ch in h):
-            return False
         now = now or time.time() * 1000
         if abs(now - at) > 3 * 86400 * 1000:
             log.append("family: too old"); return False
@@ -219,6 +217,16 @@ def family_cmd(msg, log, n_b64u=None, now=None):
             fam = json.load(open(FAMILY_PATH, encoding="utf-8"))
         except Exception:
             fam = {"v": 1, "m": []}
+        if c.get("k") == "famrevoke":                   # drop personal codes made before the command (a replay never touches newer ones)
+            keep = [x for x in fam.get("m", []) if x.get("p") or int(x.get("at") or 0) > at]
+            if len(keep) == len(fam.get("m", [])):
+                return False
+            fam["m"] = keep
+            with open(FAMILY_PATH, "w", encoding="utf-8") as f:
+                f.write(json.dumps(fam, indent=1) + "\n")
+            log.append("family codes revoked"); return True
+        if c.get("k") != "famset" or len(h) != 64 or any(ch not in "0123456789abcdef" for ch in h):
+            return False
         cur = next((x for x in fam.get("m", []) if x.get("p")), None)
         if cur and int(cur.get("at") or 0) >= at:   # replays and older changes never win
             return False
