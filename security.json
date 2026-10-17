@@ -1,6 +1,16 @@
 {
  "alerts": [
   {
+   "at": 1792264690,
+   "level": "medium",
+   "kind": "workflow",
+   "actor": "ysdesign-il",
+   "msg": "Automation files changed: .github/workflows/inbox.yml, .github/workflows/rates.yml",
+   "p": {
+    "f": ".github/workflows/inbox.yml, .github/workflows/rates.yml"
+   }
+  },
+  {
    "at": 1792262022,
    "level": "medium",
    "kind": "family",
@@ -27,5 +37,5 @@
    }
   }
  ],
- "updated": 1792262022
+ "updated": 1792264691
 }
