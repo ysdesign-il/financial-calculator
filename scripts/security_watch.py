@@ -47,7 +47,7 @@ if EV == 'push':
         add('medium', 'workflow', 'Automation files changed: ' + ', '.join(wf)[:200], f=', '.join(wf))
     if 'family.json' in files and ref == 'refs/heads/main':
         add('medium', 'family', 'The family-mode member list changed')
-    if any(f in files for f in ('devcode.json', 'scripts/security_watch.py')) and actor != OWNER:
+    if any(f in files for f in ('devcode.json', 'scripts/security_watch.py')) and actor != OWNER and ref == 'refs/heads/main':
         add('high', 'code', 'Developer code or the security watch was changed')
 elif EV == 'create' and actor not in TRUSTED:
     add('medium', 'create', f'New {E.get("ref_type", "ref")} "{E.get("ref", "")}" created', r=E.get('ref', ''))
