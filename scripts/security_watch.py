@@ -45,6 +45,8 @@ if EV == 'push':
     wf = sorted(f for f in files if f.startswith('.github/'))
     if wf and actor != 'dependabot[bot]' and ref == 'refs/heads/main':
         add('medium', 'workflow', 'Automation files changed: ' + ', '.join(wf)[:200], f=', '.join(wf))
+    if 'family.json' in files and ref == 'refs/heads/main':
+        add('medium', 'family', 'The family-mode member list changed')
     if any(f in files for f in ('devcode.json', 'scripts/security_watch.py')) and actor != OWNER:
         add('high', 'code', 'Developer code or the security watch was changed')
 elif EV == 'create' and actor not in TRUSTED:
