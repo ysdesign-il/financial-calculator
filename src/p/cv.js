@@ -27,7 +27,7 @@ const CV_F = {
   refs: [['n', 'cv_fRefName'], ['role', 'cv_fRefRole'], ['contact', 'cv_fRefContact']],
   custom: [['title', 'cv_fTitle'], ['desc', 'cv_fText', 'area']]
 };
-const CV_P = [['name', 'cv_fFull'], ['title', 'cv_fHeadline'], ['email', 'cv_fEmail', 'email'], ['phone', 'cv_fPhone', 'tel'], ['city', 'cv_fCityRes'], ['linkedin', 'cv_fLinkedin', 'url'], ['site', 'cv_fSite', 'url'], ['github', 'cv_fGithub', 'url'], ['birth', 'cv_fBirth'], ['license', 'cv_fLicense'], ['avail', 'cv_fAvail']];
+const CV_P = [['name', 'cv_fFull'], ['title', 'cv_fHeadline'], ['email', 'cv_fEmail', 'email'], ['phone', 'cv_fPhone', 'tel'], ['city', 'cv_fCityRes'], ['linkedin', 'cv_fLinkedin', 'url'], ['site', 'cv_fSite', 'url'], ['birth', 'cv_fBirth'], ['license', 'cv_fLicense'], ['avail', 'cv_fAvail']];
 var CV = {db: null, tab: 'edit', open: new Set(['personal', 'summary', 'exp']), timer: null, rt: null, imgs: {}, sure: '', aiOut: '', busy: false};
 const cvE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const cvLangOk = l => ['he', 'ar', 'en'].includes(l) ? l : 'en';
@@ -35,6 +35,7 @@ function cvBlank(){
   const l = cvLangOk(typeof lang === 'string' ? lang : 'he');
   return {tpl: 'modern', color: CV_COLORS[0], font: l === 'en' ? 'heebo' : 'sans', size: 'M', photoShape: 'circle', lang: l, dates: 'month', skillStyle: 'bars',
     p: {}, photo: '', summary: '', hobbies: '', refsReq: true, cover: '', coverInc: false, order: CV_SECS.slice(), hide: ['courses', 'vol', 'awards', 'custom', 'projects'],
+    titles: {}, notes: {}, bg: '', bgMode: 'page', bgFade: 'light',
     exp: [{}], edu: [{}], military: [], skills: [], langs: [], certs: [], courses: [], projects: [], vol: [], awards: [], refs: [], custom: []};
 }
 function cvFix(d){
@@ -42,6 +43,7 @@ function cvFix(d){
   CV_SECS.forEach(s => { if (!CV_TEXTSEC.includes(s) && !Array.isArray(d[s])) d[s] = []; });
   if (!Array.isArray(d.order)) d.order = CV_SECS.slice(); CV_SECS.forEach(s => { if (!d.order.includes(s)) d.order.push(s); }); d.order = d.order.filter(s => CV_SECS.includes(s));
   if (!Array.isArray(d.hide)) d.hide = [];
+  if (!d.titles || typeof d.titles !== 'object') d.titles = {}; if (!d.notes || typeof d.notes !== 'object') d.notes = {};
   if (!CV_TPLS.includes(d.tpl)) d.tpl = 'modern'; if (!CV_FONTS[d.font]) d.font = 'sans'; d.lang = cvLangOk(d.lang);
   return d;
 }
@@ -122,6 +124,7 @@ async function cvRender(d0, opt){
   const d = cvFix(JSON.parse(JSON.stringify(d0))); opt = opt || {};
   await cvFonts(d);
   const photo = d.photoShape !== 'none' && d.tpl !== 'ats' ? await cvImg(d.photo) : null;
+  const bgIm = d.bg ? await cvImg(d.bg) : null, bgA = {light: .16, medium: .3, strong: .5}[d.bgFade] || .16;
   const rtl = cvRtl(d), K = {S: .92, M: 1, L: 1.08}[d.size] || 1, F = n => Math.round(n * K);
   const fam = CV_FONTS[d.font] || CV_FONTS.sans, serif = CV_FONTS.serif;
   const tp = d.tpl, acc = tp === 'ats' ? '#111111' : (d.color || CV_COLORS[0]);
@@ -148,10 +151,13 @@ async function cvRender(d0, opt){
       const c = document.createElement('canvas'); c.width = CV_W; c.height = CV_H; const cx = c.getContext('2d');
       cx.fillStyle = '#ffffff'; cx.fillRect(0, 0, CV_W, CV_H);
       const n = pages.length;
+      const cover = (x, y, w, h, a) => { const r = Math.max(w / bgIm.width, h / bgIm.height), iw = bgIm.width * r, ih = bgIm.height * r; cx.save(); cx.beginPath(); cx.rect(x, y, w, h); cx.clip(); cx.globalAlpha = a; cx.drawImage(bgIm, x + (w - iw) / 2, y + (h - ih) / 2, iw, ih); cx.restore(); };
+      if (bgIm && d.bgMode !== 'header') cover(0, 0, CV_W, CV_H, bgA);
+      if (bgIm && d.bgMode === 'header' && n === 0 && tp !== 'bold'){ cover(0, 0, CV_W, 330, Math.min(1, bgA * 1.6)); const g = cx.createLinearGradient(0, 200, 0, 330); g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(1, '#ffffff'); cx.fillStyle = g; cx.fillRect(0, 200, CV_W, 130); }
       if (tp === 'modern'){ cx.fillStyle = acc; cx.fillRect(geo.sideBand.x, 0, sideW, CV_H); }
       if (tp === 'bold'){
         cx.fillStyle = cvHex(acc, .07); cx.fillRect(geo.sideBand.x, n === 0 ? bandH : 0, sideW, CV_H);
-        if (n === 0){ cx.fillStyle = acc; cx.fillRect(0, 0, CV_W, bandH); }
+        if (n === 0){ cx.fillStyle = acc; cx.fillRect(0, 0, CV_W, bandH); if (bgIm){ cover(0, 0, CV_W, bandH, Math.min(.85, bgA * 2.2)); cx.fillStyle = cvHex(acc, .45); cx.fillRect(0, 0, CV_W, bandH); } }
       }
       if (tp === 'elegant'){ cx.strokeStyle = cvHex(acc, .5); cx.lineWidth = 2; cx.strokeRect(34, 34, CV_W - 68, CV_H - 68); }
       pages.push(c);
@@ -278,7 +284,7 @@ async function cvRender(d0, opt){
   }
   /* contact rows */
   const P = d.p || {};
-  const contacts = [['☎', P.phone], ['✉', P.email], ['⌂', P.city], ['in', P.linkedin], ['◆', P.site], ['</>', P.github], ['', P.birth ? cvL(d, 'cv_fBirth').replace(/\s*\(.*\)/, '') + ': ' + P.birth : ''], ['', P.license ? cvL(d, 'cv_fLicense') + ': ' + P.license : ''], ['', P.avail ? cvL(d, 'cv_fAvail') + ': ' + P.avail : '']].filter(x => x[1]);
+  const contacts = [['☎', P.phone], ['✉', P.email], ['⌂', P.city], ['in', P.linkedin], ['◆', P.site], ['', P.birth ? cvL(d, 'cv_fBirth').replace(/\s*\(.*\)/, '') + ': ' + P.birth : ''], ['', P.license ? cvL(d, 'cv_fLicense') + ': ' + P.license : ''], ['', P.avail ? cvL(d, 'cv_fAvail') + ': ' + P.avail : '']].filter(x => x[1]);
   function opContactList(k){
     contacts.forEach(([ic, v]) => {
       const c = C(k), w = col(k).w; font(scratch, 19, 400); const L = wrap(scratch, v, w - F(34));
@@ -289,21 +295,23 @@ async function cvRender(d0, opt){
     });
   }
   /* ----- sections ----- */
+  const ST = s => String((d.titles || {})[s] || '').trim() || cvL(d, 'cv_s_' + s);
   function sec(k, s){
     if ((d.hide || []).includes(s)) return;
-    const list = d[s];
-    if (s === 'summary' || s === 'hobbies'){ const v = String(d[s] || '').trim(); if (!v) return; opHead(k, cvL(d, 'cv_s_' + s)); opLines(k, v, {size: 20}); opGap(k, 16); return; }
+    const list = d[s], note = String((d.notes || {})[s] || '').trim();
+    if (s === 'summary' || s === 'hobbies'){ const v = String(d[s] || '').trim(); if (!v) return; opHead(k, ST(s)); opLines(k, v, {size: 20}); opGap(k, 16); return; }
     if (s === 'refs'){
-      if (!d.refsReq && !list.some(x => x.n)) return;
-      opHead(k, cvL(d, 'cv_s_refs'));
+      if (!d.refsReq && !list.some(x => x.n) && !note) return;
+      opHead(k, ST('refs'));
       if (d.refsReq) opLines(k, cvL(d, 'cv_refsReq'), {size: 20, color: mut});
       else list.filter(x => x.n).forEach(x => { opLines(k, x.n, {size: 21, weight: 700, keep: true}); if (x.role) opLines(k, x.role, {size: 19, color: C(k).mut}); if (x.contact) opLines(k, x.contact, {size: 19}); opGap(k, 8); });
+      if (note) opLines(k, note, {size: 20});
       opGap(k, 16); return;
     }
     const items = (list || []).filter(x => Object.keys(x).some(f => f !== 'lvl' && f !== 'now' && String(x[f] || '').trim()));
-    if (!items.length) return;
-    if (s === 'custom'){ items.forEach(x => { if (x.title) opHead(k, x.title); if (x.desc) opLines(k, x.desc, {size: 20}); opGap(k, 16); }); return; }
-    opHead(k, cvL(d, 'cv_s_' + s));
+    if (!items.length && !note) return;
+    if (s === 'custom'){ items.forEach(x => { if (x.title) opHead(k, x.title); if (x.desc) opLines(k, x.desc, {size: 20}); opGap(k, 16); }); if (note){ opLines(k, note, {size: 20}); opGap(k, 16); } return; }
+    opHead(k, ST(s));
     if (s === 'skills'){
       const st = tp === 'ats' ? 'text' : d.skillStyle;
       if (st === 'tags') opTags(k, items.map(x => x.n).filter(Boolean));
@@ -325,6 +333,7 @@ async function cvRender(d0, opt){
         opItem(k, title, sub, cvRange(d, x)); opDesc(k, x.desc); opGap(k, 14);
       });
     }
+    if (note) opLines(k, note, {size: 20});
     opGap(k, 14);
   }
   /* ----- header (page 1) ----- */
@@ -431,12 +440,14 @@ function cvField(path, label, val, type, extra){
 }
 function cvSecEdit(d, s){
   const open = CV.open.has(s) ? ' open' : '', hid = (d.hide || []).includes(s);
-  const head = `<summary><span class="cv-sum-t">${cvE(t('cv_s_' + s))}</span>${hid ? `<span class="cv-off">⦸</span>` : ''}${Array.isArray(d[s]) && d[s].length ? `<span class="cv-cnt">${d[s].length}</span>` : ''}</summary>`;
-  let body = '';
+  const ttl = String((d.titles || {})[s] || '').trim() || t('cv_s_' + s);
+  const head = `<summary><span class="cv-sum-t">${cvE(ttl)}</span>${hid ? `<span class="cv-off">⦸</span>` : ''}${Array.isArray(d[s]) && d[s].length ? `<span class="cv-cnt">${d[s].length}</span>` : ''}</summary>`;
+  const tId = 'cvf_titles_' + s;
+  let body = s === 'custom' ? '' : `<div class="field wide cv-f cv-ttl"><label for="${tId}">✏️ ${cvE(t('cv_secTitle'))}</label><input id="${tId}" type="text" maxlength="40" dir="auto" data-cv="titles.${s}" value="${cvE((d.titles || {})[s] || '')}" placeholder="${cvE(t('cv_s_' + s))}" autocomplete="off"></div>`;
   if (s === 'summary'){
-    body = cvField('summary', 'cv_fSummary', d.summary, 'area', 5) + `<div class="btnrow cv-ai-row"><button type="button" class="mv" data-act="ai" data-k="sumWrite">✨ ${cvE(t('cv_aiSum'))}</button><button type="button" class="mv" data-act="ai" data-k="sumImprove">✨ ${cvE(t('cv_aiImprove'))}</button></div>`;
+    body += cvField('summary', 'cv_fSummary', d.summary, 'area', 5) + `<div class="btnrow cv-ai-row"><button type="button" class="mv" data-act="ai" data-k="sumWrite">✨ ${cvE(t('cv_aiSum'))}</button><button type="button" class="mv" data-act="ai" data-k="sumImprove">✨ ${cvE(t('cv_aiImprove'))}</button></div>`;
   } else if (s === 'hobbies'){
-    body = cvField('hobbies', 'cv_fHobbies', d.hobbies, 'area', 3);
+    body += cvField('hobbies', 'cv_fHobbies', d.hobbies, 'area', 3);
   } else {
     if (s === 'refs') body += cvField('refsReq', 'cv_refsReqL', d.refsReq, 'check');
     body += (d[s] || []).map((it, i) => `<div class="cv-item"><div class="cv-item-h"><b>${cvE(it.role || it.degree || it.n || it.title || t('cv_s_' + s) + ' ' + (i + 1))}</b><span class="cv-item-b">
@@ -444,13 +455,14 @@ function cvSecEdit(d, s){
       <div class="cv-grid">${CV_F[s].map(f => cvField(s + '.' + i + '.' + f[0], f[1], it[f[0]], f[2])).join('')}</div>
       ${CV_F[s].some(f => f[0] === 'desc') && s !== 'custom' ? `<button type="button" class="mv cv-ai-mini" data-act="ai" data-k="bullets" data-sec="${s}" data-i="${i}">✨ ${cvE(t('cv_aiBullets'))}</button>` : ''}</div>`).join('');
     body += `<button type="button" class="btn cv-add" data-act="add" data-sec="${s}">+ ${cvE(t('cv_add'))}</button>`;
+    body += cvField('notes.' + s, 'cv_secNote', (d.notes || {})[s], 'area', 3);
   }
   return `<details class="cv-sec" data-sec="${s}"${open}>${head}<div class="cv-sec-b">${body}</div></details>`;
 }
 function cvEditHTML(d){
   const P = d.p || {};
   const personal = `<details class="cv-sec" data-sec="personal"${CV.open.has('personal') ? ' open' : ''}><summary><span class="cv-sum-t">${cvE(t('cv_s_personal'))}</span></summary><div class="cv-sec-b">
-    <div class="cv-photo">${d.photo ? `<img src="${cvE(d.photo)}" alt="">` : '<span>👤</span>'}<div class="btnrow"><button type="button" class="btn" data-act="photo">📷 ${cvE(t('cv_photoAdd'))}</button>${d.photo ? `<button type="button" class="mv" data-act="photoDel">${cvE(t('cv_photoDel'))}</button>` : ''}</div><input type="file" accept="image/*" data-cvfile="photo" hidden><input type="file" accept="image/*" capture="user" data-cvfile="photo" data-cam="1" hidden></div>
+    <div class="cv-photo">${d.photo ? `<img src="${cvE(d.photo)}" alt="">` : '<span>👤</span>'}<div class="btnrow"><button type="button" class="btn" data-act="photo">📷 ${cvE(t('cv_photoAdd'))}</button>${d.photo ? `<button type="button" class="mv" data-act="photoDel">${cvE(t('cv_photoDel'))}</button>` : ''}</div></div>
     <div class="cv-grid">${CV_P.map(f => cvField('p.' + f[0], f[1], P[f[0]], f[2])).join('')}</div></div></details>`;
   return personal + d.order.map(s => cvSecEdit(d, s)).join('');
 }
@@ -466,8 +478,11 @@ function cvDesignHTML(d){
       ${sel('skillStyle', 'cv_skillStyle', [['bars', 'cv_ss_bars'], ['dots', 'cv_ss_dots'], ['tags', 'cv_ss_tags'], ['text', 'cv_ss_text']])}
       ${sel('dates', 'cv_dates', [['month', 'cv_d_month'], ['year', 'cv_d_year']])}
     </div>
+    <h4 class="cv-h">🖼️ ${cvE(t('cv_bg'))}</h4><p class="fine">${cvE(t('cv_bgH'))}</p>
+    <div class="cv-bgrow">${d.bg ? `<img class="cv-bgthumb" src="${cvE(d.bg)}" alt="">` : ''}<div class="btnrow"><button type="button" class="btn" data-act="bg">${cvE(t(d.bg ? 'cv_bgChange' : 'cv_bgAdd'))}</button>${d.bg ? `<button type="button" class="mv" data-act="bgDel">${cvE(t('cv_bgDel'))}</button>` : ''}</div></div>
+    ${d.bg ? `<div class="cv-grid">${sel('bgMode', 'cv_bgMode', [['page', 'cv_bg_page'], ['header', 'cv_bg_header']])}${sel('bgFade', 'cv_bgFade', [['light', 'cv_bg_light'], ['medium', 'cv_bg_medium'], ['strong', 'cv_bg_strong']])}</div>` : ''}
     <h4 class="cv-h">${cvE(t('cv_order'))}</h4><p class="fine">${cvE(t('cv_orderH'))}</p>
-    <ul class="cv-order">${d.order.map((s, i) => `<li><label class="cv-chk"><input type="checkbox" data-cvshow="${s}"${(d.hide || []).includes(s) ? '' : ' checked'}> ${cvE(t('cv_s_' + s))}</label><span><button type="button" class="mv" data-act="sup" data-i="${i}" aria-label="${cvE(t('cv_up'))}">↑</button><button type="button" class="mv" data-act="sdown" data-i="${i}" aria-label="${cvE(t('cv_down'))}">↓</button></span></li>`).join('')}</ul>`;
+    <ul class="cv-order">${d.order.map((s, i) => `<li><label class="cv-chk"><input type="checkbox" data-cvshow="${s}"${(d.hide || []).includes(s) ? '' : ' checked'}> ${cvE(String((d.titles || {})[s] || '').trim() || t('cv_s_' + s))}</label><span><button type="button" class="mv" data-act="sup" data-i="${i}" aria-label="${cvE(t('cv_up'))}">↑</button><button type="button" class="mv" data-act="sdown" data-i="${i}" aria-label="${cvE(t('cv_down'))}">↓</button></span></li>`).join('')}</ul>`;
 }
 function cvAIHTML(d){
   const ok = cvAiOk();
@@ -495,6 +510,7 @@ function cvRender0(){
     <div class="cv-score"><div class="cv-bar"><i style="width:${sc.p}%"></i></div><b>${cvE(t('cv_done', {p: sc.p}))}</b><small id="cv_st"></small>
       ${sc.miss.length ? `<details class="cv-tips"><summary>${cvE(t('cv_tipsT'))}</summary><ul>${sc.miss.map(k => `<li>${cvE(t(k))}</li>`).join('')}</ul></details>` : ''}</div>
     <div class="seg cv-tabs" role="tablist">${['edit', 'design', 'ai', 'view'].map(k => `<button type="button" role="tab" data-act="tab" data-v="${k}" class="${CV.tab === k ? 'on' : ''}" aria-pressed="${CV.tab === k}" aria-selected="${CV.tab === k}">${cvE(t({edit: 'cv_tEdit', design: 'cv_tDesign', ai: 'cv_tAI', view: 'cv_tView'}[k]))}</button>`).join('')}</div>
+    <input type="file" accept="image/*" data-cvfile="photo" hidden><input type="file" accept="image/*" capture="user" data-cvfile="photo" data-cam="1" hidden>
     <div class="cv-body" id="cv_body">${CV.tab === 'edit' ? cvEditHTML(d) : CV.tab === 'design' ? cvDesignHTML(d) : CV.tab === 'ai' ? cvAIHTML(d) : cvViewHTML()}</div>`;
   if (CV.tab === 'view') cvPreview();
   if (CV.tab === 'design') cvThumbs();
@@ -529,6 +545,14 @@ async function cvPhoto(file){
   cvSet('photo', c.toDataURL('image/jpeg', .85)); delete CV.imgs[url]; cvRender0();
 }
 
+async function cvBg(file){
+  if (!file || !/^image\//.test(file.type)) return;
+  const url = await new Promise(res => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = () => res(''); r.readAsDataURL(file); });
+  const im = await cvImg(url); if (!im) return;
+  const sc = Math.min(1, 1190 / im.width, 1684 / im.height), c = document.createElement('canvas'); c.width = Math.round(im.width * sc); c.height = Math.round(im.height * sc);
+  c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+  cvSet('bg', c.toDataURL('image/jpeg', .8)); delete CV.imgs[url]; cvRender0();
+}
 /* ---------- photo access: ask once / allow always / blocked – changeable any time in Settings → Security ----------
    A web page never sees the gallery: the phone's own picker opens and only the chosen photo reaches the app, and it stays on this device. */
 function cvPick(cam){ const f = $(`#cv_root [data-cvfile="photo"]${cam ? '[data-cam]' : ':not([data-cam])'}`); if (f) f.click(); }
@@ -671,7 +695,7 @@ document.addEventListener('input', e => {
 document.addEventListener('change', e => {
   const el = e.target; if (!el.closest || !el.closest('#cv_root')) return;
   if (el.id === 'cv_pick'){ cvLoad().cur = el.value; CV.sure = ''; CV.aiOut = ''; cvSaveSoon(); cvRender0(); return; }
-  if (el.dataset.cvfile === 'photo'){ cvPhoto(el.files && el.files[0]); el.value = ''; return; }
+  if (el.dataset.cvfile === 'photo'){ const f = el.files && el.files[0]; el.value = ''; if (CV.phKind === 'bg') cvBg(f); else cvPhoto(f); return; }
   if (el.dataset.cvfile === 'json'){
     const f = el.files && el.files[0]; el.value = ''; if (!f) return;
     const r = new FileReader(); r.onload = () => { try { const j = JSON.parse(r.result); if (!j || !j.cvbuilder || !j.d) throw 0; cvNew(j.d, j.name); cvSaveSoon(); cvRender0(); toast(t('cv_imported')); } catch (er) { toast(t('cv_badFile')); } }; r.readAsText(f); return;
@@ -680,7 +704,7 @@ document.addEventListener('change', e => {
   if (el.dataset.cv){
     const v = el.type === 'checkbox' ? el.checked : el.tagName === 'SELECT' && /\.lvl$/.test(el.dataset.cv) ? +el.value : el.value;
     cvSet(el.dataset.cv, v); cvScoreSync();
-    if (['tpl', 'color', 'font', 'size', 'lang', 'photoShape', 'skillStyle', 'dates'].includes(el.dataset.cv)) cvThumbs();
+    if (['tpl', 'color', 'font', 'size', 'lang', 'photoShape', 'skillStyle', 'dates', 'bgMode', 'bgFade'].includes(el.dataset.cv)) cvThumbs();
     if (el.dataset.cv === 'lang' || el.dataset.cv === 'photoShape') cvRender0();
   }
 });
@@ -706,7 +730,9 @@ document.addEventListener('click', e => {
   if (a === 'sup' || a === 'sdown'){ const L = d.order, i = +b.dataset.i, j = a === 'sup' ? i - 1 : i + 1; if (j < 0 || j >= L.length) return; [L[i], L[j]] = [L[j], L[i]]; re(); return; }
   if (a === 'tpl'){ d.tpl = b.dataset.v; $$('#cv_root .cv-tpl').forEach(x => x.classList.toggle('on', x === b)); it.at = Date.now(); cvSaveSoon(); return; }
   if (a === 'color'){ d.color = b.dataset.v; $$('#cv_root .cv-sw').forEach(x => x.classList.toggle('on', x === b)); const ci = $('#cv_root input[type=color]'); if (ci) ci.value = d.color; it.at = Date.now(); cvSaveSoon(); cvThumbs(); return; }
-  if (a === 'photo'){ cvPhotoAsk(); return; }
+  if (a === 'photo'){ CV.phKind = 'photo'; cvPhotoAsk(); return; }
+  if (a === 'bg'){ CV.phKind = 'bg'; cvPhotoAsk(); return; }
+  if (a === 'bgDel'){ d.bg = ''; re(); return; }
   if (a === 'photoDel'){ d.photo = ''; re(); return; }
   if (a === 'import'){ const f = $('#cv_root [data-cvfile="json"]'); if (f) f.click(); return; }
   if (a === 'ai'){ cvAI(b.dataset.k, b); return; }
