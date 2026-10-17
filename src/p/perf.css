@@ -49,3 +49,10 @@ button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
 .tile.locked::after{content:"🔒";position:absolute;top:6px;inset-inline-start:8px;font-size:.78rem}
 body.no-member .ai-fab{opacity:.7}
 .mb-ic{font-size:2.2rem;margin:0 0 6px;text-align:center}
+
+.fam-h{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.gold-btn.fam-plus{width:44px;height:44px;min-height:44px;padding:0;flex:none;border-radius:50%;border:0;letter-spacing:0;font-size:26px;font-weight:700;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25);transition:transform .2s}
+.gold-btn.fam-plus.on{transform:rotate(45deg)}
+.fam-form{margin:6px 0 10px}
+.fam-msg{white-space:pre-line;overflow-wrap:anywhere;font-size:13px;opacity:.85;margin:8px 0 0;padding:8px;border-radius:8px;background:rgba(0,0,0,.12)}
+.fam-send{display:flex;gap:8px}.fam-send>*{flex:1}

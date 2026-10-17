@@ -188,7 +188,8 @@ try { renderTiles(); if (mbLocked(tab)) activateMb('home'); } catch (e) {}
 
 /* ================= family mode: family members sign in with their name and a code from the developer; nobody else ever sees it =================
    Only fingerprints of name+code (PBKDF2) are published, in family.json; the codes themselves are never stored anywhere public. */
-const FAM_URL = () => (IN_CLAUDE ? GH_SITE : '') + 'family.json';
+const FAM_SITE = 'https://ysdesign-il.github.io/financial-calculator/';
+const FAM_URL = () => (IN_CLAUDE ? FAM_SITE : '') + 'family.json';
 var FAM = {list: null, on: false, name: ''};
 const famNorm = s => String(s || '').replace(/^.*?(FM[-\s]?)/i, 'FM').replace(/[^0-9a-z]/gi, '').toUpperCase();
 const famNameNorm = s => String(s || '').replace(/\s+/g, '').toUpperCase();
@@ -267,15 +268,21 @@ function famDevRender(){
   if (!(typeof DEV_ON !== 'undefined' && DEV_ON) || !cat){ if (s) s.remove(); return; }
   if (!s){ cat.insertAdjacentHTML('beforeend', `<section class="set-sec" id="fam_sec"></section>`); s = $('#fam_sec'); }
   const L = FAM.list || famCached() || {v: 1, m: []}, N = famNames();
-  s.innerHTML = `<div class="sec-h"><h3 class="sec-t">👨‍👩‍👧 ${E108(t('fam_title'))}</h3></div><p class="fine">${E108(t('fam_help'))}</p>
+  const tok = typeof ghTok === 'function' && ghTok(), open = !!FAM.formOpen;
+  s.innerHTML = `<div class="sec-h fam-h"><h3 class="sec-t">👨‍👩‍👧 ${E108(t('fam_title'))}</h3><button type="button" class="gold-btn fam-plus${open ? ' on' : ''}" id="fam_plus" aria-expanded="${open}" aria-label="${E108(t('fam_plusA'))}" title="${E108(t('fam_plusA'))}">+</button></div><p class="fine">${E108(t('fam_help'))}</p>
     ${typeof ghTok === 'function' && ghTok() ? '' : `<div class="gk-st bad">${E108(t('fam_needTok'))}</div><label class="scn-l" for="fam_tok">${E108(t('dc_tok'))}</label><div class="as-box"><input id="fam_tok" type="password" autocomplete="off" dir="ltr" placeholder="github_pat_…"><button type="button" class="btn" id="fam_tokSave">${E108(t('fam_tokSave'))}</button></div><p class="fine">${E108(t('dc_tokH'))} <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">${E108(t('fam_tokNew'))}</a></p>`}
-    <div class="as-box"><input id="fam_new" type="text" maxlength="30" dir="auto" placeholder="${E108(t('fam_namePh'))}" autocomplete="off"><button type="button" class="gold-btn" id="fam_add"${typeof ghTok === 'function' && ghTok() ? '' : ' disabled'}>${E108(t('fam_add'))}</button></div>
+    <div class="fam-form" id="fam_form"${open ? '' : ' hidden'}><div class="as-box"><input id="fam_new" type="text" maxlength="30" dir="auto" placeholder="${E108(t('fam_namePh'))}" autocomplete="off"><button type="button" class="gold-btn" id="fam_add"${tok ? '' : ' disabled'}>${E108(t('fam_add'))}</button></div></div>
     <div id="fam_out"></div>
     <ul class="sec-list">${(L.m || []).map(x => `<li><b dir="auto">${E108(N[x.id] || t('fam_unknown'))}</b><small>${E108(svdDate(x.at || 0))}</small><button type="button" class="mv wide" data-famdel="${E108(x.id)}">${E108(t('fam_del'))}</button></li>`).join('') || `<li>${E108(t('fam_none'))}</li>`}</ul>`;
 }
 document.addEventListener('click', async e => {
   if (!e.target.closest) return;
   if (e.target.closest('.sh-row[data-scat="conn"]')) setTimeout(() => { famFetch().then(famDevRender); }, 160);
+  if (e.target.closest('#fam_plus')){
+    FAM.formOpen = !FAM.formOpen; famDevRender();
+    if (FAM.formOpen) setTimeout(() => { const i = $('#fam_new'); if (i) i.focus(); }, 60);
+    return;
+  }
   if (e.target.closest('#fam_tokSave')){
     const v = String(($('#fam_tok') || {}).value || '').trim(); if (!v) return;
     try { RAWLS.setItem('fin-gh-tok', v); } catch (er) {} toast(t('dc_tokSaved')); famDevRender(); return;
@@ -289,14 +296,20 @@ document.addEventListener('click', async e => {
     try { await famSave(L, 'Family member added'); }
     catch (er){ add.disabled = false; const o = $('#fam_out'); if (o) o.innerHTML = `<div class="gk-st bad">${E108(t(String(er && er.message) === 'notoken' ? 'fam_needTok' : 'fam_saveFail'))}</div>`; return; }
     famNames()[id] = nm; try { saveSet(); } catch (er) {}
-    const link = (IN_CLAUDE ? GH_SITE : location.origin + location.pathname) + '#fam=' + encodeURIComponent(nm.replace(/[~:]/g, ' ') + '~' + code);
-    const html = `<div class="gk-st ok"><b>${E108(t('fam_made', {n: nm}))}</b><br><span dir="ltr" class="num">${E108(code)}</span></div>
-      <div class="btnrow"><button type="button" class="btn" data-famcopy="${E108(link)}">${E108(t('fam_copyLink'))}</button><button type="button" class="btn" data-famcopy="${E108(nm + ' · ' + code)}">${E108(t('fam_copyCode'))}</button></div>
+    const link = (IN_CLAUDE ? FAM_SITE : location.origin + location.pathname) + '#fam=' + encodeURIComponent(nm.replace(/[~:]/g, ' ') + '~' + code);
+    FAM.msg = t('fam_msg', {n: nm, l: link, c: code});
+    const html = `<div class="gk-st ok fam-card"><b>${E108(t('fam_made', {n: nm}))}</b><br><span dir="ltr" class="num">${E108(code)}</span>
+      <p class="fam-msg" dir="auto">${E108(FAM.msg)}</p></div>
+      <div class="btnrow fam-send"><button type="button" class="gold-btn" id="fam_share">📤 ${E108(t('fam_share'))}</button><button type="button" class="btn" id="fam_copy">📋 ${E108(t('fam_copy'))}</button></div>
       <p class="fine">${E108(t('fam_savedGh'))}</p>`;
-    famDevRender(); const o2 = $('#fam_out'); if (o2) o2.innerHTML = html;
+    FAM.formOpen = false; famDevRender(); const o2 = $('#fam_out'); if (o2) o2.innerHTML = html;
     return;
   }
-  const cp = e.target.closest('[data-famcopy]'); if (cp){ copyText(cp.dataset.famcopy); toast(t('st_copied')); return; }
+  if (e.target.closest('#fam_copy') && FAM.msg){ copyText(FAM.msg); toast(t('st_copied')); return; }
+  if (e.target.closest('#fam_share') && FAM.msg){
+    if (navigator.share){ try { await navigator.share({title: t('fam_title'), text: FAM.msg}); return; } catch (er) { if (er && er.name === 'AbortError') return; } }
+    copyText(FAM.msg); toast(t('shr_copiedInstead')); return;
+  }
   const del = e.target.closest('[data-famdel]');
   if (del){
     const id = del.dataset.famdel, L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []}));
