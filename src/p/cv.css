@@ -64,3 +64,11 @@ body:has(#panel-cv:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 .ph-opts{display:grid;gap:8px;margin:10px 0}
 .cv-ttl input{font-weight:700}
 .cv-bgrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.cv-bgthumb{width:64px;height:90px;object-fit:cover;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.ph-me{margin:0 0 12px;grid-column:1/-1;width:100%}.ph-me>summary{font-weight:700}
+.pm-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:8px;margin:8px 0}
+.pm-list>div{border:1px solid var(--line,rgba(127,127,127,.25));border-radius:10px;padding:8px 10px}
+.pm-list dt{font-size:.8em;opacity:.7}.pm-list dd{margin:2px 0 0;font-weight:600;font-size:.95em;overflow-wrap:anywhere}
+.phe-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px 10px;margin:8px 0}.phe-grid .wide{grid-column:1/-1}
+#ph_ed .cv-f input,#ph_ed .cv-f select{width:100%;min-height:42px;font:inherit;color:var(--ink);background:var(--field,rgba(127,127,127,.08));border:1px solid var(--line,rgba(127,127,127,.3));border-radius:10px;padding:6px 10px;box-sizing:border-box}
+#ph_ed .cv-f label{display:block;font-size:.8em;opacity:.8;margin-bottom:3px}
+.phe-ch input,.phe-ch select{border-color:var(--dz-b1,#E8B84A)!important;box-shadow:0 0 0 1px var(--dz-b1,#E8B84A)}
