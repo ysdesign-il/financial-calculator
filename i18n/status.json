@@ -1,34 +1,34 @@
 {
- "started": "2026-10-17 22:39:55 UTC",
+ "started": "2026-10-17 22:50:19 UTC",
  "events": [
+  "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
+  "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
   "published es",
   "published fr",
   "published ru",
   "published pt-BR",
   "published it",
-  "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
-  "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
   "published zh-CN",
   "published hi"
  ],
  "langs": {
-  "es": 4920,
-  "fr": 4920,
-  "ru": 4920,
-  "pt-BR": 4920,
-  "it": 4920,
-  "zh-CN": 4915,
-  "hi": 4917
+  "es": 4934,
+  "fr": 4934,
+  "ru": 4934,
+  "pt-BR": 4934,
+  "it": 4934,
+  "zh-CN": 4929,
+  "hi": 4931
  },
- "finished": "2026-10-17 22:45:45 UTC",
+ "finished": "2026-10-17 22:50:45 UTC",
  "coverage": {
-  "zh-CN": 4915,
-  "fr": 4920,
-  "hi": 4917,
-  "pt-BR": 4920,
-  "ru": 4920,
-  "es": 4920,
-  "it": 4920
+  "zh-CN": 4929,
+  "fr": 4934,
+  "hi": 4931,
+  "pt-BR": 4934,
+  "ru": 4934,
+  "es": 4934,
+  "it": 4934
  },
- "total": 4920
+ "total": 4934
 }
