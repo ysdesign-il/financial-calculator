@@ -256,11 +256,11 @@ function famCode(){
   const A = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ', r = crypto.getRandomValues(new Uint8Array(12));
   const s = Array.from(r, x => A[x % A.length]).join(''); return 'FM-' + s.slice(0, 4) + '-' + s.slice(4, 8) + '-' + s.slice(8, 12);
 }
-async function famSave(list, msg){
+async function famSave(list, msg){                 // only through the app, with the developer's GitHub token on this device
+  if (!(typeof ghTok === 'function' && ghTok() && typeof ghPut === 'function')) throw new Error('notoken');
   const text = JSON.stringify(list, null, 1);
-  if (typeof ghTok === 'function' && ghTok() && typeof ghPut === 'function'){ await ghPut('family.json', text + '\n', msg); FAM.list = list; try { RAWLS.setItem('fin-fam-list', text); } catch (e) {} return 'gh'; }
+  await ghPut('family.json', text + '\n', msg);
   FAM.list = list; try { RAWLS.setItem('fin-fam-list', text); } catch (e) {}
-  return 'manual';
 }
 function famDevRender(){
   const cat = $('.set-cat[data-cat="conn"]'); let s = $('#fam_sec');
@@ -268,35 +268,42 @@ function famDevRender(){
   if (!s){ cat.insertAdjacentHTML('beforeend', `<section class="set-sec" id="fam_sec"></section>`); s = $('#fam_sec'); }
   const L = FAM.list || famCached() || {v: 1, m: []}, N = famNames();
   s.innerHTML = `<div class="sec-h"><h3 class="sec-t">👨‍👩‍👧 ${E108(t('fam_title'))}</h3></div><p class="fine">${E108(t('fam_help'))}</p>
-    <div class="as-box"><input id="fam_new" type="text" maxlength="30" dir="auto" placeholder="${E108(t('fam_namePh'))}" autocomplete="off"><button type="button" class="gold-btn" id="fam_add">${E108(t('fam_add'))}</button></div>
+    ${typeof ghTok === 'function' && ghTok() ? '' : `<div class="gk-st bad">${E108(t('fam_needTok'))}</div><label class="scn-l" for="fam_tok">${E108(t('dc_tok'))}</label><div class="as-box"><input id="fam_tok" type="password" autocomplete="off" dir="ltr" placeholder="github_pat_…"><button type="button" class="btn" id="fam_tokSave">${E108(t('fam_tokSave'))}</button></div><p class="fine">${E108(t('dc_tokH'))} <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">${E108(t('fam_tokNew'))}</a></p>`}
+    <div class="as-box"><input id="fam_new" type="text" maxlength="30" dir="auto" placeholder="${E108(t('fam_namePh'))}" autocomplete="off"><button type="button" class="gold-btn" id="fam_add"${typeof ghTok === 'function' && ghTok() ? '' : ' disabled'}>${E108(t('fam_add'))}</button></div>
     <div id="fam_out"></div>
     <ul class="sec-list">${(L.m || []).map(x => `<li><b dir="auto">${E108(N[x.id] || t('fam_unknown'))}</b><small>${E108(svdDate(x.at || 0))}</small><button type="button" class="mv wide" data-famdel="${E108(x.id)}">${E108(t('fam_del'))}</button></li>`).join('') || `<li>${E108(t('fam_none'))}</li>`}</ul>`;
 }
 document.addEventListener('click', async e => {
   if (!e.target.closest) return;
   if (e.target.closest('.sh-row[data-scat="conn"]')) setTimeout(() => { famFetch().then(famDevRender); }, 160);
+  if (e.target.closest('#fam_tokSave')){
+    const v = String(($('#fam_tok') || {}).value || '').trim(); if (!v) return;
+    try { RAWLS.setItem('fin-gh-tok', v); } catch (er) {} toast(t('dc_tokSaved')); famDevRender(); return;
+  }
   const add = e.target.closest('#fam_add');
   if (add){
-    const nm = String(($('#fam_new') || {}).value || '').trim(); if (!nm) return;
+    const nm = String(($('#fam_new') || {}).value || '').trim(); if (!nm || add.disabled) return;
+    add.disabled = true;
     const code = famCode(), h = await famHash(nm, code), id = Math.random().toString(36).slice(2, 10);
     const L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []})); L.m = (L.m || []).concat({id, h, at: Date.now()});
+    try { await famSave(L, 'Family member added'); }
+    catch (er){ add.disabled = false; const o = $('#fam_out'); if (o) o.innerHTML = `<div class="gk-st bad">${E108(t(String(er && er.message) === 'notoken' ? 'fam_needTok' : 'fam_saveFail'))}</div>`; return; }
     famNames()[id] = nm; try { saveSet(); } catch (er) {}
-    let how = 'manual'; try { how = await famSave(L, 'Family member added'); } catch (er) { how = 'manual'; }
     const link = (IN_CLAUDE ? GH_SITE : location.origin + location.pathname) + '#fam=' + encodeURIComponent(nm.replace(/[~:]/g, ' ') + '~' + code);
-    const out = $('#fam_out');
-    if (out) out.innerHTML = `<div class="gk-st ok"><b>${E108(t('fam_made', {n: nm}))}</b><br><span dir="ltr" class="num">${E108(code)}</span></div>
+    const html = `<div class="gk-st ok"><b>${E108(t('fam_made', {n: nm}))}</b><br><span dir="ltr" class="num">${E108(code)}</span></div>
       <div class="btnrow"><button type="button" class="btn" data-famcopy="${E108(link)}">${E108(t('fam_copyLink'))}</button><button type="button" class="btn" data-famcopy="${E108(nm + ' · ' + code)}">${E108(t('fam_copyCode'))}</button></div>
-      <p class="fine">${E108(t(how === 'gh' ? 'fam_savedGh' : 'fam_savedManual'))}</p>` + (how === 'gh' ? '' : `<textarea class="lookup" rows="4" readonly dir="ltr">${E108(JSON.stringify(L, null, 1))}</textarea>`);
-    const keep = out ? out.innerHTML : ''; famDevRender(); const o2 = $('#fam_out'); if (o2) o2.innerHTML = keep;
+      <p class="fine">${E108(t('fam_savedGh'))}</p>`;
+    famDevRender(); const o2 = $('#fam_out'); if (o2) o2.innerHTML = html;
     return;
   }
   const cp = e.target.closest('[data-famcopy]'); if (cp){ copyText(cp.dataset.famcopy); toast(t('st_copied')); return; }
   const del = e.target.closest('[data-famdel]');
   if (del){
     const id = del.dataset.famdel, L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []}));
-    L.m = (L.m || []).filter(x => x.id !== id); delete famNames()[id]; try { saveSet(); } catch (er) {}
-    let how = 'manual'; try { how = await famSave(L, 'Family member removed'); } catch (er) {}
-    famDevRender(); toast(t(how === 'gh' ? 'fam_delDone' : 'fam_savedManual'));
+    L.m = (L.m || []).filter(x => x.id !== id);
+    try { await famSave(L, 'Family member removed'); } catch (er){ toast(t(String(er && er.message) === 'notoken' ? 'fam_needTok' : 'fam_saveFail')); return; }
+    delete famNames()[id]; try { saveSet(); } catch (er) {}
+    famDevRender(); toast(t('fam_delDone'));
   }
 });
 famStart(); famFromHash();

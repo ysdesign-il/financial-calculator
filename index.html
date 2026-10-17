@@ -5728,13 +5728,16 @@ Object.assign(T, {
 });
 /* 10.9 texts */
 Object.assign(T, {
+  sec_k_family:['רשימת בני המשפחה במצב משפחה השתנתה','تغيّرت قائمة أفراد العائلة في وضع العائلة','The family-mode member list changed'],
   fam_on:['שלום {n}! נכנסת למצב משפחה.','مرحبًا {n}! دخلت وضع العائلة.','Hi {n}! You are in family mode.'], fam_badge:['מצב משפחה · {n}','وضع العائلة · {n}','Family mode · {n}'], fam_badgeS:['כל המחשבונים והעוזר פתוחים לך, בלי הרשמה.','كل الحاسبات والمساعد متاحة لك بلا تسجيل.','Every calculator and the assistant are open to you, no registration needed.'],
   fam_exit:['יציאה','خروج','Sign out'], fam_offDone:['יצאת ממצב משפחה.','خرجت من وضع العائلة.','You left family mode.'], fam_title:['מצב משפחה','وضع العائلة','Family mode'],
   fam_help:['בני משפחה נכנסים עם השם שלהם וקוד שתיתן להם, ומקבלים גישה מלאה בלי הרשמה. אף אחד אחר לא רואה שהמצב הזה קיים. הקוד מוצג רק עכשיו – שמור או שלח אותו מיד.','يدخل أفراد العائلة باسمهم ورمز تعطيه لهم، ويحصلون على وصول كامل بلا تسجيل. لا أحد غيرهم يرى هذا الوضع. يُعرض الرمز الآن فقط – احفظه أو أرسله فورًا.','Family members sign in with their name and a code you give them, and get full access without registering. Nobody else sees this mode exists. The code is shown only now – save or send it right away.'],
   fam_namePh:['שם בן המשפחה','اسم فرد العائلة','Family member\'s name'], fam_add:['יצירת קוד','إنشاء رمز','Create code'], fam_made:['הקוד של {n}:','رمز {n}:','{n}\'s code:'],
   fam_copyLink:['העתקת קישור כניסה','نسخ رابط الدخول','Copy sign-in link'], fam_copyCode:['העתקת שם וקוד','نسخ الاسم والرمز','Copy name and code'],
   fam_savedGh:['נשמר ב־GitHub. הקוד יעבוד תוך כמה דקות.','حُفظ في GitHub. سيعمل الرمز خلال دقائق.','Saved to GitHub. The code works within a few minutes.'],
-  fam_savedManual:['אין במכשיר הזה מפתח GitHub, לכן הרשימה לא פורסמה. שלח את הטקסט ל־Claude כדי שיעדכן את family.json.','لا يوجد مفتاح GitHub على هذا الجهاز، لذا لم تُنشر القائمة. أرسل النص إلى Claude لتحديث family.json.','There is no GitHub key on this device, so the list was not published. Send the text to Claude to update family.json.'],
+  fam_needTok:['כדי להוסיף או להסיר בני משפחה מתוך האפליקציה צריך טוקן GitHub במכשיר הזה. מדביקים אותו פעם אחת, והוא נשמר רק כאן.','لإضافة أو إزالة أفراد العائلة من داخل التطبيق يلزم رمز GitHub على هذا الجهاز. الصقه مرة واحدة ويُحفظ هنا فقط.','To add or remove family members from the app, this device needs a GitHub token. Paste it once; it stays only here.'],
+  fam_tokSave:['שמירת טוקן','حفظ الرمز','Save token'], fam_tokNew:['ליצירת טוקן ב־GitHub','لإنشاء رمز في GitHub','Create a token on GitHub'],
+  fam_saveFail:['השמירה ב־GitHub לא הצליחה. בדקו שהטוקן תקף ושיש לו הרשאת Contents לכתיבה, ונסו שוב.','فشل الحفظ في GitHub. تحقق من صلاحية الرمز وأن لديه إذن الكتابة على Contents ثم حاول مجددًا.','Saving to GitHub failed. Check the token is valid with Contents write access, and try again.'],
   fam_del:['הסרה','إزالة','Remove'], fam_delDone:['הוסר. הקוד שלו כבר לא יעבוד.','تمت الإزالة. لن يعمل رمزه بعد الآن.','Removed. Their code no longer works.'], fam_none:['עוד אין בני משפחה.','لا يوجد أفراد عائلة بعد.','No family members yet.'], fam_unknown:['בן משפחה','فرد من العائلة','Family member'],
   mb_title:['למנויים רשומים','للمشتركين المسجلين','For registered members'], mb_calc:['"{n}" פתוח למשתמשים רשומים.','"{n}" متاح للمستخدمين المسجلين.','"{n}" is open to registered users.'], mb_ai:['העוזר האישי וההסברים פתוחים למשתמשים רשומים.','المساعد الشخصي والشروحات متاحة للمستخدمين المسجلين.','The personal assistant and explanations are open to registered users.'],
   mb_why:['ההרשמה חינמית ולוקחת חצי דקה: שם משתמש וסיסמה. החשבון נשמר במכשיר שלכם בלבד.','التسجيل مجاني ويستغرق نصف دقيقة: اسم مستخدم وكلمة مرور. يُحفظ الحساب على جهازك فقط.','Registration is free and takes half a minute: a username and a password. The account stays on your device only.'],
@@ -12386,7 +12389,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "11.1", "date": "2026-10-17", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261017.192008';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261017.193018';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -20705,11 +20708,11 @@ function famCode(){
   const A = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ', r = crypto.getRandomValues(new Uint8Array(12));
   const s = Array.from(r, x => A[x % A.length]).join(''); return 'FM-' + s.slice(0, 4) + '-' + s.slice(4, 8) + '-' + s.slice(8, 12);
 }
-async function famSave(list, msg){
+async function famSave(list, msg){                 // only through the app, with the developer's GitHub token on this device
+  if (!(typeof ghTok === 'function' && ghTok() && typeof ghPut === 'function')) throw new Error('notoken');
   const text = JSON.stringify(list, null, 1);
-  if (typeof ghTok === 'function' && ghTok() && typeof ghPut === 'function'){ await ghPut('family.json', text + '\n', msg); FAM.list = list; try { RAWLS.setItem('fin-fam-list', text); } catch (e) {} return 'gh'; }
+  await ghPut('family.json', text + '\n', msg);
   FAM.list = list; try { RAWLS.setItem('fin-fam-list', text); } catch (e) {}
-  return 'manual';
 }
 function famDevRender(){
   const cat = $('.set-cat[data-cat="conn"]'); let s = $('#fam_sec');
@@ -20717,35 +20720,42 @@ function famDevRender(){
   if (!s){ cat.insertAdjacentHTML('beforeend', `<section class="set-sec" id="fam_sec"></section>`); s = $('#fam_sec'); }
   const L = FAM.list || famCached() || {v: 1, m: []}, N = famNames();
   s.innerHTML = `<div class="sec-h"><h3 class="sec-t">👨‍👩‍👧 ${E108(t('fam_title'))}</h3></div><p class="fine">${E108(t('fam_help'))}</p>
-    <div class="as-box"><input id="fam_new" type="text" maxlength="30" dir="auto" placeholder="${E108(t('fam_namePh'))}" autocomplete="off"><button type="button" class="gold-btn" id="fam_add">${E108(t('fam_add'))}</button></div>
+    ${typeof ghTok === 'function' && ghTok() ? '' : `<div class="gk-st bad">${E108(t('fam_needTok'))}</div><label class="scn-l" for="fam_tok">${E108(t('dc_tok'))}</label><div class="as-box"><input id="fam_tok" type="password" autocomplete="off" dir="ltr" placeholder="github_pat_…"><button type="button" class="btn" id="fam_tokSave">${E108(t('fam_tokSave'))}</button></div><p class="fine">${E108(t('dc_tokH'))} <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">${E108(t('fam_tokNew'))}</a></p>`}
+    <div class="as-box"><input id="fam_new" type="text" maxlength="30" dir="auto" placeholder="${E108(t('fam_namePh'))}" autocomplete="off"><button type="button" class="gold-btn" id="fam_add"${typeof ghTok === 'function' && ghTok() ? '' : ' disabled'}>${E108(t('fam_add'))}</button></div>
     <div id="fam_out"></div>
     <ul class="sec-list">${(L.m || []).map(x => `<li><b dir="auto">${E108(N[x.id] || t('fam_unknown'))}</b><small>${E108(svdDate(x.at || 0))}</small><button type="button" class="mv wide" data-famdel="${E108(x.id)}">${E108(t('fam_del'))}</button></li>`).join('') || `<li>${E108(t('fam_none'))}</li>`}</ul>`;
 }
 document.addEventListener('click', async e => {
   if (!e.target.closest) return;
   if (e.target.closest('.sh-row[data-scat="conn"]')) setTimeout(() => { famFetch().then(famDevRender); }, 160);
+  if (e.target.closest('#fam_tokSave')){
+    const v = String(($('#fam_tok') || {}).value || '').trim(); if (!v) return;
+    try { RAWLS.setItem('fin-gh-tok', v); } catch (er) {} toast(t('dc_tokSaved')); famDevRender(); return;
+  }
   const add = e.target.closest('#fam_add');
   if (add){
-    const nm = String(($('#fam_new') || {}).value || '').trim(); if (!nm) return;
+    const nm = String(($('#fam_new') || {}).value || '').trim(); if (!nm || add.disabled) return;
+    add.disabled = true;
     const code = famCode(), h = await famHash(nm, code), id = Math.random().toString(36).slice(2, 10);
     const L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []})); L.m = (L.m || []).concat({id, h, at: Date.now()});
+    try { await famSave(L, 'Family member added'); }
+    catch (er){ add.disabled = false; const o = $('#fam_out'); if (o) o.innerHTML = `<div class="gk-st bad">${E108(t(String(er && er.message) === 'notoken' ? 'fam_needTok' : 'fam_saveFail'))}</div>`; return; }
     famNames()[id] = nm; try { saveSet(); } catch (er) {}
-    let how = 'manual'; try { how = await famSave(L, 'Family member added'); } catch (er) { how = 'manual'; }
     const link = (IN_CLAUDE ? GH_SITE : location.origin + location.pathname) + '#fam=' + encodeURIComponent(nm.replace(/[~:]/g, ' ') + '~' + code);
-    const out = $('#fam_out');
-    if (out) out.innerHTML = `<div class="gk-st ok"><b>${E108(t('fam_made', {n: nm}))}</b><br><span dir="ltr" class="num">${E108(code)}</span></div>
+    const html = `<div class="gk-st ok"><b>${E108(t('fam_made', {n: nm}))}</b><br><span dir="ltr" class="num">${E108(code)}</span></div>
       <div class="btnrow"><button type="button" class="btn" data-famcopy="${E108(link)}">${E108(t('fam_copyLink'))}</button><button type="button" class="btn" data-famcopy="${E108(nm + ' · ' + code)}">${E108(t('fam_copyCode'))}</button></div>
-      <p class="fine">${E108(t(how === 'gh' ? 'fam_savedGh' : 'fam_savedManual'))}</p>` + (how === 'gh' ? '' : `<textarea class="lookup" rows="4" readonly dir="ltr">${E108(JSON.stringify(L, null, 1))}</textarea>`);
-    const keep = out ? out.innerHTML : ''; famDevRender(); const o2 = $('#fam_out'); if (o2) o2.innerHTML = keep;
+      <p class="fine">${E108(t('fam_savedGh'))}</p>`;
+    famDevRender(); const o2 = $('#fam_out'); if (o2) o2.innerHTML = html;
     return;
   }
   const cp = e.target.closest('[data-famcopy]'); if (cp){ copyText(cp.dataset.famcopy); toast(t('st_copied')); return; }
   const del = e.target.closest('[data-famdel]');
   if (del){
     const id = del.dataset.famdel, L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []}));
-    L.m = (L.m || []).filter(x => x.id !== id); delete famNames()[id]; try { saveSet(); } catch (er) {}
-    let how = 'manual'; try { how = await famSave(L, 'Family member removed'); } catch (er) {}
-    famDevRender(); toast(t(how === 'gh' ? 'fam_delDone' : 'fam_savedManual'));
+    L.m = (L.m || []).filter(x => x.id !== id);
+    try { await famSave(L, 'Family member removed'); } catch (er){ toast(t(String(er && er.message) === 'notoken' ? 'fam_needTok' : 'fam_saveFail')); return; }
+    delete famNames()[id]; try { saveSet(); } catch (er) {}
+    famDevRender(); toast(t('fam_delDone'));
   }
 });
 famStart(); famFromHash();
