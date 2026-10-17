@@ -204,7 +204,7 @@ async function famFetch(){
 }
 function famHas(h){ const L = FAM.list || famCached(); return !!(L && Array.isArray(L.m) && L.m.some(x => x && x.h === h)); }
 function famStart(){
-  let h = '', n = ''; try { h = RAWLS.getItem('fin-fam') || ''; n = RAWLS.getItem('fin-fam-n') || ''; } catch (e) {}
+  let h = '', n = ''; try { h = RAWLS.getItem('fin-fam') || ''; RAWLS.removeItem('fin-fam-n'); } catch (e) {}   // who signed in is never kept or shown
   FAM.on = !!(h && famHas(h)); FAM.name = FAM.on ? n : '';
   famFetch().then(() => { const was = FAM.on; FAM.on = !!(h && famHas(h)); FAM.name = FAM.on ? n : ''; if (was !== FAM.on){ if (!FAM.on && h){ try { RAWLS.removeItem('fin-fam'); RAWLS.removeItem('fin-fam-n'); } catch (e) {} } famApply(); } });
 }
@@ -213,8 +213,8 @@ async function famTry(name, code){
   if (!name || famNorm(code).length < 14) return false;
   await famFetch(); const h = await famHash(name, code);
   if (!famHas(h)) return false;
-  try { RAWLS.setItem('fin-fam', h); RAWLS.setItem('fin-fam-n', String(name).trim().slice(0, 30)); } catch (e) {}
-  FAM.on = true; FAM.name = String(name).trim().slice(0, 30); famApply(); toast(t('fam_on', {n: FAM.name})); return true;
+  try { RAWLS.setItem('fin-fam', h); } catch (e) {}
+  FAM.on = true; FAM.name = ''; famApply(); toast(t('fam_onAnon')); return true;
 }
 /* one shared family username + password, chosen by the developer; works on the normal sign-in screen from any device */
 async function famPwHash(user, pass){
@@ -227,9 +227,8 @@ async function famPwTry(user, pass){
   if (!famPwEntry()) await famFetch();
   const e = famPwEntry(); if (!e) return false;
   const h = await famPwHash(user, pass); if (h !== e.h) return false;
-  const nm = String(user).trim().slice(0, 30);
-  try { RAWLS.setItem('fin-fam', h); RAWLS.setItem('fin-fam-n', nm); } catch (er) {}
-  FAM.on = true; FAM.name = nm; famApply(); toast(t('fam_on', {n: nm})); return true;
+    try { RAWLS.setItem('fin-fam', h); } catch (er) {}
+  FAM.on = true; FAM.name = ''; famApply(); toast(t('fam_onAnon')); return true;
 }
 if (typeof doLogin === 'function'){
   const doLoginFam = doLogin;
@@ -238,7 +237,7 @@ if (typeof doLogin === 'function'){
     const local = (() => { try { return typeof getAcc === 'function' && !!getAcc(hdNorm(u)); } catch (e) { return false; } })();
     if (u && pw && !local && window.crypto && crypto.subtle){
       try { accMsg('m_wait', null, true); } catch (e) {}
-      if (await famPwTry(u, pw)){ if (pi) pi.value = ''; try { accMsg('fam_inOk', {n: u}, true); } catch (e) {} try { activate('home'); } catch (e) {} return; }
+      if (await famPwTry(u, pw)){ if (pi) pi.value = ''; if (ui) ui.value = ''; try { accMsg('fam_onAnon', null, true); } catch (e) {} try { activate('home'); } catch (e) {} return; }
     }
     return doLoginFam.apply(this, arguments);
   };
@@ -271,7 +270,7 @@ function famBadge(){
   let b = $('#fam_badge'); const host = $('.set-hub') || $('#panel-settings .set-wrap') || null;
   if (!FAM.on){ if (b) b.remove(); return; }
   if (!b && host){ host.insertAdjacentHTML('afterbegin', `<div class="perm ok" id="fam_badge"><span class="perm-dot"></span><div><b></b><small></small></div><button type="button" class="mv wide" id="fam_off"></button></div>`); b = $('#fam_badge'); }
-  if (b){ $('b', b).textContent = '👨‍👩‍👧 ' + t('fam_badge', {n: FAM.name}); $('small', b).textContent = t('fam_badgeS'); $('#fam_off', b).textContent = t('fam_exit'); }
+  if (b){ $('b', b).textContent = '👨‍👩‍👧 ' + t('fam_title'); $('small', b).textContent = t('fam_badgeS'); $('#fam_off', b).textContent = t('fam_exit'); }
 }
 document.addEventListener('click', e => {
   if (!e.target.closest) return;
@@ -279,7 +278,8 @@ document.addEventListener('click', e => {
 });
 
 /* ---------- developer mode: manage family members (add with a fresh code, remove) ---------- */
-function famNames(){ return (SET.famNames && typeof SET.famNames === 'object') ? SET.famNames : (SET.famNames = {}); }
+function famNames(){ return {}; }
+try { if (SET.famNames){ delete SET.famNames; saveSet(); } } catch (e) {}   // names kept by older versions are dropped
 function famCode(){
   const A = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ', r = crypto.getRandomValues(new Uint8Array(12));
   const s = Array.from(r, x => A[x % A.length]).join(''); return 'FM-' + s.slice(0, 4) + '-' + s.slice(4, 8) + '-' + s.slice(8, 12);
@@ -313,15 +313,17 @@ function famDevRender(){
     <div class="fam-form" id="fam_form"${open ? '' : ' hidden'}><div class="as-box"><input id="fam_new" type="text" maxlength="30" dir="auto" placeholder="${E108(t('fam_namePh'))}" autocomplete="off"><button type="button" class="gold-btn" id="fam_add"${tok ? '' : ' disabled'}>${E108(t('fam_add'))}</button></div></div>
     <div id="fam_out"></div>
     ${famPwBox(L, tok)}
-    <ul class="sec-list">${(L.m || []).filter(x => !x.p).map(x => `<li><b dir="auto">${E108(N[x.id] || t('fam_unknown'))}</b><small>${E108(svdDate(x.at || 0))}</small><button type="button" class="mv wide" data-famdel="${E108(x.id)}">${E108(t('fam_del'))}</button></li>`).join('') || `<li>${E108(t('fam_none'))}</li>`}</ul>`;
+    <div class="fam-linkbox"><small>🚫 ${E108(t('fam_revT'))}</small><p class="fine">${E108(t('fam_revH'))}</p><button type="button" class="mv wide" id="fam_revoke">${E108(t('fam_revB'))}</button><p class="fine" id="fam_revSt"></p></div>
+`;   // no list of who is in family mode, not even for the developer
 }
 /* without a GitHub token: sign the change with the inbox key (only developer mode has it) and send it through the relay; the bot verifies and applies it */
-async function famRelaySet(h, at){
+async function famRelaySet(h, at){ return famRelaySend({k: 'famset', h, at}, at); }
+async function famRelaySend(cmd, at){
   if (typeof ibKey !== 'function' || typeof ib64 !== 'function') throw new Error('nokey');
   const jwk = await ibKey(); if (!jwk || !jwk.d) throw new Error('nokey');
   const j = {kty: jwk.kty, n: jwk.n, e: jwk.e, d: jwk.d, p: jwk.p, q: jwk.q, dp: jwk.dp, dq: jwk.dq, qi: jwk.qi};
   const k = await crypto.subtle.importKey('jwk', j, {name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256'}, false, ['sign']);
-  const raw = new TextEncoder().encode(JSON.stringify({k: 'famset', h, at}));
+  const raw = new TextEncoder().encode(JSON.stringify(cmd));
   const sig = await crypto.subtle.sign('RSASSA-PKCS1-v1_5', k, raw);
   const body = 'fcs1.' + ib64(raw) + '.' + ib64(sig);
   try {
@@ -346,8 +348,8 @@ function famPwBox(L, tok){
       <button type="button" class="gold-btn" id="fam_pwSave">${E108(t('fam_pwSave'))}</button></div>`;
   if (mine){
     return `<div class="fam-linkbox" id="fam_pwbox">${head}${pend ? `<div class="gk-st new">⏳ ${E108(t('fam_pwPend'))}</div>` : ''}
-      <div class="fam-cred"><span>${E108(t('fam_pwU'))}</span><b dir="auto">${E108(loc.u)}</b></div>
-      <div class="fam-cred"><span>${E108(t('fam_pwP'))}</span><b dir="ltr" id="fam_pwShow" data-p="${E108(loc.p)}">••••••</b><button type="button" class="mv" id="fam_pwEye" aria-label="${E108(t('fam_pwEye'))}">👁</button></div>
+      <div class="fam-cred"><span>${E108(t('fam_pwU'))}</span><b dir="auto" class="fam-mask" data-p="${E108(loc.u)}">••••••</b></div>
+      <div class="fam-cred"><span>${E108(t('fam_pwP'))}</span><b dir="ltr" id="fam_pwShow" class="fam-mask" data-p="${E108(loc.p)}">••••••</b><button type="button" class="mv" id="fam_pwEye" aria-label="${E108(t('fam_pwEye'))}">👁</button></div>
       <div class="btnrow fam-send"><button type="button" class="gold-btn" id="fam_pwShare">📤 ${E108(t('fam_share'))}</button><button type="button" class="btn" id="fam_pwCopy">📋 ${E108(t('fam_copy'))}</button></div>
       <button type="button" class="mv wide" id="fam_pwEdit">${E108(t('fam_pwChange'))}</button>${form(false)}</div>`;
   }
@@ -374,7 +376,6 @@ document.addEventListener('click', async e => {
     const L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []})); L.m = (L.m || []).concat({id, h, at: Date.now()});
     try { await famSave(L, 'Family member added'); }
     catch (er){ add.disabled = false; const o = $('#fam_out'); if (o) o.innerHTML = `<div class="gk-st bad">${E108(t(famErrKey(er)))}</div>`; return; }
-    famNames()[id] = nm; try { saveSet(); } catch (er) {}
     const link = (IN_CLAUDE ? FAM_SITE : location.origin + location.pathname) + '#fam=' + encodeURIComponent(nm.replace(/[~:]/g, ' ') + '~' + code);
     FAM.msg = t('fam_msg', {n: nm, l: link, c: code}); FAM.link = link;
     const html = `<div class="gk-st ok fam-card"><b>${E108(t('fam_made', {n: nm}))}</b><br><span dir="ltr" class="num">${E108(code)}</span>
@@ -385,8 +386,20 @@ document.addEventListener('click', async e => {
     FAM.formOpen = false; famDevRender(); const o2 = $('#fam_out'); if (o2) o2.innerHTML = html;
     return;
   }
+  const rv = e.target.closest('#fam_revoke');
+  if (rv && !rv.disabled){
+    if (!rv.dataset.sure){ rv.dataset.sure = '1'; rv.textContent = t('fam_revQ'); rv.classList.add('warn'); setTimeout(() => { if (rv.isConnected){ delete rv.dataset.sure; rv.textContent = t('fam_revB'); rv.classList.remove('warn'); } }, 6000); return; }
+    rv.disabled = true; const st = $('#fam_revSt'), at = Date.now();
+    const L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []})); L.m = (L.m || []).filter(x => x.p);
+    let how = '';
+    try {
+      if (typeof ghTok === 'function' && ghTok() && !IN_CLAUDE){ try { await famSave(L, 'Family codes revoked'); how = 'done'; } catch (er){ if (/^gh\d/.test(String(er && er.message))) throw er; how = await famRelaySend({k: 'famrevoke', at}, at); } }
+      else how = await famRelaySend({k: 'famrevoke', at}, at);
+    } catch (er){ rv.disabled = false; delete rv.dataset.sure; rv.textContent = t('fam_revB'); rv.classList.remove('warn'); if (st) st.textContent = t(String(er && er.message) === 'nokey' ? 'fam_noKey' : String(er && er.message) === 'relay' ? 'fam_errNet' : famErrKey(er)); return; }
+    famDevRender(); toast(t(how === 'queued' ? 'fam_pwQueued' : how === 'sent' ? 'fam_revSent' : 'fam_revDone')); return;
+  }
   if (e.target.closest('#fam_pwEdit')){ const f = $('#fam_pwForm'); if (f){ f.hidden = !f.hidden; if (!f.hidden){ const i = $('#fam_pwP'); if (i) i.focus(); } } return; }
-  if (e.target.closest('#fam_pwEye')){ const b = $('#fam_pwShow'); if (b) b.textContent = b.textContent.startsWith('•') ? b.dataset.p : '••••••'; return; }
+  if (e.target.closest('#fam_pwEye')){ const show = ($('#fam_pwShow') || {textContent: ''}).textContent.startsWith('•'); $$('#fam_pwbox .fam-mask').forEach(b => { b.textContent = show ? b.dataset.p : '••••••'; }); if (show) setTimeout(() => $$('#fam_pwbox .fam-mask').forEach(b => { b.textContent = '••••••'; }), 15000); return; }
   if (e.target.closest('#fam_pwCopy')){ const c = famPwLocal(); if (c.u){ copyText(famPwMsg(c.u, c.p)); toast(t('st_copied')); } return; }
   if (e.target.closest('#fam_pwShare')){
     const c = famPwLocal(); if (!c.u) return; const msg = famPwMsg(c.u, c.p);

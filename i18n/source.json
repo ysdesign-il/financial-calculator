@@ -4721,7 +4721,7 @@
   "mb_go": "Register or sign in",
   "mb_later": "Maybe later",
   "sec_k_family": "The family-mode member list changed",
-  "fam_needTok": "To add or remove family members from the app, this device needs a GitHub token. Paste it once; it stays only here.",
+  "fam_needTok": "To create a personal code with the plus, this device needs a GitHub token. Changing the family username and password does not need one.",
   "fam_tokSave": "Save token",
   "fam_tokNew": "Create a token on GitHub",
   "fam_saveFail": "Saving to GitHub failed. Check the token is valid with Contents write access, and try again.",
@@ -4760,6 +4760,13 @@
   "fam_pwPend": "Change sent. It takes effect within about an hour – until then the previous username and password still work.",
   "fam_pwSent": "Sent! The new username and password work within about an hour.",
   "fam_noKey": "This device does not have the developer inbox key. Open family mode in the Claude app and save there.",
-  "fam_pwQueued": "Saved, but the sending channel is blocked here. Tell Claude in the chat: \"apply the family change\", and it will update it."
+  "fam_pwQueued": "Saved, but the sending channel is blocked here. Tell Claude in the chat: \"apply the family change\", and it will update it.",
+  "fam_onAnon": "You are in family mode – everything is open.",
+  "fam_revT": "Revoke all personal codes",
+  "fam_revH": "Revokes every personal code and link made with the plus at once, without revealing who used them. The family username and password keep working.",
+  "fam_revB": "Revoke all codes",
+  "fam_revQ": "Tap again to confirm – every personal code stops working",
+  "fam_revDone": "All personal codes were revoked.",
+  "fam_revSent": "Sent! Every personal code is revoked within about an hour."
  }
 }
