@@ -156,3 +156,149 @@ if (typeof devTry === 'function'){
     return ok;
   };
 }
+
+/* ---------- members only: the AI assistant and the advanced calculators need a (free, on-device) account ---------- */
+const FREE_TABS = ['home', 'markets', 'saved', 'settings', 'convert', 'vat', 'percent', 'salary', 'tax', 'loan', 'compound', 'savegoal',
+  'unitprice', 'discount', 'split', 'workdays', 'inflation', 'expenses'];
+var isMember = () => { try { return !!FUSER || (typeof DEV_ON !== 'undefined' && DEV_ON); } catch (e) { return false; } };
+const mbLocked = id => !isMember() && TABS.includes(id) && !FREE_TABS.includes(id);
+function mbSync(){ document.body.classList.toggle('no-member', !isMember()); }
+function mbOpen(id){
+  let o = $('#mbx');
+  if (!o){ document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="mbx" hidden><div class="cp-box" role="dialog" aria-modal="true" aria-labelledby="mbx_t"><div class="cp-top"><h3 id="mbx_t"></h3><button type="button" class="cp-x" id="mbx_x">×</button></div><div id="mbx_b"></div></div></div>`); o = $('#mbx'); }
+  $('#mbx_t').textContent = t('mb_title'); $('#mbx_x').setAttribute('aria-label', t('cp_close'));
+  $('#mbx_b').innerHTML = `<p class="mb-ic">🔒</p><p><b>${E108(id === 'assist' ? t('mb_ai') : t('mb_calc', {n: t('tab_' + id)}))}</b></p><p class="fine">${E108(t('mb_why'))}</p>
+    <div class="btnrow"><button type="button" class="gold-btn" id="mbx_go">${E108(t('mb_go'))}</button><button type="button" class="btn" id="mbx_no">${E108(t('mb_later'))}</button></div>`;
+  o.hidden = false; document.body.classList.add('cp-lock');
+}
+function mbClose(){ const o = $('#mbx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); } }
+const activateMb = activate;
+activate = function(id){ if (mbLocked(id)){ mbOpen(id); return; } return activateMb.apply(this, arguments); };
+document.addEventListener('click', e => {
+  if (!e.target.closest) return;
+  if (!isMember() && e.target.closest('#ai_fab, #explainBtn')){ e.preventDefault(); e.stopPropagation(); mbOpen('assist'); return; }
+  const o = $('#mbx'); if (!o || o.hidden) return;
+  if (e.target === o || e.target.closest('#mbx_x, #mbx_no')) return mbClose();
+  if (e.target.closest('#mbx_go')){ mbClose(); activateMb('settings'); setTimeout(() => { try { if (typeof setCat === 'function') setCat('account'); } catch (er) {} }, 120); }
+}, true);
+const renderTilesMb = renderTiles;
+renderTiles = function(){ const r = renderTilesMb.apply(this, arguments); try { $$('#tiles .tile[data-go]').forEach(b => b.classList.toggle('locked', mbLocked(b.dataset.go))); } catch (e) {} return r; };
+mbSync();
+try { renderTiles(); if (mbLocked(tab)) activateMb('home'); } catch (e) {}
+
+/* ================= family mode: family members sign in with their name and a code from the developer; nobody else ever sees it =================
+   Only fingerprints of name+code (PBKDF2) are published, in family.json; the codes themselves are never stored anywhere public. */
+const FAM_URL = () => (IN_CLAUDE ? GH_SITE : '') + 'family.json';
+var FAM = {list: null, on: false, name: ''};
+const famNorm = s => String(s || '').replace(/^.*?(FM[-\s]?)/i, 'FM').replace(/[^0-9a-z]/gi, '').toUpperCase();
+const famNameNorm = s => String(s || '').replace(/\s+/g, '').toUpperCase();
+async function famHash(name, code){
+  const b = await pbk(famNameNorm(name) + ':' + famNorm(code), new TextEncoder().encode('fincalc-family-v1'), 150000, 256);
+  return Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join('');
+}
+function famCached(){ try { return JSON.parse(RAWLS.getItem('fin-fam-list') || 'null'); } catch (e) { return null; } }
+async function famFetch(){
+  try { const r = await fetch(FAM_URL() + '?t=' + Date.now(), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); if (r.ok){ const d = await r.json(); if (d && Array.isArray(d.m)){ FAM.list = d; try { RAWLS.setItem('fin-fam-list', JSON.stringify(d)); } catch (e) {} } } } catch (e) {}
+  return FAM.list;
+}
+function famHas(h){ const L = FAM.list || famCached(); return !!(L && Array.isArray(L.m) && L.m.some(x => x && x.h === h)); }
+function famStart(){
+  let h = '', n = ''; try { h = RAWLS.getItem('fin-fam') || ''; n = RAWLS.getItem('fin-fam-n') || ''; } catch (e) {}
+  FAM.on = !!(h && famHas(h)); FAM.name = FAM.on ? n : '';
+  famFetch().then(() => { const was = FAM.on; FAM.on = !!(h && famHas(h)); FAM.name = FAM.on ? n : ''; if (was !== FAM.on){ if (!FAM.on && h){ try { RAWLS.removeItem('fin-fam'); RAWLS.removeItem('fin-fam-n'); } catch (e) {} } famApply(); } });
+}
+function famApply(){ mbSync(); try { renderTiles(); } catch (e) {} famBadge(); }
+async function famTry(name, code){
+  if (!name || famNorm(code).length < 14) return false;
+  await famFetch(); const h = await famHash(name, code);
+  if (!famHas(h)) return false;
+  try { RAWLS.setItem('fin-fam', h); RAWLS.setItem('fin-fam-n', String(name).trim().slice(0, 30)); } catch (e) {}
+  FAM.on = true; FAM.name = String(name).trim().slice(0, 30); famApply(); toast(t('fam_on', {n: FAM.name})); return true;
+}
+/* the same hidden entry as developer mode accepts a family code too; or open the link the developer sends: #fam=NAME~CODE */
+if (typeof devTry === 'function'){
+  const devTryFam = devTry;
+  devTry = async function(rawName, rawCode, quiet){
+    const ni = $('#dev_name'), ci = $('#dev_code'), name = rawName != null ? rawName : ni && ni.value, code = rawCode != null ? rawCode : ci && ci.value;
+    if (/^\s*FM/i.test(String(code || '')) || /FM[-\s]?[0-9A-Z]{4}/i.test(String(code || ''))){
+      const ok = await famTry(name, code);
+      if (ok){ const b = $('#dev_box'); if (b) b.remove(); return true; }
+      if (!quiet){ const m = $('#dev_msg'); if (m) m.textContent = t('dev_bad2'); }
+      return false;
+    }
+    return devTryFam.apply(this, arguments);
+  };
+}
+async function famFromHash(){
+  const m = /[#&]fam=([^&]+)/i.exec(location.hash || ''); if (!m) return;
+  const raw = decodeURIComponent(m[1]), pair = /^([^~:]+)[~:](.+)$/.exec(raw);
+  try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+  if (!pair || !(await famTry(pair[1], pair[2]))) toast(t('dev_bad2'));
+}
+window.addEventListener('hashchange', famFromHash);
+/* who counts as a member: developer, family, or a registered account */
+const isMemberFam = isMember;
+isMember = () => FAM.on || isMemberFam();
+function famBadge(){
+  let b = $('#fam_badge'); const host = $('.set-hub') || $('#panel-settings .set-wrap') || null;
+  if (!FAM.on){ if (b) b.remove(); return; }
+  if (!b && host){ host.insertAdjacentHTML('afterbegin', `<div class="perm ok" id="fam_badge"><span class="perm-dot"></span><div><b></b><small></small></div><button type="button" class="mv wide" id="fam_off"></button></div>`); b = $('#fam_badge'); }
+  if (b){ $('b', b).textContent = '👨‍👩‍👧 ' + t('fam_badge', {n: FAM.name}); $('small', b).textContent = t('fam_badgeS'); $('#fam_off', b).textContent = t('fam_exit'); }
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest) return;
+  if (e.target.closest('#fam_off')){ try { RAWLS.removeItem('fin-fam'); RAWLS.removeItem('fin-fam-n'); } catch (er) {} FAM.on = false; FAM.name = ''; famApply(); toast(t('fam_offDone')); }
+});
+
+/* ---------- developer mode: manage family members (add with a fresh code, remove) ---------- */
+function famNames(){ return (SET.famNames && typeof SET.famNames === 'object') ? SET.famNames : (SET.famNames = {}); }
+function famCode(){
+  const A = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ', r = crypto.getRandomValues(new Uint8Array(12));
+  const s = Array.from(r, x => A[x % A.length]).join(''); return 'FM-' + s.slice(0, 4) + '-' + s.slice(4, 8) + '-' + s.slice(8, 12);
+}
+async function famSave(list, msg){
+  const text = JSON.stringify(list, null, 1);
+  if (typeof ghTok === 'function' && ghTok() && typeof ghPut === 'function'){ await ghPut('family.json', text + '\n', msg); FAM.list = list; try { RAWLS.setItem('fin-fam-list', text); } catch (e) {} return 'gh'; }
+  FAM.list = list; try { RAWLS.setItem('fin-fam-list', text); } catch (e) {}
+  return 'manual';
+}
+function famDevRender(){
+  const cat = $('.set-cat[data-cat="conn"]'); let s = $('#fam_sec');
+  if (!(typeof DEV_ON !== 'undefined' && DEV_ON) || !cat){ if (s) s.remove(); return; }
+  if (!s){ cat.insertAdjacentHTML('beforeend', `<section class="set-sec" id="fam_sec"></section>`); s = $('#fam_sec'); }
+  const L = FAM.list || famCached() || {v: 1, m: []}, N = famNames();
+  s.innerHTML = `<div class="sec-h"><h3 class="sec-t">👨‍👩‍👧 ${E108(t('fam_title'))}</h3></div><p class="fine">${E108(t('fam_help'))}</p>
+    <div class="as-box"><input id="fam_new" type="text" maxlength="30" dir="auto" placeholder="${E108(t('fam_namePh'))}" autocomplete="off"><button type="button" class="gold-btn" id="fam_add">${E108(t('fam_add'))}</button></div>
+    <div id="fam_out"></div>
+    <ul class="sec-list">${(L.m || []).map(x => `<li><b dir="auto">${E108(N[x.id] || t('fam_unknown'))}</b><small>${E108(svdDate(x.at || 0))}</small><button type="button" class="mv wide" data-famdel="${E108(x.id)}">${E108(t('fam_del'))}</button></li>`).join('') || `<li>${E108(t('fam_none'))}</li>`}</ul>`;
+}
+document.addEventListener('click', async e => {
+  if (!e.target.closest) return;
+  if (e.target.closest('.sh-row[data-scat="conn"]')) setTimeout(() => { famFetch().then(famDevRender); }, 160);
+  const add = e.target.closest('#fam_add');
+  if (add){
+    const nm = String(($('#fam_new') || {}).value || '').trim(); if (!nm) return;
+    const code = famCode(), h = await famHash(nm, code), id = Math.random().toString(36).slice(2, 10);
+    const L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []})); L.m = (L.m || []).concat({id, h, at: Date.now()});
+    famNames()[id] = nm; try { saveSet(); } catch (er) {}
+    let how = 'manual'; try { how = await famSave(L, 'Family member added'); } catch (er) { how = 'manual'; }
+    const link = (IN_CLAUDE ? GH_SITE : location.origin + location.pathname) + '#fam=' + encodeURIComponent(nm.replace(/[~:]/g, ' ') + '~' + code);
+    const out = $('#fam_out');
+    if (out) out.innerHTML = `<div class="gk-st ok"><b>${E108(t('fam_made', {n: nm}))}</b><br><span dir="ltr" class="num">${E108(code)}</span></div>
+      <div class="btnrow"><button type="button" class="btn" data-famcopy="${E108(link)}">${E108(t('fam_copyLink'))}</button><button type="button" class="btn" data-famcopy="${E108(nm + ' · ' + code)}">${E108(t('fam_copyCode'))}</button></div>
+      <p class="fine">${E108(t(how === 'gh' ? 'fam_savedGh' : 'fam_savedManual'))}</p>` + (how === 'gh' ? '' : `<textarea class="lookup" rows="4" readonly dir="ltr">${E108(JSON.stringify(L, null, 1))}</textarea>`);
+    const keep = out ? out.innerHTML : ''; famDevRender(); const o2 = $('#fam_out'); if (o2) o2.innerHTML = keep;
+    return;
+  }
+  const cp = e.target.closest('[data-famcopy]'); if (cp){ copyText(cp.dataset.famcopy); toast(t('st_copied')); return; }
+  const del = e.target.closest('[data-famdel]');
+  if (del){
+    const id = del.dataset.famdel, L = JSON.parse(JSON.stringify(FAM.list || famCached() || {v: 1, m: []}));
+    L.m = (L.m || []).filter(x => x.id !== id); delete famNames()[id]; try { saveSet(); } catch (er) {}
+    let how = 'manual'; try { how = await famSave(L, 'Family member removed'); } catch (er) {}
+    famDevRender(); toast(t(how === 'gh' ? 'fam_delDone' : 'fam_savedManual'));
+  }
+});
+famStart(); famFromHash();
+setTimeout(famBadge, 800);
+document.addEventListener('click', e => { if (e.target.closest && e.target.closest('.sh-row, [data-tab="settings"], .bt[data-tab="settings"]')) setTimeout(famBadge, 200); });

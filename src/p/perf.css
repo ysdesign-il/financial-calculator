@@ -45,3 +45,7 @@ button,a,select,input,.tile,.bt,summary,label{touch-action:manipulation}
 .sec-list li{padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--g1);display:flex;flex-direction:column;gap:3px}
 .sec-list li.new{border-color:rgba(240,112,90,.7)}
 .sec-list small{color:var(--ink-2)}
+.tile.locked{position:relative;opacity:.72}
+.tile.locked::after{content:"🔒";position:absolute;top:6px;inset-inline-start:8px;font-size:.78rem}
+body.no-member .ai-fab{opacity:.7}
+.mb-ic{font-size:2.2rem;margin:0 0 6px;text-align:center}
