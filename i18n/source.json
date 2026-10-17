@@ -4956,6 +4956,20 @@
   "cv_page1": "One page",
   "cv_making": "Preparing…",
   "cv_printNo": "Printing is blocked here – download the PDF and print it.",
-  "cv_onePage": "Tip: one-page CVs get read more. Try a smaller text size or shorter descriptions."
+  "cv_onePage": "Tip: one-page CVs get read more. Try a smaller text size or shorter descriptions.",
+  "cv_secTitle": "Section heading (you can change it)",
+  "cv_secNote": "Free text for this section (shown under the items)",
+  "cv_bg": "Background image",
+  "cv_bgH": "Your own image instead of the white background – on the whole page or at the top. It is shown softly so the text stays readable.",
+  "cv_bgAdd": "Add a background image",
+  "cv_bgChange": "Change image",
+  "cv_bgDel": "Remove background",
+  "cv_bgMode": "Placement",
+  "cv_bg_page": "Whole page",
+  "cv_bg_header": "Top of the page",
+  "cv_bgFade": "Strength",
+  "cv_bg_light": "Soft",
+  "cv_bg_medium": "Medium",
+  "cv_bg_strong": "Strong"
  }
 }

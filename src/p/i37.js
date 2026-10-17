@@ -2,6 +2,11 @@
 Object.assign(T, {
   tab_cv:['בונה קורות חיים','منشئ السيرة الذاتية','CV builder'], d_cv:['קורות חיים מעוצבים: תבניות, צבעים, PDF, עזרה בניסוח ותרגום.','سيرة ذاتية منسقة: قوالب وألوان وPDF ومساعدة في الصياغة والترجمة.','Styled CVs: templates, colors, PDF, writing help and translation.'],
   g_cv:['קריירה','المسار المهني','Career'], gs_cv:['קריירה','مهني','Career'],
+  cv_secTitle:['כותרת המקטע (אפשר לשנות)','عنوان القسم (قابل للتغيير)','Section heading (you can change it)'], cv_secNote:['טקסט חופשי למקטע (יופיע מתחת לפריטים)','نص حر للقسم (يظهر تحت العناصر)','Free text for this section (shown under the items)'],
+  cv_bg:['תמונת רקע','صورة خلفية','Background image'], cv_bgH:['תמונה משלך במקום הרקע הלבן – על כל העמוד או בראש העמוד. היא מוצגת בעדינות כדי שהטקסט יישאר קריא.','صورة خاصة بدل الخلفية البيضاء – على الصفحة كلها أو في أعلاها. تظهر بخفة ليبقى النص مقروءًا.','Your own image instead of the white background – on the whole page or at the top. It is shown softly so the text stays readable.'],
+  cv_bgAdd:['הוספת תמונת רקע','إضافة صورة خلفية','Add a background image'], cv_bgChange:['החלפת תמונה','تغيير الصورة','Change image'], cv_bgDel:['הסרת הרקע','إزالة الخلفية','Remove background'],
+  cv_bgMode:['מיקום','الموضع','Placement'], cv_bg_page:['כל העמוד','الصفحة كلها','Whole page'], cv_bg_header:['ראש העמוד','أعلى الصفحة','Top of the page'],
+  cv_bgFade:['עוצמה','الشدة','Strength'], cv_bg_light:['עדינה','خفيفة','Soft'], cv_bg_medium:['בינונית','متوسطة','Medium'], cv_bg_strong:['חזקה','قوية','Strong'],
   ph_title:['גישה לתמונות','الوصول إلى الصور','Photo access'],
   ph_why:['כדי להוסיף תמונה לקורות החיים צריך לבחור תמונה מהטלפון. איך לאפשר?','لإضافة صورة إلى السيرة يجب اختيار صورة من الهاتف. كيف تسمح؟','To add a photo to your CV you pick one from your phone. How would you like to allow it?'],
   ph_once:['הפעם בלבד – בחירת תמונה','هذه المرة فقط – اختيار صورة','Just this time – choose a photo'], ph_always:['לאפשר תמיד (בלי לשאול שוב)','السماح دائمًا (بدون سؤال مجددًا)','Always allow (don\'t ask again)'],
