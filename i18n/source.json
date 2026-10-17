@@ -4734,6 +4734,20 @@
   "o_rsB": "B/C",
   "o_rsD": "D",
   "o_rsE": "E",
-  "fam_linkL": "Family mode sign-in link"
+  "fam_linkL": "Family mode sign-in link",
+  "fam_pwTitle": "Family username and password",
+  "fam_pwHelp": "One username and password for the whole family. Sign in on the normal sign-in screen (Settings → Account & access) from any device; it stays signed in. Changing the password signs everyone out until they use the new one.",
+  "fam_pwU": "Username",
+  "fam_pwP": "Password",
+  "fam_pwEye": "Show password",
+  "fam_pwSave": "Save",
+  "fam_pwChange": "Change username or password",
+  "fam_pwShortU": "Username is too short (at least 2 characters).",
+  "fam_pwShortP": "Password is too short (at least 6 characters).",
+  "fam_pwTaken": "That name is already an account on this device. Choose another.",
+  "fam_pwOther": "A username and password were set on another device. Saving here replaces them.",
+  "fam_pwDone": "Saved. Sign-in works within a few minutes.",
+  "fam_pwMsg": "Sign-in to the financial calculator (family mode):\n{l}\nSign in under Settings → Account & access\nUsername: {u}\nPassword: {p}",
+  "fam_inOk": "Hi {n}! You are in family mode – everything is open."
  }
 }
