@@ -297,14 +297,16 @@ document.addEventListener('click', async e => {
     catch (er){ add.disabled = false; const o = $('#fam_out'); if (o) o.innerHTML = `<div class="gk-st bad">${E108(t(String(er && er.message) === 'notoken' ? 'fam_needTok' : 'fam_saveFail'))}</div>`; return; }
     famNames()[id] = nm; try { saveSet(); } catch (er) {}
     const link = (IN_CLAUDE ? FAM_SITE : location.origin + location.pathname) + '#fam=' + encodeURIComponent(nm.replace(/[~:]/g, ' ') + '~' + code);
-    FAM.msg = t('fam_msg', {n: nm, l: link, c: code});
+    FAM.msg = t('fam_msg', {n: nm, l: link, c: code}); FAM.link = link;
     const html = `<div class="gk-st ok fam-card"><b>${E108(t('fam_made', {n: nm}))}</b><br><span dir="ltr" class="num">${E108(code)}</span>
       <p class="fam-msg" dir="auto">${E108(FAM.msg)}</p></div>
+      <div class="fam-linkbox"><small>🔗 ${E108(t('fam_linkL'))}</small><a class="fam-link" id="fam_link" href="${E108(link)}" target="_blank" rel="noopener noreferrer" dir="ltr">${E108(link)}</a><button type="button" class="btn" id="fam_copyLink">${E108(t('fam_copyLink'))}</button></div>
       <div class="btnrow fam-send"><button type="button" class="gold-btn" id="fam_share">📤 ${E108(t('fam_share'))}</button><button type="button" class="btn" id="fam_copy">📋 ${E108(t('fam_copy'))}</button></div>
       <p class="fine">${E108(t('fam_savedGh'))}</p>`;
     FAM.formOpen = false; famDevRender(); const o2 = $('#fam_out'); if (o2) o2.innerHTML = html;
     return;
   }
+  if (e.target.closest('#fam_copyLink') && FAM.link){ copyText(FAM.link); toast(t('st_copied')); return; }
   if (e.target.closest('#fam_copy') && FAM.msg){ copyText(FAM.msg); toast(t('st_copied')); return; }
   if (e.target.closest('#fam_share') && FAM.msg){
     if (navigator.share){ try { await navigator.share({title: t('fam_title'), text: FAM.msg}); return; } catch (er) { if (er && er.name === 'AbortError') return; } }
