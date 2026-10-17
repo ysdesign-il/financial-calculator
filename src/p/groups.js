@@ -8,6 +8,7 @@ const GROUPS = [
   ['g_retire',  ['retire','pensfix','oldage','pencmp','mgmtfees','hishtalmut','fire','freedom']],
   ['g_budget',  ['expenses','smartsplit','split','unitprice','discount','appliance','evfuel','breakeven']],
   ['g_compare', ['insurance','cellcmp','phonecmp']],
-  ['g_fxtools', ['convert','inflation','cpilink','percent']]
+  ['g_fxtools', ['convert','inflation','cpilink','percent']],
+  ['g_cv',      ['cv']]
 ];
 const TABS = GROUPS.flatMap(g => g[1]);
