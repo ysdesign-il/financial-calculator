@@ -8,12 +8,12 @@ def seg(a, b): return '\n'.join(L[a-1:b])   # 1-indexed inclusive
 assert L[528].startswith('const TABS') and L[612].strip()=='};' and L[615].startswith('function unitHTML')
 assert L[743].startswith('const navEl') and L[860].startswith('/* ===') and 'navigation' in L[1243] and L[501].strip()=='};'
 out = []
-out.append(seg(1, 11)); out.append(P('tokens.css')); out.append(seg(38, 231)); out.append(P('css.css')); out.append(P('theme.css')); out.append(P('design.css')); out.append(P('fx.css')); out.append(P('design2.css')); out.append(P('acc.css')); out.append(P('perf.css')); out.append(P('cv.css')); out.append(P('cur.css'))
-out.append(seg(232, 234)); out.append(P('body.html')); out.append(seg(267, 502)); out.append(P('i1.js')+P('i2.js')+P('i3.js')+P('i4.js')+P('i5.js')+P('i6.js')+P('i7.js')+P('i8.js')+P('i9.js')+P('i10.js')+P('i11.js')+P('i12.js')+P('i13.js')+P('i14.js')+P('i15.js')+P('i16.js')+P('i17.js')+P('i18.js')+P('i19.js')+P('i20.js')+P('i21.js')+P('i22.js')+P('i23.js')+P('i25.js')+P('i26.js')+P('i27.js')+P('i28.js')+P('i29.js')+P('i30.js')+P('i31.js')+P('i32.js')+P('i33.js')+P('i34.js')+P('i35.js')+P('i36.js')+P('i37.js')+P('i38.js'))
+out.append(seg(1, 11)); out.append(P('tokens.css')); out.append(seg(38, 231)); out.append(P('css.css')); out.append(P('theme.css')); out.append(P('design.css')); out.append(P('fx.css')); out.append(P('design2.css')); out.append(P('acc.css')); out.append(P('perf.css')); out.append(P('cv.css')); out.append(P('mx.css')); out.append(P('cur.css'))
+out.append(seg(232, 234)); out.append(P('body.html')); out.append(seg(267, 502)); out.append(P('i1.js')+P('i2.js')+P('i3.js')+P('i4.js')+P('i5.js')+P('i6.js')+P('i7.js')+P('i8.js')+P('i9.js')+P('i10.js')+P('i11.js')+P('i12.js')+P('i13.js')+P('i14.js')+P('i15.js')+P('i16.js')+P('i17.js')+P('i18.js')+P('i19.js')+P('i20.js')+P('i21.js')+P('i22.js')+P('i23.js')+P('i25.js')+P('i26.js')+P('i27.js')+P('i28.js')+P('i29.js')+P('i30.js')+P('i31.js')+P('i32.js')+P('i33.js')+P('i34.js')+P('i35.js')+P('i36.js')+P('i37.js')+P('i38.js')+P('i39.js'))
 out.append(seg(503, 523)); out.append(P('crypto.js')); out.append(P('fx_official.js')); out.append(P('groups.js'))
 out.append(seg(530, 613)); out.append(P('ico.js'))
 out.append(seg(614, 615)); out.append(P('sico.js')+P('ui2a.js')+P('ui2b.js')+P('ui2d.js')+P('ui2c.js')+P('ui2e.js')+P('ui2f.js')+P('ui2g.js')+P('ui2h.js')+P('ui2i.js'))
-out.append(P('home.js')+P('settings_ui.js')+P('tools.js')+P('saved_pre.js')+P('cv_pre.js')); out.append(seg(744, 860)); out.append(P('c1.js')+P('c2.js')+P('c3.js')+P('c4.js')+P('c5.js')+P('c6.js')+P('c7.js')+P('c8.js')+P('c9.js')+P('c10.js')+P('c11.js')+P('c12.js')+P('c13.js'))
+out.append(P('home.js')+P('settings_ui.js')+P('tools.js')+P('saved_pre.js')+P('cv_pre.js')+P('mx_pre.js')); out.append(seg(744, 860)); out.append(P('c1.js')+P('c2.js')+P('c3.js')+P('c4.js')+P('c5.js')+P('c6.js')+P('c7.js')+P('c8.js')+P('c9.js')+P('c10.js')+P('c11.js')+P('c12.js')+P('c13.js'))
 out.append(seg(1244, len(L)))
 s = '\n'.join(out)
 # show(): warnings
@@ -38,7 +38,7 @@ function liveTouch(k){ if (LIVE_APPLYING || !FUSER) return; try { const ts = JSO
 const LS = FUSER
   ? {getItem: k => SS.getItem(WK(k)), setItem: (k, v) => { v = String(v); if (SS.getItem(WK(k)) === v) return; SS.setItem(WK(k), v); liveTouch(k); persistSoon(); }, removeItem: k => { if (SS.getItem(WK(k)) == null) return; SS.removeItem(WK(k)); liveTouch(k); persistSoon(); }}
   : {getItem: k => RAWLS.getItem(k), setItem: (k, v) => RAWLS.setItem(k, v), removeItem: k => RAWLS.removeItem(k)};
-const DATA_KEYS = ['fin-set', 'fin-vals', 'fin-scn', 'fin-lang', 'fin-cur', 'fin-tab', 'fin-exp', 'fin-clients', 'fin-trash', 'fin-files', 'fin-cv'];
+const DATA_KEYS = ['fin-set', 'fin-vals', 'fin-scn', 'fin-lang', 'fin-cur', 'fin-tab', 'fin-exp', 'fin-clients', 'fin-trash', 'fin-files', 'fin-cv', 'fin-mathx'];
 /* saving: automatic, or only when you tap Save. In manual mode your data changes wait here (and survive a reload of this tab) until you save */
 const SAVE_KEYS = ['fin-vals', 'fin-scn', 'fin-exp', 'fin-clients'];
 const LS_RAW = {getItem: LS.getItem, setItem: LS.setItem, removeItem: LS.removeItem};

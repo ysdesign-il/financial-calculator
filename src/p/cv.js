@@ -555,7 +555,8 @@ async function cvBg(file){
 }
 /* ---------- photo access: ask once / allow always / blocked – changeable any time in Settings → Security ----------
    A web page never sees the gallery: the phone's own picker opens and only the chosen photo reaches the app, and it stays on this device. */
-function cvPick(cam){ const f = $(`#cv_root [data-cvfile="photo"]${cam ? '[data-cam]' : ':not([data-cam])'}`); if (f) f.click(); }
+var PHA_T = 'cv';   /* which screen asked for a photo: the CV builder or the calculator's scanner */
+function cvPick(cam){ const sel = PHA_T === 'mx' ? '#mx_root [data-mxfile]' : '#cv_root [data-cvfile="photo"]'; const f = $(`${sel}${cam ? '[data-cam]' : ':not([data-cam])'}`); if (f) f.click(); }
 function cvPhotoAsk(){
   const m = SET.photoAccess || 'ask';
   if (m === 'never'){ toast(t('pha_blocked')); return; }
@@ -730,8 +731,8 @@ document.addEventListener('click', e => {
   if (a === 'sup' || a === 'sdown'){ const L = d.order, i = +b.dataset.i, j = a === 'sup' ? i - 1 : i + 1; if (j < 0 || j >= L.length) return; [L[i], L[j]] = [L[j], L[i]]; re(); return; }
   if (a === 'tpl'){ d.tpl = b.dataset.v; $$('#cv_root .cv-tpl').forEach(x => x.classList.toggle('on', x === b)); it.at = Date.now(); cvSaveSoon(); return; }
   if (a === 'color'){ d.color = b.dataset.v; $$('#cv_root .cv-sw').forEach(x => x.classList.toggle('on', x === b)); const ci = $('#cv_root input[type=color]'); if (ci) ci.value = d.color; it.at = Date.now(); cvSaveSoon(); cvThumbs(); return; }
-  if (a === 'photo'){ CV.phKind = 'photo'; cvPhotoAsk(); return; }
-  if (a === 'bg'){ CV.phKind = 'bg'; cvPhotoAsk(); return; }
+  if (a === 'photo'){ PHA_T = 'cv'; CV.phKind = 'photo'; cvPhotoAsk(); return; }
+  if (a === 'bg'){ PHA_T = 'cv'; CV.phKind = 'bg'; cvPhotoAsk(); return; }
   if (a === 'bgDel'){ d.bg = ''; re(); return; }
   if (a === 'photoDel'){ d.photo = ''; re(); return; }
   if (a === 'import'){ const f = $('#cv_root [data-cvfile="json"]'); if (f) f.click(); return; }

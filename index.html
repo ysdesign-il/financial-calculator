@@ -1912,6 +1912,96 @@ body:has(#panel-cv:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 #ph_ed .cv-f label{display:block;font-size:.8em;opacity:.8;margin-bottom:3px}
 .phe-ch input,.phe-ch select{border-color:var(--dz-b1,#E8B84A)!important;box-shadow:0 0 0 1px var(--dz-b1,#E8B84A)}
 
+/* ===== advanced calculator ===== */
+#mx_root{display:grid;gap:12px}
+.mx-tabs,.mx-subseg{display:flex;flex-wrap:wrap}.mx-tabs button,.mx-subseg button{flex:1 1 auto}
+.mx-body{display:grid;gap:10px}
+.mx-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.mx-bar select,#mx_root .mx-fgrid input,#mx_root .mx-fgrid textarea,#mx_root .field select,.mx-newacc input,.mx-newacc select,.mx-gbar input,.mx-gfn input,.mx-entry input,.mx-entry select{min-height:42px;font:inherit;color:var(--ink);background:var(--field,rgba(127,127,127,.08));border:1px solid var(--line,rgba(127,127,127,.3));border-radius:10px;padding:6px 10px;box-sizing:border-box}
+.mx-in-ta{width:100%;box-sizing:border-box;font:500 1.05rem/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--ink);background:var(--field,rgba(127,127,127,.08));border:1px solid var(--line,rgba(127,127,127,.3));border-radius:12px;padding:10px 12px;resize:vertical;min-height:140px;direction:ltr;text-align:left}
+.mx-keys{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px}
+.mx-keys button{min-height:40px;border-radius:10px;border:1px solid var(--line,rgba(127,127,127,.3));background:var(--g1,rgba(127,127,127,.08));color:inherit;font:600 .95rem ui-monospace,Menlo,monospace;cursor:pointer}
+.mx-keys button:active{transform:scale(.96)}
+.mx-out{display:grid;gap:10px}
+.mx-card{border:1px solid var(--line,rgba(127,127,127,.25));border-radius:14px;padding:12px 14px;background:var(--surface,transparent);display:grid;gap:8px;overflow:hidden}
+.mx-in{font-size:1.15rem;line-height:2.1;text-align:left;overflow-x:auto;white-space:nowrap}
+.mx-res{font-size:1.15rem;line-height:2.1;text-align:left;overflow-x:auto}
+.mx-val{font-size:1.25rem;color:var(--dz-b2,#C9932E)}
+.mx-sub{font-size:.85rem;opacity:.75}.mx-sep{opacity:.5}
+.mx-err{color:#d0453a;font-size:.95rem}.mx-ok{color:#1f9d6a;font-weight:600}
+.mx-h{margin:8px 0 0;font-size:1.02rem}
+.mx-big .mx-val{font-size:1.6rem}.mx-lab{font-size:.85rem;opacity:.75}
+.mx-btns{display:flex;gap:6px;flex-wrap:wrap}.mx-aib{font-size:.85rem}
+.mx-aiout{white-space:pre-wrap;line-height:1.6;font-size:.95rem;border-inline-start:4px solid var(--dz-b1,#E8B84A);padding:8px 12px;border-radius:8px;background:var(--g1,rgba(127,127,127,.08))}
+.mx-steps>summary{cursor:pointer;font-weight:600;font-size:.92rem}
+.mx-st{padding:4px 0;border-bottom:1px dashed var(--line,rgba(127,127,127,.25));line-height:2;overflow-x:auto;white-space:nowrap;text-align:left}
+.mx-st small{opacity:.7}
+.mx-tbl td,.mx-tbl th{white-space:nowrap}
+.mx-fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px 10px}.mx-fgrid .wide{grid-column:1/-1}
+.mx-fgrid label{display:block;font-size:.82em;opacity:.8;margin-bottom:3px}.mx-fgrid input,.mx-fgrid textarea{width:100%}
+.mx-help p{line-height:1.8}
+/* math typesetting */
+.mxv{font-family:'Frank Ruhl Libre',Georgia,serif;font-style:italic;font-size:1.08em}
+.mxf{font-family:'Frank Ruhl Libre',Georgia,serif}
+.mxo{margin:0 .1em}.mxp{opacity:.85}
+.mxfr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .15em;font-size:.92em;line-height:1.3}
+.mxfr-n{padding:0 .2em;border-bottom:1.5px solid currentColor}.mxfr-d{padding:0 .2em}
+sup{font-size:.72em;line-height:0}
+.mxsq{display:inline-flex;align-items:stretch;vertical-align:middle}
+.mxsq-s{font-size:1.15em;line-height:1}.mxsq-b{border-top:1.5px solid currentColor;padding:0 .15em;margin-top:.12em}.mxsq-i{font-size:.6em;margin-inline-end:-.35em;align-self:flex-start}
+.mxab{white-space:nowrap}
+.mxm{display:inline-flex;vertical-align:middle;border-inline:2px solid currentColor;border-radius:6px;padding:0 .3em;margin:0 .2em}
+.mxm-g{display:grid;gap:0 .8em;text-align:center;line-height:1.7}
+.mxbig{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1;margin:0 .1em}
+.mxbig-s{font-size:1.6em;line-height:1}.mxbig-t,.mxbig-b{font-size:.62em}
+/* accounting */
+.mx-entry{border:1px solid var(--line,rgba(127,127,127,.25));border-radius:14px;padding:10px;display:grid;gap:8px}
+.mx-eh{display:grid;grid-template-columns:auto 1fr 2fr auto;gap:6px;align-items:center}
+.mx-lines{display:grid;gap:6px}
+.mx-lh,.mx-line{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:6px;align-items:center}
+@media (max-width:520px){.mx-lh{display:none}.mx-line{grid-template-columns:1fr 1fr auto;padding-bottom:6px;border-bottom:1px dashed var(--line,rgba(127,127,127,.3))}.mx-line select{grid-column:1/-1}}
+.mx-lh{font-size:.8em;opacity:.7}
+.mx-entry input,.mx-entry select{width:100%;min-width:0}
+.mx-ef{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.mx-eb{font-size:.88em;font-weight:600}.mx-eb.ok{color:#1f9d6a}.mx-eb.bad{color:#d0453a}
+.mx-accs{display:grid;gap:4px;font-size:.88em;margin:6px 0}
+.mx-newacc{display:flex;gap:6px;flex-wrap:wrap}.mx-newacc input{flex:1 1 140px}
+.mx-ts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.mx-t{border:1px solid var(--line,rgba(127,127,127,.3));border-radius:10px;overflow:hidden;font-size:.88em}
+.mx-tt{text-align:center;font-weight:700;padding:6px;border-bottom:2px solid currentColor}
+.mx-tb{display:grid;grid-template-columns:1fr 1fr}.mx-tb>div{padding:4px 6px;min-height:20px}
+.mx-tb>div:first-child{border-inline-end:2px solid currentColor}
+[dir=rtl] .mx-tb{direction:ltr}[dir=rtl] .mx-tb>div{direction:rtl}
+.mx-tsum{border-top:1px solid var(--line,rgba(127,127,127,.4));font-weight:700}
+.mx-tbal{text-align:center;padding:5px;background:var(--g1,rgba(127,127,127,.08));font-weight:600}
+.mx-bs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.mx-rep td:last-child{text-align:end;white-space:nowrap}.mx-rh th{text-align:start;padding-top:10px}.mx-ni td{font-weight:800}
+.mx-subseg{margin-bottom:4px}
+#mx_aClr.warn{border-color:#c0392b;color:#c0392b;font-weight:700}
+/* graphs */
+.mx-gfns{display:grid;gap:6px}
+.mx-gfn{display:flex;align-items:center;gap:6px}.mx-gfn input{flex:1;font-family:ui-monospace,Menlo,monospace}
+.mx-gdot{width:14px;height:14px;border-radius:50%;flex:none}
+.mx-gbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.mx-gbar input{width:80px}
+.mx-gwrap{position:relative;border:1px solid var(--line,rgba(127,127,127,.3));border-radius:12px;overflow:hidden;background:var(--surface,transparent)}
+#mx_cv{display:block;width:100%;height:340px;touch-action:none;cursor:crosshair}
+.mx-gread{position:absolute;inset-inline-start:8px;top:6px;font-size:.8rem;background:var(--surface,rgba(255,255,255,.85));padding:2px 6px;border-radius:6px;pointer-events:none}
+.mx-gan{display:grid;gap:8px}.mx-gr{border:1px solid var(--line,rgba(127,127,127,.25));border-radius:10px;padding:8px 10px;font-size:.9em;line-height:1.8}
+#panel-mathx .svbar{display:none}
+body:has(#panel-mathx:not([hidden])) :is(#explainBtn,#resetTab){display:none}
+@media (max-width:520px){.mx-eh{grid-template-columns:auto 1fr auto}.mx-eh input[type=text]{grid-column:1/-1;order:5}}
+.mx-scimgs{display:flex;flex-wrap:wrap;gap:8px}.mx-scimg{position:relative;width:84px;height:110px;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.mx-scimg img{width:100%;height:100%;object-fit:cover}.mx-scimg button{position:absolute;top:3px;inset-inline-end:3px;width:24px;height:24px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;cursor:pointer}
+.mx-sctext{white-space:pre-wrap;line-height:1.7;padding:8px 10px;border-radius:8px;background:var(--g1,rgba(127,127,127,.08))}
+.mx-scsol ol{margin:6px 0;padding-inline:24px;line-height:1.8}.mx-scsol li{margin-bottom:4px;white-space:pre-wrap}
+.mx-scans{font-size:1.05rem;padding:8px 10px;border-radius:8px;border:2px solid var(--dz-b1,#E8B84A);margin:6px 0}
+.mx-libg{margin:8px 0}.mx-libl{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}.mx-libl button{font:500 .82rem ui-monospace,Menlo,monospace;padding:6px 8px;border-radius:8px;border:1px solid var(--line,rgba(127,127,127,.3));background:var(--g1,rgba(127,127,127,.08));color:inherit;cursor:pointer}
+#mx_libq{width:100%;min-height:40px;margin:6px 0;box-sizing:border-box;font:inherit;color:var(--ink);background:var(--field,rgba(127,127,127,.08));border:1px solid var(--line,rgba(127,127,127,.3));border-radius:10px;padding:6px 10px}
+.mx-saves input{flex:1 1 120px}
+.mx-accl{display:grid;gap:6px;margin:6px 0}.mx-acc{display:grid;grid-template-columns:1.6fr 1.2fr auto auto;gap:6px;align-items:center}.mx-acc input[type=text],.mx-acc select{min-width:0;min-height:40px;font:inherit;color:var(--ink);background:var(--field,rgba(127,127,127,.08));border:1px solid var(--line,rgba(127,127,127,.3));border-radius:10px;padding:4px 8px}
+.mx-contra{grid-column:auto;padding:0;font-size:.8em}.mx-sced>summary{cursor:pointer;font-size:.9em;opacity:.85}.mx-sced textarea,.mx-sced input{width:100%;box-sizing:border-box;font:inherit;color:var(--ink);background:var(--field,rgba(127,127,127,.08));border:1px solid var(--line,rgba(127,127,127,.3));border-radius:10px;padding:6px 10px}
+@media (max-width:520px){.mx-acc{grid-template-columns:1fr 1fr auto}.mx-acc input[type=text]{grid-column:1/-1}}
+
 /* ================= 8.5: a coin for every currency ================= */
 .cur-coin{display:inline-grid;place-items:center;flex:none;width:26px;height:26px;border-radius:50%;vertical-align:middle;margin-inline-end:6px;position:relative;overflow:hidden;
   background:conic-gradient(from 210deg,#FFF1C2,#D9A441,#8A5A14,#E9C26A,#FFF1C2);box-shadow:0 2px 6px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.55)}
@@ -6050,6 +6140,124 @@ Object.assign(T, {
   ph_sd:['כרטיס זיכרון','بطاقة ذاكرة','Memory card'], ph_jack:['שקע אוזניות','مقبس سماعات','Headphone jack'], ph_colors:['צבעים','الألوان','Colours'],
   ph_yes:['יש','نعم','Yes'], ph_no:['אין','لا','No'], ph_yrs:['{n} שנים','{n} سنوات','{n} years'], ph_ncol:['{n} צבעים','{n} ألوان','{n} colours'], ph_sources:['מקורות','المصادر','Sources']
 });
+/* advanced calculator: math, finance & economics, accounting, graphs */
+Object.assign(T, {
+  tab_mathx:['מחשבון מתקדם','الحاسبة المتقدمة','Advanced calculator'], d_mathx:['מתמטיקה מתקדמת, נוסחאות עם משתנים, פיננסים וכלכלה, חשבונאות וגרפים – עם פירוט מלא של כל שלב.','رياضيات متقدمة وصيغ بمتغيرات ومالية واقتصاد ومحاسبة ورسوم – مع شرح كل خطوة.','Advanced maths, formulas with variables, finance & economics, accounting and graphs – every step explained.'],
+  mx_tSheet:['נוסחאות','الصيغ','Formulas'], mx_tFin:['פיננסים וכלכלה','المالية والاقتصاد','Finance & economics'], mx_tAcct:['חשבונאות','المحاسبة','Accounting'], mx_tGraph:['גרפים','الرسوم','Graphs'],
+  /* sheet */
+  mx_sheetH:['כתבו תרגיל או כמה שורות: משתנים (a = 5), פונקציות (f(x) = x^2 + a), משוואות ופקודות. כל שורה מחושבת ומוצגת כנוסחה עם השלבים.','اكتب تمرينًا أو عدة أسطر: متغيرات (a = 5) ودوال (f(x) = x^2 + a) ومعادلات وأوامر. كل سطر يُحسب ويُعرض كصيغة مع الخطوات.','Type an exercise or several lines: variables (a = 5), functions (f(x) = x^2 + a), equations and commands. Each line is computed and shown as a formula with its steps.'],
+  mx_ph:['למשל: 2(3+4)^2 − sqrt(16)/2','مثلًا: 2(3+4)^2 − sqrt(16)/2','e.g. 2(3+4)^2 − sqrt(16)/2'], mx_examples:['דוגמאות','أمثلة','Examples'], mx_clear:['ניקוי','مسح','Clear'],
+  mx_ex_basic:['חשבון ושברים','حساب وكسور','Arithmetic & fractions'], mx_ex_alg:['אלגברה ומשוואות','جبر ومعادلات','Algebra & equations'], mx_ex_calc:['חדו״א: נגזרות ואינטגרלים','التفاضل والتكامل','Calculus'],
+  mx_ex_mat:['מטריצות ווקטורים','المصفوفات والمتجهات','Matrices & vectors'], mx_ex_stat:['סטטיסטיקה','الإحصاء','Statistics'], mx_ex_fin:['פיננסים בנוסחאות','مالية بالصيغ','Finance in formulas'], mx_ex_trig:['טריגונומטריה','حساب المثلثات','Trigonometry'],
+  mx_deg:['מעלות','درجات','Degrees'], mx_rad:['רדיאנים','راديان','Radians'], mx_dec:['ספרות אחרי הנקודה','المنازل العشرية','Decimals'], mx_decAuto:['אוטומטי','تلقائي','Auto'],
+  mx_opt:['לא חובה','اختياري','optional'],
+  mx_steps:['שלבי הפתרון','خطوات الحل','Solution steps'], mx_ai:['הסבר מפורט ב־AI','شرح مفصل بالـAI','Detailed AI explanation'], mx_aiWait:['ה־AI מסביר…','الـAI يشرح…','The AI is explaining…'],
+  mx_stSub:['הצבת ערכים','التعويض','Substitute values'], mx_defined:['הוגדר','عُرّف','Defined'], mx_comp:['מחשב…','جارٍ الحساب…','Computing…'], mx_frac:['כשבר','ككسر','As a fraction'],
+  mx_formula:['נוסחה','الصيغة','Formula'], mx_toSheet:['העברה לגיליון הנוסחאות','نقل إلى ورقة الصيغ','Send to the formula sheet'], mx_copied:['הועבר לגיליון','نُقل إلى الورقة','Sent to the sheet'],
+  mx_help:['מה אפשר לכתוב','ما يمكن كتابته','What you can type'],
+  mx_helpTxt:['פעולות: + − * / ^ ! % mod · כפל משתמע: 2x, 3(a+b) · קבועים: pi, e, phi · פונקציות: sqrt, root(x,n), abs, ln, log, log(x,b), exp, sin, cos, tan, asin…, round(x,d), floor, ceil, ncr, npr, gcd, lcm · סכום ומכפלה: sigma(k^2,k,1,10), product(...) · מטריצות: [1,2;3,4], det, inv, transpose, linsolve(A,b), dot, cross · סטטיסטיקה: mean, median, mode, std, variance, min, max, sum · סימבולי: solve(x^2−5x+6=0, x), solve([x+y=10; x−y=2]), diff(x^3, x), integrate(x^2, x), integrate(x^2, x, 0, 3), expand, factor, simplify, limit(sin(x)/x, x, 0), taylor(e^x, x, 0, 5) · פיננסים: npv, irr, pmt, fv, pv, nper, rate, cagr, bondprice, ytm, duration, wacc, capm ועוד (בלשונית פיננסים).','العمليات: + − * / ^ ! % mod · ضرب ضمني: 2x · الثوابت: pi, e · الدوال: sqrt, root, abs, ln, log, exp, sin, cos, tan… · المجاميع: sigma(k^2,k,1,10) · المصفوفات: [1,2;3,4], det, inv · الإحصاء: mean, median, std · رمزي: solve(x^2−5x+6=0, x), diff, integrate, expand, factor, limit, taylor · المالية: npv, irr, pmt, fv… (في تبويب المالية).','Operators: + − * / ^ ! % mod · implicit ×: 2x, 3(a+b) · constants: pi, e, phi · functions: sqrt, root(x,n), abs, ln, log, log(x,b), exp, sin, cos, tan, asin…, round(x,d), floor, ceil, ncr, npr, gcd, lcm · sums: sigma(k^2,k,1,10), product(...) · matrices: [1,2;3,4], det, inv, transpose, linsolve(A,b), dot, cross · statistics: mean, median, mode, std, variance · symbolic: solve(x^2−5x+6=0, x), solve([x+y=10; x−y=2]), diff(x^3, x), integrate(x^2, x), integrate(x^2, x, 0, 3), expand, factor, simplify, limit(sin(x)/x, x, 0), taylor(e^x, x, 0, 5) · finance: npv, irr, pmt, fv, pv, nper, rate, cagr, bondprice, ytm, duration, wacc, capm and more (Finance tab).'],
+  /* errors */
+  mx_eChar:['תו לא מוכר: {c}','رمز غير معروف: {c}','Unknown character: {c}'], mx_eExpect:['חסר "{c}"','ينقص "{c}"','Missing "{c}"'], mx_eEnd:['התרגיל נגמר באמצע','انتهى التمرين في المنتصف','The expression ended too early'],
+  mx_eTok:['משהו לא במקום: {c}','شيء في غير مكانه: {c}','Something out of place: {c}'], mx_eSym:['המשתנה {n} לא הוגדר – כתבו קודם {n} = …','المتغير {n} غير معرّف – اكتب أولًا {n} = …','{n} is not defined – write {n} = … first'],
+  mx_eFn:['פונקציה לא מוכרת: {n}','دالة غير معروفة: {n}','Unknown function: {n}'], mx_eArgs:['חסרים נתונים לפונקציה {n}','بيانات ناقصة للدالة {n}','Missing arguments for {n}'], mx_eNum:['צריך מספר','يلزم رقم','A number is needed'],
+  mx_eDiv0:['חילוק באפס','قسمة على صفر','Division by zero'], mx_eDomain:['מחוץ לתחום ההגדרה','خارج مجال التعريف','Outside the domain'], mx_eDim:['גדלי המטריצות לא מתאימים','أبعاد المصفوفات غير متوافقة','Matrix sizes do not match'],
+  mx_eSquare:['צריך מטריצה ריבועית','يلزم مصفوفة مربعة','A square matrix is needed'], mx_eSingular:['המטריצה לא הפיכה (דטרמיננטה 0)','المصفوفة غير قابلة للعكس','The matrix is not invertible (determinant 0)'],
+  mx_eIrr:['לא נמצא IRR לתזרים הזה','لم يُعثر على IRR لهذا التدفق','No IRR found for these cash flows'], mx_eLib:['מנוע האלגברה לא נטען – צריך חיבור לאינטרנט','لم يُحمّل محرك الجبر – يلزم اتصال','The algebra engine did not load – an internet connection is needed'],
+  mx_eSymFail:['לא הצלחתי לפתור את זה סימבולית','لم أتمكن من حلها رمزيًا','Could not solve this symbolically'],
+  /* finance */
+  mx_finPick:['בחרו חישוב','اختر حسابًا','Choose a calculation'], mx_finH:['ריביות ותשואות מזינים באחוזים (5 = 5%). תזרים מזומנים: מספרים מופרדים בפסיק, מהשנה 0 (ההשקעה בסימן מינוס).','أدخل الفوائد والعوائد كنسبة مئوية (5 = 5%). التدفقات: أرقام مفصولة بفواصل من السنة 0.','Enter rates as percentages (5 = 5%). Cash flows: comma-separated numbers from year 0 (the investment as a negative).'],
+  mx_g_tvm:['ערך הזמן של הכסף','القيمة الزمنية للنقود','Time value of money'], mx_g_inv:['השקעות ופרויקטים','الاستثمار والمشاريع','Investments & projects'], mx_g_rates:['ריביות','الفوائد','Interest rates'],
+  mx_g_dep:['פחת','الإهلاك','Depreciation'], mx_g_bond:['אג״ח','السندات','Bonds'], mx_g_corp:['מימון תאגידי','التمويل المؤسسي','Corporate finance'], mx_g_cost:['עלויות ותמחור','التكاليف والتسعير','Costs & pricing'], mx_g_eco:['כלכלה','الاقتصاد','Economics'],
+  mx_f_pv:['ערך נוכחי (PV)','القيمة الحالية','Present value (PV)'], mx_f_fv:['ערך עתידי (FV)','القيمة المستقبلية','Future value (FV)'], mx_f_pmt:['תשלום תקופתי (PMT)','الدفعة الدورية','Periodic payment (PMT)'], mx_f_nper:['מספר תקופות (NPER)','عدد الفترات','Number of periods (NPER)'],
+  mx_f_rate:['ריבית לתקופה (RATE)','الفائدة للفترة','Rate per period (RATE)'], mx_f_simple:['ריבית פשוטה','فائدة بسيطة','Simple interest'], mx_f_compound:['ריבית דריבית','فائدة مركبة','Compound interest'], mx_f_amort:['לוח סילוקין (שפיצר)','جدول الإطفاء','Amortisation schedule'],
+  mx_f_npv:['ערך נוכחי נקי (NPV)','صافي القيمة الحالية','Net present value (NPV)'], mx_f_irr:['שיעור תשואה פנימי (IRR)','معدل العائد الداخلي','Internal rate of return (IRR)'], mx_f_mirr:['IRR מתוקן (MIRR)','IRR المعدل','Modified IRR (MIRR)'],
+  mx_f_payback:['תקופת החזר','فترة الاسترداد','Payback period'], mx_f_dpayback:['תקופת החזר מהוונת','فترة الاسترداد المخصومة','Discounted payback'], mx_f_profindex:['מדד רווחיות (PI)','مؤشر الربحية','Profitability index (PI)'], mx_f_cagr:['צמיחה שנתית ממוצעת (CAGR)','معدل النمو السنوي المركب','CAGR'],
+  mx_f_effrate:['ריבית אפקטיבית','الفائدة الفعلية','Effective rate'], mx_f_nomrate:['ריבית נומינלית','الفائدة الاسمية','Nominal rate'], mx_f_contrate:['ריבית רציפה','فائدة مستمرة','Continuous rate'], mx_f_realrate:['ריבית ריאלית (פישר)','الفائدة الحقيقية (فيشر)','Real rate (Fisher)'],
+  mx_f_sln:['פחת קו ישר','إهلاك القسط الثابت','Straight-line depreciation'], mx_f_ddb:['פחת יתרה פוחתת כפולה','إهلاك الرصيد المتناقص المضاعف','Double-declining depreciation'], mx_f_syd:['פחת סכום ספרות השנים','إهلاك مجموع أرقام السنوات','Sum-of-years-digits'],
+  mx_f_bondprice:['מחיר אג״ח','سعر السند','Bond price'], mx_f_ytm:['תשואה לפדיון (YTM)','العائد حتى الاستحقاق','Yield to maturity (YTM)'], mx_f_duration:['מח״מ (Duration)','المدة','Duration'],
+  mx_f_capm:['תשואה נדרשת (CAPM)','العائد المطلوب (CAPM)','Required return (CAPM)'], mx_f_wacc:['עלות הון משוקללת (WACC)','متوسط تكلفة رأس المال','WACC'], mx_f_ddm:['מודל גורדון (היוון דיבידנדים)','نموذج جوردون','Gordon dividend model'],
+  mx_f_breakeven:['נקודת איזון','نقطة التعادل','Break-even point'], mx_f_margin:['שיעור רווח גולמי (Margin)','هامش الربح','Margin'], mx_f_markup:['תוספת על העלות (Markup)','نسبة الإضافة','Markup'], mx_f_vat:['מע״מ','ضريبة القيمة المضافة','VAT'],
+  mx_f_inflate:['השפעת אינפלציה','أثر التضخم','Inflation effect'], mx_f_elasticity:['גמישות מחיר (קשתית)','مرونة السعر','Price elasticity (arc)'], mx_f_multiplier:['מכפיל ההוצאה','مضاعف الإنفاق','Spending multiplier'], mx_f_eoq:['כמות הזמנה כלכלית (EOQ)','كمية الطلب الاقتصادية','Economic order quantity'],
+  /* parameters */
+  mx_p_rate:['ריבית לתקופה (%)','الفائدة للفترة (%)','Rate per period (%)'], mx_p_nper:['מספר תקופות','عدد الفترات','Number of periods'], mx_p_pmt:['תשלום תקופתי','الدفعة الدورية','Payment per period'], mx_p_pv:['ערך נוכחי','القيمة الحالية','Present value'],
+  mx_p_fv:['ערך עתידי','القيمة المستقبلية','Future value'], mx_p_type:['תשלום בתחילת תקופה (1) או בסופה (0)','الدفع بداية الفترة (1) أو نهايتها (0)','Payment at start (1) or end (0)'], mx_p_cashflows:['תזרים מזומנים (מהשנה 0)','التدفقات النقدية (من السنة 0)','Cash flows (from year 0)'],
+  mx_p_finance_rate:['ריבית מימון (%)','فائدة التمويل (%)','Finance rate (%)'], mx_p_reinvest_rate:['ריבית השקעה חוזרת (%)','فائدة إعادة الاستثمار (%)','Reinvestment rate (%)'], mx_p_begin:['ערך התחלתי','القيمة الأولية','Begin value'], mx_p_end:['ערך סופי','القيمة النهائية','End value'], mx_p_years:['שנים','سنوات','Years'],
+  mx_p_nominal:['ריבית נומינלית (%)','الفائدة الاسمية (%)','Nominal rate (%)'], mx_p_effective:['ריבית אפקטיבית (%)','الفائدة الفعلية (%)','Effective rate (%)'], mx_p_periods:['תקופות בשנה','فترات في السنة','Periods per year'], mx_p_inflation:['אינפלציה (%)','التضخم (%)','Inflation (%)'],
+  mx_p_cost:['עלות','التكلفة','Cost'], mx_p_salvage:['ערך גרט','قيمة الخردة','Salvage value'], mx_p_life:['אורך חיים (שנים)','العمر (سنوات)','Useful life (years)'], mx_p_period:['שנה','السنة','Year'], mx_p_factor:['מקדם (ברירת מחדל 2)','المعامل (افتراضي 2)','Factor (default 2)'],
+  mx_p_principal:['קרן','أصل المبلغ','Principal'], mx_p_annual_rate:['ריבית שנתית (%)','الفائدة السنوية (%)','Annual rate (%)'], mx_p_months:['חודשים','أشهر','Months'],
+  mx_p_face:['ערך נקוב','القيمة الاسمية','Face value'], mx_p_coupon_rate:['ריבית קופון (%)','فائدة القسيمة (%)','Coupon rate (%)'], mx_p_ytm:['תשואה לפדיון (%)','العائد حتى الاستحقاق (%)','Yield to maturity (%)'], mx_p_freq:['תשלומים בשנה','دفعات في السنة','Payments per year'], mx_p_price:['מחיר','السعر','Price'],
+  mx_p_rf:['ריבית חסרת סיכון (%)','الفائدة الخالية من المخاطر (%)','Risk-free rate (%)'], mx_p_beta:['בטא','بيتا','Beta'], mx_p_rm:['תשואת השוק (%)','عائد السوق (%)','Market return (%)'],
+  mx_p_equity:['הון עצמי (שווי)','حقوق الملكية','Equity value'], mx_p_debt:['חוב','الدين','Debt'], mx_p_re:['עלות הון עצמי (%)','تكلفة حقوق الملكية (%)','Cost of equity (%)'], mx_p_rd:['עלות חוב (%)','تكلفة الدين (%)','Cost of debt (%)'], mx_p_tax:['מס חברות (%)','ضريبة الشركات (%)','Tax rate (%)'],
+  mx_p_d1:['דיבידנד בשנה הבאה','توزيعات السنة القادمة','Next dividend'], mx_p_r:['תשואה נדרשת (%)','العائد المطلوب (%)','Required return (%)'], mx_p_g:['צמיחה (%)','النمو (%)','Growth (%)'],
+  mx_p_fixed:['עלויות קבועות','التكاليف الثابتة','Fixed costs'], mx_p_varcost:['עלות משתנה ליחידה','التكلفة المتغيرة للوحدة','Variable cost per unit'], mx_p_amount:['סכום','المبلغ','Amount'],
+  mx_p_q1:['כמות לפני','الكمية قبل','Quantity before'], mx_p_q2:['כמות אחרי','الكمية بعد','Quantity after'], mx_p_p1:['מחיר לפני','السعر قبل','Price before'], mx_p_p2:['מחיר אחרי','السعر بعد','Price after'], mx_p_mpc:['נטייה שולית לצרוך (0–1)','الميل الحدي للاستهلاك (0–1)','Marginal propensity to consume (0–1)'],
+  mx_p_demand:['ביקוש שנתי (יחידות)','الطلب السنوي','Annual demand (units)'], mx_p_order_cost:['עלות הזמנה','تكلفة الطلب','Cost per order'], mx_p_holding_cost:['עלות החזקה ליחידה לשנה','تكلفة الاحتفاظ للوحدة سنويًا','Holding cost per unit per year'],
+  mx_hYear:['שנה','السنة','Year'], mx_hDep:['פחת','الإهلاك','Depreciation'], mx_hAcc:['פחת נצבר','الإهلاك المتراكم','Accumulated'], mx_hBook:['ערך בספרים','القيمة الدفترية','Book value'],
+  mx_hMonth:['חודש','الشهر','Month'], mx_hPay:['תשלום','الدفعة','Payment'], mx_hInt:['ריבית','الفائدة','Interest'], mx_hPrin:['קרן','الأصل','Principal'], mx_hBal:['יתרה','الرصيد','Balance'],
+  /* accounting */
+  mx_aJournal:['יומן','اليومية','Journal'], mx_aT:['כרטיסי T','حسابات T','T-accounts'], mx_aTB:['מאזן בוחן','ميزان المراجعة','Trial balance'], mx_aReports:['דוחות כספיים','القوائم المالية','Financial statements'],
+  mx_aNew:['פקודת יומן חדשה','قيد يومية جديد','New journal entry'], mx_aLine:['שורה','سطر','Line'], mx_aAddLine:['הוספת שורה','إضافة سطر','Add line'], mx_aDate:['תאריך','التاريخ','Date'], mx_aDesc:['פרטים','البيان','Description'],
+  mx_aAcc:['חשבון','الحساب','Account'], mx_aDr:['חובה','مدين','Debit'], mx_aCr:['זכות','دائن','Credit'], mx_aBal:['מאוזנת','متوازن','Balanced'], mx_aUnbal:['לא מאוזנת: הפרש {d}','غير متوازن: فرق {d}','Not balanced: difference {d}'],
+  mx_aDel:['מחיקת הפקודה','حذف القيد','Delete entry'], mx_aSample:['דוגמה לתרגול','مثال للتدريب','Practice example'], mx_aClear:['ניקוי הכל','مسح الكل','Clear all'], mx_aClearQ:['לחצו שוב לניקוי','اضغط مجددًا للمسح','Tap again to clear'],
+  mx_aEmpty:['עוד אין פקודות. הוסיפו פקודה או טענו דוגמה.','لا قيود بعد. أضف قيدًا أو حمّل مثالًا.','No entries yet. Add one or load an example.'], mx_aSkip:['פקודות לא מאוזנות לא נכללות בדוחות.','القيود غير المتوازنة لا تدخل في القوائم.','Unbalanced entries are left out of the reports.'],
+  mx_aAccounts:['חשבונות','الحسابات','Accounts'], mx_aNewAcc:['חשבון חדש','حساب جديد','New account'], mx_aAccName:['שם החשבון','اسم الحساب','Account name'], mx_aAccType:['סוג','النوع','Type'],
+  mx_ty_ca:['רכוש שוטף','أصول متداولة','Current asset'], mx_ty_nca:['רכוש קבוע','أصول ثابتة','Non-current asset'], mx_ty_cl:['התחייבות שוטפת','التزامات متداولة','Current liability'], mx_ty_ncl:['התחייבות לזמן ארוך','التزامات طويلة الأجل','Non-current liability'],
+  mx_ty_eq:['הון','حقوق الملكية','Equity'], mx_ty_rev:['הכנסות','الإيرادات','Revenue'], mx_ty_exp:['הוצאות','المصروفات','Expense'],
+  mx_ac_cash:['קופה','الصندوق','Cash'], mx_ac_bank:['בנק','البنك','Bank'], mx_ac_ar:['לקוחות','العملاء','Accounts receivable'], mx_ac_inv:['מלאי','المخزون','Inventory'], mx_ac_prepaid:['הוצאות מראש','مصروفات مدفوعة مقدمًا','Prepaid expenses'],
+  mx_ac_vatin:['מע״מ תשומות','ضريبة المدخلات','Input VAT'], mx_ac_equip:['ציוד','المعدات','Equipment'], mx_ac_accdep:['פחת נצבר','الإهلاك المتراكم','Accumulated depreciation'], mx_ac_ap:['ספקים','الموردون','Accounts payable'], mx_ac_vatout:['מע״מ עסקאות','ضريبة المخرجات','Output VAT'],
+  mx_ac_wagespay:['שכר לשלם','رواتب مستحقة','Wages payable'], mx_ac_loanst:['הלוואה לזמן קצר','قرض قصير الأجل','Short-term loan'], mx_ac_loanlt:['הלוואה לזמן ארוך','قرض طويل الأجل','Long-term loan'], mx_ac_capital:['הון בעלים / מניות','رأس المال','Capital'],
+  mx_ac_retained:['עודפים','الأرباح المحتجزة','Retained earnings'], mx_ac_sales:['הכנסות ממכירות','إيرادات المبيعات','Sales revenue'], mx_ac_service:['הכנסות משירותים','إيرادات الخدمات','Service revenue'], mx_ac_cogs:['עלות המכר','تكلفة المبيعات','Cost of goods sold'],
+  mx_ac_wages:['הוצאות שכר','مصروف الرواتب','Wages expense'], mx_ac_rent:['שכירות','الإيجار','Rent'], mx_ac_util:['חשמל ומים','الكهرباء والمياه','Utilities'], mx_ac_depexp:['הוצאות פחת','مصروف الإهلاك','Depreciation expense'], mx_ac_interest:['הוצאות מימון','مصروفات التمويل','Interest expense'], mx_ac_other:['הוצאות אחרות','مصروفات أخرى','Other expenses'],
+  mx_rTot:['סה״כ','الإجمالي','Total'], mx_rBalance:['יתרה','الرصيد','Balance'], mx_rIS:['דוח רווח והפסד','قائمة الدخل','Income statement'], mx_rBS:['מאזן','الميزانية العمومية','Balance sheet'], mx_rNI:['רווח (הפסד) נקי','صافي الربح (الخسارة)','Net income (loss)'],
+  mx_rGross:['רווח גולמי','مجمل الربح','Gross profit'], mx_rAssets:['נכסים','الأصول','Assets'], mx_rLiab:['התחייבויות','الالتزامات','Liabilities'], mx_rEq:['הון עצמי','حقوق الملكية','Equity'], mx_rCurNI:['רווח התקופה','ربح الفترة','Profit for the period'],
+  mx_rLE:['התחייבויות והון','الالتزامات وحقوق الملكية','Liabilities & equity'], mx_rOk:['המאזן מאוזן ✓','الميزانية متوازنة ✓','The balance sheet balances ✓'], mx_rBad:['המאזן לא מאוזן – הפרש {d}','الميزانية غير متوازنة – فرق {d}','Not balanced – difference {d}'],
+  mx_rRatios:['יחסים פיננסיים','النسب المالية','Financial ratios'], mx_ra_cur:['יחס שוטף','نسبة التداول','Current ratio'], mx_ra_quick:['יחס מהיר','النسبة السريعة','Quick ratio'], mx_ra_de:['חוב להון','الدين إلى حقوق الملكية','Debt to equity'],
+  mx_ra_gm:['שיעור רווח גולמי','هامش مجمل الربح','Gross margin'], mx_ra_nm:['שיעור רווח נקי','هامش صافي الربح','Net margin'], mx_ra_roa:['תשואה על הנכסים (ROA)','العائد على الأصول','Return on assets'], mx_ra_roe:['תשואה על ההון (ROE)','العائد على حقوق الملكية','Return on equity'],
+  mx_tbOk:['מאזן הבוחן מאוזן ✓','ميزان المراجعة متوازن ✓','The trial balance balances ✓'],
+  mx_lib:['ספריית הפונקציות','مكتبة الدوال','Function library'], mx_libQ:['חיפוש פונקציה…','بحث عن دالة…','Search functions…'],
+  mx_lg_basic:['בסיסי','أساسي','Basic'], mx_lg_alg:['אלגברה','الجبر','Algebra'], mx_lg_calc:['חדו״א','التفاضل والتكامل','Calculus'], mx_lg_trig:['טריגונומטריה','حساب المثلثات','Trigonometry'], mx_lg_stat:['סטטיסטיקה','الإحصاء','Statistics'],
+  mx_lg_prob:['הסתברות והתפלגויות','الاحتمالات والتوزيعات','Probability & distributions'], mx_lg_mat:['מטריצות','المصفوفات','Matrices'], mx_lg_num:['תורת המספרים וסדרות','نظرية الأعداد والمتتاليات','Number theory & sequences'], mx_lg_fin:['פיננסים','المالية','Finance'],
+  mx_sheets:['גיליונות שמורים','أوراق محفوظة','Saved sheets'], mx_sname:['שם לגיליון','اسم الورقة','Sheet name'], mx_ssave:['שמירה','حفظ','Save'], mx_sdel:['מחיקה','حذف','Delete'], mx_copyAll:['העתקת התוצאות','نسخ النتائج','Copy results'],
+  mx_ssaved:['הגיליון נשמר','حُفظت الورقة','Sheet saved'], mx_spick:['בחרו גיליון מהרשימה','اختر ورقة من القائمة','Pick a sheet from the list'],
+  mx_g_val:['הערכת שווי','التقييم','Valuation'], mx_g_opt:['אופציות ומט״ח','الخيارات والعملات','Options & FX'], mx_g_invt:['הערכת מלאי','تقييم المخزون','Inventory valuation'],
+  mx_f_quad:['משוואה ריבועית','معادلة تربيعية','Quadratic equation'], mx_f_perp:['תזרים נצחי (Perpetuity)','الدفعات الدائمة','Perpetuity'], mx_f_gperp:['תזרים נצחי צומח','دفعات دائمة متنامية','Growing perpetuity'], mx_f_gannuity:['אנונה צומחת','دفعات متنامية','Growing annuity'],
+  mx_f_rule72:['זמן הכפלה (כלל 72)','مدة التضاعف (قاعدة 72)','Doubling time (rule of 72)'], mx_f_aftertax:['תשואה אחרי מס','العائد بعد الضريبة','After-tax return'], mx_f_balance:['יתרת הלוואה אחרי X תשלומים','رصيد القرض بعد X دفعات','Loan balance after X payments'],
+  mx_f_uop:['פחת לפי יחידות תפוקה','الإهلاك حسب الوحدات','Units-of-production depreciation'], mx_f_eps:['רווח למניה (EPS)','ربحية السهم','Earnings per share (EPS)'], mx_f_pe:['מכפיל רווח (P/E)','مضاعف الربحية','Price/earnings (P/E)'], mx_f_divyield:['תשואת דיבידנד','عائد التوزيعات','Dividend yield'],
+  mx_f_sharpe:['מדד שארפ','مؤشر شارب','Sharpe ratio'], mx_f_bscall:['אופציית Call (בלאק־שולס)','خيار شراء (بلاك-شولز)','Call option (Black–Scholes)'], mx_f_bsput:['אופציית Put (בלאק־שולס)','خيار بيع (بلاك-شولز)','Put option (Black–Scholes)'], mx_f_forward:['שער פורוורד (זוגיות ריביות)','السعر الآجل (تكافؤ الفائدة)','Forward rate (interest parity)'],
+  mx_f_fifo:['מלאי FIFO','المخزون FIFO','FIFO inventory'], mx_f_lifo:['מלאי LIFO','المخزون LIFO','LIFO inventory'], mx_f_wavg:['מלאי לפי ממוצע משוקלל','المخزون بالمتوسط المرجح','Weighted-average inventory'],
+  mx_f_cpiinfl:['אינפלציה ממדד','التضخم من المؤشر','Inflation from CPI'], mx_f_realgdp:['תמ״ג ריאלי','الناتج الحقيقي','Real GDP'], mx_f_ppp:['שער לפי כוח קנייה (PPP)','سعر حسب تعادل القوة الشرائية','PPP exchange rate'], mx_f_moneymult:['מכפיל הכסף','مضاعف النقود','Money multiplier'],
+  mx_p_a:['מקדם a','المعامل a','Coefficient a'], mx_p_b:['מקדם b','المعامل b','Coefficient b'], mx_p_c:['מקדם c / תזרים','المعامل c / الدفعة','Coefficient c / cash flow'], mx_p_paid:['תשלומים ששולמו','الدفعات المسددة','Payments made'],
+  mx_p_total_units:['סך יחידות לאורך החיים','إجمالي الوحدات','Total units over life'], mx_p_units:['יחידות השנה','وحدات السنة','Units this year'], mx_p_net_income:['רווח נקי','صافي الربح','Net income'], mx_p_shares:['מספר מניות','عدد الأسهم','Number of shares'],
+  mx_p_eps:['רווח למניה','ربحية السهم','EPS'], mx_p_dividend:['דיבידנד שנתי למניה','التوزيع السنوي للسهم','Annual dividend per share'], mx_p_ret:['תשואת התיק (%)','عائد المحفظة (%)','Portfolio return (%)'], mx_p_sd:['סטיית תקן (%)','الانحراف المعياري (%)','Standard deviation (%)'],
+  mx_p_S:['מחיר הנכס (S)','سعر الأصل (S)','Asset price (S)'], mx_p_K:['מחיר מימוש (K)','سعر التنفيذ (K)','Strike (K)'], mx_p_T:['זמן לפקיעה (שנים)','الزمن حتى الانتهاء (سنوات)','Time to expiry (years)'], mx_p_sigma:['תנודתיות (%)','التقلب (%)','Volatility (%)'],
+  mx_p_spot:['שער נוכחי','السعر الحالي','Spot rate'], mx_p_r_dom:['ריבית מקומית (%)','الفائدة المحلية (%)','Domestic rate (%)'], mx_p_r_for:['ריבית במט״ח (%)','الفائدة الأجنبية (%)','Foreign rate (%)'],
+  mx_p_qty:['כמויות שנקנו (לפי סדר)','الكميات المشتراة (بالترتيب)','Quantities bought (in order)'], mx_p_sold:['כמות שנמכרה','الكمية المباعة','Quantity sold'], mx_p_cpi0:['מדד בתחילת התקופה','المؤشر في البداية','Index at start'], mx_p_cpi1:['מדד בסוף התקופה','المؤشر في النهاية','Index at end'],
+  mx_p_nominal_gdp:['תמ״ג נומינלי','الناتج الاسمي','Nominal GDP'], mx_p_deflator:['מדד מחירי התמ״ג','مخفض الناتج','GDP deflator'], mx_p_price_home:['מחיר מקומי','السعر المحلي','Home price'], mx_p_price_foreign:['מחיר בחו״ל','السعر الأجنبي','Foreign price'], mx_p_reserve_ratio:['יחס רזרבה (%)','نسبة الاحتياطي (%)','Reserve ratio (%)'],
+  /* scan & practice */
+  mx_tScan:['סריקה ותרגול','مسح وتدريب','Scan & practice'],
+  mx_scH:['צלמו או העלו דף תרגיל או מבחן. ה־AI מתמלל כל שאלה ופותר אותה במלואה, שלב אחר שלב, כמו שנדרש במבחן – והמחשבון מאמת בנפרד כל תשובה סופית.','صوّر أو ارفع ورقة تمارين أو امتحان. يكتب الـAI كل سؤال ويحله كاملًا خطوة بخطوة كما يُطلب في الامتحان – وتتحقق الحاسبة من كل إجابة نهائية.','Take or upload a photo of an exercise or exam sheet. The AI transcribes each question and solves it fully, step by step, as an exam expects – and the calculator independently checks every final answer.'],
+  mx_scCam:['צילום','تصوير','Take photo'], mx_scPick:['תמונה מהגלריה','صورة من المعرض','From gallery'], mx_scGo:['פתרון מלא','حل كامل','Solve in full'], mx_scClear:['ניקוי','مسح','Clear'],
+  mx_scSubj:['נושא','الموضوع','Subject'], mx_sc_auto:['זיהוי אוטומטי','تلقائي','Detect automatically'], mx_sc_math:['מתמטיקה','الرياضيات','Mathematics'], mx_sc_calc:['חדו״א','التفاضل والتكامل','Calculus'], mx_sc_stat:['סטטיסטיקה והסתברות','الإحصاء والاحتمالات','Statistics & probability'],
+  mx_sc_fin:['מימון והשקעות','التمويل والاستثمار','Finance & investments'], mx_sc_acct:['חשבונאות','المحاسبة','Accounting'], mx_sc_eco:['כלכלה','الاقتصاد','Economics'],
+  mx_scMode:['מצב','الوضع','Mode'], mx_sc_full:['פתרון מלא מיד','حل كامل فورًا','Full solution right away'], mx_sc_practice:['תרגול: רמז קודם, פתרון לפי בקשה','تدريب: تلميح أولًا ثم الحل عند الطلب','Practice: hint first, solution on request'],
+  mx_scPages:['{n} עמודים נבחרו (עד 4)','اختيرت {n} صفحات (حتى 4)','{n} pages selected (up to 4)'], mx_scWait:['קורא ופותר… זה יכול לקחת עד דקה','يقرأ ويحل… قد يستغرق دقيقة','Reading and solving… this can take up to a minute'],
+  mx_scNoAI:['כדי לסרוק צריך AI עם קריאת תמונות: באפליקציית Claude זה עובד מיד; באתר צריך מפתח Gemini בהגדרות ← חיבורים.','للمسح يلزم AI يقرأ الصور: يعمل في تطبيق Claude مباشرة؛ في الموقع يلزم مفتاح Gemini.','Scanning needs an AI that reads images: it works right away in the Claude app; on the site it needs a Gemini key in Settings → Connections.'],
+  mx_scFail:['לא הצלחתי לקרוא את הדף. נסו תמונה חדה יותר, באור טוב ובלי צל.','تعذرت قراءة الصفحة. جرّب صورة أوضح بإضاءة جيدة.','Could not read the page. Try a sharper photo in good light without shadows.'],
+  mx_scQ:['שאלה {n}','سؤال {n}','Question {n}'], mx_scHint:['רמז','تلميح','Hint'], mx_scShow:['הצגת הפתרון המלא','عرض الحل الكامل','Show the full solution'], mx_scAns:['תשובה סופית','الإجابة النهائية','Final answer'], mx_scSteps:['פתרון מלא','الحل الكامل','Full solution'],
+  mx_scOk:['✓ אומת במחשבון: {v}','✓ تحققت الحاسبة: {v}','✓ Verified by the calculator: {v}'], mx_scDiff:['⚠️ המחשבון קיבל {v} – כדאי לבדוק את החישוב','⚠️ حصلت الحاسبة على {v} – راجع الحساب','⚠️ The calculator got {v} – worth double-checking'],
+  mx_scNoCheck:['תשובה מילולית – אין חישוב לאימות','إجابة نصية – لا حساب للتحقق','Text answer – nothing to verify numerically'], mx_scToSheet:['לגיליון הנוסחאות','إلى ورقة الصيغ','To the formula sheet'],
+  mx_scNote:['הערה מה־AI','ملاحظة من الـAI','Note from the AI'], mx_scDisc:['כדאי תמיד לעבור על הפתרון. ה־AI עלול לטעות בקריאה או בחישוב; האימות במחשבון בודק את התשובה הסופית.','راجع الحل دائمًا. قد يخطئ الـAI في القراءة أو الحساب؛ تتحقق الحاسبة من الإجابة النهائية.','Always review the solution. The AI can misread or miscalculate; the calculator check covers the final answer.'],
+  mx_edit:['עריכה','تحرير','Edit'], mx_scTextL:['נוסח השאלה','نص السؤال','Question text'], mx_scStepsL:['שלבי הפתרון (שורה לכל שלב)','خطوات الحل (سطر لكل خطوة)','Solution steps (one per line)'],
+  mx_scCheckL:['נוסחת אימות במחשבון','صيغة التحقق في الحاسبة','Calculator check expression'], mx_scSaveV:['שמירה ואימות מחדש','حفظ وإعادة التحقق','Save and re-check'], mx_scResolve:['פתרון מחדש מהנוסח','حل من جديد من النص','Solve again from the text'], mx_scSaved:['נשמר ואומת מחדש','حُفظ وأعيد التحقق','Saved and re-checked'],
+  mx_accH:['אפשר לשנות שם וסוג לכל חשבון, לסמן חשבון מנוגד (כמו פחת נצבר), ולמחוק חשבון שלא נמצא בשימוש.','يمكن تغيير اسم ونوع كل حساب، وتحديد حساب مقابل (مثل الإهلاك المتراكم)، وحذف حساب غير مستخدم.','Rename any account, change its type, mark contra accounts (like accumulated depreciation), and delete unused ones.'],
+  mx_contra:['מנוגד','مقابل','Contra'], mx_contraH:['חשבון מנוגד: יתרתו הטבעית הפוכה לסוג (למשל פחת נצבר מקטין את הרכוש)','حساب مقابل: رصيده الطبيعي عكس نوعه','Contra account: its normal balance is opposite to its type (e.g. accumulated depreciation)'],
+  mx_accInUse:['החשבון מופיע בפקודות – אי אפשר למחוק','الحساب مستخدم في القيود – لا يمكن حذفه','Used in entries – cannot be deleted'], mx_accReset:['שחזור החשבונות לברירת המחדל','استعادة الحسابات الافتراضية','Restore default accounts'], mx_accResetDone:['החשבונות שוחזרו','استُعيدت الحسابات','Accounts restored'],
+  /* graphs */
+  mx_gFn:['פונקציה','الدالة','Function'], mx_gAdd:['הוספת פונקציה','إضافة دالة','Add function'], mx_gFrom:['x מ־','x من','x from'], mx_gTo:['עד','إلى','to'], mx_gReset:['איפוס תצוגה','إعادة العرض','Reset view'],
+  mx_gZin:['הגדלה','تكبير','Zoom in'], mx_gZout:['הקטנה','تصغير','Zoom out'], mx_gH:['אפשר להשתמש בפונקציות שהוגדרו בגיליון הנוסחאות (למשל f(x)). גוררים כדי להזיז, נוגעים כדי לראות ערכים.','يمكن استخدام الدوال المعرّفة في ورقة الصيغ. اسحب للتحريك والمس لرؤية القيم.','Functions from the formula sheet (e.g. f(x)) work here too. Drag to move, tap to read values.'],
+  mx_gAnalysis:['ניתוח','التحليل','Analysis'], mx_gRoots:['נקודות חיתוך עם ציר x','التقاطع مع محور x','x-intercepts'], mx_gYint:['חיתוך עם ציר y','التقاطع مع محور y','y-intercept'], mx_gMin:['מינימום מקומי','قيمة صغرى محلية','Local minimum'], mx_gMax:['מקסימום מקומי','قيمة عظمى محلية','Local maximum'],
+  mx_gInter:['נקודות חיתוך בין הפונקציות','نقاط التقاطع بين الدوال','Intersections'], mx_gNone:['אין בטווח המוצג','لا يوجد في المدى المعروض','None in the shown range']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -6071,7 +6279,7 @@ function liveTouch(k){ if (LIVE_APPLYING || !FUSER) return; try { const ts = JSO
 const LS = FUSER
   ? {getItem: k => SS.getItem(WK(k)), setItem: (k, v) => { v = String(v); if (SS.getItem(WK(k)) === v) return; SS.setItem(WK(k), v); liveTouch(k); persistSoon(); }, removeItem: k => { if (SS.getItem(WK(k)) == null) return; SS.removeItem(WK(k)); liveTouch(k); persistSoon(); }}
   : {getItem: k => RAWLS.getItem(k), setItem: (k, v) => RAWLS.setItem(k, v), removeItem: k => RAWLS.removeItem(k)};
-const DATA_KEYS = ['fin-set', 'fin-vals', 'fin-scn', 'fin-lang', 'fin-cur', 'fin-tab', 'fin-exp', 'fin-clients', 'fin-trash', 'fin-files', 'fin-cv'];
+const DATA_KEYS = ['fin-set', 'fin-vals', 'fin-scn', 'fin-lang', 'fin-cur', 'fin-tab', 'fin-exp', 'fin-clients', 'fin-trash', 'fin-files', 'fin-cv', 'fin-mathx'];
 /* saving: automatic, or only when you tap Save. In manual mode your data changes wait here (and survive a reload of this tab) until you save */
 const SAVE_KEYS = ['fin-vals', 'fin-scn', 'fin-exp', 'fin-clients'];
 const LS_RAW = {getItem: LS.getItem, setItem: LS.setItem, removeItem: LS.removeItem};
@@ -6209,7 +6417,7 @@ const GROUPS = [
   ['g_retire',  ['retire','pensfix','oldage','pencmp','mgmtfees','hishtalmut','fire','freedom']],
   ['g_budget',  ['expenses','smartsplit','split','unitprice','discount','appliance','evfuel','breakeven']],
   ['g_compare', ['insurance','cellcmp','phonecmp']],
-  ['g_fxtools', ['convert','inflation','cpilink','percent']]
+  ['g_fxtools', ['mathx','convert','inflation','cpilink','percent']]
 ];
 const TABS = GROUPS.flatMap(g => g[1]);
 
@@ -8252,6 +8460,11 @@ function cvPanelHTML(){
   return `<section class="panel panel-flat tool-panel" id="panel-cv" role="tabpanel" aria-labelledby="tab-cv" hidden><div id="cv_root"></div></section>`;
 }
 Object.assign(ICON, {cv: ic('<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="9" r="2.4"/><path d="M8.5 15.5c.8-1.6 2-2.4 3.5-2.4s2.7.8 3.5 2.4M8.5 18.5h7"/>')});
+/* ================= advanced calculator: the panel shell (the module is mx_engine.js + mx.js) ================= */
+function mxPanelHTML(){
+  return `<section class="panel panel-flat tool-panel" id="panel-mathx" role="tabpanel" aria-labelledby="tab-mathx" hidden><div id="mx_root"></div></section>`;
+}
+Object.assign(ICON, {mathx: ic('<rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8 7h8M8 11.5h2M12 11.5h0M15.5 10v3M14 11.5h3M8 16l2 2M10 16l-2 2M14 17h3"/>')});
 
 const navEl = $('#nav'), panelsEl = $('#panels');
 function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
@@ -8260,7 +8473,7 @@ function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
   }</div>`
 ).join(''); }
 renderNav();
-panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'saved' ? savedPanelHTML() : id === 'markets' ? marketsPanelHTML() : id === 'clients' ? clientsPanelHTML() : id === 'cv' ? cvPanelHTML() : panelHTML(id)).join('');
+panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'saved' ? savedPanelHTML() : id === 'markets' ? marketsPanelHTML() : id === 'clients' ? clientsPanelHTML() : id === 'cv' ? cvPanelHTML() : id === 'mathx' ? mxPanelHTML() : panelHTML(id)).join('');
 
 /* ================= language ================= */
 function updateHead(){
@@ -12639,8 +12852,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "12.0", "date": "2026-10-18", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261018.021548';
+var CHANGELOG = [{"v": "12.1", "date": "2026-10-18", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261018.041350';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -21704,7 +21917,8 @@ async function cvBg(file){
 }
 /* ---------- photo access: ask once / allow always / blocked – changeable any time in Settings → Security ----------
    A web page never sees the gallery: the phone's own picker opens and only the chosen photo reaches the app, and it stays on this device. */
-function cvPick(cam){ const f = $(`#cv_root [data-cvfile="photo"]${cam ? '[data-cam]' : ':not([data-cam])'}`); if (f) f.click(); }
+var PHA_T = 'cv';   /* which screen asked for a photo: the CV builder or the calculator's scanner */
+function cvPick(cam){ const sel = PHA_T === 'mx' ? '#mx_root [data-mxfile]' : '#cv_root [data-cvfile="photo"]'; const f = $(`${sel}${cam ? '[data-cam]' : ':not([data-cam])'}`); if (f) f.click(); }
 function cvPhotoAsk(){
   const m = SET.photoAccess || 'ask';
   if (m === 'never'){ toast(t('pha_blocked')); return; }
@@ -21879,8 +22093,8 @@ document.addEventListener('click', e => {
   if (a === 'sup' || a === 'sdown'){ const L = d.order, i = +b.dataset.i, j = a === 'sup' ? i - 1 : i + 1; if (j < 0 || j >= L.length) return; [L[i], L[j]] = [L[j], L[i]]; re(); return; }
   if (a === 'tpl'){ d.tpl = b.dataset.v; $$('#cv_root .cv-tpl').forEach(x => x.classList.toggle('on', x === b)); it.at = Date.now(); cvSaveSoon(); return; }
   if (a === 'color'){ d.color = b.dataset.v; $$('#cv_root .cv-sw').forEach(x => x.classList.toggle('on', x === b)); const ci = $('#cv_root input[type=color]'); if (ci) ci.value = d.color; it.at = Date.now(); cvSaveSoon(); cvThumbs(); return; }
-  if (a === 'photo'){ CV.phKind = 'photo'; cvPhotoAsk(); return; }
-  if (a === 'bg'){ CV.phKind = 'bg'; cvPhotoAsk(); return; }
+  if (a === 'photo'){ PHA_T = 'cv'; CV.phKind = 'photo'; cvPhotoAsk(); return; }
+  if (a === 'bg'){ PHA_T = 'cv'; CV.phKind = 'bg'; cvPhotoAsk(); return; }
   if (a === 'bgDel'){ d.bg = ''; re(); return; }
   if (a === 'photoDel'){ d.photo = ''; re(); return; }
   if (a === 'import'){ const f = $('#cv_root [data-cvfile="json"]'); if (f) f.click(); return; }
@@ -22074,6 +22288,980 @@ document.addEventListener('click', e => {
   const _alPhe = applyLang;
   applyLang = function(){ const r = _alPhe.apply(this, arguments); try { if ($('#ph_ed')) pheRender(); } catch (e) {} return r; };
 }
+
+/* ================= advanced calculator: the engine — parser, evaluator, step-by-step reduction, math rendering, finance & economics functions =================
+   Self-contained (no libraries). Symbolic algebra (solve / integrate / expand / factor / limit) loads the nerdamer library on demand. */
+var MXE = {deg: false};
+const MX_ERR = (k, p) => { const e = new Error(k); e.mx = k; e.p = p; return e; };
+/* ---------- tokenizer ---------- */
+function mxTok(src){
+  const s = String(src).replace(/[×✕·]/g, '*').replace(/÷/g, '/').replace(/[−–]/g, '-').replace(/π/g, 'pi').replace(/²/g, '^2').replace(/³/g, '^3').replace(/√/g, 'sqrt').replace(/≠/g, '!=').replace(/≤/g, '<=').replace(/≥/g, '>=').replace(/‏|‎/g, '');
+  const T = []; let i = 0;
+  while (i < s.length){
+    const c = s[i];
+    if (/\s/.test(c)){ i++; continue; }
+    let m;
+    if ((m = /^(\d+\.?\d*|\.\d+)(e[+-]?\d+)?/i.exec(s.slice(i)))){ T.push({t: 'num', v: parseFloat(m[0])}); i += m[0].length; continue; }
+    if ((m = /^[A-Za-z_][A-Za-z_0-9]*/.exec(s.slice(i)))){ T.push({t: 'id', v: m[0]}); i += m[0].length; continue; }
+    if ((m = /^(<=|>=|==|!=)/.exec(s.slice(i)))){ T.push({t: 'op', v: m[0]}); i += 2; continue; }
+    if ('+-*/^%!(),=[];<>'.includes(c)){ T.push({t: 'op', v: c}); i++; continue; }
+    throw MX_ERR('mx_eChar', {c});
+  }
+  return T;
+}
+/* ---------- parser (precedence climbing, implicit multiplication) ---------- */
+function mxParse(src){
+  const T = mxTok(src); let p = 0;
+  const peek = () => T[p], isOp = v => T[p] && T[p].t === 'op' && T[p].v === v;
+  const eat = v => { if (!isOp(v)) throw MX_ERR('mx_eExpect', {c: v}); p++; };
+  function list(close){ const a = []; if (isOp(close)) return a; a.push(expr()); while (isOp(',')){ p++; a.push(expr()); } return a; }
+  function primary(){
+    const k = peek(); if (!k) throw MX_ERR('mx_eEnd');
+    if (k.t === 'num'){ p++; return {t: 'num', v: k.v}; }
+    if (k.t === 'id'){
+      p++;
+      if (isOp('(')){ p++; const args = list(')'); eat(')'); return {t: 'fn', n: k.v, args}; }
+      return {t: 'sym', n: k.v};
+    }
+    if (isOp('(')){ p++; const e = expr(); eat(')'); return {t: 'par', a: e}; }
+    if (isOp('[')){ p++; const rows = [[]];
+      if (!isOp(']')){ rows[0].push(expr()); while (isOp(',') || isOp(';')){ if (T[p].v === ';') rows.push([]); p++; rows[rows.length - 1].push(expr()); } }
+      eat(']'); return {t: 'mat', rows}; }
+    if (isOp('-')){ p++; return {t: 'neg', a: power()}; }
+    if (isOp('+')){ p++; return power(); }
+    throw MX_ERR('mx_eTok', {c: k.v});
+  }
+  function postfix(){ let e = primary(); for (;;){ if (isOp('!')){ p++; e = {t: 'fact', a: e}; } else if (isOp('%') && !(T[p + 1] && (T[p + 1].t === 'num' || T[p + 1].t === 'id' || (T[p + 1].t === 'op' && T[p + 1].v === '(')))){ p++; e = {t: 'pct', a: e}; } else break; } return e; }
+  function power(){ const b = postfix(); if (isOp('^')){ p++; const ex = isOp('-') ? (p++, {t: 'neg', a: power()}) : power(); return {t: 'op', o: '^', a: b, b: ex}; } return b; }
+  function implicitNext(){ const k = peek(); return k && (k.t === 'num' || (k.t === 'id' && k.v !== 'mod') || (k.t === 'op' && (k.v === '(' || k.v === '['))); }
+  function term(){
+    let e = unary();
+    for (;;){
+      if (T[p] && T[p].t === 'id' && T[p].v === 'mod'){ p++; e = {t: 'op', o: 'mod', a: e, b: unary()}; continue; }
+      if (isOp('*') || isOp('/') || (isOp('%') && T[p + 1] && (T[p + 1].t === 'num' || T[p + 1].t === 'id' || T[p + 1].v === '('))){ const o = T[p].v; p++; e = {t: 'op', o: o === '%' ? 'mod' : o, a: e, b: unary()}; }
+      else if (implicitNext()){ e = {t: 'op', o: '*', a: e, b: power(), imp: true}; }
+      else break;
+    }
+    return e;
+  }
+  function unary(){ if (isOp('-')){ p++; return {t: 'neg', a: unary()}; } if (isOp('+')){ p++; return unary(); } return power(); }
+  function arith(){ let e = term(); while (isOp('+') || isOp('-')){ const o = T[p].v; p++; e = {t: 'op', o, a: e, b: term()}; } return e; }
+  function cmp(){ let e = arith(); while (T[p] && T[p].t === 'op' && ['<', '>', '<=', '>=', '==', '!='].includes(T[p].v)){ const o = T[p].v; p++; e = {t: 'op', o, a: e, b: arith()}; } return e; }
+  function expr(){ return cmp(); }
+  function top(){
+    const e = expr();
+    if (isOp('=')){
+      p++; const r = expr();
+      if (e.t === 'sym') return {t: 'assign', n: e.n, e: r};
+      if (e.t === 'fn' && e.args.every(a => a.t === 'sym')) return {t: 'fdef', n: e.n, ps: e.args.map(a => a.n), e: r};
+      return {t: 'eq', a: e, b: r};
+    }
+    return e;
+  }
+  const r = top(); if (p < T.length) throw MX_ERR('mx_eTok', {c: T[p].v}); return r;
+}
+/* ---------- values ---------- */
+const mxIsM = v => Array.isArray(v);
+const mxRows = v => mxIsM(v) ? (mxIsM(v[0]) ? v : [v]) : [[v]];
+function mxFlat(args){ const o = []; args.forEach(a => { if (mxIsM(a)) mxRows(a).forEach(r => r.forEach(x => o.push(x))); else o.push(a); }); return o; }
+function mxNum(v, name){ if (typeof v !== 'number') throw MX_ERR('mx_eNum', {n: name || ''}); return v; }
+const mxGamma = z => { if (z < 0.5) return Math.PI / (Math.sin(Math.PI * z) * mxGamma(1 - z)); z -= 1; const g = 7, C = [0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7]; let x = C[0]; for (let i = 1; i < g + 2; i++) x += C[i] / (z + i); const t = z + g + 0.5; return Math.sqrt(2 * Math.PI) * Math.pow(t, z + 0.5) * Math.exp(-t) * x; };
+const mxFact = n => { if (n < 0) throw MX_ERR('mx_eDomain'); if (Number.isInteger(n) && n <= 170){ let r = 1; for (let i = 2; i <= n; i++) r *= i; return r; } return mxGamma(n + 1); };
+/* matrix helpers */
+function mxMatOp(o, A, B){
+  const a = mxIsM(A), b = mxIsM(B);
+  if (o === '*' && a && b){ const X = mxRows(A), Y = mxRows(B); if (X[0].length !== Y.length) throw MX_ERR('mx_eDim'); return X.map(r => Y[0].map((_, j) => r.reduce((s, v, k) => s + v * Y[k][j], 0))); }
+  if (o === '^' && a){ let R = mxRows(A), n = B; if (!Number.isInteger(n)) throw MX_ERR('mx_eDim'); if (n < 0){ R = mxInv(R); n = -n; } let out = R.map((r, i) => r.map((_, j) => i === j ? 1 : 0)); for (let i = 0; i < n; i++) out = mxMatOp('*', out, R); return out; }
+  const f = (x, y) => mxScalar(o, x, y);
+  if (a && b){ const X = mxRows(A), Y = mxRows(B); if (X.length !== Y.length || X[0].length !== Y[0].length) throw MX_ERR('mx_eDim'); return X.map((r, i) => r.map((v, j) => f(v, Y[i][j]))); }
+  if (a) return mxRows(A).map(r => r.map(v => f(v, B)));
+  return mxRows(B).map(r => r.map(v => f(A, v)));
+}
+function mxDet(M){ M = mxRows(M); const n = M.length; if (M.some(r => r.length !== n)) throw MX_ERR('mx_eSquare'); const A = M.map(r => r.slice()); let d = 1; for (let i = 0; i < n; i++){ let p = i; for (let r = i + 1; r < n; r++) if (Math.abs(A[r][i]) > Math.abs(A[p][i])) p = r; if (Math.abs(A[p][i]) < 1e-14) return 0; if (p !== i){ [A[p], A[i]] = [A[i], A[p]]; d = -d; } d *= A[i][i]; for (let r = i + 1; r < n; r++){ const f = A[r][i] / A[i][i]; for (let c = i; c < n; c++) A[r][c] -= f * A[i][c]; } } return d; }
+function mxInv(M){ M = mxRows(M); const n = M.length; if (M.some(r => r.length !== n)) throw MX_ERR('mx_eSquare'); const A = M.map((r, i) => r.concat(r.map((_, j) => i === j ? 1 : 0))); for (let i = 0; i < n; i++){ let p = i; for (let r = i + 1; r < n; r++) if (Math.abs(A[r][i]) > Math.abs(A[p][i])) p = r; if (Math.abs(A[p][i]) < 1e-14) throw MX_ERR('mx_eSingular'); [A[p], A[i]] = [A[i], A[p]]; const d = A[i][i]; for (let c = 0; c < 2 * n; c++) A[i][c] /= d; for (let r = 0; r < n; r++) if (r !== i){ const f = A[r][i]; for (let c = 0; c < 2 * n; c++) A[r][c] -= f * A[i][c]; } } return A.map(r => r.slice(n)); }
+function mxScalar(o, x, y){
+  mxNum(x); mxNum(y);
+  switch (o){
+    case '+': return x + y; case '-': return x - y; case '*': return x * y;
+    case '/': if (y === 0) throw MX_ERR('mx_eDiv0'); return x / y;
+    case '^': return Math.pow(x, y); case 'mod': return ((x % y) + y) % y;
+    case '<': return +(x < y); case '>': return +(x > y); case '<=': return +(x <= y); case '>=': return +(x >= y); case '==': return +(Math.abs(x - y) < 1e-12); case '!=': return +(Math.abs(x - y) >= 1e-12);
+  }
+  throw MX_ERR('mx_eTok', {c: o});
+}
+function mxBin(o, a, b){ return mxIsM(a) || mxIsM(b) ? mxMatOp(o, a, b) : mxScalar(o, a, b); }
+/* ---------- built-in functions ---------- */
+const mxT = x => MXE.deg ? x * Math.PI / 180 : x, mxTi = x => MXE.deg ? x * 180 / Math.PI : x;
+const MX_MATH = {
+  sqrt: x => { if (x < 0) throw MX_ERR('mx_eDomain'); return Math.sqrt(x); }, cbrt: Math.cbrt, root: (x, n) => x < 0 && n % 2 ? -Math.pow(-x, 1 / n) : Math.pow(x, 1 / n), abs: x => mxIsM(x) ? mxDet(x) : Math.abs(x),
+  exp: Math.exp, ln: x => { if (x <= 0) throw MX_ERR('mx_eDomain'); return Math.log(x); }, log: (x, b) => { if (x <= 0) throw MX_ERR('mx_eDomain'); return b == null ? Math.log10(x) : Math.log(x) / Math.log(b); }, log2: Math.log2, log10: Math.log10,
+  sin: x => Math.sin(mxT(x)), cos: x => Math.cos(mxT(x)), tan: x => Math.tan(mxT(x)), cot: x => 1 / Math.tan(mxT(x)), sec: x => 1 / Math.cos(mxT(x)), csc: x => 1 / Math.sin(mxT(x)),
+  asin: x => mxTi(Math.asin(x)), acos: x => mxTi(Math.acos(x)), atan: x => mxTi(Math.atan(x)), atan2: (y, x) => mxTi(Math.atan2(y, x)),
+  sinh: Math.sinh, cosh: Math.cosh, tanh: Math.tanh, asinh: Math.asinh, acosh: Math.acosh, atanh: Math.atanh,
+  floor: Math.floor, ceil: Math.ceil, round: (x, d) => { const k = Math.pow(10, d || 0); return Math.round(x * k) / k; }, trunc: Math.trunc, sign: Math.sign,
+  fact: mxFact, gamma: mxGamma, ncr: (n, k) => Math.round(mxFact(n) / (mxFact(k) * mxFact(n - k))), npr: (n, k) => Math.round(mxFact(n) / mxFact(n - k)),
+  gcd: (...a) => mxFlat(a).reduce((x, y) => { x = Math.abs(x); y = Math.abs(y); while (y){ [x, y] = [y, x % y]; } return x; }), lcm: (...a) => mxFlat(a).reduce((x, y) => Math.abs(x * y) / MX_MATH.gcd(x, y)),
+  mod: (x, y) => mxScalar('mod', x, y), hypot: Math.hypot, deg: x => x * 180 / Math.PI, rad: x => x * Math.PI / 180,
+  min: (...a) => Math.min(...mxFlat(a)), max: (...a) => Math.max(...mxFlat(a)), sum: (...a) => mxFlat(a).reduce((s, x) => s + x, 0), prod: (...a) => mxFlat(a).reduce((s, x) => s * x, 1),
+  mean: (...a) => { const v = mxFlat(a); return v.reduce((s, x) => s + x, 0) / v.length; },
+  median: (...a) => { const v = mxFlat(a).sort((x, y) => x - y), n = v.length; return n % 2 ? v[(n - 1) / 2] : (v[n / 2 - 1] + v[n / 2]) / 2; },
+  mode: (...a) => { const c = {}; mxFlat(a).forEach(x => { c[x] = (c[x] || 0) + 1; }); return +Object.keys(c).sort((x, y) => c[y] - c[x])[0]; },
+  variance: (...a) => { const v = mxFlat(a), m = MX_MATH.mean(v); return v.reduce((s, x) => s + (x - m) * (x - m), 0) / (v.length - 1); },
+  varp: (...a) => { const v = mxFlat(a), m = MX_MATH.mean(v); return v.reduce((s, x) => s + (x - m) * (x - m), 0) / v.length; },
+  std: (...a) => Math.sqrt(MX_MATH.variance(...a)), stdp: (...a) => Math.sqrt(MX_MATH.varp(...a)),
+  det: mxDet, inv: mxInv, transpose: M => { const R = mxRows(M); return R[0].map((_, j) => R.map(r => r[j])); }, trace: M => mxRows(M).reduce((s, r, i) => s + r[i], 0),
+  identity: n => Array.from({length: n}, (_, i) => Array.from({length: n}, (_, j) => +(i === j))),
+  linsolve: (A, b) => mxMatOp('*', mxInv(A), mxIsM(b) && mxRows(b).length === 1 ? MX_MATH.transpose(b) : b),
+  dot: (a, b) => mxFlat([a]).reduce((s, x, i) => s + x * mxFlat([b])[i], 0), cross: (a, b) => { const x = mxFlat([a]), y = mxFlat([b]); return [x[1] * y[2] - x[2] * y[1], x[2] * y[0] - x[0] * y[2], x[0] * y[1] - x[1] * y[0]]; },
+  norm: a => Math.sqrt(mxFlat([a]).reduce((s, x) => s + x * x, 0)), len: a => mxFlat([a]).length
+};
+/* probability, regression, number theory, sequences */
+function mxErf(x){ const t = 1 / (1 + 0.3275911 * Math.abs(x)), y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return x >= 0 ? y : -y; }
+const mxNcdf = (x, m, s) => 0.5 * (1 + mxErf((x - (m || 0)) / ((s || 1) * Math.SQRT2)));
+function mxNinv(p, m, s){ if (p <= 0 || p >= 1) throw MX_ERR('mx_eDomain'); let lo = -40, hi = 40; for (let i = 0; i < 200; i++){ const md = (lo + hi) / 2; if (mxNcdf(md, 0, 1) < p) lo = md; else hi = md; } return (m || 0) + (s || 1) * (lo + hi) / 2; }
+function mxLinreg(xs, ys){ const x = mxFlat([xs]), y = mxFlat([ys]), n = x.length; if (n !== y.length || n < 2) throw MX_ERR('mx_eDim'); const mx = x.reduce((a, b) => a + b) / n, my = y.reduce((a, b) => a + b) / n; let sxy = 0, sxx = 0, syy = 0; for (let i = 0; i < n; i++){ sxy += (x[i] - mx) * (y[i] - my); sxx += (x[i] - mx) ** 2; syy += (y[i] - my) ** 2; } const b = sxy / sxx; return {b, a: my - b * mx, r: sxy / Math.sqrt(sxx * syy), n}; }
+function mxPrimeFactors(n){ n = Math.round(Math.abs(n)); const f = []; for (let p = 2; p * p <= n; p++) while (n % p === 0){ f.push(p); n /= p; } if (n > 1) f.push(n); return f; }
+function mxRref(M){ const A = mxRows(M).map(r => r.slice()), R = A.length, C = A[0].length; let lead = 0; for (let r = 0; r < R && lead < C; r++){ let i = r; while (Math.abs(A[i][lead]) < 1e-12){ i++; if (i === R){ i = r; lead++; if (lead === C) return A; } } [A[i], A[r]] = [A[r], A[i]]; const lv = A[r][lead]; A[r] = A[r].map(v => v / lv); for (let k = 0; k < R; k++) if (k !== r){ const f = A[k][lead]; A[k] = A[k].map((v, j) => v - f * A[r][j]); } lead++; } return A.map(r => r.map(v => Math.abs(v) < 1e-12 ? 0 : v)); }
+Object.assign(MX_MATH, {
+  isprime: n => { n = Math.round(n); if (n < 2) return 0; for (let p = 2; p * p <= n; p++) if (n % p === 0) return 0; return 1; },
+  factorint: n => mxPrimeFactors(n).reduce((o, p) => { const k = o.find(x => x[0] === p); if (k) k[1]++; else o.push([p, 1]); return o; }, []).map(([p, e]) => e > 1 ? p + '^' + e : String(p)).join(' · ') || '1',
+  divisors: n => { n = Math.round(Math.abs(n)); const d = []; for (let i = 1; i * i <= n; i++) if (n % i === 0){ d.push(i); if (i * i !== n) d.push(n / i); } return d.sort((a, b) => a - b); },
+  fib: n => { let a = 0, b = 1; for (let i = 0; i < n; i++) [a, b] = [b, a + b]; return a; },
+  bin: n => Math.round(n).toString(2), hex: n => Math.round(n).toString(16).toUpperCase(), oct: n => Math.round(n).toString(8), tobase: (n, b) => Math.round(n).toString(b).toUpperCase(),
+  erf: mxErf, beta: (a, b) => mxGamma(a) * mxGamma(b) / mxGamma(a + b),
+  normpdf: (x, m, s) => { m = m || 0; s = s || 1; return Math.exp(-((x - m) ** 2) / (2 * s * s)) / (s * Math.sqrt(2 * Math.PI)); }, normcdf: mxNcdf, norminv: mxNinv,
+  binompdf: (n, p, k) => MX_MATH.ncr(n, k) * p ** k * (1 - p) ** (n - k), binomcdf: (n, p, k) => { let s = 0; for (let i = 0; i <= k; i++) s += MX_MATH.binompdf(n, p, i); return s; },
+  poissonpdf: (l, k) => Math.exp(-l) * l ** k / mxFact(k), poissoncdf: (l, k) => { let s = 0; for (let i = 0; i <= k; i++) s += MX_MATH.poissonpdf(l, i); return s; },
+  exppdf: (x, l) => x < 0 ? 0 : l * Math.exp(-l * x), expcdf: (x, l) => x < 0 ? 0 : 1 - Math.exp(-l * x), zscore: (x, m, s) => (x - m) / s,
+  percentile: (d, p) => { const v = mxFlat([d]).sort((a, b) => a - b), i = (v.length - 1) * p / 100, lo = Math.floor(i); return v[lo] + (v[Math.min(lo + 1, v.length - 1)] - v[lo]) * (i - lo); },
+  quartiles: d => [MX_MATH.percentile(d, 25), MX_MATH.percentile(d, 50), MX_MATH.percentile(d, 75)], iqr: d => MX_MATH.percentile(d, 75) - MX_MATH.percentile(d, 25),
+  geomean: (...a) => { const v = mxFlat(a); return Math.exp(v.reduce((s, x) => s + Math.log(x), 0) / v.length); }, harmean: (...a) => { const v = mxFlat(a); return v.length / v.reduce((s, x) => s + 1 / x, 0); },
+  range: (...a) => Math.max(...mxFlat(a)) - Math.min(...mxFlat(a)), count: (...a) => mxFlat(a).length,
+  cov: (x, y) => { const a = mxFlat([x]), b = mxFlat([y]), ma = MX_MATH.mean(a), mb = MX_MATH.mean(b); return a.reduce((s, v, i) => s + (v - ma) * (b[i] - mb), 0) / (a.length - 1); },
+  corr: (x, y) => mxLinreg(x, y).r, slope: (x, y) => mxLinreg(x, y).b, intercept: (x, y) => mxLinreg(x, y).a, rsq: (x, y) => mxLinreg(x, y).r ** 2, linreg: (x, y) => { const L = mxLinreg(x, y); return [L.b, L.a]; },
+  forecast: (x0, x, y) => { const L = mxLinreg(x, y); return L.a + L.b * x0; },
+  rref: mxRref, rank: M => mxRref(M).filter(r => r.some(v => Math.abs(v) > 1e-10)).length,
+  pctchange: (a, b) => (b - a) / a * 100, pctof: (part, whole) => part / whole * 100,
+  arith: (a1, d, n) => n * (2 * a1 + (n - 1) * d) / 2, geom: (a1, r, n) => r === 1 ? a1 * n : a1 * (1 - r ** n) / (1 - r),
+  gini: (...a) => { const v = mxFlat(a).sort((x, y) => x - y), n = v.length, s = v.reduce((x, y) => x + y, 0); return v.reduce((acc, x, i) => acc + (2 * (i + 1) - n - 1) * x, 0) / (n * s); },
+  nsolve: null, quad: null
+});
+const MX_CONST = {pi: Math.PI, e: Math.E, phi: (1 + Math.sqrt(5)) / 2, tau: 2 * Math.PI, inf: Infinity};
+/* ---------- finance & economics (each explains itself) ---------- */
+const mxP = x => (Math.round(x * 1e6) / 1e4) + '%';
+function mxPV(r, n, pmt, fv, type){ fv = fv || 0; type = type || 0; if (r === 0) return -(pmt * n + fv); const f = Math.pow(1 + r, n); return -(pmt * (1 + r * type) * (f - 1) / r + fv) / f; }
+function mxFV(r, n, pmt, pv, type){ pv = pv || 0; type = type || 0; if (r === 0) return -(pv + pmt * n); const f = Math.pow(1 + r, n); return -(pv * f + pmt * (1 + r * type) * (f - 1) / r); }
+function mxPMT(r, n, pv, fv, type){ fv = fv || 0; type = type || 0; if (r === 0) return -(pv + fv) / n; const f = Math.pow(1 + r, n); return -(r * (pv * f + fv)) / ((1 + r * type) * (f - 1)); }
+function mxNPER(r, pmt, pv, fv, type){ fv = fv || 0; type = type || 0; if (r === 0) return -(pv + fv) / pmt; const z = pmt * (1 + r * type) / r; return Math.log((-fv + z) / (pv + z)) / Math.log(1 + r); }
+function mxRATE(n, pmt, pv, fv, type, guess){ let r = guess || 0.05; for (let i = 0; i < 200; i++){ const f = mxFV(r, n, pmt, pv, type) - (fv || 0) * -1, h = 1e-7, d = (mxFV(r + h, n, pmt, pv, type) - mxFV(r - h, n, pmt, pv, type)) / (2 * h); const nr = r - (mxFV(r, n, pmt, pv, type) + (fv || 0)) / d; if (!isFinite(nr)) break; if (Math.abs(nr - r) < 1e-12) return nr; r = nr; } return r; }
+const mxNPV = (r, cf) => cf.reduce((s, c, t) => s + c / Math.pow(1 + r, t), 0);
+function mxIRR(cf, guess){ let r = guess || 0.1; for (let i = 0; i < 300; i++){ const f = mxNPV(r, cf), d = cf.reduce((s, c, t) => s - t * c / Math.pow(1 + r, t + 1), 0); const nr = r - f / d; if (!isFinite(nr)) break; if (Math.abs(nr - r) < 1e-12) return nr; r = nr; }
+  let lo = -0.9999, hi = 10; if (mxNPV(lo, cf) * mxNPV(hi, cf) > 0) throw MX_ERR('mx_eIrr'); for (let i = 0; i < 300; i++){ const m = (lo + hi) / 2; if (mxNPV(lo, cf) * mxNPV(m, cf) <= 0) hi = m; else lo = m; } return (lo + hi) / 2; }
+const N6 = x => mxFmt(x, 6), M2 = x => mxFmt(x, 2);
+/* each: [params], fn → value, ex → {f: formula, s: substitution lines, tbl?} */
+const MX_FIN = {
+  pv: {ps: ['rate', 'nper', 'pmt', 'fv?', 'type?'], fn: mxPV, ex: (r, n, pmt, fv, ty) => ({f: 'PV = −[PMT·(1+r·type)·((1+r)^n − 1)/r + FV] / (1+r)^n', s: [`r = ${mxP(r)}, n = ${N6(n)}, PMT = ${M2(pmt)}, FV = ${M2(fv || 0)}, type = ${ty || 0}`, `(1+r)^n = ${N6(Math.pow(1 + r, n))}`]})},
+  fv: {ps: ['rate', 'nper', 'pmt', 'pv?', 'type?'], fn: mxFV, ex: (r, n, pmt, pv, ty) => ({f: 'FV = −[PV·(1+r)^n + PMT·(1+r·type)·((1+r)^n − 1)/r]', s: [`r = ${mxP(r)}, n = ${N6(n)}, PMT = ${M2(pmt)}, PV = ${M2(pv || 0)}`, `(1+r)^n = ${N6(Math.pow(1 + r, n))}`]})},
+  pmt: {ps: ['rate', 'nper', 'pv', 'fv?', 'type?'], fn: mxPMT, ex: (r, n, pv, fv, ty) => ({f: 'PMT = −r·[PV·(1+r)^n + FV] / [(1+r·type)·((1+r)^n − 1)]', s: [`r = ${mxP(r)}, n = ${N6(n)}, PV = ${M2(pv)}, FV = ${M2(fv || 0)}`, `(1+r)^n = ${N6(Math.pow(1 + r, n))}`, `${'Σ'} ${M2(-mxPMT(r, n, pv, fv, ty) * n)} = PMT × n`]})},
+  nper: {ps: ['rate', 'pmt', 'pv', 'fv?', 'type?'], fn: mxNPER, ex: (r, pmt, pv) => ({f: 'n = ln[(PMT/r − FV)/(PMT/r + PV)] / ln(1+r)', s: [`r = ${mxP(r)}, PMT = ${M2(pmt)}, PV = ${M2(pv)}`]})},
+  rate: {ps: ['nper', 'pmt', 'pv', 'fv?', 'type?'], fn: mxRATE, ex: () => ({f: 'FV(r) = 0 → Newton–Raphson', s: []})},
+  npv: {ps: ['rate', 'cashflows[]'], fn: (r, cf) => mxNPV(r, mxFlat([cf])), ex: (r, cf) => { cf = mxFlat([cf]); return {f: 'NPV = Σ CFₜ / (1+r)ᵗ  (t = 0…n)', s: cf.map((c, t) => `t=${t}: ${M2(c)} / ${N6(Math.pow(1 + r, t))} = ${M2(c / Math.pow(1 + r, t))}`)}; }},
+  irr: {ps: ['cashflows[]'], fn: cf => mxIRR(mxFlat([cf])), ex: cf => { cf = mxFlat([cf]); const r = mxIRR(cf); return {f: 'NPV(IRR) = Σ CFₜ / (1+IRR)ᵗ = 0', s: [`IRR = ${mxP(r)}`, `NPV @ IRR = ${M2(mxNPV(r, cf))}`]}; }},
+  mirr: {ps: ['cashflows[]', 'finance_rate', 'reinvest_rate'], fn: (cf, fr, rr) => { cf = mxFlat([cf]); const n = cf.length - 1; const fvp = cf.reduce((s, c, t) => s + (c > 0 ? c * Math.pow(1 + rr, n - t) : 0), 0), pvn = cf.reduce((s, c, t) => s + (c < 0 ? c / Math.pow(1 + fr, t) : 0), 0); return Math.pow(fvp / -pvn, 1 / n) - 1; },
+    ex: (cf, fr, rr) => ({f: 'MIRR = (FV⁺ / −PV⁻)^(1/n) − 1', s: [`n = ${mxFlat([cf]).length - 1}`]})},
+  payback: {ps: ['cashflows[]'], fn: cf => { cf = mxFlat([cf]); let c = 0; for (let t = 0; t < cf.length; t++){ const prev = c; c += cf[t]; if (c >= 0 && t > 0) return t - 1 + (-prev) / cf[t]; } return NaN; },
+    ex: cf => { cf = mxFlat([cf]); let c = 0; return {f: 'Payback = t − 1 + |cumulative CFₜ₋₁| / CFₜ', s: cf.map((x, t) => `t=${t}: Σ = ${M2(c += x)}`)}; }},
+  dpayback: {ps: ['rate', 'cashflows[]'], fn: (r, cf) => { cf = mxFlat([cf]).map((x, t) => x / Math.pow(1 + r, t)); return MX_FIN.payback.fn(cf); }, ex: (r, cf) => ({f: 'Discounted payback: payback of CFₜ/(1+r)ᵗ', s: mxFlat([cf]).map((x, t) => `t=${t}: ${M2(x / Math.pow(1 + r, t))}`)})},
+  profindex: {ps: ['rate', 'cashflows[]'], fn: (r, cf) => { cf = mxFlat([cf]); return mxNPV(r, [0].concat(cf.slice(1))) / -cf[0]; }, ex: () => ({f: 'PI = PV(future CF) / initial investment', s: []})},
+  cagr: {ps: ['begin', 'end', 'years'], fn: (a, b, n) => Math.pow(b / a, 1 / n) - 1, ex: (a, b, n) => ({f: 'CAGR = (End / Begin)^(1/n) − 1', s: [`(${M2(b)} / ${M2(a)})^(1/${N6(n)}) − 1 = ${N6(Math.pow(b / a, 1 / n))} − 1`]})},
+  effrate: {ps: ['nominal', 'periods'], fn: (j, m) => Math.pow(1 + j / m, m) - 1, ex: (j, m) => ({f: 'EAR = (1 + j/m)^m − 1', s: [`(1 + ${N6(j)}/${m})^${m} − 1`]})},
+  nomrate: {ps: ['effective', 'periods'], fn: (i, m) => m * (Math.pow(1 + i, 1 / m) - 1), ex: () => ({f: 'j = m·[(1+EAR)^(1/m) − 1]', s: []})},
+  contrate: {ps: ['nominal'], fn: j => Math.exp(j) - 1, ex: () => ({f: 'EAR = e^j − 1 (continuous)', s: []})},
+  realrate: {ps: ['nominal', 'inflation'], fn: (i, pi) => (1 + i) / (1 + pi) - 1, ex: (i, pi) => ({f: '1 + r = (1 + i) / (1 + π)  (Fisher)', s: [`(1 + ${N6(i)}) / (1 + ${N6(pi)}) − 1`]})},
+  sln: {ps: ['cost', 'salvage', 'life'], fn: (c, s, l) => (c - s) / l, ex: (c, s, l) => ({f: 'D = (Cost − Salvage) / Life', s: [`(${M2(c)} − ${M2(s)}) / ${l}`], tbl: mxDepTbl('sln', c, s, l)})},
+  ddb: {ps: ['cost', 'salvage', 'life', 'period', 'factor?'], fn: (c, s, l, p, f) => mxDepRow('ddb', c, s, l, p, f), ex: (c, s, l, p, f) => ({f: 'Dₜ = BVₜ₋₁ × factor / Life  (not below salvage)', s: [`factor = ${f || 2}`], tbl: mxDepTbl('ddb', c, s, l, f)})},
+  syd: {ps: ['cost', 'salvage', 'life', 'period'], fn: (c, s, l, p) => (c - s) * (l - p + 1) * 2 / (l * (l + 1)), ex: (c, s, l, p) => ({f: 'Dₜ = (Cost − Salvage) × (Life − t + 1) / SYD,  SYD = n(n+1)/2', s: [`SYD = ${l * (l + 1) / 2}`], tbl: mxDepTbl('syd', c, s, l)})},
+  amort: {ps: ['principal', 'annual_rate', 'months'], fn: (P, r, n) => -mxPMT(r / 12, n, P), ex: (P, r, n) => ({f: 'PMT = P·i / (1 − (1+i)^−n),  i = annual / 12', s: [`i = ${mxP(r / 12)}`], tbl: mxAmortTbl(P, r, n)})},
+  bondprice: {ps: ['face', 'coupon_rate', 'ytm', 'years', 'freq?'], fn: (F, c, y, n, m) => { m = m || 1; const N = n * m, C = F * c / m, r = y / m; return C * (1 - Math.pow(1 + r, -N)) / r + F / Math.pow(1 + r, N); },
+    ex: (F, c, y, n, m) => { m = m || 1; return {f: 'P = C·[1 − (1+y/m)^−N]/(y/m) + F/(1+y/m)^N', s: [`C = ${M2(F * c / m)}, N = ${n * m}, y/m = ${mxP(y / m)}`]}; }},
+  ytm: {ps: ['price', 'face', 'coupon_rate', 'years', 'freq?'], fn: (P, F, c, n, m) => { let lo = -0.99, hi = 5; const f = y => MX_FIN.bondprice.fn(F, c, y, n, m) - P; for (let i = 0; i < 200; i++){ const mid = (lo + hi) / 2; if (f(lo) * f(mid) <= 0) hi = mid; else lo = mid; } return (lo + hi) / 2; }, ex: () => ({f: 'Price(YTM) = market price → solved numerically', s: []})},
+  duration: {ps: ['face', 'coupon_rate', 'ytm', 'years', 'freq?'], fn: (F, c, y, n, m) => { m = m || 1; const N = n * m, C = F * c / m, r = y / m; let pv = 0, w = 0; for (let t = 1; t <= N; t++){ const cf = C + (t === N ? F : 0), d = cf / Math.pow(1 + r, t); pv += d; w += t * d; } return w / pv / m; },
+    ex: (F, c, y, n, m) => { const D = MX_FIN.duration.fn(F, c, y, n, m); return {f: 'D = Σ t·PV(CFₜ) / Σ PV(CFₜ);  D* = D / (1 + y/m)', s: [`Macaulay D = ${N6(D)}`, `Modified D* = ${N6(D / (1 + y / (m || 1)))}`]}; }},
+  capm: {ps: ['rf', 'beta', 'rm'], fn: (rf, b, rm) => rf + b * (rm - rf), ex: (rf, b, rm) => ({f: 'E(R) = Rf + β·(Rm − Rf)', s: [`${N6(rf)} + ${N6(b)} × (${N6(rm)} − ${N6(rf)})`]})},
+  wacc: {ps: ['equity', 'debt', 're', 'rd', 'tax'], fn: (E, D, re, rd, t) => E / (E + D) * re + D / (E + D) * rd * (1 - t), ex: (E, D, re, rd, t) => ({f: 'WACC = E/V·Re + D/V·Rd·(1 − T)', s: [`V = ${M2(E + D)}`, `${N6(E / (E + D))}·${N6(re)} + ${N6(D / (E + D))}·${N6(rd)}·${N6(1 - t)}`]})},
+  ddm: {ps: ['d1', 'r', 'g'], fn: (d1, r, g) => { if (r <= g) throw MX_ERR('mx_eDomain'); return d1 / (r - g); }, ex: (d1, r, g) => ({f: 'P₀ = D₁ / (r − g)  (Gordon)', s: [`${M2(d1)} / (${N6(r)} − ${N6(g)})`]})},
+  breakeven: {ps: ['fixed', 'price', 'varcost'], fn: (F, p, v) => F / (p - v), ex: (F, p, v) => ({f: 'Q* = Fixed / (Price − Variable cost);  Revenue* = Q*·Price', s: [`CM = ${M2(p - v)}`, `Q* = ${M2(F)} / ${M2(p - v)} = ${N6(F / (p - v))}`, `Revenue* = ${M2(F / (p - v) * p)}`]})},
+  margin: {ps: ['cost', 'price'], fn: (c, p) => (p - c) / p, ex: (c, p) => ({f: 'Margin = (Price − Cost) / Price', s: [`(${M2(p)} − ${M2(c)}) / ${M2(p)}`, `Markup = ${mxP((p - c) / c)}`]})},
+  markup: {ps: ['cost', 'price'], fn: (c, p) => (p - c) / c, ex: (c, p) => ({f: 'Markup = (Price − Cost) / Cost', s: [`(${M2(p)} − ${M2(c)}) / ${M2(c)}`, `Margin = ${mxP((p - c) / p)}`]})},
+  vat: {ps: ['amount', 'rate'], fn: (a, r) => a * (1 + r), ex: (a, r) => ({f: 'Gross = Net × (1 + VAT);  Net = Gross / (1 + VAT)', s: [`VAT = ${M2(a * r)}`, `${M2(a)} incl. VAT → net ${M2(a / (1 + r))}, VAT ${M2(a - a / (1 + r))}`]})},
+  inflate: {ps: ['amount', 'rate', 'years'], fn: (a, r, n) => a * Math.pow(1 + r, n), ex: (a, r, n) => ({f: 'Future = Amount × (1 + π)^n', s: [`(1 + ${N6(r)})^${n} = ${N6(Math.pow(1 + r, n))}`]})},
+  elasticity: {ps: ['q1', 'q2', 'p1', 'p2'], fn: (q1, q2, p1, p2) => ((q2 - q1) / ((q1 + q2) / 2)) / ((p2 - p1) / ((p1 + p2) / 2)), ex: (q1, q2, p1, p2) => ({f: 'E = [ΔQ / avg(Q)] / [ΔP / avg(P)]  (arc / midpoint)', s: [`%ΔQ = ${mxP((q2 - q1) / ((q1 + q2) / 2))}`, `%ΔP = ${mxP((p2 - p1) / ((p1 + p2) / 2))}`]})},
+  multiplier: {ps: ['mpc'], fn: c => 1 / (1 - c), ex: c => ({f: 'k = 1 / (1 − MPC)', s: [`1 / (1 − ${N6(c)})`]})},
+  eoq: {ps: ['demand', 'order_cost', 'holding_cost'], fn: (D, S, H) => Math.sqrt(2 * D * S / H), ex: (D, S, H) => ({f: 'EOQ = √(2·D·S / H)', s: [`√(2 × ${M2(D)} × ${M2(S)} / ${M2(H)})`]})},
+  simple: {ps: ['principal', 'rate', 'years'], fn: (P, r, t) => P * (1 + r * t), ex: (P, r, t) => ({f: 'A = P·(1 + r·t)', s: [`interest = ${M2(P * r * t)}`]})},
+  compound: {ps: ['principal', 'rate', 'years', 'periods?'], fn: (P, r, t, m) => P * Math.pow(1 + r / (m || 1), (m || 1) * t), ex: (P, r, t, m) => ({f: 'A = P·(1 + r/m)^(m·t)', s: [`(1 + ${N6(r)}/${m || 1})^${(m || 1) * t} = ${N6(Math.pow(1 + r / (m || 1), (m || 1) * t))}`]})}
+};
+/* ---------- more explained functions ---------- */
+function mxInvVal(qty, cost, sold, how){
+  const Q = mxFlat([qty]), C = mxFlat([cost]); if (Q.length !== C.length) throw MX_ERR('mx_eDim');
+  const tq = Q.reduce((a, b) => a + b, 0), tc = Q.reduce((a, q, i) => a + q * C[i], 0); if (sold > tq) throw MX_ERR('mx_eDomain');
+  if (how === 'avg'){ const avg = tc / tq; return {cogs: sold * avg, end: (tq - sold) * avg, lines: [`avg = ${M2(tc)} / ${N6(tq)} = ${N6(avg)}`]}; }
+  const order = Q.map((q, i) => [q, C[i]]); if (how === 'lifo') order.reverse();
+  let left = sold, cogs = 0; const lines = [];
+  for (const [q, c] of order){ if (left <= 0) break; const take = Math.min(q, left); cogs += take * c; left -= take; lines.push(`${N6(take)} × ${M2(c)} = ${M2(take * c)}`); }
+  return {cogs, end: tc - cogs, lines};
+}
+function mxBS(S, K, T, r, v, put){ const d1 = (Math.log(S / K) + (r + v * v / 2) * T) / (v * Math.sqrt(T)), d2 = d1 - v * Math.sqrt(T); return {d1, d2, c: put ? K * Math.exp(-r * T) * mxNcdf(-d2) - S * mxNcdf(-d1) : S * mxNcdf(d1) - K * Math.exp(-r * T) * mxNcdf(d2)}; }
+Object.assign(MX_FIN, {
+  quad: {ps: ['a', 'b', 'c'], fn: (a, b, c) => { const D = b * b - 4 * a * c; if (a === 0) return -c / b; if (D < 0) return mxFmt(-b / (2 * a)) + ' ± ' + mxFmt(Math.sqrt(-D) / (2 * a)) + 'i'; const r = [(-b - Math.sqrt(D)) / (2 * a), (-b + Math.sqrt(D)) / (2 * a)]; return D === 0 ? r[0] : r; },
+    ex: (a, b, c) => { const D = b * b - 4 * a * c; return {f: 'x = (−b ± √(b² − 4ac)) / 2a', s: [`a = ${N6(a)}, b = ${N6(b)}, c = ${N6(c)}`, `Δ = b² − 4ac = ${N6(b * b)} − ${N6(4 * a * c)} = ${N6(D)}`, D < 0 ? 'Δ < 0 → complex roots' : `√Δ = ${N6(Math.sqrt(D))}`, D < 0 ? `x = ${N6(-b / (2 * a))} ± ${N6(Math.sqrt(-D) / (2 * a))}i` : `x₁ = (${N6(-b)} − ${N6(Math.sqrt(D))}) / ${N6(2 * a)} = ${N6((-b - Math.sqrt(D)) / (2 * a))},  x₂ = (${N6(-b)} + ${N6(Math.sqrt(D))}) / ${N6(2 * a)} = ${N6((-b + Math.sqrt(D)) / (2 * a))}`, `vertex: (${N6(-b / (2 * a))}, ${N6(c - b * b / (4 * a))})`]}; }},
+  perp: {ps: ['c', 'r'], fn: (c, r) => c / r, ex: (c, r) => ({f: 'PV = C / r', s: [`${M2(c)} / ${N6(r)}`]})},
+  gperp: {ps: ['c', 'r', 'g'], fn: (c, r, g) => { if (r <= g) throw MX_ERR('mx_eDomain'); return c / (r - g); }, ex: (c, r, g) => ({f: 'PV = C₁ / (r − g)', s: [`${M2(c)} / (${N6(r)} − ${N6(g)})`]})},
+  gannuity: {ps: ['c', 'r', 'g', 'nper'], fn: (c, r, g, n) => r === g ? c * n / (1 + r) : c / (r - g) * (1 - Math.pow((1 + g) / (1 + r), n)), ex: () => ({f: 'PV = C₁/(r − g) · [1 − ((1+g)/(1+r))ⁿ]', s: []})},
+  rule72: {ps: ['rate'], fn: r => Math.log(2) / Math.log(1 + r), ex: r => ({f: 'n = ln 2 / ln(1+r)   (rule of 72 ≈ 72 / r%)', s: [`72 / ${N6(r * 100)} ≈ ${N6(72 / (r * 100))}`]})},
+  aftertax: {ps: ['rate', 'tax'], fn: (r, t) => r * (1 - t), ex: (r, t) => ({f: 'r_net = r × (1 − tax)', s: [`${N6(r)} × ${N6(1 - t)}`]})},
+  balance: {ps: ['principal', 'annual_rate', 'months', 'paid'], fn: (P, r, n, k) => { const i = r / 12, pay = -mxPMT(i, n, P); return P * Math.pow(1 + i, k) - pay * (Math.pow(1 + i, k) - 1) / i; }, ex: (P, r, n) => ({f: 'B_k = P(1+i)^k − PMT·((1+i)^k − 1)/i', s: [`PMT = ${M2(-mxPMT(r / 12, n, P))}`]})},
+  uop: {ps: ['cost', 'salvage', 'total_units', 'units'], fn: (c, s, tu, u) => (c - s) / tu * u, ex: (c, s, tu) => ({f: 'D = (Cost − Salvage) / total units × units this year', s: [`${M2((c - s) / tu)} per unit`]})},
+  eps: {ps: ['net_income', 'shares'], fn: (ni, sh) => ni / sh, ex: () => ({f: 'EPS = Net income / Shares', s: []})},
+  pe: {ps: ['price', 'eps'], fn: (p, e) => p / e, ex: (p, e) => ({f: 'P/E = Price / EPS', s: [`earnings yield = ${mxP(e / p)}`]})},
+  divyield: {ps: ['dividend', 'price'], fn: (d, p) => d / p, ex: () => ({f: 'Yield = Dividend / Price', s: []})},
+  sharpe: {ps: ['ret', 'rf', 'sd'], fn: (r, rf, sd) => (r - rf) / sd, ex: () => ({f: 'Sharpe = (Rp − Rf) / σp', s: []})},
+  bscall: {ps: ['S', 'K', 'T', 'r', 'sigma'], fn: (S, K, T, r, v) => mxBS(S, K, T, r, v).c, ex: (S, K, T, r, v) => { const b = mxBS(S, K, T, r, v); return {f: 'C = S·N(d₁) − K·e^(−rT)·N(d₂)', s: [`d₁ = [ln(S/K) + (r + σ²/2)T] / (σ√T) = ${N6(b.d1)}`, `d₂ = d₁ − σ√T = ${N6(b.d2)}`, `N(d₁) = ${N6(mxNcdf(b.d1))}, N(d₂) = ${N6(mxNcdf(b.d2))}`]}; }},
+  bsput: {ps: ['S', 'K', 'T', 'r', 'sigma'], fn: (S, K, T, r, v) => mxBS(S, K, T, r, v, 1).c, ex: (S, K, T, r, v) => { const b = mxBS(S, K, T, r, v, 1); return {f: 'P = K·e^(−rT)·N(−d₂) − S·N(−d₁)', s: [`d₁ = ${N6(b.d1)}, d₂ = ${N6(b.d2)}`, `put–call parity: C − P = S − K·e^(−rT) = ${M2(S - K * Math.exp(-r * T))}`]}; }},
+  forward: {ps: ['spot', 'r_dom', 'r_for', 'T'], fn: (S, rd, rf, T) => S * Math.pow((1 + rd) / (1 + rf), T), ex: (S, rd, rf, T) => ({f: 'F = S × [(1 + r_dom) / (1 + r_for)]^T  (interest parity)', s: [`${N6(S)} × (${N6(1 + rd)} / ${N6(1 + rf)})^${T}`]})},
+  fifo: {ps: ['qty[]', 'cost[]', 'sold'], fn: (q, c, s) => mxInvVal(q, c, s, 'fifo').cogs, ex: (q, c, s) => { const r = mxInvVal(q, c, s, 'fifo'); return {f: 'FIFO: oldest layers are sold first', s: r.lines.concat([`COGS = ${M2(r.cogs)}`, `Ending inventory = ${M2(r.end)}`])}; }},
+  lifo: {ps: ['qty[]', 'cost[]', 'sold'], fn: (q, c, s) => mxInvVal(q, c, s, 'lifo').cogs, ex: (q, c, s) => { const r = mxInvVal(q, c, s, 'lifo'); return {f: 'LIFO: newest layers are sold first', s: r.lines.concat([`COGS = ${M2(r.cogs)}`, `Ending inventory = ${M2(r.end)}`])}; }},
+  wavg: {ps: ['qty[]', 'cost[]', 'sold'], fn: (q, c, s) => mxInvVal(q, c, s, 'avg').cogs, ex: (q, c, s) => { const r = mxInvVal(q, c, s, 'avg'); return {f: 'Weighted average cost', s: r.lines.concat([`COGS = ${M2(r.cogs)}`, `Ending inventory = ${M2(r.end)}`])}; }},
+  cpiinfl: {ps: ['cpi0', 'cpi1'], fn: (a, b) => b / a - 1, ex: (a, b) => ({f: 'π = CPI₁ / CPI₀ − 1', s: [`${N6(b)} / ${N6(a)} − 1`]})},
+  realgdp: {ps: ['nominal_gdp', 'deflator'], fn: (n, d) => n / d * 100, ex: () => ({f: 'Real GDP = Nominal GDP / Deflator × 100', s: []})},
+  ppp: {ps: ['price_home', 'price_foreign'], fn: (h, f) => h / f, ex: () => ({f: 'Implied exchange rate = P_home / P_foreign  (PPP)', s: []})},
+  moneymult: {ps: ['reserve_ratio'], fn: rr => 1 / rr, ex: rr => ({f: 'm = 1 / reserve ratio', s: [`1 / ${N6(rr)}`]})}
+});
+function mxDepRow(k, c, s, l, p, f){ const T = mxDepTbl(k, c, s, l, f); const r = T.rows[p - 1]; return r ? r[1] : 0; }
+function mxDepTbl(k, c, s, l, f){
+  const rows = []; let bv = c; f = f || 2;
+  for (let t = 1; t <= l; t++){
+    let d = k === 'sln' ? (c - s) / l : k === 'syd' ? (c - s) * (l - t + 1) * 2 / (l * (l + 1)) : Math.min(bv * f / l, Math.max(0, bv - s));
+    if (k === 'ddb' && t === l) d = Math.max(0, bv - s);
+    bv -= d; rows.push([t, d, c - bv, bv]);
+  }
+  return {head: ['mx_hYear', 'mx_hDep', 'mx_hAcc', 'mx_hBook'], rows};
+}
+function mxAmortTbl(P, r, n){
+  const i = r / 12, pay = -mxPMT(i, n, P), rows = []; let bal = P, ti = 0;
+  for (let t = 1; t <= n; t++){ const int = bal * i, prin = pay - int; bal -= prin; ti += int; if (t <= 24 || t > n - 3 || t % 12 === 0) rows.push([t, pay, int, prin, Math.max(0, bal)]); }
+  rows.push(['Σ', pay * n, ti, P, 0]);
+  return {head: ['mx_hMonth', 'mx_hPay', 'mx_hInt', 'mx_hPrin', 'mx_hBal'], rows};
+}
+/* ---------- evaluator ---------- */
+function mxEval(node, S){
+  S = S || {v: {}, f: {}};
+  switch (node.t){
+    case 'num': return node.v;
+    case 'par': return mxEval(node.a, S);
+    case 'sym': if (node.n in S.v) return S.v[node.n]; if (node.n in MX_CONST) return MX_CONST[node.n]; throw MX_ERR('mx_eSym', {n: node.n});
+    case 'neg': { const a = mxEval(node.a, S); return mxIsM(a) ? mxMatOp('*', a, -1) : -a; }
+    case 'fact': return mxFact(mxEval(node.a, S));
+    case 'pct': return mxEval(node.a, S) / 100;
+    case 'op': return mxBin(node.o, mxEval(node.a, S), mxEval(node.b, S));
+    case 'mat': { const R = node.rows.map(r => r.map(e => mxEval(e, S))); return R.length === 1 ? R[0] : R; }
+    case 'fn': {
+      const n = node.n.toLowerCase();
+      if (S.f[node.n]){ const fd = S.f[node.n]; if (fd.ps.length !== node.args.length) throw MX_ERR('mx_eArgs', {n: node.n}); const v = Object.assign({}, S.v); fd.ps.forEach((p, i) => { v[p] = mxEval(node.args[i], S); }); return mxEval(fd.e, {v, f: S.f}); }
+      if (MX_FIN[n]){ const a = node.args.map(x => mxEval(x, S)); const ps = MX_FIN[n].ps.filter(p => !p.endsWith('?')).length; if (a.length < ps) throw MX_ERR('mx_eArgs', {n}); return MX_FIN[n].fn(...a); }
+      if (MX_MATH[n]){ const a = node.args.map(x => mxEval(x, S)); return MX_MATH[n](...a); }
+      if (n === 'sigma' || n === 'summation'){ /* sigma(expr, k, a, b) */ const [e, k, a, b] = node.args; if (!k || k.t !== 'sym') throw MX_ERR('mx_eArgs', {n}); let s = 0; const lo = mxEval(a, S), hi = mxEval(b, S); for (let i = lo; i <= hi; i++) s += mxEval(e, {v: Object.assign({}, S.v, {[k.n]: i}), f: S.f}); return s; }
+      if (n === 'product'){ const [e, k, a, b] = node.args; let s = 1; for (let i = mxEval(a, S); i <= mxEval(b, S); i++) s *= mxEval(e, {v: Object.assign({}, S.v, {[k.n]: i}), f: S.f}); return s; }
+      if (n === 'nsolve'){ /* nsolve(f(x), x, guess): Newton, then a bracket scan */
+        const [e, k, g] = node.args; if (!k || k.t !== 'sym') throw MX_ERR('mx_eArgs', {n}); const f = x => mxEval(e, {v: Object.assign({}, S.v, {[k.n]: x}), f: S.f});
+        let x = g ? mxEval(g, S) : 1; for (let i = 0; i < 100; i++){ const fx = f(x), d = (f(x + 1e-6) - f(x - 1e-6)) / 2e-6; if (!isFinite(fx) || !d) break; const nx = x - fx / d; if (Math.abs(nx - x) < 1e-12){ x = nx; break; } x = nx; }
+        if (isFinite(x) && Math.abs(f(x)) < 1e-8) return x;
+        for (let a = -1000; a < 1000; a += 0.5){ const fa = f(a), fb = f(a + 0.5); if (isFinite(fa) && isFinite(fb) && fa * fb <= 0){ let lo = a, hi = a + 0.5; for (let i = 0; i < 100; i++){ const m = (lo + hi) / 2; if (f(lo) * f(m) <= 0) hi = m; else lo = m; } return (lo + hi) / 2; } }
+        throw MX_ERR('mx_eSymFail');
+      }
+      if (n === 'nintegrate'){ const [e, k, a, b] = node.args; return mxSimpson(x => mxEval(e, {v: Object.assign({}, S.v, {[k.n]: x}), f: S.f}), mxEval(a, S), mxEval(b, S)); }
+      if (n === 'nderive'){ const [e, k, a] = node.args, x0 = mxEval(a, S), h = 1e-5, g = x => mxEval(e, {v: Object.assign({}, S.v, {[k.n]: x}), f: S.f}); return (g(x0 + h) - g(x0 - h)) / (2 * h); }
+      throw MX_ERR('mx_eFn', {n: node.n});
+    }
+  }
+  throw MX_ERR('mx_eTok', {c: node.t});
+}
+function mxSimpson(f, a, b){ const n = 2000, h = (b - a) / n; let s = f(a) + f(b); for (let i = 1; i < n; i++) s += f(a + i * h) * (i % 2 ? 4 : 2); return s * h / 3; }
+/* ---------- formatting ---------- */
+function mxFmt(x, d){
+  if (mxIsM(x)) return '[' + mxRows(x).map(r => r.map(v => mxFmt(v, d)).join(', ')).join('; ') + ']';
+  if (typeof x !== 'number') return String(x);
+  if (!isFinite(x)) return isNaN(x) ? 'NaN' : (x > 0 ? '∞' : '−∞');
+  if (Math.abs(x) < 1e-13) return '0';
+  const ax = Math.abs(x);
+  if (ax >= 1e15 || ax < 1e-6) return x.toExponential(Math.min(d == null ? 8 : d, 12)).replace(/\.?0+e/, 'e');
+  const dd = d == null ? Math.max(0, Math.min(10, 10 - Math.floor(Math.log10(ax) + 1))) : d;
+  let s = (Math.round(x * Math.pow(10, dd)) / Math.pow(10, dd)).toFixed(dd);
+  if (d == null && s.includes('.')) s = s.replace(/\.?0+$/, '');
+  const [i, f] = s.split('.'); return i.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (f ? '.' + f : '');
+}
+function mxFrac(x){
+  if (typeof x !== 'number' || !isFinite(x) || Number.isInteger(x) || Math.abs(x) > 1e7) return '';
+  let h1 = 1, h0 = 0, k1 = 0, k0 = 1, b = x;
+  for (let i = 0; i < 25; i++){ const a = Math.floor(b); [h1, h0] = [a * h1 + h0, h1]; [k1, k0] = [a * k1 + k0, k1]; if (Math.abs(x - h1 / k1) < 1e-12 * Math.max(1, Math.abs(x))) break; b = 1 / (b - a); }
+  return k1 > 1 && k1 <= 360 && Math.abs(h1) <= 100000 && Math.abs(x - h1 / k1) < 1e-10 ? h1 + '/' + k1 : '';
+}
+/* ---------- rendering an expression as math ---------- */
+const mxEsc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+const MX_GREEK = {alpha: 'α', beta: 'β', gamma: 'γ', delta: 'δ', theta: 'θ', lambda: 'λ', mu: 'μ', sigma: 'σ', omega: 'ω', pi: 'π', phi: 'φ', tau: 'τ', inf: '∞', epsilon: 'ε', rho: 'ρ'};
+const MX_PREC = {'<': 0, '>': 0, '<=': 0, '>=': 0, '==': 0, '!=': 0, '+': 1, '-': 1, '*': 2, '/': 2, 'mod': 2, '^': 4};
+function mxHTML(n, parentPrec){
+  parentPrec = parentPrec || 0;
+  const wrap = (h, prec) => prec < parentPrec ? `<span class="mxp">(</span>${h}<span class="mxp">)</span>` : h;
+  switch (n.t){
+    case 'str': return `<span class="mxn">${mxEsc(n.v)}</span>`;
+    case 'num': { const s = mxFmt(n.v); return n.v < 0 && parentPrec > 1 ? `<span class="mxp">(</span>${s}<span class="mxp">)</span>` : `<span class="mxn">${s}</span>`; }
+    case 'sym': return `<i class="mxv">${mxEsc(MX_GREEK[n.n] || n.n)}</i>`;
+    case 'par': return `<span class="mxp">(</span>${mxHTML(n.a, 0)}<span class="mxp">)</span>`;
+    case 'neg': return wrap('−' + mxHTML(n.a, 3), 3);
+    case 'fact': return mxHTML(n.a, 5) + '!';
+    case 'pct': return mxHTML(n.a, 5) + '%';
+    case 'assign': return `<i class="mxv">${mxEsc(n.n)}</i> = ${mxHTML(n.e, 0)}`;
+    case 'fdef': return `<span class="mxf">${mxEsc(n.n)}</span><span class="mxp">(</span>${n.ps.map(p => `<i class="mxv">${mxEsc(p)}</i>`).join(', ')}<span class="mxp">)</span> = ${mxHTML(n.e, 0)}`;
+    case 'eq': return mxHTML(n.a, 0) + ' = ' + mxHTML(n.b, 0);
+    case 'mat': return `<span class="mxm"><span class="mxm-g" style="grid-template-columns:repeat(${Math.max(...n.rows.map(r => r.length))},auto)">${n.rows.map(r => r.map(e => `<span>${mxHTML(e, 0)}</span>`).join('')).join('')}</span></span>`;
+    case 'op': {
+      const pr = MX_PREC[n.o];
+      if (n.o === '/') return `<span class="mxfr"><span class="mxfr-n">${mxHTML(n.a, 0)}</span><span class="mxfr-d">${mxHTML(n.b, 0)}</span></span>`;
+      if (n.o === '^') return wrap(`${mxHTML(n.a, 5)}<sup>${mxHTML(n.b, 0)}</sup>`, pr);
+      const impOk = n.imp && !(n.b.t === 'num' || n.b.t === 'neg' || (n.b.t === 'op' && n.b.o === '^' && n.b.a.t === 'num') || (n.b.t === 'op' && n.b.o === '*'));
+      const sym = {'*': impOk ? '' : '·', '+': ' + ', '-': ' − ', mod: ' mod ', '<': ' &lt; ', '>': ' &gt; ', '<=': ' ≤ ', '>=': ' ≥ ', '==': ' = ', '!=': ' ≠ '}[n.o];
+      return wrap(mxHTML(n.a, pr) + `<span class="mxo">${sym}</span>` + mxHTML(n.b, pr + (n.o === '-' || n.o === '/' ? 1 : 0)), pr);
+    }
+    case 'fn': {
+      const f = n.n.toLowerCase(), A = n.args;
+      if (f === 'sqrt' && A.length === 1) return `<span class="mxsq"><span class="mxsq-s">√</span><span class="mxsq-b">${mxHTML(A[0], 0)}</span></span>`;
+      if (f === 'root' && A.length === 2) return `<span class="mxsq"><sup class="mxsq-i">${mxHTML(A[1], 0)}</sup><span class="mxsq-s">√</span><span class="mxsq-b">${mxHTML(A[0], 0)}</span></span>`;
+      if (f === 'abs' && A.length === 1) return `<span class="mxab">|${mxHTML(A[0], 0)}|</span>`;
+      if ((f === 'sigma' || f === 'summation') && A.length === 4) return `<span class="mxbig"><span class="mxbig-t">${mxHTML(A[3], 0)}</span><span class="mxbig-s">Σ</span><span class="mxbig-b">${mxHTML(A[1], 0)}=${mxHTML(A[2], 0)}</span></span>${mxHTML(A[0], 3)}`;
+      if ((f === 'integrate' || f === 'nintegrate') && A.length === 4) return `<span class="mxbig"><span class="mxbig-t">${mxHTML(A[3], 0)}</span><span class="mxbig-s">∫</span><span class="mxbig-b">${mxHTML(A[2], 0)}</span></span>${mxHTML(A[0], 3)} d<i class="mxv">${mxEsc(A[1].n || 'x')}</i>`;
+      if (f === 'integrate' && A.length <= 2) return `<span class="mxbig-s">∫</span>${mxHTML(A[0], 3)} d<i class="mxv">${mxEsc((A[1] && A[1].n) || 'x')}</i>`;
+      if ((f === 'diff' || f === 'derivative') && A.length >= 1) return `<span class="mxfr"><span class="mxfr-n">d</span><span class="mxfr-d">d<i class="mxv">${mxEsc((A[1] && A[1].n) || 'x')}</i></span></span><span class="mxp">(</span>${mxHTML(A[0], 0)}<span class="mxp">)</span>`;
+      if (f === 'fact') return mxHTML(A[0], 5) + '!';
+      return `<span class="mxf">${mxEsc(n.n)}</span><span class="mxp">(</span>${A.map(a => mxHTML(a, 0)).join(', ')}<span class="mxp">)</span>`;
+    }
+  }
+  return '';
+}
+const mxValNode = v => typeof v === 'string' ? {t: 'str', v} : mxIsM(v) ? {t: 'mat', rows: mxRows(v).map(r => r.map(x => ({t: 'num', v: x})))} : {t: 'num', v};
+function mxValHTML(v){ return mxHTML(mxValNode(v), 0); }
+/* ---------- steps: substitute variables, then reduce the innermost operation each time ---------- */
+function mxSteps(node, S){
+  const out = []; const clone = o => JSON.parse(JSON.stringify(o));
+  let cur = clone(node);
+  /* 1. substitute variables */
+  let sub = false;
+  const subst = n => { if (n.t === 'sym' && (n.n in S.v) && !mxIsM(S.v[n.n])){ sub = true; return {t: 'num', v: S.v[n.n]}; } if (n.t === 'sym' && n.n in MX_CONST && n.n !== 'inf'){ sub = true; return {t: 'num', v: MX_CONST[n.n]}; }
+    ['a', 'b', 'e'].forEach(k => { if (n[k] && typeof n[k] === 'object') n[k] = subst(n[k]); }); if (n.args && !['sigma', 'summation', 'product', 'nintegrate', 'nderive', 'nsolve'].includes((n.n || '').toLowerCase())) n.args = n.args.map(subst); if (n.rows) n.rows = n.rows.map(r => r.map(subst)); return n; };
+  cur = subst(cur); if (sub) out.push({k: 'mx_stSub', h: mxHTML(cur)});
+  /* 2. reduce */
+  const isC = n => n.t === 'num';
+  function reduce(n){
+    if (n.t === 'par'){ if (isC(n.a)) return n.a; const r = reduce(n.a); if (r){ n.a = r; return n; } return null; }
+    const kids = n.t === 'op' ? ['a', 'b'] : n.t === 'neg' || n.t === 'fact' || n.t === 'pct' ? ['a'] : [];
+    for (const k of kids){ if (!isC(n[k])){ const r = reduce(n[k]); if (r){ n[k] = r; return n; } return null; } }
+    if (n.t === 'fn'){ for (let i = 0; i < n.args.length; i++){ if (n.args[i].t !== 'num' && n.args[i].t !== 'mat'){ if (['sigma', 'summation', 'product', 'nintegrate', 'nderive', 'nsolve'].includes(n.n.toLowerCase())) break; const r = reduce(n.args[i]); if (r){ n.args[i] = r; return n; } return null; } } }
+    if (n.t === 'num' || n.t === 'mat' || n.t === 'sym') return null;
+    try { const v = mxEval(n, S); if (mxIsM(v)) return null; return {t: 'num', v}; } catch (e) { return null; }
+  }
+  for (let i = 0; i < 60; i++){ const before = JSON.stringify(cur); const r = reduce(cur); if (!r) break; cur = r; const h = mxHTML(cur); if (JSON.stringify(cur) === before) break; out.push({k: '', h}); if (cur.t === 'num') break; }
+  return out;
+}
+/* ---------- symbolic algebra through nerdamer (loaded on demand) ---------- */
+const MX_SYM = ['solve', 'integrate', 'diff', 'derivative', 'expand', 'factor', 'simplify', 'limit', 'taylor', 'partfrac', 'roots'];
+var MXN = {p: null};
+function mxLoadScript(u){ return new Promise((res, rej) => { const s = document.createElement('script'); s.src = u; s.async = true; s.crossOrigin = 'anonymous'; s.onload = () => res(); s.onerror = () => rej(new Error('load')); document.head.appendChild(s); }); }
+const MX_NERD_CDN = 'https://cdn.jsdelivr.net/gh/jiggzson/nerdamer@v1.1.12/all.min.js';
+function mxNerd(){
+  if (window.nerdamer) return Promise.resolve(window.nerdamer);
+  if (MXN.p) return MXN.p;
+  const urls = (typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? [MX_NERD_CDN] : ['lib/nerdamer.min.js', MX_NERD_CDN];
+  return (MXN.p = (async () => { for (const u of urls){ try { await mxLoadScript(u); if (window.nerdamer) return window.nerdamer; } catch (e) {} } MXN.p = null; throw MX_ERR('mx_eLib'); })());
+}
+/* split "name(arg1, arg2, ...)" at top-level commas, keeping the raw text of each argument */
+function mxSplitCall(src){
+  const m = /^\s*([A-Za-z]+)\s*\(([\s\S]*)\)\s*$/.exec(src); if (!m) return null;
+  const parts = []; let d = 0, cur = '';
+  for (const c of m[2]){ if ('([{'.includes(c)) d++; if (')]}'.includes(c)) d--; if (c === ',' && d === 0){ parts.push(cur.trim()); cur = ''; } else cur += c; }
+  if (cur.trim()) parts.push(cur.trim());
+  return {n: m[1].toLowerCase(), a: parts};
+}
+async function mxSymbolic(src, S){
+  const c = mxSplitCall(src); if (!c) return null;
+  const N = await mxNerd();
+  const prep = s => String(s).replace(/[×·]/g, '*').replace(/÷/g, '/').replace(/[−–]/g, '-').replace(/π/g, 'pi').replace(/√/g, 'sqrt').replace(/\bln\(/g, 'log(');
+  /* variables you defined are substituted, except the variable being solved/differentiated */
+  const free = c.a[1] && /^[A-Za-z]\w*$/.test(c.a[1]) ? c.a[1] : 'x';
+  const withVars = e => { let s = prep(e); Object.keys(S.v).forEach(k => { if (k !== free && !mxIsM(S.v[k])) s = s.replace(new RegExp('\\b' + k + '\\b', 'g'), '(' + S.v[k] + ')'); }); Object.keys(S.f).forEach(k => { const fd = S.f[k]; s = s.replace(new RegExp('\\b' + k + '\\(([^()]*)\\)', 'g'), (_, arg) => '(' + fd.src.replace(new RegExp('\\b' + fd.ps[0] + '\\b', 'g'), '(' + arg + ')') + ')'); }); return s; };
+  const toS = r => String(r.toString()).replace(/\blog\(/g, 'ln(');
+  const num = r => { try { const v = Number(N(r.toString()).evaluate().text('decimals')); return isFinite(v) ? v : null; } catch (e) { return null; } };
+  let res = '', extra = [];
+  switch (c.n){
+    case 'solve': {
+      const eqs = c.a[0].startsWith('[') ? c.a[0].slice(1, -1).split(';').map(withVars) : null;
+      if (eqs){ const r = N.solveEquations(eqs); res = r.map(p => p[0] + ' = ' + p[1]).join(',  '); break; }
+      let e = withVars(c.a[0]); if (!e.includes('=')) e += '=0';
+      const sol = N.solve(e, free); const arr = String(sol.toString()).replace(/^\[|\]$/g, '').split(',').filter(Boolean);
+      res = arr.length ? arr.map(v => free + ' = ' + v.replace(/\blog\(/g, 'ln(')).join(',  ') : '∅';
+      arr.forEach(v => { try { const d = Number(N(v).evaluate().text('decimals')); if (isFinite(d) && String(d) !== v) extra.push(free + ' ≈ ' + mxFmt(d)); } catch (er) {} });
+      break;
+    }
+    case 'integrate': {
+      if (c.a.length >= 4){ const r = N('defint(' + withVars(c.a[0]) + ',' + prep(c.a[2]) + ',' + prep(c.a[3]) + ',' + free + ')'); res = toS(r); const v = num(r); if (v != null && mxFmt(v) !== res) extra.push('≈ ' + mxFmt(v)); }
+      else { res = toS(N('integrate(' + withVars(c.a[0]) + ',' + free + ')')) + ' + C'; }
+      break;
+    }
+    case 'diff': case 'derivative': res = toS(N('diff(' + withVars(c.a[0]) + ',' + free + (c.a[2] ? ',' + prep(c.a[2]) : '') + ')')); break;
+    case 'expand': res = toS(N('expand(' + withVars(c.a[0]) + ')')); break;
+    case 'factor': res = toS(N('factor(' + withVars(c.a[0]) + ')')); break;
+    case 'simplify': res = toS(N('simplify(' + withVars(c.a[0]) + ')')); break;
+    case 'partfrac': res = toS(N('partfrac(' + withVars(c.a[0]) + ',' + free + ')')); break;
+    case 'roots': res = toS(N('roots(' + withVars(c.a[0]) + ')')); break;
+    case 'limit': { const r = N('limit(' + withVars(c.a[0]) + ',' + free + ',' + prep(c.a[2] || '0') + ')'); res = toS(r); break; }
+    case 'taylor': { /* taylor(f, x, a, n) via repeated derivatives */
+      const a = c.a[2] || '0', n = Math.min(12, +(c.a[3] || 5)); let d = withVars(c.a[0]); const terms = [];
+      for (let k = 0; k <= n; k++){ const v = N(d, {[free]: a}).evaluate(); const coef = toS(v); if (coef !== '0') terms.push('(' + coef + ')/' + mxFact(k) + '*(' + free + '-(' + a + '))^' + k); d = N('diff(' + d + ',' + free + ')').toString(); }
+      res = toS(N('expand(' + (terms.join('+') || '0') + ')')); break;
+    }
+    default: return null;
+  }
+  return {res, extra};
+}
+
+/* ================= advanced calculator: the screens — formula sheet, finance & economics, accounting, graphs ================= */
+const MX_KEY = 'fin-mathx';
+try { if (Array.isArray(DATA_KEYS) && !DATA_KEYS.includes(MX_KEY)) DATA_KEYS.push(MX_KEY); } catch (e) {}
+var MX = {d: null, tab: 'sheet', at: 'journal', run: 0, scope: {v: {}, f: {}}, timer: null, ai: {}, sure: '', finK: 'npv', gv: null};
+const mE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+function mxData(){
+  if (MX.d) return MX.d;
+  const d = toolsLoad(MX_KEY, null) || {};
+  MX.d = Object.assign({sheet: '', deg: false, dec: '', fin: {}, acct: null, graph: null}, d);
+  if (!MX.d.acct) MX.d.acct = {accounts: mxDefAccounts(), entries: []};
+  if (!MX.d.graph) MX.d.graph = {fns: ['sin(x)', 'x^2/4 - 2'], x0: -10, x1: 10};
+  MXE.deg = !!MX.d.deg;
+  return MX.d;
+}
+function mxSave(){ clearTimeout(MX.st); MX.st = setTimeout(() => { try { toolsSave(MX_KEY, MX.d); } catch (e) {} }, 400); }
+const mxDec = () => MX.d && MX.d.dec !== '' && MX.d.dec != null ? +MX.d.dec : null;
+const mxErrTxt = e => e && e.mx ? t(e.mx, e.p || {}) : t('mx_eSymFail');
+
+/* ---------- examples ---------- */
+const MX_EX = {
+  basic: '# ' + 'Arithmetic\n2(3+4)^2 - sqrt(16)/2\n1/3 + 1/6\n15% * 240\n5!\n17 mod 5\nround(22/7, 3)',
+  alg: 'a = 3\nb = -5\nf(x) = a*x^2 + b*x - 2\nf(2)\nsolve(3x^2 - 5x - 2 = 0, x)\nsolve([x + y = 10; x - y = 2])\nfactor(x^2 - 9)\nexpand((x + 2)^3)',
+  calc: 'diff(x^3 * sin(x), x)\nintegrate(x^2 * e^x, x)\nintegrate(x^2, x, 0, 3)\nlimit(sin(x)/x, x, 0)\ntaylor(e^x, x, 0, 5)\nsigma(k^2, k, 1, 10)',
+  mat: 'A = [2, 1; 1, 3]\nb = [3; 5]\ndet(A)\ninv(A)\nA * A\nlinsolve(A, b)\ncross([1,0,0], [0,1,0])',
+  stat: 'data = [12, 15, 11, 19, 15, 22, 14]\nmean(data)\nmedian(data)\nmode(data)\nstd(data)\nvariance(data)\nmax(data) - min(data)',
+  trig: 'sin(pi/6)\ncos(pi/3)^2 + sin(pi/3)^2\natan(1)\nhypot(3, 4)',
+  fin: 'npv(0.08, [-10000, 3000, 4000, 4500, 2000])\nirr([-10000, 3000, 4000, 4500, 2000])\npmt(0.05/12, 300, 800000)\nfv(0.04, 20, -5000)\ncagr(100000, 180000, 6)\nbondprice(1000, 0.05, 0.06, 10, 2)\nwacc(600, 400, 0.12, 0.06, 0.23)'
+};
+
+/* ---------- the formula sheet ---------- */
+function mxLineNode(src){ try { return mxParse(src); } catch (e) { try { return mxParse(src.replace(/([^<>!=])=([^=])/g, '$1==$2')); } catch (e2) { return null; } } }
+function mxIsSym(src){ const c = mxSplitCall(src); return !!(c && MX_SYM.includes(c.n)); }
+function mxRunSheet(){
+  const out = $('#mx_out'); if (!out) return;
+  const d = mxData(), lines = String(d.sheet || '').split('\n'), run = ++MX.run, S = {v: {}, f: {}};
+  const cards = [];
+  lines.forEach((raw, i) => {
+    const src = raw.trim(); if (!src) return;
+    if (src.startsWith('#')){ cards.push(`<h4 class="mx-h">${mE(src.replace(/^#+\s*/, ''))}</h4>`); return; }
+    const id = 'mxl' + i;
+    let symSrc = mxIsSym(src) ? src : '';
+    if (!symSrc && /[^<>!=]=[^=]/.test(src)){ const n0 = mxLineNode(src); if (n0 && n0.t === 'eq'){ const vs = (src.match(/[A-Za-z_]\w*/g) || []).filter(v => !(v in S.v) && !(v in MX_CONST) && !MX_MATH[v.toLowerCase()] && !S.f[v]); symSrc = 'solve(' + src + ', ' + (vs.includes('x') ? 'x' : vs[0] || 'x') + ')'; } }
+    if (symSrc){
+      const srcShown = src;
+      const n = mxLineNode(srcShown);
+      cards.push(`<div class="mx-card" data-l="${i}"><div class="mx-in" dir="ltr">${n ? mxHTML(n) : mE(srcShown)}</div><div class="mx-res" id="${id}" dir="ltr">⏳ ${mE(t('mx_comp'))}</div>${mxCardBtns(i)}</div>`);
+      const Sc = {v: Object.assign({}, S.v), f: Object.assign({}, S.f)};
+      mxSymbolic(symSrc, Sc).then(r => {
+        if (run !== MX.run) return; const el = document.getElementById(id); if (!el) return;
+        if (!r || !r.res){ el.innerHTML = `<span class="mx-err">${mE(t('mx_eSymFail'))}</span>`; return; }
+        el.innerHTML = '= ' + r.res.split(',  ').map(part => { const pn = mxLineNode(part.replace(/\s*\+\s*C$/, '')); return pn ? mxHTML(pn) + (/\+\s*C$/.test(part) ? ' + <i class="mxv">C</i>' : '') : mE(part); }).join('<span class="mx-sep">,</span> ')
+          + (r.extra.length ? `<div class="mx-sub">${r.extra.map(mE).join(' · ')}</div>` : '');
+        MX.ai[i] = r.res + (r.extra.length ? ' (' + r.extra.join(', ') + ')' : '');
+      }).catch(e => { if (run !== MX.run) return; const el = document.getElementById(id); if (el) el.innerHTML = `<span class="mx-err">${mE(mxErrTxt(e))}</span>`; });
+      return;
+    }
+    let n = null, html = '';
+    try {
+      n = mxParse(src);
+      if (n.t === 'assign'){ const v = mxEval(n.e, S); S.v[n.n] = v; html = mxResHTML(v, n.e, S, `<i class="mxv">${mE(n.n)}</i> = `); MX.ai[i] = n.n + ' = ' + mxFmt(v, mxDec()); }
+      else if (n.t === 'fdef'){ S.f[n.n] = {ps: n.ps, e: n.e, src: src.slice(src.indexOf('=') + 1).trim()}; html = `<span class="mx-ok">✓ ${mE(t('mx_defined'))}</span>`; MX.ai[i] = ''; }
+      else { const v = mxEval(n, S); S.v.ans = v; html = mxResHTML(v, n, S, '= '); MX.ai[i] = mxFmt(v, mxDec());
+        if (n.t === 'fn' && MX_PCTOUT.includes(n.n.toLowerCase()) && typeof v === 'number') html += ` <span class="mx-sub">= ${mE(mxFmt(v * 100, 4))}%</span>`; }
+    } catch (e){ html = `<span class="mx-err">⚠️ ${mE(mxErrTxt(e))}</span>`; MX.ai[i] = ''; }
+    cards.push(`<div class="mx-card" data-l="${i}"><div class="mx-in" dir="ltr">${n ? mxHTML(n) : mE(src)}</div><div class="mx-res" dir="ltr">${html}</div>${n && n.t !== 'fdef' ? mxStepsHTML(n, S) : ''}${mxCardBtns(i)}</div>`);
+  });
+  MX.scope = S;
+  out.innerHTML = cards.join('') || '';
+}
+function mxResHTML(v, node, S, pre){
+  const fr = typeof v === 'number' ? mxFrac(v) : '';
+  return pre + (mxIsM(v) ? mxValHTML(v) : `<b class="mx-val">${mE(mxFmt(v, mxDec()))}</b>`) + (fr ? ` <span class="mx-sub">= ${mE(fr)}</span>` : '');
+}
+function mxCardBtns(i){ return `<div class="mx-btns"><button type="button" class="mv mx-aib" data-mxai="${i}">🤖 ${mE(t('mx_ai'))}</button></div><div class="mx-aiout" id="mxai${i}" hidden></div>`; }
+function mxStepsHTML(n, S){
+  const node = n.t === 'assign' ? n.e : n; let parts = [];
+  /* finance functions explain themselves */
+  if (node.t === 'fn' && MX_FIN[node.n.toLowerCase()]){
+    try { const f = MX_FIN[node.n.toLowerCase()], a = node.args.map(x => mxEval(x, S)), ex = f.ex(...a);
+      parts.push(`<div class="mx-st"><b>${mE(t('mx_formula'))}:</b> <span dir="ltr">${mE(ex.f)}</span></div>`);
+      (ex.s || []).forEach(s => parts.push(`<div class="mx-st" dir="ltr">${mE(s)}</div>`));
+      if (ex.tbl) parts.push(mxTblHTML(ex.tbl));
+    } catch (e) {}
+  }
+  const st = mxSteps(node, S), fin = parts.length > 0;
+  if (!fin && st.length < 2) return '';
+  st.forEach(s => parts.push(`<div class="mx-st" dir="ltr">${s.k ? `<small>${mE(t(s.k))}:</small> ` : '⟶ '}${s.h}</div>`));
+  if (!parts.length) return '';
+  return `<details class="mx-steps"><summary>${mE(t('mx_steps'))} (${parts.length})</summary>${parts.join('')}</details>`;
+}
+function mxTblHTML(tb){
+  const f = x => typeof x === 'number' ? mxFmt(x, 2) : mE(x);
+  return `<div class="scroll"><table class="tbl mx-tbl"><thead><tr>${tb.head.map(h => `<th>${mE(t(h))}</th>`).join('')}</tr></thead><tbody>${tb.rows.map(r => `<tr>${r.map((c, j) => j ? `<td>${f(c)}</td>` : `<th>${mE(c)}</th>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
+const MX_KEYS = [['(', '('], [')', ')'], ['^', '^'], ['√', 'sqrt('], ['π', 'pi'], ['e', 'e'], ['x', 'x'], ['=', ' = '], [',', ', '], ['[', '['], [']', ']'], [';', '; '], ['!', '!'], ['%', '%'], ['sin', 'sin('], ['cos', 'cos('], ['tan', 'tan('], ['ln', 'ln('], ['log', 'log('], ['|x|', 'abs('],
+  ['Σ', 'sigma(k, k, 1, 10)'], ['∫', 'integrate(x^2, x)'], ['d/dx', 'diff(x^2, x)'], ['solve', 'solve(x^2 - 4 = 0, x)']];
+/* every function, grouped, tap to insert */
+const MX_LIB = [
+  ['basic', ['sqrt(x)', 'root(x, n)', 'abs(x)', 'exp(x)', 'ln(x)', 'log(x)', 'log(x, b)', 'log2(x)', 'round(x, d)', 'floor(x)', 'ceil(x)', 'trunc(x)', 'sign(x)', 'x mod n', 'n!', 'pctchange(old, new)', 'pctof(part, whole)', 'hypot(a, b)', 'min(…)', 'max(…)', 'sum(…)', 'prod(…)']],
+  ['alg', ['solve(x^2 - 5x + 6 = 0, x)', 'solve([x + y = 10; x - y = 2])', 'quad(a, b, c)', 'nsolve(x^3 - 2x - 5, x, 2)', 'expand((x + 1)^3)', 'factor(x^2 - 9)', 'simplify((x^2 - 1)/(x - 1))', 'partfrac(1/(x^2 - 1), x)', 'roots(x^3 - 6x^2 + 11x - 6)']],
+  ['calc', ['diff(x^3, x)', 'diff(sin(x), x, 2)', 'integrate(x^2, x)', 'integrate(x^2, x, 0, 3)', 'nintegrate(e^(-x^2), x, 0, 1)', 'nderive(x^3, x, 2)', 'limit(sin(x)/x, x, 0)', 'taylor(e^x, x, 0, 5)', 'sigma(k^2, k, 1, 10)', 'product(k, k, 1, 5)']],
+  ['trig', ['sin(x)', 'cos(x)', 'tan(x)', 'cot(x)', 'sec(x)', 'csc(x)', 'asin(x)', 'acos(x)', 'atan(x)', 'atan2(y, x)', 'sinh(x)', 'cosh(x)', 'tanh(x)', 'deg(x)', 'rad(x)']],
+  ['stat', ['mean(data)', 'median(data)', 'mode(data)', 'std(data)', 'stdp(data)', 'variance(data)', 'varp(data)', 'percentile(data, 90)', 'quartiles(data)', 'iqr(data)', 'range(data)', 'count(data)', 'geomean(data)', 'harmean(data)', 'zscore(x, mu, sigma)', 'cov(xs, ys)', 'corr(xs, ys)', 'linreg(xs, ys)', 'slope(xs, ys)', 'intercept(xs, ys)', 'rsq(xs, ys)', 'forecast(x, xs, ys)', 'gini(data)']],
+  ['prob', ['ncr(n, k)', 'npr(n, k)', 'normpdf(x, mu, sigma)', 'normcdf(x, mu, sigma)', 'norminv(p, mu, sigma)', 'binompdf(n, p, k)', 'binomcdf(n, p, k)', 'poissonpdf(lambda, k)', 'poissoncdf(lambda, k)', 'exppdf(x, lambda)', 'expcdf(x, lambda)', 'erf(x)', 'gamma(x)', 'beta(a, b)']],
+  ['mat', ['[1, 2; 3, 4]', 'det(A)', 'inv(A)', 'transpose(A)', 'trace(A)', 'rank(A)', 'rref(A)', 'identity(3)', 'linsolve(A, b)', 'A^2', 'dot(u, v)', 'cross(u, v)', 'norm(v)']],
+  ['num', ['isprime(n)', 'factorint(n)', 'divisors(n)', 'gcd(a, b)', 'lcm(a, b)', 'fib(n)', 'bin(n)', 'hex(n)', 'oct(n)', 'tobase(n, b)', 'arith(a1, d, n)', 'geom(a1, r, n)']],
+  ['fin', Object.keys(MX_FIN).filter(k => k !== 'quad').map(k => k + '(' + MX_FIN[k].ps.map(p => p.replace('?', '')).join(', ') + ')')]
+];
+function mxLibHTML(){
+  const q = String(MX.libQ || '').toLowerCase();
+  return `<details class="adv mx-lib"${MX.libOpen ? ' open' : ''}><summary>📖 ${mE(t('mx_lib'))}</summary><input type="search" id="mx_libq" dir="ltr" value="${mE(MX.libQ || '')}" placeholder="${mE(t('mx_libQ'))}" autocomplete="off">
+    ${MX_LIB.map(([g, L]) => { const F = L.filter(x => !q || x.toLowerCase().includes(q)); return F.length ? `<div class="mx-libg"><b>${mE(t('mx_lg_' + g))}</b><div class="mx-libl">${F.map(x => `<button type="button" data-mxlib="${mE(x)}" dir="ltr">${mE(x)}</button>`).join('')}</div></div>` : ''; }).join('')}</details>`;
+}
+function mxSheetHTML(){
+  const d = mxData();
+  return `<p class="fine">${mE(t('mx_sheetH'))}</p>
+    <div class="mx-bar"><select id="mx_ex" aria-label="${mE(t('mx_examples'))}"><option value="">📚 ${mE(t('mx_examples'))}</option>${Object.keys(MX_EX).map(k => `<option value="${k}">${mE(t('mx_ex_' + k))}</option>`).join('')}</select>
+      <div class="seg mx-seg"><button type="button" data-mxdeg="0" aria-pressed="${!d.deg}">${mE(t('mx_rad'))}</button><button type="button" data-mxdeg="1" aria-pressed="${!!d.deg}">${mE(t('mx_deg'))}</button></div>
+      <select id="mx_dec" aria-label="${mE(t('mx_dec'))}" title="${mE(t('mx_dec'))}"><option value="">${mE(t('mx_decAuto'))}</option>${[0, 2, 4, 6, 10].map(n => `<option value="${n}"${String(d.dec) === String(n) ? ' selected' : ''}>${n}</option>`).join('')}</select>
+      <button type="button" class="mv" id="mx_clr">${mE(t('mx_clear'))}</button></div>
+    <textarea id="mx_in" class="mx-in-ta" rows="6" dir="ltr" spellcheck="false" autocapitalize="none" autocomplete="off" placeholder="${mE(t('mx_ph'))}">${mE(d.sheet)}</textarea>
+    <div class="mx-keys">${MX_KEYS.map(([l, v]) => `<button type="button" data-mxk="${mE(v)}">${mE(l)}</button>`).join('')}</div>
+    ${mxLibHTML()}
+    <div class="mx-bar mx-saves"><select id="mx_sheets" aria-label="${mE(t('mx_sheets'))}"><option value="">🗂 ${mE(t('mx_sheets'))} (${Object.keys(d.sheets || {}).length})</option>${Object.keys(d.sheets || {}).map(k => `<option value="${mE(k)}">${mE(k)}</option>`).join('')}</select>
+      <input type="text" id="mx_sname" dir="auto" maxlength="30" placeholder="${mE(t('mx_sname'))}"><button type="button" class="mv" id="mx_ssave">💾 ${mE(t('mx_ssave'))}</button>${Object.keys(d.sheets || {}).length ? `<button type="button" class="mv" id="mx_sdel">🗑 ${mE(t('mx_sdel'))}</button>` : ''}<button type="button" class="mv" id="mx_copyAll">📋 ${mE(t('mx_copyAll'))}</button></div>
+    <div id="mx_out" class="mx-out" aria-live="polite"></div>
+    <details class="adv mx-help"><summary>❓ ${mE(t('mx_help'))}</summary><p class="fine" dir="auto">${mE(t('mx_helpTxt'))}</p></details>`;
+}
+
+/* ---------- finance & economics forms ---------- */
+const MX_FGROUPS = [['tvm', ['pv', 'fv', 'pmt', 'nper', 'rate', 'simple', 'compound', 'amort', 'balance', 'rule72']], ['inv', ['npv', 'irr', 'mirr', 'payback', 'dpayback', 'profindex', 'cagr']], ['rates', ['effrate', 'nomrate', 'contrate', 'realrate', 'aftertax']],
+  ['dep', ['sln', 'ddb', 'syd', 'uop']], ['bond', ['bondprice', 'ytm', 'duration']], ['corp', ['capm', 'wacc']], ['val', ['ddm', 'perp', 'gperp', 'gannuity', 'eps', 'pe', 'divyield', 'sharpe']], ['opt', ['bscall', 'bsput', 'forward']],
+  ['cost', ['breakeven', 'margin', 'markup', 'vat']], ['invt', ['fifo', 'lifo', 'wavg']], ['eco', ['inflate', 'cpiinfl', 'realgdp', 'elasticity', 'multiplier', 'moneymult', 'ppp', 'eoq']]];
+const MX_PCT = ['rate', 'annual_rate', 'nominal', 'effective', 'inflation', 'coupon_rate', 'ytm', 'rf', 'rm', 're', 'rd', 'tax', 'r', 'g', 'finance_rate', 'reinvest_rate', 'sigma', 'ret', 'sd', 'r_dom', 'r_for', 'reserve_ratio'];
+const MX_PCTOUT = ['irr', 'mirr', 'rate', 'cagr', 'effrate', 'nomrate', 'contrate', 'realrate', 'ytm', 'capm', 'wacc', 'margin', 'markup', 'cpiinfl', 'aftertax', 'divyield'];
+const MX_FDEF = {pv: [5, 10, -1000], fv: [5, 10, -1000], pmt: [0.5, 240, 500000], nper: [0.5, -3000, 300000], rate: [10, -100, 800], simple: [10000, 4, 3], compound: [10000, 4, 10, 12], amort: [500000, 5, 240],
+  npv: [8, '-10000, 3000, 4000, 4500, 2000'], irr: ['-10000, 3000, 4000, 4500, 2000'], mirr: ['-10000, 3000, 4000, 4500, 2000', 8, 6], payback: ['-10000, 3000, 4000, 4500, 2000'], dpayback: [8, '-10000, 3000, 4000, 4500, 2000'], profindex: [8, '-10000, 3000, 4000, 4500, 2000'], cagr: [100000, 180000, 6],
+  effrate: [12, 12], nomrate: [12.68, 12], contrate: [10], realrate: [6, 3], sln: [50000, 5000, 5], ddb: [50000, 5000, 5, 1], syd: [50000, 5000, 5, 1], bondprice: [1000, 5, 6, 10, 2], ytm: [950, 1000, 5, 10, 2], duration: [1000, 5, 6, 10, 2],
+  capm: [4, 1.2, 9], wacc: [600, 400, 12, 6, 23], ddm: [5, 9, 3], breakeven: [100000, 50, 30], margin: [60, 100], markup: [60, 100], vat: [1000, 18], inflate: [1000, 3, 10], elasticity: [1000, 800, 10, 12], multiplier: [0.8], eoq: [12000, 100, 2.4], balance: [500000, 5, 240, 60], rule72: [7], aftertax: [5, 25], uop: [50000, 5000, 100000, 18000], perp: [1000, 8], gperp: [1000, 8, 3], gannuity: [1000, 8, 3, 10], eps: [5000000, 1000000], pe: [120, 6], divyield: [4, 120], sharpe: [11, 4, 15],
+  bscall: [100, 100, 1, 5, 20], bsput: [100, 100, 1, 5, 20], forward: [3.7, 4.5, 5, 1], fifo: ['100, 200, 150', '10, 12, 13', 300], lifo: ['100, 200, 150', '10, 12, 13', 300], wavg: ['100, 200, 150', '10, 12, 13', 300], cpiinfl: [104.2, 107.5], realgdp: [2000, 125], ppp: [20, 5.5], moneymult: [10]};
+function mxFinHTML(){
+  const d = mxData(), k = MX.finK, f = MX_FIN[k], V = (d.fin && d.fin[k]) || MX_FDEF[k] || [];
+  return `<p class="fine">${mE(t('mx_finH'))}</p>
+    <div class="field wide"><label for="mx_fk">${mE(t('mx_finPick'))}</label><select id="mx_fk">${MX_FGROUPS.map(([g, L]) => `<optgroup label="${mE(t('mx_g_' + g))}">${L.map(x => `<option value="${x}"${x === k ? ' selected' : ''}>${mE(t('mx_f_' + x))}</option>`).join('')}</optgroup>`).join('')}</select></div>
+    <div class="mx-fgrid">${f.ps.map((p, i) => { const nm = p.replace(/[?\[\]]/g, ''), opt = p.endsWith('?'), list = p.endsWith('[]'), v = V[i] != null ? V[i] : '';
+      return `<div class="field cv-f${list ? ' wide' : ''}"><label for="mxp_${i}">${mE(t('mx_p_' + nm))}${opt ? ' <small>(' + mE(t('mx_opt')) + ')</small>' : ''}</label>${list ? `<textarea id="mxp_${i}" data-mxp="${i}" rows="2" dir="ltr">${mE(v)}</textarea>` : `<input id="mxp_${i}" data-mxp="${i}" type="text" inputmode="decimal" dir="ltr" value="${mE(v)}" autocomplete="off">`}</div>`; }).join('')}</div>
+    <div id="mx_fres" class="mx-fres" aria-live="polite"></div>`;
+}
+function mxFinArgs(){
+  const f = MX_FIN[MX.finK], a = [], raw = [];
+  for (let i = 0; i < f.ps.length; i++){
+    const p = f.ps[i], nm = p.replace(/[?\[\]]/g, ''), el = $('#mxp_' + i); const s = String(el ? el.value : '').trim(); raw.push(s);
+    if (p.endsWith('[]')){ const L = s.split(/[,;\s]+/).filter(Boolean).map(Number); if (!L.length || L.some(isNaN)) throw MX_ERR('mx_eNum'); a.push(L); continue; }
+    if (!s){ if (p.endsWith('?')){ a.push(undefined); continue; } throw MX_ERR('mx_eArgs', {n: t('mx_p_' + nm)}); }
+    let v = Number(s.replace(/,/g, '')); if (isNaN(v)) throw MX_ERR('mx_eNum'); if (MX_PCT.includes(nm)) v /= 100; a.push(v);
+  }
+  return {a, raw};
+}
+function mxFinRun(){
+  const box = $('#mx_fres'); if (!box) return; const k = MX.finK, f = MX_FIN[k];
+  try {
+    const {a, raw} = mxFinArgs(); const d = mxData(); d.fin = d.fin || {}; d.fin[k] = raw; mxSave();
+    const v = f.fn(...a), ex = f.ex(...a), pct = MX_PCTOUT.includes(k);
+    let extra = '';
+    if (k === 'breakeven') extra = ` <span class="mx-sub">(${mE(t('mx_p_price'))}×Q = ${mE(mxFmt(v * a[1], 2))})</span>`;
+    const call = k + '(' + a.filter(x => x !== undefined).map(x => Array.isArray(x) ? '[' + x.join(', ') + ']' : String(Math.round(x * 1e10) / 1e10)).join(', ') + ')';
+    box.innerHTML = `<div class="mx-card mx-big"><div class="mx-lab">${mE(t('mx_f_' + k))}</div><div class="mx-res"><b class="mx-val">${pct ? mE(mxFmt(v * 100, 4)) + '%' : mE(mxFmt(v, mxDec() == null ? 2 : mxDec()))}</b>${extra}</div>
+      <div class="mx-st"><b>${mE(t('mx_formula'))}:</b> <span dir="ltr">${mE(ex.f)}</span></div>${(ex.s || []).map(s => `<div class="mx-st" dir="ltr">${mE(s)}</div>`).join('')}${ex.tbl ? mxTblHTML(ex.tbl) : ''}
+      <div class="mx-st" dir="ltr"><code>${mE(call)}</code></div>
+      <div class="btnrow"><button type="button" class="mv" data-mxsend="${mE(call)}">➕ ${mE(t('mx_toSheet'))}</button><button type="button" class="mv mx-aib" data-mxaifin="1">🤖 ${mE(t('mx_ai'))}</button></div><div class="mx-aiout" id="mxaifin" hidden></div></div>`;
+    MX.finLast = call + ' = ' + (pct ? mxFmt(v * 100, 4) + '%' : mxFmt(v, 2));
+  } catch (e){ box.innerHTML = `<div class="mx-card"><span class="mx-err">⚠️ ${mE(mxErrTxt(e))}</span></div>`; }
+}
+
+/* ---------- accounting ---------- */
+const MX_ACC0 = [['cash', 'ca'], ['bank', 'ca'], ['ar', 'ca'], ['inv', 'ca'], ['prepaid', 'ca'], ['vatin', 'ca'], ['equip', 'nca'], ['accdep', 'nca', 1], ['ap', 'cl'], ['vatout', 'cl'], ['wagespay', 'cl'], ['loanst', 'cl'], ['loanlt', 'ncl'],
+  ['capital', 'eq'], ['retained', 'eq'], ['sales', 'rev'], ['service', 'rev'], ['cogs', 'exp'], ['wages', 'exp'], ['rent', 'exp'], ['util', 'exp'], ['depexp', 'exp'], ['interest', 'exp'], ['other', 'exp']];
+function mxDefAccounts(){ return MX_ACC0.map(([id, ty, contra]) => ({id, ty, k: 'mx_ac_' + id, contra: !!contra})); }
+const mxAccName = a => a.k ? t(a.k) : a.n;
+const MX_TYPES = ['ca', 'nca', 'cl', 'ncl', 'eq', 'rev', 'exp'];
+const mxDebitNormal = a => (['ca', 'nca', 'exp'].includes(a.ty)) !== !!a.contra;
+function mxEntryBal(en){ let d = 0, c = 0; (en.lines || []).forEach(l => { d += +l.dr || 0; c += +l.cr || 0; }); return {d, c, ok: Math.abs(d - c) < 0.005 && d > 0}; }
+function mxLedger(){
+  const A = mxData().acct, L = {};
+  A.accounts.forEach(a => { L[a.id] = {a, dr: [], cr: [], td: 0, tc: 0}; });
+  A.entries.forEach((en, ei) => { if (!mxEntryBal(en).ok) return; (en.lines || []).forEach(l => { const x = L[l.acc]; if (!x) return; if (+l.dr){ x.dr.push([ei + 1, +l.dr]); x.td += +l.dr; } if (+l.cr){ x.cr.push([ei + 1, +l.cr]); x.tc += +l.cr; } }); });
+  Object.values(L).forEach(x => { x.bal = mxDebitNormal(x.a) ? x.td - x.tc : x.tc - x.td; });
+  return L;
+}
+const M2a = x => mxFmt(x, 2);
+function mxAcctHTML(){
+  const A = mxData().acct, at = MX.at;
+  const sub = `<div class="seg mx-subseg">${['journal', 'T', 'TB', 'reports'].map(k => `<button type="button" data-mxat="${k}" aria-pressed="${at === k}">${mE(t({journal: 'mx_aJournal', T: 'mx_aT', TB: 'mx_aTB', reports: 'mx_aReports'}[k]))}</button>`).join('')}</div>`;
+  const tools = `<div class="btnrow"><button type="button" class="mv" id="mx_aSample">📘 ${mE(t('mx_aSample'))}</button><button type="button" class="mv${MX.sure === 'aclr' ? ' warn' : ''}" id="mx_aClr">${mE(t(MX.sure === 'aclr' ? 'mx_aClearQ' : 'mx_aClear'))}</button></div>`;
+  if (at === 'journal'){
+    const opts = sel => A.accounts.map(a => `<option value="${mE(a.id)}"${a.id === sel ? ' selected' : ''}>${mE(mxAccName(a))}</option>`).join('');
+    const ents = A.entries.map((en, ei) => { const b = mxEntryBal(en);
+      return `<div class="mx-entry" data-e="${ei}"><div class="mx-eh"><b>#${ei + 1}</b><input type="date" data-ae="date" value="${mE(en.date || '')}" aria-label="${mE(t('mx_aDate'))}"><input type="text" data-ae="desc" dir="auto" value="${mE(en.desc || '')}" placeholder="${mE(t('mx_aDesc'))}"><button type="button" class="mv" data-adel="${ei}" aria-label="${mE(t('mx_aDel'))}">🗑</button></div>
+        <div class="mx-lines"><div class="mx-lh"><span>${mE(t('mx_aAcc'))}</span><span>${mE(t('mx_aDr'))}</span><span>${mE(t('mx_aCr'))}</span><span></span></div>${(en.lines || []).map((l, li) => `<div class="mx-line" data-li="${li}"><select data-al="acc">${opts(l.acc)}</select><input type="text" inputmode="decimal" dir="ltr" data-al="dr" value="${mE(l.dr || '')}" placeholder="${mE(t('mx_aDr'))}" aria-label="${mE(t('mx_aDr'))}"><input type="text" inputmode="decimal" dir="ltr" data-al="cr" value="${mE(l.cr || '')}" placeholder="${mE(t('mx_aCr'))}" aria-label="${mE(t('mx_aCr'))}"><button type="button" class="mv" data-alrm="${li}" aria-label="${mE(t('cv_rm'))}">✕</button></div>`).join('')}</div>
+        <div class="mx-ef"><button type="button" class="mv" data-aadd="${ei}">+ ${mE(t('mx_aAddLine'))}</button><span class="mx-eb ${b.ok ? 'ok' : 'bad'}">${b.ok ? '✓ ' + mE(t('mx_aBal')) + ' · ' + M2a(b.d) : mE(t('mx_aUnbal', {d: M2a(Math.abs(b.d - b.c))}))}</span></div></div>`; }).join('');
+    return sub + tools + (ents || `<p class="fine">${mE(t('mx_aEmpty'))}</p>`) + `<button type="button" class="gold-btn" id="mx_aNew">+ ${mE(t('mx_aNew'))}</button>
+      <details class="adv"${MX.accOpen ? ' open' : ''} id="mx_accBox"><summary>${mE(t('mx_aAccounts'))} (${A.accounts.length})</summary><p class="fine">${mE(t('mx_accH'))}</p>
+        <div class="mx-accl">${A.accounts.map((a, ai) => { const used = A.entries.some(en => (en.lines || []).some(l => l.acc === a.id));
+          return `<div class="mx-acc"><input type="text" data-acn="${ai}" dir="auto" value="${mE(mxAccName(a))}" aria-label="${mE(t('mx_aAccName'))}"><select data-act2="${ai}" aria-label="${mE(t('mx_aAccType'))}">${MX_TYPES.map(ty => `<option value="${ty}"${a.ty === ty ? ' selected' : ''}>${mE(t('mx_ty_' + ty))}</option>`).join('')}</select>
+            <label class="cv-chk mx-contra" title="${mE(t('mx_contraH'))}"><input type="checkbox" data-acc2="${ai}"${a.contra ? ' checked' : ''}> ${mE(t('mx_contra'))}</label>
+            <button type="button" class="mv" data-acdel="${ai}"${used ? ' disabled title="' + mE(t('mx_accInUse')) + '"' : ''} aria-label="${mE(t('cv_rm'))}">🗑</button></div>`; }).join('')}</div>
+        <button type="button" class="mv" id="mx_accReset">↺ ${mE(t('mx_accReset'))}</button>
+        <div class="mx-newacc"><input type="text" id="mx_accN" dir="auto" placeholder="${mE(t('mx_aAccName'))}"><select id="mx_accT">${MX_TYPES.map(ty => `<option value="${ty}">${mE(t('mx_ty_' + ty))}</option>`).join('')}</select><button type="button" class="btn" id="mx_accAdd">+ ${mE(t('mx_aNewAcc'))}</button></div></details>`;
+  }
+  const L = mxLedger(), used = Object.values(L).filter(x => x.td || x.tc), skip = A.entries.some(en => !mxEntryBal(en).ok) ? `<p class="fine">⚠️ ${mE(t('mx_aSkip'))}</p>` : '';
+  if (!used.length) return sub + tools + `<p class="fine">${mE(t('mx_aEmpty'))}</p>`;
+  if (at === 'T'){
+    return sub + skip + `<div class="mx-ts">${used.map(x => `<div class="mx-t"><div class="mx-tt">${mE(mxAccName(x.a))}</div><div class="mx-tb"><div class="mx-td">${x.dr.map(([e, v]) => `<div><small>#${e}</small> ${M2a(v)}</div>`).join('')}</div><div class="mx-tc">${x.cr.map(([e, v]) => `<div><small>#${e}</small> ${M2a(v)}</div>`).join('')}</div></div>
+      <div class="mx-tb mx-tsum"><div>${M2a(x.td)}</div><div>${M2a(x.tc)}</div></div><div class="mx-tbal">${mE(t('mx_rBalance'))}: ${M2a(Math.abs(x.td - x.tc))} ${x.td >= x.tc ? mE(t('mx_aDr')) : mE(t('mx_aCr'))}</div></div>`).join('')}</div>`;
+  }
+  if (at === 'TB'){
+    let sd = 0, sc = 0; const rows = used.map(x => { const v = x.td - x.tc; if (v >= 0) sd += v; else sc -= v; return `<tr><th>${mE(mxAccName(x.a))}</th><td>${v >= 0 ? M2a(v) : ''}</td><td>${v < 0 ? M2a(-v) : ''}</td></tr>`; }).join('');
+    return sub + skip + `<div class="scroll"><table class="tbl"><thead><tr><th>${mE(t('mx_aAcc'))}</th><th>${mE(t('mx_aDr'))}</th><th>${mE(t('mx_aCr'))}</th></tr></thead><tbody>${rows}<tr class="tot"><th>${mE(t('mx_rTot'))}</th><td>${M2a(sd)}</td><td>${M2a(sc)}</td></tr></tbody></table></div>
+      <p class="${Math.abs(sd - sc) < 0.005 ? 'mx-ok' : 'mx-err'}">${Math.abs(sd - sc) < 0.005 ? mE(t('mx_tbOk')) : mE(t('mx_rBad', {d: M2a(sd - sc)}))}</p>`;
+  }
+  /* reports */
+  const by = ty => used.filter(x => x.a.ty === ty), sum = arr => arr.reduce((s, x) => s + x.bal, 0);
+  const rev = by('rev'), exp = by('exp'), R = sum(rev), E = sum(exp), NI = R - E, cogs = (L.cogs && L.cogs.bal) || 0;
+  const ca = by('ca'), nca = by('nca'), cl = by('cl'), ncl = by('ncl'), eq = by('eq');
+  const CA = sum(ca), NCA = nca.reduce((s, x) => s + (x.a.contra ? -x.bal : x.bal), 0), CL = sum(cl), NCL = sum(ncl), EQ = sum(eq) + NI, TA = CA + NCA, TLE = CL + NCL + EQ;
+  const list = (arr, neg) => arr.map(x => `<tr><td>${mE(mxAccName(x.a))}</td><td>${neg && x.a.contra ? '(' + M2a(x.bal) + ')' : M2a(x.bal)}</td></tr>`).join('');
+  const sec = (h, rows, tot) => `<tr class="mx-rh"><th colspan="2">${mE(h)}</th></tr>${rows}${tot != null ? `<tr class="tot"><td>${mE(t('mx_rTot'))}</td><td>${M2a(tot)}</td></tr>` : ''}`;
+  const inv = (L.inv && L.inv.bal) || 0, ratio = (a, b) => b ? mxFmt(a / b, 2) : '—', pc = (a, b) => b ? mxFmt(a / b * 100, 1) + '%' : '—';
+  return sub + skip + `<h4 class="mx-h">${mE(t('mx_rIS'))}</h4><div class="scroll"><table class="tbl mx-rep"><tbody>${sec(t('mx_ty_rev'), list(rev), R)}${cogs ? `<tr class="tot"><td>${mE(t('mx_rGross'))}</td><td>${M2a(R - cogs)}</td></tr>` : ''}${sec(t('mx_ty_exp'), list(exp), E)}<tr class="tot mx-ni"><td>${mE(t('mx_rNI'))}</td><td>${M2a(NI)}</td></tr></tbody></table></div>
+    <h4 class="mx-h">${mE(t('mx_rBS'))}</h4><div class="mx-bs"><div class="scroll"><table class="tbl mx-rep"><tbody>${sec(t('mx_ty_ca'), list(ca), CA)}${sec(t('mx_ty_nca'), list(nca, 1), NCA)}<tr class="tot mx-ni"><td>${mE(t('mx_rAssets'))}</td><td>${M2a(TA)}</td></tr></tbody></table></div>
+      <div class="scroll"><table class="tbl mx-rep"><tbody>${sec(t('mx_ty_cl'), list(cl), CL)}${sec(t('mx_ty_ncl'), list(ncl), NCL)}${sec(t('mx_ty_eq'), list(eq) + `<tr><td>${mE(t('mx_rCurNI'))}</td><td>${M2a(NI)}</td></tr>`, EQ)}<tr class="tot mx-ni"><td>${mE(t('mx_rLE'))}</td><td>${M2a(TLE)}</td></tr></tbody></table></div></div>
+    <p class="${Math.abs(TA - TLE) < 0.005 ? 'mx-ok' : 'mx-err'}">${Math.abs(TA - TLE) < 0.005 ? mE(t('mx_rOk')) : mE(t('mx_rBad', {d: M2a(TA - TLE)}))}</p>
+    <h4 class="mx-h">${mE(t('mx_rRatios'))}</h4><div class="pm-list">${[['mx_ra_cur', ratio(CA, CL)], ['mx_ra_quick', ratio(CA - inv, CL)], ['mx_ra_de', ratio(CL + NCL, EQ)], ['mx_ra_gm', pc(R - cogs, R)], ['mx_ra_nm', pc(NI, R)], ['mx_ra_roa', pc(NI, TA)], ['mx_ra_roe', pc(NI, EQ)]].map(([k, v]) => `<div><dt>${mE(t(k))}</dt><dd dir="ltr">${v}</dd></div>`).join('')}</div>`;
+}
+function mxAcctSample(){
+  const y = new Date().getFullYear() + '-01-';
+  const E = (dd, desc, lines) => ({date: y + dd, desc, lines: lines.map(([acc, dr, cr]) => ({acc, dr: dr || '', cr: cr || ''}))});
+  const he = typeof lang === 'string' && lang === 'he';
+  return [E('02', he ? 'השקעת בעלים' : 'Owner investment', [['bank', 100000], ['capital', 0, 100000]]), E('03', he ? 'רכישת ציוד באשראי' : 'Equipment on credit', [['equip', 40000], ['ap', 0, 40000]]),
+    E('05', he ? 'קניית מלאי במזומן' : 'Inventory for cash', [['inv', 30000], ['bank', 0, 30000]]), E('12', he ? 'מכירה באשראי' : 'Sale on credit', [['ar', 45000], ['sales', 0, 45000]]),
+    E('12', he ? 'עלות המכר' : 'Cost of goods sold', [['cogs', 20000], ['inv', 0, 20000]]), E('20', he ? 'גבייה מלקוחות' : 'Collected from customers', [['bank', 30000], ['ar', 0, 30000]]),
+    E('28', he ? 'תשלום שכר ושכירות' : 'Wages and rent paid', [['wages', 12000], ['rent', 5000], ['bank', 0, 17000]]), E('31', he ? 'פחת ציוד' : 'Equipment depreciation', [['depexp', 1000], ['accdep', 0, 1000]]),
+    E('31', he ? 'תשלום לספק' : 'Paid supplier', [['ap', 15000], ['bank', 0, 15000]])];
+}
+
+/* ---------- graphs ---------- */
+const MX_GC = ['#2A5FD6', '#E0900A', '#14A66B', '#D2523B', '#7C3AED'];
+function mxGraphHTML(){
+  const g = mxData().graph;
+  return `<p class="fine">${mE(t('mx_gH'))}</p>
+    <div class="mx-gfns">${g.fns.map((f, i) => `<div class="mx-gfn"><span class="mx-gdot" style="background:${MX_GC[i]}"></span><span dir="ltr">y =</span><input type="text" data-mxg="${i}" dir="ltr" value="${mE(f)}" autocomplete="off" spellcheck="false"><button type="button" class="mv" data-mxgrm="${i}" aria-label="${mE(t('cv_rm'))}">✕</button></div>`).join('')}
+      ${g.fns.length < 5 ? `<button type="button" class="mv" id="mx_gAdd">+ ${mE(t('mx_gAdd'))}</button>` : ''}</div>
+    <div class="mx-gbar"><label>${mE(t('mx_gFrom'))} <input type="text" inputmode="decimal" id="mx_gx0" dir="ltr" value="${mE(g.x0)}"></label><label>${mE(t('mx_gTo'))} <input type="text" inputmode="decimal" id="mx_gx1" dir="ltr" value="${mE(g.x1)}"></label>
+      <button type="button" class="mv" data-mxgz="0.5" aria-label="${mE(t('mx_gZin'))}">＋</button><button type="button" class="mv" data-mxgz="2" aria-label="${mE(t('mx_gZout'))}">－</button><button type="button" class="mv" id="mx_gRes">${mE(t('mx_gReset'))}</button></div>
+    <div class="mx-gwrap"><canvas id="mx_cv" height="340"></canvas><div class="mx-gread" id="mx_gread" dir="ltr"></div></div>
+    <div id="mx_gan" class="mx-gan"></div>`;
+}
+function mxGFuncs(){
+  const g = mxData().graph, S = MX.scope || {v: {}, f: {}};
+  return g.fns.map((src, i) => { try { const n = mxParse(src); return {i, src, f: x => { try { const v = mxEval(n, {v: Object.assign({}, S.v, {x}), f: S.f}); return typeof v === 'number' ? v : NaN; } catch (e) { return NaN; } }}; } catch (e) { return {i, src, f: () => NaN, bad: true}; } });
+}
+function mxDraw(){
+  const cv = $('#mx_cv'); if (!cv) return; const g = mxData().graph, F = mxGFuncs();
+  const W = cv.clientWidth || 340, H = 340, dpr = window.devicePixelRatio || 1; cv.width = W * dpr; cv.height = H * dpr; const cx = cv.getContext('2d'); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const x0 = +g.x0, x1 = +g.x1; if (!(x1 > x0)) return;
+  /* y range from the data */
+  let ys = []; F.forEach(fn => { for (let k = 0; k <= 200; k++){ const y = fn.f(x0 + (x1 - x0) * k / 200); if (isFinite(y)) ys.push(y); } });
+  ys.sort((a, b) => a - b); let y0 = ys.length ? ys[Math.floor(ys.length * 0.02)] : -10, y1 = ys.length ? ys[Math.ceil(ys.length * 0.98) - 1] : 10;
+  if (g.y0 != null && g.y1 != null){ y0 = g.y0; y1 = g.y1; } if (!(y1 > y0)){ y0 -= 1; y1 += 1; } const pad = (y1 - y0) * 0.1; y0 -= pad; y1 += pad;
+  MX.gv = {x0, x1, y0, y1, W, H};
+  const X = x => (x - x0) / (x1 - x0) * W, Y = y => H - (y - y0) / (y1 - y0) * H;
+  const css = getComputedStyle(document.documentElement), ink = css.getPropertyValue('--ink').trim() || '#222', line = 'rgba(127,127,127,.25)';
+  cx.clearRect(0, 0, W, H); cx.direction = 'ltr';
+  const step = v => { const r = v / 8, p = Math.pow(10, Math.floor(Math.log10(r))); return [1, 2, 5, 10].map(m => m * p).find(s => s >= r); };
+  const sx = step(x1 - x0), sy = step(y1 - y0);
+  cx.lineWidth = 1; cx.strokeStyle = line; cx.fillStyle = ink; cx.font = '11px sans-serif'; cx.textAlign = 'center';
+  for (let x = Math.ceil(x0 / sx) * sx; x <= x1; x += sx){ cx.beginPath(); cx.moveTo(X(x), 0); cx.lineTo(X(x), H); cx.stroke(); if (Math.abs(x) > 1e-9) cx.fillText(mxFmt(+x.toPrecision(6)), X(x), Math.min(H - 4, Math.max(12, Y(0) + 13))); }
+  cx.textAlign = 'left';
+  for (let y = Math.ceil(y0 / sy) * sy; y <= y1; y += sy){ cx.beginPath(); cx.moveTo(0, Y(y)); cx.lineTo(W, Y(y)); cx.stroke(); if (Math.abs(y) > 1e-9) cx.fillText(mxFmt(+y.toPrecision(6)), Math.min(W - 40, Math.max(3, X(0) + 4)), Y(y) - 3); }
+  cx.strokeStyle = ink; cx.lineWidth = 1.4; cx.beginPath(); if (y0 < 0 && y1 > 0){ cx.moveTo(0, Y(0)); cx.lineTo(W, Y(0)); } if (x0 < 0 && x1 > 0){ cx.moveTo(X(0), 0); cx.lineTo(X(0), H); } cx.stroke();
+  F.forEach(fn => {
+    cx.strokeStyle = MX_GC[fn.i]; cx.lineWidth = 2.2; cx.beginPath(); let on = false, py = null;
+    for (let px = 0; px <= W; px += 1){ const x = x0 + (x1 - x0) * px / W, y = fn.f(x); if (!isFinite(y) || (py != null && Math.abs(Y(y) - py) > H * 2)){ on = false; py = null; continue; } const yy = Y(y); if (!on){ cx.moveTo(px, yy); on = true; } else cx.lineTo(px, yy); py = yy; }
+    cx.stroke();
+  });
+  if (MX.gpt != null){ const x = MX.gpt; cx.strokeStyle = 'rgba(127,127,127,.6)'; cx.setLineDash([4, 4]); cx.beginPath(); cx.moveTo(X(x), 0); cx.lineTo(X(x), H); cx.stroke(); cx.setLineDash([]);
+    const rd = $('#mx_gread'); if (rd) rd.innerHTML = `x = ${mE(mxFmt(x, 4))}` + F.map(fn => { const y = fn.f(x); if (isFinite(y)){ cx.fillStyle = MX_GC[fn.i]; cx.beginPath(); cx.arc(X(x), Y(y), 4, 0, 7); cx.fill(); } return ` · <span style="color:${MX_GC[fn.i]}">y${fn.i + 1} = ${mE(isFinite(y) ? mxFmt(y, 4) : '—')}</span>`; }).join(''); }
+  mxAnalyse(F, x0, x1);
+}
+function mxAnalyse(F, x0, x1){
+  const box = $('#mx_gan'); if (!box) return; const N = 800, fmt = v => mxFmt(+v.toPrecision(8), 4);
+  const bis = (f, a, b) => { let fa = f(a); for (let i = 0; i < 60; i++){ const m = (a + b) / 2, fm = f(m); if (fa * fm <= 0) b = m; else { a = m; fa = fm; } } return (a + b) / 2; };
+  const scan = f => { const R = []; let px = x0, pv = f(x0); for (let k = 1; k <= N; k++){ const x = x0 + (x1 - x0) * k / N, v = f(x); if (isFinite(v) && isFinite(pv)){ if (v === 0) R.push(x); else if (pv * v < 0){ const r = bis(f, px, x); if (Math.abs(f(r)) < 1e-6 * (1 + Math.abs(v - pv) * 1e3)) R.push(r); } } px = x; pv = v; } return R.filter((r, i, a) => !i || Math.abs(r - a[i - 1]) > (x1 - x0) / N); };
+  const rows = F.filter(fn => !fn.bad).map(fn => {
+    const roots = scan(fn.f), d = x => (fn.f(x + 1e-5) - fn.f(x - 1e-5)) / 2e-5, crit = scan(d), mins = [], maxs = [];
+    crit.forEach(x => { const s = (fn.f(x + 1e-3) + fn.f(x - 1e-3)) / 2 - fn.f(x); if (s > 0) mins.push(x); else if (s < 0) maxs.push(x); });
+    const y0 = fn.f(0), pts = arr => arr.length ? arr.slice(0, 8).map(x => `(${fmt(x)}, ${fmt(fn.f(x))})`).join(' ') : t('mx_gNone');
+    return `<div class="mx-gr"><b style="color:${MX_GC[fn.i]}">y${fn.i + 1} = ${mE(fn.src)}</b><div>${mE(t('mx_gRoots'))}: <span dir="ltr">${roots.length ? roots.slice(0, 10).map(fmt).join(', ') : mE(t('mx_gNone'))}</span></div>
+      <div>${mE(t('mx_gYint'))}: <span dir="ltr">${isFinite(y0) && x0 <= 0 && x1 >= 0 ? fmt(y0) : '—'}</span></div><div>${mE(t('mx_gMin'))}: <span dir="ltr">${pts(mins)}</span></div><div>${mE(t('mx_gMax'))}: <span dir="ltr">${pts(maxs)}</span></div></div>`;
+  });
+  const inter = []; const G = F.filter(fn => !fn.bad);
+  for (let i = 0; i < G.length; i++) for (let j = i + 1; j < G.length; j++){ const h = x => G[i].f(x) - G[j].f(x); scan(h).slice(0, 6).forEach(x => inter.push(`y${G[i].i + 1}∩y${G[j].i + 1}: (${fmt(x)}, ${fmt(G[i].f(x))})`)); }
+  box.innerHTML = `<h4 class="mx-h">${mE(t('mx_gAnalysis'))}</h4>${rows.join('')}${G.length > 1 ? `<div class="mx-gr"><b>${mE(t('mx_gInter'))}</b><div dir="ltr">${inter.length ? inter.join('<br>') : mE(t('mx_gNone'))}</div></div>` : ''}`;
+}
+
+/* ---------- AI explanation ---------- */
+async function mxAI(prompt, outId, btn){
+  const o = $('#' + outId); if (!o) return;
+  if (typeof cvAiOk !== 'function' || !cvAiOk()){ o.hidden = false; o.textContent = t('cv_aiNo'); return; }
+  const old = btn.textContent; btn.disabled = true; btn.textContent = '⏳ ' + t('mx_aiWait');
+  const UL = {he: 'Hebrew', ar: 'Arabic', en: 'English'}[typeof lang === 'string' && ['he', 'ar', 'en'].includes(lang) ? lang : 'en'];
+  try { const r = await cvAsk(`You are a patient maths, finance and accounting teacher. Explain in ${UL}, step by step and in full detail, how to solve the following, showing every formula and intermediate result with numbered steps. Keep maths in plain text (use ^, sqrt, /). Finish with the final answer.\n\n${prompt}`); o.hidden = false; o.textContent = r || t('cv_aiErr'); }
+  catch (e){ o.hidden = false; o.textContent = e && e.message === 'noai' ? t('cv_aiNo') : t('cv_aiErr'); }
+  finally { btn.disabled = false; btn.textContent = old; }
+}
+
+/* ---------- scan & practice: a photo of an exercise/exam → transcription, full solution, independent check ---------- */
+MX.imgs = [];
+function mxScanEngine(){
+  try { if (typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) return typeof PH === 'object' && PH && PH.ok ? 'claude' : '';
+    return typeof gemKey === 'function' && gemKey() ? 'gemini' : ''; } catch (e) { return ''; }
+}
+function mxScanHTML(){
+  const d = mxData(), sc = d.scan || {}, eng = mxScanEngine();
+  return `<p class="fine">${mE(t('mx_scH'))}</p>${eng ? '' : `<div class="gk-st new">${mE(t('mx_scNoAI'))}</div>`}
+    <div class="mx-fgrid"><div class="field cv-f"><label for="mx_scSubj">${mE(t('mx_scSubj'))}</label><select id="mx_scSubj">${['auto', 'math', 'calc', 'stat', 'fin', 'acct', 'eco'].map(k => `<option value="${k}"${(sc.subj || 'auto') === k ? ' selected' : ''}>${mE(t('mx_sc_' + k))}</option>`).join('')}</select></div>
+      <div class="field cv-f"><label for="mx_scMode">${mE(t('mx_scMode'))}</label><select id="mx_scMode">${['full', 'practice'].map(k => `<option value="${k}"${(sc.mode || 'full') === k ? ' selected' : ''}>${mE(t('mx_sc_' + k))}</option>`).join('')}</select></div></div>
+    <div class="btnrow"><button type="button" class="btn" id="mx_scCam">📷 ${mE(t('mx_scCam'))}</button><button type="button" class="btn" id="mx_scPick">🖼️ ${mE(t('mx_scPick'))}</button>
+      <input type="file" accept="image/*" multiple data-mxfile hidden><input type="file" accept="image/*" capture="environment" data-mxfile data-cam hidden></div>
+    <div class="mx-scimgs">${MX.imgs.map((x, i) => `<span class="mx-scimg"><img src="${x.url}" alt=""><button type="button" data-scrm="${i}" aria-label="${mE(t('cv_rm'))}">✕</button></span>`).join('')}</div>
+    ${MX.imgs.length ? `<p class="fine">${mE(t('mx_scPages', {n: MX.imgs.length}))}</p><div class="btnrow"><button type="button" class="gold-btn" id="mx_scGo"${eng ? '' : ' disabled'}>✨ ${mE(t('mx_scGo'))}</button><button type="button" class="mv" id="mx_scClr">${mE(t('mx_scClear'))}</button></div>` : ''}
+    <div id="mx_scOut" aria-live="polite">${sc.res ? mxScanResHTML(sc.res, sc.mode) : ''}</div>`;
+}
+/* run the AI's own check expression through the calculator and compare it with the numbers in its answer */
+function mxScanVerify(q){
+  const ck = String(q.check || '').trim(); if (!ck) return {k: 'none'};
+  let v; try { v = mxEval(mxParse(ck), {v: {}, f: {}}); } catch (e) { return {k: 'none'}; }
+  if (typeof v !== 'number' || !isFinite(v)) return {k: 'none'};
+  const nums = (String(q.answer || '').replace(/(\d),(\d{3})/g, '$1$2').match(/-?\d+(?:\.\d+)?/g) || []).map(Number);
+  const close = x => Math.abs(x - v) <= Math.max(0.006, Math.abs(v) * 0.005) || Math.abs(x - v * 100) <= Math.max(0.006, Math.abs(v * 100) * 0.005);
+  return {k: nums.some(close) ? 'ok' : 'diff', v};
+}
+function mxScanResHTML(res, mode){
+  const Q = Array.isArray(res.questions) ? res.questions : [];
+  if (!Q.length) return `<div class="mx-card"><span class="mx-err">${mE(t('mx_scFail'))}</span></div>`;
+  return Q.map((q, i) => {
+    const ver = mxScanVerify(q), steps = (Array.isArray(q.steps) ? q.steps : [String(q.steps || '')]).filter(Boolean);
+    const vtxt = ver.k === 'ok' ? `<div class="mx-ok">${mE(t('mx_scOk', {v: mxFmt(ver.v)}))}</div>` : ver.k === 'diff' ? `<div class="mx-err">${mE(t('mx_scDiff', {v: mxFmt(ver.v)}))}</div>` : `<div class="mx-sub">${mE(t('mx_scNoCheck'))}</div>`;
+    const sol = `<div class="mx-scsol"${mode === 'practice' ? ' hidden' : ''} id="mxsol${i}"><b>${mE(t('mx_scSteps'))}</b><ol>${steps.map(s => `<li dir="auto">${mE(s)}</li>`).join('')}</ol>
+      <div class="mx-scans"><b>${mE(t('mx_scAns'))}:</b> <span dir="auto">${mE(q.answer || '')}</span></div>${vtxt}
+      ${q.check ? `<div class="btnrow"><button type="button" class="mv" data-mxsend="${mE(q.check)}">➕ ${mE(t('mx_scToSheet'))}</button></div>` : ''}</div>`;
+    const ed = `<details class="mx-sced"><summary>✏️ ${mE(t('mx_edit'))}</summary>
+      <div class="field wide cv-f"><label>${mE(t('mx_scTextL'))}</label><textarea data-sce="text" data-q="${i}" rows="3" dir="auto">${mE(q.text || '')}</textarea></div>
+      <div class="field wide cv-f"><label>${mE(t('mx_scStepsL'))}</label><textarea data-sce="steps" data-q="${i}" rows="5" dir="auto">${mE(steps.join('\n'))}</textarea></div>
+      <div class="field wide cv-f"><label>${mE(t('mx_scAns'))}</label><input data-sce="answer" data-q="${i}" type="text" dir="auto" value="${mE(q.answer || '')}"></div>
+      <div class="field wide cv-f"><label>${mE(t('mx_scCheckL'))}</label><input data-sce="check" data-q="${i}" type="text" dir="ltr" value="${mE(q.check || '')}"></div>
+      <div class="btnrow"><button type="button" class="btn" data-scsave="${i}">✓ ${mE(t('mx_scSaveV'))}</button><button type="button" class="mv" data-scre="${i}">✨ ${mE(t('mx_scResolve'))}</button><button type="button" class="mv" data-scdel="${i}">🗑 ${mE(t('cv_rm'))}</button></div></details>`;
+    return `<div class="mx-card mx-scq"><div class="mx-lab">${mE(t('mx_scQ', {n: q.n || i + 1}))}${q.topic ? ' · ' + mE(q.topic) : ''}</div><div class="mx-sctext" dir="auto">${mE(q.text || '')}</div>
+      ${mode === 'practice' && q.hint ? `<details class="mx-steps"><summary>💡 ${mE(t('mx_scHint'))}</summary><div dir="auto">${mE(q.hint)}</div></details><button type="button" class="btn" data-scshow="${i}">${mE(t('mx_scShow'))}</button>` : ''}${sol}${ed}</div>`;
+  }).join('') + (res.notes ? `<div class="mx-card"><b>${mE(t('mx_scNote'))}:</b> <span dir="auto">${mE(res.notes)}</span></div>` : '') + `<p class="fine">${mE(t('mx_scDisc'))}</p>`;
+}
+async function mxScanAdd(files){
+  for (const f of Array.from(files || []).slice(0, 4 - MX.imgs.length)){
+    if (!/^image\//.test(f.type)) continue;
+    try { const blob = typeof phShrink === 'function' ? await phShrink(f) : f; MX.imgs.push({blob, url: URL.createObjectURL(blob)}); } catch (e) {}
+  }
+  mxRender();
+}
+const mxB64 = blob => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = rej; r.readAsDataURL(blob); });
+async function mxScanRun(btn){
+  const eng = mxScanEngine(); if (!eng || !MX.imgs.length) return;
+  const d = mxData(), subj = ($('#mx_scSubj') || {}).value || 'auto', mode = ($('#mx_scMode') || {}).value || 'full';
+  const UL = {he: 'Hebrew', ar: 'Arabic', en: 'English'}[typeof lang === 'string' && ['he', 'ar', 'en'].includes(lang) ? lang : 'en'];
+  const prompt = `You are an expert teacher and exam grader in mathematics, statistics, economics, finance and accounting.${subj !== 'auto' ? ' Subject: ' + ({math: 'mathematics', calc: 'calculus', stat: 'statistics and probability', fin: 'finance and investments', acct: 'financial accounting', eco: 'economics'}[subj]) + '.' : ''}
+The image(s) contain exercise or exam questions. For EACH question:
+1. Transcribe it exactly, in its original language (keep numbers and symbols).
+2. Name the topic.
+3. Solve it completely and rigorously, step by step, exactly as an exam answer should look: state the formula, substitute the numbers, show every intermediate result, keep enough decimal places, and state units. For accounting, write journal entries as "Dr Account amount / Cr Account amount" lines and tables as text.
+4. Give the final answer clearly.
+5. Give "check": ONE expression in this calculator's syntax that computes the main numeric final answer (or "" if the answer is not a number). Syntax: + - * / ^ ( ), sqrt(), ln(), log(), exp(), sin()/cos()/tan() (radians), ncr(n,k), normcdf(x,mu,sd), norminv(p,mu,sd), binompdf(n,p,k), binomcdf(n,p,k), poissonpdf(lambda,k), mean([..]), std([..]), npv(rate,[cf0,cf1,..]), irr([cf0,..]), pmt(rate,nper,pv), fv(rate,nper,pmt,pv), pv(rate,nper,pmt,fv), bondprice(face,coupon,ytm,years,freq), bscall(S,K,T,r,sigma). Rates as decimals (0.05).
+6. Give "hint": a first nudge that does not reveal the answer.
+Write topic, steps, answer and hint in ${UL}. Return JSON only:
+{"questions":[{"n":"1","text":"...","topic":"...","hint":"...","steps":["step 1 ...","step 2 ..."],"answer":"...","check":"..."}],"notes":"anything unreadable or ambiguous, else empty"}`;
+  const old = btn.textContent; btn.disabled = true; btn.textContent = '⏳ ' + t('mx_scWait');
+  const out = $('#mx_scOut'); if (out) out.innerHTML = `<div class="mx-card"><span class="mx-sub">⏳ ${mE(t('mx_scWait'))}</span></div>`;
+  try {
+    let res;
+    if (eng === 'claude'){
+      try { res = await PH.s.json(prompt, {images: MX.imgs.map(x => x.blob), cache: false, modelTier: 'complex'}); }
+      catch (e){ const r = await PH.s(prompt, {images: MX.imgs.map(x => x.blob), cache: false, modelTier: 'complex'}); res = mxJSON(r && r.text); }
+    } else {
+      const parts = [{text: prompt}]; for (const x of MX.imgs) parts.push({inline_data: {mime_type: 'image/jpeg', data: await mxB64(x.blob)}});
+      const txt = await gemTry([SET.gmodel].concat(GEM_FALLBACK), gemKey(), [{role: 'user', parts}], {generationConfig: {responseMimeType: 'application/json', temperature: 0.1}});
+      res = mxJSON(txt);
+    }
+    if (!res || !Array.isArray(res.questions)) throw new Error('fmt');
+    d.scan = {res, mode, subj, at: Date.now()}; mxSave();
+    if (out) out.innerHTML = mxScanResHTML(res, mode);
+  } catch (e){ if (out) out.innerHTML = `<div class="mx-card"><span class="mx-err">${mE(e && e.code && typeof aiCodeText === 'function' ? aiCodeText(e.code) : t('mx_scFail'))}</span></div>`; }
+  finally { if (btn.isConnected){ btn.disabled = false; btn.textContent = old; } }
+}
+/* solve one (edited) question again from its text, no image needed */
+async function mxScanResolve(i, btn){
+  const d = mxData(), res = d.scan.res, q = res.questions[i];
+  if (typeof cvAiOk !== 'function' || !cvAiOk()){ toast(t('cv_aiNo')); return; }
+  const UL = {he: 'Hebrew', ar: 'Arabic', en: 'English'}[typeof lang === 'string' && ['he', 'ar', 'en'].includes(lang) ? lang : 'en'];
+  const old = btn.textContent; btn.disabled = true; btn.textContent = '⏳ ' + t('mx_scWait');
+  try {
+    const r = mxJSON(await cvAsk(`You are an expert teacher and exam grader. Solve this exam question completely and rigorously, step by step (formula, substitution, every intermediate result), in ${UL}. Return JSON only: {"topic":"...","hint":"...","steps":["..."],"answer":"...","check":"ONE calculator expression for the numeric final answer, or empty"}. Calculator syntax: + - * / ^, sqrt, ln, log, exp, normcdf(x,mu,sd), binompdf(n,p,k), ncr, npv(rate,[cf0,..]), irr([..]), pmt(rate,n,pv), fv, pv, mean([..]), std([..]).\n\nQuestion:\n${q.text}`));
+    if (!r || !r.steps) throw new Error('fmt');
+    Object.assign(q, {topic: r.topic || q.topic, hint: r.hint || q.hint, steps: r.steps, answer: r.answer || '', check: r.check || ''}); mxSave();
+    const o = $('#mx_scOut'); if (o) o.innerHTML = mxScanResHTML(res, d.scan.mode);
+  } catch (e){ toast(t('cv_aiErr')); if (btn.isConnected){ btn.disabled = false; btn.textContent = old; } }
+}
+const mxJSON = s => { const m = /\{[\s\S]*\}/.exec(String(s || '')); try { return m ? JSON.parse(m[0]) : null; } catch (e) { return null; } };
+document.addEventListener('change', e => {
+  const el = e.target; if (!el.closest || !el.closest('#mx_root')) return;
+  if (el.hasAttribute && el.hasAttribute('data-mxfile')){ mxScanAdd(el.files); el.value = ''; return; }
+  if (el.id === 'mx_scSubj' || el.id === 'mx_scMode'){ const d = mxData(); d.scan = Object.assign(d.scan || {}, {[el.id === 'mx_scSubj' ? 'subj' : 'mode']: el.value}); mxSave(); if (el.id === 'mx_scMode' && d.scan.res){ const o = $('#mx_scOut'); if (o) o.innerHTML = mxScanResHTML(d.scan.res, el.value); } }
+});
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest || !t0.closest('#mx_root')) return; let b;
+  if (t0.closest('#mx_scCam')){ PHA_T = 'mx'; if ((SET.photoAccess || 'ask') === 'never') return toast(t('pha_blocked')); cvPick(true); return; }
+  if (t0.closest('#mx_scPick')){ PHA_T = 'mx'; cvPhotoAsk(); return; }
+  if ((b = t0.closest('[data-scrm]'))){ const x = MX.imgs.splice(+b.dataset.scrm, 1)[0]; if (x) URL.revokeObjectURL(x.url); mxRender(); return; }
+  if (t0.closest('#mx_scClr')){ MX.imgs.forEach(x => URL.revokeObjectURL(x.url)); MX.imgs = []; const d = mxData(); if (d.scan) delete d.scan.res; mxSave(); mxRender(); return; }
+  if ((b = t0.closest('#mx_scGo'))){ mxScanRun(b); return; }
+  if ((b = t0.closest('[data-scsave]')) || (b = t0.closest('[data-scre]')) || (b = t0.closest('[data-scdel]'))){
+    const d = mxData(), res = d.scan && d.scan.res; if (!res) return; const i = +(b.dataset.scsave || b.dataset.scre || b.dataset.scdel), q = res.questions[i]; if (!q) return;
+    if (b.dataset.scdel != null){ res.questions.splice(i, 1); mxSave(); const o = $('#mx_scOut'); if (o) o.innerHTML = mxScanResHTML(res, d.scan.mode); return; }
+    const card = b.closest('.mx-scq'), val = k => { const el = card.querySelector(`[data-sce="${k}"]`); return el ? el.value : ''; };
+    q.text = val('text'); q.steps = val('steps').split('\n').map(x => x.trim()).filter(Boolean); q.answer = val('answer'); q.check = val('check').trim();
+    if (b.dataset.scre != null){ mxScanResolve(i, b); return; }
+    mxSave(); const o = $('#mx_scOut'); if (o) o.innerHTML = mxScanResHTML(res, d.scan.mode); toast(t('mx_scSaved')); return;
+  }
+  if ((b = t0.closest('[data-scshow]'))){ const s2 = $('#mxsol' + b.dataset.scshow); if (s2) s2.hidden = false; b.remove(); return; }
+});
+
+/* ---------- the panel ---------- */
+function mxRender(){
+  const root = $('#mx_root'); if (!root) return; mxData();
+  root.innerHTML = `<div class="seg mx-tabs" role="tablist">${['sheet', 'fin', 'acct', 'graph', 'scan'].map(k => `<button type="button" role="tab" data-mxt="${k}" aria-pressed="${MX.tab === k}" aria-selected="${MX.tab === k}">${mE(t({sheet: 'mx_tSheet', fin: 'mx_tFin', acct: 'mx_tAcct', graph: 'mx_tGraph', scan: 'mx_tScan'}[k]))}</button>`).join('')}</div>
+    <div class="mx-body">${MX.tab === 'sheet' ? mxSheetHTML() : MX.tab === 'fin' ? mxFinHTML() : MX.tab === 'acct' ? mxAcctHTML() : MX.tab === 'graph' ? mxGraphHTML() : mxScanHTML()}</div>`;
+  if (MX.tab === 'sheet') mxRunSheet();
+  if (MX.tab === 'fin') mxFinRun();
+  if (MX.tab === 'graph'){ mxRunSheetSilent(); setTimeout(mxDraw, 30); }
+}
+function mxRunSheetSilent(){ const S = {v: {}, f: {}}; String(mxData().sheet || '').split('\n').forEach(raw => { const src = raw.trim(); if (!src || src.startsWith('#') || mxIsSym(src)) return; try { const n = mxParse(src); if (n.t === 'assign') S.v[n.n] = mxEval(n.e, S); else if (n.t === 'fdef') S.f[n.n] = {ps: n.ps, e: n.e, src}; } catch (e) {} }); MX.scope = S; }
+function mxInsert(txt){
+  const ta = $('#mx_in'); if (!ta) return; const s = ta.selectionStart || ta.value.length, e = ta.selectionEnd || s;
+  ta.value = ta.value.slice(0, s) + txt + ta.value.slice(e); const p = s + txt.length - (txt.endsWith('(') ? 0 : 0); ta.focus(); try { ta.setSelectionRange(p, p); } catch (er) {}
+  mxData().sheet = ta.value; mxSave(); clearTimeout(MX.timer); MX.timer = setTimeout(mxRunSheet, 250);
+}
+document.addEventListener('input', e => {
+  const el = e.target; if (!el.closest || !el.closest('#mx_root')) return; const d = mxData();
+  if (el.id === 'mx_libq'){ MX.libQ = el.value; MX.libOpen = true; const box = el.closest('.mx-lib'); const pos = el.selectionStart; box.outerHTML = mxLibHTML(); const q = $('#mx_libq'); if (q){ q.focus(); try { q.setSelectionRange(pos, pos); } catch (er) {} } return; }
+  if (el.id === 'mx_in'){ d.sheet = el.value; mxSave(); clearTimeout(MX.timer); MX.timer = setTimeout(mxRunSheet, 450); return; }
+  if (el.dataset.mxp != null){ clearTimeout(MX.timer); MX.timer = setTimeout(mxFinRun, 350); return; }
+  if (el.dataset.mxg != null){ d.graph.fns[+el.dataset.mxg] = el.value; mxSave(); clearTimeout(MX.timer); MX.timer = setTimeout(mxDraw, 300); return; }
+  if (el.id === 'mx_gx0' || el.id === 'mx_gx1'){ const v = +el.value; if (isFinite(v)){ d.graph[el.id === 'mx_gx0' ? 'x0' : 'x1'] = v; d.graph.y0 = d.graph.y1 = null; mxSave(); clearTimeout(MX.timer); MX.timer = setTimeout(mxDraw, 300); } return; }
+  if (el.dataset.acn != null){ const a = d.acct.accounts[+el.dataset.acn]; if (a){ a.n = el.value.trim() || mxAccName(a); delete a.k; mxSave(); } return; }
+  const en = el.closest('.mx-entry'); if (en){
+    const E = d.acct.entries[+en.dataset.e]; if (!E) return;
+    if (el.dataset.ae){ E[el.dataset.ae] = el.value; mxSave(); return; }
+    const ln = el.closest('.mx-line'); if (ln && el.dataset.al){ const L = E.lines[+ln.dataset.li]; L[el.dataset.al] = el.dataset.al === 'acc' ? el.value : el.value.replace(/[^\d.\-]/g, ''); if (el.dataset.al === 'dr' && +L.dr) L.cr = ''; if (el.dataset.al === 'cr' && +L.cr) L.dr = ''; mxSave();
+      const b = mxEntryBal(E), tag = en.querySelector('.mx-eb'); if (tag){ tag.className = 'mx-eb ' + (b.ok ? 'ok' : 'bad'); tag.textContent = b.ok ? '✓ ' + t('mx_aBal') + ' · ' + M2a(b.d) : t('mx_aUnbal', {d: M2a(Math.abs(b.d - b.c))}); } }
+  }
+});
+document.addEventListener('change', e => {
+  const el = e.target; if (!el.closest || !el.closest('#mx_root')) return; const d = mxData();
+  if (el.id === 'mx_sheets' && el.value){ d.sheet = (d.sheets || {})[el.value] || ''; mxSave(); const v = el.value; mxRender(); const s2 = $('#mx_sheets'); if (s2) s2.value = v; return; }
+  if (el.id === 'mx_ex' && el.value){ d.sheet = MX_EX[el.value]; mxSave(); mxRender(); return; }
+  if (el.id === 'mx_dec'){ d.dec = el.value; mxSave(); mxRunSheet(); return; }
+  if (el.id === 'mx_fk'){ MX.finK = el.value; mxRender(); return; }
+  if (el.dataset.al === 'acc'){ el.dispatchEvent(new Event('input', {bubbles: true})); }
+  if (el.dataset.act2 != null){ const a = d.acct.accounts[+el.dataset.act2]; if (a){ a.ty = el.value; mxSave(); } return; }
+  if (el.dataset.acc2 != null){ const a = d.acct.accounts[+el.dataset.acc2]; if (a){ a.contra = el.checked; mxSave(); } return; }
+});
+document.addEventListener('toggle', e => { if (e.target && e.target.classList && e.target.classList.contains('mx-lib')) MX.libOpen = e.target.open; }, true);
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest || !t0.closest('#mx_root')) return; const d = mxData(); let b;
+  if (!t0.closest('#mx_aClr')) MX.sure = '';
+  if ((b = t0.closest('[data-mxt]'))){ MX.tab = b.dataset.mxt; mxRender(); return; }
+  if ((b = t0.closest('[data-mxk]'))){ mxInsert(b.dataset.mxk); return; }
+  if ((b = t0.closest('[data-mxdeg]'))){ d.deg = b.dataset.mxdeg === '1'; MXE.deg = d.deg; mxSave(); mxRender(); return; }
+  if ((b = t0.closest('[data-mxlib]'))){ mxInsert((String(d.sheet || '').trim() && !/\n$/.test(($('#mx_in') || {}).value || '') ? '\n' : '') + b.dataset.mxlib.replace(/^n!$/, '5!').replace('x mod n', '17 mod 5')); return; }
+  if (t0.closest('#mx_ssave')){ const nm = String(($('#mx_sname') || {}).value || '').trim() || ('#' + (Object.keys(d.sheets || {}).length + 1)); d.sheets = d.sheets || {}; d.sheets[nm] = d.sheet; mxSave(); toast(t('mx_ssaved', {n: nm})); mxRender(); return; }
+  if (t0.closest('#mx_sdel')){ const k = ($('#mx_sheets') || {}).value; if (k && d.sheets[k] != null){ delete d.sheets[k]; mxSave(); mxRender(); } else toast(t('mx_spick')); return; }
+  if (t0.closest('#mx_copyAll')){ const txt = $$('#mx_out .mx-card').map(c => c.querySelector('.mx-in').innerText.replace(/\s+/g, ' ').trim() + '  ' + c.querySelector('.mx-res').innerText.replace(/\s+/g, ' ').trim()).join('\n'); copyText(txt); toast(t('st_copied')); return; }
+  if (t0.closest('#mx_clr')){ d.sheet = ''; mxSave(); mxRender(); return; }
+  if ((b = t0.closest('[data-mxai]'))){ const i = +b.dataset.mxai, line = String(d.sheet || '').split('\n')[i] || ''; mxAI(`Exercise: ${line}\nCalculator result: ${MX.ai[i] || '(see steps)'}\nOther lines on the sheet (context):\n${d.sheet}`, 'mxai' + i, b); return; }
+  if ((b = t0.closest('[data-mxaifin]'))){ mxAI(`${t('mx_f_' + MX.finK)} — ${MX.finLast || ''}`, 'mxaifin', b); return; }
+  if ((b = t0.closest('[data-mxsend]'))){ d.sheet = (String(d.sheet || '').trim() ? d.sheet.replace(/\s*$/, '\n') : '') + b.dataset.mxsend; mxSave(); toast(t('mx_copied')); return; }
+  if ((b = t0.closest('[data-mxat]'))){ MX.at = b.dataset.mxat; mxRender(); return; }
+  if (t0.closest('#mx_aNew')){ d.acct.entries.push({date: new Date().toISOString().slice(0, 10), desc: '', lines: [{acc: 'bank', dr: '', cr: ''}, {acc: 'sales', dr: '', cr: ''}]}); mxSave(); mxRender(); return; }
+  if ((b = t0.closest('[data-aadd]'))){ d.acct.entries[+b.dataset.aadd].lines.push({acc: d.acct.accounts[0].id, dr: '', cr: ''}); mxSave(); mxRender(); return; }
+  if ((b = t0.closest('[data-alrm]'))){ const en = b.closest('.mx-entry'); d.acct.entries[+en.dataset.e].lines.splice(+b.dataset.alrm, 1); mxSave(); mxRender(); return; }
+  if ((b = t0.closest('[data-adel]'))){ d.acct.entries.splice(+b.dataset.adel, 1); mxSave(); mxRender(); return; }
+  if (t0.closest('#mx_aSample')){ d.acct.entries = mxAcctSample(); mxSave(); mxRender(); return; }
+  if (t0.closest('#mx_aClr')){ if (MX.sure !== 'aclr'){ MX.sure = 'aclr'; mxRender(); return; } MX.sure = ''; d.acct.entries = []; mxSave(); mxRender(); return; }
+  if ((b = t0.closest('[data-acdel]')) && !b.disabled){ d.acct.accounts.splice(+b.dataset.acdel, 1); MX.accOpen = true; mxSave(); mxRender(); return; }
+  if (t0.closest('#mx_accReset')){ const used = new Set(d.acct.entries.flatMap(en => (en.lines || []).map(l => l.acc))); const def = mxDefAccounts(), ids = new Set(def.map(a => a.id)); d.acct.accounts = def.concat(d.acct.accounts.filter(a => !ids.has(a.id) && used.has(a.id))); MX.accOpen = true; mxSave(); mxRender(); toast(t('mx_accResetDone')); return; }
+  if (t0.closest('#mx_accAdd')){ MX.accOpen = true; const n = String(($('#mx_accN') || {}).value || '').trim(); if (!n) return; d.acct.accounts.push({id: 'u' + Date.now().toString(36), n, ty: ($('#mx_accT') || {}).value || 'exp'}); mxSave(); mxRender(); return; }
+  if (t0.closest('#mx_gAdd')){ d.graph.fns.push(''); mxSave(); mxRender(); setTimeout(() => { const i = $$('#mx_root [data-mxg]').pop(); if (i) i.focus(); }, 50); return; }
+  if ((b = t0.closest('[data-mxgrm]'))){ d.graph.fns.splice(+b.dataset.mxgrm, 1); mxSave(); mxRender(); return; }
+  if ((b = t0.closest('[data-mxgz]'))){ const g = d.graph, k = +b.dataset.mxgz, c = (g.x0 + g.x1) / 2, h = (g.x1 - g.x0) / 2 * k; g.x0 = +(c - h).toPrecision(8); g.x1 = +(c + h).toPrecision(8); g.y0 = g.y1 = null; mxSave(); mxRender(); return; }
+  if (t0.closest('#mx_gRes')){ Object.assign(d.graph, {x0: -10, x1: 10, y0: null, y1: null}); MX.gpt = null; mxSave(); mxRender(); return; }
+});
+/* graph: drag to pan, tap to read */
+document.addEventListener('pointerdown', e => {
+  const cv = e.target.closest && e.target.closest('#mx_cv'); if (!cv || !MX.gv) return;
+  const r = cv.getBoundingClientRect(), g = mxData().graph, st = {x: e.clientX, y: e.clientY, x0: g.x0, x1: g.x1, moved: false};
+  const mv = ev => { const dx = ev.clientX - st.x; if (Math.abs(dx) > 4) st.moved = true; if (!st.moved) return; const span = st.x1 - st.x0, sh = -dx / r.width * span; g.x0 = +(st.x0 + sh).toPrecision(8); g.x1 = +(st.x1 + sh).toPrecision(8); mxDraw(); };
+  const up = ev => { window.removeEventListener('pointermove', mv); window.removeEventListener('pointerup', up); if (!st.moved){ const v = MX.gv; MX.gpt = v.x0 + (ev.clientX - r.left) / r.width * (v.x1 - v.x0); mxDraw(); } else { mxSave(); const a = $('#mx_gx0'), b2 = $('#mx_gx1'); if (a) a.value = g.x0; if (b2) b2.value = g.x1; } };
+  window.addEventListener('pointermove', mv); window.addEventListener('pointerup', up);
+});
+window.addEventListener('resize', () => { if (MX.tab === 'graph' && $('#mx_cv')) mxDraw(); });
+
+/* ---------- wiring into the app ---------- */
+CALC.mathx = () => null;
+if (typeof svKind === 'function'){ const svKindMx = svKind; svKind = function(id){ return id === 'mathx' ? '' : svKindMx.apply(this, arguments); }; }
+try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('mathx'); if (Array.isArray(EX_SKIP)) EX_SKIP.push('mathx'); } catch (e) {}
+{
+  const activateMx = activate;
+  activate = function(id){ const r = activateMx.apply(this, arguments); if (id === 'mathx' && !(typeof mbLocked === 'function' && mbLocked('mathx'))) mxRender(); return r; };
+  const applyLangMx = applyLang;
+  applyLang = function(){ const r = applyLangMx.apply(this, arguments); try { if (tab === 'mathx' && $('#mx_root') && $('#mx_root').children.length) mxRender(); } catch (e) {} return r; };
+}
+try { if (tab === 'mathx' && !(typeof mbLocked === 'function' && mbLocked('mathx'))) mxRender(); } catch (e) {}
 
 applyLang(false);
 activate(tab);
