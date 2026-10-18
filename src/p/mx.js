@@ -32,7 +32,7 @@ function mxLineNode(src){ try { return mxParse(src); } catch (e) { try { return 
 function mxIsSym(src){ const c = mxSplitCall(src); return !!(c && MX_SYM.includes(c.n)); }
 function mxRunSheet(){
   const out = $('#mx_out'); if (!out) return;
-  const d = mxData(), lines = String(d.sheet || '').split('\n'), run = ++MX.run, S = {v: {}, f: {}};
+  const d = mxData(), lines = String(d.sheet || '').split('\n'), run = ++MX.run, S = mxBaseScope();
   const cards = [];
   lines.forEach((raw, i) => {
     const src = raw.trim(); if (!src) return;
@@ -109,7 +109,7 @@ const MX_LIB = [
 function mxLibHTML(){
   const q = String(MX.libQ || '').toLowerCase();
   return `<details class="adv mx-lib"${MX.libOpen ? ' open' : ''}><summary>📖 ${mE(t('mx_lib'))}</summary><input type="search" id="mx_libq" dir="ltr" value="${mE(MX.libQ || '')}" placeholder="${mE(t('mx_libQ'))}" autocomplete="off">
-    ${MX_LIB.map(([g, L]) => { const F = L.filter(x => !q || x.toLowerCase().includes(q)); return F.length ? `<div class="mx-libg"><b>${mE(t('mx_lg_' + g))}</b><div class="mx-libl">${F.map(x => `<button type="button" data-mxlib="${mE(x)}" dir="ltr">${mE(x)}</button>`).join('')}</div></div>` : ''; }).join('')}</details>`;
+    ${(mxMyLib().length ? [['mine', mxMyLib()]] : []).concat(MX_LIB).map(([g, L]) => { const F = L.filter(x => !q || x.toLowerCase().includes(q)); return F.length ? `<div class="mx-libg"><b>${mE(t('mx_lg_' + g))}</b><div class="mx-libl">${F.map(x => `<button type="button" data-mxlib="${mE(x)}" dir="ltr">${mE(x)}</button>`).join('')}</div></div>` : ''; }).join('')}</details>`;
 }
 function mxSheetHTML(){
   const d = mxData();
@@ -119,11 +119,12 @@ function mxSheetHTML(){
       <select id="mx_dec" aria-label="${mE(t('mx_dec'))}" title="${mE(t('mx_dec'))}"><option value="">${mE(t('mx_decAuto'))}</option>${[0, 2, 4, 6, 10].map(n => `<option value="${n}"${String(d.dec) === String(n) ? ' selected' : ''}>${n}</option>`).join('')}</select>
       <button type="button" class="mv" id="mx_clr">${mE(t('mx_clear'))}</button></div>
     <textarea id="mx_in" class="mx-in-ta" rows="6" dir="ltr" spellcheck="false" autocapitalize="none" autocomplete="off" placeholder="${mE(t('mx_ph'))}">${mE(d.sheet)}</textarea>
-    <div class="mx-keys">${MX_KEYS.map(([l, v]) => `<button type="button" data-mxk="${mE(v)}">${mE(l)}</button>`).join('')}</div>
+    <div class="mx-keys">${MX_KEYS.concat(mxMyKeys()).map(([l, v]) => `<button type="button" data-mxk="${mE(v)}">${mE(l)}</button>`).join('')}</div>
     ${mxLibHTML()}
     <div class="mx-bar mx-saves"><select id="mx_sheets" aria-label="${mE(t('mx_sheets'))}"><option value="">🗂 ${mE(t('mx_sheets'))} (${Object.keys(d.sheets || {}).length})</option>${Object.keys(d.sheets || {}).map(k => `<option value="${mE(k)}">${mE(k)}</option>`).join('')}</select>
       <input type="text" id="mx_sname" dir="auto" maxlength="30" placeholder="${mE(t('mx_sname'))}"><button type="button" class="mv" id="mx_ssave">💾 ${mE(t('mx_ssave'))}</button>${Object.keys(d.sheets || {}).length ? `<button type="button" class="mv" id="mx_sdel">🗑 ${mE(t('mx_sdel'))}</button>` : ''}<button type="button" class="mv" id="mx_copyAll">📋 ${mE(t('mx_copyAll'))}</button></div>
     <div id="mx_out" class="mx-out" aria-live="polite"></div>
+    ${mxMineHTML()}
     <details class="adv mx-help"><summary>❓ ${mE(t('mx_help'))}</summary><p class="fine" dir="auto">${mE(t('mx_helpTxt'))}</p></details>`;
 }
 
@@ -139,9 +140,13 @@ const MX_FDEF = {pv: [5, 10, -1000], fv: [5, 10, -1000], pmt: [0.5, 240, 500000]
   capm: [4, 1.2, 9], wacc: [600, 400, 12, 6, 23], ddm: [5, 9, 3], breakeven: [100000, 50, 30], margin: [60, 100], markup: [60, 100], vat: [1000, 18], inflate: [1000, 3, 10], elasticity: [1000, 800, 10, 12], multiplier: [0.8], eoq: [12000, 100, 2.4], balance: [500000, 5, 240, 60], rule72: [7], aftertax: [5, 25], uop: [50000, 5000, 100000, 18000], perp: [1000, 8], gperp: [1000, 8, 3], gannuity: [1000, 8, 3, 10], eps: [5000000, 1000000], pe: [120, 6], divyield: [4, 120], sharpe: [11, 4, 15],
   bscall: [100, 100, 1, 5, 20], bsput: [100, 100, 1, 5, 20], forward: [3.7, 4.5, 5, 1], fifo: ['100, 200, 150', '10, 12, 13', 300], lifo: ['100, 200, 150', '10, 12, 13', 300], wavg: ['100, 200, 150', '10, 12, 13', 300], cpiinfl: [104.2, 107.5], realgdp: [2000, 125], ppp: [20, 5.5], moneymult: [10]};
 function mxFinHTML(){
-  const d = mxData(), k = MX.finK, f = MX_FIN[k], V = (d.fin && d.fin[k]) || MX_FDEF[k] || [];
-  return `<p class="fine">${mE(t('mx_finH'))}</p>
-    <div class="field wide"><label for="mx_fk">${mE(t('mx_finPick'))}</label><select id="mx_fk">${MX_FGROUPS.map(([g, L]) => `<optgroup label="${mE(t('mx_g_' + g))}">${L.map(x => `<option value="${x}"${x === k ? ' selected' : ''}>${mE(t('mx_f_' + x))}</option>`).join('')}</optgroup>`).join('')}</select></div>
+  const d = xsD0(); if (/^my:/.test(MX.finK) && !d.my.fns.some(z => 'my:' + z.n === MX.finK)) MX.finK = 'npv';
+  const k = MX.finK, f = MX_FIN[k], V = (d.fin && d.fin[k]) || MX_FDEF[k] || [];
+  const mine = d.my.fns.filter(z => z.n && z.e && !mxMyCheck('f', z));
+  const pick = `<p class="fine">${mE(t('mx_finH'))}</p>
+    <div class="field wide"><label for="mx_fk">${mE(t('mx_finPick'))}</label><select id="mx_fk">${mine.length ? `<optgroup label="⭐ ${mE(t('xm_fins'))}">${mine.map(z => `<option value="my:${mE(z.n)}"${'my:' + z.n === k ? ' selected' : ''}>${mE(z.desc ? z.desc + ' — ' : '')}${mE(z.n)}(${mE(z.ps.join(', '))})</option>`).join('')}</optgroup>` : ''}${MX_FGROUPS.map(([g, L]) => `<optgroup label="${mE(t('mx_g_' + g))}">${L.map(x => `<option value="${x}"${x === k ? ' selected' : ''}>${mE(t('mx_f_' + x))}</option>`).join('')}</optgroup>`).join('')}</select></div>`;
+  if (/^my:/.test(k)) return pick + mxMyFinHTML() + `<p class="fine">${mE(t('xm_finH'))}</p><div id="mx_fres" class="mx-fres" aria-live="polite"></div>`;
+  return pick + `<p class="fine">${mE(t('xm_finAdd'))}</p>
     <div class="mx-fgrid">${f.ps.map((p, i) => { const nm = p.replace(/[?\[\]]/g, ''), opt = p.endsWith('?'), list = p.endsWith('[]'), v = V[i] != null ? V[i] : '';
       return `<div class="field cv-f${list ? ' wide' : ''}"><label for="mxp_${i}">${mE(t('mx_p_' + nm))}${opt ? ' <small>(' + mE(t('mx_opt')) + ')</small>' : ''}</label>${list ? `<textarea id="mxp_${i}" data-mxp="${i}" rows="2" dir="ltr">${mE(v)}</textarea>` : `<input id="mxp_${i}" data-mxp="${i}" type="text" inputmode="decimal" dir="ltr" value="${mE(v)}" autocomplete="off">`}</div>`; }).join('')}</div>
     <div id="mx_fres" class="mx-fres" aria-live="polite"></div>`;
@@ -158,6 +163,7 @@ function mxFinArgs(){
 }
 function mxFinRun(){
   const box = $('#mx_fres'); if (!box) return; const k = MX.finK, f = MX_FIN[k];
+  if (/^my:/.test(k)){ mxMyFinRun(box); return; }
   try {
     const {a, raw} = mxFinArgs(); const d = mxData(); d.fin = d.fin || {}; d.fin[k] = raw; mxSave();
     const v = f.fn(...a), ex = f.ex(...a), pct = MX_PCTOUT.includes(k);
@@ -322,7 +328,7 @@ function mxScanEngine(){
 }
 function mxScanHTML(){
   const d = mxData(), sc = d.scan || {}, eng = mxScanEngine();
-  return `<p class="fine">${mE(t('mx_scH'))}</p>${eng ? '' : `<div class="gk-st new">${mE(t('mx_scNoAI'))}</div>`}
+  return `<p class="fine">${mE(t('mx_scH'))}</p>${eng ? '' : `<div class="gk-st new">${mE(t('mx_scNoAI'))}</div>${typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE ? '' : `<div class="btnrow"><button type="button" class="btn" data-gkgo="1">✦ ${mE(t('xs_connect'))}</button></div>`}`}
     <div class="mx-fgrid"><div class="field cv-f"><label for="mx_scSubj">${mE(t('mx_scSubj'))}</label><select id="mx_scSubj">${['auto', 'math', 'calc', 'stat', 'fin', 'acct', 'eco'].map(k => `<option value="${k}"${(sc.subj || 'auto') === k ? ' selected' : ''}>${mE(t('mx_sc_' + k))}</option>`).join('')}</select></div>
       <div class="field cv-f"><label for="mx_scMode">${mE(t('mx_scMode'))}</label><select id="mx_scMode">${['full', 'practice'].map(k => `<option value="${k}"${(sc.mode || 'full') === k ? ' selected' : ''}>${mE(t('mx_sc_' + k))}</option>`).join('')}</select></div></div>
     <div class="btnrow"><button type="button" class="btn" id="mx_scCam">📷 ${mE(t('mx_scCam'))}</button><button type="button" class="btn" id="mx_scPick">🖼️ ${mE(t('mx_scPick'))}</button>
@@ -439,13 +445,14 @@ document.addEventListener('click', e => {
 /* ---------- the panel ---------- */
 function mxRender(){
   const root = $('#mx_root'); if (!root) return; mxData();
-  root.innerHTML = `<div class="seg mx-tabs" role="tablist">${['sheet', 'fin', 'acct', 'graph', 'scan'].map(k => `<button type="button" role="tab" data-mxt="${k}" aria-pressed="${MX.tab === k}" aria-selected="${MX.tab === k}">${mE(t({sheet: 'mx_tSheet', fin: 'mx_tFin', acct: 'mx_tAcct', graph: 'mx_tGraph', scan: 'mx_tScan'}[k]))}</button>`).join('')}</div>
-    <div class="mx-body">${MX.tab === 'sheet' ? mxSheetHTML() : MX.tab === 'fin' ? mxFinHTML() : MX.tab === 'acct' ? mxAcctHTML() : MX.tab === 'graph' ? mxGraphHTML() : mxScanHTML()}</div>`;
+  root.innerHTML = `<div class="seg mx-tabs" role="tablist">${['solve', 'sheet', 'fin', 'acct', 'graph', 'scan'].map(k => `<button type="button" role="tab" data-mxt="${k}" aria-pressed="${MX.tab === k}" aria-selected="${MX.tab === k}">${mE(t({solve: 'xs_tab', sheet: 'mx_tSheet', fin: 'mx_tFin', acct: 'mx_tAcct', graph: 'mx_tGraph', scan: 'mx_tScan'}[k]))}</button>`).join('')}</div>
+    <div class="mx-body">${MX.tab === 'solve' ? xsSolveHTML() : MX.tab === 'sheet' ? mxSheetHTML() : MX.tab === 'fin' ? mxFinHTML() : MX.tab === 'acct' ? mxAcctHTML() : MX.tab === 'graph' ? mxGraphHTML() : mxScanHTML()}</div>`;
+  if (MX.tab === 'solve' && MX.xs){ const o = $('#xs_out'); if (o) o.innerHTML = xsResHTML(MX.xs.r, MX.xs.raw); }
   if (MX.tab === 'sheet') mxRunSheet();
   if (MX.tab === 'fin') mxFinRun();
   if (MX.tab === 'graph'){ mxRunSheetSilent(); setTimeout(mxDraw, 30); }
 }
-function mxRunSheetSilent(){ const S = {v: {}, f: {}}; String(mxData().sheet || '').split('\n').forEach(raw => { const src = raw.trim(); if (!src || src.startsWith('#') || mxIsSym(src)) return; try { const n = mxParse(src); if (n.t === 'assign') S.v[n.n] = mxEval(n.e, S); else if (n.t === 'fdef') S.f[n.n] = {ps: n.ps, e: n.e, src}; } catch (e) {} }); MX.scope = S; }
+function mxRunSheetSilent(){ const S = mxBaseScope(); String(mxData().sheet || '').split('\n').forEach(raw => { const src = raw.trim(); if (!src || src.startsWith('#') || mxIsSym(src)) return; try { const n = mxParse(src); if (n.t === 'assign') S.v[n.n] = mxEval(n.e, S); else if (n.t === 'fdef') S.f[n.n] = {ps: n.ps, e: n.e, src}; } catch (e) {} }); MX.scope = S; }
 function mxInsert(txt){
   const ta = $('#mx_in'); if (!ta) return; const s = ta.selectionStart || ta.value.length, e = ta.selectionEnd || s;
   ta.value = ta.value.slice(0, s) + txt + ta.value.slice(e); const p = s + txt.length - (txt.endsWith('(') ? 0 : 0); ta.focus(); try { ta.setSelectionRange(p, p); } catch (er) {}

@@ -327,7 +327,7 @@ function mxHTML(n, parentPrec){
     case 'num': { const s = mxFmt(n.v); return n.v < 0 && parentPrec > 1 ? `<span class="mxp">(</span>${s}<span class="mxp">)</span>` : `<span class="mxn">${s}</span>`; }
     case 'sym': return `<i class="mxv">${mxEsc(MX_GREEK[n.n] || n.n)}</i>`;
     case 'par': return `<span class="mxp">(</span>${mxHTML(n.a, 0)}<span class="mxp">)</span>`;
-    case 'neg': return wrap('−' + mxHTML(n.a, 3), 3);
+    case 'neg': return wrap('−' + mxHTML(n.a, n.a.t === 'op' && ['*', '/', '^'].includes(n.a.o) ? 2 : 3), 3);
     case 'fact': return mxHTML(n.a, 5) + '!';
     case 'pct': return mxHTML(n.a, 5) + '%';
     case 'assign': return `<i class="mxv">${mxEsc(n.n)}</i> = ${mxHTML(n.e, 0)}`;

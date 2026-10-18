@@ -1,0 +1,16 @@
+Object.assign(T, {
+  gk2_t:['חיבור Gemini – AI בכל האפליקציה','ربط Gemini – ذكاء اصطناعي في كل التطبيق','Connect Gemini – AI across the app'],
+  gk2_s:['מפתח חינמי מ-Google מפעיל את העוזר, ההסברים, כתיבת קורות החיים, המחשבון המתקדם והסריקה.','مفتاح مجاني من Google يشغّل المساعد والشروحات وكتابة السيرة الذاتية والحاسبة المتقدمة والمسح.','A free key from Google powers the assistant, explanations, CV writing, the advanced calculator and scanning.'],
+  gk2_s1:['פתחו את דף המפתחות של Google והתחברו עם חשבון Google.','افتح صفحة مفاتيح Google وسجّل الدخول بحساب Google.','Open Google\'s key page and sign in with your Google account.'],
+  gk2_open:['קבלת מפתח מ-Google AI Studio','الحصول على مفتاح من Google AI Studio','Get a key from Google AI Studio'],
+  gk2_s2:['לחצו Create API key ואז העתיקו את המפתח (מתחיל ב-AIza).','اضغط Create API key ثم انسخ المفتاح (يبدأ بـ AIza).','Tap Create API key, then copy the key (it starts with AIza).'],
+  gk2_s3:['חזרו לכאן. המפתח נקלט לבד, או הדביקו בכפתור ואז הוא נבדק.','عُد إلى هنا. يُلتقط المفتاح تلقائيًا، أو الصقه بالزر ليُفحص.','Come back here. The key is picked up by itself, or paste it with the button and it is tested.'],
+  gk2_paste:['הדבקת המפתח ובדיקה','لصق المفتاح وفحصه','Paste key & test'],
+  gk2_where:['המפתח נשמר רק במכשיר הזה (מוצפן כשמחוברים לחשבון), לא נכלל בייצוא ונשלח רק ל-Google.','يُحفظ المفتاح على هذا الجهاز فقط (مشفّرًا عند تسجيل الدخول)، ولا يُضمَّن في التصدير ويُرسل إلى Google فقط.','The key stays on this device only (encrypted when signed in), is left out of exports and is sent only to Google.'],
+  gk2_noClip:['אין גישה ללוח. הדביקו את המפתח בשדה ולחצו "אישור ובדיקת המפתח".','لا وصول إلى الحافظة. الصق المفتاح في الحقل واضغط "تأكيد المفتاح وفحصه".','No clipboard access. Paste the key in the field and tap "Approve & test key".'],
+  gk2_noKey:['בלוח אין מפתח Gemini. העתיקו את המפתח מ-Google AI Studio ונסו שוב.','لا يوجد مفتاح Gemini في الحافظة. انسخ المفتاح من Google AI Studio وحاول مجددًا.','No Gemini key on the clipboard. Copy the key in Google AI Studio and try again.'],
+  gk2_on:['Gemini מחובר. ה-AI עונה עכשיו בכל האפליקציה.','تم ربط Gemini. الذكاء الاصطناعي يجيب الآن في كل التطبيق.','Gemini is connected. AI now answers across the app.'],
+  gk2_inClaude:['בתוך Claude אין גישה ל-Google, ולכן כאן עונה Claude. אפשר לשמור מפתח כאן, והוא יעבוד באתר.','داخل Claude لا يمكن الوصول إلى Google، لذا يجيب Claude هنا. يمكنك حفظ مفتاح هنا وسيعمل في الموقع.','Inside Claude Google cannot be reached, so Claude answers here. You can save a key here and it works on the website.'],
+  gk_okS:['ה-AI עובד עם Gemini בכל האפליקציה במכשיר הזה.','الذكاء الاصطناعي يعمل مع Gemini في كل التطبيق على هذا الجهاز.','AI runs on Gemini across the app on this device.'],
+  gk2_conn:['מחובר – ה-AI עונה בכל האפליקציה','متصل – الذكاء الاصطناعي يجيب في كل التطبيق','Connected – AI answers across the app'],
+});
