@@ -1376,6 +1376,7 @@ input.ro{opacity:.75;cursor:not-allowed}
 .lg-box{max-height:88vh}.lg-body{overflow-y:auto;flex:1;line-height:1.7;font-size:.95rem;overscroll-behavior:contain}
 .lg-body h4{margin:16px 0 6px;font-size:1rem}.lg-body p{margin:0 0 10px}.lg-body ul{margin:0 0 10px;padding-inline-start:20px}.lg-body li{margin:0 0 6px}
 .lg-a{appearance:none;background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer}.lg-links{white-space:nowrap}
+.lg-docs .btn{flex:1 1 45%;min-width:140px}.lg-other{flex-wrap:wrap}
 
 /* ================= 7.8: app designs (ORBIT, AURUM); the default design has none of these rules ================= */
 .dz-ban{display:none}
@@ -6458,7 +6459,7 @@ Object.assign(T, {
   ix_uOk:['נוסף: {n} · {v}','تمت الإضافة: {n} · {v}','Added: {n} · {v}'],
 });
 Object.assign(T, {
-  lg_a11yT:['הצהרת נגישות','بيان إمكانية الوصول','Accessibility statement'], lg_privT:['מדיניות פרטיות','سياسة الخصوصية','Privacy policy'], lg_docs:['נגישות ופרטיות','إمكانية الوصول والخصوصية','Accessibility & privacy'],
+  lg_a11yT:['הצהרת נגישות','بيان إمكانية الوصول','Accessibility statement'], lg_privT:['מדיניות פרטיות','سياسة الخصوصية','Privacy policy'],
   lg_contactH:['יצירת קשר','التواصل','Contact'], lg_write:['כתיבה אלינו','اكتب لنا','Write to us'],
   lg_updated:['עודכן לאחרונה: {d}','آخر تحديث: {d}','Last updated: {d}'], lg_notLegal:['המסמך מתאר את האפליקציה כפי שהיא, ואינו ייעוץ משפטי.','يصف هذا المستند التطبيق كما هو، وليس استشارة قانونية.','This document describes the app as it is and is not legal advice.'],
   lg_fbNote:['מה שנשלח בטופס הזה, ואיך הוא נשמר, מוסבר ב־','ما يُرسل في هذا النموذج وكيف يُحفظ موضّح في','What this form sends and how it is kept is explained in the'],
@@ -6510,6 +6511,37 @@ Object.assign(T, {
   lg_p_chgH:['שינויים','التغييرات','Changes'],
   lg_p_chg:['אם נשנה את האופן שבו מידע נשמר או נשלח, נעדכן את המסמך הזה ואת תאריך העדכון.','إذا غيّرنا طريقة حفظ المعلومات أو إرسالها، سنحدّث هذا المستند وتاريخ التحديث.','If we change how information is kept or sent, we will update this document and its date.'],
   lg_p_contact:['שאלות על פרטיות או בקשה בנושא המידע שלך – דרך "משוב למפתח" בהגדרות ← מערכת.','أسئلة حول الخصوصية أو طلب يتعلق بمعلوماتك – عبر "ملاحظات للمطوّر" في الإعدادات ← النظام.','Privacy questions or a request about your information – through "Feedback to the developer" in Settings → System.'],
+  lg_termsT:['תנאי שימוש','شروط الاستخدام','Terms of use'], lg_credT:['רישיונות וקרדיטים','التراخيص والإشارات','Licences & credits'],
+  lg_docs:['מסמכים: תנאים, פרטיות ונגישות','المستندات: الشروط والخصوصية وإمكانية الوصول','Documents: terms, privacy & accessibility'],
+  /* terms */
+  lg_t_intro:['המחשבון הפיננסי הוא כלי חינמי לחישובים ולמידע כללי. השימוש בו מהווה הסכמה לתנאים האלה.','الحاسبة المالية أداة مجانية للحسابات والمعلومات العامة. استخدامها يعني الموافقة على هذه الشروط.','The financial calculator is a free tool for calculations and general information. Using it means you accept these terms.'],
+  lg_t_calcH:['החישובים להמחשה בלבד','الحسابات للتوضيح فقط','Calculations are for illustration only'],
+  lg_t_calc1:['התוצאות הן הערכה לפי הנתונים שהזנת והכללים שנכללו באפליקציה, ועשויות להיות שונות מהמצב בפועל.','النتائج تقدير وفق البيانات التي أدخلتها والقواعد المضمّنة في التطبيق، وقد تختلف عن الواقع.','Results are an estimate based on the data you entered and the rules built into the app, and may differ from reality.'],
+  lg_t_calc2:['שום דבר באפליקציה אינו ייעוץ השקעות, שיווק השקעות, ייעוץ מס, ייעוץ פנסיוני או ייעוץ משפטי, ואינו תחליף לייעוץ מאיש מקצוע מוסמך. לפני החלטה כלכלית כדאי להתייעץ עם בעל רישיון.','لا شيء في التطبيق يُعدّ استشارة استثمارية أو تسويقًا استثماريًا أو استشارة ضريبية أو تقاعدية أو قانونية، ولا يغني عن مستشار مرخّص. قبل أي قرار مالي يُستحسن استشارة صاحب ترخيص.','Nothing in the app is investment advice, investment marketing, tax, pension or legal advice, and it does not replace a licensed professional. Before a financial decision, consult someone licensed.'],
+  lg_t_dataH:['מחירים, שערים ומדדים','الأسعار والصرف والمؤشرات','Prices, rates and indices'],
+  lg_t_data:['המחירים מגיעים ממקורות חיצוניים ועשויים להתעכב, להיות חלקיים או שגויים. אין להסתמך עליהם למסחר או לביצוע עסקאות.','تأتي الأسعار من مصادر خارجية وقد تتأخر أو تكون ناقصة أو خاطئة. لا يُعتمد عليها للتداول أو لإجراء صفقات.','Prices come from outside sources and may be delayed, incomplete or wrong. Do not rely on them for trading or transactions.'],
+  lg_t_aiH:['AI ופתרון תרגילים','الذكاء الاصطناعي وحل التمارين','AI and exercise solutions'],
+  lg_t_ai:['תשובות של AI, הסברים, סריקה ופתרונות תרגילים עשויים לטעות, גם כשהם נבדקים במחשבון. כדאי לבדוק כל תוצאה חשובה.','إجابات الذكاء الاصطناعي والشروح والمسح وحلول التمارين قد تخطئ، حتى عند التحقق منها بالحاسبة. يُستحسن فحص كل نتيجة مهمة.','AI answers, explanations, scanning and exercise solutions can be wrong, even when checked by the calculator. Check any important result.'],
+  lg_t_liabH:['אחריות','المسؤولية','Liability'],
+  lg_t_liab:['האפליקציה ניתנת כמו שהיא (AS IS), בלי התחייבות שתפעל תמיד, ללא תקלות או שהמידע בה מדויק. השימוש בה על אחריותך, ולא תהיה אחריות לנזק ישיר או עקיף שנגרם משימוש בה או מהסתמכות עליה.','يُقدَّم التطبيق كما هو (AS IS)، دون التزام بأن يعمل دائمًا أو بلا أعطال أو بدقة معلوماته. الاستخدام على مسؤوليتك، ولا مسؤولية عن ضرر مباشر أو غير مباشر ناتج عن استخدامه أو الاعتماد عليه.','The app is provided as is, with no promise that it will always work, be free of faults or be accurate. You use it at your own risk, and there is no liability for direct or indirect damage from using or relying on it.'],
+  lg_t_useH:['שימוש הוגן','الاستخدام العادل','Fair use'],
+  lg_t_use1:['אין להשתמש באפליקציה לפעילות בלתי חוקית או לפגיעה באחרים.','لا يُستخدم التطبيق لنشاط غير قانوني أو للإضرار بالآخرين.','Do not use the app for anything unlawful or to harm others.'],
+  lg_t_use2:['אין לנסות לעקוף את מנגנוני האבטחה, מצב המפתח או מצב המשפחה.','لا يُحاول تجاوز آليات الأمان أو وضع المطوّر أو وضع العائلة.','Do not try to get around its security, developer mode or family mode.'],
+  lg_t_use3:['המידע שאתה מזין ומעלה (למשל לקורות חיים) הוא באחריותך, ונשמר במכשיר שלך.','المعلومات التي تُدخلها وترفعها (مثل السيرة الذاتية) مسؤوليتك، وتُحفظ على جهازك.','What you enter and upload (for example for a CV) is your responsibility and stays on your device.'],
+  lg_t_chgH:['שינויים בשירות','تغييرات في الخدمة','Changes to the service'],
+  lg_t_chg:['האפליקציה, התכונות שלה והתנאים האלה עשויים להשתנות או להיפסק בכל עת. הגרסה העדכנית תמיד מופיעה כאן.','قد يتغير التطبيق وميزاته وهذه الشروط أو تتوقف في أي وقت. النسخة الأحدث تظهر هنا دائمًا.','The app, its features and these terms may change or stop at any time. The current version is always shown here.'],
+  lg_t_contact:['שאלות על התנאים – דרך טופס המשוב בהגדרות ← מערכת.','أسئلة حول الشروط – عبر نموذج الملاحظات في الإعدادات ← النظام.','Questions about these terms – through the feedback form in Settings → System.'],
+  /* credits */
+  lg_c_intro:['האפליקציה נבנתה בעזרת רכיבים ומקורות מידע של אחרים, ואנחנו מודים להם.','بُني التطبيق بالاستعانة بمكونات ومصادر معلومات لآخرين، ونشكرهم.','The app is built with components and data sources from others, and we thank them.'],
+  lg_c_libH:['ספריות וגופנים','المكتبات والخطوط','Libraries and fonts'],
+  lg_c_lib1:['nerdamer – ספריית אלגברה סמלית, ברישיון MIT (במחשבון המתקדם).','nerdamer – مكتبة جبر رمزي، بترخيص MIT (في الحاسبة المتقدمة).','nerdamer – symbolic algebra library, MIT licence (in the advanced calculator).'],
+  lg_c_lib2:['הגופנים Frank Ruhl Libre, IBM Plex Sans Hebrew ו־Arabic, Heebo ו־Rubik – ברישיון SIL Open Font License, דרך Google Fonts.','الخطوط Frank Ruhl Libre وIBM Plex Sans Hebrew وArabic وHeebo وRubik – بترخيص SIL Open Font License عبر Google Fonts.','Fonts Frank Ruhl Libre, IBM Plex Sans Hebrew and Arabic, Heebo and Rubik – SIL Open Font License, via Google Fonts.'],
+  lg_c_dataH:['מקורות מידע','مصادر المعلومات','Data sources'],
+  lg_c_data1:['בנק ישראל – שערים יציגים וריבית; הלשכה המרכזית לסטטיסטיקה – מדדים.','بنك إسرائيل – أسعار الصرف التمثيلية والفائدة؛ دائرة الإحصاء المركزية – المؤشرات.','Bank of Israel – representative rates and interest; Central Bureau of Statistics – indices.'],
+  lg_c_data2:['CNBC – מדדים, סחורות ומניות; Coinbase ו־Binance – קריפטו; Frankfurter (הבנק המרכזי האירופי) ו־gold-api – שערים ומתכות.','CNBC – مؤشرات وسلع وأسهم؛ Coinbase وBinance – عملات مشفّرة؛ Frankfurter (البنك المركزي الأوروبي) وgold-api – أسعار ومعادن.','CNBC – indices, commodities and stocks; Coinbase and Binance – crypto; Frankfurter (European Central Bank) and gold-api – rates and metals.'],
+  lg_c_data3:['TradingView – הלוח החי, כשבוחרים להציג אותו.','TradingView – اللوحة المباشرة عند اختيار عرضها.','TradingView – the live board, when you choose to show it.'],
+  lg_c_data4:['שמות המקורות וסימני המסחר שייכים לבעליהם, ואין באזכורם קשר או המלצה מצדם.','أسماء المصادر والعلامات التجارية مملوكة لأصحابها، وذكرها لا يعني ارتباطًا أو توصية منهم.','Source names and trademarks belong to their owners; mentioning them implies no connection or endorsement.'],
+  lg_c_licLink:['נוסח רישיון MIT של nerdamer','نص ترخيص MIT لمكتبة nerdamer','The nerdamer MIT licence text'],
 });
 
 const t = (k, p) => {
@@ -13105,8 +13137,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.1", "date": "2026-10-18", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261018.233404';
+var CHANGELOG = [{"v": "13.2", "date": "2026-10-18", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261018.233553';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -25005,6 +25037,21 @@ const LG_DOCS = {
     ['lg_a_limH', ['lg_a_l1', 'lg_a_l2', 'lg_a_l3'], true],
     ['lg_contactH', ['lg_a_contact']]
   ]},
+  terms: {t: 'lg_termsT', ic: '📜', parts: [
+    ['', ['lg_t_intro']],
+    ['lg_t_calcH', ['lg_t_calc1', 'lg_t_calc2']],
+    ['lg_t_dataH', ['lg_t_data']],
+    ['lg_t_aiH', ['lg_t_ai']],
+    ['lg_t_liabH', ['lg_t_liab']],
+    ['lg_t_useH', ['lg_t_use1', 'lg_t_use2', 'lg_t_use3'], true],
+    ['lg_t_chgH', ['lg_t_chg']],
+    ['lg_contactH', ['lg_t_contact']]
+  ]},
+  cred: {t: 'lg_credT', ic: '🧾', parts: [
+    ['', ['lg_c_intro']],
+    ['lg_c_libH', ['lg_c_lib1', 'lg_c_lib2'], true],
+    ['lg_c_dataH', ['lg_c_data1', 'lg_c_data2', 'lg_c_data3', 'lg_c_data4'], true]
+  ], extra: () => `<p><a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? 'https://ysdesign-il.github.io/financial-calculator/' : ''}lib/nerdamer.LICENSE.txt" target="_blank" rel="noopener">${lgE(t('lg_c_licLink'))}</a></p>`},
   priv: {t: 'lg_privT', ic: '🔒', parts: [
     ['', ['lg_p_intro']],
     ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3']],
@@ -25024,18 +25071,19 @@ function lgOpen(k){
   $('#lgx_x').setAttribute('aria-label', t('cp_close'));
   $('#lgx_t').textContent = D.ic + ' ' + t(D.t);
   $('#lgx_b').innerHTML = D.parts.map(([h, L, list]) => (h ? `<h4>${lgE(t(h))}</h4>` : '') + (list ? `<ul>${L.map(x => `<li>${lgE(t(x))}</li>`).join('')}</ul>` : L.map(x => `<p>${lgE(t(x))}</p>`).join(''))).join('')
-    + `<div class="btnrow"><button type="button" class="btn" data-lgfb="1">💬 ${lgE(t('lg_write'))}</button><button type="button" class="mv wide" data-lgo="${k === 'a11y' ? 'priv' : 'a11y'}">${lgE(t(k === 'a11y' ? 'lg_privT' : 'lg_a11yT'))}</button></div>`
+    + (D.extra ? D.extra() : '')
+    + `<div class="btnrow"><button type="button" class="btn" data-lgfb="1">💬 ${lgE(t('lg_write'))}</button></div><div class="btnrow lg-other">${Object.keys(LG_DOCS).filter(x => x !== k).map(x => `<button type="button" class="mv wide" data-lgo="${x}">${LG_DOCS[x].ic} ${lgE(t(LG_DOCS[x].t))}</button>`).join('')}</div>`
     + `<p class="fine">${lgE(t('lg_updated', {d: LG_DATE}))} · ${lgE(t('lg_notLegal'))}</p>`;
   $('#lgx').hidden = false; document.body.classList.add('cp-lock'); $('#lgx_b').scrollTop = 0; setTimeout(() => { try { $('#lgx_x').focus(); } catch (e) {} }, 30);
 }
 function lgClose(){ const o = $('#lgx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); } }
-function lgLinks(){ return `<span class="lg-links"><button type="button" class="lg-a" data-lgo="a11y">${lgE(t('lg_a11yT'))}</button> · <button type="button" class="lg-a" data-lgo="priv">${lgE(t('lg_privT'))}</button></span>`; }
+function lgLinks(){ return `<span class="lg-links">${['terms', 'priv', 'a11y'].map(k => `<button type="button" class="lg-a" data-lgo="${k}">${lgE(t(LG_DOCS[k].t))}</button>`).join(' · ')}</span>`; }
 /* links: at the foot of every screen, in Settings → System, and next to the feedback form (where an e-mail may be asked for) */
 function lgMount(){
   $$('.note').forEach(n => { const old = n.querySelector('.lg-links'); if (old && old.dataset.l === document.documentElement.lang) return; if (old) old.remove(); n.insertAdjacentHTML('beforeend', ' ' + lgLinks()); n.querySelector('.lg-links').dataset.l = document.documentElement.lang; });
   const sys = $('.set-cat[data-cat="system"]');
   if (sys){ let s = $('#lg_sec'); const lg = document.documentElement.lang;
-    if (!s || s.dataset.l !== lg){ if (s) s.remove(); sys.insertAdjacentHTML('beforeend', `<section class="set-sec" id="lg_sec" data-l="${lg}"><div class="sec-h"><h3 class="sec-t">📄 ${lgE(t('lg_docs'))}</h3></div><div class="btnrow"><button type="button" class="btn" data-lgo="a11y">♿ ${lgE(t('lg_a11yT'))}</button><button type="button" class="btn" data-lgo="priv">🔒 ${lgE(t('lg_privT'))}</button></div></section>`); } }
+    if (!s || s.dataset.l !== lg){ if (s) s.remove(); sys.insertAdjacentHTML('beforeend', `<section class="set-sec" id="lg_sec" data-l="${lg}"><div class="sec-h"><h3 class="sec-t">📄 ${lgE(t('lg_docs'))}</h3></div><div class="btnrow lg-docs">${['terms', 'priv', 'a11y', 'cred'].map(k => `<button type="button" class="btn" data-lgo="${k}">${LG_DOCS[k].ic} ${lgE(t(LG_DOCS[k].t))}</button>`).join('')}</div></section>`); } }
   const fb = $('#fb_box'); if (fb && !fb.querySelector('.lg-fb')) fb.insertAdjacentHTML('beforeend', `<p class="fine lg-fb">${lgE(t('lg_fbNote'))} <button type="button" class="lg-a" data-lgo="priv">${lgE(t('lg_privT'))}</button></p>`);
 }
 document.addEventListener('click', e => {

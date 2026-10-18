@@ -1137,3 +1137,4 @@ input.ro{opacity:.75;cursor:not-allowed}
 .lg-box{max-height:88vh}.lg-body{overflow-y:auto;flex:1;line-height:1.7;font-size:.95rem;overscroll-behavior:contain}
 .lg-body h4{margin:16px 0 6px;font-size:1rem}.lg-body p{margin:0 0 10px}.lg-body ul{margin:0 0 10px;padding-inline-start:20px}.lg-body li{margin:0 0 6px}
 .lg-a{appearance:none;background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer}.lg-links{white-space:nowrap}
+.lg-docs .btn{flex:1 1 45%;min-width:140px}.lg-other{flex-wrap:wrap}
