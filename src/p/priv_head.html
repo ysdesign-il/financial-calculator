@@ -1,0 +1,16 @@
+<script>
+/* 12.7: full private mode — when on, nothing is loaded from outside sites (no fonts, live quotes, widgets or AI); only this site's own files */
+var PRIV = false; try { PRIV = window['local' + 'Storage'].getItem('fin-priv') === '1'; } catch (e) {}
+(function(){
+  if (!PRIV){ document.write('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&family=Heebo:wght@400;700&family=Rubik:wght@400;700&display=swap" rel="stylesheet">'); return; }
+  var own = function(x){ return x.origin === location.origin || x.origin === 'https://ysdesign-il.github.io' || /(^|\.)(claude\.ai|claudeusercontent\.com|anthropic\.com)$/.test(x.hostname); };
+  var ext = function(u){ try { var x = new URL(u, location.href); return /^(https?|wss?):$/.test(x.protocol) && !own(x); } catch (e) { return false; } };
+  var f = window.fetch; if (f) window.fetch = function(i){ var u = typeof i === 'string' ? i : (i && i.url) || ''; if (ext(u)) return Promise.reject(new Error('private')); return f.apply(this, arguments); };
+  var X = window.XMLHttpRequest && XMLHttpRequest.prototype.open; if (X) XMLHttpRequest.prototype.open = function(m, u){ if (ext(u)) throw new Error('private'); return X.apply(this, arguments); };
+  var W = window.WebSocket; if (W) window.WebSocket = function(u, p){ if (ext(u)) throw new Error('private'); return new W(u, p); };
+  var blocked = function(n){ if (!n || n.nodeType !== 1) return false; var t = n.tagName, u = t === 'LINK' ? n.getAttribute('href') : (t === 'SCRIPT' || t === 'IFRAME' || t === 'IMG') ? n.getAttribute('src') : ''; return !!u && ext(u); };
+  var ap = Node.prototype.appendChild, ib = Node.prototype.insertBefore;
+  Node.prototype.appendChild = function(n){ return blocked(n) ? n : ap.call(this, n); };
+  Node.prototype.insertBefore = function(n, r){ return blocked(n) ? n : ib.call(this, n, r); };
+})();
+</script>

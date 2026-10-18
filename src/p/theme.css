@@ -1131,3 +1131,4 @@ input.ro{opacity:.75;cursor:not-allowed}
 
 .tvx{margin-top:14px}.tv-ov{margin:8px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;min-height:120px;background:var(--g2)}
 .tv-cr{margin:4px 10px 8px;text-align:end}.tv-cr a{color:inherit}
+.pv-sw{margin:6px 0}.pv-pill{margin:0 0 8px;padding:8px 10px;border-radius:12px;border:1px solid var(--line);background:var(--g2)}
