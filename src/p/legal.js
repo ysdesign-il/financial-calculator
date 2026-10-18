@@ -8,6 +8,21 @@ const LG_DOCS = {
     ['lg_a_limH', ['lg_a_l1', 'lg_a_l2', 'lg_a_l3'], true],
     ['lg_contactH', ['lg_a_contact']]
   ]},
+  terms: {t: 'lg_termsT', ic: '📜', parts: [
+    ['', ['lg_t_intro']],
+    ['lg_t_calcH', ['lg_t_calc1', 'lg_t_calc2']],
+    ['lg_t_dataH', ['lg_t_data']],
+    ['lg_t_aiH', ['lg_t_ai']],
+    ['lg_t_liabH', ['lg_t_liab']],
+    ['lg_t_useH', ['lg_t_use1', 'lg_t_use2', 'lg_t_use3'], true],
+    ['lg_t_chgH', ['lg_t_chg']],
+    ['lg_contactH', ['lg_t_contact']]
+  ]},
+  cred: {t: 'lg_credT', ic: '🧾', parts: [
+    ['', ['lg_c_intro']],
+    ['lg_c_libH', ['lg_c_lib1', 'lg_c_lib2'], true],
+    ['lg_c_dataH', ['lg_c_data1', 'lg_c_data2', 'lg_c_data3', 'lg_c_data4'], true]
+  ], extra: () => `<p><a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? 'https://ysdesign-il.github.io/financial-calculator/' : ''}lib/nerdamer.LICENSE.txt" target="_blank" rel="noopener">${lgE(t('lg_c_licLink'))}</a></p>`},
   priv: {t: 'lg_privT', ic: '🔒', parts: [
     ['', ['lg_p_intro']],
     ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3']],
@@ -27,18 +42,19 @@ function lgOpen(k){
   $('#lgx_x').setAttribute('aria-label', t('cp_close'));
   $('#lgx_t').textContent = D.ic + ' ' + t(D.t);
   $('#lgx_b').innerHTML = D.parts.map(([h, L, list]) => (h ? `<h4>${lgE(t(h))}</h4>` : '') + (list ? `<ul>${L.map(x => `<li>${lgE(t(x))}</li>`).join('')}</ul>` : L.map(x => `<p>${lgE(t(x))}</p>`).join(''))).join('')
-    + `<div class="btnrow"><button type="button" class="btn" data-lgfb="1">💬 ${lgE(t('lg_write'))}</button><button type="button" class="mv wide" data-lgo="${k === 'a11y' ? 'priv' : 'a11y'}">${lgE(t(k === 'a11y' ? 'lg_privT' : 'lg_a11yT'))}</button></div>`
+    + (D.extra ? D.extra() : '')
+    + `<div class="btnrow"><button type="button" class="btn" data-lgfb="1">💬 ${lgE(t('lg_write'))}</button></div><div class="btnrow lg-other">${Object.keys(LG_DOCS).filter(x => x !== k).map(x => `<button type="button" class="mv wide" data-lgo="${x}">${LG_DOCS[x].ic} ${lgE(t(LG_DOCS[x].t))}</button>`).join('')}</div>`
     + `<p class="fine">${lgE(t('lg_updated', {d: LG_DATE}))} · ${lgE(t('lg_notLegal'))}</p>`;
   $('#lgx').hidden = false; document.body.classList.add('cp-lock'); $('#lgx_b').scrollTop = 0; setTimeout(() => { try { $('#lgx_x').focus(); } catch (e) {} }, 30);
 }
 function lgClose(){ const o = $('#lgx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); } }
-function lgLinks(){ return `<span class="lg-links"><button type="button" class="lg-a" data-lgo="a11y">${lgE(t('lg_a11yT'))}</button> · <button type="button" class="lg-a" data-lgo="priv">${lgE(t('lg_privT'))}</button></span>`; }
+function lgLinks(){ return `<span class="lg-links">${['terms', 'priv', 'a11y'].map(k => `<button type="button" class="lg-a" data-lgo="${k}">${lgE(t(LG_DOCS[k].t))}</button>`).join(' · ')}</span>`; }
 /* links: at the foot of every screen, in Settings → System, and next to the feedback form (where an e-mail may be asked for) */
 function lgMount(){
   $$('.note').forEach(n => { const old = n.querySelector('.lg-links'); if (old && old.dataset.l === document.documentElement.lang) return; if (old) old.remove(); n.insertAdjacentHTML('beforeend', ' ' + lgLinks()); n.querySelector('.lg-links').dataset.l = document.documentElement.lang; });
   const sys = $('.set-cat[data-cat="system"]');
   if (sys){ let s = $('#lg_sec'); const lg = document.documentElement.lang;
-    if (!s || s.dataset.l !== lg){ if (s) s.remove(); sys.insertAdjacentHTML('beforeend', `<section class="set-sec" id="lg_sec" data-l="${lg}"><div class="sec-h"><h3 class="sec-t">📄 ${lgE(t('lg_docs'))}</h3></div><div class="btnrow"><button type="button" class="btn" data-lgo="a11y">♿ ${lgE(t('lg_a11yT'))}</button><button type="button" class="btn" data-lgo="priv">🔒 ${lgE(t('lg_privT'))}</button></div></section>`); } }
+    if (!s || s.dataset.l !== lg){ if (s) s.remove(); sys.insertAdjacentHTML('beforeend', `<section class="set-sec" id="lg_sec" data-l="${lg}"><div class="sec-h"><h3 class="sec-t">📄 ${lgE(t('lg_docs'))}</h3></div><div class="btnrow lg-docs">${['terms', 'priv', 'a11y', 'cred'].map(k => `<button type="button" class="btn" data-lgo="${k}">${LG_DOCS[k].ic} ${lgE(t(LG_DOCS[k].t))}</button>`).join('')}</div></section>`); } }
   const fb = $('#fb_box'); if (fb && !fb.querySelector('.lg-fb')) fb.insertAdjacentHTML('beforeend', `<p class="fine lg-fb">${lgE(t('lg_fbNote'))} <button type="button" class="lg-a" data-lgo="priv">${lgE(t('lg_privT'))}</button></p>`);
 }
 document.addEventListener('click', e => {
