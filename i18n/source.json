@@ -5639,7 +5639,6 @@
   "ix_hsi": "Hang Seng (Hong Kong)",
   "ix_ssec": "Shanghai Composite (China)",
   "ix_kospi": "KOSPI (Korea)",
-  "ix_sensex": "Sensex (India)",
   "ix_asx": "ASX 200 (Australia)",
   "ix_palladium": "Palladium (ounce)",
   "ix_gasoline": "Gasoline (gallon)",
@@ -5656,6 +5655,7 @@
   "ix_pAll": "All",
   "ix_pDef": "Default",
   "ix_pDone": "Done",
-  "ix_pMin": "Pick at least one"
+  "ix_pMin": "Pick at least one",
+  "ix_nifty": "Nifty 50 (India)"
  }
 }
