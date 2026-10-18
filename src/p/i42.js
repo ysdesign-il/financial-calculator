@@ -1,0 +1,11 @@
+Object.assign(T, {
+  ix_dxy:['מדד הדולר (DXY)','مؤشر الدولار (DXY)','US Dollar Index (DXY)'], ix_tsx:['S&P/TSX (קנדה)','S&P/TSX (كندا)','S&P/TSX (Canada)'], ix_ipc:['IPC (מקסיקו)','IPC (المكسيك)','IPC (Mexico)'], ix_bovespa:['בובספה (ברזיל)','بوفيسبا (البرازيل)','Bovespa (Brazil)'],
+  ix_cac:['CAC 40 (צרפת)','CAC 40 (فرنسا)','CAC 40 (France)'], ix_ibex:['IBEX 35 (ספרד)','IBEX 35 (إسبانيا)','IBEX 35 (Spain)'], ix_ftmib:['FTSE MIB (איטליה)','FTSE MIB (إيطاليا)','FTSE MIB (Italy)'], ix_aex:['AEX (הולנד)','AEX (هولندا)','AEX (Netherlands)'], ix_smi:['SMI (שווייץ)','SMI (سويسرا)','SMI (Switzerland)'],
+  ix_hsi:['האנג סנג (הונג קונג)','هانغ سنغ (هونغ كونغ)','Hang Seng (Hong Kong)'], ix_ssec:['שנגחאי (סין)','شنغهاي (الصين)','Shanghai Composite (China)'], ix_kospi:['KOSPI (קוריאה)','KOSPI (كوريا)','KOSPI (Korea)'], ix_sensex:['סנסקס (הודו)','سنسكس (الهند)','Sensex (India)'], ix_asx:['ASX 200 (אוסטרליה)','ASX 200 (أستراليا)','ASX 200 (Australia)'],
+  ix_palladium:['פלדיום (אונקיה)','بلاديوم (أونصة)','Palladium (ounce)'], ix_gasoline:['בנזין (גלון)','بنزين (غالون)','Gasoline (gallon)'], ix_heatoil:['סולר / מזוט (גלון)','زيت التدفئة (غالون)','Heating oil (gallon)'],
+  ix_wheat:['חיטה (סנט לבושל)','قمح (سنت للبوشل)','Wheat (cents/bushel)'], ix_corn:['תירס (סנט לבושל)','ذرة (سنت للبوشل)','Corn (cents/bushel)'], ix_soy:['סויה (סנט לבושל)','صويا (سنت للبوشل)','Soybeans (cents/bushel)'],
+  ix_coffee:['קפה (סנט לליברה)','قهوة (سنت للرطل)','Coffee (cents/pound)'], ix_sugar:['סוכר (סנט לליברה)','سكر (سنت للرطل)','Sugar (cents/pound)'], ix_cocoa:['קקאו (טון)','كاكاو (طن)','Cocoa (ton)'], ix_cotton:['כותנה (סנט לליברה)','قطن (سنت للرطل)','Cotton (cents/pound)'],
+  ix_pick:['בחירת מדדים וסחורות','اختيار المؤشرات والسلع','Choose indices & commodities'],
+  ix_pickH:['סמנו מה להציג. המחירים מתעדכנים חי כל 15 שניות כשהמסך פתוח, בלי חשבון אצל ברוקר. לחיצה על כרטיס פותחת גרף.','حدّد ما يُعرض. تتحدث الأسعار مباشرة كل 15 ثانية عندما تكون الشاشة مفتوحة، دون حساب لدى وسيط. الضغط على بطاقة يفتح رسمًا بيانيًا.','Pick what to show. Prices update live every 15 seconds while the screen is open, with no broker account. Tap a card for a chart.'],
+  ix_pAll:['הכל','الكل','All'], ix_pDef:['ברירת מחדל','الافتراضي','Default'], ix_pDone:['סיום','تم','Done'], ix_pMin:['צריך לבחור לפחות אחד','يجب اختيار واحد على الأقل','Pick at least one'],
+});

@@ -154,7 +154,12 @@ MARKETS = [("ta35", ".TA35", "TA-35"), ("ta125", ".TA125", "TA-125"), ("spx", ".
            ("dji", ".DJI", "Dow Jones"), ("ixic", ".IXIC", "Nasdaq Composite"), ("rut", ".RUT", "Russell 2000"), ("vix", ".VIX", "VIX"),
            ("ftse", ".FTSE", "FTSE 100"), ("dax", ".GDAXI", "DAX"), ("stoxx", ".STOXX50E", "Euro Stoxx 50"), ("nikkei", ".N225", "Nikkei 225"),
            ("gold", "@GC.1", "Gold"), ("silver", "@SI.1", "Silver"), ("platinum", "@PL.1", "Platinum"), ("copper", "@HG.1", "Copper"),
-           ("brent", "@LCO.1", "Brent"), ("wti", "@CL.1", "WTI crude"), ("natgas", "@NG.1", "Natural gas")]
+           ("brent", "@LCO.1", "Brent"), ("wti", "@CL.1", "WTI crude"), ("natgas", "@NG.1", "Natural gas"),
+           ("dxy", ".DXY", "US Dollar Index"), ("tsx", ".GSPTSE", "S&P/TSX"), ("ipc", ".MXX", "IPC Mexico"), ("bovespa", ".BVSP", "Bovespa"),
+           ("cac", ".FCHI", "CAC 40"), ("ibex", ".IBEX", "IBEX 35"), ("ftmib", ".FTMIB", "FTSE MIB"), ("aex", ".AEX", "AEX"), ("smi", ".SSMI", "SMI"),
+           ("hsi", ".HSI", "Hang Seng"), ("ssec", ".SSEC", "Shanghai Composite"), ("kospi", ".KS11", "KOSPI"), ("sensex", ".BSESN", "Sensex"), ("asx", ".AXJO", "S&P/ASX 200"),
+           ("palladium", "@PA.1", "Palladium"), ("gasoline", "@RB.1", "Gasoline"), ("heatoil", "@HO.1", "Heating oil"), ("wheat", "@W.1", "Wheat"), ("corn", "@C.1", "Corn"),
+           ("soy", "@S.1", "Soybeans"), ("coffee", "@KC.1", "Coffee"), ("sugar", "@SB.1", "Sugar"), ("cocoa", "@CC.1", "Cocoa"), ("cotton", "@CT.1", "Cotton")]
 QUOTE_URL = "https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=%s&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1"
 CHART_URL = "https://ts-api.cnbc.com/harmony/app/charts/10Y.json?symbol=%s"
 

@@ -22,7 +22,7 @@ const MK_SVG = {
   build: `<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="url(#mkg-build)"/><path d="M10 25V8h2v17M8 25h16M12 9l12 2.5M12 12.5l11-1M23 11.5v5" stroke="#3a2c00" stroke-width="1.6" fill="none" stroke-linecap="round"/><rect x="20.5" y="16.5" width="5" height="3.4" rx=".6" fill="#3a2c00"/></svg>`,
   house: `<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="url(#mkg-house)"/><path d="M8 16.5L16 9l8 7.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 15v8h11v-8" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><rect x="14.4" y="18" width="3.2" height="5" fill="#fff"/></svg>`
 };
-const MK_FLAG = {ta35: '🇮🇱', ta125: '🇮🇱', spx: '🇺🇸', ndx: '🇺🇸', dji: '🇺🇸', ixic: '🇺🇸', rut: '🇺🇸', ftse: '🇬🇧', dax: '🇩🇪', stoxx: '🇪🇺', nikkei: '🇯🇵'};
+const MK_FLAG = {ta35: '🇮🇱', ta125: '🇮🇱', spx: '🇺🇸', ndx: '🇺🇸', dji: '🇺🇸', ixic: '🇺🇸', rut: '🇺🇸', ftse: '🇬🇧', dax: '🇩🇪', stoxx: '🇪🇺', nikkei: '🇯🇵', dxy: '💵', tsx: '🇨🇦', ipc: '🇲🇽', bovespa: '🇧🇷', cac: '🇫🇷', ibex: '🇪🇸', ftmib: '🇮🇹', aex: '🇳🇱', smi: '🇨🇭', hsi: '🇭🇰', ssec: '🇨🇳', kospi: '🇰🇷', sensex: '🇮🇳', asx: '🇦🇺', palladium: '⚪', gasoline: '⛽', heatoil: '🛢️', wheat: '🌾', corn: '🌽', soy: '🫘', coffee: '☕', sugar: '🍬', cocoa: '🍫', cotton: '🧶'};
 function mkIcon(k){
   if (MK_SVG[k]) return `<span class="mk-ic mk-ic-${k}" aria-hidden="true">${MK_SVG[k]}${['gold', 'silver', 'platinum', 'copper'].includes(k) ? '<span class="mk-sh"><i></i></span>' : ''}</span>`;
   if (MK_FLAG[k]) return `<span class="cur-coin mk-flag" aria-hidden="true"><i>${MK_FLAG[k]}</i></span>`;

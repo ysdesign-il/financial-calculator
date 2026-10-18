@@ -72,7 +72,7 @@ function mvCheck(){
   const lim = Math.max(0.1, +SET.mvPct || 2), day = new Date().toISOString().slice(0, 10);
   const seen = SET.mvSeen && typeof SET.mvSeen === 'object' ? SET.mvSeen : (SET.mvSeen = {});
   const hits = [];
-  IX_MK.forEach(k => {
+  (typeof ixShown === 'function' ? ixShown() : IX_MK).forEach(k => {
     const d = IX.mkt[k]; if (!d || !(d.p > 0) || !isFinite(+d.chp) || !d.live) return;
     const ch = +d.chp; if (Math.abs(ch) < lim) return;
     const key = k + (ch > 0 ? '+' : '-'); if (seen[key] === day) return;
