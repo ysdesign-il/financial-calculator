@@ -1354,6 +1354,9 @@ input.ro{opacity:.75;cursor:not-allowed}
 .ix-pickrow{margin:10px 0 4px}.ix-pick{border:1px solid var(--line);border-radius:16px;padding:12px;margin:6px 0 10px;background:var(--g2)}
 .ix-pg{margin:8px 0}.ix-pg b{display:block;font-size:.85rem;margin-bottom:6px}.ix-pl{display:flex;flex-wrap:wrap;gap:6px}
 
+.tvx{margin-top:14px}.tv-ov{margin:8px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;min-height:120px;background:var(--g2)}
+.tv-cr{margin:4px 10px 8px;text-align:end}.tv-cr a{color:inherit}
+
 /* ================= 7.8: app designs (ORBIT, AURUM); the default design has none of these rules ================= */
 .dz-ban{display:none}
 .dz-h{margin-top:0}
@@ -6407,6 +6410,13 @@ Object.assign(T, {
   ix_pick:['בחירת מדדים וסחורות','اختيار المؤشرات والسلع','Choose indices & commodities'],
   ix_pickH:['סמנו מה להציג. המחירים מתעדכנים חי כל 15 שניות כשהמסך פתוח, בלי חשבון אצל ברוקר. לחיצה על כרטיס פותחת גרף.','حدّد ما يُعرض. تتحدث الأسعار مباشرة كل 15 ثانية عندما تكون الشاشة مفتوحة، دون حساب لدى وسيط. الضغط على بطاقة يفتح رسمًا بيانيًا.','Pick what to show. Prices update live every 15 seconds while the screen is open, with no broker account. Tap a card for a chart.'],
   ix_pAll:['הכל','الكل','All'], ix_pDef:['ברירת מחדל','الافتراضي','Default'], ix_pDone:['סיום','تم','Done'], ix_pMin:['צריך לבחור לפחות אחד','يجب اختيار واحد على الأقل','Pick at least one'],
+  tv_t:['לוח חי – TradingView','لوحة مباشرة – TradingView','Live board – TradingView'],
+  tv_h:['לוח חי עם גרפים לכל מדד וסחורה שבחרת, ומטבעות וקריפטו. נטען רק כשלוחצים "הצגה" – TradingView רואה את הכתובת שלך ועשוי לשמור עוגיות.','لوحة مباشرة برسوم لكل مؤشر وسلعة اخترتها، والعملات والعملات المشفّرة. تُحمَّل فقط عند الضغط على "عرض" – يرى TradingView عنوانك وقد يحفظ ملفات تعريف الارتباط.','A live board with charts for every index and commodity you picked, plus currencies and crypto. It loads only when you tap "Show" – TradingView sees your address and may set cookies.'],
+  tv_hOn:['מתעדכן חי. לחיצה על שורה מחליפה את הגרף.','يتحدث مباشرة. الضغط على سطر يغيّر الرسم.','Updating live. Tap a row to switch the chart.'],
+  tv_show:['הצגת הלוח החי','عرض اللوحة المباشرة','Show the live board'], tv_hide:['הסתרת הלוח החי','إخفاء اللوحة المباشرة','Hide the live board'],
+  tv_fail:['לא הצלחתי לטעון את הלוח החי כרגע. נסו שוב מאוחר יותר.','تعذّر تحميل اللوحة المباشرة الآن. حاول لاحقًا.','Could not load the live board right now. Try again later.'],
+  tv_by:['נתונים וגרפים: TradingView','البيانات والرسوم: TradingView','Data and charts by TradingView'], tv_fx:['מטבעות וקריפטו','العملات والعملات المشفّرة','Currencies & crypto'],
+  tv_inClaude:['בתוך Claude הלוח החי לא נטען. באתר עצמו הוא מוצג במסך הזה.','داخل Claude لا تُحمَّل اللوحة المباشرة. في الموقع نفسه تظهر في هذه الشاشة.','Inside Claude the live board does not load. On the website it shows on this screen.'],
 });
 
 const t = (k, p) => {
@@ -6598,7 +6608,7 @@ function devLang(){
   return 'en';                                              // any other language: English
 }
 function langAuto(){ try { return !LS.getItem('fin-lang'); } catch (e) { return true; } }
-const SET_DEF = {photoAccess:'ask', ixShow:'', sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', myGross:'', myKids:'', myBYear:'', myEq:'', persona:'all', shareLang:'ui', words:'1', enTerms:'0', plain:'0', tts:'1', voiceIn:'0', dfmt:'auto', wkStart:'auto', trFix:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {photoAccess:'ask', ixShow:'', tvOn:'0', sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', myGross:'', myKids:'', myBYear:'', myEq:'', persona:'all', shareLang:'ui', words:'1', enTerms:'0', plain:'0', tts:'1', voiceIn:'0', dfmt:'auto', wkStart:'auto', trFix:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -13002,8 +13012,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "12.6", "date": "2026-10-18", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261018.153601';
+var CHANGELOG = [{"v": "12.7", "date": "2026-10-18", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261018.154235';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -24721,6 +24731,65 @@ function gkNo(k){ try { return !IN_CLAUDE && !gkAllowed() ? 'gk3_only' : k; } ca
   if (typeof setCat === 'function'){ const scGk = setCat; setCat = function(){ const r = scGk.apply(this, arguments); try { gkCardMount(); } catch (e) {} return r; }; }
   if (typeof famApply === 'function'){ const faGk = famApply; famApply = function(){ const r = faGk.apply(this, arguments); try { gkCardMount(); } catch (e) {} return r; }; }
 }
+
+/* ---------- 12.7: the live TradingView board on the markets screen (no outside links) ----------
+   Nothing loads from those sites until you tap to show it (they see your address and may set cookies); the choice is remembered.
+   Inside the Claude app outside widgets cannot load, so there you get buttons that open the sites. */
+const TV_SYM = {ta35: 'TASE:TA35', ta125: 'TASE:TA125', spx: 'FOREXCOM:SPXUSD', ndx: 'FOREXCOM:NSXUSD', dji: 'FOREXCOM:DJI', ixic: 'NASDAQ:IXIC', rut: 'TVC:RUT', vix: 'TVC:VIX', dxy: 'TVC:DXY',
+  tsx: 'TSX:TSX', ipc: 'BMV:ME', bovespa: 'BMFBOVESPA:IBOV', ftse: 'TVC:UKX', dax: 'XETR:DAX', stoxx: 'TVC:SX5E', cac: 'EURONEXT:PX1', ibex: 'BME:IBC', ftmib: 'TVC:FTMIB', aex: 'EURONEXT:AEX', smi: 'SIX:SMI',
+  nikkei: 'TVC:NI225', hsi: 'TVC:HSI', ssec: 'SSE:000001', kospi: 'TVC:KOSPI', nifty: 'NSE:NIFTY', asx: 'ASX:XJO',
+  gold: 'TVC:GOLD', silver: 'TVC:SILVER', platinum: 'TVC:PLATINUM', palladium: 'TVC:PALLADIUM', copper: 'COMEX:HG1!', brent: 'TVC:UKOIL', wti: 'TVC:USOIL', natgas: 'NYMEX:NG1!',
+  gasoline: 'NYMEX:RB1!', heatoil: 'NYMEX:HO1!', wheat: 'CBOT:ZW1!', corn: 'CBOT:ZC1!', soy: 'CBOT:ZS1!', coffee: 'ICEUS:KC1!', sugar: 'ICEUS:SB1!', cocoa: 'ICEUS:CC1!', cotton: 'ICEUS:CT1!'};
+const TV_FX = [['FX_IDC:USDILS', 'USD/ILS'], ['FX_IDC:EURILS', 'EUR/ILS'], ['FX_IDC:GBPILS', 'GBP/ILS'], ['FX:EURUSD', 'EUR/USD'], ['BITSTAMP:BTCUSD', 'Bitcoin'], ['BITSTAMP:ETHUSD', 'Ethereum']];
+const tvLang = () => { const l = document.documentElement.lang || 'he'; return l === 'he' ? 'he_IL' : l === 'ar' ? 'ar_AE' : 'en'; };
+const tvDark = () => { try { return getComputedStyle(document.documentElement).colorScheme.includes('dark') || document.documentElement.dataset.theme === 'dark'; } catch (e) { return false; } };
+const tvE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+/* a TradingView widget: their standard embed (a script whose text is the settings), inside a box we own */
+function tvWidget(host, name, cfg){
+  host.innerHTML = '';
+  const wrap = document.createElement('div'); wrap.className = 'tradingview-widget-container';
+  const inner = document.createElement('div'); inner.className = 'tradingview-widget-container__widget'; wrap.appendChild(inner);
+  const s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://s3.tradingview.com/external-embedding/embed-widget-' + name + '.js';
+  s.text = JSON.stringify(Object.assign({locale: tvLang(), colorTheme: tvDark() ? 'dark' : 'light', isTransparent: true, width: '100%'}, cfg));
+  s.onerror = () => { host.innerHTML = `<p class="fine">${tvE(t('tv_fail'))}</p>`; };
+  wrap.appendChild(s); host.appendChild(wrap);
+  const cr = document.createElement('div'); cr.className = 'tv-cr fine'; cr.textContent = t('tv_by'); host.appendChild(cr);
+}
+function tvOverviewCfg(){
+  const S = typeof ixShown === 'function' ? ixShown() : IX_DEF, sym = k => ({s: TV_SYM[k], d: ixName(k)});
+  const idx = S.filter(k => TV_SYM[k] && !IX_COM.includes(k)).map(sym), com = S.filter(k => TV_SYM[k] && IX_COM.includes(k)).map(sym);
+  const tabs = [];
+  if (idx.length) tabs.push({title: t('ix_gMkt'), symbols: idx, originalTitle: 'Indices'});
+  if (com.length) tabs.push({title: t('ix_gCom'), symbols: com, originalTitle: 'Commodities'});
+  tabs.push({title: t('tv_fx'), symbols: TV_FX.map(([s, d]) => ({s, d})), originalTitle: 'Forex'});
+  return {dateRange: '1D', showChart: true, height: 560, showSymbolLogo: true, showFloatingTooltip: true, plotLineColorGrowing: '#1f9d55', plotLineColorFalling: '#d64545', tabs};
+}
+function tvBoxHTML(){
+  const on = SET.tvOn === '1';
+  if (IN_CLAUDE) return `<h4 class="ix-g">📺 ${tvE(t('tv_t'))}</h4><p class="fine">${tvE(t('tv_inClaude'))}</p>`;
+  return `<h4 class="ix-g">📺 ${tvE(t('tv_t'))}</h4><p class="fine">${tvE(t(on ? 'tv_hOn' : 'tv_h'))}</p>
+    <div class="btnrow"><button type="button" class="${on ? 'btn' : 'gold-btn'}" id="tv_tog">${tvE(t(on ? 'tv_hide' : 'tv_show'))}</button></div>
+    <div id="tv_ov" class="tv-ov"${on ? '' : ' hidden'}></div>`;
+}
+var TVX = {sig: ''};
+function tvMount(){
+  const hm = $('#hmx'); if (!hm) return;
+  let box = $('#tvx'); if (!box){ box = document.createElement('div'); box.id = 'tvx'; box.className = 'tvx'; hm.parentNode.insertBefore(box, hm.nextSibling); TVX.sig = ''; }
+  /* rebuild only when something it depends on changed — the price board above refreshes every 15 seconds, the widget must not */
+  const sig = [document.documentElement.lang, SET.tvOn, tvDark(), typeof ixShown === 'function' ? ixShown().join(',') : ''].join('|');
+  if (sig === TVX.sig) return; TVX.sig = sig;
+  box.innerHTML = tvBoxHTML();
+  if (!IN_CLAUDE && SET.tvOn === '1'){ const ov = $('#tv_ov'); if (ov) tvWidget(ov, 'market-overview', tvOverviewCfg()); }
+}
+{
+  const ixBoardTv = ixBoard;
+  ixBoard = function(){ const r = ixBoardTv.apply(this, arguments); try { tvMount(); } catch (e) {} return r; };
+  try { tvMount(); } catch (e) {}
+}
+document.addEventListener('click', e => {
+  if (e.target.closest && e.target.closest('#tv_tog')){ SET.tvOn = SET.tvOn === '1' ? '0' : '1'; saveSet(); TVX.sig = ''; tvMount(); return; }
+
+});
 
 applyLang(false);
 activate(tab);
