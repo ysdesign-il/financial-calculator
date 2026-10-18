@@ -8,4 +8,11 @@ Object.assign(T, {
   ix_pick:['בחירת מדדים וסחורות','اختيار المؤشرات والسلع','Choose indices & commodities'],
   ix_pickH:['סמנו מה להציג. המחירים מתעדכנים חי כל 15 שניות כשהמסך פתוח, בלי חשבון אצל ברוקר. לחיצה על כרטיס פותחת גרף.','حدّد ما يُعرض. تتحدث الأسعار مباشرة كل 15 ثانية عندما تكون الشاشة مفتوحة، دون حساب لدى وسيط. الضغط على بطاقة يفتح رسمًا بيانيًا.','Pick what to show. Prices update live every 15 seconds while the screen is open, with no broker account. Tap a card for a chart.'],
   ix_pAll:['הכל','الكل','All'], ix_pDef:['ברירת מחדל','الافتراضي','Default'], ix_pDone:['סיום','تم','Done'], ix_pMin:['צריך לבחור לפחות אחד','يجب اختيار واحد على الأقل','Pick at least one'],
+  tv_t:['לוח חי – TradingView','لوحة مباشرة – TradingView','Live board – TradingView'],
+  tv_h:['לוח חי עם גרפים לכל מדד וסחורה שבחרת, ומטבעות וקריפטו. נטען רק כשלוחצים "הצגה" – TradingView רואה את הכתובת שלך ועשוי לשמור עוגיות.','لوحة مباشرة برسوم لكل مؤشر وسلعة اخترتها، والعملات والعملات المشفّرة. تُحمَّل فقط عند الضغط على "عرض" – يرى TradingView عنوانك وقد يحفظ ملفات تعريف الارتباط.','A live board with charts for every index and commodity you picked, plus currencies and crypto. It loads only when you tap "Show" – TradingView sees your address and may set cookies.'],
+  tv_hOn:['מתעדכן חי. לחיצה על שורה מחליפה את הגרף.','يتحدث مباشرة. الضغط على سطر يغيّر الرسم.','Updating live. Tap a row to switch the chart.'],
+  tv_show:['הצגת הלוח החי','عرض اللوحة المباشرة','Show the live board'], tv_hide:['הסתרת הלוח החי','إخفاء اللوحة المباشرة','Hide the live board'],
+  tv_fail:['לא הצלחתי לטעון את הלוח החי כרגע. נסו שוב מאוחר יותר.','تعذّر تحميل اللوحة المباشرة الآن. حاول لاحقًا.','Could not load the live board right now. Try again later.'],
+  tv_by:['נתונים וגרפים: TradingView','البيانات والرسوم: TradingView','Data and charts by TradingView'], tv_fx:['מטבעות וקריפטו','العملات والعملات المشفّرة','Currencies & crypto'],
+  tv_inClaude:['בתוך Claude הלוח החי לא נטען. באתר עצמו הוא מוצג במסך הזה.','داخل Claude لا تُحمَّل اللوحة المباشرة. في الموقع نفسه تظهر في هذه الشاشة.','Inside Claude the live board does not load. On the website it shows on this screen.'],
 });
