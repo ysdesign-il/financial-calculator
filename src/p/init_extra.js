@@ -3433,7 +3433,19 @@ var IX_SYM = {ta35: '.TA35', ta125: '.TA125', spx: '.SPX', ndx: '.NDX', dji: '.D
   palladium: '@PA.1', gasoline: '@RB.1', heatoil: '@HO.1', wheat: '@W.1', corn: '@C.1', soy: '@S.1', coffee: '@KC.1', sugar: '@SB.1', cocoa: '@CC.1', cotton: '@CT.1'};
 /* price with its unit: $ for most commodities, ¢ for grains and softs quoted in cents */
 function ixFmtV(k, x){ if (!isFinite(x)) return '—'; const n = N(x, null, x >= 1000 ? 0 : 2); return IX_CENT.includes(k) ? n + '¢' : (IX_COM.includes(k) ? '$' + n : n); }
-function ixShown(){ const v = String(SET.ixShow || '').split(',').filter(k => IX_MK.includes(k)); return v.length ? v : IX_DEF.slice(); }
+/* 12.9: your own stocks, currencies and crypto, added by symbol; they live in IX_MK / IX_SYM like the built-in ones */
+var IX_USER = [];
+function ixUserList(){ return Array.isArray(SET.ixCustom) ? SET.ixCustom.filter(c => c && c.k && c.sym) : []; }
+function ixUserSync(){
+  const L = ixUserList(), keys = L.map(c => c.k);
+  IX_USER.filter(k => !keys.includes(k)).forEach(k => { const i = IX_MK.indexOf(k); if (i >= 0) IX_MK.splice(i, 1); delete IX_SYM[k]; try { delete IX.mkt[k]; } catch (e) {} });
+  L.slice().reverse().forEach(c => { if (!IX_MK.includes(c.k)) IX_MK.unshift(c.k); IX_SYM[c.k] = c.sym; T['ix_' + c.k] = [c.n, c.n, c.n]; });
+  IX_USER = keys;
+}
+const ixUser = k => ixUserList().find(c => c.k === k);
+const _ixFmtV129 = ixFmtV;
+ixFmtV = function(k, x){ const u = ixUser(k); if (!u || !isFinite(x)) return _ixFmtV129(k, x); const n = N(x, null, x >= 1000 ? 0 : x >= 1 ? 2 : 5), c = String(u.cur || '').toUpperCase(); return c === 'USD' ? '$' + n : c === 'ILS' ? '₪' + n : c === 'EUR' ? '€' + n : c ? n + ' ' + c : n; };
+function ixShown(){ ixUserSync(); const v = String(SET.ixShow || '').split(',').filter(k => IX_MK.includes(k)); return v.length ? v : IX_USER.concat(IX_DEF); }
 var IXE = {};
 function ixOffVal(id){
   const c = IX.idx.cpi, b = IX.idx.build, h = IX.idx.house;
@@ -3509,9 +3521,12 @@ async function ixRemote(){
 var IXL = {timer: null, ok: null, fails: 0, at: 0};
 var FX_CN = {ILS: ['ILS=', 0], EUR: ['EUR=', 1], GBP: ['GBP=', 1], JPY: ['JPY=', 0], CHF: ['CHF=', 0], CAD: ['CAD=', 0], AUD: ['AUD=', 1], JOD: ['JOD=', 0], AED: ['AED=', 0], SAR: ['SAR=', 0], EGP: ['EGP=', 0], TRY: ['TRY=', 0], CNY: ['CNY=', 0], INR: ['INR=', 0]};
 var FXL = {pin: {}, at: 0}, FXSRC = {};
-const IX_QURL = 'https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=' + IX_MK.map(k => encodeURIComponent(IX_SYM[k])).concat(Object.keys(FX_CN).map(k => encodeURIComponent(FX_CN[k][0]))).join('%7C') + '&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1';
+const IX_QBASE = 'https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=';
+const IX_QTAIL = '&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1';
+function ixQurl(){ try { ixUserSync(); } catch (e) {} return IX_QBASE + IX_MK.map(k => encodeURIComponent(IX_SYM[k])).concat(Object.keys(FX_CN).map(k => encodeURIComponent(FX_CN[k][0]))).join('%7C') + IX_QTAIL; }
+var IX_QURL = ixQurl();
 const ixNum = x => { const n = parseFloat(String(x == null ? '' : x).replace(/[,%+\s]/g, '')); return isFinite(n) ? n : NaN; };
-var IX_TABS = ['home', 'convert', 'compound', 'yield', 'retire', 'cpilink', 'expenses'];
+var IX_TABS = ['home', 'markets', 'convert', 'compound', 'yield', 'retire', 'cpilink', 'expenses'];
 async function ixLiveTick(force){
   clearTimeout(IXL.timer); IXL.timer = null;
   if (!force && (SET.liveFx === '0' || IXL.ok === false)) return;
@@ -3520,7 +3535,7 @@ async function ixLiveTick(force){
   let got = false;
   try {
     const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 6000);
-    const r = await fetch(IX_QURL, {signal: ctl.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'});
+    const r = await fetch(ixQurl(), {signal: ctl.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'});
     clearTimeout(to);
     if (!r.ok) throw new Error('http');
     const j = await r.json(), rows = (((j || {}).FormattedQuoteResult || {}).FormattedQuote) || [];
@@ -3538,7 +3553,7 @@ async function ixLiveTick(force){
       Object.assign(it, ixRet(it)); IX.mkt[k] = it; n++;
     });
     if (nf){ RATES.USD = 1; FXL.at = Date.now(); META.live = true; META.official = false; META.mkt = false; META.unix = Math.floor(Date.now() / 1000); try { lastAt = new Date(); lastOk = true; renderStamp(); } catch (e) {} }
-    if (n || nf){ got = true; IXL.ok = true; IXL.fails = 0; IXL.at = Date.now(); ixOfficial(tab !== 'home'); if (tab === 'home') try { renderMarket(); } catch (e) {} else if (nf && tab === 'convert') try { calc(tab); } catch (e) {} }
+    if (n || nf){ got = true; IXL.ok = true; IXL.fails = 0; IXL.at = Date.now(); ixOfficial(tab !== 'home' && tab !== 'markets'); if (tab === 'home' || tab === 'markets') try { renderMarket(); } catch (e) {} else if (nf && tab === 'convert') try { calc(tab); } catch (e) {} }
   } catch (e) { IXL.fails++; if (!IXL.ok && IXL.fails >= 3) IXL.ok = false; }
   if (SET.liveFx !== '0' && IXL.ok !== false) IXL.timer = setTimeout(ixLiveTick, IXL.ok ? 15000 : 30000);
   return got;
@@ -3562,10 +3577,14 @@ function ixBoard(){
     const meta = asEsc(lkLabel(d.m)) + ' · ' + asEsc(t('ix_yoy', {v: ixSg(+d.yoy)})) + (k === 'house' ? ' · ' + asEsc(t('ix_prov')) : '');
     h += card(k, N(+d.v, 1), ixCh(+d.mom), meta, go);
   });
+  const SHOWU = ixShown().filter(k => IX_USER.includes(k));
+  if (SHOWU.length){ h += `</div><h4 class="ix-g">⭐ ${asEsc(t('ix_gMine'))}</h4><div class="mkt">`;
+    SHOWU.forEach(k => { const d = IX.mkt[k]; if (!d || !(d.p > 0)){ h += card(k, '…', '', asEsc(t('ix_uWait')), 'none'); return; }
+      h += card(k, ixFmtV(k, d.p), ixCh(+d.chp), asEsc(ixDay(d.t)) + ' · ' + asEsc(t(d.rt ? 'ix_rt' : 'ix_delay')), 'none'); }); }
   h += `</div><h4 class="ix-g">${asEsc(t('ix_gMkt'))}${IXL.ok && srcOk('mkt', 'live') ? ` <span class="lv-pill on"><i></i>${asEsc(t('lv_live'))}</span>` : ''}</h4><div class="mkt">`;
   const SHOW = ixShown(); let comH = false;
   IX_MK.forEach((k, i) => {
-    if (!SHOW.includes(k)) return;
+    if (!SHOW.includes(k) || IX_USER.includes(k)) return;
     if (IX_COM.includes(k) && !comH){ comH = true; h += `</div><h4 class="ix-g">${asEsc(t('ix_gCom'))}</h4><div class="mkt">`; }      // indices first, then commodities
     const d = IX.mkt[k]; if (!d || !(d.p > 0)) return;
     const val = ixFmtV(k, d.p);
@@ -3579,9 +3598,63 @@ function ixBoard(){
 var IXP = {open: false};
 function ixPickHTML(SHOW){
   const grp = (title, L) => `<div class="ix-pg"><b>${asEsc(t(title))}</b><div class="ix-pl">${L.map(k => `<button type="button" class="tchip${SHOW.includes(k) ? ' on' : ''}" data-ixp="${k}" aria-pressed="${SHOW.includes(k)}">${asEsc(ixName(k))}</button>`).join('')}</div></div>`;
-  return `<div class="ix-pick" id="ix_pickbox"><p class="fine">${asEsc(t('ix_pickH'))}</p>${grp('ix_gMkt', IX_MK.filter(k => !IX_COM.includes(k)))}${grp('ix_gCom', IX_COM)}
+  const mine = `<div class="ix-pg ix-mine"><b>⭐ ${asEsc(t('ix_gMine'))}</b><p class="fine">${asEsc(t('ix_uH'))}</p>
+    <div class="ix-add"><input type="text" id="ix_uq" value="${asEsc(IXP.q || '')}" dir="ltr" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="AAPL · NVDA · TEVA · EUR · BTC" aria-label="${asEsc(t('ix_uAdd'))}"><button type="button" class="gold-btn" id="ix_uadd">＋ ${asEsc(t('ix_uAdd'))}</button></div>
+    <p class="fine ix-umsg" id="ix_umsg" role="status" aria-live="polite"></p>
+    <div class="ix-pl">${IX_USER.map(k => `<span class="ix-uchip"><button type="button" class="tchip${SHOW.includes(k) ? ' on' : ''}" data-ixp="${k}" aria-pressed="${SHOW.includes(k)}">${asEsc(ixName(k))}</button><button type="button" class="mv ix-urm" data-ixurm="${k}" aria-label="${asEsc(t('cv_rm'))}">✕</button></span>`).join('')}</div></div>`;
+  return `<div class="ix-pick" id="ix_pickbox"><p class="fine">${asEsc(t('ix_pickH'))}</p>${mine}${grp('ix_gMkt', IX_MK.filter(k => !IX_COM.includes(k) && !IX_USER.includes(k)))}${grp('ix_gCom', IX_COM)}
     <div class="btnrow"><button type="button" class="mv wide" data-ixpall="1">${asEsc(t('ix_pAll'))}</button><button type="button" class="mv wide" data-ixpdef="1">${asEsc(t('ix_pDef'))}</button><button type="button" class="gold-btn" data-ixpok="1">${asEsc(t('ix_pDone'))}</button></div></div>`;
 }
+/* find a symbol the live feed knows: a stock ticker as typed, a currency against the shekel (then the dollar), or a crypto coin */
+async function ixUserFind(raw){
+  const q = String(raw || '').trim().toUpperCase().replace(/\s+/g, '').replace(/^\$/, '');
+  if (!q || !/^[A-Z0-9.\-=^:]{1,15}$/.test(q)) return {err: 'ix_uBad'};
+  const C = [], cur = /^[A-Z]{3}$/.test(q) && (typeof RATES === 'object' && (RATES[q] || q === 'USD'));
+  if (cur && q !== 'ILS'){ C.push([q + 'ILS=', 'fx', q + '/ILS'], [q === 'USD' ? 'ILS=' : q + '=', 'fx', q === 'USD' ? 'USD/ILS' : q]); }
+  C.push([q, 'stock', '']);
+  if (/^[A-Z]{2,5}$/.test(q)) C.push([q + '.CM=', 'crypto', q]);
+  let j; try { const r = await fetch(IX_QBASE + C.map(c => encodeURIComponent(c[0])).join('%7C') + IX_QTAIL, {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); j = await r.json(); } catch (e) { return {err: typeof PRIV !== 'undefined' && PRIV ? 'ix_uPriv' : 'ix_uNet'}; }
+  const rows = (((j || {}).FormattedQuoteResult || {}).FormattedQuote) || [];
+  for (const [sym, kind, nm] of C){
+    const r = rows.find(x => x.symbol === sym); const p = r && ixNum(r.last);
+    if (r && p > 0 && !r.code) return {sym, kind, n: String(r.name || r.shortName || nm || sym).slice(0, 40), cur: r.currencyCode || (kind === 'crypto' ? 'USD' : ''), p, r};
+  }
+  return {err: 'ix_uNone'};
+}
+async function ixUserAdd(){
+  const inp = $('#ix_uq'), msg = $('#ix_umsg'), btn = $('#ix_uadd'); if (!inp) return;
+  const L = ixUserList(); if (L.length >= 30){ if (msg) msg.textContent = t('ix_uMax'); return; }
+  if (btn) btn.disabled = true; if (msg) msg.textContent = '⏳ ' + t('ix_uLook');
+  const f = await ixUserFind(inp.value);
+  if (btn) btn.disabled = false;
+  if (f.err){ if (msg) msg.textContent = '⚠️ ' + t(f.err); return; }
+  if (L.some(c => c.sym === f.sym)){ if (msg) msg.textContent = t('ix_uDup', {n: f.n}); return; }
+  const k = 'u_' + f.sym.toLowerCase().replace(/[^a-z0-9]/g, '_');
+  SET.ixCustom = L.concat([{k, sym: f.sym, n: f.n, cur: f.cur, kind: f.kind}]);
+  if (String(SET.ixShow || '')) SET.ixShow = String(SET.ixShow) + ',' + k;
+  saveSet(); ixUserSync();
+  IX.mkt[k] = {p: f.p, pc: ixNum(f.r.previous_day_closing), chp: ixNum(f.r.change_pct), t: Math.round((Date.parse(f.r.last_time) || Date.now()) / 1000), rt: String(f.r.realTime) === 'true', live: true};
+  const y = window.scrollY; try { ixBoard(); } catch (er) {} window.scrollTo(0, y);
+  IXP.q = ''; try { ixBoard(); } catch (er) {} const m2 = $('#ix_umsg'); if (m2) m2.textContent = '✓ ' + t('ix_uOk', {n: f.n, v: ixFmtV(k, f.p)});
+}
+document.addEventListener('keydown', e => { if (e.target && e.target.id === 'ix_uq' && e.key === 'Enter'){ e.preventDefault(); ixUserAdd(); } });
+document.addEventListener('input', e => { if (e.target && e.target.id === 'ix_uq') IXP.q = e.target.value; }, true);
+/* the board redraws itself (live prices); keep what you are typing and where the cursor is */
+{
+  const ixBoardKeep = ixBoard;
+  ixBoard = function(){
+    const a = document.activeElement, typing = a && a.id === 'ix_uq', pos = typing ? a.selectionStart : 0, msg = ($('#ix_umsg') || {}).textContent || '';
+    const r = ixBoardKeep.apply(this, arguments);
+    const m = $('#ix_umsg'); if (m && msg) m.textContent = msg;
+    if (typing){ const i = $('#ix_uq'); if (i){ i.focus(); try { i.setSelectionRange(pos, pos); } catch (e) {} } }
+    return r;
+  };
+}
+document.addEventListener('click', e => {
+  if (e.target.closest && e.target.closest('#ix_uadd')){ ixUserAdd(); return; }
+  const rm = e.target.closest && e.target.closest('[data-ixurm]');
+  if (rm){ const k = rm.dataset.ixurm; SET.ixCustom = ixUserList().filter(c => c.k !== k); SET.ixShow = String(SET.ixShow || '').split(',').filter(x => x && x !== k).join(','); saveSet(); ixUserSync(); const y = window.scrollY; try { ixBoard(); } catch (er) {} window.scrollTo(0, y); return; }
+});
 document.addEventListener('click', e => {
   const b = e.target.closest && e.target.closest('#ix_pick, [data-ixp], [data-ixpall], [data-ixpdef], [data-ixpok]'); if (!b) return;
   if (b.id === 'ix_pick'){ IXP.open = !IXP.open; }
@@ -3796,7 +3869,7 @@ async function srcTest(){
   if (SRC.testing) return; SRC.testing = true; srcRender(true);
   const probe = async (k, url, ok) => { const t0 = performance.now(); try { const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 6000); const r = await fetch(url, {signal: ctl.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); clearTimeout(to); const good = r.ok && (!ok || ok(await r.json())); SRC.test[k] = {ok: good, ms: Math.round(performance.now() - t0), at: Date.now()}; } catch (e) { SRC.test[k] = {ok: false, ms: Math.round(performance.now() - t0), at: Date.now(), blocked: true}; } };
   await Promise.all([
-    probe('cnbc', IX_QURL, j => !!(j && j.FormattedQuoteResult)),
+    probe('cnbc', ixQurl(), j => !!(j && j.FormattedQuoteResult)),
     probe('coinbase', SRC_L.cb, j => !!(j && j.data && j.data.rates)),
     probe('gh', IN_CLAUDE ? SRC_L.gh : 'rates.json?v=' + Date.now(), j => !!(j && j.usd))
   ]);

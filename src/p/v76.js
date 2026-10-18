@@ -270,7 +270,7 @@ const closeLabel = () => { const d = CLOSE.d || prevTradingDay(); try { return n
 async function closeFetchLive(){                           // on the website the quote feed gives the previous close directly
   if (IN_CLAUDE) return false;
   try {
-    const r = await fetch(IX_QURL, {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); if (!r.ok) return false;
+    const r = await fetch(ixQurl(), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); if (!r.ok) return false;
     const rows = ((((await r.json()) || {}).FormattedQuoteResult || {}).FormattedQuote) || [], usd = {};
     rows.forEach(q => {
       const fk = Object.keys(FX_CN).find(x => FX_CN[x][0] === q.symbol), pc = ixNum(q.previous_day_closing);
