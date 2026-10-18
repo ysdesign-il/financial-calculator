@@ -178,7 +178,7 @@ function chSeries(){
 function chDraw(){
   const box = $('#chx_b'); if (!box || $('#chx').hidden) return;
   $('#chx_t').innerHTML = (typeof mkIcon === 'function' ? mkIcon(CH.k) : '') + ' ' + E91(ixName(CH.k));
-  const P = chSeries(), com = IX_COM.includes(CH.k), fmt = x => (com ? '$' : '') + N(x, null, x >= 1000 ? 0 : 2);
+  const P = chSeries(), com = IX_COM.includes(CH.k), fmt = x => ixFmtV(CH.k, x);
   const head = `<div class="ch-rng" role="tablist">${CH_R.map(([r]) => `<button type="button" role="tab" data-chr="${r}" class="${r === CH.r ? 'on' : ''}" aria-selected="${r === CH.r}">${E91(t('ch_' + r))}</button>`).join('')}</div>`;
   const go = CH.go && CH.go !== 'none' ? `<button type="button" class="lc-add ch-go" data-chgo="1">🧮 ${E91(t('ch_go'))}</button>` : '';
   if (P.length < 2){
@@ -232,7 +232,7 @@ function alNow(k){
   if (IX_MK.includes(k)){ const d = IX.mkt[k]; return d && d.p > 0 ? d.p : NaN; }
   const a = RATES[baseCur], b = RATES[k]; return a > 0 && b > 0 ? a / b : NaN;
 }
-const alFmt = (k, x) => !isFinite(x) ? '—' : IX_MK.includes(k) ? (IX_COM.includes(k) ? '$' : '') + N(x, null, x >= 1000 ? 0 : 2) : M(x, x >= 100 ? 0 : x >= 1 ? 3 : 6, baseCur);
+const alFmt = (k, x) => !isFinite(x) ? '—' : IX_MK.includes(k) ? ixFmtV(k, x) : M(x, x >= 100 ? 0 : x >= 1 ? 3 : 6, baseCur);
 function alCheck(){
   const L = alList(); let hit = 0;
   L.forEach(a => {

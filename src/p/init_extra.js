@@ -3426,9 +3426,14 @@ figApply(true);
 /* ================= live indices: official price indices and market indices, used across the app and editable ================= */
 var IX_BUILT = __IX_BUILT__;
 var IX = {idx: Object.assign({}, (IX_BUILT && IX_BUILT.idx) || {}), mkt: Object.assign({}, ((IX_BUILT && IX_BUILT.mkt) || {}).items || {}), src: 'built', at: 0};
-var IX_MK = ['ta35', 'ta125', 'spx', 'ndx', 'dji', 'ixic', 'rut', 'vix', 'ftse', 'dax', 'stoxx', 'nikkei', 'gold', 'silver', 'platinum', 'copper', 'brent', 'wti', 'natgas'], IX_COM = ['gold', 'silver', 'platinum', 'copper', 'brent', 'wti', 'natgas'], IX_RET = ['ta125', 'ta35', 'spx', 'ndx', 'dji', 'gold'];
+var IX_MK = ['ta35', 'ta125', 'spx', 'ndx', 'dji', 'ixic', 'rut', 'vix', 'dxy', 'tsx', 'ipc', 'bovespa', 'ftse', 'dax', 'stoxx', 'cac', 'ibex', 'ftmib', 'aex', 'smi', 'nikkei', 'hsi', 'ssec', 'kospi', 'sensex', 'asx', 'gold', 'silver', 'platinum', 'palladium', 'copper', 'brent', 'wti', 'natgas', 'gasoline', 'heatoil', 'wheat', 'corn', 'soy', 'coffee', 'sugar', 'cocoa', 'cotton'], IX_COM = ['gold', 'silver', 'platinum', 'palladium', 'copper', 'brent', 'wti', 'natgas', 'gasoline', 'heatoil', 'wheat', 'corn', 'soy', 'coffee', 'sugar', 'cocoa', 'cotton'], IX_CENT = ['wheat', 'corn', 'soy', 'coffee', 'sugar', 'cotton'], IX_DEF = ['ta35', 'ta125', 'spx', 'ndx', 'dji', 'ixic', 'rut', 'vix', 'ftse', 'dax', 'stoxx', 'nikkei', 'gold', 'silver', 'platinum', 'copper', 'brent', 'wti', 'natgas'], IX_RET = ['ta125', 'ta35', 'spx', 'ndx', 'dji', 'gold'];
 var IX_SYM = {ta35: '.TA35', ta125: '.TA125', spx: '.SPX', ndx: '.NDX', dji: '.DJI', ixic: '.IXIC', rut: '.RUT', vix: '.VIX', ftse: '.FTSE', dax: '.GDAXI', stoxx: '.STOXX50E', nikkei: '.N225',
-  gold: '@GC.1', silver: '@SI.1', platinum: '@PL.1', copper: '@HG.1', brent: '@LCO.1', wti: '@CL.1', natgas: '@NG.1'};
+  gold: '@GC.1', silver: '@SI.1', platinum: '@PL.1', copper: '@HG.1', brent: '@LCO.1', wti: '@CL.1', natgas: '@NG.1',
+  dxy: '.DXY', tsx: '.GSPTSE', ipc: '.MXX', bovespa: '.BVSP', cac: '.FCHI', ibex: '.IBEX', ftmib: '.FTMIB', aex: '.AEX', smi: '.SSMI', hsi: '.HSI', ssec: '.SSEC', kospi: '.KS11', sensex: '.BSESN', asx: '.AXJO',
+  palladium: '@PA.1', gasoline: '@RB.1', heatoil: '@HO.1', wheat: '@W.1', corn: '@C.1', soy: '@S.1', coffee: '@KC.1', sugar: '@SB.1', cocoa: '@CC.1', cotton: '@CT.1'};
+/* price with its unit: $ for most commodities, ¢ for grains and softs quoted in cents */
+function ixFmtV(k, x){ if (!isFinite(x)) return '—'; const n = N(x, null, x >= 1000 ? 0 : 2); return IX_CENT.includes(k) ? n + '¢' : (IX_COM.includes(k) ? '$' + n : n); }
+function ixShown(){ const v = String(SET.ixShow || '').split(',').filter(k => IX_MK.includes(k)); return v.length ? v : IX_DEF.slice(); }
 var IXE = {};
 function ixOffVal(id){
   const c = IX.idx.cpi, b = IX.idx.build, h = IX.idx.house;
@@ -3558,16 +3563,35 @@ function ixBoard(){
     h += card(k, N(+d.v, 1), ixCh(+d.mom), meta, go);
   });
   h += `</div><h4 class="ix-g">${asEsc(t('ix_gMkt'))}${IXL.ok && srcOk('mkt', 'live') ? ` <span class="lv-pill on"><i></i>${asEsc(t('lv_live'))}</span>` : ''}</h4><div class="mkt">`;
+  const SHOW = ixShown(); let comH = false;
   IX_MK.forEach((k, i) => {
-    if (k === IX_COM[0]) h += `</div><h4 class="ix-g">${asEsc(t('ix_gCom'))}</h4><div class="mkt">`;      // indices first, then commodities
+    if (!SHOW.includes(k)) return;
+    if (IX_COM.includes(k) && !comH){ comH = true; h += `</div><h4 class="ix-g">${asEsc(t('ix_gCom'))}</h4><div class="mkt">`; }      // indices first, then commodities
     const d = IX.mkt[k]; if (!d || !(d.p > 0)) return;
-    const val = (IX_COM.includes(k) ? '$' : '') + N(d.p, null, d.p >= 1000 ? 0 : 2);
+    const val = ixFmtV(k, d.p);
     const meta = asEsc(ixDay(d.t)) + ' · ' + asEsc(t(!d.live ? 'ix_snap' : d.rt ? 'ix_rt' : 'ix_delay')) + (isFinite(+d.ytd) ? ' · ' + asEsc(t('ix_ytd', {v: ixSg(+d.ytd)})) : '');
     h += card(k, val, ixCh(+d.chp), meta, IX_RET.includes(k) ? 'compound:' + k : 'none');
   });
-  h += `</div><p class="fine mkt-note">${asEsc(t('ix_note'))}${liveOwner() ? ` <button type="button" class="fg-x" id="ix_edit">${asEsc(t('ix_edit'))}</button>` : ''}</p>`;
+  h += `</div><div class="btnrow ix-pickrow"><button type="button" class="btn" id="ix_pick" aria-expanded="${IXP.open ? 'true' : 'false'}">✏️ ${asEsc(t('ix_pick'))} (${SHOW.length}/${IX_MK.length})</button></div>${IXP.open ? ixPickHTML(SHOW) : ''}<p class="fine mkt-note">${asEsc(t('ix_note'))}${liveOwner() ? ` <button type="button" class="fg-x" id="ix_edit">${asEsc(t('ix_edit'))}</button>` : ''}</p>`;
   ext.innerHTML = h;
 }
+/* choose which indices and commodities the board shows (12.4) */
+var IXP = {open: false};
+function ixPickHTML(SHOW){
+  const grp = (title, L) => `<div class="ix-pg"><b>${asEsc(t(title))}</b><div class="ix-pl">${L.map(k => `<button type="button" class="tchip${SHOW.includes(k) ? ' on' : ''}" data-ixp="${k}" aria-pressed="${SHOW.includes(k)}">${asEsc(ixName(k))}</button>`).join('')}</div></div>`;
+  return `<div class="ix-pick" id="ix_pickbox"><p class="fine">${asEsc(t('ix_pickH'))}</p>${grp('ix_gMkt', IX_MK.filter(k => !IX_COM.includes(k)))}${grp('ix_gCom', IX_COM)}
+    <div class="btnrow"><button type="button" class="mv wide" data-ixpall="1">${asEsc(t('ix_pAll'))}</button><button type="button" class="mv wide" data-ixpdef="1">${asEsc(t('ix_pDef'))}</button><button type="button" class="gold-btn" data-ixpok="1">${asEsc(t('ix_pDone'))}</button></div></div>`;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('#ix_pick, [data-ixp], [data-ixpall], [data-ixpdef], [data-ixpok]'); if (!b) return;
+  if (b.id === 'ix_pick'){ IXP.open = !IXP.open; }
+  else if (b.dataset.ixp){ let S = ixShown(); const k = b.dataset.ixp; S = S.includes(k) ? S.filter(x => x !== k) : S.concat([k]); if (!S.length) return toast(t('ix_pMin')); SET.ixShow = IX_MK.filter(x => S.includes(x)).join(','); saveSet(); if (!IX.mkt[k] || !(IX.mkt[k].p > 0)) setTimeout(() => { try { ixLiveTick(true); } catch (er) {} }, 200); }
+  else if (b.dataset.ixpall){ SET.ixShow = IX_MK.join(','); saveSet(); setTimeout(() => { try { ixLiveTick(true); } catch (er) {} }, 200); }
+  else if (b.dataset.ixpdef){ SET.ixShow = ''; saveSet(); }
+  else if (b.dataset.ixpok){ IXP.open = false; }
+  const y = window.scrollY; try { ixBoard(); } catch (er) {} window.scrollTo(0, y);
+  if (b.id === 'ix_pick' && IXP.open){ const box = $('#ix_pickbox'); if (box) box.scrollIntoView({block: 'nearest'}); }
+});
 const renderMarketIx = renderMarket;
 renderMarket = function(){ const r = renderMarketIx.apply(this, arguments); try { ixBoard(); } catch (e) {} return r; };
 panelsEl.addEventListener('click', e => {
