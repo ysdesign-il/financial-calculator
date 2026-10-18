@@ -27,9 +27,13 @@ function tvWidget(host, name, cfg){
 }
 function tvOverviewCfg(){
   const S = typeof ixShown === 'function' ? ixShown() : IX_DEF, sym = k => ({s: TV_SYM[k][0], d: TV_SYM[k][1] ? t(TV_SYM[k][1]) : IX_COM.includes(k) ? ixName(k).replace(/\s*\(.*\)$/, '') : ixName(k)});
-  const pick = S.filter(k => TV_SYM[k]).length >= 3 ? S : IX_MK;      // too few of the picked ones stream here → show all that do
+  const pick = S.filter(k => TV_SYM[k]).length >= 3 ? S : IX_MK.filter(k => TV_SYM[k]);      // too few of the picked ones stream here → show all that do
   const idx = pick.filter(k => TV_SYM[k] && !IX_COM.includes(k)).map(sym), com = pick.filter(k => TV_SYM[k] && IX_COM.includes(k)).map(sym);
   const tabs = [];
+  const U = (typeof ixUserList === 'function' ? ixUserList() : []).filter(c => S.includes(c.k)).map(c => {
+    const sym = c.kind === 'fx' ? 'FX_IDC:' + (c.sym === 'ILS=' ? 'USDILS' : /^[A-Z]{3}=$/.test(c.sym) ? (['EUR', 'GBP', 'AUD', 'NZD'].includes(c.sym.slice(0, 3)) ? c.sym.slice(0, 3) + 'USD' : 'USD' + c.sym.slice(0, 3)) : c.sym.replace('=', '')) : c.kind === 'crypto' ? 'CRYPTO:' + c.sym.replace('.CM=', '') + 'USD' : c.sym;
+    return {s: sym, d: c.n}; });
+  if (U.length) tabs.push({title: '⭐ ' + t('ix_gMine'), symbols: U, originalTitle: 'Mine'});
   if (idx.length) tabs.push({title: t('ix_gMkt'), symbols: idx, originalTitle: 'Indices'});
   if (com.length) tabs.push({title: t('ix_gCom'), symbols: com, originalTitle: 'Commodities'});
   tabs.push({title: t('tv_fx'), symbols: TV_FX.map(([s, d]) => ({s, d})), originalTitle: 'Forex'});
@@ -43,7 +47,7 @@ function tvBoxHTML(){
     <div class="btnrow"><button type="button" class="${on ? 'btn' : 'gold-btn'}" id="tv_tog">${tvE(t(on ? 'tv_hide' : 'tv_show'))}</button></div>
     <div id="tv_ov" class="tv-ov"${on ? '' : ' hidden'}></div>${on ? tvMissNote() : ''}`;
 }
-function tvMissNote(){ const S = typeof ixShown === 'function' ? ixShown() : IX_DEF, miss = S.filter(k => !TV_SYM[k]); return miss.length ? `<p class="fine">${tvE(t('tv_miss', {n: miss.map(ixName).join(', ')}))}</p>` : ''; }
+function tvMissNote(){ const S = typeof ixShown === 'function' ? ixShown() : IX_DEF, miss = S.filter(k => !TV_SYM[k] && !(typeof IX_USER !== 'undefined' && IX_USER.includes(k))); return miss.length ? `<p class="fine">${tvE(t('tv_miss', {n: miss.map(ixName).join(', ')}))}</p>` : ''; }
 var TVX = {sig: ''};
 function tvMount(){
   const hm = $('#hmx'); if (!hm) return;
@@ -86,3 +90,6 @@ setTimeout(pvSetRender, 950);
     try { if (typeof PRIV !== 'undefined' && PRIV){ const hm = $('#hmx'); if (hm && !hm.querySelector('.pv-pill')) hm.insertAdjacentHTML('afterbegin', `<p class="fine pv-pill">🔒 ${tvE(t('pv_pill'))}</p>`); } } catch (e) {}
     return r; };
 }
+
+/* the markets screen redraws its board wherever the app asks to recalculate the open screen */
+{ const calcMk = calc; calc = function(id){ if (id === 'markets'){ try { renderMarket(); } catch (e) {} return; } return calcMk.apply(this, arguments); }; }

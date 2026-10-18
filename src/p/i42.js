@@ -25,4 +25,13 @@ Object.assign(T, {
   pv_pill:['מצב פרטי מלא: המחירים מהעדכון האוטומטי האחרון, בלי חיבור חי לאתרים חיצוניים.','الوضع الخاص الكامل: الأسعار من آخر تحديث تلقائي، دون اتصال مباشر بمواقع خارجية.','Full private mode: prices from the latest automatic update, with no live connection to outside sites.'],
   tv_miss:['לא בלוח החי (הנתונים שלהם לא חינמיים להטמעה), אבל מתעדכנים בכרטיסים למעלה: {n}.','غير موجودة في اللوحة المباشرة (بياناتها غير مجانية للتضمين)، لكنها تتحدث في البطاقات أعلاه: {n}.','Not on the live board (their data is not free to embed), but updating in the cards above: {n}.'],
   tv_cn50:['סין A50','الصين A50','China A50'],
+  ix_gMine:['המניות והמטבעות שלי','أسهمي وعملاتي','My stocks & currencies'],
+  ix_uH:['כתבו סימול של מניה (AAPL, NVDA, TEVA), קוד מטבע (EUR, JPY – מול השקל) או מטבע קריפטו (BTC, SOL). המחיר מתעדכן חי כמו שאר הכרטיסים.','اكتب رمز سهم (AAPL، NVDA، TEVA)، أو رمز عملة (EUR، JPY – مقابل الشيكل) أو عملة مشفّرة (BTC، SOL). يتحدث السعر مباشرة مثل باقي البطاقات.','Type a stock ticker (AAPL, NVDA, TEVA), a currency code (EUR, JPY – against the shekel) or a crypto coin (BTC, SOL). The price updates live like the other cards.'],
+  ix_uAdd:['הוספה','إضافة','Add'], ix_uLook:['מחפש…','جارٍ البحث…','Looking it up…'], ix_uWait:['ממתין למחיר…','بانتظار السعر…','Waiting for a price…'],
+  ix_uBad:['הסימול לא תקין. אותיות באנגלית וספרות בלבד.','رمز غير صالح. أحرف إنجليزية وأرقام فقط.','Invalid symbol. English letters and digits only.'],
+  ix_uNone:['לא מצאתי מחיר לסימול הזה. בדקו את הכתיב (למשל AAPL, EUR, BTC).','لم أجد سعرًا لهذا الرمز. تحقق من الكتابة (مثل AAPL، EUR، BTC).','No price found for that symbol. Check the spelling (e.g. AAPL, EUR, BTC).'],
+  ix_uNet:['אין חיבור למחירים כרגע. נסו שוב.','لا اتصال بالأسعار الآن. حاول مجددًا.','No connection to prices right now. Try again.'],
+  ix_uPriv:['במצב פרטי מלא אי אפשר לחפש מחירים חיים. כבו אותו בהגדרות ← אבטחה.','في الوضع الخاص الكامل لا يمكن البحث عن أسعار مباشرة. أوقفه من الإعدادات ← الأمان.','Live prices cannot be looked up in full private mode. Turn it off in Settings → Security.'],
+  ix_uDup:['{n} כבר ברשימה.','{n} موجود في القائمة.','{n} is already on the list.'], ix_uMax:['אפשר עד 30 פריטים משלכם.','يمكن حتى 30 عنصرًا خاصًا.','Up to 30 items of your own.'],
+  ix_uOk:['נוסף: {n} · {v}','تمت الإضافة: {n} · {v}','Added: {n} · {v}'],
 });
