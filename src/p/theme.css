@@ -1134,3 +1134,6 @@ input.ro{opacity:.75;cursor:not-allowed}
 .pv-sw{margin:6px 0}.pv-pill{margin:0 0 8px;padding:8px 10px;border-radius:12px;border:1px solid var(--line);background:var(--g2)}
 .ix-add{display:flex;gap:8px;margin:6px 0}.ix-add input{flex:1;min-width:0;font:inherit;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:inherit;text-transform:uppercase}
 .ix-umsg{min-height:1.2em;margin:2px 0 6px}.ix-uchip{display:inline-flex;align-items:center;gap:2px}.ix-urm{min-width:28px;height:28px;font-size:.8rem}
+.lg-box{max-height:88vh}.lg-body{overflow-y:auto;flex:1;line-height:1.7;font-size:.95rem;overscroll-behavior:contain}
+.lg-body h4{margin:16px 0 6px;font-size:1rem}.lg-body p{margin:0 0 10px}.lg-body ul{margin:0 0 10px;padding-inline-start:20px}.lg-body li{margin:0 0 6px}
+.lg-a{appearance:none;background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer}.lg-links{white-space:nowrap}
