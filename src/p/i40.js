@@ -1,4 +1,5 @@
 Object.assign(T, {
+  gk3_only:['ה־AI באתר זמין רק במצב מפתח ובמצב משפחה. באפליקציית Claude הוא עובד מיד.','الذكاء الاصطناعي في الموقع متاح فقط في وضع المطوّر ووضع العائلة. في تطبيق Claude يعمل مباشرة.','On the website AI is available only in developer mode and family mode. In the Claude app it works right away.'],
   gk2_t:['חיבור Gemini – AI בכל האפליקציה','ربط Gemini – ذكاء اصطناعي في كل التطبيق','Connect Gemini – AI across the app'],
   gk2_s:['מפתח חינמי מ-Google מפעיל את העוזר, ההסברים, כתיבת קורות החיים, המחשבון המתקדם והסריקה.','مفتاح مجاني من Google يشغّل المساعد والشروحات وكتابة السيرة الذاتية والحاسبة المتقدمة والمسح.','A free key from Google powers the assistant, explanations, CV writing, the advanced calculator and scanning.'],
   gk2_s1:['פתחו את דף המפתחות של Google והתחברו עם חשבון Google.','افتح صفحة مفاتيح Google وسجّل الدخول بحساب Google.','Open Google\'s key page and sign in with your Google account.'],

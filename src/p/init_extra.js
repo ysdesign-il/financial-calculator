@@ -291,9 +291,9 @@ async function asAnswer(q){
   if (eng === 'gemini'){ if (!gemKey()) throw new Error('noai'); return gemChat(hist.map((m, i) => i === 0 ? {role: 'user', content: asSystem() + '\n\nUser: ' + m.content} : m)); }
   try {
     if (p === 'gemini'){
-      if (!(SET.gkey || '').trim()) throw new Error('nokey');
+      if (!gemKey()) throw new Error('nokey');
       const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + encodeURIComponent(model) + ':generateContent', {
-        method:'POST', headers:{'Content-Type':'application/json', 'x-goog-api-key': SET.gkey.trim()},
+        method:'POST', headers:{'Content-Type':'application/json', 'x-goog-api-key': gemKey()},
         body: JSON.stringify({systemInstruction:{parts:[{text: asSystem()}]}, contents: hist.map(m => ({role: m.role === 'assistant' ? 'model' : 'user', parts:[{text: m.content}]}))})});
       if (!r.ok) throw new Error('HTTP ' + r.status);
       const j = await r.json();

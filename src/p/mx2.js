@@ -110,7 +110,7 @@ function xsResHTML(r, raw){
 }
 function xsAiBlock(raw, primary){
   const ok = typeof cvAiOk === 'function' && cvAiOk();
-  return `<div class="xs-ai">${ok ? `<button type="button" class="${primary ? 'gold-btn' : 'mv mx-aib'}" id="xs_ai" data-p="${primary ? 1 : 0}">🤖 ${mE(t(primary ? 'xs_aiSolve' : 'xs_aiExplain'))}</button>` : `<p class="fine">${mE(t('xs_aiNone'))}</p><button type="button" class="btn" data-gkgo="1">✦ ${mE(t('xs_connect'))}</button>`}<div class="mx-aiout xs-aiout" id="xs_aiout" hidden></div></div>`;
+  return `<div class="xs-ai">${ok ? `<button type="button" class="${primary ? 'gold-btn' : 'mv mx-aib'}" id="xs_ai" data-p="${primary ? 1 : 0}">🤖 ${mE(t(primary ? 'xs_aiSolve' : 'xs_aiExplain'))}</button>` : `<p class="fine">${mE(t(gkNo('xs_aiNone')))}</p>${gkAllowed() && !(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? `<button type="button" class="btn" data-gkgo="1">✦ ${mE(t('xs_connect'))}</button>` : ''}`}<div class="mx-aiout xs-aiout" id="xs_aiout" hidden></div></div>`;
 }
 function xsCopyText(r){
   const strip = h => { const el = document.createElement('div'); el.innerHTML = h; return el.innerText.replace(/\s+/g, ' ').trim(); };
@@ -136,7 +136,7 @@ async function xsAi(btn){
         ${ver.k === 'ok' ? `<div class="mx-ok">${mE(t('mx_scOk', {v: mxFmt(ver.v)}))}</div>` : ver.k === 'diff' ? `<div class="mx-err">${mE(t('mx_scDiff', {v: mxFmt(ver.v)}))}</div>` : `<div class="mx-sub">${mE(t('mx_scNoCheck'))}</div>`}
         ${res.check ? `<div class="btnrow"><button type="button" class="mv" data-mxsend="${mE(res.check)}">➕ ${mE(t('mx_scToSheet'))}</button></div>` : ''}<p class="fine">${mE(t('mx_scDisc'))}</p>`;
     }
-  } catch (e) { o.hidden = false; o.textContent = e && e.message === 'noai' ? t('cv_aiNo') : t('cv_aiErr'); }
+  } catch (e) { o.hidden = false; o.textContent = e && e.message === 'noai' ? t(gkNo('cv_aiNo')) : t('cv_aiErr'); }
   finally { if (btn.isConnected){ btn.disabled = false; btn.textContent = old; } }
 }
 function xsInsert(txt){

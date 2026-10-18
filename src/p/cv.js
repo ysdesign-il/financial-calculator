@@ -486,7 +486,7 @@ function cvDesignHTML(d){
 }
 function cvAIHTML(d){
   const ok = cvAiOk();
-  return `<p class="fine">${cvE(t('cv_aiH'))}</p>${ok ? '' : `<div class="gk-st new">${cvE(t('cv_aiNo'))}</div>`}
+  return `<p class="fine">${cvE(t('cv_aiH'))}</p>${ok ? '' : `<div class="gk-st new">${cvE(t(gkNo('cv_aiNo')))}</div>`}
     <div class="cv-ai-card"><div class="btnrow"><button type="button" class="btn" data-act="ai" data-k="sumWrite"${ok ? '' : ' disabled'}>✨ ${cvE(t('cv_aiSum'))}</button><button type="button" class="btn" data-act="ai" data-k="review"${ok ? '' : ' disabled'}>🔎 ${cvE(t('cv_aiReview'))}</button></div></div>
     <div class="cv-ai-card"><h4 class="cv-h">🎯 ${cvE(t('cv_aiTailor'))}</h4><div class="field wide"><textarea id="cv_job" rows="4" dir="auto" placeholder="${cvE(t('cv_aiTailorPh'))}"></textarea></div><button type="button" class="btn" data-act="ai" data-k="tailor"${ok ? '' : ' disabled'}>${cvE(t('cv_aiTailorGo'))}</button></div>
     <div class="cv-ai-card"><h4 class="cv-h">🌐 ${cvE(t('cv_aiTr'))}</h4><div class="btnrow">${['he', 'ar', 'en'].filter(l => l !== d.lang).map(l => `<button type="button" class="btn" data-act="ai" data-k="translate" data-v="${l}"${ok ? '' : ' disabled'}>${cvE(t('cv_ln_' + l))}</button>`).join('')}</div></div>
@@ -611,7 +611,7 @@ const cvJSON = s => { const m = /\{[\s\S]*\}/.exec(String(s || '')); return m ? 
 function cvOut(html){ CV.aiOut = html; const o = $('#cv_aiOut'); if (o) o.innerHTML = html; else toast(String(html).replace(/<[^>]+>/g, ' ').slice(0, 140)); }
 async function cvAI(k, btn){
   const it = cvCur(), d = it.d, L = CV_LN[d.lang], UL = CV_LN[cvLangOk(lang)] || 'English';
-  if (!cvAiOk()){ toast(t('cv_aiNo')); return; }
+  if (!cvAiOk()){ toast(t(gkNo('cv_aiNo'))); return; }
   if (CV.busy) return; CV.busy = true;
   const old = btn ? btn.textContent : ''; if (btn){ btn.disabled = true; btn.textContent = '⏳ ' + t('cv_aiWait'); }
   try {
@@ -660,7 +660,7 @@ async function cvAI(k, btn){
     }
   } catch (e){
     const c = e && (e.code || e.message);
-    toast(c === 'noai' ? t('cv_aiNo') : typeof aiCodeText === 'function' && e && e.code ? aiCodeText(e.code) : t('cv_aiErr'));
+    toast(c === 'noai' ? t(gkNo('cv_aiNo')) : typeof aiCodeText === 'function' && e && e.code ? aiCodeText(e.code) : t('cv_aiErr'));
   } finally { CV.busy = false; if (btn && btn.isConnected){ btn.disabled = false; btn.textContent = old; } }
 }
 

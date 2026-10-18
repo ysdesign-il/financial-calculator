@@ -40,7 +40,7 @@ async function tryLiveCrypto(){
 }
 
 /* ---- Gemini (Google) as a rate source: the user's own API key, grounded with Google Search ---- */
-const gemOn = () => SET.rateSrc === 'gemini' && !!(SET.gkey && SET.gkey.trim());
+const gemOn = () => SET.rateSrc === 'gemini' && !!(SET.gkey && SET.gkey.trim()) && (typeof gkAllowed !== 'function' || gkAllowed());
 const GEM_FIAT = ['ILS','EUR','GBP','JPY','CHF','CAD','AUD','NZD','CNY','HKD','SGD','INR','RUB','TRY','AED','SAR','JOD','EGP','PLN','CZK','HUF','RON','SEK','NOK','DKK','BRL','MXN','ARS','ZAR','KRW','THB'];
 var gemLast = 0, gemBusy = null;
 async function tryLiveGemini(force){
