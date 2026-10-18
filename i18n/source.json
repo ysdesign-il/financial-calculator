@@ -5656,20 +5656,6 @@
   "ix_pDef": "Default",
   "ix_pDone": "Done",
   "ix_pMin": "Pick at least one",
-  "ix_nifty": "Nifty 50 (India)",
-  "tv_t": "Live from TradingView and Investing.com",
-  "tv_h": "A live TradingView board with charts for every index and commodity you picked, plus currencies. It loads only when you tap \"Show\" – these sites see your address and may set cookies.",
-  "tv_hOn": "Updating live from TradingView. Tap a row to switch the chart.",
-  "tv_show": "Show the live board",
-  "tv_hide": "Hide the live board",
-  "tv_fail": "Could not load TradingView right now. Open the site with the buttons below.",
-  "tv_by": "Data and charts by TradingView",
-  "tv_fx": "Currencies & crypto",
-  "tv_openTv": "Markets on TradingView",
-  "tv_invIdx": "Indices on Investing.com",
-  "tv_invCom": "Commodities on Investing.com",
-  "tv_inClaude": "Inside Claude outside sites cannot be embedded, so here they open with a button. On the website the live TradingView board shows right on the screen.",
-  "tv_chart": "Live TradingView chart",
-  "tv_chartHide": "Close the live chart"
+  "ix_nifty": "Nifty 50 (India)"
  }
 }
