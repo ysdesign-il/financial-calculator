@@ -5656,6 +5656,25 @@
   "ix_pDef": "Default",
   "ix_pDone": "Done",
   "ix_pMin": "Pick at least one",
-  "ix_nifty": "Nifty 50 (India)"
+  "ix_nifty": "Nifty 50 (India)",
+  "tv_t": "Live board – TradingView",
+  "tv_h": "A live board with charts for every index and commodity you picked, plus currencies and crypto. It loads only when you tap \"Show\", with no cookies and without telling TradingView which site it is on. It does see your address – for full privacy use private mode in Settings → Security.",
+  "tv_hOn": "Updating live. Tap a row to switch the chart.",
+  "tv_show": "Show the live board",
+  "tv_hide": "Hide the live board",
+  "tv_fail": "Could not load the live board right now. Try again later.",
+  "tv_by": "Data and charts by TradingView",
+  "tv_fx": "Currencies & crypto",
+  "tv_inClaude": "Inside Claude the live board does not load. On the website it shows on this screen.",
+  "tv_noCookie": "no cookies",
+  "tv_priv": "The live board is off because full private mode is on (Settings → Security).",
+  "pv_t": "Full private mode",
+  "pv_h": "When on, the app contacts no outside site: no live prices, no TradingView board, no AI and no outside fonts – so no site sees your address. Prices come from the site's own automatic update (a few times a day).",
+  "pv_on": "On",
+  "pv_off": "Off",
+  "pv_note": "Switching reloads the app. This setting is kept on this device only.",
+  "pv_reloadOn": "Full private mode on – reloading…",
+  "pv_reloadOff": "Private mode off – reloading…",
+  "pv_pill": "Full private mode: prices from the latest automatic update, with no live connection to outside sites."
  }
 }
