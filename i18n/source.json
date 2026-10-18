@@ -5677,6 +5677,18 @@
   "pv_reloadOff": "Private mode off – reloading…",
   "pv_pill": "Full private mode: prices from the latest automatic update, with no live connection to outside sites.",
   "tv_miss": "Not on the live board (their data is not free to embed), but updating in the cards above: {n}.",
-  "tv_cn50": "China A50"
+  "tv_cn50": "China A50",
+  "ix_gMine": "My stocks & currencies",
+  "ix_uH": "Type a stock ticker (AAPL, NVDA, TEVA), a currency code (EUR, JPY – against the shekel) or a crypto coin (BTC, SOL). The price updates live like the other cards.",
+  "ix_uAdd": "Add",
+  "ix_uLook": "Looking it up…",
+  "ix_uWait": "Waiting for a price…",
+  "ix_uBad": "Invalid symbol. English letters and digits only.",
+  "ix_uNone": "No price found for that symbol. Check the spelling (e.g. AAPL, EUR, BTC).",
+  "ix_uNet": "No connection to prices right now. Try again.",
+  "ix_uPriv": "Live prices cannot be looked up in full private mode. Turn it off in Settings → Security.",
+  "ix_uDup": "{n} is already on the list.",
+  "ix_uMax": "Up to 30 items of your own.",
+  "ix_uOk": "Added: {n} · {v}"
  }
 }
