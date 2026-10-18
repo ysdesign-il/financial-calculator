@@ -21,6 +21,7 @@ function gkCardHTML(){
 }
 function gkCardMount(){
   const w = $('#gk_wrap'); if (!w) return;
+  if (!gkAllowed()){ w.hidden = true; return; }
   w.hidden = false;
   const ai = $('#ai_sec'); if (ai && ai.firstElementChild !== w) ai.insertBefore(w, ai.firstChild);   // the connection comes first
   const lg = document.documentElement.lang || '';
@@ -77,4 +78,18 @@ function gkGo(){
   try { activate('settings'); } catch (e) {}
   setTimeout(() => { try { if (typeof setCat === 'function') setCat('conn'); } catch (e) {}
     setTimeout(() => { const sec = $('[data-sk="set_ai"] details'); if (sec) sec.open = true; try { gkCardMount(); } catch (e) {} const c = $('#gk_card'); if (c) c.scrollIntoView({block: 'start', behavior: 'smooth'}); }, 200); }, 120);
+}
+
+/* 12.3: Gemini is only for developer mode and family mode — everyone else does not see it and a stored key is not used */
+function gkAllowed(){ try { return (typeof DEV_ON !== 'undefined' && DEV_ON === true) || (typeof FAM === 'object' && FAM && FAM.on === true); } catch (e) { return false; } }
+function gkNo(k){ try { return !IN_CLAUDE && !gkAllowed() ? 'gk3_only' : k; } catch (e) { return k; } }
+{
+  const gemKey123 = gemKey;
+  gemKey = function(){ return gkAllowed() ? gemKey123.apply(this, arguments) : ''; };
+}
+/* show/hide the card whenever settings open or developer/family mode changes */
+{
+  const actGk = activate; activate = function(id){ const r = actGk.apply(this, arguments); if (id === 'settings'){ try { gkCardMount(); } catch (e) {} } return r; };
+  if (typeof setCat === 'function'){ const scGk = setCat; setCat = function(){ const r = scGk.apply(this, arguments); try { gkCardMount(); } catch (e) {} return r; }; }
+  if (typeof famApply === 'function'){ const faGk = famApply; famApply = function(){ const r = faGk.apply(this, arguments); try { gkCardMount(); } catch (e) {} return r; }; }
 }

@@ -5625,6 +5625,7 @@
   "xm_fins": "My formulas",
   "xm_finH": "This is your own formula. Edit it under \"Mine\" in the Full solution and Formulas tabs.",
   "xm_finAdd": "Want your own formula as a form? Add a function under \"Mine\" (Full solution tab) and it appears here.",
-  "mx_lg_mine": "⭐ Mine"
+  "mx_lg_mine": "⭐ Mine",
+  "gk3_only": "On the website AI is available only in developer mode and family mode. In the Claude app it works right away."
  }
 }

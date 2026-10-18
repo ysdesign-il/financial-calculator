@@ -312,11 +312,11 @@ function mxAnalyse(F, x0, x1){
 /* ---------- AI explanation ---------- */
 async function mxAI(prompt, outId, btn){
   const o = $('#' + outId); if (!o) return;
-  if (typeof cvAiOk !== 'function' || !cvAiOk()){ o.hidden = false; o.textContent = t('cv_aiNo'); return; }
+  if (typeof cvAiOk !== 'function' || !cvAiOk()){ o.hidden = false; o.textContent = t(gkNo('cv_aiNo')); return; }
   const old = btn.textContent; btn.disabled = true; btn.textContent = '⏳ ' + t('mx_aiWait');
   const UL = {he: 'Hebrew', ar: 'Arabic', en: 'English'}[typeof lang === 'string' && ['he', 'ar', 'en'].includes(lang) ? lang : 'en'];
   try { const r = await cvAsk(`You are a patient maths, finance and accounting teacher. Explain in ${UL}, step by step and in full detail, how to solve the following, showing every formula and intermediate result with numbered steps. Keep maths in plain text (use ^, sqrt, /). Finish with the final answer.\n\n${prompt}`); o.hidden = false; o.textContent = r || t('cv_aiErr'); }
-  catch (e){ o.hidden = false; o.textContent = e && e.message === 'noai' ? t('cv_aiNo') : t('cv_aiErr'); }
+  catch (e){ o.hidden = false; o.textContent = e && e.message === 'noai' ? t(gkNo('cv_aiNo')) : t('cv_aiErr'); }
   finally { btn.disabled = false; btn.textContent = old; }
 }
 
@@ -328,7 +328,7 @@ function mxScanEngine(){
 }
 function mxScanHTML(){
   const d = mxData(), sc = d.scan || {}, eng = mxScanEngine();
-  return `<p class="fine">${mE(t('mx_scH'))}</p>${eng ? '' : `<div class="gk-st new">${mE(t('mx_scNoAI'))}</div>${typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE ? '' : `<div class="btnrow"><button type="button" class="btn" data-gkgo="1">✦ ${mE(t('xs_connect'))}</button></div>`}`}
+  return `<p class="fine">${mE(t('mx_scH'))}</p>${eng ? '' : `<div class="gk-st new">${mE(t(gkNo('mx_scNoAI')))}</div>${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) || !gkAllowed() ? '' : `<div class="btnrow"><button type="button" class="btn" data-gkgo="1">✦ ${mE(t('xs_connect'))}</button></div>`}`}
     <div class="mx-fgrid"><div class="field cv-f"><label for="mx_scSubj">${mE(t('mx_scSubj'))}</label><select id="mx_scSubj">${['auto', 'math', 'calc', 'stat', 'fin', 'acct', 'eco'].map(k => `<option value="${k}"${(sc.subj || 'auto') === k ? ' selected' : ''}>${mE(t('mx_sc_' + k))}</option>`).join('')}</select></div>
       <div class="field cv-f"><label for="mx_scMode">${mE(t('mx_scMode'))}</label><select id="mx_scMode">${['full', 'practice'].map(k => `<option value="${k}"${(sc.mode || 'full') === k ? ' selected' : ''}>${mE(t('mx_sc_' + k))}</option>`).join('')}</select></div></div>
     <div class="btnrow"><button type="button" class="btn" id="mx_scCam">📷 ${mE(t('mx_scCam'))}</button><button type="button" class="btn" id="mx_scPick">🖼️ ${mE(t('mx_scPick'))}</button>
@@ -408,7 +408,7 @@ Write topic, steps, answer and hint in ${UL}. Return JSON only:
 /* solve one (edited) question again from its text, no image needed */
 async function mxScanResolve(i, btn){
   const d = mxData(), res = d.scan.res, q = res.questions[i];
-  if (typeof cvAiOk !== 'function' || !cvAiOk()){ toast(t('cv_aiNo')); return; }
+  if (typeof cvAiOk !== 'function' || !cvAiOk()){ toast(t(gkNo('cv_aiNo'))); return; }
   const UL = {he: 'Hebrew', ar: 'Arabic', en: 'English'}[typeof lang === 'string' && ['he', 'ar', 'en'].includes(lang) ? lang : 'en'];
   const old = btn.textContent; btn.disabled = true; btn.textContent = '⏳ ' + t('mx_scWait');
   try {
