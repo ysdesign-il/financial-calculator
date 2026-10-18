@@ -3591,7 +3591,7 @@ function ixBoard(){
     const meta = asEsc(ixDay(d.t)) + ' · ' + asEsc(t(!d.live ? 'ix_snap' : d.rt ? 'ix_rt' : 'ix_delay')) + (isFinite(+d.ytd) ? ' · ' + asEsc(t('ix_ytd', {v: ixSg(+d.ytd)})) : '');
     h += card(k, val, ixCh(+d.chp), meta, IX_RET.includes(k) ? 'compound:' + k : 'none');
   });
-  h += `</div><div class="btnrow ix-pickrow"><button type="button" class="btn" id="ix_pick" aria-expanded="${IXP.open ? 'true' : 'false'}">✏️ ${asEsc(t('ix_pick'))} (${SHOW.length}/${IX_MK.length})</button></div>${IXP.open ? ixPickHTML(SHOW) : ''}<p class="fine mkt-note">${asEsc(t('ix_note'))}${liveOwner() ? ` <button type="button" class="fg-x" id="ix_edit">${asEsc(t('ix_edit'))}</button>` : ''}</p>`;
+  h += `</div>${DEV_ON === true ? `<div class="btnrow ix-pickrow"><button type="button" class="btn" id="ix_pick" aria-expanded="${IXP.open ? 'true' : 'false'}">✏️ ${asEsc(t('ix_pick'))} (${SHOW.length}/${IX_MK.length})</button></div>${IXP.open ? ixPickHTML(SHOW) : ''}` : ''}<p class="fine mkt-note">${asEsc(t('ix_note'))}${liveOwner() ? ` <button type="button" class="fg-x" id="ix_edit">${asEsc(t('ix_edit'))}</button>` : ''}</p>`;
   ext.innerHTML = h;
 }
 /* choose which indices and commodities the board shows (12.4) */
@@ -3622,6 +3622,7 @@ async function ixUserFind(raw){
   return {err: 'ix_uNone'};
 }
 async function ixUserAdd(){
+  if (DEV_ON !== true) return;
   const inp = $('#ix_uq'), msg = $('#ix_umsg'), btn = $('#ix_uadd'); if (!inp) return;
   const L = ixUserList(); if (L.length >= 30){ if (msg) msg.textContent = t('ix_uMax'); return; }
   if (btn) btn.disabled = true; if (msg) msg.textContent = '⏳ ' + t('ix_uLook');
@@ -3653,10 +3654,10 @@ document.addEventListener('input', e => { if (e.target && e.target.id === 'ix_uq
 document.addEventListener('click', e => {
   if (e.target.closest && e.target.closest('#ix_uadd')){ ixUserAdd(); return; }
   const rm = e.target.closest && e.target.closest('[data-ixurm]');
-  if (rm){ const k = rm.dataset.ixurm; SET.ixCustom = ixUserList().filter(c => c.k !== k); SET.ixShow = String(SET.ixShow || '').split(',').filter(x => x && x !== k).join(','); saveSet(); ixUserSync(); const y = window.scrollY; try { ixBoard(); } catch (er) {} window.scrollTo(0, y); return; }
+  if (rm && DEV_ON === true){ const k = rm.dataset.ixurm; SET.ixCustom = ixUserList().filter(c => c.k !== k); SET.ixShow = String(SET.ixShow || '').split(',').filter(x => x && x !== k).join(','); saveSet(); ixUserSync(); const y = window.scrollY; try { ixBoard(); } catch (er) {} window.scrollTo(0, y); return; }
 });
 document.addEventListener('click', e => {
-  const b = e.target.closest && e.target.closest('#ix_pick, [data-ixp], [data-ixpall], [data-ixpdef], [data-ixpok]'); if (!b) return;
+  const b = e.target.closest && e.target.closest('#ix_pick, [data-ixp], [data-ixpall], [data-ixpdef], [data-ixpok]'); if (!b || DEV_ON !== true) return;
   if (b.id === 'ix_pick'){ IXP.open = !IXP.open; }
   else if (b.dataset.ixp){ let S = ixShown(); const k = b.dataset.ixp; S = S.includes(k) ? S.filter(x => x !== k) : S.concat([k]); if (!S.length) return toast(t('ix_pMin')); SET.ixShow = IX_MK.filter(x => S.includes(x)).join(','); saveSet(); if (!IX.mkt[k] || !(IX.mkt[k].p > 0)) setTimeout(() => { try { ixLiveTick(true); } catch (er) {} }, 200); }
   else if (b.dataset.ixpall){ SET.ixShow = IX_MK.join(','); saveSet(); setTimeout(() => { try { ixLiveTick(true); } catch (er) {} }, 200); }
