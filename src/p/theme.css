@@ -1116,3 +1116,13 @@ input.ro{opacity:.75;cursor:not-allowed}
 .fl-b{font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
 .fl-b.fl-m{border-color:color-mix(in srgb,var(--gold-ui) 55%,transparent);color:var(--gold)}
 .fl-bar{margin:8px 0 4px}
+.gk-card{border:1px solid var(--line);border-radius:16px;padding:14px;margin:6px 0 12px;background:var(--g1)}
+.gk-card.on{border-color:rgba(47,191,134,.55)}
+.gk-hd{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px}.gk-hd b{display:block}.gk-hd small{display:block;opacity:.8;line-height:1.45;margin-top:2px}
+.gk-ic{width:34px;height:34px;flex:0 0 34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#4285f4,#9b72cb,#d96570);color:#fff;font-size:1.1rem}
+.gk-steps{margin:0;padding-inline-start:20px;display:grid;gap:10px}.gk-steps li{line-height:1.5}
+.gk-steps li span{display:block}.gk-steps .gold-btn,.gk-steps .btn{display:inline-flex;margin-top:6px;text-decoration:none;align-items:center;gap:6px}
+.gk-where{margin:10px 0 0}.gk-inc{margin:0 0 8px}
+.gk-okb{display:none;margin-top:6px;font-weight:700;color:#2fbf86;font-size:.9rem}.gk-card.on .gk-okb{display:block}
+.gk-card.on .gk-steps,.gk-card.on .gk-where{display:none}
+#gk_wrap .field .hint,#gk_wrap > p.fine:last-child{display:none}
