@@ -5,9 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <title>מחשבון פיננסי</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&family=Heebo:wght@400;700&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+<script>
+/* 12.7: full private mode — when on, nothing is loaded from outside sites (no fonts, live quotes, widgets or AI); only this site's own files */
+var PRIV = false; try { PRIV = window['local' + 'Storage'].getItem('fin-priv') === '1'; } catch (e) {}
+(function(){
+  if (!PRIV){ document.write('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&family=Heebo:wght@400;700&family=Rubik:wght@400;700&display=swap" rel="stylesheet">'); return; }
+  var own = function(x){ return x.origin === location.origin || x.origin === 'https://ysdesign-il.github.io' || /(^|\.)(claude\.ai|claudeusercontent\.com|anthropic\.com)$/.test(x.hostname); };
+  var ext = function(u){ try { var x = new URL(u, location.href); return /^(https?|wss?):$/.test(x.protocol) && !own(x); } catch (e) { return false; } };
+  var f = window.fetch; if (f) window.fetch = function(i){ var u = typeof i === 'string' ? i : (i && i.url) || ''; if (ext(u)) return Promise.reject(new Error('private')); return f.apply(this, arguments); };
+  var X = window.XMLHttpRequest && XMLHttpRequest.prototype.open; if (X) XMLHttpRequest.prototype.open = function(m, u){ if (ext(u)) throw new Error('private'); return X.apply(this, arguments); };
+  var W = window.WebSocket; if (W) window.WebSocket = function(u, p){ if (ext(u)) throw new Error('private'); return new W(u, p); };
+  var blocked = function(n){ if (!n || n.nodeType !== 1) return false; var t = n.tagName, u = t === 'LINK' ? n.getAttribute('href') : (t === 'SCRIPT' || t === 'IFRAME' || t === 'IMG') ? n.getAttribute('src') : ''; return !!u && ext(u); };
+  var ap = Node.prototype.appendChild, ib = Node.prototype.insertBefore;
+  Node.prototype.appendChild = function(n){ return blocked(n) ? n : ap.call(this, n); };
+  Node.prototype.insertBefore = function(n, r){ return blocked(n) ? n : ib.call(this, n, r); };
+})();
+</script>
+
 <style>
 :root{
   color-scheme: dark;
@@ -1356,6 +1370,7 @@ input.ro{opacity:.75;cursor:not-allowed}
 
 .tvx{margin-top:14px}.tv-ov{margin:8px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;min-height:120px;background:var(--g2)}
 .tv-cr{margin:4px 10px 8px;text-align:end}.tv-cr a{color:inherit}
+.pv-sw{margin:6px 0}.pv-pill{margin:0 0 8px;padding:8px 10px;border-radius:12px;border:1px solid var(--line);background:var(--g2)}
 
 /* ================= 7.8: app designs (ORBIT, AURUM); the default design has none of these rules ================= */
 .dz-ban{display:none}
@@ -6411,12 +6426,20 @@ Object.assign(T, {
   ix_pickH:['סמנו מה להציג. המחירים מתעדכנים חי כל 15 שניות כשהמסך פתוח, בלי חשבון אצל ברוקר. לחיצה על כרטיס פותחת גרף.','حدّد ما يُعرض. تتحدث الأسعار مباشرة كل 15 ثانية عندما تكون الشاشة مفتوحة، دون حساب لدى وسيط. الضغط على بطاقة يفتح رسمًا بيانيًا.','Pick what to show. Prices update live every 15 seconds while the screen is open, with no broker account. Tap a card for a chart.'],
   ix_pAll:['הכל','الكل','All'], ix_pDef:['ברירת מחדל','الافتراضي','Default'], ix_pDone:['סיום','تم','Done'], ix_pMin:['צריך לבחור לפחות אחד','يجب اختيار واحد على الأقل','Pick at least one'],
   tv_t:['לוח חי – TradingView','لوحة مباشرة – TradingView','Live board – TradingView'],
-  tv_h:['לוח חי עם גרפים לכל מדד וסחורה שבחרת, ומטבעות וקריפטו. נטען רק כשלוחצים "הצגה" – TradingView רואה את הכתובת שלך ועשוי לשמור עוגיות.','لوحة مباشرة برسوم لكل مؤشر وسلعة اخترتها، والعملات والعملات المشفّرة. تُحمَّل فقط عند الضغط على "عرض" – يرى TradingView عنوانك وقد يحفظ ملفات تعريف الارتباط.','A live board with charts for every index and commodity you picked, plus currencies and crypto. It loads only when you tap "Show" – TradingView sees your address and may set cookies.'],
+  tv_h:['לוח חי עם גרפים לכל מדד וסחורה שבחרת, ומטבעות וקריפטו. נטען רק כשלוחצים "הצגה", בלי עוגיות ובלי לספר ל־TradingView מאיזה אתר. את הכתובת שלך הוא רואה – להסתרה מלאה יש מצב פרטי בהגדרות ← אבטחה.','لوحة مباشرة برسوم لكل مؤشر وسلعة اخترتها، والعملات والعملات المشفّرة. تُحمَّل فقط عند الضغط على "عرض"، بلا ملفات تعريف ارتباط ودون إخبار TradingView بالموقع. يرى عنوانك – للخصوصية الكاملة استخدم الوضع الخاص في الإعدادات ← الأمان.','A live board with charts for every index and commodity you picked, plus currencies and crypto. It loads only when you tap "Show", with no cookies and without telling TradingView which site it is on. It does see your address – for full privacy use private mode in Settings → Security.'],
   tv_hOn:['מתעדכן חי. לחיצה על שורה מחליפה את הגרף.','يتحدث مباشرة. الضغط على سطر يغيّر الرسم.','Updating live. Tap a row to switch the chart.'],
   tv_show:['הצגת הלוח החי','عرض اللوحة المباشرة','Show the live board'], tv_hide:['הסתרת הלוח החי','إخفاء اللوحة المباشرة','Hide the live board'],
   tv_fail:['לא הצלחתי לטעון את הלוח החי כרגע. נסו שוב מאוחר יותר.','تعذّر تحميل اللوحة المباشرة الآن. حاول لاحقًا.','Could not load the live board right now. Try again later.'],
   tv_by:['נתונים וגרפים: TradingView','البيانات والرسوم: TradingView','Data and charts by TradingView'], tv_fx:['מטבעות וקריפטו','العملات والعملات المشفّرة','Currencies & crypto'],
   tv_inClaude:['בתוך Claude הלוח החי לא נטען. באתר עצמו הוא מוצג במסך הזה.','داخل Claude لا تُحمَّل اللوحة المباشرة. في الموقع نفسه تظهر في هذه الشاشة.','Inside Claude the live board does not load. On the website it shows on this screen.'],
+  tv_noCookie:['בלי עוגיות','بلا ملفات تعريف الارتباط','no cookies'],
+  tv_priv:['הלוח החי כבוי כי מצב פרטי מלא פועל (הגדרות ← אבטחה).','اللوحة المباشرة متوقفة لأن الوضع الخاص الكامل مفعّل (الإعدادات ← الأمان).','The live board is off because full private mode is on (Settings → Security).'],
+  pv_t:['מצב פרטי מלא','الوضع الخاص الكامل','Full private mode'],
+  pv_h:['כשהמצב פועל, האפליקציה לא פונה לשום אתר חיצוני: בלי מחירים חיים, בלי הלוח של TradingView, בלי AI ובלי גופנים מבחוץ – ולכן אף אתר לא רואה את הכתובת שלך. המחירים מגיעים מהעדכון האוטומטי של האתר עצמו (כמה פעמים ביום).','عند تفعيله لا يتصل التطبيق بأي موقع خارجي: لا أسعار مباشرة، ولا لوحة TradingView، ولا ذكاء اصطناعي، ولا خطوط خارجية – لذا لا يرى أي موقع عنوانك. الأسعار تأتي من التحديث التلقائي للموقع نفسه (عدة مرات يوميًا).','When on, the app contacts no outside site: no live prices, no TradingView board, no AI and no outside fonts – so no site sees your address. Prices come from the site\'s own automatic update (a few times a day).'],
+  pv_on:['פועל','مفعّل','On'], pv_off:['כבוי','متوقف','Off'],
+  pv_note:['ההחלפה טוענת את האפליקציה מחדש. הגדרה זו נשמרת במכשיר הזה בלבד.','التبديل يعيد تحميل التطبيق. يُحفظ هذا الإعداد على هذا الجهاز فقط.','Switching reloads the app. This setting is kept on this device only.'],
+  pv_reloadOn:['מצב פרטי מלא פועל – טוען מחדש…','تم تفعيل الوضع الخاص الكامل – إعادة التحميل…','Full private mode on – reloading…'], pv_reloadOff:['מצב פרטי כבוי – טוען מחדש…','تم إيقاف الوضع الخاص – إعادة التحميل…','Private mode off – reloading…'],
+  pv_pill:['מצב פרטי מלא: המחירים מהעדכון האוטומטי האחרון, בלי חיבור חי לאתרים חיצוניים.','الوضع الخاص الكامل: الأسعار من آخر تحديث تلقائي، دون اتصال مباشر بمواقع خارجية.','Full private mode: prices from the latest automatic update, with no live connection to outside sites.'],
 });
 
 const t = (k, p) => {
@@ -13013,7 +13036,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "12.7", "date": "2026-10-18", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261018.154235';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261018.154826';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -24744,16 +24767,20 @@ const TV_FX = [['FX_IDC:USDILS', 'USD/ILS'], ['FX_IDC:EURILS', 'EUR/ILS'], ['FX_
 const tvLang = () => { const l = document.documentElement.lang || 'he'; return l === 'he' ? 'he_IL' : l === 'ar' ? 'ar_AE' : 'en'; };
 const tvDark = () => { try { return getComputedStyle(document.documentElement).colorScheme.includes('dark') || document.documentElement.dataset.theme === 'dark'; } catch (e) { return false; } };
 const tvE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
-/* a TradingView widget: their standard embed (a script whose text is the settings), inside a box we own */
+/* a TradingView widget, loaded privately: our own frame straight to their widget page, with no cookies (a fresh, throw-away
+   storage every time where the browser supports it), no referrer (they are not told which site it is on) and no script of theirs on our page */
 function tvWidget(host, name, cfg){
   host.innerHTML = '';
-  const wrap = document.createElement('div'); wrap.className = 'tradingview-widget-container';
-  const inner = document.createElement('div'); inner.className = 'tradingview-widget-container__widget'; wrap.appendChild(inner);
-  const s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://s3.tradingview.com/external-embedding/embed-widget-' + name + '.js';
-  s.text = JSON.stringify(Object.assign({locale: tvLang(), colorTheme: tvDark() ? 'dark' : 'light', isTransparent: true, width: '100%'}, cfg));
-  s.onerror = () => { host.innerHTML = `<p class="fine">${tvE(t('tv_fail'))}</p>`; };
-  wrap.appendChild(s); host.appendChild(wrap);
-  const cr = document.createElement('div'); cr.className = 'tv-cr fine'; cr.textContent = t('tv_by'); host.appendChild(cr);
+  const c = Object.assign({locale: tvLang(), colorTheme: tvDark() ? 'dark' : 'light', isTransparent: true, width: '100%'}, cfg);
+  const f = document.createElement('iframe');
+  f.setAttribute('credentialless', ''); f.credentialless = true;
+  f.referrerPolicy = 'no-referrer'; f.setAttribute('referrerpolicy', 'no-referrer');
+  f.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+  f.loading = 'lazy'; f.title = t('tv_t'); f.className = 'tv-frame';
+  f.style.cssText = 'width:100%;border:0;display:block;height:' + (c.height || 400) + 'px';
+  f.src = 'https://www.tradingview-widget.com/embed-widget/' + name + '/?locale=' + encodeURIComponent(c.locale) + '#' + encodeURIComponent(JSON.stringify(c));
+  host.appendChild(f);
+  const cr = document.createElement('div'); cr.className = 'tv-cr fine'; cr.textContent = t('tv_by') + (('credentialless' in HTMLIFrameElement.prototype) ? ' · ' + t('tv_noCookie') : ''); host.appendChild(cr);
 }
 function tvOverviewCfg(){
   const S = typeof ixShown === 'function' ? ixShown() : IX_DEF, sym = k => ({s: TV_SYM[k], d: ixName(k)});
@@ -24767,6 +24794,7 @@ function tvOverviewCfg(){
 function tvBoxHTML(){
   const on = SET.tvOn === '1';
   if (IN_CLAUDE) return `<h4 class="ix-g">📺 ${tvE(t('tv_t'))}</h4><p class="fine">${tvE(t('tv_inClaude'))}</p>`;
+  if (typeof PRIV !== 'undefined' && PRIV) return `<h4 class="ix-g">📺 ${tvE(t('tv_t'))}</h4><p class="fine">🔒 ${tvE(t('tv_priv'))}</p>`;
   return `<h4 class="ix-g">📺 ${tvE(t('tv_t'))}</h4><p class="fine">${tvE(t(on ? 'tv_hOn' : 'tv_h'))}</p>
     <div class="btnrow"><button type="button" class="${on ? 'btn' : 'gold-btn'}" id="tv_tog">${tvE(t(on ? 'tv_hide' : 'tv_show'))}</button></div>
     <div id="tv_ov" class="tv-ov"${on ? '' : ' hidden'}></div>`;
@@ -24776,10 +24804,10 @@ function tvMount(){
   const hm = $('#hmx'); if (!hm) return;
   let box = $('#tvx'); if (!box){ box = document.createElement('div'); box.id = 'tvx'; box.className = 'tvx'; hm.parentNode.insertBefore(box, hm.nextSibling); TVX.sig = ''; }
   /* rebuild only when something it depends on changed — the price board above refreshes every 15 seconds, the widget must not */
-  const sig = [document.documentElement.lang, SET.tvOn, tvDark(), typeof ixShown === 'function' ? ixShown().join(',') : ''].join('|');
+  const sig = [document.documentElement.lang, SET.tvOn, typeof PRIV !== 'undefined' && PRIV, tvDark(), typeof ixShown === 'function' ? ixShown().join(',') : ''].join('|');
   if (sig === TVX.sig) return; TVX.sig = sig;
   box.innerHTML = tvBoxHTML();
-  if (!IN_CLAUDE && SET.tvOn === '1'){ const ov = $('#tv_ov'); if (ov) tvWidget(ov, 'market-overview', tvOverviewCfg()); }
+  if (!IN_CLAUDE && !(typeof PRIV !== 'undefined' && PRIV) && SET.tvOn === '1'){ const ov = $('#tv_ov'); if (ov) tvWidget(ov, 'market-overview', tvOverviewCfg()); }
 }
 {
   const ixBoardTv = ixBoard;
@@ -24790,6 +24818,29 @@ document.addEventListener('click', e => {
   if (e.target.closest && e.target.closest('#tv_tog')){ SET.tvOn = SET.tvOn === '1' ? '0' : '1'; saveSet(); TVX.sig = ''; tvMount(); return; }
 
 });
+
+/* ---------- full private mode: the switch in Settings → Security, and a note on the markets screen ---------- */
+function pvSetRender(){
+  const cat = $('.set-cat[data-cat="security"]'); if (!cat) return; let s = $('#pv_sec');
+  if (!s){ cat.insertAdjacentHTML('afterbegin', `<section class="set-sec" id="pv_sec"></section>`); s = $('#pv_sec'); }
+  const on = typeof PRIV !== 'undefined' && PRIV;
+  s.innerHTML = `<div class="sec-h"><h3 class="sec-t">🔒 ${tvE(t('pv_t'))}</h3></div><p class="fine">${tvE(t('pv_h'))}</p>
+    <label class="mk-sw pv-sw"><input type="checkbox" id="pv_tog"${on ? ' checked' : ''}><span class="mk-knob"></span><span>${tvE(t(on ? 'pv_on' : 'pv_off'))}</span></label>
+    <p class="fine">${tvE(t('pv_note'))}</p>`;
+}
+document.addEventListener('change', e => {
+  if (!e.target || e.target.id !== 'pv_tog') return;
+  try { if (e.target.checked) RAWLS.setItem('fin-priv', '1'); else RAWLS.removeItem('fin-priv'); } catch (er) {}
+  toast(t(e.target.checked ? 'pv_reloadOn' : 'pv_reloadOff')); setTimeout(() => location.reload(), 900);
+});
+document.addEventListener('click', e => { if (e.target.closest && e.target.closest('.sh-row[data-scat="security"]')) setTimeout(pvSetRender, 160); });
+setTimeout(pvSetRender, 950);
+{
+  const ixBoardPv = ixBoard;
+  ixBoard = function(){ const r = ixBoardPv.apply(this, arguments);
+    try { if (typeof PRIV !== 'undefined' && PRIV){ const hm = $('#hmx'); if (hm && !hm.querySelector('.pv-pill')) hm.insertAdjacentHTML('afterbegin', `<p class="fine pv-pill">🔒 ${tvE(t('pv_pill'))}</p>`); } } catch (e) {}
+    return r; };
+}
 
 applyLang(false);
 activate(tab);
