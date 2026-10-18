@@ -23,4 +23,6 @@ Object.assign(T, {
   pv_note:['ההחלפה טוענת את האפליקציה מחדש. הגדרה זו נשמרת במכשיר הזה בלבד.','التبديل يعيد تحميل التطبيق. يُحفظ هذا الإعداد على هذا الجهاز فقط.','Switching reloads the app. This setting is kept on this device only.'],
   pv_reloadOn:['מצב פרטי מלא פועל – טוען מחדש…','تم تفعيل الوضع الخاص الكامل – إعادة التحميل…','Full private mode on – reloading…'], pv_reloadOff:['מצב פרטי כבוי – טוען מחדש…','تم إيقاف الوضع الخاص – إعادة التحميل…','Private mode off – reloading…'],
   pv_pill:['מצב פרטי מלא: המחירים מהעדכון האוטומטי האחרון, בלי חיבור חי לאתרים חיצוניים.','الوضع الخاص الكامل: الأسعار من آخر تحديث تلقائي، دون اتصال مباشر بمواقع خارجية.','Full private mode: prices from the latest automatic update, with no live connection to outside sites.'],
+  tv_miss:['לא בלוח החי (הנתונים שלהם לא חינמיים להטמעה), אבל מתעדכנים בכרטיסים למעלה: {n}.','غير موجودة في اللوحة المباشرة (بياناتها غير مجانية للتضمين)، لكنها تتحدث في البطاقات أعلاه: {n}.','Not on the live board (their data is not free to embed), but updating in the cards above: {n}.'],
+  tv_cn50:['סין A50','الصين A50','China A50'],
 });

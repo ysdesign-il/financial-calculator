@@ -1,12 +1,13 @@
 /* ---------- 12.7: the live TradingView board on the markets screen (no outside links) ----------
    Nothing loads from those sites until you tap to show it (they see your address and may set cookies); the choice is remembered.
    Inside the Claude app outside widgets cannot load, so there you get buttons that open the sites. */
-const TV_SYM = {ta35: 'TASE:TA35', ta125: 'TASE:TA125', spx: 'FOREXCOM:SPXUSD', ndx: 'FOREXCOM:NSXUSD', dji: 'FOREXCOM:DJI', ixic: 'NASDAQ:IXIC', rut: 'TVC:RUT', vix: 'TVC:VIX', dxy: 'TVC:DXY',
-  tsx: 'TSX:TSX', ipc: 'BMV:ME', bovespa: 'BMFBOVESPA:IBOV', ftse: 'TVC:UKX', dax: 'XETR:DAX', stoxx: 'TVC:SX5E', cac: 'EURONEXT:PX1', ibex: 'BME:IBC', ftmib: 'TVC:FTMIB', aex: 'EURONEXT:AEX', smi: 'SIX:SMI',
-  nikkei: 'TVC:NI225', hsi: 'TVC:HSI', ssec: 'SSE:000001', kospi: 'TVC:KOSPI', nifty: 'NSE:NIFTY', asx: 'ASX:XJO',
-  gold: 'TVC:GOLD', silver: 'TVC:SILVER', platinum: 'TVC:PLATINUM', palladium: 'TVC:PALLADIUM', copper: 'COMEX:HG1!', brent: 'TVC:UKOIL', wti: 'TVC:USOIL', natgas: 'NYMEX:NG1!',
-  gasoline: 'NYMEX:RB1!', heatoil: 'NYMEX:HO1!', wheat: 'CBOT:ZW1!', corn: 'CBOT:ZC1!', soy: 'CBOT:ZS1!', coffee: 'ICEUS:KC1!', sugar: 'ICEUS:SB1!', cocoa: 'ICEUS:CC1!', cotton: 'ICEUS:CT1!'};
-const TV_FX = [['FX_IDC:USDILS', 'USD/ILS'], ['FX_IDC:EURILS', 'EUR/ILS'], ['FX_IDC:GBPILS', 'GBP/ILS'], ['FX:EURUSD', 'EUR/USD'], ['BITSTAMP:BTCUSD', 'Bitcoin'], ['BITSTAMP:ETHUSD', 'Ethereum']];
+/* symbols the free embeddable board actually streams (broker feeds, not exchange-licensed data). [symbol, name shown when it is a stand-in] */
+const TV_SYM = {spx: ['OANDA:SPX500USD'], ndx: ['OANDA:NAS100USD'], dji: ['OANDA:US30USD'], rut: ['OANDA:US2000USD'], dxy: ['TVC:DXY'],
+  ftse: ['OANDA:UK100GBP'], dax: ['OANDA:DE30EUR'], stoxx: ['OANDA:EU50EUR'], cac: ['OANDA:FR40EUR'], ibex: ['OANDA:ESPIXEUR'], aex: ['OANDA:NL25EUR'], smi: ['OANDA:CH20CHF'],
+  nikkei: ['OANDA:JP225USD'], hsi: ['OANDA:HK33HKD'], ssec: ['OANDA:CN50USD', 'tv_cn50'], nifty: ['OANDA:IN50USD'], asx: ['OANDA:AU200AUD'],
+  gold: ['OANDA:XAUUSD'], silver: ['OANDA:XAGUSD'], platinum: ['OANDA:XPTUSD'], palladium: ['OANDA:XPDUSD'], copper: ['OANDA:XCUUSD'], brent: ['OANDA:BCOUSD'], wti: ['OANDA:WTICOUSD'], natgas: ['OANDA:NATGASUSD'],
+  wheat: ['OANDA:WHEATUSD'], corn: ['OANDA:CORNUSD'], soy: ['OANDA:SOYBNUSD'], sugar: ['OANDA:SUGARUSD']};
+const TV_FX = [['FX_IDC:USDILS', 'USD/ILS'], ['FX_IDC:EURILS', 'EUR/ILS'], ['FX_IDC:GBPILS', 'GBP/ILS'], ['OANDA:EURUSD', 'EUR/USD'], ['OANDA:USDJPY', 'USD/JPY'], ['BITSTAMP:BTCUSD', 'Bitcoin'], ['BITSTAMP:ETHUSD', 'Ethereum']];
 const tvLang = () => { const l = document.documentElement.lang || 'he'; return l === 'he' ? 'he_IL' : l === 'ar' ? 'ar_AE' : 'en'; };
 const tvDark = () => { try { return getComputedStyle(document.documentElement).colorScheme.includes('dark') || document.documentElement.dataset.theme === 'dark'; } catch (e) { return false; } };
 const tvE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
@@ -18,16 +19,16 @@ function tvWidget(host, name, cfg){
   const f = document.createElement('iframe');
   f.setAttribute('credentialless', ''); f.credentialless = true;
   f.referrerPolicy = 'no-referrer'; f.setAttribute('referrerpolicy', 'no-referrer');
-  f.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-  f.loading = 'lazy'; f.title = t('tv_t'); f.className = 'tv-frame';
+    f.loading = 'lazy'; f.title = t('tv_t'); f.className = 'tv-frame';
   f.style.cssText = 'width:100%;border:0;display:block;height:' + (c.height || 400) + 'px';
   f.src = 'https://www.tradingview-widget.com/embed-widget/' + name + '/?locale=' + encodeURIComponent(c.locale) + '#' + encodeURIComponent(JSON.stringify(c));
   host.appendChild(f);
   const cr = document.createElement('div'); cr.className = 'tv-cr fine'; cr.textContent = t('tv_by') + (('credentialless' in HTMLIFrameElement.prototype) ? ' · ' + t('tv_noCookie') : ''); host.appendChild(cr);
 }
 function tvOverviewCfg(){
-  const S = typeof ixShown === 'function' ? ixShown() : IX_DEF, sym = k => ({s: TV_SYM[k], d: ixName(k)});
-  const idx = S.filter(k => TV_SYM[k] && !IX_COM.includes(k)).map(sym), com = S.filter(k => TV_SYM[k] && IX_COM.includes(k)).map(sym);
+  const S = typeof ixShown === 'function' ? ixShown() : IX_DEF, sym = k => ({s: TV_SYM[k][0], d: TV_SYM[k][1] ? t(TV_SYM[k][1]) : IX_COM.includes(k) ? ixName(k).replace(/\s*\(.*\)$/, '') : ixName(k)});
+  const pick = S.filter(k => TV_SYM[k]).length >= 3 ? S : IX_MK;      // too few of the picked ones stream here → show all that do
+  const idx = pick.filter(k => TV_SYM[k] && !IX_COM.includes(k)).map(sym), com = pick.filter(k => TV_SYM[k] && IX_COM.includes(k)).map(sym);
   const tabs = [];
   if (idx.length) tabs.push({title: t('ix_gMkt'), symbols: idx, originalTitle: 'Indices'});
   if (com.length) tabs.push({title: t('ix_gCom'), symbols: com, originalTitle: 'Commodities'});
@@ -40,8 +41,9 @@ function tvBoxHTML(){
   if (typeof PRIV !== 'undefined' && PRIV) return `<h4 class="ix-g">📺 ${tvE(t('tv_t'))}</h4><p class="fine">🔒 ${tvE(t('tv_priv'))}</p>`;
   return `<h4 class="ix-g">📺 ${tvE(t('tv_t'))}</h4><p class="fine">${tvE(t(on ? 'tv_hOn' : 'tv_h'))}</p>
     <div class="btnrow"><button type="button" class="${on ? 'btn' : 'gold-btn'}" id="tv_tog">${tvE(t(on ? 'tv_hide' : 'tv_show'))}</button></div>
-    <div id="tv_ov" class="tv-ov"${on ? '' : ' hidden'}></div>`;
+    <div id="tv_ov" class="tv-ov"${on ? '' : ' hidden'}></div>${on ? tvMissNote() : ''}`;
 }
+function tvMissNote(){ const S = typeof ixShown === 'function' ? ixShown() : IX_DEF, miss = S.filter(k => !TV_SYM[k]); return miss.length ? `<p class="fine">${tvE(t('tv_miss', {n: miss.map(ixName).join(', ')}))}</p>` : ''; }
 var TVX = {sig: ''};
 function tvMount(){
   const hm = $('#hmx'); if (!hm) return;
