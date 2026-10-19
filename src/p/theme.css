@@ -1318,3 +1318,17 @@ body[data-tab="expenses"] .page-head .scan-btn + .prn-btn,body[data-tab="clients
 .mig-box{max-width:460px;width:100%;text-align:center;background:var(--card,#fff);color:var(--ink,#141821);border-radius:22px;padding:26px 20px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
 .mig-box h2{margin:6px 0 10px;font-size:1.3rem}.mig-box p{line-height:1.6}.mig-ic{font-size:2.6rem}.mig-btns{justify-content:center;margin:14px 0}.mig-btns .gold-btn{width:100%}
 .mig-box .lg-a{margin-top:10px;font-size:.9rem;opacity:.8}
+/* 13.15: bank accounts adviser */
+.bk-accs{display:flex;flex-direction:column;gap:12px;margin:12px 0}
+.bk-acc{border:1.5px solid var(--line);border-radius:16px;padding:10px 12px;margin:0;min-width:0}
+.bk-acc legend{padding:0 4px;max-width:100%}.bk-nick{font:inherit;font-weight:700;font-size:16px;border:none;border-bottom:1.5px dashed var(--line);background:transparent;color:inherit;padding:4px 2px;max-width:100%}
+.bk-row{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.bk-row select{font:inherit;font-size:16px;min-height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface,transparent);color:inherit;padding:2px 8px;flex:1 1 140px}
+.bk-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.bk-f{display:flex;flex-direction:column;gap:3px;font-size:.8rem;color:var(--ink-2)}
+.bk-f input,.bk-f select{font:inherit;font-size:16px;min-height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface,transparent);color:var(--ink);padding:4px 8px;min-width:0}
+.bk-rm{margin-top:6px}.bk-house{margin:6px 0 14px}
+.bk-hero{display:flex;flex-direction:column;gap:2px;padding:14px;border-radius:16px;margin:8px 0;border:1.5px solid var(--line);background:color-mix(in srgb,var(--gold,#d4a017) 10%,transparent)}.bk-hero b{font-size:1.7rem}.bk-hero small{opacity:.8}
+.bk-adv{list-style:none;padding:0;margin:0 0 12px;display:flex;flex-direction:column;gap:8px}
+.bk-a{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;border:1px solid var(--line)}.bk-a p{margin:3px 0 0;font-size:.86rem;line-height:1.5;color:var(--ink-2)}.bk-ic{font-size:1.2rem;line-height:1.3}
+.bk-warn{border-color:#d97706;background:color-mix(in srgb,#d97706 8%,transparent)}.bk-ok{border-color:#16a34a;background:color-mix(in srgb,#16a34a 7%,transparent)}
+.bk-plan{width:100%;border-collapse:collapse;font-size:.88rem}.bk-plan th,.bk-plan td{padding:6px 4px;border-bottom:1px solid var(--line);text-align:start}.bk-plan .neg{color:#b42318}
+.bk-empty{padding:10px 0}
