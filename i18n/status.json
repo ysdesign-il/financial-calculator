@@ -1,24 +1,11 @@
 {
- "started": "2026-10-19 12:16:13 UTC",
- "events": [
-  "published es",
-  "published fr",
-  "published ru",
-  "published pt-BR",
-  "published it",
-  "published zh-CN",
-  "published hi"
- ],
+ "started": "2026-10-19 13:23:49 UTC",
+ "events": [],
  "langs": {
-  "es": 6137,
-  "fr": 6137,
-  "ru": 6137,
-  "pt-BR": 6137,
-  "it": 6137,
   "zh-CN": 6131,
   "hi": 6132
  },
- "finished": "2026-10-19 12:18:58 UTC",
+ "finished": "2026-10-19 13:24:15 UTC",
  "coverage": {
   "zh-CN": 6131,
   "fr": 6137,
