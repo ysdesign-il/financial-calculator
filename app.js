@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261019.235804'){ try { if (!sessionStorage.getItem('fin-hb-20261019.235804')){ sessionStorage.setItem('fin-hb-20261019.235804', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261020.000914'){ try { if (!sessionStorage.getItem('fin-hb-20261020.000914')){ sessionStorage.setItem('fin-hb-20261020.000914', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -5074,6 +5074,12 @@ Object.assign(T, {
   ar_note:['האחוזים והשטחים לפי תקנות ההסדרים (הנחה מארנונה) כפי שהרשויות מפרסמות; ספי מבחן ההכנסה לפי הפרסום ל־2025 ומתעדכנים כל שנה. הערכה בלבד – הרשות קובעת.','النسب والمساحات حسب أنظمة التسويات (خصم الأرنونا) كما تنشرها السلطات؛ عتبات فحص الدخل حسب منشور 2025 وتُحدَّث سنويًا. تقدير فقط – السلطة تقرر.','Percentages and areas per the arnona-discount regulations as authorities publish them; income-test ceilings from the 2025 publication, updated yearly. An estimate only – the authority decides.'],
   lg_h_p1910k:['19.10.2026 – נוסף הסבר על התזכורות.','19.10.2026 – أُضيف شرح عن التذكيرات.','19.10.2026 – added an explanation of reminders.'],
   sc2_now:['עכשיו','الآن','Now'], sc2_diff:['הפרש','الفرق','Difference'], sc2_hint:['העמודה "עכשיו" מתעדכנת בזמן שמשנים ערכים; ההפרש לעומת "{n}".','عمود "الآن" يتحدث أثناء تغيير القيم؛ الفرق مقارنة بـ"{n}".','The "Now" column updates as you change values; the difference is against "{n}".'],
+});
+/* 13.20: the documents no longer name the hosting providers or addresses */
+Object.assign(T, {
+  lg_p_ext6:['האתר מתארח אצל ספק אחסון חיצוני, שרואה את כתובת ה-IP בכל טעינה של האתר, לפי מדיניות הפרטיות שלו. הנתונים המשותפים (שערים, מדדים) מתעדכנים אוטומטית מהמקורות הרשמיים. אם כתובת האתר משתנה, הכתובת הקודמת מעבירה לחדשה, ובלחיצה אחת גם את הנתונים שלך – ישירות בתוך הטלפון.','الموقع مستضاف لدى مزود استضافة خارجي يرى عنوان IP عند كل تحميل للموقع، وفق سياسة الخصوصية الخاصة به. البيانات المشتركة (الأسعار والمؤشرات) تتحدث تلقائيًا من المصادر الرسمية. إذا تغيّر عنوان الموقع، يحوّل العنوان السابق إلى الجديد، وبضغطة واحدة ينقل بياناتك أيضًا – مباشرة داخل الهاتف.','The website is hosted by an outside hosting provider, which sees your IP address each time the site loads, under its own privacy policy. Shared data (rates, indices) updates automatically from the official sources. If the site\'s address changes, the previous address forwards to the new one and, with one tap, moves your data too – directly on your phone.'],
+  lg_h_p1910g:['19.10.2026 – האתר עבר לכתובת חדשה; הכתובת הקודמת מעבירה לכאן עם הנתונים.','19.10.2026 – انتقل الموقع إلى عنوان جديد؛ العنوان السابق يحوّل إلى هنا مع البيانات.','19.10.2026 – the site moved to a new address; the previous address forwards here with your data.'],
+  lg_t_host:['האתר מתארח אצל ספקים חיצוניים. הכתובת עשויה להשתנות; כשזה קורה, הכתובת הקודמת מפנה לחדשה ומאפשרת להעביר אליה את הנתונים שבמכשיר. אין התחייבות לזמינות רציפה, ותקלות אצל הספקים עשויות להשבית את האתר זמנית.','الموقع مستضاف لدى مزودين خارجيين. قد يتغير العنوان؛ وعندها يحوّل العنوان السابق إلى الجديد ويتيح نقل البيانات الموجودة على الجهاز. لا يوجد التزام بالتوفر المتواصل، وقد تعطّل الأعطال لدى المزودين الموقع مؤقتًا.','The site is hosted by outside providers. The address may change; when it does, the previous address forwards to the new one and lets you move the data on your device. Continuous availability isn\'t guaranteed, and provider outages may take the site down temporarily.'],
 });
 
 const t = (k, p) => {
@@ -11707,8 +11713,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.19", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.235804';
+var CHANGELOG = [{"v": "13.20", "date": "2026-10-20", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261020.000914';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
