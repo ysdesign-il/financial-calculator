@@ -7350,6 +7350,7 @@
   "lg_h_p1910k": "19.10.2026 – added an explanation of reminders.",
   "sc2_now": "Now",
   "sc2_diff": "Difference",
-  "sc2_hint": "The \"Now\" column updates as you change values; the difference is against \"{n}\"."
+  "sc2_hint": "The \"Now\" column updates as you change values; the difference is against \"{n}\".",
+  "lg_copy": "© {y} Financial Calculator. All rights reserved."
  }
 }
