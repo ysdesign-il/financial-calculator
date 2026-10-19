@@ -112,10 +112,12 @@ async function dsRoute(k, fs){
 }
 
 /* ================= personal cards: crop, straighten, clean up, hide parts, watermark, PDF — all on the phone ================= */
+/* the photo at full camera resolution (up to 16 megapixels – what a phone browser can safely hold), turned the right way up */
 function dsLoad(file){
   return new Promise((res, rej) => {
     const img = new Image(), u = URL.createObjectURL(file);
-    img.onload = () => { const k = Math.min(1, 2000 / Math.max(img.width, img.height)), c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(u); res(c); };
+    img.onload = () => { const k = Math.min(1, 4096 / Math.max(img.width, img.height), Math.sqrt(16e6 / (img.width * img.height))), c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      const x = c.getContext('2d'); x.imageSmoothingEnabled = true; x.imageSmoothingQuality = 'high'; x.drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(u); res(c); };
     img.onerror = () => { URL.revokeObjectURL(u); rej(new Error('img')); };
     img.src = u;
   });
@@ -157,51 +159,95 @@ function dsHomo(W, H, q){
     for (let r = 0; r < 8; r++){ if (r === c) continue; const f = A[r][c] / A[c][c]; for (let k = c; k < 8; k++) A[r][k] -= f * A[c][k]; B[r] -= f * B[c]; } }
   return B.map((b, i) => b / A[i][i]);
 }
+/* straightening with bicubic (Catmull-Rom) sampling – sharper letters than simple blending; a photo much bigger than the result is first shrunk smoothly so fine print does not shimmer */
 function dsWarp(src, qn, W, H){
+  const sw0 = src.width, sh0 = src.height, Q0 = qn.map(([x, y]) => [x * sw0, y * sh0]);
+  const qw = (Math.hypot(Q0[1][0] - Q0[0][0], Q0[1][1] - Q0[0][1]) + Math.hypot(Q0[2][0] - Q0[3][0], Q0[2][1] - Q0[3][1])) / 2, qh = (Math.hypot(Q0[3][0] - Q0[0][0], Q0[3][1] - Q0[0][1]) + Math.hypot(Q0[2][0] - Q0[1][0], Q0[2][1] - Q0[1][1])) / 2;
+  const shrink = Math.min(qw / W, qh / H) / 1.25;
+  if (shrink > 1.15){ const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(sw0 / shrink)); c.height = Math.max(1, Math.round(sh0 / shrink)); const x = c.getContext('2d'); x.imageSmoothingEnabled = true; x.imageSmoothingQuality = 'high'; x.drawImage(src, 0, 0, c.width, c.height); src = c; }
   const sw = src.width, sh = src.height, q = qn.map(([x, y]) => [x * sw, y * sh]), h = dsHomo(W, H, q);
   const sd = src.getContext('2d').getImageData(0, 0, sw, sh).data, out = document.createElement('canvas'); out.width = W; out.height = H;
-  const ox = out.getContext('2d'), od = ox.createImageData(W, H), o = od.data;
+  const ox = out.getContext('2d'), od = ox.createImageData(W, H), o = od.data, wx = new Float32Array(4), wy = new Float32Array(4);
+  const cr = t0 => { const t2 = t0 * t0, t3 = t2 * t0; return [(-t3 + 2 * t2 - t0) / 2, (3 * t3 - 5 * t2 + 2) / 2, (-3 * t3 + 4 * t2 + t0) / 2, (t3 - t2) / 2]; };
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++){
     const z = h[6] * x + h[7] * y + 1, u = (h[0] * x + h[1] * y + h[2]) / z, v = (h[3] * x + h[4] * y + h[5]) / z;
-    const x0 = Math.max(0, Math.min(sw - 2, u | 0)), y0 = Math.max(0, Math.min(sh - 2, v | 0)), fx = Math.max(0, Math.min(1, u - x0)), fy = Math.max(0, Math.min(1, v - y0)), i = (y * W + x) * 4;
-    const a = (y0 * sw + x0) * 4, b = a + 4, c = a + sw * 4, d = c + 4;
-    for (let ch = 0; ch < 3; ch++) o[i + ch] = (sd[a + ch] * (1 - fx) + sd[b + ch] * fx) * (1 - fy) + (sd[c + ch] * (1 - fx) + sd[d + ch] * fx) * fy;
-    o[i + 3] = 255;
+    const x1 = Math.floor(u), y1 = Math.floor(v), A = cr(u - x1), B = cr(v - y1), i = (y * W + x) * 4;
+    let r = 0, g = 0, b = 0;
+    for (let m = 0; m < 4; m++){ const yy = Math.min(sh - 1, Math.max(0, y1 - 1 + m)), row = yy * sw;
+      for (let n = 0; n < 4; n++){ const xx = Math.min(sw - 1, Math.max(0, x1 - 1 + n)), k = (row + xx) * 4, w = A[n] * B[m]; r += sd[k] * w; g += sd[k + 1] * w; b += sd[k + 2] * w; } }
+    o[i] = r < 0 ? 0 : r > 255 ? 255 : r; o[i + 1] = g < 0 ? 0 : g > 255 ? 255 : g; o[i + 2] = b < 0 ? 0 : b > 255 ? 255 : b; o[i + 3] = 255;
   }
   ox.putImageData(od, 0, 0); return out;
 }
 const dsDist = (a, b, sw, sh) => Math.hypot((a[0] - b[0]) * sw, (a[1] - b[1]) * sh);
+/* the size of the result: as many dots per inch as the photo really holds – a card up to 600 DPI, a page at 300 DPI (print quality), never below 300 */
 function dsOutSize(src, q, type){
   const size = (DS_CARDS.find(c => c[0] === type) || [0, 0, 'free'])[2], sw = src.width, sh = src.height;
   const mw = (dsDist(q[0], q[1], sw, sh) + dsDist(q[3], q[2], sw, sh)) / 2, mh = (dsDist(q[0], q[3], sw, sh) + dsDist(q[1], q[2], sw, sh)) / 2, port = mh > mw;
-  if (size === 'free'){ const k = Math.min(1.6, 1600 / Math.max(mw, mh)); return [Math.max(50, Math.round(mw * k)), Math.max(50, Math.round(mh * k))]; }
-  const [a, b] = DS_MM[size], px = size === 'a4' ? 5.9 : 11.8;                       // ~150 dpi for a page, ~300 dpi for a card
-  return port ? [Math.round(Math.min(a, b) * px), Math.round(Math.max(a, b) * px)] : [Math.round(Math.max(a, b) * px), Math.round(Math.min(a, b) * px)];
+  if (size === 'free'){ const k = Math.min(1, 3000 / Math.max(mw, mh)); return [Math.max(50, Math.round(mw * k)), Math.max(50, Math.round(mh * k)), 0]; }
+  const [a, b] = DS_MM[size], lw = port ? Math.min(a, b) : Math.max(a, b), lh = port ? Math.max(a, b) : Math.min(a, b);
+  const real = Math.min(mw / lw, mh / lh) * 25.4, dpi = Math.round(Math.max(300, Math.min(size === 'a4' ? 300 : 600, real)) / 10) * 10;
+  return [Math.round(lw * dpi / 25.4), Math.round(lh * dpi / 25.4), dpi, Math.round(real)];
 }
-/* the look: improved (contrast stretched), original, grey, black-and-white (adaptive threshold – sharp text) */
+/* the look. All of it runs on the phone.
+   auto – colour kept, white balance, contrast and sharpening (best for cards)
+   doc  – the paper made evenly white (shadows and uneven light removed), colour kept, sharp text (best for pages)
+   orig – as photographed · gray – grey, even light · bw – crisp black text on white, with smooth edges */
+/* how the light falls on the page: shrink a lot, keep the brightest (paper, not ink), smooth, enlarge again */
+function dsLight(c){
+  const W = c.width, H = c.height, k = Math.min(1, 96 / Math.max(W, H)), w = Math.max(4, Math.round(W * k)), h = Math.max(4, Math.round(H * k));
+  const s1 = document.createElement('canvas'); s1.width = w; s1.height = h; const x1 = s1.getContext('2d'); x1.imageSmoothingQuality = 'high'; x1.drawImage(c, 0, 0, w, h);
+  const id = x1.getImageData(0, 0, w, h), d = id.data, m = new Uint8ClampedArray(d), R = 2;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) for (let ch = 0; ch < 3; ch++){ let mx = 0;
+    for (let dy = -R; dy <= R; dy++) for (let dx = -R; dx <= R; dx++){ const yy = Math.min(h - 1, Math.max(0, y + dy)), xx = Math.min(w - 1, Math.max(0, x + dx)), v = d[(yy * w + xx) * 4 + ch]; if (v > mx) mx = v; }
+    m[(y * w + x) * 4 + ch] = mx; }
+  id.data.set(m); x1.putImageData(id, 0, 0);
+  const s2 = document.createElement('canvas'); s2.width = W; s2.height = H; const x2 = s2.getContext('2d'); x2.imageSmoothingEnabled = true; x2.imageSmoothingQuality = 'high'; x2.filter = 'blur(' + Math.max(2, Math.round(Math.max(W, H) / 60)) + 'px)';
+  x2.drawImage(s1, 0, 0, W, H); x2.filter = 'none';
+  return x2.getImageData(0, 0, W, H).data;
+}
 function dsFilter(c, f){
   const W = c.width, H = c.height, out = document.createElement('canvas'); out.width = W; out.height = H; const x = out.getContext('2d'); x.drawImage(c, 0, 0);
   if (f === 'orig') return out;
-  const id = x.getImageData(0, 0, W, H), d = id.data, n = W * H, L = new Uint8Array(n), hist = new Array(256).fill(0);
-  for (let i = 0; i < n; i++){ const v = (d[i * 4] * 299 + d[i * 4 + 1] * 587 + d[i * 4 + 2] * 114) / 1000 | 0; L[i] = v; hist[v]++; }
-  let lo = 0, hi = 255, acc = 0; for (let i = 0; i < 256; i++){ acc += hist[i]; if (acc > n * 0.01){ lo = i; break; } } acc = 0; for (let i = 255; i >= 0; i--){ acc += hist[i]; if (acc > n * 0.01){ hi = i; break; } }
-  const sp = Math.max(1, hi - lo), st = v => Math.max(0, Math.min(255, (v - lo) * 255 / sp));
-  if (f === 'auto'){ for (let i = 0; i < n * 4; i += 4){ d[i] = st(d[i]); d[i + 1] = st(d[i + 1]); d[i + 2] = st(d[i + 2]); } }
-  else if (f === 'gray'){ for (let i = 0; i < n; i++){ const v = st(L[i]); d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = v; } }
-  else if (f === 'bw'){
-    const I = new Float64Array((W + 1) * (H + 1)); for (let y = 0; y < H; y++){ let r = 0; for (let xx = 0; xx < W; xx++){ r += L[y * W + xx]; I[(y + 1) * (W + 1) + xx + 1] = I[y * (W + 1) + xx + 1] + r; } }
-    const s = Math.max(8, Math.round(Math.max(W, H) / 24));
-    for (let y = 0; y < H; y++) for (let xx = 0; xx < W; xx++){
-      const x1 = Math.max(0, xx - s), x2 = Math.min(W, xx + s + 1), y1 = Math.max(0, y - s), y2 = Math.min(H, y + s + 1);
-      const m = (I[y2 * (W + 1) + x2] - I[y1 * (W + 1) + x2] - I[y2 * (W + 1) + x1] + I[y1 * (W + 1) + x1]) / ((x2 - x1) * (y2 - y1));
-      const v = L[y * W + xx] < m * 0.88 ? 0 : 255, i = (y * W + xx) * 4; d[i] = d[i + 1] = d[i + 2] = v; }
+  /* everything works in place on 8-bit pixels (light on the phone's memory); the blur for sharpening is done by the browser's own fast filter */
+  const id = x.getImageData(0, 0, W, H), d = id.data, n = W * H, flat = f === 'doc' || f === 'bw' || f === 'gray';
+  if (flat){ const Lt = dsLight(c); for (let i = 0; i < n * 4; i += 4) for (let k = 0; k < 3; k++) d[i + k] = d[i + k] * 250 / Math.max(24, Lt[i + k]); }
+  else {
+    const hist = new Uint32Array(256); for (let i = 0; i < n * 4; i += 4) hist[(d[i] * 299 + d[i + 1] * 587 + d[i + 2] * 114) / 1000 | 0]++;
+    let acc = 0, wt = 255; for (let v = 255; v >= 0; v--){ acc += hist[v]; if (acc > n * 0.02){ wt = v; break; } }
+    let sr = 0, sg = 0, sb = 0, sn = 0; for (let i = 0; i < n * 4; i += 4){ if ((d[i] * 299 + d[i + 1] * 587 + d[i + 2] * 114) / 1000 >= wt){ sr += d[i]; sg += d[i + 1]; sb += d[i + 2]; sn++; } }
+    const mr = sn ? sr / sn : 255, mg = sn ? sg / sn : 255, mb = sn ? sb / sn : 255, mm = (mr + mg + mb) / 3, cl = v => Math.min(1.25, Math.max(0.8, v)), G = [cl(mm / Math.max(1, mr)), cl(mm / Math.max(1, mg)), cl(mm / Math.max(1, mb))];
+    for (let i = 0; i < n * 4; i += 4){ d[i] = d[i] * G[0]; d[i + 1] = d[i + 1] * G[1]; d[i + 2] = d[i + 2] * G[2]; }
   }
+  /* contrast: the darkest 0.5% becomes black, the paper (or the brightest 0.5%) white – through a lookup table */
+  const h2 = new Uint32Array(256); for (let i = 0; i < n * 4; i += 4) h2[(d[i] * 299 + d[i + 1] * 587 + d[i + 2] * 114) / 1000 | 0]++;
+  let lo = 0, hi = 255, a2 = 0; for (let v = 0; v < 256; v++){ a2 += h2[v]; if (a2 > n * 0.005){ lo = v; break; } } a2 = 0; for (let v = 255; v >= 0; v--){ a2 += h2[v]; if (a2 > n * (flat ? 0.2 : 0.005)){ hi = v; break; } }
+  if (flat) hi = Math.min(hi, 235); const sp = Math.max(30, hi - lo), LUT = new Uint8ClampedArray(256); for (let v = 0; v < 256; v++) LUT[v] = (v - lo) * 255 / sp;
+  const gray = f === 'gray' || f === 'bw';
+  for (let i = 0; i < n * 4; i += 4){ if (gray){ const g = LUT[(d[i] * 299 + d[i + 1] * 587 + d[i + 2] * 114) / 1000 | 0]; d[i] = d[i + 1] = d[i + 2] = g; } else { d[i] = LUT[d[i]]; d[i + 1] = LUT[d[i + 1]]; d[i + 2] = LUT[d[i + 2]]; } }
+  /* sharpening (unsharp mask): the picture minus a slightly blurred copy, added back */
+  x.putImageData(id, 0, 0);
+  const bc = document.createElement('canvas'); bc.width = W; bc.height = H; const bx = bc.getContext('2d'); bx.filter = 'blur(' + Math.max(1, Math.round(Math.max(W, H) / 2500)) + 'px)'; bx.drawImage(out, 0, 0); bx.filter = 'none';
+  const B = bx.getImageData(0, 0, W, H).data, amt = f === 'bw' ? 1.2 : f === 'doc' ? 0.9 : f === 'gray' ? 0.7 : 0.6;
+  bc.width = bc.height = 1;
+  for (let i = 0; i < n * 4; i += 4) for (let k = 0; k < 3; k++){ let v = d[i + k] + (d[i + k] - B[i + k]) * amt;
+    if (f === 'bw') v = (v - 150) * 255 / 70 + 128;                 // a soft threshold: black ink, white paper, smooth (not jagged) letter edges
+    d[i + k] = v; }
   x.putImageData(id, 0, 0); return out;
 }
+/* is it sharp? the variance of the edges (Laplacian) on a medium-size copy – low means blurred */
+function dsSharp(c){
+  const k = Math.min(1, 900 / Math.max(c.width, c.height)), w = Math.max(8, Math.round(c.width * k)), h = Math.max(8, Math.round(c.height * k));
+  const t0 = document.createElement('canvas'); t0.width = w; t0.height = h; const x = t0.getContext('2d'); x.drawImage(c, 0, 0, w, h);
+  const d = x.getImageData(0, 0, w, h).data, g = new Float32Array(w * h); for (let i = 0; i < w * h; i++) g[i] = d[i * 4] * 0.299 + d[i * 4 + 1] * 0.587 + d[i * 4 + 2] * 0.114;
+  let s1 = 0, s2 = 0, m = 0; for (let y = 1; y < h - 1; y++) for (let xx = 1; xx < w - 1; xx++){ const i = y * w + xx, l = 4 * g[i] - g[i - 1] - g[i + 1] - g[i - w] - g[i + w]; s1 += l; s2 += l * l; m++; }
+  return m ? s2 / m - (s1 / m) * (s1 / m) : 0;
+}
 /* a page as it will be saved: the look, the hidden parts and the watermark */
-function dsCompose(p){
+function dsCompose(p, maxSide){
   if (!p._f || p._fk !== DSC.filt){ p._f = dsFilter(p.base, DSC.filt); p._fk = DSC.filt; }
-  const W = p.base.width, H = p.base.height, c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d'); x.drawImage(p._f, 0, 0);
+  const k = maxSide ? Math.min(1, maxSide / Math.max(p.base.width, p.base.height)) : 1, W = Math.round(p.base.width * k), H = Math.round(p.base.height * k);
+  const c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(p._f, 0, 0, W, H);
   x.fillStyle = '#000'; (p.red || []).forEach(r => x.fillRect(r[0] * W, r[1] * H, r[2] * W, r[3] * H));
   const wm = String(DSC.wm || '').trim();
   if (wm){
@@ -237,7 +283,7 @@ const dsCardName = () => (DSC && String(DSC.name || '').trim()) || t('ds_c_' + (
 function dsCardRender(root){
   const C = DSC, cur = C.cur;
   if (cur){
-    root.innerHTML = dsBar(t('ds_cropT')) + `<p class="fine">${slE(t('ds_cropH'))}</p>
+    root.innerHTML = dsBar(t('ds_cropT')) + `<p class="fine">${slE(t('ds_cropH'))}</p><details class="ds-det ds-tips"><summary>💡 ${slE(t('ds_tipsT'))}</summary><p class="fine">${slE(t('ds_tips'))}</p></details>
       <div class="ds-crop" id="ds_crop"><canvas id="ds_cv"></canvas>${cur.q.map((_, i) => `<button type="button" class="ds-hd" data-hi="${i}" aria-label="${slE(t('ds_corner', {n: i + 1}))}"></button>`).join('')}</div>
       <div class="btnrow ds-tools"><button type="button" class="mv" id="ds_rot">⟳ ${slE(t('ds_rot'))}</button><button type="button" class="mv" id="ds_whole">⛶ ${slE(t('ds_whole'))}</button><button type="button" class="mv" id="ds_redet">✨ ${slE(t('ds_redet'))}</button></div>
       <h4 class="ds-q">${slE(t('ds_cardType'))}</h4>
@@ -251,14 +297,15 @@ function dsCardRender(root){
   }
   const size = (DS_CARDS.find(c => c[0] === C.type) || [0, 0, 'free'])[2];
   root.innerHTML = dsBar(dsCardName()) + `
-    <div class="ds-pages">${C.pages.map((p, i) => `<figure class="ds-pg"><div class="ds-pgw"><canvas data-pgc="${i}" aria-label="${slE(t('ds_side', {n: i + 1}))}"></canvas></div><figcaption>${slE(t('ds_side', {n: i + 1}))} <button type="button" class="lg-a" data-pgdel="${i}">${slE(t('cv_rm'))}</button></figcaption></figure>`).join('')}</div>
+    <div class="ds-pages">${C.pages.map((p, i) => `<figure class="ds-pg"><div class="ds-pgw"><canvas data-pgc="${i}" aria-label="${slE(t('ds_side', {n: i + 1}))}"></canvas></div><figcaption><span>${slE(t('ds_side', {n: i + 1}))}</span> <button type="button" class="lg-a" data-pgdel="${i}">${slE(t('cv_rm'))}</button></figcaption><p class="ds-res" dir="ltr">${p.base.width} × ${p.base.height} px${p.dpi ? ' · ' + p.dpi + ' DPI' : ''}</p>${p.sharp < 60 ? `<p class="ds-qw">⚠️ ${slE(t('ds_blurry'))}</p>` : p.real && p.real < 280 ? `<p class="ds-qw">ℹ️ ${slE(t('ds_lowres', {d: p.real}))}</p>` : ''}</figure>`).join('')}</div>
     <div class="btnrow ds-tools">${dsPickBtns(false, 'ds_add').replace('class="btnrow ds-go"', 'class="ds-addw"')}</div>
     <h4 class="ds-q">${slE(t('ds_filt'))}</h4>
-    <div class="ds-chips" role="radiogroup" aria-label="${slE(t('ds_filt'))}">${['auto', 'orig', 'gray', 'bw'].map(f => `<button type="button" role="radio" class="ds-chip${f === C.filt ? ' on' : ''}" aria-checked="${f === C.filt}" data-dfl="${f}">${slE(t('ds_f_' + f))}</button>`).join('')}</div>
+    <div class="ds-chips" role="radiogroup" aria-label="${slE(t('ds_filt'))}">${['auto', 'doc', 'orig', 'gray', 'bw'].map(f => `<button type="button" role="radio" class="ds-chip${f === C.filt ? ' on' : ''}" aria-checked="${f === C.filt}" data-dfl="${f}">${slE(t('ds_f_' + f))}</button>`).join('')}</div>
     <h4 class="ds-q">${slE(t('ds_red'))}</h4><p class="fine">${slE(t(C.type === 'credit' ? 'ds_credit' : 'ds_redH'))}</p>
     <div class="btnrow"><button type="button" class="btn${DSX.red ? ' on' : ''}" id="ds_redb" aria-pressed="${DSX.red}">🖍️ ${slE(t(DSX.red ? 'ds_redOn' : 'ds_redGo'))}</button><button type="button" class="mv" id="ds_redu">↶ ${slE(t('ds_redUndo'))}</button></div>
     <div class="field ds-wmf"><label for="ds_wm">💧 ${slE(t('ds_wm'))}</label><div class="control"><input id="ds_wm" type="text" maxlength="60" dir="auto" value="${slE(C.wm)}" placeholder="${slE(t('ds_wmPh'))}"></div></div><p class="fine">${slE(t('ds_wmH'))}</p>
     ${size === 'card' || size === 'pass' ? `<div class="field cv-f"><label for="ds_lay">${slE(t('ds_lay'))}</label><select id="ds_lay">${['sheet', 'sep'].map(v => `<option value="${v}"${v === C.lay ? ' selected' : ''}>${slE(t('ds_lay_' + v))}</option>`).join('')}</select></div>` : ''}
+    <div class="field cv-f"><label for="ds_q">${slE(t('ds_q'))}</label><select id="ds_q">${['max', 'std'].map(v => `<option value="${v}"${v === (C.q || 'max') ? ' selected' : ''}>${slE(t('ds_q_' + v))}</option>`).join('')}</select></div>
     ${dsWarn('ds_warnSend')}
     <div class="btnrow ds-out"><button type="button" class="gold-btn" id="ds_pdf">📄 ${slE(t('ds_pdf'))}</button><button type="button" class="btn" id="ds_img">🖼️ ${slE(t('ds_img'))}</button>${navigator.share ? `<button type="button" class="btn" id="ds_share">📤 ${slE(t('ds_share'))}</button>` : ''}</div>
     <div class="btnrow"><button type="button" class="mv" id="ds_new">🗑️ ${slE(t('ds_new'))}</button></div>
@@ -277,46 +324,71 @@ function dsCropDraw(){
 }
 function dsPagesDraw(){
   $$('#ds_root canvas[data-pgc]').forEach(cv => {
-    const p = DSC.pages[+cv.dataset.pgc]; if (!p) return; const c = dsCompose(p);
+    const p = DSC.pages[+cv.dataset.pgc]; if (!p) return; const c = dsCompose(p, 1400);
     cv.width = c.width; cv.height = c.height; cv.getContext('2d').drawImage(c, 0, 0);
   });
 }
 function dsCut(){
   const C = DSC, cur = C.cur; if (!cur) return;
-  const [W, H] = dsOutSize(cur.img, cur.q, C.type);
-  C.pages.push({base: dsWarp(cur.img, cur.q, W, H), red: []}); C.cur = null; dscRender();
+  const [W, H, dpi, real] = dsOutSize(cur.img, cur.q, C.type), base = dsWarp(cur.img, cur.q, W, H);
+  if (!C.filtSet){ const size = (DS_CARDS.find(c => c[0] === C.type) || [0, 0, 'free'])[2]; C.filt = size === 'card' || size === 'pass' ? 'auto' : 'doc'; }
+  C.pages.push({base, red: [], dpi, real, sharp: dsSharp(base)}); C.cur = null; dscRender();
 }
-/* the sheets that go into the file: a card or passport page at its real size on A4 (so it prints right), or each page on its own */
-function dsSheets(){
-  const C = DSC, size = (DS_CARDS.find(c => c[0] === C.type) || [0, 0, 'free'])[2], imgs = C.pages.map(dsCompose);
-  const A4W = 2480, A4H = 3508, MM = A4W / 210, out = [];
-  const sheet = () => { const c = document.createElement('canvas'); c.width = A4W; c.height = A4H; const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, A4W, A4H); out.push(c); return x; };
+/* the file. Each scan goes in at its full resolution and is placed at its real size (a card prints exactly card-size);
+   "smaller file" brings it down to 300 DPI (pages 200) with stronger compression – easier to send. */
+function dsPlan(){
+  const C = DSC, size = (DS_CARDS.find(c => c[0] === C.type) || [0, 0, 'free'])[2], PW = 595.28, PH = 841.89, MM = 72 / 25.4, std = C.q === 'std';
+  const imgs = C.pages.map(p => { let c = dsCompose(p); const target = std ? (size === 'a4' ? 200 : size === 'free' ? 0 : 300) : 0;
+    if (std){ const k = target && p.dpi ? Math.min(1, target / p.dpi) : Math.min(1, 1800 / Math.max(c.width, c.height)); if (k < 0.999){ const d = document.createElement('canvas'); d.width = Math.round(c.width * k); d.height = Math.round(c.height * k); const x = d.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(c, 0, 0, d.width, d.height); c = d; } }
+    return {c, mmw: size === 'free' ? 0 : (c.width > c.height ? Math.max(...DS_MM[size]) : Math.min(...DS_MM[size])), mmh: size === 'free' ? 0 : (c.width > c.height ? Math.min(...DS_MM[size]) : Math.max(...DS_MM[size]))}; });
+  const pages = [];
   if ((size === 'card' || size === 'pass') && C.lay === 'sheet'){
-    let x = sheet(), y = 25 * MM;
-    imgs.forEach(im => {
-      const [a, b] = DS_MM[size], port = im.height > im.width, w = (port ? Math.min(a, b) : Math.max(a, b)) * MM, h = (port ? Math.max(a, b) : Math.min(a, b)) * MM;
-      if (y + h > A4H - 20 * MM){ x = sheet(); y = 25 * MM; }
-      const x0 = (A4W - w) / 2; x.drawImage(im, x0, y, w, h); x.strokeStyle = '#c8ccd4'; x.lineWidth = 3; x.setLineDash([18, 12]); x.strokeRect(x0 - 6, y - 6, w + 12, h + 12); x.setLineDash([]);
-      y += h + 18 * MM;
-    });
-    return out;
+    let pg = {items: []}, y = 25 * MM; pages.push(pg);
+    imgs.forEach(im => { const w = im.mmw * MM, h = im.mmh * MM; if (y + h > PH - 20 * MM){ pg = {items: []}; pages.push(pg); y = 25 * MM; }
+      pg.items.push({c: im.c, x: (PW - w) / 2, y, w, h, frame: true}); y += h + 18 * MM; });
+    return pages;
   }
-  imgs.forEach(im => { const x = sheet(), M = size === 'a4' ? 0 : 15 * MM, k = Math.min((A4W - 2 * M) / im.width, (A4H - 2 * M) / im.height), w = im.width * k, h = im.height * k; x.drawImage(im, (A4W - w) / 2, size === 'a4' ? (A4H - h) / 2 : M, w, h); });
-  return out;
+  imgs.forEach(im => { let w, h;
+    if (size === 'a4'){ w = PW; h = PH; }
+    else if (im.mmw){ w = im.mmw * MM; h = im.mmh * MM; }
+    else { const k = Math.min((PW - 30 * MM) / im.c.width, (PH - 30 * MM) / im.c.height); w = im.c.width * k; h = im.c.height * k; }
+    pages.push({items: [{c: im.c, x: (PW - w) / 2, y: size === 'a4' ? 0 : 15 * MM, w, h}]}); });
+  return pages;
+}
+async function dsPdf(pages, qual){
+  const enc = new TextEncoder(), parts = [], offs = []; let len = 0;
+  const put = x => { const u = typeof x === 'string' ? enc.encode(x) : x; parts.push(u); len += u.length; };
+  const obj = (n, body) => { offs[n] = len; put(n + ' 0 obj\n'); body(); put('\nendobj\n'); };
+  const PW = 595.28, PH = 841.89, f = v => (Math.round(v * 100) / 100).toString();
+  let n = 3; const P = [];
+  for (const pg of pages){ const p = {id: n++, cid: n++, imgs: []}; for (const it of pg.items){ const b = await new Promise(r => it.c.toBlob(r, 'image/jpeg', qual)); p.imgs.push({id: n++, u: new Uint8Array(await b.arrayBuffer()), w: it.c.width, h: it.c.height, it}); } P.push(p); }
+  put('%PDF-1.4\n'); put(new Uint8Array([37, 226, 227, 207, 211, 10]));
+  obj(1, () => put('<< /Type /Catalog /Pages 2 0 R >>'));
+  obj(2, () => put('<< /Type /Pages /Count ' + P.length + ' /Kids [' + P.map(p => p.id + ' 0 R').join(' ') + '] >>'));
+  for (const p of P){
+    const cs = p.imgs.map((im, i) => { const it = im.it, yb = PH - it.y - it.h; return 'q ' + f(it.w) + ' 0 0 ' + f(it.h) + ' ' + f(it.x) + ' ' + f(yb) + ' cm /Im' + i + ' Do Q' + (it.frame ? ' q 0.78 0.8 0.83 RG 0.8 w [4 3] 0 d ' + f(it.x - 2) + ' ' + f(yb - 2) + ' ' + f(it.w + 4) + ' ' + f(it.h + 4) + ' re S Q' : ''); }).join('\n');
+    obj(p.id, () => put('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + PW + ' ' + PH + '] /Resources << /XObject << ' + p.imgs.map((im, i) => '/Im' + i + ' ' + im.id + ' 0 R').join(' ') + ' >> >> /Contents ' + p.cid + ' 0 R >>'));
+    obj(p.cid, () => put('<< /Length ' + enc.encode(cs).length + ' >>\nstream\n' + cs + '\nendstream'));
+    for (const im of p.imgs) obj(im.id, () => { put('<< /Type /XObject /Subtype /Image /Width ' + im.w + ' /Height ' + im.h + ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' + im.u.length + ' >>\nstream\n'); put(im.u); put('\nendstream'); });
+  }
+  const xref = len; put('xref\n0 ' + n + '\n0000000000 65535 f \n'); for (let i = 1; i < n; i++) put(String(offs[i] || 0).padStart(10, '0') + ' 00000 n \n');
+  put('trailer\n<< /Size ' + n + ' /Root 1 0 R >>\nstartxref\n' + xref + '\n%%EOF');
+  return new Blob(parts, {type: 'application/pdf'});
 }
 const dsFileName = ext => (dsCardName() + ' ' + new Date().toISOString().slice(0, 10)).replace(/[\\/:*?"<>|]+/g, ' ').trim() + '.' + ext;
-const dsJpeg = c => new Promise(res => c.toBlob(b => res(b), 'image/jpeg', 0.9));
 async function dsOut(how){
   if (!DSC || !DSC.pages.length) return; toast(t('ds_making'));
   await new Promise(r => setTimeout(r, 30));
+  const std = DSC.q === 'std', qual = std ? 0.82 : 0.95;
   try {
     if (how === 'img'){
-      const size = (DS_CARDS.find(c => c[0] === DSC.type) || [0, 0, 'free'])[2], one = DSC.pages.length === 1 || !((size === 'card' || size === 'pass') && DSC.lay === 'sheet');
-      const L = one ? DSC.pages.map(dsCompose) : dsSheets();
-      for (let i = 0; i < L.length; i++){ const r = await fileSave(await dsJpeg(L[i]), dsFileName('jpg').replace('.jpg', L.length > 1 ? ' ' + (i + 1) + '.jpg' : '.jpg'), 'image/jpeg'); if (r !== 'saved'){ toast(t(r === 'declined' ? 'pdf_declined' : 'pdf_fail')); return; } }
+      /* images: each page on its own at full resolution – PNG (lossless) for black-and-white, high-quality JPEG otherwise */
+      const L = dsPlan().flatMap(pg => pg.items.map(it => it.c)), png = DSC.filt === 'bw' && !std;
+      for (let i = 0; i < L.length; i++){ const ext = png ? 'png' : 'jpg', b = await new Promise(r => L[i].toBlob(r, png ? 'image/png' : 'image/jpeg', qual));
+        const r = await fileSave(b, dsFileName(ext).replace('.' + ext, L.length > 1 ? ' ' + (i + 1) + '.' + ext : '.' + ext), png ? 'image/png' : 'image/jpeg'); if (r !== 'saved'){ toast(t(r === 'declined' ? 'pdf_declined' : 'pdf_fail')); return; } }
       toast(t('ds_fileOk')); return;
     }
-    const blob = pdfBytes(dsSheets()), name = dsFileName('pdf');
+    const blob = await dsPdf(dsPlan(), qual), name = dsFileName('pdf');
     if (how === 'share'){
       const f = new File([blob], name, {type: 'application/pdf'});
       if (navigator.canShare && navigator.canShare({files: [f]})){ try { await navigator.share({files: [f], title: name}); } catch (er) {} return; }
@@ -336,7 +408,7 @@ document.addEventListener('pointermove', e => {
   if (!DSD) return;
   if (DSD.el && DSC && DSC.cur){ const r = $('#ds_cv').getBoundingClientRect(); DSC.cur.q[DSD.i] = [Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), Math.max(0, Math.min(1, (e.clientY - r.top) / r.height))]; dsCropDraw(); return; }
   if (DSD.cv){ const r = DSD.cv.getBoundingClientRect(), x1 = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), y1 = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height)); DSD.x1 = x1; DSD.y1 = y1;
-    const p = DSC.pages[DSD.red], c = dsCompose(p), x = DSD.cv.getContext('2d'); x.drawImage(c, 0, 0); x.fillStyle = 'rgba(0,0,0,.7)'; x.fillRect(Math.min(DSD.x0, x1) * c.width, Math.min(DSD.y0, y1) * c.height, Math.abs(x1 - DSD.x0) * c.width, Math.abs(y1 - DSD.y0) * c.height); }
+    const p = DSC.pages[DSD.red], c = dsCompose(p, 1400), x = DSD.cv.getContext('2d'); x.drawImage(c, 0, 0); x.fillStyle = 'rgba(0,0,0,.7)'; x.fillRect(Math.min(DSD.x0, x1) * c.width, Math.min(DSD.y0, y1) * c.height, Math.abs(x1 - DSD.x0) * c.width, Math.abs(y1 - DSD.y0) * c.height); }
 });
 const dsUp = () => {
   if (DSD && DSD.cv && DSD.x1 != null){ const w = Math.abs(DSD.x1 - DSD.x0), h = Math.abs(DSD.y1 - DSD.y0); if (w > 0.01 && h > 0.01) DSC.pages[DSD.red].red.push([Math.min(DSD.x0, DSD.x1), Math.min(DSD.y0, DSD.y1), w, h]); dsPagesDraw(); }
@@ -462,7 +534,7 @@ document.addEventListener('click', e => {
   if (t0.closest('#ds_detno')){ DSX.det = null; dscRender(); return; }
   if (t0.closest('#ds_cut')){ const btn = t0.closest('#ds_cut'); btn.disabled = true; btn.textContent = '⏳'; setTimeout(() => { try { dsCut(); } catch (er) { toast(t('ph_fail')); dscRender(); } }, 30); return; }
   if ((b = t0.closest('[data-pgdel]'))){ DSC.pages.splice(+b.dataset.pgdel, 1); if (!DSC.pages.length){ DSC = null; DSX.view = 'kinds'; } dscRender(); return; }
-  if ((b = t0.closest('[data-dfl]'))){ DSC.filt = b.dataset.dfl; dscRender(); return; }
+  if ((b = t0.closest('[data-dfl]'))){ DSC.filt = b.dataset.dfl; DSC.filtSet = true; b.textContent = '⏳ ' + b.textContent; setTimeout(dscRender, 20); return; }
   if (t0.closest('#ds_redb')){ DSX.red = !DSX.red; dscRender(); return; }
   if (t0.closest('#ds_redu')){ for (let i = DSC.pages.length - 1; i >= 0; i--) if (DSC.pages[i].red.length){ DSC.pages[i].red.pop(); break; } dsPagesDraw(); return; }
   if (t0.closest('#ds_pdf')){ dsOut('pdf'); return; }
@@ -485,6 +557,7 @@ document.addEventListener('change', e => {
   if (el.id === 'ds_detk' && DSX.det){ DSX.det.k = el.value; if (el.value !== 'card') DSX.det.cardType = ''; dscRender(); return; }
   if (el.id === 'ds_tl2' && DSL){ DSX.tl = el.value; dsLetterRun(null, el.value); return; }
   if (el.id === 'ds_lay'){ DSC.lay = el.value; return; }
+  if (el.id === 'ds_q'){ DSC.q = el.value; return; }
 });
 document.addEventListener('input', e => {
   if (e.target && e.target.id === 'ds_hint'){ DSX.hint = e.target.value.slice(0, 60); return; }
