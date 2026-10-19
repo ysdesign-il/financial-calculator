@@ -1448,7 +1448,7 @@ async function updCheck(manual){
     try { const x = await fetch('version.json?t=' + Date.now(), {cache: 'no-store'}); if (x.ok) r = await x.json(); } catch (e) {}
   }
   if (!r && IN_CLAUDE){
-    try { const x = await fetch('https://ysdesign-il.github.io/financial-calculator/version.json?t=' + Date.now(), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); if (x.ok) r = await x.json(); } catch (e) {}
+    try { const x = await fetch(SITE_BASE + 'version.json?t=' + Date.now(), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); if (x.ok) r = await x.json(); } catch (e) {}
   }
   if (!r && UPD.dbv) r = UPD.dbv;
   if (r && r.build){ UPD.remote = r; UPD.st = 'ok'; }
@@ -3501,7 +3501,7 @@ async function ixSite(){
 }
 setTimeout(ixSite, 1400);
 rjEvery(ixSite);
-var IX_GH = 'https://ysdesign-il.github.io/financial-calculator/rates.json', IX_GH_OK = null;
+var IX_GH = SITE_BASE + 'rates.json', IX_GH_OK = null;
 async function ixRemote(){
   if (!IN_CLAUDE || IX_GH_OK === false) return;
   try {
@@ -3824,7 +3824,7 @@ const SRC_L = {
   cbsApi: id => 'https://api.cbs.gov.il/index/data/price?id=' + id + '&format=json&download=false&last=3&lang=he',
   cb: 'https://api.coinbase.com/v2/exchange-rates?currency=USD', cbBtc: 'https://www.coinbase.com/price/bitcoin',
   bn: 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT', bnBtc: 'https://www.binance.com/en/price/bitcoin',
-  gh: 'https://ysdesign-il.github.io/financial-calculator/rates.json', ghAct: 'https://github.com/ysdesign-il/financial-calculator/actions'
+  gh: SITE_BASE + 'rates.json', ghAct: 'https://github.com/ysdesign-il/financial-calculator/actions'
 };
 const SRC_G = {ILS: 'USD-ILS', EUR: 'EUR-ILS', ta35: '142:TLV', ta125: '137:TLV', spx: '.INX:INDEXSP', ndx: 'NDX:INDEXNASDAQ', dji: '.DJI:INDEXDJX', gold: 'GCW00:COMEX', brent: 'BZW00:NYMEX'};
 function srcAge(ms){

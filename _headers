@@ -1,0 +1,11 @@
+# security and caching headers for the whole site (Cloudflare reads this file; it is not served)
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(self), microphone=(), geolocation=(self), payment=(), usb=(), interest-cohort=()
+  Strict-Transport-Security: max-age=31536000
+  Access-Control-Allow-Origin: *
+/sw.js
+  Cache-Control: no-cache
+/version.json
+  Cache-Control: no-cache

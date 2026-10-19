@@ -1,0 +1,11 @@
+// Cloudflare Workers – the site is served as static files straight from this repository (no server code).
+// Cloudflare builds it on every push to main (Workers Builds); the Worker in the dashboard must be named exactly like "name".
+{
+  "name": "financial-calculator",
+  "compatibility_date": "2026-10-19",
+  "assets": {
+    "directory": ".",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none"
+  }
+}

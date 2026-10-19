@@ -1313,3 +1313,8 @@ body[data-tab="expenses"] .page-head .scan-btn + .prn-btn,body[data-tab="clients
 .px-dr{margin:0 0 6px}.px-stamps{margin:0}.px-deco .px-row{margin:6px 0}
 .bt-cam{position:relative}.bt-cam canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .bt-shot{min-height:56px;font-size:1.05rem;flex:1}.bt-th .px-th{cursor:default}
+/* 13.12: "the app has moved" */
+.mig-ov{position:fixed;inset:0;z-index:200;background:var(--bg,#0b1426);display:grid;place-items:center;padding:20px;overflow:auto}
+.mig-box{max-width:460px;width:100%;text-align:center;background:var(--card,#fff);color:var(--ink,#141821);border-radius:22px;padding:26px 20px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.mig-box h2{margin:6px 0 10px;font-size:1.3rem}.mig-box p{line-height:1.6}.mig-ic{font-size:2.6rem}.mig-btns{justify-content:center;margin:14px 0}.mig-btns .gold-btn{width:100%}
+.mig-box .lg-a{margin-top:10px;font-size:.9rem;opacity:.8}

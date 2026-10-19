@@ -658,7 +658,7 @@ try {
 } catch (e) {}
 /* developer code, published from the app, the website or GitHub, runs in the app and on the website */
 var DC = {pub: null, at: 0, ran: false, err: ''};
-const DC_URL_GH = 'https://ysdesign-il.github.io/financial-calculator/devcode.json', DC_REPO = 'ysdesign-il/financial-calculator';
+const DC_URL_GH = SITE_BASE + 'devcode.json', DC_REPO = 'ysdesign-il/financial-calculator';
 function dcSkip(){ return /[#&?]nocode\b/.test(location.hash + location.search); }
 function dcRun(code){
   if (!code || DC.ran || dcSkip()) return;
