@@ -1,6 +1,16 @@
 {
  "alerts": [
   {
+   "at": 1792434128,
+   "level": "medium",
+   "kind": "workflow",
+   "actor": "ysdesign-il",
+   "msg": "Automation files changed: .github/workflows/codeql.yml, .github/workflows/publish.yml",
+   "p": {
+    "f": ".github/workflows/codeql.yml, .github/workflows/publish.yml"
+   }
+  },
+  {
    "at": 1792368798,
    "level": "low",
    "kind": "csp",
@@ -45,5 +55,5 @@
    }
   }
  ],
- "updated": 1792368799
+ "updated": 1792434128
 }
