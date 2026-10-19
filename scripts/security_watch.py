@@ -3,7 +3,7 @@
 Runs in GitHub Actions on pushes, branch/tag changes, forks, visibility and rule changes, releases, and once a day.
 Alerts go to security.json (shown in the app's developer mode) and, when serious, to a GitHub issue,
 which GitHub sends to the owner by email and to the GitHub mobile app. Standard library only."""
-import json, os, subprocess, time, urllib.request
+import json, os, re, subprocess, time, urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OWNER = 'ysdesign-il'
@@ -27,6 +27,81 @@ def api(path, method='GET', body=None):
                                  headers={'Authorization': 'Bearer ' + TOKEN, 'Accept': 'application/vnd.github+json', 'User-Agent': 'security-watch', 'Content-Type': 'application/json'})
     with urllib.request.urlopen(req, timeout=20) as r:
         return json.loads(r.read() or b'null')
+
+SITE = 'https://ysdesign-il.github.io/financial-calculator/'
+NB = r'(?<![A-Za-z0-9_-])'
+SECRET_PATTERNS = [(label, re.compile(NB + rx)) for label, rx in [
+    ('Google API key', r'AIza[0-9A-Za-z_-]{35}'),
+    ('OpenAI / Anthropic key', r'sk-(?:ant-|proj-)?[A-Za-z0-9_-]{30,}'),
+    ('GitHub token', r'(?:ghp|gho|ghs|ghu|github_pat)_[A-Za-z0-9_]{30,}'),
+    ('Stripe secret key', r'sk_(?:live|test)_[A-Za-z0-9]{16,}'),
+    ('Supabase secret key', r'sb_secret_[A-Za-z0-9_-]{20,}'),
+    ('Slack token', r'xox[abprs]-[A-Za-z0-9-]{20,}'),
+    ('ntfy access token', r'tk_[a-z0-9]{29}'),
+    ('Private key', r'-----BEGIN [A-Z ]*PRIVATE KEY-----'),
+]]
+
+def secrets_in(text):
+    return sorted({label for label, rx in SECRET_PATTERNS if rx.search(text)})
+
+def raised_recently(kind, days=30):
+    """True if an alert of this kind is already in security.json from the last `days` days (so daily checks don't repeat it)."""
+    try:
+        old = json.load(open(os.path.join(ROOT, 'security.json'), encoding='utf-8')).get('alerts', [])
+    except Exception:
+        return False
+    return any(a.get('kind') == kind and a.get('at', 0) > time.time() - days * 86400 for a in old)
+
+def fetch(url, timeout=20):
+    req = urllib.request.Request(url, headers={'User-Agent': 'security-watch'})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return r.status, r.geturl(), r.read().decode('utf-8', 'replace')
+
+def live_check():
+    """Daily: no secrets in the repository or on the live site, the security policy (CSP) is in place, HTTPS is enforced."""
+    # 1. secrets anywhere in the repository (everything here is public)
+    found = {}
+    for base, dirs, names in os.walk(ROOT):
+        dirs[:] = [d for d in dirs if d not in ('.git', 'node_modules', '__pycache__')]
+        for n in names:
+            p = os.path.join(base, n)
+            if os.path.getsize(p) > 5_000_000 or n.endswith(('.png', '.jpg', '.ico', '.webp', '.woff2')):
+                continue
+            try:
+                hits = secrets_in(open(p, encoding='utf-8', errors='ignore').read())
+            except Exception:
+                continue
+            if hits:
+                found[os.path.relpath(p, ROOT)] = hits
+    for f, hits in sorted(found.items()):
+        add('high', 'secret', f'Possible secret in the public repository: {", ".join(hits)} in {f}. Revoke it now, then remove it.', f=f)
+    # 2. the live site
+    status, final, html = fetch(SITE)
+    if status != 200:
+        add('medium', 'site', f'The live site did not answer normally (HTTP {status})')
+        return
+    for name, text in [('index.html', html)] + [(u, fetch(SITE + u)[2]) for u in ('sw.js',)]:
+        hits = secrets_in(text)
+        if hits:
+            add('high', 'secret', f'Possible secret on the live site: {", ".join(hits)} in {name}. Revoke it now.', f=name)
+    m = re.search(r'<meta[^>]+http-equiv=["\']Content-Security-Policy["\'][^>]*?content=(["\'])(.*?)\1', html, re.I | re.S)
+    if not m:
+        if not raised_recently('csp'):
+            add('low', 'csp', 'The live site has no security policy (CSP) — scripts from other sites are not restricted')
+    else:
+        csp = m.group(2).lower()
+        missing = [d for d in ('default-src', "object-src 'none'", "base-uri 'self'") if d not in csp]
+        if missing and not raised_recently('csp'):
+            add('medium', 'csp', 'The security policy (CSP) lost: ' + ', '.join(missing))
+        if "'unsafe-eval'" in csp and not raised_recently('csp-eval'):
+            add('medium', 'csp-eval', "The security policy (CSP) allows 'unsafe-eval'")
+    # 3. HTTPS is enforced (http:// must redirect to https://)
+    try:
+        _, final_http, _ = fetch(SITE.replace('https://', 'http://', 1))
+        if not final_http.startswith('https://') and not raised_recently('https'):
+            add('medium', 'https', 'The site opens without HTTPS — turn on "Enforce HTTPS" in Settings → Pages')
+    except Exception as e:
+        print('https check skipped:', e)
 
 if EV == 'push':
     ref = E.get('ref', '')
@@ -70,6 +145,10 @@ elif EV in ('schedule', 'workflow_dispatch'):
             add('high', 'collab', 'Accounts with access besides the owner: ' + ', '.join(extra), r=', '.join(extra))
     except Exception as e:
         print('collaborators check skipped:', e)
+    try:
+        live_check()
+    except Exception as e:
+        print('live site check skipped:', e)
 
 if not alerts:
     print('Nothing unusual.'); raise SystemExit(0)
