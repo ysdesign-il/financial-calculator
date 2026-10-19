@@ -40,7 +40,7 @@ var PX = null;   // {docs: [{pdf, bytes, name, forms}], pages: [...], cur, tool,
 const PX_ST = {col: '#1d3fbf', fs: 14, font: 'sans', b: false, it: false, al: 'start', bg: '', lw: 2, op: 1, fill: '', hlCol: '#ffe14d'};
 const PX_FONTS = {sans: '-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"Noto Sans Hebrew","Noto Sans Arabic",sans-serif', serif: 'Georgia,"Times New Roman","David","Frank Ruehl CLM",serif', mono: '"Courier New",Consolas,monospace', hand: '"Segoe Print","Comic Sans MS","Chalkboard SE","Noteworthy",cursive'};
 const PX_COLS = ['#111111', '#1d3fbf', '#c62828', '#2e7d32', '#ef6c00', '#6a1b9a', '#ffffff', '#ffe14d'];
-const PX_TOOLS = [['select', '✋'], ['text', 'T'], ['edit', '✎'], ['pen', '✏️'], ['hl', '🖍️'], ['rect', '▭'], ['ell', '◯'], ['line', '╱'], ['arrow', '➚'], ['white', '⬜'], ['redact', '⬛'], ['check', '✓'], ['x', '✗'], ['dot', '●'], ['date', '📅']];
+const PX_TOOLS = [['select', '✋'], ['text', 'T'], ['edit', '✎'], ['pen', '✏️'], ['hl', '🖍️'], ['rect', '▭'], ['ell', '◯'], ['line', '╱'], ['arrow', '➚'], ['white', '⬜'], ['redact', '⬛'], ['check', '✓'], ['x', '✗'], ['dot', '●'], ['date', '📅'], ['stamp', '🔖']];
 let PX_ID = 1;
 function pxNew(){ return {docs: [], pages: [], cur: 0, tool: 'select', sel: null, zoom: 1, hist: [], fut: [], name: '', st: Object.assign({}, PX_ST), form: {}, flatForm: false}; }
 const pxPage = () => PX && PX.pages[PX.cur];
@@ -49,7 +49,7 @@ const pxW = p => pxR(p) % 180 ? p.h0 : p.w0, pxH = p => pxR(p) % 180 ? p.w0 : p.
 const pxSelObj = () => { const p = pxPage(); return p && PX.sel != null ? p.objs.find(o => o.id === PX.sel) : null; };
 /* undo / redo: snapshots of the pages and their objects */
 const pxClone = o => Object.assign({}, o, o.pts ? {pts: o.pts.map(a => a.slice())} : {});
-function pxSnap(){ if (!PX) return; PX.hist.push({pages: PX.pages.map(p => Object.assign({}, p, {objs: p.objs.map(pxClone)})), cur: PX.cur}); if (PX.hist.length > 80) PX.hist.shift(); PX.fut = []; PX.dirty = true; }
+function pxSnap(){ if (!PX) return; PX.hist.push({pages: PX.pages.map(p => Object.assign({}, p, {objs: p.objs.map(pxClone)})), cur: PX.cur}); if (PX.hist.length > 80) PX.hist.shift(); PX.fut = []; PX.dirty = true; if (typeof pxDraftSoon === 'function') pxDraftSoon(); }
 function pxUndo(redo){ const A = redo ? PX.fut : PX.hist, B = redo ? PX.hist : PX.fut; if (!A.length) return; B.push({pages: PX.pages.map(p => Object.assign({}, p, {objs: p.objs.map(pxClone)})), cur: PX.cur}); const s = A.pop(); PX.pages = s.pages; PX.cur = Math.min(s.cur, PX.pages.length - 1); PX.sel = null; pxRender($('#ds_root')); pxSay(t(redo ? 'px_redone' : 'px_undone')); }
 
 /* ================= adding files ================= */
@@ -113,7 +113,7 @@ function pxPaint(x, o, preview){
     x.font = pxFont(o); x.fillStyle = o.col; x.textBaseline = 'top'; try { x.direction = rtl ? 'rtl' : 'ltr'; } catch (e) {}
     const al = o.al || 'start', pad = o.fs * 0.15;
     L.forEach((l, i) => { const yy = o.y + pad + i * o.fs * 1.28; let xx;
-      if (al === 'center'){ x.textAlign = 'center'; xx = B.x + B.w / 2; } else if ((al === 'start') !== rtl){ x.textAlign = 'left'; xx = B.x + pad; } else { x.textAlign = 'right'; xx = B.x + B.w - pad; }
+      if (al === 'center'){ x.textAlign = 'center'; xx = B.x + B.w / 2; } else if (al === 'left' || (al !== 'right' && (al === 'start') !== rtl)){ x.textAlign = 'left'; xx = B.x + pad; } else { x.textAlign = 'right'; xx = B.x + B.w - pad; }
       x.fillText(l, xx, yy); if (o.u){ const tw = x.measureText(l).width, ux = x.textAlign === 'left' ? xx : x.textAlign === 'right' ? xx - tw : xx - tw / 2; x.fillRect(ux, yy + o.fs * 1.08, tw, Math.max(0.6, o.fs / 16)); } });
     if (preview && !o.txt){ x.globalAlpha = 0.5; x.fillStyle = o.col; x.fillRect(B.x + pad, B.y + pad, 1, o.fs); }
   } else if (o.t === 'pen'){
@@ -137,6 +137,7 @@ function pxPaint(x, o, preview){
     else if (o.k === 'x'){ x.moveTo(o.x + s * .15, o.y + s * .15); x.lineTo(o.x + s * .85, o.y + s * .85); x.moveTo(o.x + s * .85, o.y + s * .15); x.lineTo(o.x + s * .15, o.y + s * .85); x.stroke(); }
     else { x.arc(o.x + s / 2, o.y + s / 2, s * .3, 0, 7); x.fill(); }
   } else if (o.t === 'img'){ const B = pxBox(o); x.drawImage(o.c, B.x, B.y, B.w, B.h); }
+  else if (o.t === 'wm'){ const W = o.w, H = o.h, a = Math.atan2(H, W), D = Math.hypot(W, H); x.translate(W / 2, H / 2); x.rotate(-a); let fs = 80; x.font = '800 ' + fs + 'px ' + PX_FONTS.sans; const tw = x.measureText(o.txt).width; fs = Math.max(10, Math.min(200, fs * D * 0.7 / Math.max(1, tw))); x.font = '800 ' + fs + 'px ' + PX_FONTS.sans; x.fillStyle = o.col; x.textAlign = 'center'; x.textBaseline = 'middle'; try { x.direction = pxRtl(o.txt) ? 'rtl' : 'ltr'; } catch (e) {} x.fillText(o.txt, 0, 0); }
   x.restore();
 }
 /* the page picture itself (the PDF page or the photo), at a given scale (pixels per point) */
@@ -150,7 +151,8 @@ async function pxPageCanvas(p, k, forPrint){
   return c;
 }
 /* page + everything on it, for pictures, printing and "flat" files */
-async function pxComposite(p, k){ const c = await pxPageCanvas(p, k, true), x = c.getContext('2d'); x.setTransform(k, 0, 0, k, 0, 0); p.objs.forEach(o => pxPaint(x, o, false)); return c; }
+const pxDecoOf = p => typeof pxDeco === 'function' && PX ? pxDeco(PX.pages.indexOf(p)) : [];
+async function pxComposite(p, k){ const c = await pxPageCanvas(p, k, true), x = c.getContext('2d'); x.setTransform(k, 0, 0, k, 0, 0); p.objs.forEach(o => pxPaint(x, o, false)); pxDecoOf(p).forEach(o => pxPaint(x, o, false)); return c; }
 
 /* ================= the screen ================= */
 function pxRender(root){
@@ -179,6 +181,7 @@ function pxRender(root){
     <div class="px-thumbs" id="px_thumbs" role="listbox" aria-label="${E(t('px_pages'))}">${PX.pages.map((q, i) => `<button type="button" role="option" class="px-th${i === PX.cur ? ' on' : ''}" aria-selected="${i === PX.cur}" data-pxp="${i}" aria-label="${E(t('ds_side', {n: i + 1}))}"><canvas data-pxth="${i}"></canvas><span>${i + 1}</span></button>`).join('')}</div>
     <div class="btnrow px-pops"><button type="button" class="mv" id="px_rotL" title="${E(t('px_rotL'))}">⟲</button><button type="button" class="mv" id="px_rotR" title="${E(t('px_rotR'))}">⟳</button><button type="button" class="mv" id="px_mvL" title="${E(t('px_mvB'))}">⇤</button><button type="button" class="mv" id="px_mvR" title="${E(t('px_mvF'))}">⇥</button><button type="button" class="mv" id="px_dup">⧉ ${E(t('px_dup'))}</button><button type="button" class="mv" id="px_addB">＋ ${E(t('px_addBlank'))}</button><button type="button" class="mv" id="px_addF">📎 ${E(t('px_addFile'))}</button><button type="button" class="mv" id="px_delP">🗑️ ${E(t('px_delPage'))}</button>
       <input type="file" id="px_addFF" accept="application/pdf,image/*,.txt,.md,.csv,.html,.htm,.json,.docx,.xlsx,.pptx,.odt,.rtf" multiple hidden></div>
+    ${typeof pxDecoHTML === 'function' ? pxDecoHTML() : ''}
     ${nf ? `<details class="ds-det px-form"${PX.formOpen ? ' open' : ''}><summary>📋 ${E(t('px_form', {n: nf}))}</summary><div id="px_formB">${pxFormHTML()}</div></details>` : ''}
     <details class="ds-det px-list"><summary>☰ ${E(t('px_objs', {n: p.objs.length}))}</summary><div class="px-ol">${p.objs.length ? p.objs.map(o => `<button type="button" class="px-oi${o.id === PX.sel ? ' on' : ''}" data-pxo="${o.id}">${E(pxObjName(o))}</button>`).join('') : `<p class="fine">${E(t('px_noObjs'))}</p>`}</div><p class="fine">${E(t('px_kbd'))}</p></details>
     <div class="px-save"><div class="field cv-f"><label for="px_name">${E(t('px_fname'))}</label><div class="control"><input id="px_name" type="text" maxlength="80" dir="auto" value="${E(PX.name)}"></div></div>
@@ -189,7 +192,7 @@ function pxRender(root){
     <p class="fine sl-priv">🔒 ${E(t('px_priv'))}</p>`;
   pxDraw(true); pxThumbs();
 }
-function pxObjName(o){ const n = t('px_o_' + (o.t === 'mark' ? o.k : o.t === 'pen' && o.hl ? 'hl' : o.base ? 'scan' : o.sig ? 'sign' : o.qr ? 'qr' : o.t)); return o.t === 'text' ? n + ': ' + (String(o.txt || '').slice(0, 30) || '…') : n; }
+function pxObjName(o){ const n = t('px_o_' + (o.t === 'mark' ? o.k : o.t === 'pen' && o.hl ? 'hl' : o.base ? 'scan' : o.sig ? 'sign' : o.qr ? 'qr' : o.stamp ? 'stamp' : o.t)); return o.t === 'text' ? n + ': ' + (String(o.txt || '').slice(0, 30) || '…') : n; }
 function pxPropsHTML(o, tool){
   const E = pxE, st = PX.st, k = o ? (o.t === 'pen' && o.hl ? 'hl' : o.t) : tool, v = o || st;
   const cols = cur => `<div class="px-cols" role="radiogroup" aria-label="${E(t('px_color'))}">${PX_COLS.map(c => `<button type="button" role="radio" class="px-c${c === cur ? ' on' : ''}" aria-checked="${c === cur}" data-pxc="${c}" style="background:${c}" aria-label="${E(c)}"></button>`).join('')}<input type="color" id="px_ccol" value="${/^#[0-9a-f]{6}$/i.test(cur || '') ? cur : '#000000'}" aria-label="${E(t('px_colorMore'))}"></div>`;
@@ -204,6 +207,7 @@ function pxPropsHTML(o, tool){
   if (k === 'mark' || k === 'check' || k === 'x' || k === 'dot') return `<div class="px-row"><button type="button" class="px-tb s" data-pxms="-1" aria-label="${E(t('px_smaller'))}">−</button><b class="px-z">${Math.round(v.s || 14)}pt</b><button type="button" class="px-tb s" data-pxms="1" aria-label="${E(t('px_bigger'))}">+</button></div>${cols(v.col || st.col)}${acts}`;
   if (k === 'img') return `<div class="px-row"><label>${E(t('px_op'))} <input type="range" id="px_op" min="0.1" max="1" step="0.05" value="${v.op == null ? 1 : v.op}"></label><button type="button" class="mv" id="px_ratio">${E(t('px_ratio'))}</button></div>${acts}`;
   if (k === 'white') return `<p class="fine">${E(t('px_whiteH'))}</p>${o ? `<div class="px-row"><label>${E(t('px_fillC'))} <input type="color" id="px_wcol" value="${o.fill || '#ffffff'}"></label></div>` : ''}${acts}`;
+  if (k === 'stamp' && typeof pxStampProps === 'function') return pxStampProps();
   if (k === 'redact') return `<p class="fine">⚠️ ${E(t('px_redactH'))}</p>${acts}`;
   return `<p class="fine">${E(t('px_selH'))}</p>`;
 }
@@ -242,7 +246,7 @@ async function pxDraw(full){
   }
   ov.width = Math.round(cssW * dpr); ov.height = Math.round(cssH * dpr);
   const x = ov.getContext('2d'); x.setTransform(k * dpr, 0, 0, k * dpr, 0, 0);
-  p.objs.forEach(o => pxPaint(x, o, true)); if (PX.draft) pxPaint(x, PX.draft, true);
+  pxDecoOf(p).forEach(o => pxPaint(x, o, false)); p.objs.forEach(o => pxPaint(x, o, true)); if (PX.draft) pxPaint(x, PX.draft, true);
   const so = pxSelObj();
   if (so){ const B = pxBox(so), m = 3 / k; x.save(); x.setLineDash([4 / k, 3 / k]); x.strokeStyle = '#1F4FB8'; x.lineWidth = 1.4 / k; x.strokeRect(B.x - m, B.y - m, B.w + m * 2, B.h + m * 2); x.setLineDash([]);
     const hs = 9 / k; x.fillStyle = '#fff'; x.strokeStyle = '#1F4FB8'; x.lineWidth = 1.6 / k; x.beginPath(); x.rect(B.x + B.w + m - hs / 2, B.y + B.h + m - hs / 2, hs, hs); x.fill(); x.stroke(); x.restore(); }
@@ -302,6 +306,7 @@ function pxDown(e){
   if (T === 'pen' || T === 'hl'){ PX.draft = {id: PX_ID++, t: 'pen', pts: [[x, y]], col: T === 'hl' ? st.hlCol : st.col, lw: T === 'hl' ? (st.hlLw || 12) : st.lw, op: T === 'hl' ? 0.45 : st.op, hl: T === 'hl'}; PXD = {m: 'draw'}; pxDraw(false); return; }
   if (['rect', 'ell', 'white', 'redact'].includes(T)){ PX.draft = {id: PX_ID++, t: T, x, y, w: 0, h: 0, col: st.col, lw: T === 'rect' || T === 'ell' ? st.lw : 0, fill: T === 'white' ? '#ffffff' : (st.fillOn ? st.col : ''), op: T === 'rect' || T === 'ell' ? st.op : 1}; PXD = {m: 'shape', x, y}; return; }
   if (T === 'line' || T === 'arrow'){ PX.draft = {id: PX_ID++, t: T, x1: x, y1: y, x2: x, y2: y, col: st.col, lw: st.lw, op: st.op}; PXD = {m: 'line'}; return; }
+  if (T === 'stamp'){ pxSnap(); const c = pxStampCanvas(PX.st.stamp || {k: 'paid', col: '#c62828', date: true}), w = Math.min(pxW(p) * 0.32, 170), h = w * c.height / c.width, o = {id: PX_ID++, t: 'img', c, x: x - w / 2, y: y - h / 2, w, h, op: 1, alpha: true, stamp: true}; p.objs.push(o); PX.sel = o.id; PX.tool = 'select'; pxRender($('#ds_root')); pxSay(t('px_added', {n: t('px_o_stamp')})); return; }
   if (T === 'check' || T === 'x' || T === 'dot'){ pxSnap(); const s = st.ms || 14, o = {id: PX_ID++, t: 'mark', k: T, x: x - s / 2, y: y - s / 2, s, col: st.col, op: 1}; p.objs.push(o); PX.sel = o.id; pxRefresh(); pxSay(t('px_added', {n: pxObjName(o)})); return; }
 }
 function pxMoveEv(e){
@@ -451,7 +456,7 @@ async function pxBuild(onlyPage){
       page = out.addPage([p.w0, p.h0]); page.setRotation(L.degrees(pxR(p)));
       if (p.img){ const im = await pxEmbed(out, p.img, p.alpha); page.drawImage(im, {x: 0, y: 0, width: p.w0, height: p.h0}); }
     }
-    for (const o of p.objs) await pxDrawObj(L, out, page, p, o);
+    for (const o of p.objs.concat(pxDecoOf(p))) await pxDrawObj(L, out, page, p, o);
   }
   return out.save();
 }
@@ -470,7 +475,7 @@ async function pxSave(how){
     const bytes = await pxBuild(), blob = new Blob([bytes], {type: 'application/pdf'}), name = pxFile('pdf');
     pxSay('');
     if (how === 'share'){ const f = new File([blob], name, {type: 'application/pdf'}); if (navigator.canShare && navigator.canShare({files: [f]})){ try { await navigator.share({files: [f], title: name}); } catch (e) {} return; } }
-    const r = await fileSave(blob, name, 'application/pdf'); toast(t(r === 'saved' ? 'ds_fileOk' : r === 'declined' ? 'pdf_declined' : 'pdf_fail')); if (r === 'saved') PX.dirty = false;
+    const r = await fileSave(blob, name, 'application/pdf'); toast(t(r === 'saved' ? 'ds_fileOk' : r === 'declined' ? 'pdf_declined' : 'pdf_fail')); if (r === 'saved'){ PX.dirty = false; if (typeof pxDraftClear === 'function') pxDraftClear(); }
   } catch (e){ pxSay(''); toast(t('px_saveFail')); }
   finally { PX.busy = false; }
 }
@@ -545,7 +550,7 @@ document.addEventListener('click', e => {
   if (t0.closest('#px_share')){ pxSave('share'); return; }
   if (t0.closest('#px_png')){ pxSave('png'); return; }
   if (t0.closest('#px_print')){ pxSave('print'); return; }
-  if (t0.closest('#px_close')){ if (PX.dirty && !confirm(t('px_leave'))) return; PX = null; dscRender(); return; }
+  if (t0.closest('#px_close')){ if (PX.dirty && !confirm(t('px_leave'))) return; PX = null; if (typeof pxDraftClear === 'function') pxDraftClear(); dscRender(); return; }
 });
 document.addEventListener('input', e => {
   const el = e.target; if (!el || !PX || DSX.view !== 'pdf' || !el.closest || !el.closest('#ds_root')) return; const so = pxSelObj();

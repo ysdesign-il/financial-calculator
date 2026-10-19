@@ -2,9 +2,22 @@
 const CACHE = 'fin-v1';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).catch(() => {})); self.skipWaiting(); });
-self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
+self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE && k !== 'fin-share').map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => {
   const r = e.request;
+  /* files shared to the installed app from other apps (Android "Share"): kept here for a moment, then the app opens them */
+  if (r.method === 'POST' && new URL(r.url).pathname.endsWith('/share-target')){
+    e.respondWith((async () => {
+      try {
+        const fd = await r.formData(), c = await caches.open('fin-share'); for (const k of await c.keys()) await c.delete(k);
+        let i = 0; for (const f of fd.getAll('files')){ if (!f || typeof f === 'string') continue; await c.put('__share/' + (i++), new Response(f, {headers: {'content-type': f.type || 'application/octet-stream', 'x-name': encodeURIComponent(f.name || 'file')}})); }
+        const txt = [fd.get('title'), fd.get('text'), fd.get('url')].filter(x => typeof x === 'string' && x).join('\n');
+        if (txt) await c.put('__share/text', new Response(txt, {headers: {'content-type': 'text/plain;charset=utf-8'}}));
+      } catch (er) {}
+      return Response.redirect('./?share=1', 303);
+    })());
+    return;
+  }
   if (r.method !== 'GET' || new URL(r.url).origin !== location.origin) return;     // only this site's own files
   e.respondWith(fetch(r).then(res => {
     if (res && res.ok && res.type === 'basic'){ const cp = res.clone(); caches.open(CACHE).then(c => c.put(r, cp)).catch(() => {}); }

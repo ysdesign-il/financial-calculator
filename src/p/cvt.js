@@ -282,8 +282,10 @@ async function cvtOcr(btn){
   const old = btn.textContent; btn.disabled = true; btn.textContent = '⏳ ' + t('ph_reading');
   try {
     const blobs = []; for (const p of DSC.pages.slice(0, 4)){ const c = dsCompose(p, 2000); blobs.push(await new Promise(r => c.toBlob(r, 'image/jpeg', 0.9))); }
-    const j = await dsAsk('Transcribe ALL the text in these scanned pages exactly as written, in its original language and reading order, keeping line breaks and simple tables (use tabs between cells). Do not translate, summarise or add anything. Return ONLY JSON: {"text": "..."}', blobs, 'default');
-    DSC.ocr = String((j && j.text) || '').slice(0, 50000); dscRender(); const ta = $('#ds_ocr'); if (ta) ta.focus();
+    const j = await dsAsk('Transcribe ALL the text in these ' + blobs.length + ' scanned page image(s) exactly as written, in its original language and reading order. Do not translate, summarise or add anything. Return ONLY JSON: {"text": all the text with line breaks (tabs between table cells), "pages": [one entry per image, in order: {"lines": [{"t": the text of one printed line, "b": [left, top, right, bottom] of that line as numbers from 0 to 1000 relative to the image width and height]}]}]}', blobs, 'default');
+    const pg = Array.isArray(j && j.pages) ? j.pages.map(x => Array.isArray(x && x.lines) ? x.lines.filter(l => l && typeof l.t === 'string').slice(0, 400) : []) : [];
+    DSC.ocrLines = pg.some(x => x.length) ? pg : null;
+    DSC.ocr = String((j && j.text) || pg.map(x => x.map(l => l.t).join('\n')).join('\n\n') || '').slice(0, 50000); dscRender(); const ta = $('#ds_ocr'); if (ta) ta.focus();
   } catch (e){ toast(t('ph_fail')); }
   finally { if (btn.isConnected){ btn.disabled = false; btn.textContent = old; } }
 }
