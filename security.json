@@ -1,6 +1,14 @@
 {
  "alerts": [
   {
+   "at": 1792368798,
+   "level": "low",
+   "kind": "csp",
+   "actor": "ysdesign-il",
+   "msg": "The live site has no security policy (CSP) — scripts from other sites are not restricted",
+   "p": {}
+  },
+  {
    "at": 1792264690,
    "level": "medium",
    "kind": "workflow",
@@ -37,5 +45,5 @@
    }
   }
  ],
- "updated": 1792264691
+ "updated": 1792368799
 }
