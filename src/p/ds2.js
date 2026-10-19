@@ -222,7 +222,7 @@ function dsFilter(c, f){
   /* contrast: the darkest 0.5% becomes black, the paper (or the brightest 0.5%) white – through a lookup table */
   const h2 = new Uint32Array(256); for (let i = 0; i < n * 4; i += 4) h2[(d[i] * 299 + d[i + 1] * 587 + d[i + 2] * 114) / 1000 | 0]++;
   let lo = 0, hi = 255, a2 = 0; for (let v = 0; v < 256; v++){ a2 += h2[v]; if (a2 > n * 0.005){ lo = v; break; } } a2 = 0; for (let v = 255; v >= 0; v--){ a2 += h2[v]; if (a2 > n * (flat ? 0.2 : 0.005)){ hi = v; break; } }
-  if (flat) hi = Math.min(hi, 235); const sp = Math.max(30, hi - lo), LUT = new Uint8ClampedArray(256); for (let v = 0; v < 256; v++) LUT[v] = (v - lo) * 255 / sp;
+  if (flat) hi = Math.min(hi, 235); lo = Math.min(lo, hi - 100); /* a nearly empty page stays white */ const sp = Math.max(30, hi - lo), LUT = new Uint8ClampedArray(256); for (let v = 0; v < 256; v++) LUT[v] = (v - lo) * 255 / sp;
   const gray = f === 'gray' || f === 'bw';
   for (let i = 0; i < n * 4; i += 4){ if (gray){ const g = LUT[(d[i] * 299 + d[i + 1] * 587 + d[i + 2] * 114) / 1000 | 0]; d[i] = d[i + 1] = d[i + 2] = g; } else { d[i] = LUT[d[i]]; d[i + 1] = LUT[d[i + 1]]; d[i + 2] = LUT[d[i + 2]]; } }
   /* sharpening (unsharp mask): the picture minus a slightly blurred copy, added back */

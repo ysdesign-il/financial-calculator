@@ -1343,3 +1343,9 @@ body[data-tab="expenses"] .page-head .scan-btn + .prn-btn,body[data-tab="clients
 .d4-tools{display:inline-flex;gap:4px;flex-wrap:wrap;margin-inline-start:auto}.ds-pg figcaption{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .ds-crop .d4-loupe{position:absolute;z-index:5;border-radius:50%;width:auto;box-shadow:0 4px 18px rgba(0,0,0,.45);pointer-events:none}
 .d4-adj{margin:8px 0}.d4-adj input[type=range]{width:100%;accent-color:#1F4FB8}
+.d5-tag{font-size:.78rem;padding:2px 8px;border-radius:999px;border:1px solid #d97706;background:color-mix(in srgb,#d97706 10%,transparent)}.d5-tag.ok{border-color:#16a34a;background:color-mix(in srgb,#16a34a 8%,transparent)}
+.d5-ban{align-items:flex-start}.d5-ban p{margin:0 0 6px}.d5-ck{display:flex;margin:6px 0}
+.fu-cu{display:flex;gap:6px}.fu-cu input{flex:1 1 60px;min-width:0}.fu-cu select{flex:0 1 auto;font:inherit;font-size:16px;min-height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface,transparent);color:inherit;max-width:55%}
+.fu-car{margin:8px 0 12px}.fu-range{width:100%;accent-color:#1F4FB8}.fu-t tr.key th,.fu-t tr.key td{font-weight:700}.fu-t td{white-space:nowrap}
+.fu-log{list-style:none;padding:0;margin:0 0 10px;display:flex;flex-direction:column;gap:6px}.fu-log li{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:12px;font-size:.88rem}
+.fu-wide{grid-column:1/-1}.fu-cu select{max-width:none;flex:1 1 50%}

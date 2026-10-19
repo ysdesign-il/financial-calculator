@@ -6,7 +6,7 @@ const GROUPS = [
   ['g_realty',  ['mortgage','mortcmp','mortcap','refi','rentbuy']],
   ['g_invest',  ['compound','savegoal','yield','dividends','avgcost','networth','kidsave','mmf','invfees','childallow']],
   ['g_retire',  ['retire','pensfix','oldage','pencmp','mgmtfees','hishtalmut','fire','freedom']],
-  ['g_budget',  ['expenses','bankacc','smartsplit','split','unitprice','discount','appliance','evfuel','breakeven']],
+  ['g_budget',  ['expenses','bankacc','smartsplit','split','unitprice','discount','appliance','fuelcalc','evfuel','breakeven']],
   ['g_compare', ['insurance','cellcmp','phonecmp']],
   ['g_fxtools', ['mathx','docscan','convert','inflation','cpilink','percent']]
 ];
