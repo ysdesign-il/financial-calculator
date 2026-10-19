@@ -1,10 +1,13 @@
 {
- "started": "2026-10-19 14:52:02 UTC",
+ "started": "2026-10-19 18:22:28 UTC",
  "events": [
-  "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
+  "  gemini gemini-flash-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
   "  gemini gemini-3.8-flash: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
-  "published es",
+  "  gemini gemini-flash-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
+  "  gemini gemini-flash-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
   "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
+  "published es",
+  "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
   "published fr",
   "published ru",
   "published pt-BR",
@@ -13,23 +16,23 @@
   "published hi"
  ],
  "langs": {
-  "es": 6658,
-  "fr": 6658,
-  "ru": 6658,
-  "pt-BR": 6658,
-  "it": 6658,
-  "zh-CN": 6652,
-  "hi": 6653
+  "es": 7028,
+  "fr": 7026,
+  "ru": 7025,
+  "pt-BR": 7026,
+  "it": 7028,
+  "zh-CN": 7022,
+  "hi": 7020
  },
- "finished": "2026-10-19 14:52:54 UTC",
+ "finished": "2026-10-19 18:30:13 UTC",
  "coverage": {
-  "zh-CN": 6652,
-  "fr": 6658,
-  "hi": 6653,
-  "pt-BR": 6658,
-  "ru": 6658,
-  "es": 6658,
-  "it": 6658
+  "zh-CN": 7022,
+  "fr": 7026,
+  "hi": 7020,
+  "pt-BR": 7026,
+  "ru": 7025,
+  "es": 7028,
+  "it": 7028
  },
- "total": 6658
+ "total": 7028
 }
