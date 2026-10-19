@@ -8,9 +8,13 @@
 <script>
 /* 12.7: full private mode — when on, nothing is loaded from outside sites (no fonts, live quotes, widgets or AI); only this site's own files */
 var PRIV = false; try { PRIV = window['local' + 'Storage'].getItem('fin-priv') === '1'; } catch (e) {}
+/* 13.8: which of the app's keys existed before this visit wrote anything (to tell a real user from a first visit when moving address) */
+var FIN_K0 = []; try { var _ls = window['local' + 'Storage']; for (var _i = 0; _i < _ls.length; _i++){ var _k = _ls.key(_i); if (_k && _k.indexOf('fin-') === 0) FIN_K0.push(_k); } } catch (e) {}
+/* 13.12: the site's own address – the Claude app reads the shared data files (rates, version…) from here */
+var SITE_BASE = 'https://ysdesign-il.github.io/financial-calculator/';
 (function(){
   if (!PRIV){ document.write('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&family=Heebo:wght@400;700&family=Rubik:wght@400;700&display=swap" rel="stylesheet">'); return; }
-  var own = function(x){ return x.origin === location.origin || x.origin === 'https://ysdesign-il.github.io' || /(^|\.)(claude\.ai|claudeusercontent\.com|anthropic\.com)$/.test(x.hostname); };
+  var own = function(x){ return x.origin === location.origin || x.origin === 'https://ysdesign-il.github.io' || x.origin === SITE_BASE.replace(/^(https?:\/\/[^\/]+).*$/, '$1') || /(^|\.)(claude\.ai|claudeusercontent\.com|anthropic\.com)$/.test(x.hostname); };
   var ext = function(u){ try { var x = new URL(u, location.href); return /^(https?|wss?):$/.test(x.protocol) && !own(x); } catch (e) { return false; } };
   var f = window.fetch; if (f) window.fetch = function(i){ var u = typeof i === 'string' ? i : (i && i.url) || ''; if (ext(u)) return Promise.reject(new Error('private')); return f.apply(this, arguments); };
   var X = window.XMLHttpRequest && XMLHttpRequest.prototype.open; if (X) XMLHttpRequest.prototype.open = function(m, u){ if (ext(u)) throw new Error('private'); return X.apply(this, arguments); };
@@ -1552,6 +1556,11 @@ body[data-tab="expenses"] .page-head .scan-btn + .prn-btn,body[data-tab="clients
 .px-dr{margin:0 0 6px}.px-stamps{margin:0}.px-deco .px-row{margin:6px 0}
 .bt-cam{position:relative}.bt-cam canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .bt-shot{min-height:56px;font-size:1.05rem;flex:1}.bt-th .px-th{cursor:default}
+/* 13.12: "the app has moved" */
+.mig-ov{position:fixed;inset:0;z-index:200;background:var(--bg,#0b1426);display:grid;place-items:center;padding:20px;overflow:auto}
+.mig-box{max-width:460px;width:100%;text-align:center;background:var(--card,#fff);color:var(--ink,#141821);border-radius:22px;padding:26px 20px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.mig-box h2{margin:6px 0 10px;font-size:1.3rem}.mig-box p{line-height:1.6}.mig-ic{font-size:2.6rem}.mig-btns{justify-content:center;margin:14px 0}.mig-btns .gold-btn{width:100%}
+.mig-box .lg-a{margin-top:10px;font-size:.9rem;opacity:.8}
 
 /* ================= 7.8: app designs (ORBIT, AURUM); the default design has none of these rules ================= */
 .dz-ban{display:none}
@@ -6941,6 +6950,25 @@ Object.assign(T, {
   ax_reset:['איפוס הנגישות','إعادة ضبط الإتاحة','Reset accessibility'], ax_resetDone:['הגדרות הנגישות אופסו','أُعيد ضبط إعدادات الإتاحة','Accessibility settings reset'],
   ax_hideBtn:['הסתרת הכפתור הצף (התפריט נשאר בהגדרות ← מערכת)','إخفاء الزر العائم (تبقى القائمة في الإعدادات ← النظام)','Hide the floating button (the menu stays in Settings → System)'], ax_hidden:['הכפתור הוסתר. התפריט זמין בהגדרות ← מערכת.','أُخفي الزر. القائمة متاحة في الإعدادات ← النظام.','Button hidden. The menu is in Settings → System.'],
   ax_note:['ההגדרות נשמרות במכשיר וחלות על כל המסכים.','تُحفظ الإعدادات على الجهاز وتسري على كل الشاشات.','Settings are saved on the device and apply to every screen.']
+});
+/* 13.8: moving to a new address */
+Object.assign(T, {
+  mig_t:['האפליקציה עברה לכתובת חדשה','انتقل التطبيق إلى عنوان جديد','The app has moved to a new address'],
+  mig_h:['הכתובת החדשה: {d}. לחיצה אחת מעבירה לשם את כל הנתונים שלך מהמכשיר הזה – הגדרות, חשבונות, חישובים שמורים, קורות חיים ועוד.','العنوان الجديد: {d}. ضغطة واحدة تنقل إليه كل بياناتك من هذا الجهاز – الإعدادات والحسابات والحسابات المحفوظة والسيرة الذاتية وغيرها.','The new address: {d}. One tap moves all your data from this device there – settings, accounts, saved calculations, CV and more.'],
+  mig_go:['מעבר לכתובת החדשה עם כל הנתונים','الانتقال إلى العنوان الجديد مع كل البيانات','Go to the new address with all my data'],
+  mig_priv:['הנתונים עוברים ישירות בתוך הטלפון, מהכתובת הישנה לחדשה – לא דרך שרת ולא בתוך הקישור. חשבונות מוצפנים נשארים מוצפנים.','تنتقل البيانات مباشرة داخل الهاتف من العنوان القديم إلى الجديد – لا عبر خادم ولا داخل الرابط. تبقى الحسابات المشفرة مشفرة.','The data moves directly inside the phone, from the old address to the new one – not through a server and not in the link. Encrypted accounts stay encrypted.'],
+  mig_skip:['מעבר בלי הנתונים','الانتقال دون البيانات','Go without my data'],
+  mig_wait:['פותח את הכתובת החדשה ומעביר…','جارٍ فتح العنوان الجديد والنقل…','Opening the new address and moving your data…'],
+  mig_slow:['זה לוקח יותר מהרגיל. אם נפתחה לשונית חדשה, חזרו אליה; אם לא – לחצו שוב.','يستغرق الأمر أكثر من المعتاد. إن فُتح تبويب جديد فارجعوا إليه؛ وإلا اضغطوا مرة أخرى.','This is taking longer than usual. If a new tab opened, go to it; if not, tap again.'],
+  mig_big:['יש כאן יותר מדי נתונים להעברה בדרך הזו. השתמשו בהגדרות ← מערכת ← גיבוי ושחזור, ושחזרו בכתובת החדשה.','البيانات كثيرة جدًا للنقل بهذه الطريقة. استخدموا الإعدادات ← النظام ← النسخ الاحتياطي والاستعادة، واستعيدوا في العنوان الجديد.','There is too much data to move this way. Use Settings → System → Backup and restore, and restore it at the new address.'],
+  mig_done:['הנתונים הועברו','نُقلت البيانات','Your data has moved'],
+  mig_doneH:['מעכשיו פתחו את האפליקציה בכתובת {d}. אם שמרתם אותה במסך הבית, הוסיפו אותה מחדש מהכתובת החדשה.','من الآن افتحوا التطبيق على العنوان {d}. إن حفظتموه على الشاشة الرئيسية فأضيفوه من جديد من العنوان الجديد.','From now on open the app at {d}. If you saved it to your home screen, add it again from the new address.'],
+  mig_open:['פתיחת הכתובת החדשה','فتح العنوان الجديد','Open the new address'],
+  mig_recv:['מקבל את הנתונים מהכתובת הקודמת…','جارٍ استلام البيانات من العنوان السابق…','Receiving your data from the previous address…'],
+  mig_recvH:['השאירו את הלשונית הזו פתוחה כמה שניות.','اتركوا هذا التبويب مفتوحًا بضع ثوانٍ.','Keep this tab open for a few seconds.'],
+  mig_ok:['הנתונים התקבלו – טוען…','تم استلام البيانات – جارٍ التحميل…','Data received – loading…'],
+  mig_over:['כבר יש נתונים בכתובת הזו. להחליף אותם בנתונים מהכתובת הקודמת?','توجد بيانات في هذا العنوان بالفعل. هل تستبدلها ببيانات العنوان السابق؟','There is already data at this address. Replace it with the data from the previous address?'],
+  mig_fail:['ההעברה לא הצליחה. אפשר לנסות שוב מהכתובת הקודמת, או להשתמש בגיבוי ושחזור.','فشل النقل. يمكن المحاولة مرة أخرى من العنوان السابق أو استخدام النسخ الاحتياطي والاستعادة.','The move did not work. Try again from the previous address, or use backup and restore.']
 });
 /* 13.8: direct printing */
 Object.assign(T, {
@@ -13763,8 +13791,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.11", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.165109';
+var CHANGELOG = [{"v": "13.12", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.170745';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -13828,7 +13856,7 @@ async function updCheck(manual){
     try { const x = await fetch('version.json?t=' + Date.now(), {cache: 'no-store'}); if (x.ok) r = await x.json(); } catch (e) {}
   }
   if (!r && IN_CLAUDE){
-    try { const x = await fetch('https://ysdesign-il.github.io/financial-calculator/version.json?t=' + Date.now(), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); if (x.ok) r = await x.json(); } catch (e) {}
+    try { const x = await fetch(SITE_BASE + 'version.json?t=' + Date.now(), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); if (x.ok) r = await x.json(); } catch (e) {}
   }
   if (!r && UPD.dbv) r = UPD.dbv;
   if (r && r.build){ UPD.remote = r; UPD.st = 'ok'; }
@@ -15881,7 +15909,7 @@ async function ixSite(){
 }
 setTimeout(ixSite, 1400);
 rjEvery(ixSite);
-var IX_GH = 'https://ysdesign-il.github.io/financial-calculator/rates.json', IX_GH_OK = null;
+var IX_GH = SITE_BASE + 'rates.json', IX_GH_OK = null;
 async function ixRemote(){
   if (!IN_CLAUDE || IX_GH_OK === false) return;
   try {
@@ -16204,7 +16232,7 @@ const SRC_L = {
   cbsApi: id => 'https://api.cbs.gov.il/index/data/price?id=' + id + '&format=json&download=false&last=3&lang=he',
   cb: 'https://api.coinbase.com/v2/exchange-rates?currency=USD', cbBtc: 'https://www.coinbase.com/price/bitcoin',
   bn: 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT', bnBtc: 'https://www.binance.com/en/price/bitcoin',
-  gh: 'https://ysdesign-il.github.io/financial-calculator/rates.json', ghAct: 'https://github.com/ysdesign-il/financial-calculator/actions'
+  gh: SITE_BASE + 'rates.json', ghAct: 'https://github.com/ysdesign-il/financial-calculator/actions'
 };
 const SRC_G = {ILS: 'USD-ILS', EUR: 'EUR-ILS', ta35: '142:TLV', ta125: '137:TLV', spx: '.INX:INDEXSP', ndx: 'NDX:INDEXNASDAQ', dji: '.DJI:INDEXDJX', gold: 'GCW00:COMEX', brent: 'BZW00:NYMEX'};
 function srcAge(ms){
@@ -18235,7 +18263,7 @@ try {
 } catch (e) {}
 /* developer code, published from the app, the website or GitHub, runs in the app and on the website */
 var DC = {pub: null, at: 0, ran: false, err: ''};
-const DC_URL_GH = 'https://ysdesign-il.github.io/financial-calculator/devcode.json', DC_REPO = 'ysdesign-il/financial-calculator';
+const DC_URL_GH = SITE_BASE + 'devcode.json', DC_REPO = 'ysdesign-il/financial-calculator';
 function dcSkip(){ return /[#&?]nocode\b/.test(location.hash + location.search); }
 function dcRun(code){
   if (!code || DC.ran || dcSkip()) return;
@@ -18677,7 +18705,7 @@ applyWhen = function(id){
 
 /* ---------- the company car straight from the Ministry of Transport price list ---------- */
 var CARS = {d: null, st: '', at: 0, q: ''};
-function carsUrl(){ return IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/cars.json' : 'cars.json'; }
+function carsUrl(){ return IN_CLAUDE ? SITE_BASE + 'cars.json' : 'cars.json'; }
 async function carsLoad(){
   if (CARS.d || CARS.st === 'wait') return CARS.d;
   CARS.st = 'wait'; carPickRender();
@@ -20376,7 +20404,7 @@ document.addEventListener('click', e => {
 });
 
 /* ---------- 4. a chart for every live index and commodity ---------- */
-const HIST_URL = IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/history.json' : 'history.json';
+const HIST_URL = IN_CLAUDE ? SITE_BASE + 'history.json' : 'history.json';
 var HIST = {d: null, at: 0, p: null};
 function histLoad(){
   if (HIST.d && Date.now() - HIST.at < 3600e3) return Promise.resolve(HIST.d);
@@ -20671,7 +20699,7 @@ if (location.hostname === 'localhost') window.__fin91 = {phApply, insList, mcLis
 const E92 = s => asEsc(String(s == null ? '' : s));
 
 /* ---------- 1. phone plans: your own plans next to the published ones, and fresher prices from the site ---------- */
-const CELL_URL = IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/cell.json' : 'cell.json';
+const CELL_URL = IN_CLAUDE ? SITE_BASE + 'cell.json' : 'cell.json';
 fetch(CELL_URL + '?v=' + Math.floor(Date.now() / 3600e3), {credentials: 'omit', referrerPolicy: 'no-referrer'}).then(r => r.ok ? r.json() : null).then(j => {
   if (j && Array.isArray(j.plans) && j.plans.length && String(j.at || '') > CELL.at){ CELL = j; if (tab === 'cellcmp') calc(tab); clRender(); }
 }).catch(() => {});
@@ -20950,7 +20978,7 @@ try { fbBox(); } catch (e) {}
    (ntfy.sh). The site's server collects it twice an hour into inbox.json. Only the app, in developer mode, holds the PRIVATE key
    (in its own database, readable only by the owner), so only the developer can read website messages. The person just taps "Send". */
 const INBOX_TOPIC = 'fc-in-318ca4899cb6f959f4e4de51', INBOX_PUB = {"kty": "RSA", "n": "wxtR5meXd5lblZDdURSscmj48iXULVTtEJtrqAj6Lsm6GnSd18JVzEuhQfgRZJZ-3BXPJNaUWFEwRh2YAYsNpeceOWkrKeq3R4vigswqUDVSphAe-v_UUQoCpRXT3vypPYbBps_6ndsVcn96UjdW1Azz12ZrIn0JJprYVhZEh7UDpVoXM0WUHOxItdNHWfeOJ_D9dZXrYPlup9GANJsPMygFPbIv2bdIwHjoPxhir3ZmmGilH5yqTvOJw1Rc504ofLc9JY3oM1cR0pedexJbU8vZwrU2i5atTNvFRNvlh31HH7HrR5FZ1NZxHnRlyMit-lqGIlxA2THDeLLkqr_INQ", "e": "AQAB", "alg": "RSA-OAEP-256"};
-const INBOX_URL = IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/inbox.json' : 'inbox.json';
+const INBOX_URL = IN_CLAUDE ? SITE_BASE + 'inbox.json' : 'inbox.json';
 const ib64 = u => btoa(String.fromCharCode(...new Uint8Array(u))), ibUn64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 async function ibLock(obj){
   const S = crypto.subtle, pk = await S.importKey('jwk', INBOX_PUB, {name: 'RSA-OAEP', hash: 'SHA-256'}, false, ['encrypt']);
@@ -21463,7 +21491,7 @@ document.addEventListener('click', async e => {
 /* the sender: replies waiting for this phone appear under the feedback box */
 async function rpCheck(){
   const mine = rkMine(); if (!mine.length) return;
-  let j = null; try { const r = await fetch((IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/' : '') + 'replies.json?v=' + Math.floor(Date.now() / 60000), {cache: 'no-store', credentials: 'omit'}); if (r.ok) j = await r.json(); } catch (e) {}
+  let j = null; try { const r = await fetch((IN_CLAUDE ? SITE_BASE : '') + 'replies.json?v=' + Math.floor(Date.now() / 60000), {cache: 'no-store', credentials: 'omit'}); if (r.ok) j = await r.json(); } catch (e) {}
   if (!j || !Array.isArray(j.r)) return;
   const got = [];
   for (const x of mine){
@@ -22017,7 +22045,7 @@ var SEC = {list: [], at: 0};
 async function secLoad(){
   if (typeof DEV_ON === 'undefined' || !DEV_ON) return;
   try {
-    const u = IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/security.json' : 'security.json';
+    const u = IN_CLAUDE ? SITE_BASE + 'security.json' : 'security.json';
     const r = await fetch(u + '?t=' + Date.now(), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'});
     if (!r.ok) return;
     const d = await r.json(); SEC.list = Array.isArray(d && d.alerts) ? d.alerts : []; SEC.at = Date.now(); secRender();
@@ -22113,7 +22141,7 @@ try { renderTiles(); if (mbLocked(tab)) activateMb('home'); } catch (e) {}
 
 /* ================= family mode: family members sign in with their name and a code from the developer; nobody else ever sees it =================
    Only fingerprints of name+code (PBKDF2) are published, in family.json; the codes themselves are never stored anywhere public. */
-const FAM_SITE = 'https://ysdesign-il.github.io/financial-calculator/';
+const FAM_SITE = SITE_BASE;
 const FAM_URL = () => (IN_CLAUDE ? FAM_SITE : '') + 'family.json';
 var FAM = {list: null, on: false, name: ''};
 const famNorm = s => String(s || '').replace(/^.*?(FM[-\s]?)/i, 'FM').replace(/[^0-9a-z]/gi, '').toUpperCase();
@@ -25679,7 +25707,7 @@ const LG_DOCS = {
     ['', ['lg_c_intro']],
     ['lg_c_libH', ['lg_c_lib1', 'lg_c_lib3', 'lg_c_lib4', 'lg_c_lib2'], true],
     ['lg_c_dataH', ['lg_c_data1', 'lg_c_data2', 'lg_c_data3', 'lg_c_data4'], true]
-  ], extra: () => `<p><a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? 'https://ysdesign-il.github.io/financial-calculator/' : ''}lib/nerdamer.LICENSE.txt" target="_blank" rel="noopener">${lgE(t('lg_c_licLink'))}</a></p><p>${lgE(t('lg_c_licLinks'))} ${[['pdfjs/LICENSE.txt', 'pdf.js'], ['pdfjs/wasm/LICENSE_JBIG2', 'JBIG2'], ['pdfjs/wasm/LICENSE_OPENJPEG', 'OpenJPEG'], ['pdfjs/wasm/LICENSE_QCMS', 'QCMS'], ['pdf-lib.LICENSE.txt', 'pdf-lib'], ['jszip.LICENSE.txt', 'JSZip']].map(([f, n]) => `<a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? 'https://ysdesign-il.github.io/financial-calculator/' : ''}lib/${f}" target="_blank" rel="noopener">${n}</a>`).join(' · ')}</p>`},
+  ], extra: () => `<p><a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? SITE_BASE : ''}lib/nerdamer.LICENSE.txt" target="_blank" rel="noopener">${lgE(t('lg_c_licLink'))}</a></p><p>${lgE(t('lg_c_licLinks'))} ${[['pdfjs/LICENSE.txt', 'pdf.js'], ['pdfjs/wasm/LICENSE_JBIG2', 'JBIG2'], ['pdfjs/wasm/LICENSE_OPENJPEG', 'OpenJPEG'], ['pdfjs/wasm/LICENSE_QCMS', 'QCMS'], ['pdf-lib.LICENSE.txt', 'pdf-lib'], ['jszip.LICENSE.txt', 'JSZip']].map(([f, n]) => `<a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? SITE_BASE : ''}lib/${f}" target="_blank" rel="noopener">${n}</a>`).join(' · ')}</p>`},
   priv: {t: 'lg_privT', ic: '🔒', parts: [
     ['', ['lg_p_intro']],
     ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3', 'lg_p_dev4', 'lg_p_dev5', 'lg_p_dev6', 'lg_p_dev7', 'lg_p_dev8', 'lg_p_dev9']],
@@ -29226,6 +29254,118 @@ document.addEventListener('keydown', e => {
 { const alPrn = applyLang; applyLang = function(){ const r = alPrn.apply(this, arguments); try { prnBtnLabel(); const o = $('#prnx'); if (o && !o.hidden) prnPanel(); } catch (e) {} return r; }; }
 { const acPrn = activate; activate = function(){ const r = acPrn.apply(this, arguments); try { prnBtnLabel(); } catch (e) {} return r; }; }
 try { prnBtnMount(); } catch (e) {}
+
+/* ---------- 13.8: moving to a new address without losing anything ----------
+   The browser keeps the app's data per address, so a new domain starts empty. When MIG_TO is set:
+   • on the old address the app shows "the app has moved": one tap opens the new address and hands it all the data
+     directly, phone to phone (window.postMessage between the two tabs – no server, nothing in the link);
+   • on the new address the app receives it, but only from the old addresses listed here.
+   Encrypted accounts stay encrypted. Leave MIG_TO empty until the new address is live. */
+const MIG_TO = '';                                         // e.g. 'https://example.co.il' – no trailing slash
+const MIG_FROM = ['https://ysdesign-il.github.io'];
+const migE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+const migKeys = () => { const L = []; try { for (let i = 0; i < RAWLS.length; i++){ const k = RAWLS.key(i); if (k && k.indexOf('fin-') === 0 && k !== 'fin-migrated') L.push(k); } } catch (e) {} return L; };
+const migItems = () => { const o = {}; migKeys().forEach(k => { try { o[k] = RAWLS.getItem(k); } catch (e) {} }); return o; };
+const migGo = () => location.replace(MIG_TO + '/' + location.search + (location.hash && !/^#mig/.test(location.hash) ? location.hash : ''));
+function migOverlay(html){
+  let o = $('#migx'); if (!o){ document.body.insertAdjacentHTML('beforeend', `<div class="mig-ov" id="migx" role="dialog" aria-modal="true" aria-labelledby="migx_t"><div class="mig-box" id="migx_b"></div></div>`); o = $('#migx'); }
+  $('#migx_b').innerHTML = html; document.body.classList.add('cp-lock'); setTimeout(() => { const b = $('#migx_b button'); if (b) b.focus(); }, 30);
+}
+const migHost = () => { let h = MIG_TO; try { h = new URL(MIG_TO).host; } catch (e) {} return '\u2068' + h + '\u2069'; };
+
+/* ---------- the old address ---------- */
+var MIGS = {w: null, t: null, sent: false};
+function migOld(){
+  const n = (typeof FIN_K0 !== 'undefined' ? FIN_K0 : migKeys()).filter(k => !['fin-migrated', 'fin-ver', 'fin-tab', 'fin-lang', 'fin-upd-ntf', 'fin-fam-list'].includes(k)).length;
+  let done = ''; try { done = RAWLS.getItem('fin-migrated') || ''; } catch (e) {}
+  if (done || !n){ migGo(); return; }
+  migOverlay(`<div class="mig-ic" aria-hidden="true">🚚</div><h2 id="migx_t">${migE(t('mig_t'))}</h2>
+    <p>${migE(t('mig_h', {d: migHost()}))}</p>
+    <div class="btnrow mig-btns"><button type="button" class="gold-btn" id="mig_go">📦 ${migE(t('mig_go'))}</button></div>
+    <p class="fine">🔒 ${migE(t('mig_priv'))}</p>
+    <div class="sl-st" id="mig_st" aria-live="polite"></div>
+    <button type="button" class="lg-a" id="mig_skip">${migE(t('mig_skip'))}</button>`);
+}
+function migSend(){
+  const items = migItems(); MIGS.sent = false;
+  MIGS.w = window.open(MIG_TO + '/#mig', '_blank');
+  const st = $('#mig_st');
+  if (!MIGS.w){ migLink(items); return; }
+  if (st){ st.textContent = t('mig_wait'); st.className = 'sl-st'; }
+  clearTimeout(MIGS.t); MIGS.t = setTimeout(() => { if (!MIGS.sent){ const s = $('#mig_st'); if (s){ s.textContent = t('mig_slow'); s.className = 'sl-st bad'; } } }, 12000);
+}
+/* if the browser blocked the new tab: the data travels in the part of the link after #, which browsers never send to any server */
+async function migLink(items){
+  try {
+    const raw = new TextEncoder().encode(JSON.stringify(items));
+    let bytes = raw, z = '0';
+    if (typeof CompressionStream === 'function'){ bytes = new Uint8Array(await new Response(new Blob([raw]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer()); z = '1'; }
+    let bin = ''; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    const b64 = btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    if (b64.length > 1500000){ const s = $('#mig_st'); if (s){ s.textContent = t('mig_big'); s.className = 'sl-st bad'; } return; }
+    try { RAWLS.setItem('fin-migrated', String(Date.now())); } catch (e) {}
+    location.href = MIG_TO + '/#migz=' + z + b64;
+  } catch (e) { const s = $('#mig_st'); if (s){ s.textContent = t('mig_big'); s.className = 'sl-st bad'; } }
+}
+window.addEventListener('message', e => {
+  if (!MIG_TO || e.origin !== MIG_TO || !e.data || typeof e.data !== 'object') return;
+  if (e.data.type === 'mig-ready' && MIGS.w && !MIGS.sent){ MIGS.sent = true; try { MIGS.w.postMessage({type: 'mig-data', v: 1, items: migItems()}, MIG_TO); } catch (er) {} return; }
+  if (e.data.type === 'mig-done'){ clearTimeout(MIGS.t); try { RAWLS.setItem('fin-migrated', String(Date.now())); } catch (er) {}
+    migOverlay(`<div class="mig-ic" aria-hidden="true">✅</div><h2 id="migx_t">${migE(t('mig_done'))}</h2><p>${migE(t('mig_doneH', {d: migHost()}))}</p>
+      <div class="btnrow mig-btns"><button type="button" class="gold-btn" id="mig_open">↗ ${migE(t('mig_open'))}</button></div>`); }
+});
+
+/* ---------- the new address ---------- */
+function migApply(items){
+  if (!items || typeof items !== 'object') return false;
+  const keys = Object.keys(items).filter(k => /^fin-[\w:.\-+=/]*$/.test(k) && k !== 'fin-migrated' && typeof items[k] === 'string');
+  if (!keys.length) return false;
+  let mine = 0; try { mine = migKeys().filter(k => !['fin-lang', 'fin-ver', 'fin-tab', 'fin-upd-ntf'].includes(k)).length; } catch (e) {}
+  if (mine > 2 && !confirm(t('mig_over'))) return false;
+  keys.forEach(k => { try { RAWLS.setItem(k, items[k]); } catch (e) {} });
+  return true;
+}
+function migNew(){
+  const h = location.hash || '';
+  if (h === '#mig' && window.opener){
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    migOverlay(`<div class="mig-ic" aria-hidden="true">📥</div><h2 id="migx_t">${migE(t('mig_recv'))}</h2><p class="fine">${migE(t('mig_recvH'))}</p>`);
+    const ok = e => {
+      if (!MIG_FROM.includes(e.origin) || !e.data || e.data.type !== 'mig-data') return;
+      window.removeEventListener('message', ok);
+      const applied = migApply(e.data.items);
+      try { e.source.postMessage({type: applied ? 'mig-done' : 'mig-no'}, e.origin); } catch (er) {}
+      if (applied){ migOverlay(`<div class="mig-ic" aria-hidden="true">✅</div><h2 id="migx_t">${migE(t('mig_ok'))}</h2>`); setTimeout(() => location.reload(), 900); }
+      else { const o = $('#migx'); if (o) o.remove(); document.body.classList.remove('cp-lock'); }
+    };
+    window.addEventListener('message', ok);
+    MIG_FROM.forEach(o => { try { window.opener.postMessage({type: 'mig-ready'}, o); } catch (e) {} });
+    return;
+  }
+  if (h.indexOf('#migz=') === 0){
+    const data = h.slice(6);
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}       // the data leaves the address bar at once
+    (async () => {
+      try {
+        const z = data.charAt(0), b64 = data.slice(1).replace(/-/g, '+').replace(/_/g, '/'), bin = atob(b64 + '==='.slice((b64.length + 3) % 4)), u = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+        const txt = z === '1' ? await new Response(new Blob([u]).stream().pipeThrough(new DecompressionStream('gzip'))).text() : new TextDecoder().decode(u);
+        if (migApply(JSON.parse(txt))){ toast(t('mig_ok')); setTimeout(() => location.reload(), 900); }
+      } catch (e) { toast(t('mig_fail')); }
+    })();
+  }
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest) return;
+  if (e.target.closest('#mig_go')){ migSend(); return; }
+  if (e.target.closest('#mig_skip')){ try { RAWLS.setItem('fin-migrated', 'skip'); } catch (er) {} migGo(); return; }
+  if (e.target.closest('#mig_open')){ if (MIGS.w && !MIGS.w.closed){ try { MIGS.w.focus(); return; } catch (er) {} } migGo(); return; }
+});
+try {
+  if (MIG_TO && typeof IN_CLAUDE !== 'undefined' && !IN_CLAUDE){
+    if (MIG_FROM.includes(location.origin)) migOld(); else if (location.origin === MIG_TO) migNew();
+  }
+} catch (e) {}
 
 applyLang(false);
 activate(tab);

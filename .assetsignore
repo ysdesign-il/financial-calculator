@@ -1,0 +1,15 @@
+# files in the repository that are not part of the website
+.git
+.github
+.nojekyll
+.assetsignore
+wrangler.jsonc
+node_modules
+src
+scripts
+i18n
+AGENTS.md
+README.md
+enhancements.js
+cars_probe.json
+.wrangler

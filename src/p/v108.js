@@ -92,7 +92,7 @@ var SEC = {list: [], at: 0};
 async function secLoad(){
   if (typeof DEV_ON === 'undefined' || !DEV_ON) return;
   try {
-    const u = IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/security.json' : 'security.json';
+    const u = IN_CLAUDE ? SITE_BASE + 'security.json' : 'security.json';
     const r = await fetch(u + '?t=' + Date.now(), {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'});
     if (!r.ok) return;
     const d = await r.json(); SEC.list = Array.isArray(d && d.alerts) ? d.alerts : []; SEC.at = Date.now(); secRender();
@@ -188,7 +188,7 @@ try { renderTiles(); if (mbLocked(tab)) activateMb('home'); } catch (e) {}
 
 /* ================= family mode: family members sign in with their name and a code from the developer; nobody else ever sees it =================
    Only fingerprints of name+code (PBKDF2) are published, in family.json; the codes themselves are never stored anywhere public. */
-const FAM_SITE = 'https://ysdesign-il.github.io/financial-calculator/';
+const FAM_SITE = SITE_BASE;
 const FAM_URL = () => (IN_CLAUDE ? FAM_SITE : '') + 'family.json';
 var FAM = {list: null, on: false, name: ''};
 const famNorm = s => String(s || '').replace(/^.*?(FM[-\s]?)/i, 'FM').replace(/[^0-9a-z]/gi, '').toUpperCase();

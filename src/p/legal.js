@@ -24,7 +24,7 @@ const LG_DOCS = {
     ['', ['lg_c_intro']],
     ['lg_c_libH', ['lg_c_lib1', 'lg_c_lib3', 'lg_c_lib4', 'lg_c_lib2'], true],
     ['lg_c_dataH', ['lg_c_data1', 'lg_c_data2', 'lg_c_data3', 'lg_c_data4'], true]
-  ], extra: () => `<p><a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? 'https://ysdesign-il.github.io/financial-calculator/' : ''}lib/nerdamer.LICENSE.txt" target="_blank" rel="noopener">${lgE(t('lg_c_licLink'))}</a></p><p>${lgE(t('lg_c_licLinks'))} ${[['pdfjs/LICENSE.txt', 'pdf.js'], ['pdfjs/wasm/LICENSE_JBIG2', 'JBIG2'], ['pdfjs/wasm/LICENSE_OPENJPEG', 'OpenJPEG'], ['pdfjs/wasm/LICENSE_QCMS', 'QCMS'], ['pdf-lib.LICENSE.txt', 'pdf-lib'], ['jszip.LICENSE.txt', 'JSZip']].map(([f, n]) => `<a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? 'https://ysdesign-il.github.io/financial-calculator/' : ''}lib/${f}" target="_blank" rel="noopener">${n}</a>`).join(' · ')}</p>`},
+  ], extra: () => `<p><a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? SITE_BASE : ''}lib/nerdamer.LICENSE.txt" target="_blank" rel="noopener">${lgE(t('lg_c_licLink'))}</a></p><p>${lgE(t('lg_c_licLinks'))} ${[['pdfjs/LICENSE.txt', 'pdf.js'], ['pdfjs/wasm/LICENSE_JBIG2', 'JBIG2'], ['pdfjs/wasm/LICENSE_OPENJPEG', 'OpenJPEG'], ['pdfjs/wasm/LICENSE_QCMS', 'QCMS'], ['pdf-lib.LICENSE.txt', 'pdf-lib'], ['jszip.LICENSE.txt', 'JSZip']].map(([f, n]) => `<a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? SITE_BASE : ''}lib/${f}" target="_blank" rel="noopener">${n}</a>`).join(' · ')}</p>`},
   priv: {t: 'lg_privT', ic: '🔒', parts: [
     ['', ['lg_p_intro']],
     ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3', 'lg_p_dev4', 'lg_p_dev5', 'lg_p_dev6', 'lg_p_dev7', 'lg_p_dev8', 'lg_p_dev9']],

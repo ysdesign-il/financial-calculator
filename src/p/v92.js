@@ -2,7 +2,7 @@
 const E92 = s => asEsc(String(s == null ? '' : s));
 
 /* ---------- 1. phone plans: your own plans next to the published ones, and fresher prices from the site ---------- */
-const CELL_URL = IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/cell.json' : 'cell.json';
+const CELL_URL = IN_CLAUDE ? SITE_BASE + 'cell.json' : 'cell.json';
 fetch(CELL_URL + '?v=' + Math.floor(Date.now() / 3600e3), {credentials: 'omit', referrerPolicy: 'no-referrer'}).then(r => r.ok ? r.json() : null).then(j => {
   if (j && Array.isArray(j.plans) && j.plans.length && String(j.at || '') > CELL.at){ CELL = j; if (tab === 'cellcmp') calc(tab); clRender(); }
 }).catch(() => {});

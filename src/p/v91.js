@@ -149,7 +149,7 @@ document.addEventListener('click', e => {
 });
 
 /* ---------- 4. a chart for every live index and commodity ---------- */
-const HIST_URL = IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/history.json' : 'history.json';
+const HIST_URL = IN_CLAUDE ? SITE_BASE + 'history.json' : 'history.json';
 var HIST = {d: null, at: 0, p: null};
 function histLoad(){
   if (HIST.d && Date.now() - HIST.at < 3600e3) return Promise.resolve(HIST.d);

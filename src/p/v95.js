@@ -3,7 +3,7 @@
    (ntfy.sh). The site's server collects it twice an hour into inbox.json. Only the app, in developer mode, holds the PRIVATE key
    (in its own database, readable only by the owner), so only the developer can read website messages. The person just taps "Send". */
 const INBOX_TOPIC = 'fc-in-318ca4899cb6f959f4e4de51', INBOX_PUB = {"kty": "RSA", "n": "wxtR5meXd5lblZDdURSscmj48iXULVTtEJtrqAj6Lsm6GnSd18JVzEuhQfgRZJZ-3BXPJNaUWFEwRh2YAYsNpeceOWkrKeq3R4vigswqUDVSphAe-v_UUQoCpRXT3vypPYbBps_6ndsVcn96UjdW1Azz12ZrIn0JJprYVhZEh7UDpVoXM0WUHOxItdNHWfeOJ_D9dZXrYPlup9GANJsPMygFPbIv2bdIwHjoPxhir3ZmmGilH5yqTvOJw1Rc504ofLc9JY3oM1cR0pedexJbU8vZwrU2i5atTNvFRNvlh31HH7HrR5FZ1NZxHnRlyMit-lqGIlxA2THDeLLkqr_INQ", "e": "AQAB", "alg": "RSA-OAEP-256"};
-const INBOX_URL = IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/inbox.json' : 'inbox.json';
+const INBOX_URL = IN_CLAUDE ? SITE_BASE + 'inbox.json' : 'inbox.json';
 const ib64 = u => btoa(String.fromCharCode(...new Uint8Array(u))), ibUn64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 async function ibLock(obj){
   const S = crypto.subtle, pk = await S.importKey('jwk', INBOX_PUB, {name: 'RSA-OAEP', hash: 'SHA-256'}, false, ['encrypt']);

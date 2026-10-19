@@ -6660,6 +6660,22 @@
   "lg_p_dev9": "The editor's draft is kept on the device (IndexedDB) so you can continue later, and is deleted when the file is saved or closed or you tap \"Delete the draft\". In private mode and with an encrypted account no draft is kept. Files shared to the app are held for a moment in the browser's cache and deleted as soon as they open.",
   "lg_h_a1910f": "19.10.2026 – added sharing files to the app, batch scanning, searchable PDFs and a scan button on every calculator.",
   "lg_h_t1910e": "19.10.2026 – added a section on stamps and page numbers.",
-  "lg_h_p1910f": "19.10.2026 – added an explanation of the editor draft and files shared to the app."
+  "lg_h_p1910f": "19.10.2026 – added an explanation of the editor draft and files shared to the app.",
+  "mig_t": "The app has moved to a new address",
+  "mig_h": "The new address: {d}. One tap moves all your data from this device there – settings, accounts, saved calculations, CV and more.",
+  "mig_go": "Go to the new address with all my data",
+  "mig_priv": "The data moves directly inside the phone, from the old address to the new one – not through a server and not in the link. Encrypted accounts stay encrypted.",
+  "mig_skip": "Go without my data",
+  "mig_wait": "Opening the new address and moving your data…",
+  "mig_slow": "This is taking longer than usual. If a new tab opened, go to it; if not, tap again.",
+  "mig_big": "There is too much data to move this way. Use Settings → System → Backup and restore, and restore it at the new address.",
+  "mig_done": "Your data has moved",
+  "mig_doneH": "From now on open the app at {d}. If you saved it to your home screen, add it again from the new address.",
+  "mig_open": "Open the new address",
+  "mig_recv": "Receiving your data from the previous address…",
+  "mig_recvH": "Keep this tab open for a few seconds.",
+  "mig_ok": "Data received – loading…",
+  "mig_over": "There is already data at this address. Replace it with the data from the previous address?",
+  "mig_fail": "The move did not work. Try again from the previous address, or use backup and restore."
  }
 }

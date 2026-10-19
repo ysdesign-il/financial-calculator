@@ -179,7 +179,7 @@ applyWhen = function(id){
 
 /* ---------- the company car straight from the Ministry of Transport price list ---------- */
 var CARS = {d: null, st: '', at: 0, q: ''};
-function carsUrl(){ return IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/cars.json' : 'cars.json'; }
+function carsUrl(){ return IN_CLAUDE ? SITE_BASE + 'cars.json' : 'cars.json'; }
 async function carsLoad(){
   if (CARS.d || CARS.st === 'wait') return CARS.d;
   CARS.st = 'wait'; carPickRender();

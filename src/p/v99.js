@@ -51,7 +51,7 @@ document.addEventListener('click', async e => {
 /* the sender: replies waiting for this phone appear under the feedback box */
 async function rpCheck(){
   const mine = rkMine(); if (!mine.length) return;
-  let j = null; try { const r = await fetch((IN_CLAUDE ? 'https://ysdesign-il.github.io/financial-calculator/' : '') + 'replies.json?v=' + Math.floor(Date.now() / 60000), {cache: 'no-store', credentials: 'omit'}); if (r.ok) j = await r.json(); } catch (e) {}
+  let j = null; try { const r = await fetch((IN_CLAUDE ? SITE_BASE : '') + 'replies.json?v=' + Math.floor(Date.now() / 60000), {cache: 'no-store', credentials: 'omit'}); if (r.ok) j = await r.json(); } catch (e) {}
   if (!j || !Array.isArray(j.r)) return;
   const got = [];
   for (const x of mine){
