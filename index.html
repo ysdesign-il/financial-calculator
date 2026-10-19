@@ -1561,6 +1561,20 @@ body[data-tab="expenses"] .page-head .scan-btn + .prn-btn,body[data-tab="clients
 .mig-box{max-width:460px;width:100%;text-align:center;background:var(--card,#fff);color:var(--ink,#141821);border-radius:22px;padding:26px 20px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
 .mig-box h2{margin:6px 0 10px;font-size:1.3rem}.mig-box p{line-height:1.6}.mig-ic{font-size:2.6rem}.mig-btns{justify-content:center;margin:14px 0}.mig-btns .gold-btn{width:100%}
 .mig-box .lg-a{margin-top:10px;font-size:.9rem;opacity:.8}
+/* 13.15: bank accounts adviser */
+.bk-accs{display:flex;flex-direction:column;gap:12px;margin:12px 0}
+.bk-acc{border:1.5px solid var(--line);border-radius:16px;padding:10px 12px;margin:0;min-width:0}
+.bk-acc legend{padding:0 4px;max-width:100%}.bk-nick{font:inherit;font-weight:700;font-size:16px;border:none;border-bottom:1.5px dashed var(--line);background:transparent;color:inherit;padding:4px 2px;max-width:100%}
+.bk-row{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.bk-row select{font:inherit;font-size:16px;min-height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface,transparent);color:inherit;padding:2px 8px;flex:1 1 140px}
+.bk-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.bk-f{display:flex;flex-direction:column;gap:3px;font-size:.8rem;color:var(--ink-2)}
+.bk-f input,.bk-f select{font:inherit;font-size:16px;min-height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface,transparent);color:var(--ink);padding:4px 8px;min-width:0}
+.bk-rm{margin-top:6px}.bk-house{margin:6px 0 14px}
+.bk-hero{display:flex;flex-direction:column;gap:2px;padding:14px;border-radius:16px;margin:8px 0;border:1.5px solid var(--line);background:color-mix(in srgb,var(--gold,#d4a017) 10%,transparent)}.bk-hero b{font-size:1.7rem}.bk-hero small{opacity:.8}
+.bk-adv{list-style:none;padding:0;margin:0 0 12px;display:flex;flex-direction:column;gap:8px}
+.bk-a{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;border:1px solid var(--line)}.bk-a p{margin:3px 0 0;font-size:.86rem;line-height:1.5;color:var(--ink-2)}.bk-ic{font-size:1.2rem;line-height:1.3}
+.bk-warn{border-color:#d97706;background:color-mix(in srgb,#d97706 8%,transparent)}.bk-ok{border-color:#16a34a;background:color-mix(in srgb,#16a34a 7%,transparent)}
+.bk-plan{width:100%;border-collapse:collapse;font-size:.88rem}.bk-plan th,.bk-plan td{padding:6px 4px;border-bottom:1px solid var(--line);text-align:start}.bk-plan .neg{color:#b42318}
+.bk-empty{padding:10px 0}
 
 /* ================= 7.8: app designs (ORBIT, AURUM); the default design has none of these rules ================= */
 .dz-ban{display:none}
@@ -7218,6 +7232,42 @@ Object.assign(T, {
   lg_p_law:['המדיניות נכתבה בהתאם לחוק הגנת הפרטיות, התשמ"א–1981, ותקנותיו. אין חובה חוקית למסור לנו מידע כלשהו: כל מה שנשלח (משוב, שאלה ל-AI, כינוי) נשלח מרצונך, משמש רק למטרה שלשמה שלחת אותו, ולא מועבר לאחרים מעבר לשירותים המפורטים כאן. אפשר להשתמש בכל המחשבונים בלי למסור שום מידע.','كُتبت هذه السياسة وفق قانون حماية الخصوصية الإسرائيلي لسنة 1981 وأنظمته. لا يوجد التزام قانوني بتقديم أي معلومات لنا: كل ما يُرسل (ملاحظات، سؤال للذكاء الاصطناعي، كنية) يُرسل بإرادتك، ويُستخدم فقط للغرض الذي أرسلته من أجله، ولا يُنقل لآخرين خارج الخدمات المفصّلة هنا. يمكن استخدام كل الحاسبات دون تقديم أي معلومات.','This policy follows Israel\'s Protection of Privacy Law, 1981, and its regulations. There is no legal obligation to give us any information: anything sent (feedback, an AI question, a nickname) is sent by your choice, used only for the purpose you sent it for, and not passed to others beyond the services listed here. Every calculator can be used without providing any information.'],
   lg_h_p1910h:['19.10.2026 – סקירה מלאה: נוספו סעיפים על הרשאות במכשיר, אבטחת המידע והבסיס החוקי.','19.10.2026 – مراجعة كاملة: أُضيفت بنود عن أذونات الجهاز وأمن المعلومات والأساس القانوني.','19.10.2026 – full review: added sections on device permissions, security and the legal basis.']
 });
+/* 13.15: bank accounts adviser */
+Object.assign(T, {
+  tab_bankacc:['ניהול חשבונות בנק','إدارة الحسابات البنكية','Bank accounts adviser'], d_bankacc:['כמה חשבונות? הכלי ממליץ איך להתנהל ביניהם: יציאה מהמינוס, העברות קבועות, עמלות, כרית ביטחון וכסף שלא עובד.','عدة حسابات؟ تقترح الأداة كيف تديرها معًا: الخروج من السحب على المكشوف، تحويلات ثابتة، عمولات، احتياطي أمان وأموال غير مستثمرة.','Several accounts? Get advice on running them together: leaving the overdraft, standing transfers, fees, an emergency buffer and idle money.'],
+  bk_intro:['מלאו לכל חשבון יתרה, מסגרת, עמלות וכמה נכנס ויוצא בחודש. ההמלצות מתעדכנות מיד וממוינות לפי החיסכון הגדול ביותר.','املأ لكل حساب الرصيد والحد والعمولات وكم يدخل ويخرج شهريًا. تتحدث التوصيات فورًا وتُرتّب حسب أكبر توفير.','For each account, fill in the balance, overdraft limit, fees and how much comes in and goes out each month. The advice updates at once, biggest saving first.'],
+  bk_noNum:['אין לכתוב כאן מספר חשבון או סניף – רק כינוי (למשל "עו״ש משפחתי"). הנתונים נשמרים רק במכשיר שלך.','لا تكتب هنا رقم حساب أو فرع – فقط كنية (مثل "الحساب الجاري العائلي"). تُحفظ البيانات على جهازك فقط.','Never type an account or branch number here – just a nickname (e.g. "Family current account"). The data stays on your device only.'],
+  bk_balS:['יתרה','الرصيد','Balance'], bk_accN:['חשבון {n}','حساب {n}','Account {n}'], bk_f_nick:['כינוי','الكنية','Nickname'], bk_f_bank:['בנק','البنك','Bank'], bk_f_type:['סוג','النوع','Type'],
+  bk_f_bal:['יתרה עכשיו (₪, מינוס עם −)','الرصيد الآن (₪، السالب بإشارة −)','Balance now (₪, minus with −)'], bk_f_lim:['מסגרת אשראי (₪)','حد السحب (₪)','Overdraft limit (₪)'], bk_f_od:['ריבית על המינוס (%)','فائدة السحب (%)','Overdraft rate (%)'],
+  bk_f_fee:['עמלות בחודש (₪)','عمولات شهرية (₪)','Fees per month (₪)'], bk_f_inc:['נכנס בחודש (₪)','يدخل شهريًا (₪)','In per month (₪)'], bk_f_out:['יוצא בחודש (₪)','يخرج شهريًا (₪)','Out per month (₪)'], bk_f_sal:['המשכורת נכנסת לכאן','الراتب يدخل هنا','Salary is paid here'],
+  bk_b_hapoalim:['הפועלים','هبوعليم','Hapoalim'], bk_b_leumi:['לאומי','لئومي','Leumi'], bk_b_discount:['דיסקונט','ديسكونت','Discount'], bk_b_mizrahi:['מזרחי טפחות','مزراحي طفحوت','Mizrahi Tefahot'], bk_b_fibi:['הבינלאומי','البنك الدولي','First International'], bk_b_jerusalem:['ירושלים','القدس','Jerusalem'], bk_b_mercantile:['מרכנתיל','مركنتيل','Mercantile'], bk_b_yahav:['יהב','يهاف','Yahav'], bk_b_massad:['מסד','مساد','Massad'], bk_b_onezero:['וואן זירו','وان زيرو','One Zero'], bk_b_other:['אחר','آخر','Other'],
+  bk_t_cur:['עו״ש אישי','حساب جارٍ شخصي','Personal current'], bk_t_joint:['עו״ש משותף','حساب جارٍ مشترك','Joint current'], bk_t_biz:['עסקי','تجاري','Business'], bk_t_save:['חיסכון / פיקדון','توفير / وديعة','Savings / deposit'],
+  bk_add:['הוספת חשבון','إضافة حساب','Add an account'], bk_exp:['הוצאות הבית בחודש (₪)','مصاريف البيت الشهرية (₪)','Household spending per month (₪)'], bk_expPh:['ריק = סך "יוצא בחודש"','فارغ = مجموع "يخرج شهريًا"','Empty = total "out per month"'], bk_buf:['כרית ביטחון רצויה','احتياطي الأمان المطلوب','Wanted emergency buffer'], bk_bufN:['{n} חודשי הוצאות','{n} أشهر مصاريف','{n} months of spending'],
+  bk_fill:['מלאו יתרות וסכומים, וההמלצות יופיעו כאן.','املأ الأرصدة والمبالغ وستظهر التوصيات هنا.','Fill in balances and amounts and the advice appears here.'],
+  bk_total:['סך כל החשבונות','مجموع كل الحسابات','All accounts together'], bk_flow:['תזרים חודשי {m}','التدفق الشهري {m}','Monthly flow {m}'], bk_feesY:['עמלות בשנה {m}','عمولات سنوية {m}','Fees per year {m}'],
+  bk_advH:['מה כדאי לעשות','ماذا يُستحسن أن تفعل','What to do'], bk_planH:['תפקיד כל חשבון','دور كل حساب','The role of each account'], bk_role:['תפקיד','الدور','Role'], bk_net:['נטו בחודש','الصافي شهريًا','Net per month'],
+  bk_r_main:['ראשי – משכורת והוראות קבע','رئيسي – الراتب والأوامر الثابتة','Main – salary and standing orders'], bk_r_joint:['משותף – הוצאות הבית','مشترك – مصاريف البيت','Joint – household spending'], bk_r_biz:['עסקי – רק לעסק','تجاري – للعمل فقط','Business – for the business only'], bk_r_save:['חיסכון – לא לגעת','توفير – لا تلمس','Savings – hands off'], bk_r_side:['משני','ثانوي','Secondary'], bk_r_idle:['כמעט לא בשימוש – לשקול סגירה','شبه غير مستخدم – فكّر بإغلاقه','Barely used – consider closing'],
+  bk_roleH:['כלל אצבע: חשבון ראשי אחד לכל מה שנכנס וקבוע, חשבון נפרד לעסק אם יש, ואת מה שמעבר לכרית הביטחון – בחיסכון שמניב ריבית.','قاعدة عامة: حساب رئيسي واحد لكل ما يدخل وثابت، وحساب منفصل للعمل إن وُجد، وما يزيد عن احتياطي الأمان – في توفير يدرّ فائدة.','Rule of thumb: one main account for everything that comes in and is fixed, a separate one for a business if any, and anything beyond the buffer in savings that earns interest.'],
+  bk_aMove:['העבירו {m} מ"{a}" ל"{b}"','حوّلوا {m} من "{a}" إلى "{b}"','Move {m} from "{a}" to "{b}"'], bk_aMoveP:['ככה יוצאים מהמינוס וחוסכים בערך {y} בשנה בריבית (‎{r}%).','هكذا تخرجون من السحب وتوفرون نحو {y} سنويًا من الفائدة ({r}%).','That clears the overdraft and saves about {y} a year in interest ({r}%).'],
+  bk_odGuess:['(לא מילאתם ריבית – הנחנו פריים + 4%, כ-{r}%.)','(لم تملؤوا الفائدة – افترضنا البرايم + 4%، نحو {r}%.)','(No rate entered – assumed prime + 4%, about {r}%.)'],
+  bk_aOd:['"{a}" נשאר במינוס של {m}','"{a}" يبقى في سالب {m}','"{a}" stays {m} in overdraft'], bk_aOdP:['המינוס עולה כ-{y} בשנה (‎{r}%). כדאי לבקש מהבנק הלוואה בריבית נמוכה יותר לסגירתו, או לקבוע תוכנית החזר חודשית.','السالب يكلّف نحو {y} سنويًا ({r}%). يُستحسن طلب قرض بفائدة أقل لإغلاقه، أو وضع خطة سداد شهرية.','The overdraft costs about {y} a year ({r}%). Ask the bank for a cheaper loan to clear it, or set a monthly repayment plan.'],
+  bk_aSo:['הוראת קבע: {m} בחודש מ"{a}" ל"{b}"','أمر ثابت: {m} شهريًا من "{a}" إلى "{b}"','Standing order: {m} a month from "{a}" to "{b}"'], bk_aDrift:['"{a}" יורד ב-{m} כל חודש','"{a}" ينخفض {m} كل شهر','"{a}" drops {m} every month'],
+  bk_aDriftP:['בלי שינוי הוא יגיע לקצה המסגרת בעוד כ-{n} חודשים.','دون تغيير سيصل إلى حد السحب خلال نحو {n} أشهر.','Without a change it hits the overdraft limit in about {n} months.'], bk_aDriftNow:['הוא כבר בקצה המסגרת או מעבר לה.','وصل بالفعل إلى حد السحب أو تجاوزه.','It is already at or past its limit.'], bk_aDriftFix:['העבירו אליו חיובים מחשבון אחר, או צמצמו הוצאות שיורדות ממנו.','انقلوا إليه خصومات من حساب آخر، أو قلّلوا المصاريف المخصومة منه.','Move charges to another account, or cut what comes out of it.'],
+  bk_aTotNeg:['יוצא יותר ממה שנכנס: {m} בחודש','يخرج أكثر مما يدخل: {m} شهريًا','More goes out than comes in: {m} a month'], bk_aTotNegP:['העברות בין חשבונות לא יפתרו את זה. כדאי לבדוק את ההוצאות במסך "הוצאות" או בתוכנית חובות.','التحويلات بين الحسابات لن تحل ذلك. افحصوا المصاريف في شاشة "المصاريف" أو في خطة الديون.','Moving money between accounts won\'t fix this. Check your spending in "Expenses" or the debt plan.'],
+  bk_aClose:['לשקול לסגור את "{a}" – חיסכון {y} בשנה','فكّروا بإغلاق "{a}" – توفير {y} سنويًا','Consider closing "{a}" – saves {y} a year'], bk_aCloseP:['זה החשבון עם הכי מעט תנועה מבין החשבונות שגובים עמלות. לפני סגירה העבירו הוראות קבע ומשכורת, ובדקו שאין הלוואות או פיקדונות קשורים.','هذا الحساب الأقل حركة بين الحسابات التي تُحصّل عمولات. قبل الإغلاق انقلوا الأوامر الثابتة والراتب، وتأكدوا من عدم وجود قروض أو ودائع مرتبطة.','It has the least activity of the accounts that charge fees. Before closing, move standing orders and salary, and check there are no linked loans or deposits.'],
+  bk_aFees:['עמלות של {y} בשנה','عمولات بقيمة {y} سنويًا','{y} a year in fees'], bk_aFeesP:['בקשו מהבנק מסלול עמלות שמתאים לשימוש שלכם, או פטור בזכות הפקדת משכורת. אפשר גם לבדוק בנק דיגיטלי ולפעול בערוצים הישירים (אפליקציה ואתר), שבהם הפעולות לרוב זולות יותר.','اطلبوا من البنك مسار عمولات يناسب استخدامكم، أو إعفاءً مقابل إيداع الراتب. يمكن أيضًا فحص بنك رقمي واستخدام القنوات المباشرة (التطبيق والموقع) حيث تكون العمليات غالبًا أرخص.','Ask the bank for a fee track that fits your use, or an exemption for paying in your salary. You can also look at a digital bank and use direct channels (app and website), where actions are usually cheaper.'],
+  bk_aBuf:['חסר {m} לכרית ביטחון של {n} חודשים ({b})','ينقص {m} لاحتياطي أمان لمدة {n} أشهر ({b})','{m} short of a {n}-month buffer ({b})'], bk_aBufP:['בתזרים הנוכחי תגיעו אליה בעוד כ-{n} חודשים. כדאי הוראת קבע קבועה לחשבון החיסכון מיד אחרי המשכורת.','بالتدفق الحالي ستصلون إليه خلال نحو {n} أشهر. يُستحسن أمر ثابت لحساب التوفير فور الراتب.','At the current flow you\'ll get there in about {n} months. A standing order to savings right after payday helps.'], bk_aBufP0:['קודם צריך תזרים חודשי חיובי – אחר כך לחסוך לכרית.','أولًا يلزم تدفق شهري موجب – ثم الادخار للاحتياطي.','First get the monthly flow positive – then save for the buffer.'],
+  bk_aIdle:['{m} יושבים בעו״ש בלי לעבוד','{m} في الحساب الجاري دون فائدة','{m} sitting idle in current accounts'], bk_aIdleP:['בפיקדון או בקרן כספית הם יכולים להניב בערך {y} בשנה (כ-{r}%, לפני מס).','في وديعة أو صندوق نقدي قد تدرّ نحو {y} سنويًا (نحو {r}%، قبل الضريبة).','In a deposit or money-market fund they could earn about {y} a year (about {r}%, before tax).'], bk_aIdleP2:['השאירו בעו״ש חודש הוצאות אחד ואת כרית הביטחון.','اتركوا في الحساب الجاري مصاريف شهر واحد واحتياطي الأمان.','Keep one month of spending plus the buffer in the current account.'],
+  bk_aBufOk:['כרית הביטחון במקום ({b}) – יפה','احتياطي الأمان موجود ({b}) – ممتاز','Your emergency buffer is in place ({b}) – nice'], bk_allOk:['לא מצאנו משהו לשפר – החשבונות מתנהלים טוב.','لم نجد ما يُحسّن – الحسابات تُدار جيدًا.','Nothing to improve – the accounts are running well.'],
+  bk_ai:['התייעצות עם העוזר','استشارة المساعد','Ask the assistant'], bk_clear:['ניקוי הכול','مسح الكل','Clear all'], bk_clearSure:['למחוק את כל החשבונות מהמסך הזה?','حذف كل الحسابات من هذه الشاشة؟','Delete all the accounts on this screen?'],
+  bk_priv:['הכול נשמר רק במכשיר. לעוזר נשלחים כינויים וסכומים בלבד, ורק כשלוחצים עליו.','كل شيء يُحفظ على الجهاز فقط. تُرسل للمساعد الكنى والمبالغ فقط، وفقط عند الضغط عليه.','Everything stays on the device. Only nicknames and amounts go to the assistant, and only when you tap it.'],
+  bk_disc:['ההמלצות כלליות ומבוססות על המספרים שמילאתם. הן אינן ייעוץ פיננסי אישי; לפני שינוי משמעותי כדאי לברר עם הבנק את התנאים המדויקים.','التوصيات عامة ومبنية على الأرقام التي أدخلتموها. وهي ليست استشارة مالية شخصية؛ قبل أي تغيير مهم يُستحسن الاستفسار من البنك عن الشروط الدقيقة.','The advice is general and based on the numbers you entered. It isn\'t personal financial advice; before a major change, check the exact terms with your bank.'],
+  bk_c1:['איך כדאי לחלק את הכסף בין החשבונות?','كيف يُستحسن توزيع المال بين الحسابات؟','How should I split the money between the accounts?'], bk_c2:['האם כדאי לסגור אחד החשבונות?','هل يُستحسن إغلاق أحد الحسابات؟','Should I close one of the accounts?'], bk_c3:['איך לצאת מהמינוס הכי מהר?','كيف أخرج من السالب بأسرع ما يمكن؟','How do I get out of the overdraft fastest?']
+});
+Object.assign(T, {
+  lg_p_dev10:['ניהול חשבונות בנק: הכינויים, היתרות והסכומים נשמרים רק במכשיר. אין בכלי שדה למספר חשבון או סניף. לעוזר נשלחים כינויים וסכומים בלבד, ורק כשלוחצים "התייעצות עם העוזר".','إدارة الحسابات البنكية: الكنى والأرصدة والمبالغ تُحفظ على الجهاز فقط. لا يوجد في الأداة حقل لرقم حساب أو فرع. تُرسل للمساعد الكنى والمبالغ فقط، وفقط عند الضغط على "استشارة المساعد".','Bank accounts adviser: nicknames, balances and amounts are kept on the device only. The tool has no field for an account or branch number. Only nicknames and amounts go to the assistant, and only when you tap "Ask the assistant".'],
+  lg_h_p1910i:['19.10.2026 – נוסף הסבר על כלי ניהול חשבונות הבנק.','19.10.2026 – أُضيف شرح عن أداة إدارة الحسابات البنكية.','19.10.2026 – added an explanation of the bank accounts adviser.']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -7375,7 +7425,7 @@ const GROUPS = [
   ['g_realty',  ['mortgage','mortcmp','mortcap','refi','rentbuy']],
   ['g_invest',  ['compound','savegoal','yield','dividends','avgcost','networth','kidsave','mmf','invfees','childallow']],
   ['g_retire',  ['retire','pensfix','oldage','pencmp','mgmtfees','hishtalmut','fire','freedom']],
-  ['g_budget',  ['expenses','smartsplit','split','unitprice','discount','appliance','evfuel','breakeven']],
+  ['g_budget',  ['expenses','bankacc','smartsplit','split','unitprice','discount','appliance','evfuel','breakeven']],
   ['g_compare', ['insurance','cellcmp','phonecmp']],
   ['g_fxtools', ['mathx','docscan','convert','inflation','cpilink','percent']]
 ];
@@ -7408,7 +7458,7 @@ function devLang(){
   return 'en';                                              // any other language: English
 }
 function langAuto(){ try { return !LS.getItem('fin-lang'); } catch (e) { return true; } }
-const SET_DEF = {photoAccess:'ask', slip:{}, slips:[], tf:{}, axZoom:100, axLinks:'0', axSpace:'0', axFocus:'0', axGray:'0', axCursor:'0', axBtn:'1', ixShow:'', ixCustom:[], tvOn:'0', sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', myGross:'', myKids:'', myBYear:'', myEq:'', persona:'all', shareLang:'ui', words:'1', enTerms:'0', plain:'0', tts:'1', voiceIn:'0', dfmt:'auto', wkStart:'auto', trFix:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {photoAccess:'ask', slip:{}, slips:[], tf:{}, bk:{}, axZoom:100, axLinks:'0', axSpace:'0', axFocus:'0', axGray:'0', axCursor:'0', axBtn:'1', ixShow:'', ixCustom:[], tvOn:'0', sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', myGross:'', myKids:'', myBYear:'', myEq:'', persona:'all', shareLang:'ui', words:'1', enTerms:'0', plain:'0', tts:'1', voiceIn:'0', dfmt:'auto', wkStart:'auto', trFix:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -9435,6 +9485,11 @@ function tfPanelHTML(){
   return `<section class="panel panel-flat tool-panel" id="panel-taxfree" role="tabpanel" aria-labelledby="tab-taxfree" hidden><div id="tf_root"></div></section>`;
 }
 Object.assign(ICON, {taxfree: ic('<path d="M6 3h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5L6 21z"/><path d="M9.5 13.5l5-5"/><circle cx="9.8" cy="8.8" r="1"/><circle cx="14.2" cy="13.2" r="1"/><path d="M9 17h6"/>')});
+/* ================= bank accounts adviser: the panel shell (the module is bk.js) ================= */
+function bkPanelHTML(){
+  return `<section class="panel panel-flat tool-panel" id="panel-bankacc" role="tabpanel" aria-labelledby="tab-bankacc" hidden><div id="bk_root"></div></section>`;
+}
+Object.assign(ICON, {bankacc: ic('<path d="M3 10l9-6 9 6"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8"/><path d="M3 20h18"/><path d="M16 4.5l2.5 1.5"/>')});
 
 const navEl = $('#nav'), panelsEl = $('#panels');
 function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
@@ -9443,7 +9498,7 @@ function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
   }</div>`
 ).join(''); }
 renderNav();
-panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'saved' ? savedPanelHTML() : id === 'markets' ? marketsPanelHTML() : id === 'clients' ? clientsPanelHTML() : id === 'cv' ? cvPanelHTML() : id === 'mathx' ? mxPanelHTML() : id === 'docscan' ? dsPanelHTML() : id === 'taxfree' ? tfPanelHTML() : panelHTML(id)).join('');
+panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'saved' ? savedPanelHTML() : id === 'markets' ? marketsPanelHTML() : id === 'clients' ? clientsPanelHTML() : id === 'cv' ? cvPanelHTML() : id === 'mathx' ? mxPanelHTML() : id === 'docscan' ? dsPanelHTML() : id === 'taxfree' ? tfPanelHTML() : id === 'bankacc' ? bkPanelHTML() : panelHTML(id)).join('');
 
 /* ================= language ================= */
 function updateHead(){
@@ -13822,8 +13877,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.14", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.175308';
+var CHANGELOG = [{"v": "13.15", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.184715';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -25744,7 +25799,7 @@ const LG_DOCS = {
   ], extra: () => `<p><a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? SITE_BASE : ''}lib/nerdamer.LICENSE.txt" target="_blank" rel="noopener">${lgE(t('lg_c_licLink'))}</a></p><p>${lgE(t('lg_c_licLinks'))} ${[['pdfjs/LICENSE.txt', 'pdf.js'], ['pdfjs/wasm/LICENSE_JBIG2', 'JBIG2'], ['pdfjs/wasm/LICENSE_OPENJPEG', 'OpenJPEG'], ['pdfjs/wasm/LICENSE_QCMS', 'QCMS'], ['pdf-lib.LICENSE.txt', 'pdf-lib'], ['jszip.LICENSE.txt', 'JSZip']].map(([f, n]) => `<a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? SITE_BASE : ''}lib/${f}" target="_blank" rel="noopener">${n}</a>`).join(' · ')}</p>`},
   priv: {t: 'lg_privT', ic: '🔒', parts: [
     ['', ['lg_p_intro']],
-    ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3', 'lg_p_dev4', 'lg_p_dev5', 'lg_p_dev6', 'lg_p_dev7', 'lg_p_dev8', 'lg_p_dev9']],
+    ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3', 'lg_p_dev4', 'lg_p_dev5', 'lg_p_dev6', 'lg_p_dev7', 'lg_p_dev8', 'lg_p_dev9', 'lg_p_dev10']],
     ['lg_p_usH', ['lg_p_us1', 'lg_p_us2', 'lg_p_us3', 'lg_p_us4'], true],
     ['lg_p_extH', ['lg_p_ext0', 'lg_p_ext1', 'lg_p_ext2', 'lg_p_ext3', 'lg_p_ext4', 'lg_p_ext5', 'lg_p_ext6'], true],
     ['lg_p_permH', ['lg_p_perm']],
@@ -25755,7 +25810,7 @@ const LG_DOCS = {
     ['lg_p_rightsH', ['lg_p_r1', 'lg_p_r2', 'lg_p_r3'], true],
     ['lg_p_chgH', ['lg_p_chg']],
     ['lg_contactH', ['lg_p_contact']],
-    ['lg_histH', ['lg_h_p1910h', 'lg_h_p1910g', 'lg_h_p1910f', 'lg_h_p1910e', 'lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_p1910i', 'lg_h_p1910h', 'lg_h_p1910g', 'lg_h_p1910f', 'lg_h_p1910e', 'lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
   ]}
 };
 const lgE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
@@ -29061,6 +29116,127 @@ try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('taxfree'); if (Array.isArray
   const actTf = activate; activate = function(id){ const r = actTf.apply(this, arguments); if (id === 'taxfree') tfRender(); return r; };
   const alTf = applyLang; applyLang = function(){ const r = alTf.apply(this, arguments); try { if (tab === 'taxfree') tfRender(); } catch (e) {} return r; };
   try { if (tab === 'taxfree') tfRender(); } catch (e) {}
+}
+
+/* ---------- 13.15: bank accounts adviser – how to run several accounts together ----------
+   Only a nickname per account (never an account number), the balance and the monthly flows.
+   The advice is worked out on the phone: move money out of an overdraft, balance the monthly flows, cut fees,
+   keep an emergency buffer and put idle money to work. The AI assistant can be asked on top. */
+const BK_BANKS = ['hapoalim', 'leumi', 'discount', 'mizrahi', 'fibi', 'jerusalem', 'mercantile', 'yahav', 'massad', 'onezero', 'other'];
+const BK_TYPES = ['cur', 'joint', 'biz', 'save'];
+const bkE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+let BK_ID = 1;
+function bkD(){ const d = SET.bk && typeof SET.bk === 'object' ? SET.bk : (SET.bk = {}); if (!Array.isArray(d.accs)) d.accs = []; if (d.buf == null) d.buf = 3; return d; }
+function bkNew(){ return {id: Date.now().toString(36) + (BK_ID++), nick: '', bank: 'other', type: 'cur', bal: '', lim: '', od: '', fee: '', inc: '', out: '', sal: false}; }
+const bkN = v => { const x = parseFloat(String(v == null ? '' : v).replace(/[,\s₪]/g, '')); return isFinite(x) ? x : 0; };
+const bkM = x => M(Math.round(x), 0, 'ILS');
+const bkName = (a, i) => String(a.nick || '').trim() || t('bk_accN', {n: i + 1});
+const bkPrime = () => (typeof MKT !== 'undefined' && isFinite(+MKT.boi) ? +MKT.boi : 0) + 1.5;
+/* the advice, highest saving first */
+function bkAdvise(){
+  const d = bkD(), A = d.accs.map((a, i) => ({a, i, name: bkName(a, i), bal: bkN(a.bal), lim: Math.abs(bkN(a.lim)), od: a.od === '' || a.od == null ? bkPrime() + 4 : bkN(a.od), odGuess: a.od === '' || a.od == null, fee: bkN(a.fee), inc: bkN(a.inc), out: bkN(a.out), save: a.type === 'save'}));
+  A.forEach(x => { x.net = x.inc - x.out - x.fee; });
+  const out = [], tot = {bal: A.reduce((s, x) => s + x.bal, 0), fees: A.reduce((s, x) => s + x.fee, 0) * 12, net: A.reduce((s, x) => s + x.net, 0), inc: A.reduce((s, x) => s + x.inc, 0), out: A.reduce((s, x) => s + x.out, 0)};
+  if (!A.length) return {A, out, tot};
+  /* 1) money in one account while another is in overdraft */
+  const neg = A.filter(x => x.bal < 0).sort((p, q) => q.od - p.od), give = A.filter(x => x.bal > 0).map(x => ({x, can: Math.max(0, x.bal - Math.max(0, x.out))}));
+  neg.forEach(n => { let need = -n.bal;
+    give.sort((p, q) => (p.x.save - q.x.save) || (q.can - p.can)).forEach(g => { if (need <= 0 || g.can <= 0) return; const m = Math.min(need, g.can); g.can -= m; need -= m;
+      out.push({k: 'move', pr: 1e6 + m * n.od / 100, h: t('bk_aMove', {m: bkM(m), a: g.x.name, b: n.name}), p: t('bk_aMoveP', {y: bkM(m * n.od / 100), r: N(n.od, 1)}) + (n.odGuess ? ' ' + t('bk_odGuess', {r: N(n.od, 1)}) : '')}); });
+    if (need > 0) out.push({k: 'warn', pr: need * n.od / 100 + 1, h: t('bk_aOd', {a: n.name, m: bkM(need)}), p: t('bk_aOdP', {y: bkM(need * n.od / 100), r: N(n.od, 1)})}); });
+  /* 2) accounts that drift down every month */
+  A.filter(x => x.net < 0 && !x.save).forEach(x => {
+    const room = x.bal + x.lim, months = room > 0 ? Math.floor(room / -x.net) : 0, src = A.filter(y => y !== x && y.net > 0).sort((p, q) => q.net - p.net)[0];
+    out.push({k: src ? 'so' : 'warn', pr: -x.net * 12 * (x.od / 100) * 0.5 + 2, h: src ? t('bk_aSo', {m: bkM(-x.net), a: src.name, b: x.name}) : t('bk_aDrift', {a: x.name, m: bkM(-x.net)}), p: (room > 0 ? t('bk_aDriftP', {n: months}) : t('bk_aDriftNow')) + (src ? '' : ' ' + t('bk_aDriftFix'))});
+  });
+  if (tot.net < 0) out.push({k: 'warn', pr: -tot.net * 12, h: t('bk_aTotNeg', {m: bkM(-tot.net)}), p: t('bk_aTotNegP')});
+  /* 3) fees */
+  const feeAcc = A.filter(x => x.fee > 0 && !x.save);
+  if (feeAcc.length >= 2){ const c = feeAcc.slice().sort((p, q) => (p.inc + p.out) - (q.inc + q.out))[0]; out.push({k: 'fee', pr: c.fee * 12, h: t('bk_aClose', {a: c.name, y: bkM(c.fee * 12)}), p: t('bk_aCloseP')}); }
+  if (tot.fees > 0) out.push({k: 'fee', pr: tot.fees * 0.3, h: t('bk_aFees', {y: bkM(tot.fees)}), p: t('bk_aFeesP')});
+  /* 4) emergency buffer and idle money */
+  const exp = bkN(d.exp) || tot.out, buf = exp * (+d.buf || 3), liquid = A.filter(x => !x.save).reduce((s, x) => s + Math.max(0, x.bal), 0), saved = A.filter(x => x.save).reduce((s, x) => s + Math.max(0, x.bal), 0);
+  const boi = typeof MKT !== 'undefined' && isFinite(+MKT.boi) ? +MKT.boi : 0;
+  if (exp > 0){
+    if (liquid + saved < buf){ const gap = buf - liquid - saved, mo = tot.net > 0 ? Math.ceil(gap / tot.net) : 0; out.push({k: 'buf', pr: gap * 0.05, h: t('bk_aBuf', {m: bkM(gap), b: bkM(buf), n: +d.buf || 3}), p: mo ? t('bk_aBufP', {n: mo}) : t('bk_aBufP0')}); }
+    else if (liquid > Math.max(buf - saved, 0) + exp){ const idle = liquid - Math.max(buf - saved, 0) - exp, r = Math.max(0, boi - 0.3);
+      out.push({k: 'idle', pr: idle * r / 100, h: t('bk_aIdle', {m: bkM(idle)}), p: (boi ? t('bk_aIdleP', {y: bkM(idle * r / 100), r: N(r, 2)}) : '') + ' ' + t('bk_aIdleP2')}); }
+    else out.push({k: 'ok', pr: 0, h: t('bk_aBufOk', {b: bkM(buf)}), p: ''});
+  }
+  /* 5) the role of each account */
+  const main = A.filter(x => !x.save).sort((p, q) => (q.inc + (q.a.sal ? 1e9 : 0)) - (p.inc + (p.a.sal ? 1e9 : 0)))[0];
+  A.forEach(x => { x.role = x.save ? 'save' : x === main ? 'main' : x.a.type === 'biz' ? 'biz' : x.a.type === 'joint' ? 'joint' : (x.inc + x.out) < (main ? (main.inc + main.out) * 0.2 : 0) ? 'idle' : 'side'; });
+  out.sort((p, q) => q.pr - p.pr);
+  return {A, out, tot, buf, liquid, saved, boi};
+}
+function bkRender(){
+  const root = $('#bk_root'); if (!root) return;
+  const d = bkD(), E = bkE;
+  if (!d.accs.length){ d.accs.push(bkNew(), bkNew()); }
+  const sel = (i, k, list, pre) => `<select data-bki="${i}" data-bkk="${k}" aria-label="${E(t('bk_f_' + k))}">${list.map(v => `<option value="${v}"${d.accs[i][k] === v ? ' selected' : ''}>${E(t(pre + v))}</option>`).join('')}</select>`;
+  const num = (i, k, ph) => `<label class="bk-f"><span>${E(t('bk_f_' + k))}</span><input type="text" inputmode="decimal" dir="ltr" data-bki="${i}" data-bkk="${k}" value="${E(d.accs[i][k])}" placeholder="${E(ph || '0')}"></label>`;
+  root.innerHTML = `<p class="fine">${E(t('bk_intro'))}</p>
+    <div class="ds-warn" role="note"><span aria-hidden="true">🔒</span><p>${E(t('bk_noNum'))}</p></div>
+    <div class="bk-accs">${d.accs.map((a, i) => `<fieldset class="bk-acc"><legend><input type="text" class="bk-nick" maxlength="30" dir="auto" data-bki="${i}" data-bkk="nick" value="${E(a.nick)}" placeholder="${E(t('bk_accN', {n: i + 1}))}" aria-label="${E(t('bk_f_nick'))}"></legend>
+      <div class="bk-row">${sel(i, 'bank', BK_BANKS, 'bk_b_')}${sel(i, 'type', BK_TYPES, 'bk_t_')}</div>
+      <div class="bk-grid">${num(i, 'bal', '-2,500')}${a.type === 'save' ? '' : num(i, 'lim') + num(i, 'od', N(bkPrime() + 4, 1) + '%')}${num(i, 'fee')}${num(i, 'inc')}${num(i, 'out')}</div>
+      ${a.type === 'save' ? '' : `<label class="prn-ck"><input type="checkbox" data-bki="${i}" data-bkk="sal"${a.sal ? ' checked' : ''}> ${E(t('bk_f_sal'))}</label>`}
+      ${d.accs.length > 1 ? `<button type="button" class="lg-a bk-rm" data-bkrm="${i}">${E(t('cv_rm'))}</button>` : ''}</fieldset>`).join('')}</div>
+    <div class="btnrow">${d.accs.length < 8 ? `<button type="button" class="btn" id="bk_add">＋ ${E(t('bk_add'))}</button>` : ''}</div>
+    <div class="bk-grid bk-house">${`<label class="bk-f"><span>${E(t('bk_exp'))}</span><input type="text" inputmode="decimal" dir="ltr" id="bk_exp" value="${E(d.exp == null ? '' : d.exp)}" placeholder="${E(t('bk_expPh'))}"></label>`}<label class="bk-f"><span>${E(t('bk_buf'))}</span><select id="bk_buf">${[1, 2, 3, 4, 6].map(n => `<option value="${n}"${+d.buf === n ? ' selected' : ''}>${E(t('bk_bufN', {n}))}</option>`).join('')}</select></label></div>
+    <div id="bk_out" aria-live="polite"></div>
+    <div class="btnrow"><button type="button" class="gold-btn" id="bk_ai">✦ ${E(t('bk_ai'))}</button><button type="button" class="mv" id="bk_clear">🗑️ ${E(t('bk_clear'))}</button></div>
+    <p class="fine sl-priv">🔒 ${E(t('bk_priv'))}</p><p class="fine">${E(t('bk_disc'))}</p>`;
+  bkOut();
+}
+function bkOut(){
+  const box = $('#bk_out'); if (!box) return;
+  const R = bkAdvise(), E = bkE, filled = R.A.some(x => x.bal || x.inc || x.out || x.fee);
+  if (!filled){ box.innerHTML = `<p class="fine bk-empty">${E(t('bk_fill'))}</p>`; return; }
+  const ic = {move: '↔️', so: '🔁', fee: '✂️', buf: '🛟', idle: '📈', warn: '⚠️', ok: '✅'};
+  box.innerHTML = `<div class="bk-hero"><span>${E(t('bk_total'))}</span><b dir="ltr">${E(bkM(R.tot.bal))}</b><small>${E(t('bk_flow', {m: (R.tot.net >= 0 ? '+' : '') + bkM(R.tot.net)}))} · ${E(t('bk_feesY', {m: bkM(R.tot.fees)}))}</small></div>
+    <h3 class="ds-q">${E(t('bk_advH'))}</h3>
+    <ol class="bk-adv">${R.out.map(o => `<li class="bk-a bk-${o.k}"><span class="bk-ic" aria-hidden="true">${ic[o.k] || '•'}</span><div><b>${E(o.h)}</b>${o.p ? `<p>${E(o.p)}</p>` : ''}</div></li>`).join('') || `<li class="bk-a bk-ok"><span class="bk-ic">✅</span><div><b>${E(t('bk_allOk'))}</b></div></li>`}</ol>
+    <h3 class="ds-q">${E(t('bk_planH'))}</h3>
+    <table class="bk-plan"><thead><tr><th scope="col">${E(t('bk_f_nick'))}</th><th scope="col">${E(t('bk_role'))}</th><th scope="col">${E(t('bk_balS'))}</th><th scope="col">${E(t('bk_net'))}</th></tr></thead><tbody>${R.A.map(x => `<tr><th scope="row" dir="auto">${E(x.name)}</th><td>${E(t('bk_r_' + x.role))}</td><td dir="ltr" class="${x.bal < 0 ? 'neg' : ''}">${E(bkM(x.bal))}</td><td dir="ltr" class="${x.net < 0 ? 'neg' : ''}">${E((x.net >= 0 ? '+' : '') + bkM(x.net))}</td></tr>`).join('')}</tbody></table>
+    <p class="fine">${E(t('bk_roleH'))}</p>`;
+}
+/* what the assistant sees on this screen (nicknames and numbers only) */
+function bkAiText(){
+  const R = bkAdvise();
+  return 'Bank accounts of the person (nicknames only, amounts in ILS per month unless stated):\n' + R.A.map(x => `- ${x.name}: bank ${t('bk_b_' + x.a.bank)}, type ${t('bk_t_' + x.a.type)}, balance ${Math.round(x.bal)}, overdraft limit ${Math.round(x.lim)}, overdraft rate ${N(x.od, 1)}%${x.odGuess ? ' (assumed)' : ''}, fees ${Math.round(x.fee)}/month, money in ${Math.round(x.inc)}, money out ${Math.round(x.out)}${x.a.sal ? ', salary paid here' : ''}`).join('\n')
+    + `\nHousehold monthly expenses: ${Math.round(bkN(bkD().exp) || R.tot.out)}; wanted emergency buffer: ${bkD().buf} months. Bank of Israel rate now: ${R.boi || 'unknown'}%.\nThe app's own suggestions: ` + R.out.map(o => o.h).join(' | ')
+    + '\nAdvise in plain words how to run these accounts together (where to keep what, transfers, standing orders, fees, buffer, idle money). Use their numbers. This is general information, not personal financial advice; mention checking with the bank where relevant.';
+}
+{ const aiStBk = aiScreenText; aiScreenText = function(id){ const s = aiStBk.apply(this, arguments); return id === 'bankacc' ? s + '\n' + bkAiText() : s; }; }
+{ const aiChBk = aiChipKeys; aiChipKeys = function(id){ return id === 'bankacc' ? ['bk_c1', 'bk_c2', 'bk_c3'] : aiChBk.apply(this, arguments); }; }
+let BK_T = null;
+document.addEventListener('input', e => {
+  const el = e.target; if (!el || !el.closest || !el.closest('#bk_root')) return; const d = bkD();
+  if (el.dataset.bki != null){ const a = d.accs[+el.dataset.bki]; if (!a) return; const k = el.dataset.bkk; a[k] = el.type === 'checkbox' ? el.checked : el.value; }
+  else if (el.id === 'bk_exp') d.exp = el.value; else return;
+  clearTimeout(BK_T); BK_T = setTimeout(() => { saveSet(); bkOut(); }, 250);
+});
+document.addEventListener('change', e => {
+  const el = e.target; if (!el || !el.closest || !el.closest('#bk_root')) return; const d = bkD();
+  if (el.dataset.bki != null){ const a = d.accs[+el.dataset.bki]; if (!a) return; const k = el.dataset.bkk; a[k] = el.type === 'checkbox' ? el.checked : el.value; saveSet(); if (k === 'type'){ bkRender(); const n = $(`#bk_root [data-bki="${el.dataset.bki}"][data-bkk="type"]`); if (n) n.focus(); } else bkOut(); return; }
+  if (el.id === 'bk_buf'){ d.buf = +el.value; saveSet(); bkOut(); }
+});
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest || !t0.closest('#bk_root')) return; const d = bkD(); let b;
+  if (t0.closest('#bk_add')){ d.accs.push(bkNew()); saveSet(); bkRender(); const n = $$('#bk_root .bk-nick'); if (n.length) n[n.length - 1].focus(); return; }
+  if ((b = t0.closest('[data-bkrm]'))){ d.accs.splice(+b.dataset.bkrm, 1); saveSet(); bkRender(); return; }
+  if (t0.closest('#bk_clear')){ if (!confirm(t('bk_clearSure'))) return; SET.bk = {}; saveSet(); bkRender(); return; }
+  if (t0.closest('#bk_ai')){ try { aiOpen(); } catch (er) {} return; }
+});
+CALC.bankacc = () => null;
+try { GS_SYN.bankacc = 'חשבון בנק חשבונות בנק עו"ש עובר ושב מינוס מסגרת אשראי עמלות בנק פיקדון ניהול חשבונות כמה חשבונות bank account accounts overdraft fees checking savings حساب بنكي حسابات سحب على المكشوف عمولات'; } catch (e) {}
+if (typeof svKind === 'function'){ const svKindBk = svKind; svKind = function(id){ return id === 'bankacc' ? '' : svKindBk.apply(this, arguments); }; }
+try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('bankacc'); if (Array.isArray(EX_SKIP)) EX_SKIP.push('bankacc'); } catch (e) {}
+{
+  const actBk = activate; activate = function(id){ const r = actBk.apply(this, arguments); if (id === 'bankacc') bkRender(); return r; };
+  const alBk = applyLang; applyLang = function(){ const r = alBk.apply(this, arguments); try { if (tab === 'bankacc') bkRender(); } catch (e) {} return r; };
+  try { if (tab === 'bankacc') bkRender(); } catch (e) {}
 }
 
 /* ---------- 13.7: the accessibility button – one tap from every screen ----------
