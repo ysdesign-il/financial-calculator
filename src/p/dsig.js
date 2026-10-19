@@ -71,9 +71,10 @@ function dsSigHTML(){
 }
 
 /* ---------- the dialog ---------- */
-function sgOpen(){
-  if (!DSC || !DSC.pages.length) return;
-  Object.assign(DSG, {view: 'make', strokes: [], img: null, sig: null, pg: DSC.pages.length - 1, all: false});
+function sgOpen(cb){
+  cb = typeof cb === 'function' ? cb : null;
+  if (!cb && (!DSC || !DSC.pages.length)) return;
+  Object.assign(DSG, {view: 'make', strokes: [], img: null, sig: null, pg: DSC && DSC.pages.length ? DSC.pages.length - 1 : 0, all: false, cb});
   DSG.keep = !!sgSaved();
   let o = $('#dssg');
   if (!o){ document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="dssg" hidden><div class="cp-box sg-box" role="dialog" aria-modal="true" aria-labelledby="dssg_t"><div class="cp-top"><h3 id="dssg_t"></h3><button type="button" class="cp-x" id="dssg_x">×</button></div><div id="dssg_b"></div></div></div>`); o = $('#dssg'); }
@@ -138,6 +139,7 @@ function sgToPlace(){
   const c = sgFinish(sgMake()); if (!c){ toast(t('sg_none')); return; }
   DSG.sig = c;
   if (DSG.keep){ try { sgSave(sgMake().toDataURL('image/png')); } catch (e) {} }
+  if (DSG.cb){ const cb = DSG.cb; DSG.cb = null; sgClose(); cb(c); return; }
   sgStartPlace();
 }
 function sgStartPlace(){
@@ -166,7 +168,7 @@ document.addEventListener('click', e => {
   if (t0.closest('#sg_clr')){ DSG.strokes = []; sgPadDraw(); return; }
   if (t0.closest('#sg_bk')){ DSG.strokes.pop(); sgPadDraw(); return; }
   if (t0.closest('#sg_pickImg')){ const f = $('#sg_file'); if (f) f.click(); return; }
-  if (t0.closest('#sg_useSaved')){ sgLoadUrl(sgSaved()).then(c => { DSG.sig = sgFinish(c); sgStartPlace(); }).catch(() => toast(t('sg_none'))); return; }
+  if (t0.closest('#sg_useSaved')){ sgLoadUrl(sgSaved()).then(c => { DSG.sig = sgFinish(c); if (DSG.cb){ const cb = DSG.cb; DSG.cb = null; sgClose(); cb(DSG.sig); return; } sgStartPlace(); }).catch(() => toast(t('sg_none'))); return; }
   if (t0.closest('#sg_delSaved')){ sgSave(''); DSG.keep = false; sgPanel(); toast(t('sg_deleted')); return; }
   if (t0.closest('#sg_next')){ sgToPlace(); return; }
   if (t0.closest('#sg_back')){ DSG.view = 'make'; sgPanel(); return; }
