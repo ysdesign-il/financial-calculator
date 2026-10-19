@@ -9,7 +9,7 @@ const TV_SYM = {spx: ['OANDA:SPX500USD'], ndx: ['OANDA:NAS100USD'], dji: ['OANDA
   wheat: ['OANDA:WHEATUSD'], corn: ['OANDA:CORNUSD'], soy: ['OANDA:SOYBNUSD'], sugar: ['OANDA:SUGARUSD']};
 const TV_FX = [['FX_IDC:USDILS', 'USD/ILS'], ['FX_IDC:EURILS', 'EUR/ILS'], ['FX_IDC:GBPILS', 'GBP/ILS'], ['OANDA:EURUSD', 'EUR/USD'], ['OANDA:USDJPY', 'USD/JPY'], ['BITSTAMP:BTCUSD', 'Bitcoin'], ['BITSTAMP:ETHUSD', 'Ethereum']];
 const tvLang = () => { const l = document.documentElement.lang || 'he'; return l === 'he' ? 'he_IL' : l === 'ar' ? 'ar_AE' : 'en'; };
-const tvDark = () => { try { return getComputedStyle(document.documentElement).colorScheme.includes('dark') || document.documentElement.dataset.theme === 'dark'; } catch (e) { return false; } };
+const tvDark = () => document.documentElement.dataset.theme === 'dark';      // set by the theme itself – no style recalculation
 const tvE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 /* a TradingView widget, loaded privately: our own frame straight to their widget page, with no cookies (a fresh, throw-away
    storage every time where the browser supports it), no referrer (they are not told which site it is on) and no script of theirs on our page */

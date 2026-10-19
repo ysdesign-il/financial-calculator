@@ -2,7 +2,7 @@
 Object.assign(DEFS, {
   cellcmp: [
     SEL('cl_co','f_clCo','all',[['all','o_clCoAll'],['019','cp_019'],['pelephone','cp_pelephone'],['cellcom','cp_cellcom'],['partner','cp_partner'],['golan','cp_golan'],['hot','cp_hot'],['wecom','cp_wecom'],['xphone','cp_xphone'],['ramilevy','cp_ramilevy'],['other','o_clCoMine']],{wide:true}),
-    F('cl_gb','f_clGb','',50,{hint:'h_clGb'}),
+    F('cl_gb','f_clGb','',50,{hint:'h_clGbH'}),
     SEL('cl_5g','f_cl5g','any',[['any','o_clAny'],['yes','o_clYes']]),
     SEL('cl_abroad','f_clAbroad','any',[['any','o_clAny'],['yes','o_clYes']]),
     F('cl_months','f_clMonths','mo',24,{hint:'h_clMonths'}),

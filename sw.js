@@ -1,5 +1,5 @@
 /* the website works offline: always try the network first (so updates arrive at once), and fall back to the last copy */
-const CACHE = 'fin-v1';
+const CACHE = 'fin-v2';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).catch(() => {})); self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE && k !== 'fin-share').map(k => caches.delete(k)))).then(() => self.clients.claim())); });
@@ -19,8 +19,19 @@ self.addEventListener('fetch', e => {
     return;
   }
   if (r.method !== 'GET' || new URL(r.url).origin !== location.origin) return;     // only this site's own files
+  /* the app's script: each version has its own address (app.js?v=…), so a kept copy is always right – open at once, no download */
+  const u = new URL(r.url);
+  if (u.pathname.endsWith('/app.js') && u.searchParams.get('v')){
+    e.respondWith(caches.open(CACHE).then(c => c.match(r).then(m => m || fetch(r).then(res => {
+      if (res && res.ok && res.type === 'basic'){ const cp = res.clone(); c.keys().then(ks => Promise.all(ks.filter(k => k.url !== r.url && new URL(k.url).pathname.endsWith('/app.js')).map(k => c.delete(k)))).then(() => c.put(r, cp)).catch(() => {}); }
+      return res;
+    }))).catch(() => fetch(r)));
+    return;
+  }
+  /* one kept copy per file: data files are asked for with a changing ?t=… so they are never stale – keep them without it, or the store grows forever */
+  const key = u.origin + u.pathname;
   e.respondWith(fetch(r).then(res => {
-    if (res && res.ok && res.type === 'basic'){ const cp = res.clone(); caches.open(CACHE).then(c => c.put(r, cp)).catch(() => {}); }
+    if (res && res.ok && res.type === 'basic'){ const cp = res.clone(); caches.open(CACHE).then(c => c.put(key, cp)).catch(() => {}); }
     return res;
-  }).catch(() => caches.match(r).then(m => m || (r.mode === 'navigate' ? caches.match('index.html') : undefined)).then(m => m || Response.error())));
+  }).catch(() => caches.match(key).then(m => m || caches.match(r, {ignoreSearch: true})).then(m => m || (r.mode === 'navigate' ? caches.match('index.html') : undefined)).then(m => m || Response.error())));
 });

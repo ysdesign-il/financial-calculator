@@ -7,5 +7,5 @@ Object.assign(T, {
   f_mvAlert:['התראה על תנועה חדה במדדים','تنبيه عند حركة حادة في المؤشرات','Alert on big market moves'],
   h_mvAlert:['כשמדד, סחורה או בורסה עולים או יורדים היום יותר מהאחוז שבחרת – התראה עם צליל (פעם ביום לכל מדד). עובד כשהעדכון החי פועל והאפליקציה או האתר פתוחים.','عند صعود أو هبوط مؤشر أكثر من النسبة المختارة – تنبيه مع صوت مرة يوميًا.','When an index or commodity moves more than your threshold today – an alert with a sound (once a day each). Works while live data is on and the app or site is open.'],
   f_mvPct:['מאיזה שינוי יומי להתריע','من أي تغيير يومي للتنبيه','Alert from a daily change of'],
-  mv_today:['תנועה חדה היום: {x}','حركة حادة اليوم: {x}','Big move today: {x}'], mv_title:['תנועה חדה בשוק','حركة حادة في السوق','Big market move']
+  mv_today:['תנועה חדה היום: {x}','حركة حادة اليوم: {x}','Big move today: {x}'], mkmv_title:['תנועה חדה בשוק','حركة حادة في السوق','Big market move']
 });

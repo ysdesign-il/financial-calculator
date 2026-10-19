@@ -788,8 +788,8 @@ function drawChart(el){
   const W = Math.max(260, Math.floor(wrap.clientWidth) || 600), H = 240;
   const pl = 44, pr = 6, pt = 8, pb = 26, ih = H - pt - pb;
   const n = s.labels.length;
-  const totals = s.labels.map((_, i) => s.layers.reduce((a, l) => a + Math.max(0, l.values[i] || 0), 0));
-  const max = niceMax(Math.max(1e-9, ...totals));
+  const totals = s.labels.map((_, i) => s.layers.reduce((a, l) => a + (isFinite(l.values[i]) ? Math.max(0, l.values[i] || 0) : 0), 0));
+  const top = Math.max(1e-9, ...totals.filter(isFinite)), nm = niceMax(top), max = isFinite(nm) ? nm : top;
   const bw = (W - pl - pr) / n, gap = Math.min(5, bw * 0.2);
   const step = Math.ceil(n / Math.max(1, Math.floor((W - pl) / 36)));
   let g = '';
@@ -800,7 +800,7 @@ function drawChart(el){
   for (let i = 0; i < n; i++){
     let acc = 0;
     s.layers.forEach(l => {
-      const val = Math.max(0, l.values[i] || 0);
+      const val = isFinite(l.values[i]) ? Math.max(0, l.values[i] || 0) : 0;
       const h = val / max * ih;
       if (h > 0){
         const y = pt + ih - (acc / max * ih) - h;

@@ -80,7 +80,7 @@ def live_check():
     if status != 200:
         add('medium', 'site', f'The live site did not answer normally (HTTP {status})')
         return
-    for name, text in [('index.html', html)] + [(u, fetch(SITE + u)[2]) for u in ('sw.js',)]:
+    for name, text in [('index.html', html)] + [(u, fetch(SITE + u)[2]) for u in ('sw.js', 'app.js')]:
         hits = secrets_in(text)
         if hits:
             add('high', 'secret', f'Possible secret on the live site: {", ".join(hits)} in {name}. Revoke it now.', f=name)

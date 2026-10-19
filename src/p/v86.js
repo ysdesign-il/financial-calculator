@@ -64,7 +64,7 @@ const MK_COIN = [[/דולר|دولار|dollar/i, 'USD'], [/אירו|يورو|eur
 function coinsAll(){
   try { coinBeside($('#cur')); } catch (e) {}
   /* market cards on Home */
-  $$('#hm .mk, #hmx .mk').forEach(card => {
+  ['hm', 'hmx'].flatMap(id => { const r = document.getElementById(id); return r ? [...r.getElementsByClassName('mk')] : []; }).forEach(card => {
     if (card.querySelector('.cur-coin')) return;
     const l = card.querySelector('.mk-l'); if (!l) return;
     const hit = MK_COIN.find(([rx]) => rx.test(l.textContent)); if (!hit) return;

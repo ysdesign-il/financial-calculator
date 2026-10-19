@@ -296,7 +296,7 @@ function toast(msg){
   el.textContent = msg; el.hidden = false; clearTimeout(toastT);
   toastT = setTimeout(() => { el.hidden = true; }, 3200);
 }
-Object.assign(T, {st_saved:['הקובץ נשמר','تم حفظ الملف','File saved']});
+Object.assign(T, {st_fileSaved:['הקובץ נשמר','تم حفظ الملف','File saved']});
 /* inside Claude a page may not download by itself: the viewer is asked to confirm the save. On the website a plain download works. */
 async function fileSave(data, name, mime){
   if (window.claude && typeof window.claude.use === 'function'){
@@ -312,7 +312,7 @@ async function fileSave(data, name, mime){
 }
 async function deliver(text, name, mime){
   const r = await fileSave(text, name, mime);
-  if (r === 'saved') toast(t('st_saved'));
+  if (r === 'saved') toast(t('st_fileSaved'));
   else if (r === 'fail'){ copyText(text); toast(t('st_copied')); }
 }
 function doAction(act, id){

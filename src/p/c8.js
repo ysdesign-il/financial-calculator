@@ -185,10 +185,10 @@ function calcMortCap(){
   const warn = [];
   if (pti > 50) warn.push(t('w_mcPti'));
   if (v('mc_yrs') > 30) warn.push(t('w_mcYrs'));
-  return {hero: {label: t('r_mcPrice'), value: MI(price), sub: t('r_mcSub', {l: MI(loan), p: MI(pm)})},
+  return {hero: {label: t('r_mcPrice'), value: MI(price), sub: t('r_mcapSub', {l: MI(loan), p: MI(pm)})},
     rows: [[t('r_mcPay'), MI(pay)], [t('r_mcByPay'), MI(byPay)], [t('r_mcByEq', {p: PC(ltv * 100)}), MI(byEq)], [t('r_mcLoan'), MI(loan), 'key'],
       [t('r_mcLimit'), t(byPay <= byEq ? 'r_mcLimPay' : 'r_mcLimEq')], [t('r_mcPrice'), MI(price), 'key'], [t('r_mcPm'), MI(pm)], [t('r_mcLtv'), PC(price ? loan / price * 100 : NaN)], [t('r_mcPti'), PC(inc ? (pm + other) / inc * 100 : NaN)]],
-    warn, note: t('n_mc')};
+    warn, note: t('n_mcap')};
 }
 
 /* --- company car benefit --- */

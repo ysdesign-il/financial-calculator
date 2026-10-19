@@ -1711,7 +1711,7 @@
   "h_pcDep": "From deposits",
   "h_pcEnd": "Final balance",
   "h_pcFees": "Fees",
-  "h_pcRet": "Return",
+  "h_pcRet": "Expected yearly return before fees. Can be set per offer.",
   "h_pctGross": "% of gross",
   "h_phBudget": "Hides phones above this price",
   "h_phFromY": "e.g. 2025 – newer models only",
@@ -2282,7 +2282,7 @@
   "mv_shared": "Sent. On the new phone: Settings → Account & access → \"I moved to a new phone\".",
   "mv_siteOnly": "The website has no cloud backup, so the account moves with an encrypted transfer code.",
   "mv_tab": "📲 New phone",
-  "mv_title": "Big market move",
+  "mv_title": "Move to a new phone",
   "mv_today": "Big move today: {x}",
   "mv_yourCode": "Transfer code for {n}",
   "n_ap": "Use = power in watts × hours. Air conditioners and fridges do not run at full power all the time, so this is an upper estimate. Home tariff from July 2026: 63.52 agorot per kWh incl. VAT.",
@@ -4136,7 +4136,7 @@
   "st_ok": "Rates updated ({d})",
   "st_resetCalcs": "All calculators were reset",
   "st_resetDone": "Settings were reset",
-  "st_saved": "File saved",
+  "st_saved": "Saved in the app: {v}",
   "st_snap": "snapshot rates",
   "st_srcNa": "Direct connection is blocked inside claude.ai. Works automatically in a saved file or on your site.",
   "st_stamp": "Updated {t} · {s}",
@@ -7056,6 +7056,14 @@
   "fu_c2": "Is my car's consumption reasonable?",
   "fu_c3": "Should I switch to an electric car?",
   "lg_p_dev11": "Fuel calculator: the fill-up log (date, odometer, litres and amount) and your car details are kept on the device only. You can export the log to a file or delete it.",
-  "lg_h_p1910j": "19.10.2026 – added an explanation of the fuel calculator's fill-up log."
+  "lg_h_p1910j": "19.10.2026 – added an explanation of the fuel calculator's fill-up log.",
+  "r_carleaseSub": "Total cost over the term, after resale",
+  "n_carlease": "Cost includes the down payment, payments, yearly costs and an alternative return on the cash, less resale value. Leasing covers the term only, with no buyout at the end.",
+  "r_mcapSub": "Mortgage up to {l} · {p} a month",
+  "n_mcap": "Bank of Israel rules: financing up to 75% for a first home, 70% when upgrading and 50% for investment, terms up to 30 years, and payments up to 50% of income. Purchase tax, lawyer, agent and other costs paid from equity are not included.",
+  "h_pcRetH": "Return",
+  "h_clGbH": "Most people use 10–50GB; heavy video 100GB+.",
+  "mkmv_title": "Big market move",
+  "st_fileSaved": "File saved"
  }
 }
