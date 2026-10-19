@@ -1592,6 +1592,25 @@ body[data-tab="expenses"] .page-head .scan-btn + .prn-btn,body[data-tab="clients
 .fu-car{margin:8px 0 12px}.fu-range{width:100%;accent-color:#1F4FB8}.fu-t tr.key th,.fu-t tr.key td{font-weight:700}.fu-t td{white-space:nowrap}
 .fu-log{list-style:none;padding:0;margin:0 0 10px;display:flex;flex-direction:column;gap:6px}.fu-log li{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:12px;font-size:.88rem}
 .fu-wide{grid-column:1/-1}.fu-cu select{max-width:none;flex:1 1 50%}
+.rm-bar{display:flex;flex-direction:column;gap:8px;margin:10px 0}.rm-bar input[type=search]{font:inherit;font-size:16px;min-height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface,transparent);color:var(--ink);padding:4px 12px}
+.rm-list{list-style:none;padding:0;margin:8px 0 14px;display:flex;flex-direction:column;gap:8px}
+.rm-it{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--surface,transparent)}
+.rm-it.due{border-color:#d97706;background:color-mix(in srgb,#d97706 7%,transparent)}.rm-it.late{border-color:#b42318;background:color-mix(in srgb,#b42318 7%,transparent)}.rm-it.done{opacity:.6}.rm-it.done b{text-decoration:line-through}
+.rm-ic{font-size:1.4rem;line-height:1.2}.rm-b{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}.rm-w{font-size:.84rem;color:var(--ink-2)}.rm-it.late .rm-rel{color:#b42318;font-weight:700}.rm-b small{font-size:.82rem;color:var(--ink-2);white-space:pre-wrap}
+.rm-acts{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}.rm-form{margin:8px 0 12px}.rm-form textarea{font:inherit;font-size:16px;border-radius:10px;border:1px solid var(--line);background:var(--surface,transparent);color:var(--ink);padding:6px 8px;width:100%;box-sizing:border-box}
+.rm-form .bk-f{margin-bottom:8px}.rm-sug .ds-chip{font-size:.85rem}
+.hrm{margin:10px 0}.hrm-in{appearance:none;font:inherit;color:inherit;text-align:start;width:100%;display:flex;flex-direction:column;gap:4px;padding:12px 14px;border-radius:16px;border:1.5px solid #d97706;background:color-mix(in srgb,#d97706 9%,var(--surface,transparent));cursor:pointer}
+.hrm-h{font-weight:700}.hrm-r{font-size:.88rem}.hrm-r.late{color:#b42318}.hrm-m{font-size:.8rem;color:var(--ink-2)}
+.rm-form fieldset{border:0;padding:0;margin:0;min-width:0}.rm-form legend{font-weight:700;padding:0;margin-bottom:6px}
+.hpic{margin:12px 0;padding:14px;border-radius:18px;border:1.5px solid var(--line);background:var(--surface,transparent)}.hpic .sec-t{margin-top:0}
+.hpic-top{display:flex;gap:14px;align-items:center;margin-bottom:10px}.hpic-st{display:flex;flex-direction:column;gap:2px}.hpic-st small{color:var(--ink-2);font-size:.82rem}
+.hpic-score{--c:#16a34a;flex:0 0 74px;height:74px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(closest-side,var(--surface,#fff) 78%,transparent 80% 100%),conic-gradient(var(--c) calc(var(--p)*1%),var(--line) 0)}
+.hpic-score.mid{--c:#d97706}.hpic-score.low{--c:#b42318}.hpic-score b{font-size:1.5rem;line-height:1}.hpic-score small{font-size:.7rem;color:var(--ink-2)}
+.hpic-rows{display:grid;grid-template-columns:1fr 1fr;gap:6px}.hpic-r{appearance:none;font:inherit;color:inherit;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:8px 10px;border-radius:12px;border:1px solid var(--line);background:transparent;cursor:pointer;text-align:start}
+.hpic-r span{font-size:.8rem;color:var(--ink-2)}.hpic-r b{font-size:1.02rem}
+.hpic-tips{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}.hpic-tips button{appearance:none;font:inherit;color:inherit;width:100%;text-align:start;padding:9px 12px;border-radius:12px;border:1px solid var(--line);background:color-mix(in srgb,var(--gold,#d4a017) 7%,transparent);cursor:pointer}
+.es-t th small,.bk-plan th small{display:block;font-weight:400;font-size:.76rem;color:var(--ink-2)}.es-t tr.es-no{opacity:.55}
+.scn2 .scn-now{background:color-mix(in srgb,var(--gold,#d4a017) 12%,transparent);font-weight:600}.scn2 .scn-d{font-weight:600}.scn2 tr.key td,.scn2 tr.key th{font-weight:700}
 
 /* ================= 7.8: app designs (ORBIT, AURUM); the default design has none of these rules ================= */
 .dz-ban{display:none}
@@ -2470,7 +2489,7 @@ body:has(#panel-mathx:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 <div class="toast" id="toast" role="status" hidden></div>
 
 
-<script>var HTML_BUILD = '20261019.212211';</script>
-<script src="app.js?v=20261019.212211"></script>
+<script>var HTML_BUILD = '20261019.235804';</script>
+<script src="app.js?v=20261019.235804"></script>
 </body>
 </html>
