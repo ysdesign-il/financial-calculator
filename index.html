@@ -1586,6 +1586,12 @@ body[data-tab="expenses"] .page-head .scan-btn + .prn-btn,body[data-tab="clients
 .d4-tools{display:inline-flex;gap:4px;flex-wrap:wrap;margin-inline-start:auto}.ds-pg figcaption{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .ds-crop .d4-loupe{position:absolute;z-index:5;border-radius:50%;width:auto;box-shadow:0 4px 18px rgba(0,0,0,.45);pointer-events:none}
 .d4-adj{margin:8px 0}.d4-adj input[type=range]{width:100%;accent-color:#1F4FB8}
+.d5-tag{font-size:.78rem;padding:2px 8px;border-radius:999px;border:1px solid #d97706;background:color-mix(in srgb,#d97706 10%,transparent)}.d5-tag.ok{border-color:#16a34a;background:color-mix(in srgb,#16a34a 8%,transparent)}
+.d5-ban{align-items:flex-start}.d5-ban p{margin:0 0 6px}.d5-ck{display:flex;margin:6px 0}
+.fu-cu{display:flex;gap:6px}.fu-cu input{flex:1 1 60px;min-width:0}.fu-cu select{flex:0 1 auto;font:inherit;font-size:16px;min-height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface,transparent);color:inherit;max-width:55%}
+.fu-car{margin:8px 0 12px}.fu-range{width:100%;accent-color:#1F4FB8}.fu-t tr.key th,.fu-t tr.key td{font-weight:700}.fu-t td{white-space:nowrap}
+.fu-log{list-style:none;padding:0;margin:0 0 10px;display:flex;flex-direction:column;gap:6px}.fu-log li{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:12px;font-size:.88rem}
+.fu-wide{grid-column:1/-1}.fu-cu select{max-width:none;flex:1 1 50%}
 
 /* ================= 7.8: app designs (ORBIT, AURUM); the default design has none of these rules ================= */
 .dz-ban{display:none}
@@ -7358,6 +7364,88 @@ Object.assign(T, {
   d4_loupeH:['בגרירת פינה מופיעה זכוכית מגדלת לדיוק.','عند سحب زاوية تظهر عدسة مكبّرة للدقة.','While dragging a corner, a magnifier appears for precision.'],
   bk_c4:['כדאי לי לעבור בנק?','هل يُستحسن أن أنتقل إلى بنك آخر؟','Should I switch banks?'],
 });
+/* 13.17: a smarter scanner */
+Object.assign(T, {
+  d5_str:['יישור הטקסט בעמוד {n}','تقويم النص في الصفحة {n}','Straighten the text on page {n}'],
+  d5_strOk:['העמוד יושר ב־{a}°','تم تقويم الصفحة بـ{a}°','Page straightened by {a}°'],
+  d5_strNo:['העמוד כבר ישר','الصفحة مستقيمة أصلًا','The page is already straight'],
+  d5_strT:['יושר {a}°','قُوّمت {a}°','Straightened {a}°'],
+  d5_auto:['יישור אוטומטי של טקסט עקום במסמכים','تقويم تلقائي للنص المائل في المستندات','Straighten crooked text in documents automatically'],
+  d5_split:['פיצול עמוד {n} לשני עמודים (ספר פתוח)','تقسيم الصفحة {n} إلى صفحتين (كتاب مفتوح)','Split page {n} into two pages (open book)'],
+  d5_splitOk:['הספר פוצל לשני עמודים. אפשר לשנות את הסדר בחצים.','قُسّم الكتاب إلى صفحتين. يمكن تغيير الترتيب بالأسهم.','Split into two pages. Use the arrows to change the order.'],
+  d5_blankT:['עמוד ריק','صفحة فارغة','Blank page'],
+  d5_dupT:['כפול של עמוד {n}','مكررة من الصفحة {n}','Same as page {n}'],
+  d5_found:['נמצאו {b} עמודים ריקים ו־{d} עמודים שנסרקו פעמיים.','وُجدت {b} صفحات فارغة و{d} صفحات مُسحت مرتين.','Found {b} blank pages and {d} pages scanned twice.'],
+  d5_clean:['הסרת {n} עמודים מיותרים','إزالة {n} صفحات زائدة','Remove {n} extra pages'],
+  d5_cleaned:['הוסרו {n} עמודים','أُزيلت {n} صفحات','{n} pages removed'],
+  d5_edge:['ניקוי קצוות – צללים ואצבעות בשולי הדף','تنظيف الحواف – ظلال وأصابع على هوامش الصفحة','Clean the edges – shadows and fingers at the margins'],
+  d5_max:['גודל קובץ מרבי','أقصى حجم للملف','Maximum file size'], d5_noMax:['בלי הגבלה','بلا حد','No limit'], d5_mb:['עד {m} MB','حتى {m} MB','Up to {m} MB'],
+  d5_maxH:['ה־PDF יוקטן אוטומטית כדי לעבור באתרים שמגבילים גודל קובץ.','سيُصغَّر ملف PDF تلقائيًا ليُقبل في المواقع التي تحدّ حجم الملف.','The PDF will be made smaller automatically for sites that limit the file size.'],
+  d5_fitOk:['הקובץ האחרון: {s} MB – בתוך המגבלה.','الملف الأخير: {s} MB – ضمن الحد.','Last file: {s} MB – within the limit.'],
+  d5_fitNo:['הקובץ האחרון: {s} MB – עדיין מעל {m} MB. נסו פחות עמודים או מראה שחור־לבן.','الملف الأخير: {s} MB – ما زال فوق {m} MB. جرّبوا صفحات أقل أو مظهر أبيض وأسود.','Last file: {s} MB – still over {m} MB. Try fewer pages or the black & white look.'],
+  d5_name:['שם הקובץ: "{s}"','اسم الملف: "{s}"','File name: "{s}"'],
+  d5_named:['שם הקובץ: {s}','اسم الملف: {s}','File name: {s}'],
+  d5_foundH:['פרטים שנמצאו במסמך','تفاصيل وُجدت في المستند','Details found in the document'],
+  d5_foundP:['טלפון – לחיוג, מייל – לשליחה, קישור – לפתיחה, תאריך – תזכורת ביומן, סכום – העתקה.','هاتف – للاتصال، بريد – للإرسال، رابط – للفتح، تاريخ – تذكير في التقويم، مبلغ – نسخ.','Phone – call, e-mail – write, link – open, date – a calendar reminder, amount – copy.'],
+  d5_fDate:['תזכורת ביומן ל־{v}','تذكير في التقويم لـ{v}','Calendar reminder for {v}'], d5_fSum:['העתקת הסכום {v}','نسخ المبلغ {v}','Copy the amount {v}'],
+  d5_fCal:['התזכורת נוצרה – פתחו את הקובץ כדי להוסיף ליומן.','أُنشئ التذكير – افتحوا الملف لإضافته إلى التقويم.','Reminder created – open the file to add it to your calendar.'],
+});
+/* 13.17: fuel calculator */
+Object.assign(T, {
+  tab_fuelcalc:['מחשבון דלק','حاسبة الوقود','Fuel calculator'],
+  d_fuelcalc:['עלות נסיעה, מילוי מיכל לפי ליטרים, יומן תדלוקים עם הצריכה האמיתית, עלות חודשית ושנתית, השוואות והמרות.','كلفة الرحلة، تعبئة الخزان باللترات، سجل التعبئة مع الاستهلاك الحقيقي، الكلفة الشهرية والسنوية، مقارنات وتحويلات.','Trip cost, filling the tank by litres, a fill-up log with your real consumption, monthly and yearly cost, comparisons and conversions.'],
+  fu_intro:['מלאו פעם אחת את סוג הדלק, המחיר והצריכה של הרכב – וכל הכלים כאן משתמשים בהם.','املأ مرة واحدة نوع الوقود والسعر واستهلاك السيارة – وكل الأدوات هنا تستخدمها.','Fill in the fuel type, price and your car\'s consumption once – every tool here uses them.'],
+  fu_tab_trip:['נסיעה','رحلة','Trip'], fu_tab_fill:['מילוי מיכל','تعبئة الخزان','Fill the tank'], fu_tab_log:['יומן תדלוקים','سجل التعبئة','Fill-up log'], fu_tab_cost:['חודש ושנה','شهر وسنة','Month & year'], fu_tab_cmp:['השוואות','مقارنات','Compare'], fu_tab_conv:['המרות','تحويلات','Conversions'],
+  fu_car:['הרכב שלי','سيارتي','My car'], fu_kind:['סוג דלק','نوع الوقود','Fuel type'], fu_k_95:['בנזין 95','بنزين 95','Petrol 95'], fu_k_98:['בנזין 98','بنزين 98','Petrol 98'], fu_k_diesel:['סולר','سولار','Diesel'],
+  fu_service:['סוג שירות','نوع الخدمة','Service'], fu_self:['שירות עצמי','خدمة ذاتية','Self-service'], fu_fullS:['שירות מלא (+{m} לליטר)','خدمة كاملة (+{m} للتر)','Full service (+{m} per litre)'],
+  fu_price:['מחיר לליטר','السعر للتر','Price per litre'], fu_cons:['צריכת דלק','استهلاك الوقود','Fuel consumption'], fu_unit:['יחידה','الوحدة','Unit'],
+  fu_u_kpl:['ק״מ לליטר','كم/لتر','km/L'], fu_u_l100:['ליטר ל־100 ק״מ','لتر/100 كم','L/100 km'], fu_u_mpgus:['מייל לגלון (ארה״ב)','ميل/غالون (أمريكي)','mpg (US)'], fu_u_mpguk:['מייל לגלון (בריטניה)','ميل/غالون (بريطاني)','mpg (UK)'],
+  fu_kplV:['{v} ק״מ לליטר','{v} كم/لتر','{v} km/L'], fu_l100V:['{v} ליטר ל־100 ק״מ','{v} لتر/100 كم','{v} L/100 km'],
+  fu_regNote:['בלי מחיר – משתמשים במחיר המרבי של בנזין 95 בשירות עצמי שקבע משרד האנרגיה: {m} לליטר.','بلا سعر – يُستخدم السعر الأقصى لبنزين 95 بخدمة ذاتية الذي حددته وزارة الطاقة: {m} للتر.','With no price, the maximum self-service price for petrol 95 set by the Ministry of Energy is used: {m} per litre.'],
+  fu_freeNote:['המחיר של בנזין 98 וסולר אינו בפיקוח – כתבו את המחיר בתחנה.','سعر بنزين 98 والسولار غير مراقب – اكتبوا السعر في المحطة.','Petrol 98 and diesel prices aren\'t regulated – enter the price at the station.'],
+  fu_fromLog:['הצריכה נלקחת מיומן התדלוקים.','الاستهلاك مأخوذ من سجل التعبئة.','Consumption is taken from the fill-up log.'],
+  fu_fill:['מלאו את הנתונים כדי לראות את החישוב.','املأ البيانات لرؤية الحساب.','Fill in the details to see the result.'],
+  fu_priv:['הכול נשמר רק במכשיר.','كل شيء محفوظ على الجهاز فقط.','Everything is kept on this device only.'],
+  fu_yr:['שנה','سنة','year'],
+  fu_trKm:['מרחק','المسافة','Distance'], fu_trPpl:['נוסעים לחלוקה','ركاب للتقسيم','People sharing'], fu_trToll:['כביש אגרה','طريق برسوم','Toll road'], fu_trPark:['חניה','موقف','Parking'], fu_trRt:['הלוך ושוב','ذهابًا وإيابًا','Round trip'],
+  fu_trCost:['עלות הנסיעה','كلفة الرحلة','Trip cost'], fu_trSub:['{l} ליטר ל־{km} ק״מ','{l} لتر لـ{km} كم','{l} L for {km} km'],
+  fu_liters:['ליטרים','لترات','Litres'], fu_fuelCost:['דלק','الوقود','Fuel'], fu_extra:['אגרה וחניה','رسوم وموقف','Tolls and parking'], fu_perKm:['עלות לק״מ','الكلفة لكل كم','Cost per km'], fu_perPerson:['לכל נוסע ({n})','لكل راكب ({n})','Per person ({n})'], fu_consUsed:['צריכה בחישוב','الاستهلاك في الحساب','Consumption used'], fu_priceUsed:['מחיר בחישוב','السعر في الحساب','Price used'],
+  fu_fiTank:['נפח המיכל','سعة الخزان','Tank size'], fu_fiBud:['תקציב לתדלוק','ميزانية التعبئة','Fill-up budget'], fu_fiLv:['כמה יש עכשיו במיכל','كم يوجد الآن في الخزان','How full is the tank now'], fu_fiLit:['כמה ליטרים לתדלק','كم لترًا للتعبئة','Litres to fill'],
+  fu_fiToFull:['עד מיכל מלא','حتى خزان ممتلئ','To a full tank'], fu_fiToFullS:['{l} ליטר','{l} لتر','{l} L'], fu_fiRangeNow:['טווח נסיעה עכשיו','مدى القيادة الآن','Range now'], fu_fiRangeFull:['טווח במיכל מלא','المدى بخزان ممتلئ','Range on a full tank'], fu_fiTankCost:['מיכל מלא מאפס','خزان ممتلئ من الصفر','A full tank from empty'],
+  fu_fiBudL:['ב־{m} תקבלו','بـ{m} تحصلون على','{m} buys'], fu_fiOver:['התקציב גדול מהמיכל – מילוי מלא יעלה','الميزانية أكبر من الخزان – التعبئة الكاملة تكلف','The budget is more than the tank holds – a full fill costs'], fu_fiLitM:['{l} ליטר עולים','{l} لتر تكلّف','{l} L costs'],
+  fu_lgIntro:['רשמו כל תדלוק עם מד הק״מ. בין שני מילויים מלאים מחושבת הצריכה האמיתית של הרכב.','سجّلوا كل تعبئة مع عداد الكيلومترات. بين تعبئتين كاملتين يُحسب الاستهلاك الحقيقي للسيارة.','Record every fill-up with the odometer. Between two full fills the car\'s real consumption is worked out.'],
+  fu_lgAdd:['תדלוק חדש','تعبئة جديدة','New fill-up'], fu_lgDate:['תאריך','التاريخ','Date'], fu_lgOdo:['מד ק״מ','عداد الكيلومترات','Odometer'], fu_lgL:['ליטרים','لترات','Litres'], fu_lgSum:['סכום ששולם','المبلغ المدفوع','Amount paid'], fu_lgFull:['מילאתי עד הסוף','عبّأت حتى الامتلاء','Filled to the top'], fu_lgSave:['שמירת התדלוק','حفظ التعبئة','Save fill-up'],
+  fu_lgNeed:['צריך מד ק״מ וליטרים.','يلزم عداد الكيلومترات واللترات.','The odometer and litres are needed.'], fu_lgDup:['כבר יש תדלוק עם אותו מד ק״מ.','توجد تعبئة بنفس قراءة العداد.','There\'s already a fill-up at that odometer reading.'], fu_lgSaved:['התדלוק נשמר.','حُفظت التعبئة.','Fill-up saved.'],
+  fu_lgEmpty:['עוד אין תדלוקים ביומן.','لا توجد تعبئات في السجل بعد.','No fill-ups in the log yet.'], fu_lgMore:['צריך לפחות שני תדלוקים (רצוי מלאים) כדי לחשב צריכה.','يلزم تعبئتان على الأقل (يُفضّل كاملتين) لحساب الاستهلاك.','At least two fill-ups (ideally full) are needed to work out consumption.'],
+  fu_lgReal:['הצריכה האמיתית שלכם','استهلاككم الحقيقي','Your real consumption'], fu_lgApprox:['הערכה – חסרים מילויים מלאים','تقدير – تنقص تعبئات كاملة','estimate – full fills missing'],
+  fu_lgMonth:['הוצאה על דלק בחודש','مصروف الوقود شهريًا','Fuel spending a month'], fu_lgKmMonth:['ק״מ בחודש','كم شهريًا','km a month'], fu_lgTotal:['סה״כ ({n} תדלוקים)','المجموع ({n} تعبئات)','Total ({n} fill-ups)'],
+  fu_lgUse:['להשתמש בצריכה הזו בכל החישובים','استخدام هذا الاستهلاك في كل الحسابات','Use this consumption everywhere'], fu_lgUsed:['הצריכה עודכנה.','تم تحديث الاستهلاك.','Consumption updated.'],
+  fu_lgList:['התדלוקים','التعبئات','Fill-ups'], fu_lgPart:['מילוי חלקי','تعبئة جزئية','partial fill'], fu_lgDel:['הסרת התדלוק מ־{d}','إزالة تعبئة {d}','Remove the fill-up of {d}'],
+  fu_lgCsv:['ייצוא לאקסל (CSV)','تصدير إلى إكسل (CSV)','Export to Excel (CSV)'], fu_lgClear:['מחיקת היומן','حذف السجل','Delete the log'], fu_lgClearQ:['למחוק את כל התדלוקים?','حذف كل التعبئات؟','Delete all fill-ups?'],
+  fu_coKm:['ק״מ בחודש','كم شهريًا','km a month'], fu_coRise:['אם המחיר יעלה ב־','إذا ارتفع السعر بـ','If the price rises by'],
+  fu_coMonth:['דלק בחודש','الوقود شهريًا','Fuel a month'], fu_coSub:['{y} בשנה · {l} ליטר בחודש','{y} في السنة · {l} لتر شهريًا','{y} a year · {l} L a month'],
+  fu_coLy:['ליטרים בשנה','لترات في السنة','Litres a year'], fu_coKmY:['ק״מ בשנה','كم في السنة','km a year'], fu_coRiseR:['עלייה של {m} לליטר','ارتفاع {m} للتر','A rise of {m} per litre'], fu_coAgora:['כל 10 אגורות לליטר','كل 10 أغورات للتر','Every 10 agorot per litre'],
+  fu_tipsH:['איך לחסוך בדלק','كيف توفّرون الوقود','How to save fuel'],
+  fu_coBetter:['נהיגה חסכונית ב־10% חוסכת כ־{y} בשנה','قيادة أوفر بـ10% توفّر نحو {y} في السنة','Driving 10% more efficiently saves about {y} a year'], fu_coBetterP:['ההרגלים שלמטה הם הדרך הזולה ביותר להוריד את ההוצאה.','العادات أدناه أرخص طريقة لخفض المصروف.','The habits below are the cheapest way to cut the bill.'],
+  fu_tip_tire:['לחץ אוויר בצמיגים','ضغط الهواء في الإطارات','Tyre pressure'], fu_tip_tireP:['צמיגים רכים מעלים את הצריכה. בדקו פעם בחודש לפי המדבקה בדלת הנהג.','الإطارات الطرية ترفع الاستهلاك. افحصوا مرة شهريًا حسب الملصق في باب السائق.','Soft tyres raise consumption. Check monthly against the sticker in the driver\'s door.'],
+  fu_tip_speed:['מהירות קבועה ומתונה','سرعة ثابتة ومعتدلة','Steady, moderate speed'], fu_tip_speedP:['האצות ובלימות חדות ונסיעה מהירה בכביש מהיר שורפות הרבה יותר דלק.','التسارع والكبح الحادّان والسرعة العالية تحرق وقودًا أكثر بكثير.','Hard acceleration, sharp braking and high motorway speeds burn much more fuel.'],
+  fu_tip_ac:['מזגן וחלונות','المكيّف والنوافذ','Air-con and windows'], fu_tip_acP:['בעיר – חלון פתוח; בכביש מהיר – חלונות סגורים ומזגן מתון.','في المدينة – نافذة مفتوحة؛ على الطريق السريع – نوافذ مغلقة ومكيّف معتدل.','In town, an open window; on the motorway, closed windows and moderate air-con.'],
+  fu_tip_load:['משקל וגגון','الوزن وحامل السقف','Weight and roof racks'], fu_tip_loadP:['הוציאו מהבגאז׳ מה שלא צריך, והורידו גגון כשלא משתמשים בו.','أخرجوا من الصندوق ما لا تحتاجونه وأزيلوا حامل السقف عند عدم استعماله.','Clear out the boot and take off the roof rack when not in use.'],
+  fu_tip_idle:['לא להשאיר מנוע דולק','لا تتركوا المحرك يعمل','Don\'t idle'], fu_tip_idleP:['בעמידה ארוכה כבו את המנוע.','عند التوقف الطويل أطفئوا المحرك.','Switch the engine off during long stops.'],
+  fu_tip_service:['טיפולים בזמן','صيانة في موعدها','Regular servicing'], fu_tip_serviceP:['מסנן אוויר, שמן ומצתים תקינים שומרים על צריכה נמוכה.','فلتر الهواء والزيت والشمعات السليمة تحافظ على استهلاك منخفض.','A clean air filter, fresh oil and good spark plugs keep consumption low.'],
+  fu_cm_station:['תחנה זולה יותר','محطة أرخص','Cheaper station'], fu_cm_cars:['שני רכבים','سيارتان','Two cars'], fu_cm_oct:['98 מול 95','98 مقابل 95','98 vs 95'],
+  fu_csP2:['מחיר בתחנה הזולה','السعر في المحطة الأرخص','Price at the cheaper station'], fu_csL:['ליטרים לתדלוק','لترات للتعبئة','Litres to fill'], fu_csKm:['ק״מ נוספים (הלוך ושוב)','كم إضافية (ذهابًا وإيابًا)','Extra km (there and back)'],
+  fu_csWorth:['שווה לנסוע – חיסכון נטו','تستحق الرحلة – توفير صافٍ','Worth the drive – net saving'], fu_csNot:['לא שווה – הפסד נטו','لا تستحق – خسارة صافية','Not worth it – net loss'], fu_csSub:['חיסכון במחיר {g} פחות דלק לדרך {c}','توفير في السعر {g} ناقص وقود الطريق {c}','Price saving {g} minus fuel for the detour {c}'],
+  fu_csYes:['כדאי – עד {km} ק״מ נוספים זה עדיין משתלם','يستحق – حتى {km} كم إضافية ما زال مجديًا','Worth it – up to {km} extra km still pays'], fu_csNo:['לא כדאי – משתלם רק עד {km} ק״מ נוספים','لا يستحق – مجدٍ فقط حتى {km} كم إضافية','Not worth it – it only pays up to {km} extra km'], fu_csP:['החישוב כולל רק דלק, לא זמן ובלאי.','الحساب يشمل الوقود فقط، لا الوقت والاهتلاك.','Only fuel is counted, not time or wear.'],
+  fu_ccA:['הרכב שלי','سيارتي','My car'], fu_ccB:['רכב אחר','سيارة أخرى','Other car'], fu_ccKm:['ק״מ בשנה','كم في السنة','km a year'], fu_ccY:['שנים','سنوات','Years'],
+  fu_ccDiff:['הפרש הדלק לאורך התקופה','فرق الوقود على طول الفترة','Fuel difference over the period'], fu_ccSub:['{y} שנים · {m} בחודש','{y} سنوات · {m} شهريًا','{y} years · {m} a month'], fu_ccCostA:['הרכב שלי','سيارتي','My car'], fu_ccCostB:['רכב אחר','سيارة أخرى','Other car'], fu_ccBsaves:['הרכב האחר חוסך','السيارة الأخرى توفّر','The other car saves'], fu_ccAsaves:['הרכב שלי חוסך','سيارتي توفّر','My car saves'],
+  fu_coP98:['מחיר בנזין 98','سعر بنزين 98','Petrol 98 price'], fu_coL:['ליטרים בשנה','لترات في السنة','Litres a year'], fu_coExtra:['תוספת לשנה על 98','زيادة سنوية على 98','Extra a year for 98'], fu_coExtraS:['{m} יותר לכל ליטר','{m} أكثر لكل لتر','{m} more per litre'],
+  fu_coOctH:['צריך 98 רק אם היצרן דורש','98 مطلوب فقط إذا طلب الصانع','You need 98 only if the maker requires it'], fu_coOctP:['בדקו בספר הרכב או במכסה הדלק. אם כתוב 95 – 98 לא יחסוך דלק ולא ישפר את המנוע.','افحصوا دليل السيارة أو غطاء الوقود. إذا كُتب 95 – فالـ98 لن يوفّر وقودًا ولن يحسّن المحرك.','Check the manual or the fuel cap. If it says 95, 98 won\'t save fuel or help the engine.'],
+  fu_cvCons:['צריכת דלק','استهلاك الوقود','Fuel consumption'], fu_cvVal:['ערך','القيمة','Value'], fu_cvVol:['ליטרים וגלונים','لترات وغالونات','Litres and gallons'], fu_cvL:['ליטרים','لترات','Litres'], fu_cvG:['גלונים','غالونات','Gallons'],
+  fu_c1:['איך להוריד את ההוצאה על דלק?','كيف أخفض مصروف الوقود؟','How can I cut my fuel bill?'], fu_c2:['האם הצריכה של הרכב שלי סבירה?','هل استهلاك سيارتي معقول؟','Is my car\'s consumption reasonable?'], fu_c3:['כדאי לי לעבור לרכב חשמלי?','هل يستحق أن أنتقل لسيارة كهربائية؟','Should I switch to an electric car?'],
+  lg_p_dev11:['מחשבון דלק: יומן התדלוקים (תאריך, מד ק״מ, ליטרים וסכום) והנתונים של הרכב נשמרים רק במכשיר. אפשר לייצא את היומן לקובץ או למחוק אותו.','حاسبة الوقود: سجل التعبئة (التاريخ، العداد، اللترات والمبلغ) وبيانات السيارة تُحفظ على الجهاز فقط. يمكن تصدير السجل إلى ملف أو حذفه.','Fuel calculator: the fill-up log (date, odometer, litres and amount) and your car details are kept on the device only. You can export the log to a file or delete it.'],
+  lg_h_p1910j:['19.10.2026 – נוסף הסבר על יומן התדלוקים במחשבון הדלק.','19.10.2026 – أُضيف شرح عن سجل التعبئة في حاسبة الوقود.','19.10.2026 – added an explanation of the fuel calculator\'s fill-up log.'],
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -7515,7 +7603,7 @@ const GROUPS = [
   ['g_realty',  ['mortgage','mortcmp','mortcap','refi','rentbuy']],
   ['g_invest',  ['compound','savegoal','yield','dividends','avgcost','networth','kidsave','mmf','invfees','childallow']],
   ['g_retire',  ['retire','pensfix','oldage','pencmp','mgmtfees','hishtalmut','fire','freedom']],
-  ['g_budget',  ['expenses','bankacc','smartsplit','split','unitprice','discount','appliance','evfuel','breakeven']],
+  ['g_budget',  ['expenses','bankacc','smartsplit','split','unitprice','discount','appliance','fuelcalc','evfuel','breakeven']],
   ['g_compare', ['insurance','cellcmp','phonecmp']],
   ['g_fxtools', ['mathx','docscan','convert','inflation','cpilink','percent']]
 ];
@@ -7548,7 +7636,7 @@ function devLang(){
   return 'en';                                              // any other language: English
 }
 function langAuto(){ try { return !LS.getItem('fin-lang'); } catch (e) { return true; } }
-const SET_DEF = {photoAccess:'ask', slip:{}, slips:[], tf:{}, bk:{}, axZoom:100, axLinks:'0', axSpace:'0', axFocus:'0', axGray:'0', axCursor:'0', axBtn:'1', ixShow:'', ixCustom:[], tvOn:'0', sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', myGross:'', myKids:'', myBYear:'', myEq:'', persona:'all', shareLang:'ui', words:'1', enTerms:'0', plain:'0', tts:'1', voiceIn:'0', dfmt:'auto', wkStart:'auto', trFix:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {photoAccess:'ask', slip:{}, slips:[], tf:{}, bk:{}, fu:{}, axZoom:100, axLinks:'0', axSpace:'0', axFocus:'0', axGray:'0', axCursor:'0', axBtn:'1', ixShow:'', ixCustom:[], tvOn:'0', sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', myGross:'', myKids:'', myBYear:'', myEq:'', persona:'all', shareLang:'ui', words:'1', enTerms:'0', plain:'0', tts:'1', voiceIn:'0', dfmt:'auto', wkStart:'auto', trFix:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -9580,6 +9668,11 @@ function bkPanelHTML(){
   return `<section class="panel panel-flat tool-panel" id="panel-bankacc" role="tabpanel" aria-labelledby="tab-bankacc" hidden><div id="bk_root"></div></section>`;
 }
 Object.assign(ICON, {bankacc: ic('<path d="M3 10l9-6 9 6"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8"/><path d="M3 20h18"/><path d="M16 4.5l2.5 1.5"/>')});
+/* ================= fuel calculator: the panel shell (the module is fu.js) ================= */
+function fuPanelHTML(){
+  return `<section class="panel panel-flat tool-panel" id="panel-fuelcalc" role="tabpanel" aria-labelledby="tab-fuelcalc" hidden><div id="fu_root"></div></section>`;
+}
+Object.assign(ICON, {fuelcalc: ic('<path d="M4 20V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v15"/><path d="M3 20h12"/><path d="M6.5 8h5"/><path d="M14 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/>')});
 
 const navEl = $('#nav'), panelsEl = $('#panels');
 function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
@@ -9588,7 +9681,7 @@ function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
   }</div>`
 ).join(''); }
 renderNav();
-panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'saved' ? savedPanelHTML() : id === 'markets' ? marketsPanelHTML() : id === 'clients' ? clientsPanelHTML() : id === 'cv' ? cvPanelHTML() : id === 'mathx' ? mxPanelHTML() : id === 'docscan' ? dsPanelHTML() : id === 'taxfree' ? tfPanelHTML() : id === 'bankacc' ? bkPanelHTML() : panelHTML(id)).join('');
+panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'saved' ? savedPanelHTML() : id === 'markets' ? marketsPanelHTML() : id === 'clients' ? clientsPanelHTML() : id === 'cv' ? cvPanelHTML() : id === 'mathx' ? mxPanelHTML() : id === 'docscan' ? dsPanelHTML() : id === 'taxfree' ? tfPanelHTML() : id === 'bankacc' ? bkPanelHTML() : id === 'fuelcalc' ? fuPanelHTML() : panelHTML(id)).join('');
 
 /* ================= language ================= */
 function updateHead(){
@@ -13967,8 +14060,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.16", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.190451';
+var CHANGELOG = [{"v": "13.17", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.192721';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -25889,7 +25982,7 @@ const LG_DOCS = {
   ], extra: () => `<p><a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? SITE_BASE : ''}lib/nerdamer.LICENSE.txt" target="_blank" rel="noopener">${lgE(t('lg_c_licLink'))}</a></p><p>${lgE(t('lg_c_licLinks'))} ${[['pdfjs/LICENSE.txt', 'pdf.js'], ['pdfjs/wasm/LICENSE_JBIG2', 'JBIG2'], ['pdfjs/wasm/LICENSE_OPENJPEG', 'OpenJPEG'], ['pdfjs/wasm/LICENSE_QCMS', 'QCMS'], ['pdf-lib.LICENSE.txt', 'pdf-lib'], ['jszip.LICENSE.txt', 'JSZip']].map(([f, n]) => `<a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? SITE_BASE : ''}lib/${f}" target="_blank" rel="noopener">${n}</a>`).join(' · ')}</p>`},
   priv: {t: 'lg_privT', ic: '🔒', parts: [
     ['', ['lg_p_intro']],
-    ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3', 'lg_p_dev4', 'lg_p_dev5', 'lg_p_dev6', 'lg_p_dev7', 'lg_p_dev8', 'lg_p_dev9', 'lg_p_dev10']],
+    ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3', 'lg_p_dev4', 'lg_p_dev5', 'lg_p_dev6', 'lg_p_dev7', 'lg_p_dev8', 'lg_p_dev9', 'lg_p_dev10', 'lg_p_dev11']],
     ['lg_p_usH', ['lg_p_us1', 'lg_p_us2', 'lg_p_us3', 'lg_p_us4'], true],
     ['lg_p_extH', ['lg_p_ext0', 'lg_p_ext1', 'lg_p_ext2', 'lg_p_ext3', 'lg_p_ext4', 'lg_p_ext5', 'lg_p_ext6'], true],
     ['lg_p_permH', ['lg_p_perm']],
@@ -25900,7 +25993,7 @@ const LG_DOCS = {
     ['lg_p_rightsH', ['lg_p_r1', 'lg_p_r2', 'lg_p_r3'], true],
     ['lg_p_chgH', ['lg_p_chg']],
     ['lg_contactH', ['lg_p_contact']],
-    ['lg_histH', ['lg_h_p1910i', 'lg_h_p1910h', 'lg_h_p1910g', 'lg_h_p1910f', 'lg_h_p1910e', 'lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_p1910j', 'lg_h_p1910i', 'lg_h_p1910h', 'lg_h_p1910g', 'lg_h_p1910f', 'lg_h_p1910e', 'lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
   ]}
 };
 const lgE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
@@ -26383,7 +26476,7 @@ function dsFilter(c, f){
   /* contrast: the darkest 0.5% becomes black, the paper (or the brightest 0.5%) white – through a lookup table */
   const h2 = new Uint32Array(256); for (let i = 0; i < n * 4; i += 4) h2[(d[i] * 299 + d[i + 1] * 587 + d[i + 2] * 114) / 1000 | 0]++;
   let lo = 0, hi = 255, a2 = 0; for (let v = 0; v < 256; v++){ a2 += h2[v]; if (a2 > n * 0.005){ lo = v; break; } } a2 = 0; for (let v = 255; v >= 0; v--){ a2 += h2[v]; if (a2 > n * (flat ? 0.2 : 0.005)){ hi = v; break; } }
-  if (flat) hi = Math.min(hi, 235); const sp = Math.max(30, hi - lo), LUT = new Uint8ClampedArray(256); for (let v = 0; v < 256; v++) LUT[v] = (v - lo) * 255 / sp;
+  if (flat) hi = Math.min(hi, 235); lo = Math.min(lo, hi - 100); /* a nearly empty page stays white */ const sp = Math.max(30, hi - lo), LUT = new Uint8ClampedArray(256); for (let v = 0; v < 256; v++) LUT[v] = (v - lo) * 255 / sp;
   const gray = f === 'gray' || f === 'bw';
   for (let i = 0; i < n * 4; i += 4){ if (gray){ const g = LUT[(d[i] * 299 + d[i + 1] * 587 + d[i + 2] * 114) / 1000 | 0]; d[i] = d[i + 1] = d[i + 2] = g; } else { d[i] = LUT[d[i]]; d[i + 1] = LUT[d[i + 1]]; d[i + 2] = LUT[d[i + 2]]; } }
   /* sharpening (unsharp mask): the picture minus a slightly blurred copy, added back */
@@ -28989,6 +29082,202 @@ try { GS_SYN.docscan += ' סיבוב עמוד סידור עמודים בהירו
   dsCardStart = async function(){ if (DSC) DSC.recrop = null; return start4.apply(this, arguments); };
 }
 
+/* ---------- 13.17: a smarter scanner – all worked out on the phone, nothing is sent ----------
+   • straightens crooked text by itself (and a button per page)
+   • finds blank pages and pages scanned twice, and removes them in one tap
+   • splits an open book (two pages in one photo) into two pages
+   • cleans the edges: shadows and fingers at the margins
+   • fits the PDF under a size limit (for sites that accept up to 1 MB, 2 MB…)
+   • suggests a file name from the recognised text */
+let D5_RAW = false;
+const d5Size = () => (DS_CARDS.find(c => c[0] === (DSC && DSC.type)) || [0, 0, 'free'])[2];
+function d5Gray(c, maxSide){
+  const k = Math.min(1, maxSide / Math.max(c.width, c.height)), w = Math.max(8, Math.round(c.width * k)), h = Math.max(8, Math.round(c.height * k));
+  const t0 = document.createElement('canvas'); t0.width = w; t0.height = h; const x = t0.getContext('2d'); x.drawImage(c, 0, 0, w, h);
+  const d = x.getImageData(0, 0, w, h).data, g = new Uint8Array(w * h); for (let i = 0; i < w * h; i++) g[i] = (d[i * 4] * 299 + d[i * 4 + 1] * 587 + d[i * 4 + 2] * 114) / 1000;
+  return {w, h, g, d};
+}
+
+/* ---- straightening: the angle at which the text lines line up best (projection profile) ---- */
+function d5SkewAngle(c){
+  const {w, h, g} = d5Gray(c, 1000); let sum = 0; for (let i = 0; i < g.length; i++) sum += g[i];
+  const mean = sum / g.length, th = Math.min(mean - 45, 150), mx = Math.round(w * 0.04), my = Math.round(h * 0.04), P = [];
+  for (let y = my; y < h - my; y++) for (let x = mx; x < w - mx; x++){ const v = g[y * w + x]; if (v < th && g[y * w + x - 1] >= th) P.push(x, y); }   // left edges of ink: sharper peaks
+  if (P.length < 600) return 0;
+  const st = Math.max(1, Math.floor(P.length / 2 / 40000)) * 2;
+  const score = a => { const tn = Math.tan(a * Math.PI / 180), off = Math.ceil(w * Math.abs(tn)) + 2, B = new Float32Array(h + 2 * off + 2);
+    for (let i = 0; i < P.length; i += st) B[Math.round(P[i + 1] - P[i] * tn) + off]++;
+    let s = 0; for (let i = 1; i < B.length; i++){ const d = B[i] - B[i - 1]; s += d * d; } return s; };
+  const s0 = score(0); let best = 0, bs = s0;
+  for (let a = -7; a <= 7.001; a += 0.5){ const s = score(a); if (s > bs){ bs = s; best = a; } }
+  for (let a = best - 0.45; a <= best + 0.451; a += 0.05){ const s = score(a); if (s > bs){ bs = s; best = a; } }
+  return bs > s0 * 1.08 ? Math.round(best * 100) / 100 : 0;
+}
+function d5Paper(c){
+  const {g, d} = d5Gray(c, 64), idx = Array.from(g.keys()).sort((a, b) => g[b] - g[a]).slice(0, Math.max(1, Math.round(g.length * 0.3)));
+  let r = 0, gg = 0, b = 0; idx.forEach(i => { r += d[i * 4]; gg += d[i * 4 + 1]; b += d[i * 4 + 2]; }); const n = idx.length;
+  return `rgb(${Math.round(r / n)},${Math.round(gg / n)},${Math.round(b / n)})`;
+}
+function d5Straighten(p, a){
+  if (!a) return false; const s = p.base, W = s.width, H = s.height, th = -a * Math.PI / 180, cs = Math.cos(th), sn = Math.sin(th);
+  const c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d'); x.fillStyle = d5Paper(s); x.fillRect(0, 0, W, H);
+  x.imageSmoothingQuality = 'high'; x.translate(W / 2, H / 2); x.rotate(th); x.drawImage(s, -W / 2, -H / 2);
+  const mv = (cx, cy) => { const px = (cx - 0.5) * W, py = (cy - 0.5) * H; return [(px * cs - py * sn) / W + 0.5, (px * sn + py * cs) / H + 0.5]; };
+  p.red = (p.red || []).map(([rx, ry, rw, rh]) => { const [nx, ny] = mv(rx + rw / 2, ry + rh / 2); return [nx - rw / 2, ny - rh / 2, rw, rh]; });
+  p.sig = (p.sig || []).map(sg => { const hF = sg.w * sg.c.height / sg.c.width * W / H, [nx, ny] = mv(sg.x + sg.w / 2, sg.y + hF / 2); return Object.assign({}, sg, {x: nx - sg.w / 2, y: ny - hF / 2}); });
+  p.base = c; p._f = null; p._fk = null; p._d5 = null; p.skew = Math.round(((p.skew || 0) + a) * 100) / 100;
+  return true;
+}
+
+/* ---- blank pages and pages scanned twice ---- */
+function d5Info(p){
+  if (p._d5 && p._d5b === p.base) return p._d5;
+  const k = Math.min(1, 320 / Math.max(p.base.width, p.base.height)), s = document.createElement('canvas'); s.width = Math.max(8, Math.round(p.base.width * k)); s.height = Math.max(8, Math.round(p.base.height * k));
+  s.getContext('2d').drawImage(p.base, 0, 0, s.width, s.height);
+  /* ink = clearly darker than the paper around it (a blurred copy), so shadows and an uneven light don't count */
+  const bgc = document.createElement('canvas'); bgc.width = s.width; bgc.height = s.height; const bx = bgc.getContext('2d'); bx.filter = 'blur(10px)'; bx.drawImage(s, 0, 0); bx.filter = 'none';
+  const {w, h, g} = d5Gray(s, 320), B = d5Gray(bgc, 320).g, mx = Math.round(w * 0.06), my = Math.round(h * 0.06); let ink = 0, n = 0;
+  for (let y = my; y < h - my; y++) for (let x = mx; x < w - mx; x++){ n++; if (g[y * w + x] < B[y * w + x] - 40) ink++; }
+  /* a 40-pixel fingerprint, normalised – two pages match only when nearly every part looks the same */
+  const q = d5Gray(s, 40), m = q.g.reduce((a, v) => a + v, 0) / q.g.length, sd = Math.sqrt(q.g.reduce((a, v) => a + (v - m) * (v - m), 0) / q.g.length) || 1, hash = Float32Array.from(q.g, v => (v - m) / sd);
+  p._d5 = {blank: n ? ink / n < 0.0025 : false, hash, r: q.w / q.h}; p._d5b = p.base; return p._d5;
+}
+function d5Extra(){
+  const P = (DSC && DSC.pages) || [], I = P.map(d5Info), blank = [], dup = [];
+  I.forEach((a, i) => { if (a.blank){ blank.push(i); return; }
+    for (let j = 0; j < i; j++){ const b = I[j]; if (b.blank || dup.some(d => d[0] === j) || Math.abs(a.r - b.r) > 0.08) continue; if (a.hash.length !== b.hash.length) continue; let cr = 0; for (let k = 0; k < a.hash.length; k++) cr += a.hash[k] * b.hash[k]; if (cr / a.hash.length >= 0.95){ dup.push([i, j]); break; } } });
+  return {blank, dup};
+}
+
+/* ---- an open book: two pages in one photo ---- */
+function d5Split(i){
+  const p = DSC.pages[i]; if (!p) return; const s = p.base, W = s.width, H = s.height, {w, h, g} = d5Gray(s, 500);
+  let gx = Math.round(w / 2), lo = 1e9; for (let x = Math.round(w * 0.42); x <= Math.round(w * 0.58); x++){ let sm = 0; for (let y = 0; y < h; y++) sm += g[y * w + x]; if (sm < lo){ lo = sm; gx = x; } }
+  const cut = Math.round(gx / w * W), part = (x0, x1) => { const c = document.createElement('canvas'); c.width = x1 - x0; c.height = H; c.getContext('2d').drawImage(s, x0, 0, x1 - x0, H, 0, 0, x1 - x0, H); return {base: c, red: [], dpi: p.dpi, real: p.real, sharp: dsSharp(c)}; };
+  const L = part(0, cut), R = part(cut, W), rtl = (document.documentElement.dir || '') === 'rtl';
+  DSC.pages.splice(i, 1, ...(rtl ? [R, L] : [L, R]));
+}
+
+/* ---- clean edges, after the look and the brightness ---- */
+{
+  const f5 = dsFilter;
+  dsFilter = function(c, f){
+    const out = f5.apply(this, arguments); if (D5_RAW || !DSC || !DSC.edge) return out;
+    const x = out.getContext('2d'), W = out.width, H = out.height, m = Math.max(2, Math.round(Math.min(W, H) * 0.025));
+    x.fillStyle = f === 'orig' ? d5Paper(out) : '#fff'; x.fillRect(0, 0, W, m); x.fillRect(0, H - m, W, m); x.fillRect(0, 0, m, H); x.fillRect(W - m, 0, m, H);
+    return out;
+  };
+}
+
+/* ---- fit the PDF under a size limit ---- */
+function d5Scale(c, k){ if (k >= 0.999) return c; const d = document.createElement('canvas'); d.width = Math.max(1, Math.round(c.width * k)); d.height = Math.max(1, Math.round(c.height * k)); const x = d.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(c, 0, 0, d.width, d.height); return d; }
+{
+  const pdf5 = dsPdf;
+  dsPdf = async function(pages, qual){
+    const lim = DSC && +DSC.maxMB ? +DSC.maxMB * 1048576 : 0; let b = await pdf5.apply(this, arguments);
+    if (DSC) DSC._fit = null; if (!lim) return b;
+    if (b.size > lim){
+      fit: for (const k of [1, 0.85, 0.72, 0.6, 0.5, 0.4, 0.32, 0.25]){
+        const P = k === 1 ? pages : pages.map(pg => Object.assign({}, pg, {items: pg.items.map(it => Object.assign({}, it, {c: d5Scale(it.c, k)}))}));
+        for (const q of [0.8, 0.7, 0.6, 0.5, 0.42]){ if (q >= qual && k === 1) continue; b = await pdf5.call(this, P, Math.min(q, qual)); if (b.size <= lim) break fit; }
+      }
+    }
+    DSC._fit = {mb: b.size / 1048576, ok: b.size <= lim};
+    const st = $('#d5_fitSt'); if (st) st.textContent = t(DSC._fit.ok ? 'd5_fitOk' : 'd5_fitNo', {s: N(DSC._fit.mb, 2), m: DSC.maxMB});
+    return b;
+  };
+}
+
+/* ---- automatic straightening right after a page is cut (documents, not cards) ---- */
+{
+  const cut5 = dsCut;
+  dsCut = function(){
+    const before = new Set((DSC && DSC.pages) || []), r = cut5.apply(this, arguments);
+    if (!DSC || DSC.autoStr === false || !['a4', 'free'].includes(d5Size())) return r;
+    const np = DSC.pages.find(p => !before.has(p)); if (!np || np.skew != null) return r;
+    try { const a = d5SkewAngle(np.base); np.skew = 0; if (Math.abs(a) >= 0.3 && d5Straighten(np, a) && DSX.view === 'card'){ dscRender(); toast(t('d5_strOk', {a: N(Math.abs(a), 1)})); } } catch (e) {}
+    return r;
+  };
+}
+
+/* ---- a file name from the recognised text ---- */
+function d5NameIdea(){
+  const L = String((DSC && DSC.ocr) || '').split('\n').map(s => s.replace(/[\\/:*?"<>|_#=~^]+/g, ' ').replace(/\s+/g, ' ').trim()).filter(s => (s.match(/\p{L}/gu) || []).length >= 3);
+  const s = L.find(x => x.length >= 4 && x.length <= 50) || L[0] || ''; return s.length > 50 ? s.slice(0, 48).replace(/\s+\S*$/, '') : s;
+}
+
+/* ---- wiring into the scanned-pages screen ---- */
+{
+  const card5 = dsCardRender;
+  dsCardRender = function(root){
+    const r = card5.apply(this, arguments); if (!DSC || DSC.cur) return r; const E = d4E, X = d5Extra();
+    $$('#ds_root .ds-pg').forEach((fig, i) => { const p = DSC.pages[i], tl = fig.querySelector('.d4-tools'), cap = fig.querySelector('figcaption'); if (!p || !cap) return;
+      const land = p.base.width > p.base.height * 1.15;
+      if (tl && !tl.querySelector('[data-d5str]')) tl.insertAdjacentHTML('beforeend', `<button type="button" class="px-tb s" data-d5str="${i}" aria-label="${E(t('d5_str', {n: i + 1}))}" title="${E(t('d5_str', {n: i + 1}))}">📐</button>${land ? `<button type="button" class="px-tb s" data-d5split="${i}" aria-label="${E(t('d5_split', {n: i + 1}))}" title="${E(t('d5_split', {n: i + 1}))}">📖</button>` : ''}`);
+      const d = X.dup.find(z => z[0] === i), tag = X.blank.includes(i) ? '⚪ ' + t('d5_blankT') : d ? '👯 ' + t('d5_dupT', {n: d[1] + 1}) : p.skew ? '📐 ' + t('d5_strT', {a: N(Math.abs(p.skew), 1)}) : '';
+      if (tag && !cap.querySelector('.d5-tag')) cap.insertAdjacentHTML('beforeend', `<span class="d5-tag${p.skew && !d && !X.blank.includes(i) ? ' ok' : ''}">${E(tag)}</span>`); });
+    const pg = root.querySelector('.ds-pages'), n = X.blank.length + X.dup.length;
+    if (pg && n && !root.querySelector('.d5-ban')) pg.insertAdjacentHTML('beforebegin', `<div class="ds-warn d5-ban" role="status"><span aria-hidden="true">🧹</span><div><p>${E(t('d5_found', {b: X.blank.length, d: X.dup.length}))}</p><button type="button" class="btn" id="d5_clean">${E(t('d5_clean', {n}))}</button></div></div>`);
+    const adj = root.querySelector('.d4-adj');
+    if (adj && !root.querySelector('#d5_edge')) adj.insertAdjacentHTML('afterend', `<label class="prn-ck d5-ck"><input type="checkbox" id="d5_edge"${DSC.edge ? ' checked' : ''}> ${E(t('d5_edge'))}</label><label class="prn-ck d5-ck"><input type="checkbox" id="d5_auto"${DSC.autoStr !== false ? ' checked' : ''}> ${E(t('d5_auto'))}</label>`);
+    const q = $('#ds_q'), qf = q && q.closest('.field');
+    if (qf && !root.querySelector('#d5_max')) qf.insertAdjacentHTML('afterend', `<div class="field cv-f"><label for="d5_max">${E(t('d5_max'))}</label><select id="d5_max">${[0, 0.5, 1, 2, 5, 10].map(v => `<option value="${v}"${+(DSC.maxMB || 0) === v ? ' selected' : ''}>${E(v ? t('d5_mb', {m: v}) : t('d5_noMax'))}</option>`).join('')}</select></div><p class="fine" id="d5_fitSt" aria-live="polite">${DSC._fit ? E(t(DSC._fit.ok ? 'd5_fitOk' : 'd5_fitNo', {s: N(DSC._fit.mb, 2), m: DSC.maxMB})) : DSC.maxMB ? E(t('d5_maxH')) : ''}</p>`);
+    const oc = $('#ds_ocrcopy'), idea = d5NameIdea();
+    if (oc && idea && !root.querySelector('#d5_name') && String(DSC.name || '').trim() !== idea) oc.closest('.btnrow').insertAdjacentHTML('afterend', `<div class="btnrow"><button type="button" class="mv" id="d5_name">✍️ ${E(t('d5_name', {s: idea}))}</button></div>`);
+    return r;
+  };
+}
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest || !t0.closest('#ds_root') || !DSC) return; let b;
+  if ((b = t0.closest('[data-d5str]'))){ const i = +b.dataset.d5str, p = DSC.pages[i]; if (!p) return; b.disabled = true;
+    setTimeout(() => { const a = d5SkewAngle(p.base); if (Math.abs(a) >= 0.1 && d5Straighten(p, a)) toast(t('d5_strOk', {a: N(Math.abs(a), 1)})); else toast(t('d5_strNo')); dscRender(); const n = $(`[data-d5str="${i}"]`); if (n) n.focus(); }, 20); return; }
+  if ((b = t0.closest('[data-d5split]'))){ const i = +b.dataset.d5split; b.disabled = true; setTimeout(() => { d5Split(i); dscRender(); toast(t('d5_splitOk')); }, 20); return; }
+  if (t0.closest('#d5_clean')){ const X = d5Extra(), rm = new Set([...X.blank, ...X.dup.map(d => d[0])]); if (rm.size >= DSC.pages.length) return; DSC.pages = DSC.pages.filter((_, i) => !rm.has(i)); dscRender(); toast(t('d5_cleaned', {n: rm.size})); return; }
+  if (t0.closest('#d5_name')){ DSC.name = d5NameIdea().slice(0, 60); toast(t('d5_named', {s: DSC.name})); dscRender(); }
+});
+document.addEventListener('change', e => {
+  const el = e.target; if (!el || !DSC || !el.closest || !el.closest('#ds_root')) return;
+  if (el.id === 'd5_edge'){ DSC.edge = el.checked; DSC.pages.forEach(p => { p._f = null; p._fk = null; }); dsPagesDraw(); }
+  else if (el.id === 'd5_auto') DSC.autoStr = el.checked;
+  else if (el.id === 'd5_max'){ DSC.maxMB = +el.value; DSC._fit = null; const st = $('#d5_fitSt'); if (st) st.textContent = DSC.maxMB ? t('d5_maxH') : ''; }
+});
+try { GS_SYN.docscan += ' יישור אוטומטי עמוד ריק כפול ספר פתוח פיצול גודל קובץ דחיסה straighten deskew blank duplicate book split file size compress تقويم صفحة فارغة مكررة كتاب تقسيم حجم الملف ضغط'; } catch (e) {}
+
+/* ---- details found in the recognised text: phone numbers, e-mails, links, dates and amounts – each with an action ---- */
+function d5Found(){
+  const s = String((DSC && DSC.ocr) || ''); if (!s.trim()) return [];
+  const out = [], seen = new Set(), add = (k, v, show) => { const key = k + '|' + v; if (seen.has(key) || out.length >= 14) return; seen.add(key); out.push({k, v, show: show || v}); };
+  (s.match(/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g) || []).forEach(m => add('mail', m));
+  (s.match(/\bhttps?:\/\/[^\s<>"']+|\bwww\.[^\s<>"']+/gi) || []).forEach(m => add('link', m.replace(/[.,;:)]+$/, '')));
+  (s.match(/(?:\+972[-\s]?|\b0)(?:[23489]|5\d|7\d)[-\s]?\d{3}[-\s]?\d{4}\b|\*\d{4}\b|\b1[-\s]?[78]00[-\s]?\d{2,3}[-\s]?\d{3,4}\b/g) || []).forEach(m => add('tel', m.replace(/[\s-]/g, ''), m.trim()));
+  (s.match(/\b(\d{1,2})[./-](\d{1,2})[./-](\d{4}|\d{2})\b/g) || []).forEach(m => { const [d, mo, y0] = m.split(/[./-]/).map(Number), y = y0 < 100 ? 2000 + y0 : y0; if (d >= 1 && d <= 31 && mo >= 1 && mo <= 12 && y >= 2000 && y <= 2100) add('date', `${y}-${String(mo).padStart(2, '0')}-${String(d).padStart(2, '0')}`, m); });
+  (s.match(/(?:₪\s?\d[\d,]*(?:\.\d{1,2})?|\d[\d,]*(?:\.\d{1,2})?\s?(?:₪|ש["״]ח|NIS|ILS))/g) || []).forEach(m => add('sum', m.replace(/[^\d.]/g, ''), m.trim()));
+  return out;
+}
+function d5FoundHTML(){
+  const F = d5Found(); if (!F.length) return ''; const E = d4E, ic = {mail: '✉️', link: '🔗', tel: '📞', date: '📅', sum: '💰'};
+  return `<div class="d5-found"><h4 class="ds-q">🔎 ${E(t('d5_foundH'))}</h4><p class="fine">${E(t('d5_foundP'))}</p><div class="ds-chips">${F.map((f, i) => f.k === 'tel' ? `<a class="ds-chip" href="tel:${E(f.v)}">${ic.tel} <span dir="ltr">${E(f.show)}</span></a>`
+    : f.k === 'mail' ? `<a class="ds-chip" href="mailto:${E(f.v)}">${ic.mail} <span dir="ltr">${E(f.show)}</span></a>`
+    : f.k === 'link' ? `<a class="ds-chip" href="${E(/^https?:/i.test(f.v) ? f.v : 'https://' + f.v)}" target="_blank" rel="noopener noreferrer">${ic.link} <span dir="ltr">${E(f.show.slice(0, 40))}</span></a>`
+    : `<button type="button" class="ds-chip" data-d5f="${i}" aria-label="${E(t(f.k === 'date' ? 'd5_fDate' : 'd5_fSum', {v: f.show}))}">${ic[f.k]} <span dir="ltr">${E(f.show)}</span></button>`).join('')}</div></div>`;
+}
+{
+  const card5b = dsCardRender;
+  dsCardRender = function(root){
+    const r = card5b.apply(this, arguments); if (!DSC || DSC.cur) return r;
+    const oc = $('#ds_ocrcopy'); if (oc && !root.querySelector('.d5-found')){ const h = d5FoundHTML(), row = oc.closest('.btnrow'); if (h && row) row.insertAdjacentHTML('afterend', h); }
+    return r;
+  };
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('#ds_root [data-d5f]'); if (!b || !DSC) return; const f = d5Found()[+b.dataset.d5f]; if (!f) return;
+  if (f.k === 'sum'){ copyText(f.v); toast(t('st_copied')); return; }
+  /* a date: a reminder in the phone's calendar, on that day */
+  const d = f.v.replace(/-/g, ''), name = (String(DSC.name || '').trim() || t('ds_c_' + DSC.type)).replace(/[\;,\n]/g, ' '), now = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+  const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//fincalc//docscan//EN', 'BEGIN:VEVENT', 'UID:' + Date.now() + '@fincalc', 'DTSTAMP:' + now, 'DTSTART;VALUE=DATE:' + d, 'SUMMARY:' + name, 'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + name, 'TRIGGER:-P1D', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+  fileSave(new Blob([ics], {type: 'text/calendar'}), (name + ' ' + f.v).replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim() + '.ics', 'text/calendar').then(r => toast(t(r === 'saved' ? 'd5_fCal' : r === 'declined' ? 'pdf_declined' : 'pdf_fail'))).catch(() => toast(t('pdf_fail')));
+});
+
 /* ---------- 13.5: Tax Free — VAT refund on shopping abroad (and for tourists shopping in Israel) ----------
    Rules change from time to time: the minimums and rates here were checked in October 2026 and are shown as a guide,
    with a note to confirm in the shop. Nothing is sent anywhere; purchases are kept on this device. */
@@ -29544,6 +29833,243 @@ try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('bankacc'); if (Array.isArray
   const actBk = activate; activate = function(id){ const r = actBk.apply(this, arguments); if (id === 'bankacc') bkRender(); return r; };
   const alBk = applyLang; applyLang = function(){ const r = alBk.apply(this, arguments); try { if (tab === 'bankacc') bkRender(); } catch (e) {} return r; };
   try { if (tab === 'bankacc') bkRender(); } catch (e) {}
+}
+
+/* ---------- 13.17: fuel calculator – by litres, with a fill-up log ----------
+   Trip cost, filling the tank, a log of fill-ups (real consumption), monthly and yearly cost,
+   comparisons (two cars, a cheaper station, 98 vs 95) and unit conversions. Everything stays on the phone. */
+const fuE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+const fuN = v => { const x = parseFloat(String(v == null ? '' : v).replace(/[,\s₪]/g, '')); return isFinite(x) ? x : NaN; };
+const fuM = (x, d) => M(isFinite(x) ? x : 0, d == null ? 2 : d, 'ILS');
+const FU_FULL = 0.26;                    // full-service surcharge per litre (Ministry of Energy, October 2026)
+const FU_TABS = [['trip', '🛣️'], ['fill', '⛽'], ['log', '📒'], ['cost', '📅'], ['cmp', '⚖️'], ['conv', '🔁']];
+var FUT = 'trip';
+function fuD(){ const d = SET.fu && typeof SET.fu === 'object' ? SET.fu : (SET.fu = {}); if (!d.t || typeof d.t !== 'object') d.t = {}; if (!Array.isArray(d.log)) d.log = []; if (!d.kind) d.kind = '95'; if (!d.unit) d.unit = 'kpl'; return d; }
+const fu95 = () => typeof IL26 === 'object' && isFinite(+IL26.fuel95) ? +IL26.fuel95 : 8;
+/* the price per litre: what was typed, or the regulated 95 price (+ full service) */
+function fuPrice(){ const d = fuD(), p = fuN(d.price); return isFinite(p) && p > 0 ? p : fu95() + (d.full ? FU_FULL : 0); }
+/* consumption in km per litre, whatever unit it was typed in */
+const fuKpl = (v, u) => { const x = fuN(v); return !(x > 0) ? NaN : u === 'l100' ? 100 / x : x; };
+function fuCons(){ const d = fuD(), k = fuKpl(d.cons, d.unit); if (isFinite(k)) return k; const L = fuLogStats(); return L && isFinite(L.kpl) ? L.kpl : 14; }
+const fuConsTxt = k => isFinite(k) && k > 0 ? t('fu_kplV', {v: N(k, 1)}) + ' · ' + t('fu_l100V', {v: N(100 / k, 1)}) : '—';
+const fuTv = (id, def) => { const v = fuN(fuD().t[id]); return isFinite(v) ? v : def; };
+const fuIn = (id, lab, ph, unit, extra) => `<label class="bk-f"><span>${fuE(lab)}${unit ? ' (' + fuE(unit) + ')' : ''}</span><input type="text" inputmode="decimal" dir="ltr" id="${id}" data-fut="1" value="${fuE(fuD().t[id] == null ? '' : fuD().t[id])}" placeholder="${fuE(ph == null ? '' : ph)}"${extra || ''}></label>`;
+const fuRow = (a, b, key) => `<tr${key ? ' class="key"' : ''}><th scope="row">${fuE(a)}</th><td dir="auto">${fuE(b)}</td></tr>`;
+const fuHero = (lab, val, sub) => `<div class="bk-hero"><span>${fuE(lab)}</span><b dir="auto">${fuE(val)}</b>${sub ? `<small>${fuE(sub)}</small>` : ''}</div>`;
+const fuTip = (ic, h, p, k) => `<li class="bk-a${k ? ' bk-' + k : ''}"><span class="bk-ic" aria-hidden="true">${ic}</span><div><b>${fuE(h)}</b>${p ? `<p>${fuE(p)}</p>` : ''}</div></li>`;
+
+/* the car: fuel type, service, price and consumption – shared by all the tabs */
+function fuCarHTML(){
+  const d = fuD(), E = fuE, reg = d.kind === '95';
+  return `<fieldset class="bk-acc fu-car"><legend>🚗 ${E(t('fu_car'))}</legend>
+    <div class="bk-row"><select id="fu_kind" aria-label="${E(t('fu_kind'))}">${['95', '98', 'diesel'].map(k => `<option value="${k}"${d.kind === k ? ' selected' : ''}>${E(t('fu_k_' + k))}</option>`).join('')}</select>
+    <select id="fu_full" aria-label="${E(t('fu_service'))}"><option value="0"${d.full ? '' : ' selected'}>${E(t('fu_self'))}</option><option value="1"${d.full ? ' selected' : ''}>${E(t('fu_fullS', {m: fuM(FU_FULL)}))}</option></select></div>
+    <div class="bk-grid"><label class="bk-f"><span>${E(t('fu_price'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" id="fu_price" value="${E(d.price == null ? '' : d.price)}" placeholder="${E(N(fu95() + (d.full ? FU_FULL : 0), 2))}"></label>
+    <label class="bk-f fu-wide"><span>${E(t('fu_cons'))}</span><span class="fu-cu"><input type="text" inputmode="decimal" dir="ltr" id="fu_cons" value="${E(d.cons == null ? '' : d.cons)}" placeholder="${E(d.unit === 'l100' ? '7' : '14')}"><select id="fu_unit" aria-label="${E(t('fu_unit'))}"><option value="kpl"${d.unit === 'kpl' ? ' selected' : ''}>${E(t('fu_u_kpl'))}</option><option value="l100"${d.unit === 'l100' ? ' selected' : ''}>${E(t('fu_u_l100'))}</option></select></span></label></div>
+    <p class="fine" id="fu_carNote">${E(reg ? t('fu_regNote', {m: fuM(fu95())}) : t('fu_freeNote'))}${fuLogStats() && !isFinite(fuKpl(d.cons, d.unit)) ? ' ' + E(t('fu_fromLog')) : ''}</p></fieldset>`;
+}
+function fuRender(){
+  const root = $('#fu_root'); if (!root) return; const E = fuE;
+  root.innerHTML = `<p class="fine">${E(t('fu_intro'))}</p>
+    <div class="ds-chips bk-tabs" role="tablist" aria-label="${E(t('tab_fuelcalc'))}">${FU_TABS.map(([k, ic]) => `<button type="button" role="tab" class="ds-chip${FUT === k ? ' on' : ''}" aria-selected="${FUT === k}" data-futab="${k}">${ic} ${E(t('fu_tab_' + k))}</button>`).join('')}</div>
+    ${FUT === 'conv' ? '' : fuCarHTML()}<div id="fu_view"></div>
+    <p class="fine sl-priv">🔒 ${E(t('fu_priv'))}</p>`;
+  fuView();
+}
+function fuView(){
+  const v = $('#fu_view'); if (!v) return;
+  ({trip: fuTrip, fill: fuFill, log: fuLog, cost: fuCost, cmp: fuCmp, conv: fuConv})[FUT](v);
+}
+function fuOut(){ const f = ({trip: fuTripOut, fill: fuFillOut, log: fuLogOut, cost: fuCostOut, cmp: fuCmpOut, conv: fuConvOut})[FUT]; if (f) f(); }
+
+/* ---- 1) a trip ---- */
+function fuTrip(v){
+  const E = fuE, d = fuD();
+  v.innerHTML = `<div class="bk-grid">${fuIn('tr_km', t('fu_trKm'), '120', 'km')}${fuIn('tr_ppl', t('fu_trPpl'), '1')}${fuIn('tr_toll', t('fu_trToll'), '0', '₪')}${fuIn('tr_park', t('fu_trPark'), '0', '₪')}</div>
+    <label class="prn-ck"><input type="checkbox" id="tr_rt" data-fuck="1"${d.t.tr_rt ? ' checked' : ''}> ${E(t('fu_trRt'))}</label>
+    <div id="fu_out" aria-live="polite"></div>`;
+  fuTripOut();
+}
+function fuTripOut(){
+  const box = $('#fu_out'); if (!box) return; const E = fuE, d = fuD(), km0 = Math.max(0, fuTv('tr_km', 0)), km = km0 * (d.t.tr_rt ? 2 : 1);
+  if (!km){ box.innerHTML = `<p class="fine bk-empty">${E(t('fu_fill'))}</p>`; return; }
+  const k = fuCons(), p = fuPrice(), L = km / k, fuel = L * p, extra = Math.max(0, fuTv('tr_toll', 0)) + Math.max(0, fuTv('tr_park', 0)), tot = fuel + extra, ppl = Math.max(1, Math.round(fuTv('tr_ppl', 1)));
+  box.innerHTML = fuHero(t('fu_trCost'), fuM(tot, 0), t('fu_trSub', {l: N(L, 1), km: N(km, 0)}))
+    + `<table class="bk-plan fu-t"><tbody>${fuRow(t('fu_liters'), N(L, 1) + ' L')}${fuRow(t('fu_fuelCost'), fuM(fuel))}${extra ? fuRow(t('fu_extra'), fuM(extra)) : ''}${fuRow(t('fu_perKm'), fuM(tot / km))}${ppl > 1 ? fuRow(t('fu_perPerson', {n: ppl}), fuM(tot / ppl), true) : ''}${fuRow(t('fu_consUsed'), fuConsTxt(k))}${fuRow(t('fu_priceUsed'), fuM(p) + ' / L')}</tbody></table>`;
+}
+
+/* ---- 2) filling the tank ---- */
+function fuFill(v){
+  const E = fuE, d = fuD(), lv = d.t.fi_lv == null ? 25 : +d.t.fi_lv;
+  v.innerHTML = `<div class="bk-grid">${fuIn('fi_tank', t('fu_fiTank'), '50', 'L')}${fuIn('fi_bud', t('fu_fiBud'), '200', '₪')}</div>
+    <div class="field"><label for="fi_lv">${E(t('fu_fiLv'))} <b id="fi_lvv">${lv}%</b></label><input type="range" id="fi_lv" min="0" max="100" step="5" value="${lv}" class="fu-range"></div>
+    <div class="bk-grid">${fuIn('fi_lit', t('fu_fiLit'), '30', 'L')}</div>
+    <div id="fu_out" aria-live="polite"></div>`;
+  fuFillOut();
+}
+function fuFillOut(){
+  const box = $('#fu_out'); if (!box) return; const d = fuD(), k = fuCons(), p = fuPrice(), tank = Math.max(1, fuTv('fi_tank', 50)), lv = Math.min(100, Math.max(0, d.t.fi_lv == null ? 25 : +d.t.fi_lv));
+  const need = tank * (1 - lv / 100), bud = fuTv('fi_bud', NaN), lit = fuTv('fi_lit', NaN);
+  let h = fuHero(t('fu_fiToFull'), fuM(need * p, 0), t('fu_fiToFullS', {l: N(need, 1)}))
+    + `<table class="bk-plan fu-t"><tbody>${fuRow(t('fu_fiRangeNow'), N(tank * lv / 100 * k, 0) + ' km')}${fuRow(t('fu_fiRangeFull'), N(tank * k, 0) + ' km', true)}${fuRow(t('fu_fiTankCost'), fuM(tank * p, 0))}`;
+  if (bud > 0){ const bl = Math.min(bud / p, need); h += fuRow(t('fu_fiBudL', {m: fuM(bud, 0)}), N(bl, 1) + ' L · +' + N(bl * k, 0) + ' km', true) + (bud / p > need + 0.05 ? fuRow(t('fu_fiOver'), fuM(need * p, 0)) : ''); }
+  if (lit > 0) h += fuRow(t('fu_fiLitM', {l: N(lit, 1)}), fuM(lit * p) + ' · +' + N(lit * k, 0) + ' km');
+  box.innerHTML = h + '</tbody></table>';
+}
+
+/* ---- 3) the fill-up log: the real consumption, from one full tank to the next ---- */
+function fuLogStats(){
+  const L = fuD().log.filter(x => fuN(x.odo) > 0 && fuN(x.l) > 0).slice().sort((a, b) => fuN(a.odo) - fuN(b.odo)); if (L.length < 2) return null;
+  const fulls = L.map((x, i) => x.full ? i : -1).filter(i => i >= 0); let km = 0, lit = 0;
+  const seg = {}; for (let s = 0; s + 1 < fulls.length; s++){ const a = fulls[s], b = fulls[s + 1], dk = fuN(L[b].odo) - fuN(L[a].odo); let dl = 0; for (let j = a + 1; j <= b; j++) dl += fuN(L[j].l); if (dk > 0 && dl > 0){ km += dk; lit += dl; seg[L[b].id] = dk / dl; } }
+  const first = L[0], last = L[L.length - 1], dist = fuN(last.odo) - fuN(first.odo), money = L.slice(1).reduce((s, x) => s + fuLogSum(x), 0), litAll = L.slice(1).reduce((s, x) => s + fuN(x.l), 0);
+  const days = Math.max(1, (new Date(last.d) - new Date(first.d)) / 864e5);
+  return {kpl: lit > 0 ? km / lit : (dist > 0 && litAll > 0 ? dist / litAll : NaN), seg, perKm: dist > 0 ? money / dist : NaN, month: isFinite(days) && days >= 7 ? money / days * 30.4 : NaN, kmMonth: isFinite(days) && days >= 7 ? dist / days * 30.4 : NaN, dist, money, n: L.length, exact: lit > 0};
+}
+const fuLogSum = x => { const s = fuN(x.sum); if (s > 0) return s; const p = fuN(x.p); return p > 0 ? p * fuN(x.l) : fuN(x.l) * fuPrice(); };
+function fuLog(v){
+  const E = fuE, d = fuD(), today = new Date().toISOString().slice(0, 10), last = d.log.length ? d.log[d.log.length - 1] : null;
+  v.innerHTML = `<p class="fine">${E(t('fu_lgIntro'))}</p>
+    <fieldset class="bk-acc"><legend>➕ ${E(t('fu_lgAdd'))}</legend><div class="bk-grid">
+      <label class="bk-f"><span>${E(t('fu_lgDate'))}</span><input type="date" id="lg_d" value="${today}" max="${today}"></label>
+      <label class="bk-f"><span>${E(t('fu_lgOdo'))} (km)</span><input type="text" inputmode="numeric" dir="ltr" id="lg_odo" placeholder="${E(last ? String(Math.round(fuN(last.odo) + 500)) : '45000')}"></label>
+      <label class="bk-f"><span>${E(t('fu_lgL'))} (L)</span><input type="text" inputmode="decimal" dir="ltr" id="lg_l" placeholder="40"></label>
+      <label class="bk-f"><span>${E(t('fu_lgSum'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" id="lg_sum" placeholder="${E(N(40 * fuPrice(), 0))}"></label></div>
+      <label class="prn-ck"><input type="checkbox" id="lg_full" checked> ${E(t('fu_lgFull'))}</label>
+      <div class="btnrow"><button type="button" class="gold-btn" id="lg_add">＋ ${E(t('fu_lgSave'))}</button></div></fieldset>
+    <div id="fu_out" aria-live="polite"></div>`;
+  fuLogOut();
+}
+function fuLogOut(){
+  const box = $('#fu_out'); if (!box) return; const E = fuE, d = fuD(), S = fuLogStats();
+  if (!d.log.length){ box.innerHTML = `<p class="fine bk-empty">${E(t('fu_lgEmpty'))}</p>`; return; }
+  const L = d.log.slice().sort((a, b) => fuN(b.odo) - fuN(a.odo));
+  box.innerHTML = (S && isFinite(S.kpl) ? fuHero(t('fu_lgReal'), t('fu_kplV', {v: N(S.kpl, 1)}), t('fu_l100V', {v: N(100 / S.kpl, 1)}) + (S.exact ? '' : ' · ' + t('fu_lgApprox')))
+      + `<table class="bk-plan fu-t"><tbody>${isFinite(S.perKm) ? fuRow(t('fu_perKm'), fuM(S.perKm)) : ''}${isFinite(S.month) ? fuRow(t('fu_lgMonth'), fuM(S.month, 0), true) : ''}${isFinite(S.kmMonth) ? fuRow(t('fu_lgKmMonth'), N(S.kmMonth, 0) + ' km') : ''}${fuRow(t('fu_lgTotal', {n: S.n}), fuM(S.money, 0) + ' · ' + N(S.dist, 0) + ' km')}</tbody></table>
+      <div class="btnrow"><button type="button" class="btn" id="lg_use">✓ ${E(t('fu_lgUse'))}</button></div>`
+    : `<p class="fine">${E(t('fu_lgMore'))}</p>`)
+    + `<h3 class="ds-q">${E(t('fu_lgList'))}</h3><ul class="fu-log">${L.map(x => { const k = S && S.seg[x.id]; return `<li><div><b dir="ltr">${E(N(fuN(x.odo), 0))} km</b> · ${E(fuDate(x.d))}${x.full ? '' : ` · <span class="fine">${E(t('fu_lgPart'))}</span>`}<br><span dir="ltr">${E(N(fuN(x.l), 1))} L · ${E(fuM(fuLogSum(x)))}${fuN(x.l) > 0 ? ' · ' + E(fuM(fuLogSum(x) / fuN(x.l))) + '/L' : ''}</span>${k ? ` · <b>${E(t('fu_kplV', {v: N(k, 1)}))}</b>` : ''}</div><button type="button" class="lg-a" data-lgdel="${E(x.id)}" aria-label="${E(t('fu_lgDel', {d: fuDate(x.d)}))}">${E(t('cv_rm'))}</button></li>`; }).join('')}</ul>
+    <div class="btnrow"><button type="button" class="mv" id="lg_csv">⬇️ ${E(t('fu_lgCsv'))}</button><button type="button" class="mv" id="lg_clear">🗑️ ${E(t('fu_lgClear'))}</button></div>`;
+}
+const fuDate = s => { try { const [y, m, dd] = String(s).split('-'); return y && m && dd ? `${+dd}.${+m}.${y}` : String(s || ''); } catch (e) { return ''; } };
+
+/* ---- 4) a month and a year of driving ---- */
+function fuCost(v){
+  const S = fuLogStats(), km0 = S && isFinite(S.kmMonth) ? Math.round(S.kmMonth) : 1250;
+  v.innerHTML = `<div class="bk-grid">${fuIn('co_km', t('fu_coKm'), String(km0), 'km')}${fuIn('co_rise', t('fu_coRise'), '0.30', '₪')}</div><div id="fu_out" aria-live="polite"></div>`;
+  fuCostOut();
+}
+function fuCostOut(){
+  const box = $('#fu_out'); if (!box) return; const S = fuLogStats(), km = Math.max(0, fuTv('co_km', S && isFinite(S.kmMonth) ? S.kmMonth : 1250)), k = fuCons(), p = fuPrice(), rise = fuTv('co_rise', 0.3);
+  const Lm = km / k, m = Lm * p, y = m * 12, better = y - y / 1.1;
+  box.innerHTML = fuHero(t('fu_coMonth'), fuM(m, 0), t('fu_coSub', {y: fuM(y, 0), l: N(Lm, 0)}))
+    + `<table class="bk-plan fu-t"><tbody>${fuRow(t('fu_coLy'), N(Lm * 12, 0) + ' L')}${fuRow(t('fu_coKmY'), N(km * 12, 0) + ' km')}${fuRow(t('fu_perKm'), fuM(p / k))}${fuRow(t('fu_coRiseR', {m: fuM(rise)}), '+' + fuM(Lm * 12 * rise, 0) + ' / ' + t('fu_yr'), true)}${fuRow(t('fu_coAgora'), '+' + fuM(Lm * 12 * 0.1, 0) + ' / ' + t('fu_yr'))}</tbody></table>
+    <h3 class="ds-q">${fuE(t('fu_tipsH'))}</h3><ol class="bk-adv">${fuTip('💡', t('fu_coBetter', {y: fuM(better, 0)}), t('fu_coBetterP'), 'ok')}${['tire', 'speed', 'ac', 'load', 'idle', 'service'].map(x => fuTip({tire: '🛞', speed: '🐢', ac: '❄️', load: '🧳', idle: '⏱️', service: '🔧'}[x], t('fu_tip_' + x), t('fu_tip_' + x + 'P'))).join('')}</ol>`;
+}
+
+/* ---- 5) comparisons ---- */
+function fuCmp(v){
+  const E = fuE, d = fuD(), mode = d.t.cm_mode || 'station';
+  v.innerHTML = `<div class="ds-chips" role="radiogroup" aria-label="${E(t('fu_tab_cmp'))}">${['station', 'cars', 'oct'].map(m => `<button type="button" role="radio" class="ds-chip${m === mode ? ' on' : ''}" aria-checked="${m === mode}" data-fucm="${m}">${E(t('fu_cm_' + m))}</button>`).join('')}</div>
+    <div class="bk-grid">${mode === 'station' ? fuIn('cs_p2', t('fu_csP2'), N(Math.max(0, fuPrice() - 0.3), 2), '₪') + fuIn('cs_l', t('fu_csL'), '40', 'L') + fuIn('cs_km', t('fu_csKm'), '6', 'km')
+      : mode === 'cars' ? fuIn('cc_a', t('fu_ccA'), N(fuCons(), 1), t('fu_u_kpl')) + fuIn('cc_b', t('fu_ccB'), '20', t('fu_u_kpl')) + fuIn('cc_km', t('fu_ccKm'), '15000', 'km') + fuIn('cc_y', t('fu_ccY'), '5')
+      : fuIn('co_p98', t('fu_coP98'), N(fuPrice() + 0.6, 2), '₪') + fuIn('co_l', t('fu_coL'), '1500', 'L')}</div>
+    <div id="fu_out" aria-live="polite"></div>`;
+  fuCmpOut();
+}
+function fuCmpOut(){
+  const box = $('#fu_out'); if (!box) return; const d = fuD(), mode = d.t.cm_mode || 'station', p = fuPrice(), k = fuCons();
+  if (mode === 'station'){
+    const p2 = fuTv('cs_p2', Math.max(0, p - 0.3)), L = Math.max(0, fuTv('cs_l', 40)), km = Math.max(0, fuTv('cs_km', 6)), gain = (p - p2) * L, cost = km / k * p2, net = gain - cost;
+    box.innerHTML = fuHero(t(net > 0 ? 'fu_csWorth' : 'fu_csNot'), fuM(Math.abs(net)), t('fu_csSub', {g: fuM(gain), c: fuM(cost)}))
+      + `<ol class="bk-adv">${fuTip(net > 0 ? '✅' : '✋', t(net > 0 ? 'fu_csYes' : 'fu_csNo', {km: N(gain > 0 ? gain / (p2 / k) : 0, 1)}), t('fu_csP'), net > 0 ? 'ok' : 'warn')}</ol>`;
+  } else if (mode === 'cars'){
+    const a = Math.max(0.1, fuTv('cc_a', k)), b = Math.max(0.1, fuTv('cc_b', 20)), km = Math.max(0, fuTv('cc_km', 15000)), y = Math.max(1, fuTv('cc_y', 5)), ca = km / a * p, cb = km / b * p, df = ca - cb;
+    box.innerHTML = fuHero(t('fu_ccDiff'), fuM(Math.abs(df) * y, 0), t('fu_ccSub', {y: N(y, 0), m: fuM(Math.abs(df) / 12, 0)}))
+      + `<table class="bk-plan fu-t"><tbody>${fuRow(t('fu_ccCostA'), fuM(ca, 0) + ' / ' + t('fu_yr'))}${fuRow(t('fu_ccCostB'), fuM(cb, 0) + ' / ' + t('fu_yr'))}${fuRow(t(df >= 0 ? 'fu_ccBsaves' : 'fu_ccAsaves'), fuM(Math.abs(df), 0) + ' / ' + t('fu_yr'), true)}</tbody></table>`;
+  } else {
+    const p98 = fuTv('co_p98', p + 0.6), L = Math.max(0, fuTv('co_l', 1500)), extra = (p98 - p) * L;
+    box.innerHTML = fuHero(t('fu_coExtra'), fuM(extra, 0) + ' / ' + t('fu_yr'), t('fu_coExtraS', {m: fuM(p98 - p)})) + `<ol class="bk-adv">${fuTip('ℹ️', t('fu_coOctH'), t('fu_coOctP'))}</ol>`;
+  }
+}
+
+/* ---- 6) conversions ---- */
+const FU_CU = {kpl: [1, 'fu_u_kpl'], l100: [0, 'fu_u_l100'], mpgus: [2.35215, 'fu_u_mpgus'], mpguk: [2.82481, 'fu_u_mpguk']};
+const fuToKpl = (x, u) => !(x > 0) ? NaN : u === 'l100' ? 100 / x : x / FU_CU[u][0];
+function fuConv(v){
+  const E = fuE, d = fuD(), u = d.t.cv_u || 'kpl';
+  v.innerHTML = `<h3 class="ds-q">${E(t('fu_cvCons'))}</h3><div class="bk-grid">${fuIn('cv_v', t('fu_cvVal'), '15')}<label class="bk-f"><span>${E(t('fu_unit'))}</span><select id="cv_u" data-fusel="1">${Object.keys(FU_CU).map(k => `<option value="${k}"${k === u ? ' selected' : ''}>${E(t(FU_CU[k][1]))}</option>`).join('')}</select></label></div>
+    <div id="fu_out" aria-live="polite"></div>
+    <h3 class="ds-q">${E(t('fu_cvVol'))}</h3><div class="bk-grid">${fuIn('cv_l', t('fu_cvL'), '40', 'L')}${fuIn('cv_g', t('fu_cvG'), '', 'US gal')}</div><div id="fu_out2" aria-live="polite"></div>`;
+  fuConvOut();
+}
+function fuConvOut(){
+  const box = $('#fu_out'), b2 = $('#fu_out2'); if (!box) return; const d = fuD(), u = d.t.cv_u || 'kpl', k = fuToKpl(fuTv('cv_v', NaN), u);
+  box.innerHTML = isFinite(k) ? `<table class="bk-plan fu-t"><tbody>${Object.keys(FU_CU).filter(x => x !== u).map(x => fuRow(t(FU_CU[x][1]), N(x === 'l100' ? 100 / k : k * FU_CU[x][0], 2))).join('')}</tbody></table>` : '';
+  if (b2){ const L = fuTv('cv_l', NaN), G = fuTv('cv_g', NaN), rows = [];
+    if (L > 0) rows.push(fuRow(N(L, 1) + ' L', N(L / 3.78541, 2) + ' US gal · ' + N(L / 4.54609, 2) + ' UK gal'));
+    if (G > 0) rows.push(fuRow(N(G, 2) + ' US gal', N(G * 3.78541, 2) + ' L'));
+    b2.innerHTML = rows.length ? `<table class="bk-plan fu-t"><tbody>${rows.join('')}</tbody></table>` : ''; }
+}
+
+/* what the assistant sees on this screen */
+function fuAiText(){
+  const d = fuD(), S = fuLogStats();
+  return `Fuel calculator. Fuel: ${d.kind}${d.full ? ', full service' : ', self-service'}; price used ${N(fuPrice(), 2)} ILS/L (regulated 95 price now ${N(fu95(), 2)}); consumption used ${N(fuCons(), 1)} km/L.`
+    + (S ? ` Fill-up log: ${S.n} fill-ups, ${isFinite(S.kpl) ? 'real consumption ' + N(S.kpl, 1) + ' km/L, ' : ''}${isFinite(S.month) ? 'about ' + Math.round(S.month) + ' ILS a month, ' : ''}${isFinite(S.kmMonth) ? Math.round(S.kmMonth) + ' km a month' : ''}.` : '')
+    + ' Help with fuel costs and saving fuel in plain words. General information only.';
+}
+{ const aiStFu = aiScreenText; aiScreenText = function(id){ const s = aiStFu.apply(this, arguments); return id === 'fuelcalc' ? s + '\n' + fuAiText() : s; }; }
+{ const aiChFu = aiChipKeys; aiChipKeys = function(id){ return id === 'fuelcalc' ? ['fu_c1', 'fu_c2', 'fu_c3'] : aiChFu.apply(this, arguments); }; }
+
+/* events */
+let FU_T = null;
+document.addEventListener('input', e => {
+  const el = e.target; if (!el || !el.closest || !el.closest('#fu_root')) return; const d = fuD();
+  if (el.id === 'fu_price') d.price = el.value; else if (el.id === 'fu_cons') d.cons = el.value;
+  else if (el.id === 'fi_lv'){ d.t.fi_lv = +el.value; const o = $('#fi_lvv'); if (o) o.textContent = el.value + '%'; }
+  else if (el.dataset.fut) d.t[el.id] = el.value; else return;
+  clearTimeout(FU_T); FU_T = setTimeout(() => { saveSet(); fuOut(); }, 180);
+});
+document.addEventListener('change', e => {
+  const el = e.target; if (!el || !el.closest || !el.closest('#fu_root')) return; const d = fuD();
+  if (el.id === 'fu_kind'){ d.kind = el.value; if (el.value !== '95' && !(fuN(d.price) > 0)) toast(t('fu_freeNote')); }
+  else if (el.id === 'fu_full') d.full = el.value === '1';
+  else if (el.id === 'fu_unit'){ const k = fuKpl(d.cons, d.unit); d.unit = el.value; if (isFinite(k)) d.cons = String(Math.round((el.value === 'l100' ? 100 / k : k) * 10) / 10); }
+  else if (el.dataset.fuck) d.t[el.id] = el.checked;
+  else if (el.dataset.fusel) d.t[el.id] = el.value;
+  else return;
+  saveSet();
+  if (el.id === 'fu_kind' || el.id === 'fu_full' || el.id === 'fu_unit'){ const id = el.id; fuRender(); const n = $('#' + id); if (n) n.focus(); } else fuOut();
+});
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest || !t0.closest('#fu_root')) return; const d = fuD(); let b;
+  if ((b = t0.closest('[data-futab]'))){ FUT = b.dataset.futab; fuRender(); const n = $(`#fu_root [data-futab="${FUT}"]`); if (n) n.focus(); return; }
+  if ((b = t0.closest('[data-fucm]'))){ d.t.cm_mode = b.dataset.fucm; saveSet(); fuView(); const n = $(`#fu_root [data-fucm="${d.t.cm_mode}"]`); if (n) n.focus(); return; }
+  if (t0.closest('#lg_add')){
+    const odo = fuN($('#lg_odo').value), l = fuN($('#lg_l').value), sum = fuN($('#lg_sum').value), dt = $('#lg_d').value || new Date().toISOString().slice(0, 10);
+    if (!(odo > 0) || !(l > 0)){ toast(t('fu_lgNeed')); ($('#lg_odo').value ? $('#lg_l') : $('#lg_odo')).focus(); return; }
+    const prev = d.log.filter(x => fuN(x.odo) >= odo); if (prev.length && prev.some(x => fuN(x.odo) === odo)){ toast(t('fu_lgDup')); return; }
+    d.log.push({id: Date.now().toString(36), d: dt, odo: String(odo), l: String(l), sum: sum > 0 ? String(sum) : '', full: $('#lg_full').checked});
+    if (d.log.length > 300) d.log.splice(0, d.log.length - 300);
+    saveSet(); fuRender(); toast(t('fu_lgSaved')); const n = $('#lg_odo'); if (n) n.focus(); return;
+  }
+  if ((b = t0.closest('[data-lgdel]'))){ d.log = d.log.filter(x => x.id !== b.dataset.lgdel); saveSet(); fuRender(); return; }
+  if (t0.closest('#lg_use')){ const S = fuLogStats(); if (S && isFinite(S.kpl)){ d.cons = String(Math.round((d.unit === 'l100' ? 100 / S.kpl : S.kpl) * 10) / 10); saveSet(); fuRender(); toast(t('fu_lgUsed')); } return; }
+  if (t0.closest('#lg_clear')){ if (!confirm(t('fu_lgClearQ'))) return; d.log = []; saveSet(); fuRender(); return; }
+  if (t0.closest('#lg_csv')){
+    const rows = [['date', 'odometer_km', 'litres', 'total_ils', 'price_per_l', 'full_tank']].concat(d.log.slice().sort((a, b) => fuN(a.odo) - fuN(b.odo)).map(x => [x.d, fuN(x.odo), fuN(x.l), Math.round(fuLogSum(x) * 100) / 100, Math.round(fuLogSum(x) / fuN(x.l) * 1000) / 1000, x.full ? 1 : 0]));
+    fileSave(new Blob(['﻿' + rows.map(r => r.join(',')).join('\n')], {type: 'text/csv'}), 'fuel-log.csv', 'text/csv').then(r => toast(t(r === 'saved' ? 'ds_fileOk' : r === 'declined' ? 'pdf_declined' : 'pdf_fail'))).catch(() => toast(t('pdf_fail')));
+  }
+});
+CALC.fuelcalc = () => null;
+try { GS_SYN.fuelcalc = 'דלק בנזין סולר ליטר ליטרים תדלוק מילוי מיכל צריכת דלק קילומטר לליטר עלות נסיעה מחיר דלק 95 98 יומן תדלוקים fuel petrol gasoline diesel litre liter fill up tank consumption km per litre mpg trip cost fuel log وقود بنزين سولار لتر تعبئة خزان استهلاك كلفة رحلة'; } catch (e) {}
+if (typeof svKind === 'function'){ const svKindFu = svKind; svKind = function(id){ return id === 'fuelcalc' ? '' : svKindFu.apply(this, arguments); }; }
+try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('fuelcalc'); if (Array.isArray(EX_SKIP)) EX_SKIP.push('fuelcalc'); } catch (e) {}
+{
+  const actFu = activate; activate = function(id){ const r = actFu.apply(this, arguments); if (id === 'fuelcalc') fuRender(); return r; };
+  const alFu = applyLang; applyLang = function(){ const r = alFu.apply(this, arguments); try { if (tab === 'fuelcalc') fuRender(); } catch (e) {} return r; };
+  try { if (tab === 'fuelcalc') fuRender(); } catch (e) {}
 }
 
 /* ---------- 13.7: the accessibility button – one tap from every screen ----------
