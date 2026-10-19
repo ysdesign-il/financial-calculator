@@ -21,7 +21,7 @@ function mcTrack(amt, tr, cpi){
 }
 function calcMortCmp(){
   const L = mcList(), amt = Math.max(0, v('mc_amt')), cpi = Math.max(-99, v('mc_cpi')) / 100;
-  if (!(amt > 0)) return {hero: {label: t('r_mcBest'), value: '—'}, rows: []};
+  if (!(amt > 0)) return {hero: {label: t('tab_mortcmp'), value: '—'}, rows: []};
   const R = L.map((o, i) => {
     const trs = (o.tr || []).filter(x => (+x.s || 0) > 0), share = trs.reduce((s, x) => s + (+x.s || 0), 0) || 1;
     let first = 0, paid = 0, maxN = 0;
@@ -63,7 +63,7 @@ function calcPenCmp(){
   return {
     hero: {label: t('r_pcBest', {n: best.name}), value: M(best.b), sub: t('r_pcSub', {y: yrs, s: M(best.b - worst.b), f: M(best.fees)})},
     rows,
-    table: {title: t('t_pcCmp'), open: true, head: ['', t('h_pcDep'), t('h_pcAcc'), t('h_pcRet'), t('h_pcFees'), t('h_pcEnd')], rows: S.map(o => [o.name, PC(o.df * 100), PC(o.af * 100), PC(o.ret), M(o.fees), M(o.b)])},
+    table: {title: t('t_pcCmp'), open: true, head: ['', t('h_pcDep'), t('h_pcAcc'), t('h_pcRetH'), t('h_pcFees'), t('h_pcEnd')], rows: S.map(o => [o.name, PC(o.df * 100), PC(o.af * 100), PC(o.ret), M(o.fees), M(o.b)])},
     note: t('n_pc_' + (($('#pc_kind') || {}).value || 'pension')) + ' ' + t('n_pc')
   };
 }

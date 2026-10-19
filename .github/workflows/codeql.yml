@@ -29,6 +29,7 @@ jobs:
           config: |
             paths-ignore:
               - index.html
+              - app.js
               - lang
               - i18n
               - '*.json'

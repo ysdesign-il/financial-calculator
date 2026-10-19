@@ -6,7 +6,7 @@ const E108 = s => asEsc(String(s == null ? '' : s));
   let on = false, raf = 0;
   const upd = () => { raf = 0; const v = window.scrollY > 260; if (v !== on){ on = v; document.body.classList.toggle('hero-min', v); } };
   window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(upd); }, {passive: true});
-  upd();
+  raf = requestAnimationFrame(upd);          // after the first paint: reading the scroll position now would lay out the whole page early
 })();
 
 /* ---------- figures that age: say so on the result ---------- */

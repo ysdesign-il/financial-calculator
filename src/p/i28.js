@@ -1,7 +1,7 @@
 /* 9.0 texts */
 Object.assign(T, {
   tab_cellcmp:['השוואת חבילות סלולר','مقارنة باقات الخلوي','Mobile plan comparison'], d_cellcmp:['כל החברות בישראל – מה הכי זול לפי הגלישה שלכם, כולל המחיר אחרי המבצע','كل الشركات في إسرائيل – الأرخص حسب استخدامكم، بما في ذلك السعر بعد العرض','Every Israeli carrier – the cheapest for your usage, including the price after the promo'],
-  f_clGb:['כמה גלישה בחודש (GB)','كم تصفح شهريًا (GB)','Data a month (GB)'], h_clGb:['רוב האנשים צורכים 10–50GB. צפייה רבה בסרטונים: 100GB ומעלה.','معظم الناس 10–50GB. مشاهدة فيديو كثيرة: 100GB فأكثر.','Most people use 10–50GB; heavy video 100GB+.'],
+  f_clGb:['כמה גלישה בחודש (GB)','كم تصفح شهريًا (GB)','Data a month (GB)'], h_clGbH:['רוב האנשים צורכים 10–50GB. צפייה רבה בסרטונים: 100GB ומעלה.','معظم الناس 10–50GB. مشاهدة فيديو كثيرة: 100GB فأكثر.','Most people use 10–50GB; heavy video 100GB+.'],
   f_cl5g:['דור 5 (5G)','الجيل الخامس (5G)','5G'], o_clAny:['לא משנה','لا يهم','Any'], o_clYes:['חובה','ضروري','Required'], f_clAbroad:['כולל גלישה בחו"ל','يشمل التصفح في الخارج','Includes roaming'],
   f_clMonths:['לכמה חודשים להשוות','لكم شهرًا المقارنة','Compare over'], h_clMonths:['המחיר הממוצע לאורך התקופה – כולל העלייה אחרי חודשי המבצע.','متوسط السعر على المدة – مع الارتفاع بعد العرض.','Average price over the period – including the rise after the promo.'],
   f_clLines:['מספר קווים','عدد الخطوط','Lines'], f_clNow:['כמה אתם משלמים היום בחודש','كم تدفعون اليوم شهريًا','What you pay now a month'], h_clNow:['על כל הקווים יחד – כדי לראות כמה תחסכו.','لكل الخطوط معًا – لمعرفة التوفير.','All lines together – to see the saving.'],

@@ -115,9 +115,9 @@ async function persistNow(){
   try { await sealMap(FUSER, ek, map); LIVE_SEALED = j; } catch (e) {}
 }
 /* unlock = decrypt stored data into the per-tab working copy, then start the session */
-async function unlockSession(name, pw, rec, seed){
+async function unlockSession(name, pw, rec, seed, rawP){
   if (!rec.esalt) rec.esalt = b64(rnd(16));
-  const raw = b64(await pbk(pw, u8(rec.esalt), 200000, 256));
+  const raw = b64(await (rawP || pbk(pw, u8(rec.esalt), 200000, 256)));
   const sfx = ':' + ENC_NAME(name);
   let map = {};
   try {
@@ -163,12 +163,14 @@ async function doLogin(){
   const lk = lockLeft(name); if (lk > 0) return accMsg('m_lock', {s: lk});
   const rec = name ? getAcc(name) : null;
   accMsg('m_wait', null, true);
-  let ok = false;
+  let ok = false, rawP = null;
+  /* the data key is worked out at the same time as the password check (both run off the main thread) – signing in takes half the time */
+  if (rec && rec.esalt){ rawP = pbk(p, u8(rec.esalt), 200000, 256); rawP.catch(() => {}); }
   if (rec){ try { ok = (await hashPw(p, u8(rec.salt), rec.iter || 200000)) === rec.hash; } catch (e) { ok = false; } }
   else { try { await hashPw(p, new Uint8Array(16), 200000); } catch (e) {} }
   noteFail(name, ok);
   if (!ok) return accMsg('m_bad');
-  try { await unlockSession(rec.name, p, rec, {}); } catch (e) { accMsg('m_nocrypto'); }
+  try { await unlockSession(rec.name, p, rec, {}, rawP); } catch (e) { accMsg('m_nocrypto'); }
 }
 async function doChange(){
   const rec = getAcc(FUSER); if (!rec) return;
@@ -469,7 +471,9 @@ async function fxTick(){
   }
 }
 function fxStart(){ if (fxTimer){ clearTimeout(fxTimer); fxTimer = null; } fxFails = 0; if (SET.liveFx === '1'){ fxStatus('fx_conn'); fxTick(); } else fxStatus(''); }
-function fxSync(){ $$('#fx_live, .fx-live-cb').forEach(c => { c.checked = SET.liveFx === '1'; }); $$('#set_fxInt, .fx-int-sel').forEach(s => { s.value = SET.fxInt || '1'; }); const s = $('#set_liveFx'); if (s) s.value = SET.liveFx; $$('#fx_st, .fx-st').forEach(st => { st.textContent = fxKey ? t(fxKey, fxP) : ''; }); }
+function fxSync(){                         // by id and class (fast on a big page) instead of a selector list
+  const by = (id, cls) => { const L = [...document.getElementsByClassName(cls)], e = document.getElementById(id); if (e && !L.includes(e)) L.unshift(e); return L; };
+  by('fx_live', 'fx-live-cb').forEach(c => { c.checked = SET.liveFx === '1'; }); by('set_fxInt', 'fx-int-sel').forEach(s => { s.value = SET.fxInt || '1'; }); const s = $('#set_liveFx'); if (s) s.value = SET.liveFx; by('fx_st', 'fx-st').forEach(st => { st.textContent = fxKey ? t(fxKey, fxP) : ''; }); }
 panelsEl.addEventListener('change', e => {
   if (e.target.id !== 'fx_live') return;
   SET.liveFx = e.target.checked ? '1' : '0'; saveSet(); fxSync();
@@ -3037,7 +3041,7 @@ function liveApply(){
     if (!(+SET.autoRef > 0)) SET.autoRef = '5';
   }
   if (OWN_LAST !== own){ OWN_LAST = own; if (typeof figApply === 'function') try { figApply(true); } catch (e) {} if (typeof ixBoard === 'function' && tab === 'home') try { ixBoard(); } catch (e) {} }
-  $$('[data-i="sc_conn"], [data-i="sc_connAi"]').forEach(el => { el.dataset.i = own ? 'sc_conn' : 'sc_connAi'; el.textContent = t(el.dataset.i); });
+  $$('[data-i="sc_conn"], [data-i="sc_connAi"]', $('#panel-settings') || document).forEach(el => { el.dataset.i = own ? 'sc_conn' : 'sc_connAi'; el.textContent = t(el.dataset.i); });
   const sub = $('#sh_sub_conn'); if (sub){ sub.dataset.i = own ? 'sc_connS' : 'sc_connAiS'; sub.textContent = t(sub.dataset.i); }
 }
 liveApply();
@@ -4052,7 +4056,7 @@ async function lnSave(which){
 }
 function lnLabel(){
   const own = liveOwner(), pubN = lnLive(LN.pub).length, k = own ? 'sc_conn' : pubN ? 'sc_connLn' : 'sc_connAi';
-  $$('[data-i="sc_conn"], [data-i="sc_connAi"], [data-i="sc_connLn"]').forEach(el => { el.dataset.i = k; el.textContent = t(k); });
+  $$('[data-i="sc_conn"], [data-i="sc_connAi"], [data-i="sc_connLn"]', $('#panel-settings') || document).forEach(el => { el.dataset.i = k; el.textContent = t(k); });
   const sub = $('#sh_sub_conn'); if (sub && !own){ sub.dataset.i = pubN ? 'sc_connLnS' : 'sc_connAiS'; sub.textContent = t(sub.dataset.i); }
 }
 function lnRender(){
@@ -4352,7 +4356,7 @@ function svInject(){
 function svUi(){
   try { svInject(); } catch (e) {}
   const h = svBarHtml();
-  $$('.svbar').forEach(b => { if (b.dataset.h !== h){ b.innerHTML = h; b.dataset.h = h; } });
+  [...document.getElementsByClassName('svbar')].forEach(b => { if (b.dataset.h !== h){ b.innerHTML = h; b.dataset.h = h; } });
   const s = $('#set_saveMode'); if (s && s.value !== SV.mode) s.value = SV.mode;
 }
 function svMode(m, quiet){

@@ -411,12 +411,12 @@ function calcCar(){
   const lease = lup + lm * n + lrun * yrs + og(lup);
   const diff = lease - buy;
   return {
-    hero: {label: diff > 0 ? t('r_clBuy') : t('r_clLease'), value: M(Math.abs(diff)), sub: t('r_clSub')},
+    hero: {label: diff > 0 ? t('r_clBuy') : t('r_clLease'), value: M(Math.abs(diff)), sub: t('r_carleaseSub')},
     rows: [
       [t('r_clPmt'), M(pm)], [t('r_clBuyTot'), M(buy), 'key'], [t('r_clLeaseTot'), M(lease), 'key'],
       [t('r_clBuyMo'), M(buy / n)], [t('r_clLeaseMo'), M(lease / n)], [t('r_clResale'), M(resale)]
     ],
-    note: t('n_cl')
+    note: t('n_carlease')
   };
 }
 

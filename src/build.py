@@ -73,5 +73,12 @@ s = s.replace('__IX_BUILT__', _j.dumps({'idx': _rt.get('idx', {}), 'mkt': _rt.ge
 _ver = dict(_cl[0]); _ver['build'] = _build
 _j.dump(_ver, open(os.path.join(ROOT, 'version.json'), 'w', encoding='utf-8'), ensure_ascii=False)
 print('version', _ver['v'], _build)
+# the app's big script goes into its own file: the browser reads and compiles it off the main thread while the page shows,
+# and the service worker keeps each version, so opening the app again doesn't download it again
+import re as _re
+_m = max(_re.finditer(r'\n<script>\n(.*?)\n</script>', s, _re.S), key=lambda m: len(m.group(1)))
+_guard = "if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '%s'){ try { if (!sessionStorage.getItem('fin-hb-%s')){ sessionStorage.setItem('fin-hb-%s', '1'); location.reload(); } } catch (e) {} }\n" % (_build, _build, _build)
+open(os.path.join(ROOT, 'app.js'), 'w', encoding='utf-8').write(_guard + _m.group(1) + '\n')
+s = s[:_m.start()] + "\n<script>var HTML_BUILD = '%s';</script>\n<script src=\"app.js?v=%s\"></script>" % (_build, _build) + s[_m.end():]
 open(os.path.join(ROOT, 'index.html'),'w',encoding='utf-8').write(s)
 print(len(s.split('\n')), 'lines')

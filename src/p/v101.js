@@ -186,7 +186,9 @@ const PLAIN = [[/ריבית בנק ישראל/, 'pl_boi'], [/מרווח/, 'pl_ma
 function lxDecorate(root){
   root = root || document;
   const en = SET.enTerms === '1' && lang !== 'en', pl = SET.plain === '1';
-  $$('.field label[data-i]', root).forEach(l => {
+  /* both off (the usual case): only clear what an earlier visit added – no work per field */
+  if (!en && !pl){ $$('.field label[data-en]', root).forEach(l => { delete l.dataset.en; }); $$('.plain-x', root).forEach(x => x.remove()); }
+  else $$('.field label[data-i]', root).forEach(l => {
     const k = l.dataset.i, src = T[k];
     if (en && src && src[2] && src[2] !== l.textContent) l.dataset.en = src[2]; else delete l.dataset.en;
     const f = l.closest('.field'); if (!f) return;

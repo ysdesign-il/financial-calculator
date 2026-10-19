@@ -84,7 +84,7 @@ function mvCheck(){
   hits.sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
   const up = hits[0][1] > 0, txt = hits.slice(0, 3).map(([k, ch]) => ixName(k) + ' ' + sgnPC(ch)).join(' · ') + (hits.length > 3 ? ' …' : '');
   toast((up ? '📈 ' : '📉 ') + t('mv_today', {x: txt}));
-  try { if (!IN_CLAUDE && 'Notification' in window && Notification.permission === 'granted') new Notification(t('mv_title'), {body: txt, icon: 'icon-192.png', tag: 'mv-' + day}); } catch (e) {}
+  try { if (!IN_CLAUDE && 'Notification' in window && Notification.permission === 'granted') new Notification(t('mkmv_title'), {body: txt, icon: 'icon-192.png', tag: 'mv-' + day}); } catch (e) {}
 }
 const _ixB97 = ixBoard;
 ixBoard = function(){ const r = _ixB97.apply(this, arguments); try { mvCheck(); } catch (e) {} return r; };
