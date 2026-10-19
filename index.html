@@ -1488,6 +1488,21 @@ body[data-tab="home"] .page-head .prn-btn,body[data-tab="expenses"] .page-head .
   #prn_area .prn-sheet img{position:absolute;max-width:none;display:block}#prn_area .prn-sheet img.fr{outline:.6pt dashed #aaa;outline-offset:2pt}
   #prn_area *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+/* 13.9: signing scanned documents */
+.sg-box{max-width:560px;overflow:auto}#dssg_b{display:flex;flex-direction:column;gap:10px;overflow:auto}
+.sg-tabs{display:flex;gap:6px;flex-wrap:wrap}.sg-tabs button{appearance:none;font:inherit;font-size:.88rem;min-height:44px;padding:8px 14px;border-radius:12px;border:1.5px solid var(--line);background:transparent;color:inherit;cursor:pointer}
+.sg-tabs button.on,.sg-pen.on,.sg-font.on{border-color:#1F4FB8;background:color-mix(in srgb,#1F4FB8 12%,transparent);box-shadow:inset 0 0 0 1px #1F4FB8;font-weight:700}
+.sg-padw{position:relative;border:1.5px dashed var(--line);border-radius:14px;background:#fff;height:190px;overflow:hidden}
+#sg_pad{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.sg-line{position:absolute;inset-inline:18px;bottom:44px;border-bottom:1.5px solid #c9cfdb;pointer-events:none}
+.sg-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8a93a6;font-size:.95rem;pointer-events:none}.sg-ph[hidden]{display:none}
+.sg-fonts{display:flex;flex-direction:column;gap:6px}.sg-font{appearance:none;min-height:56px;padding:8px 14px;border-radius:12px;border:1.5px solid var(--line);background:#fff;cursor:pointer;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.sg-pens{display:flex;gap:6px;flex-wrap:wrap}.sg-pen{appearance:none;font:inherit;font-size:.85rem;min-height:40px;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:12px;border:1.5px solid var(--line);background:transparent;color:inherit;cursor:pointer}.sg-pen i{width:16px;height:16px;border-radius:50%;display:inline-block}
+.sg-saved{display:flex;flex-direction:column;gap:8px;padding:10px;border:1px solid var(--line);border-radius:14px}.sg-saved img{max-height:80px;max-width:100%;align-self:center;background:#fff;border-radius:8px;padding:4px}
+.sg-prev{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px;text-align:center}.sg-prev canvas{max-width:100%;max-height:120px}
+.sg-stage{position:relative;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;touch-action:none}.sg-stage canvas{display:block;width:100%;height:auto}
+#sg_mark{position:absolute;height:auto;cursor:grab;outline:2px dashed #1F4FB8;outline-offset:2px;background:color-mix(in srgb,#1F4FB8 6%,transparent);touch-action:none;user-select:none;-webkit-user-select:none}
+#sg_mark:focus-visible{outline:3px solid var(--focus,#1F4FB8)}
 
 /* ================= 7.8: app designs (ORBIT, AURUM); the default design has none of these rules ================= */
 .dz-ban{display:none}
@@ -6900,6 +6915,41 @@ Object.assign(T, {
   lg_h_a1910c:['19.10.2026 – נוספה הדפסה ישירה נגישה מכל מסך.','19.10.2026 – أُضيفت طباعة مباشرة متاحة من كل شاشة.','19.10.2026 – added accessible direct printing from every screen.'],
   lg_h_t1910b:['19.10.2026 – נוסף סעיף על תדפיסים מהאפליקציה.','19.10.2026 – أُضيف بند عن المطبوعات من التطبيق.','19.10.2026 – added a section on printouts from the app.'],
   lg_h_p1910c:['19.10.2026 – נוסף הסבר על ההדפסה: מה קורה לדף ומי רואה אותו.','19.10.2026 – أُضيف شرح عن الطباعة: ماذا يحدث للصفحة ومن يراها.','19.10.2026 – added an explanation of printing: what happens to the page and who sees it.']
+});
+/* 13.9: signing scanned documents */
+Object.assign(T, {
+  sg_title:['חתימה על המסמך','التوقيع على المستند','Sign the document'],
+  sg_hint:['ציירו חתימה באצבע, הקלידו אותה או צלמו חתימה מנייר, ומקמו אותה על הדף. החתימה נכנסת ל־PDF, לתמונות ולהדפסה.','ارسم توقيعك بإصبعك أو اكتبه أو صوّر توقيعًا من ورقة، ثم ضعه على الصفحة. يدخل التوقيع في PDF والصور والطباعة.','Draw your signature with a finger, type it, or photograph one from paper, then place it on the page. It goes into the PDF, the images and the printout.'],
+  sg_add:['הוספת חתימה','إضافة توقيع','Add a signature'], sg_more:['חתימה נוספת','توقيع آخر','Another signature'], sg_undo:['ביטול החתימה האחרונה','إلغاء آخر توقيع','Remove the last signature'],
+  sg_count:['על המסמך {n} חתימות','على المستند {n} توقيعات','{n} signature(s) on the document'],
+  sg_makeT:['יצירת חתימה','إنشاء توقيع','Create a signature'], sg_placeT:['מיקום החתימה','موضع التوقيع','Place the signature'],
+  sg_h_draw:['ציור','رسم','Draw'], sg_h_type:['הקלדה','كتابة','Type'], sg_h_img:['מתמונה','من صورة','From a photo'],
+  sg_padA:['משטח חתימה – ציירו כאן באצבע או בעכבר','مساحة التوقيع – ارسم هنا بإصبعك أو بالفأرة','Signature pad – draw here with a finger or mouse'], sg_padPh:['חתמו כאן','وقّع هنا','Sign here'],
+  sg_clear:['ניקוי','مسح','Clear'], sg_back1:['ביטול קו אחרון','إلغاء آخر خط','Undo last stroke'],
+  sg_drawH:['אפשר גם להקליד את החתימה או לצלם אותה – למשל אם קשה לצייר על המסך.','يمكنك أيضًا كتابة التوقيع أو تصويره – مثلًا إذا كان الرسم على الشاشة صعبًا.','You can also type the signature or photograph it – for example if drawing on the screen is hard.'],
+  sg_name:['השם לחתימה','الاسم للتوقيع','Name to sign with'], sg_style:['סגנון כתב','نمط الخط','Writing style'], sg_sample:['החתימה שלי','توقيعي','My signature'],
+  sg_pickImg:['צילום או בחירת תמונה של חתימה','تصوير أو اختيار صورة توقيع','Take or choose a photo of a signature'],
+  sg_imgH:['חתמו על דף לבן בעט כהה וצלמו מקרוב. הרקע הופך שקוף והדיו נשאר.','وقّع على ورقة بيضاء بقلم داكن وصوّرها عن قرب. تصبح الخلفية شفافة ويبقى الحبر.','Sign on white paper with a dark pen and photograph it close up. The paper becomes transparent and the ink stays.'],
+  sg_pen:['צבע עט','لون القلم','Pen colour'], sg_pBlue:['כחול כהה','أزرق داكن','Dark blue'], sg_pBlack:['שחור','أسود','Black'], sg_pBright:['כחול','أزرق','Blue'],
+  sg_date:['להוסיף את תאריך היום מתחת לחתימה','إضافة تاريخ اليوم تحت التوقيع','Add today\'s date under the signature'],
+  sg_keep:['לזכור את החתימה במכשיר הזה','تذكّر التوقيع على هذا الجهاز','Remember the signature on this device'],
+  sg_next:['המשך למיקום','متابعة إلى الموضع','Continue to placing'],
+  sg_priv:['החתימה נוצרת ומוצבת בטלפון בלבד ולא נשלחת לשום מקום. היא נשמרת רק אם סימנתם "לזכור", ואפשר למחוק אותה בכל רגע.','يُنشأ التوقيع ويوضع على الهاتف فقط ولا يُرسل إلى أي مكان. يُحفظ فقط إذا اخترت "تذكّر"، ويمكن حذفه في أي وقت.','The signature is made and placed on your phone only and is never sent. It is kept only if you tick "remember", and you can delete it at any time.'],
+  sg_savedA:['החתימה','التوقيع','The signature'], sg_useSaved:['להשתמש בחתימה השמורה','استخدام التوقيع المحفوظ','Use the saved signature'], sg_delSaved:['מחיקת החתימה השמורה','حذف التوقيع المحفوظ','Delete the saved signature'],
+  sg_orNew:['או צרו חתימה חדשה:','أو أنشئ توقيعًا جديدًا:','Or create a new one:'], sg_deleted:['החתימה השמורה נמחקה מהמכשיר','حُذف التوقيع المحفوظ من الجهاز','The saved signature was deleted from this device'],
+  sg_none:['עדיין אין חתימה – ציירו, הקלידו או בחרו תמונה','لا يوجد توقيع بعد – ارسم أو اكتب أو اختر صورة','No signature yet – draw, type or choose a photo'],
+  sg_page:['על איזה דף','على أي صفحة','Which page'], sg_placeH:['גררו את החתימה למקום הנכון ושנו את הגודל. במקלדת: חצים להזזה, + ו־ − לגודל, Enter לאישור.','اسحب التوقيع إلى مكانه وغيّر حجمه. بلوحة المفاتيح: الأسهم للتحريك، + و − للحجم، Enter للتأكيد.','Drag the signature into place and adjust its size. Keyboard: arrows to move, + and − to resize, Enter to confirm.'],
+  sg_markA:['החתימה – גררו או הזיזו בחצים','التوقيع – اسحبه أو حرّكه بالأسهم','The signature – drag it or move it with the arrow keys'],
+  sg_size:['גודל החתימה','حجم التوقيع','Signature size'], sg_all:['באותו מקום בכל הדפים','في المكان نفسه في كل الصفحات','In the same place on every page'],
+  sg_apply:['חתימה על המסמך','وقّع المستند','Sign the document'], sg_backMake:['שינוי החתימה','تغيير التوقيع','Change the signature'],
+  sg_done:['החתימה נוספה. שמרו PDF, תמונה או הדפיסו.','أُضيف التوقيع. احفظ PDF أو صورة أو اطبع.','Signature added. Save a PDF or image, or print.'],
+  sg_legalShort:['זו חתימה אלקטרונית פשוטה (תמונת חתימה), לא חתימה מאושרת או מאובטחת עם תעודה. יש גופים שדורשים חתימה מאושרת או מקור.','هذا توقيع إلكتروني بسيط (صورة توقيع)، وليس توقيعًا معتمدًا أو مؤمّنًا بشهادة. بعض الجهات تطلب توقيعًا معتمدًا أو الأصل.','This is a simple electronic signature (an image of a signature), not a certified or secure signature with a certificate. Some bodies require a certified signature or an original.'],
+  lg_a_d12:['חתימה על מסמכים סרוקים בשלוש דרכים – ציור, הקלדת שם או צילום חתימה מנייר – כך שמי שמתקשה לצייר על המסך יכול לחתום. את מיקום החתימה וגודלה אפשר לקבוע גם במקלדת (חצים, + ו־ −).','التوقيع على المستندات الممسوحة بثلاث طرق – الرسم أو كتابة الاسم أو تصوير توقيع من ورقة – ليتمكن من يصعب عليه الرسم على الشاشة من التوقيع. يمكن ضبط موضع التوقيع وحجمه بلوحة المفاتيح أيضًا (الأسهم، + و −).','Signing scanned documents three ways – drawing, typing a name, or photographing a signature on paper – so people who find drawing on a screen hard can still sign. The signature\'s position and size can also be set by keyboard (arrows, + and −).'],
+  lg_t_sig:['החתימה בסורק המסמכים היא חתימה אלקטרונית פשוטה – תמונה של חתימה שמוצבת על המסמך. היא אינה "חתימה אלקטרונית מאובטחת" או "מאושרת" לפי חוק חתימה אלקטרונית, התשס"א–2001, ואין מאחוריה תעודה או גורם מאשר. גופים מסוימים (בתי משפט, בנקים, רשויות) עשויים לדרוש חתימה מאושרת, חתימה במקור או זיהוי נוסף, ובאחריותך לבדוק זאת. מותר לחתום רק בשמך או בהרשאה מפורשת; אסור להשתמש בכלי כדי לזייף חתימה של אחר או לשנות מסמך שכבר נחתם.','التوقيع في ماسح المستندات توقيع إلكتروني بسيط – صورة توقيع توضع على المستند. ليس "توقيعًا إلكترونيًا مؤمّنًا" أو "معتمدًا" وفق قانون التوقيع الإلكتروني الإسرائيلي لسنة 2001، ولا تقف وراءه شهادة أو جهة مصادقة. قد تطلب بعض الجهات (المحاكم والبنوك والسلطات) توقيعًا معتمدًا أو توقيعًا أصليًا أو تحققًا إضافيًا، ومسؤوليتك التحقق من ذلك. يُسمح بالتوقيع باسمك فقط أو بإذن صريح؛ ويُمنع استخدام الأداة لتزوير توقيع غيرك أو لتغيير مستند سبق توقيعه.','The signature in the document scanner is a simple electronic signature – an image of a signature placed on the document. It is not a "secure" or "certified" electronic signature under Israel\'s Electronic Signature Law, 2001, and no certificate or certifying authority stands behind it. Some bodies (courts, banks, authorities) may require a certified signature, a wet signature or extra identification, and it is your responsibility to check. Sign only in your own name or with explicit permission; the tool must not be used to forge someone else\'s signature or to change a document that has already been signed.'],
+  lg_p_dev7:['חתימה: החתימה שציירתם, הקלדתם או צילמתם נוצרת ומוצבת במכשיר ולא נשלחת לשום שרת או ל־AI. היא נשמרת במכשיר רק אם סימנתם "לזכור", בנפרד מההגדרות ומהגיבוי – כך שהיא לא נכללת בקובץ גיבוי או בייצוא ההגדרות. כפתור "מחיקת החתימה השמורה" מוחק אותה מיד.','التوقيع: التوقيع الذي رسمته أو كتبته أو صوّرته يُنشأ ويوضع على الجهاز ولا يُرسل إلى أي خادم أو إلى الذكاء الاصطناعي. يُحفظ على الجهاز فقط إذا اخترت "تذكّر"، منفصلًا عن الإعدادات والنسخة الاحتياطية – فلا يدخل في ملف النسخ الاحتياطي ولا في تصدير الإعدادات. زر "حذف التوقيع المحفوظ" يحذفه فورًا.','Signature: the signature you draw, type or photograph is made and placed on the device and is never sent to any server or AI. It is kept on the device only if you tick "remember", separately from the settings and backups – so it isn\'t included in a backup file or a settings export. "Delete the saved signature" removes it at once.'],
+  lg_h_a1910d:['19.10.2026 – נוספה חתימה על מסמכים סרוקים בשלוש דרכים, כולל הפעלה במקלדת.','19.10.2026 – أُضيف التوقيع على المستندات الممسوحة بثلاث طرق، مع التشغيل بلوحة المفاتيح.','19.10.2026 – added signing scanned documents three ways, including keyboard operation.'],
+  lg_h_t1910c:['19.10.2026 – נוסף סעיף על חתימה על מסמכים: חתימה אלקטרונית פשוטה ומה מותר.','19.10.2026 – أُضيف بند عن التوقيع على المستندات: توقيع إلكتروني بسيط وما المسموح.','19.10.2026 – added a section on signing documents: a simple electronic signature and what is allowed.'],
+  lg_h_p1910d:['19.10.2026 – נוסף הסבר על החתימה: היכן נוצרת, מתי נשמרת ואיך מוחקים.','19.10.2026 – أُضيف شرح عن التوقيع: أين يُنشأ ومتى يُحفظ وكيف يُحذف.','19.10.2026 – added an explanation of the signature: where it is made, when it is kept and how to delete it.']
 });
 
 const t = (k, p) => {
@@ -13505,8 +13555,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.8", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.151558';
+var CHANGELOG = [{"v": "13.9", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.164925';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -25400,11 +25450,11 @@ const LG_DATE = '19.10.2026';
 const LG_DOCS = {
   a11y: {t: 'lg_a11yT', ic: '♿', parts: [
     ['', ['lg_a_intro']],
-    ['lg_a_doneH', ['lg_a_d1', 'lg_a_d2', 'lg_a_d3', 'lg_a_d4', 'lg_a_d5', 'lg_a_d6', 'lg_a_d7', 'lg_a_d8', 'lg_a_d9', 'lg_a_d10', 'lg_a_d11'], true],
+    ['lg_a_doneH', ['lg_a_d1', 'lg_a_d2', 'lg_a_d3', 'lg_a_d4', 'lg_a_d5', 'lg_a_d6', 'lg_a_d7', 'lg_a_d8', 'lg_a_d9', 'lg_a_d10', 'lg_a_d11', 'lg_a_d12'], true],
     ['lg_a_howH', ['lg_a_how']],
     ['lg_a_limH', ['lg_a_l1', 'lg_a_l2', 'lg_a_l3'], true],
     ['lg_contactH', ['lg_a_contact']],
-    ['lg_histH', ['lg_h_a1910c', 'lg_h_a1910b', 'lg_h_a1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_a1910d', 'lg_h_a1910c', 'lg_h_a1910b', 'lg_h_a1910', 'lg_h_1810'], true]
   ]},
   terms: {t: 'lg_termsT', ic: '📜', parts: [
     ['', ['lg_t_intro']],
@@ -25412,10 +25462,10 @@ const LG_DOCS = {
     ['lg_t_dataH', ['lg_t_data']],
     ['lg_t_aiH', ['lg_t_ai', 'lg_t_tf']],
     ['lg_t_liabH', ['lg_t_liab']],
-    ['lg_t_useH', ['lg_t_use1', 'lg_t_use2', 'lg_t_use3', 'lg_t_use4', 'lg_t_prn'], true],
+    ['lg_t_useH', ['lg_t_use1', 'lg_t_use2', 'lg_t_use3', 'lg_t_use4', 'lg_t_prn', 'lg_t_sig'], true],
     ['lg_t_chgH', ['lg_t_chg']],
     ['lg_contactH', ['lg_t_contact']],
-    ['lg_histH', ['lg_h_t1910b', 'lg_h_t1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_t1910c', 'lg_h_t1910b', 'lg_h_t1910', 'lg_h_1810'], true]
   ]},
   cred: {t: 'lg_credT', ic: '🧾', parts: [
     ['', ['lg_c_intro']],
@@ -25424,7 +25474,7 @@ const LG_DOCS = {
   ], extra: () => `<p><a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? 'https://ysdesign-il.github.io/financial-calculator/' : ''}lib/nerdamer.LICENSE.txt" target="_blank" rel="noopener">${lgE(t('lg_c_licLink'))}</a></p>`},
   priv: {t: 'lg_privT', ic: '🔒', parts: [
     ['', ['lg_p_intro']],
-    ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3', 'lg_p_dev4', 'lg_p_dev5', 'lg_p_dev6']],
+    ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3', 'lg_p_dev4', 'lg_p_dev5', 'lg_p_dev6', 'lg_p_dev7']],
     ['lg_p_usH', ['lg_p_us1', 'lg_p_us2', 'lg_p_us3', 'lg_p_us4'], true],
     ['lg_p_extH', ['lg_p_ext0', 'lg_p_ext1', 'lg_p_ext2', 'lg_p_ext3', 'lg_p_ext4', 'lg_p_ext5', 'lg_p_ext6'], true],
     ['lg_p_noH', ['lg_p_no']],
@@ -25432,7 +25482,7 @@ const LG_DOCS = {
     ['lg_p_rightsH', ['lg_p_r1', 'lg_p_r2', 'lg_p_r3'], true],
     ['lg_p_chgH', ['lg_p_chg']],
     ['lg_contactH', ['lg_p_contact']],
-    ['lg_histH', ['lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
   ]}
 };
 const lgE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
@@ -25942,6 +25992,7 @@ function dsCompose(p, maxSide){
   const k = maxSide ? Math.min(1, maxSide / Math.max(p.base.width, p.base.height)) : 1, W = Math.round(p.base.width * k), H = Math.round(p.base.height * k);
   const c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(p._f, 0, 0, W, H);
   x.fillStyle = '#000'; (p.red || []).forEach(r => x.fillRect(r[0] * W, r[1] * H, r[2] * W, r[3] * H));
+  try { dsSigDraw(p, x, W, H); } catch (e) {}
   const wm = String(DSC.wm || '').trim();
   if (wm){
     const txt = wm + ' · ' + new Date().toLocaleDateString('he-IL'), fs = Math.max(14, Math.round(Math.min(W, H) / 11));
@@ -25996,6 +26047,7 @@ function dsCardRender(root){
     <div class="ds-chips" role="radiogroup" aria-label="${slE(t('ds_filt'))}">${['auto', 'doc', 'orig', 'gray', 'bw'].map(f => `<button type="button" role="radio" class="ds-chip${f === C.filt ? ' on' : ''}" aria-checked="${f === C.filt}" data-dfl="${f}">${slE(t('ds_f_' + f))}</button>`).join('')}</div>
     <h4 class="ds-q">${slE(t('ds_red'))}</h4><p class="fine">${slE(t(C.type === 'credit' ? 'ds_credit' : 'ds_redH'))}</p>
     <div class="btnrow"><button type="button" class="btn${DSX.red ? ' on' : ''}" id="ds_redb" aria-pressed="${DSX.red}">🖍️ ${slE(t(DSX.red ? 'ds_redOn' : 'ds_redGo'))}</button><button type="button" class="mv" id="ds_redu">↶ ${slE(t('ds_redUndo'))}</button></div>
+    ${typeof dsSigHTML === 'function' ? dsSigHTML() : ''}
     <div class="field ds-wmf"><label for="ds_wm">💧 ${slE(t('ds_wm'))}</label><div class="control"><input id="ds_wm" type="text" maxlength="60" dir="auto" value="${slE(C.wm)}" placeholder="${slE(t('ds_wmPh'))}"></div></div><p class="fine">${slE(t('ds_wmH'))}</p>
     ${size === 'card' || size === 'pass' ? `<div class="field cv-f"><label for="ds_lay">${slE(t('ds_lay'))}</label><select id="ds_lay">${['sheet', 'sep'].map(v => `<option value="${v}"${v === C.lay ? ' selected' : ''}>${slE(t('ds_lay_' + v))}</option>`).join('')}</select></div>` : ''}
     <div class="field cv-f"><label for="ds_q">${slE(t('ds_q'))}</label><select id="ds_q">${['max', 'std'].map(v => `<option value="${v}"${v === (C.q || 'max') ? ' selected' : ''}>${slE(t('ds_q_' + v))}</option>`).join('')}</select></div>
@@ -26266,6 +26318,223 @@ try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('docscan'); if (Array.isArray
   if (typeof phRenderAll === 'function'){ const phDs = phRenderAll; phRenderAll = function(){ const r = phDs.apply(this, arguments); try { if (tab === 'docscan' && DSX.view === 'kinds') dscRender(); } catch (e) {} return r; }; }
   try { if (tab === 'docscan') dscRender(); } catch (e) {}
 }
+
+/* ---------- 13.9: signing scanned documents ----------
+   A signature is drawn with a finger, typed, or taken from a photo, then placed on the page. Everything happens on the phone:
+   nothing is sent, and the signature is kept on the device only when "remember" is ticked (its own key, never in settings exports).
+   This is a simple electronic signature (an image of a signature), not a certified digital signature. */
+const SG_KEY = 'fin-sig';
+var DSG = {view: 'make', how: 'draw', strokes: [], pen: '#10204a', font: 0, name: '', img: null, keep: false, date: false, sig: null, pg: 0, x: 0, y: 0, w: 0.32, all: false, drag: null};
+const SG_FONTS = ['italic 600 {s}px "Segoe Script","Brush Script MT","Snell Roundhand","Lucida Handwriting",cursive', 'italic 500 {s}px Georgia,"Times New Roman","David","Frank Ruehl CLM",serif', '600 {s}px "Comic Sans MS","Chalkboard SE","Segoe Print","Noteworthy",cursive'];
+const sgE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+function sgSaved(){ try { return LS.getItem(SG_KEY) || ''; } catch (e) { return ''; } }
+function sgSave(url){ try { if (url) LS.setItem(SG_KEY, url); else LS.removeItem(SG_KEY); } catch (e) {} }
+/* cut a canvas down to what is drawn on it, with a small margin */
+function sgTrim(c){
+  const x = c.getContext('2d'), d = x.getImageData(0, 0, c.width, c.height).data; let a = c.width, b = c.height, z = -1, w = -1;
+  for (let j = 0; j < c.height; j++) for (let i = 0; i < c.width; i++) if (d[(j * c.width + i) * 4 + 3] > 12){ if (i < a) a = i; if (i > z) z = i; if (j < b) b = j; if (j > w) w = j; }
+  if (z < 0) return null;
+  const m = Math.round(Math.max(z - a, w - b) * 0.04) + 2, o = document.createElement('canvas'); o.width = z - a + 1 + m * 2; o.height = w - b + 1 + m * 2;
+  o.getContext('2d').drawImage(c, a - m, b - m, o.width, o.height, 0, 0, o.width, o.height); return o;
+}
+/* the finished signature, optionally with today's date under it */
+function sgFinish(c){
+  if (!c) return null;
+  if (!DSG.date) return c;
+  const ds = new Date().toLocaleDateString(locOf ? locOf() : 'he-IL'), fs = Math.max(18, Math.round(c.height * 0.22)), o = document.createElement('canvas'), x0 = o.getContext('2d');
+  x0.font = '500 ' + fs + 'px -apple-system,"Segoe UI",Arial,sans-serif'; const tw = x0.measureText(ds).width;
+  o.width = Math.max(c.width, Math.ceil(tw) + 8); o.height = c.height + Math.round(fs * 1.5);
+  const x = o.getContext('2d'); x.drawImage(c, (o.width - c.width) / 2, 0); x.font = '500 ' + fs + 'px -apple-system,"Segoe UI",Arial,sans-serif'; x.fillStyle = DSG.pen; x.textAlign = 'center'; x.textBaseline = 'top'; x.fillText(ds, o.width / 2, c.height + fs * 0.25);
+  return o;
+}
+function sgFromDraw(){
+  if (!DSG.strokes.length) return null;
+  const S = 3, pad = $('#sg_pad'), W = (pad ? pad.clientWidth : 340) * S, H = (pad ? pad.clientHeight : 180) * S, c = document.createElement('canvas'); c.width = W; c.height = H;
+  sgPaint(c.getContext('2d'), S); return sgTrim(c);
+}
+function sgPaint(x, S){
+  x.lineCap = 'round'; x.lineJoin = 'round'; x.strokeStyle = DSG.pen; x.fillStyle = DSG.pen;
+  DSG.strokes.forEach(st => {
+    if (st.length === 1){ x.beginPath(); x.arc(st[0][0] * S, st[0][1] * S, 1.6 * S, 0, 7); x.fill(); return; }
+    x.lineWidth = 2.6 * S; x.beginPath(); x.moveTo(st[0][0] * S, st[0][1] * S);
+    for (let i = 1; i < st.length - 1; i++){ const mx = (st[i][0] + st[i + 1][0]) / 2, my = (st[i][1] + st[i + 1][1]) / 2; x.quadraticCurveTo(st[i][0] * S, st[i][1] * S, mx * S, my * S); }
+    const l = st[st.length - 1]; x.lineTo(l[0] * S, l[1] * S); x.stroke();
+  });
+}
+function sgFromType(){
+  const s = String(DSG.name || '').trim(); if (!s) return null;
+  const fs = 120, c = document.createElement('canvas'), f = SG_FONTS[DSG.font].replace('{s}', fs); let x = c.getContext('2d'); x.font = f;
+  c.width = Math.ceil(x.measureText(s).width + fs); c.height = Math.round(fs * 1.8); x = c.getContext('2d'); x.font = f; x.fillStyle = DSG.pen; x.textBaseline = 'middle'; x.direction = /[֐-ۿ]/.test(s) ? 'rtl' : 'ltr'; x.textAlign = 'center';
+  x.fillText(s, c.width / 2, c.height / 2); return sgTrim(c);
+}
+/* a photo of a signature on paper: the paper becomes transparent, the ink stays (in the chosen pen colour) */
+function sgFromImg(){
+  const im = DSG.img; if (!im) return null;
+  const k = Math.min(1, 1600 / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+  const x = c.getContext('2d'); x.drawImage(im, 0, 0, c.width, c.height); const D = x.getImageData(0, 0, c.width, c.height), d = D.data;
+  let sum = 0; for (let i = 0; i < d.length; i += 4) sum += d[i] * .3 + d[i + 1] * .59 + d[i + 2] * .11; const avg = sum / (d.length / 4), th = avg * 0.72;
+  const pr = parseInt(DSG.pen.slice(1, 3), 16), pg = parseInt(DSG.pen.slice(3, 5), 16), pb = parseInt(DSG.pen.slice(5, 7), 16);
+  for (let i = 0; i < d.length; i += 4){ const v = d[i] * .3 + d[i + 1] * .59 + d[i + 2] * .11, a = v >= th ? 0 : Math.min(255, Math.round((th - v) / th * 255 * 2.2)); d[i] = pr; d[i + 1] = pg; d[i + 2] = pb; d[i + 3] = a; }
+  x.putImageData(D, 0, 0); return sgTrim(c);
+}
+function sgMake(){ return DSG.how === 'draw' ? sgFromDraw() : DSG.how === 'type' ? sgFromType() : sgFromImg(); }
+function sgLoadUrl(u){ return new Promise((res, rej) => { const im = new Image(); im.onload = () => { const c = document.createElement('canvas'); c.width = im.width; c.height = im.height; c.getContext('2d').drawImage(im, 0, 0); res(c); }; im.onerror = rej; im.src = u; }); }
+
+/* ---------- drawing the signatures onto a page (called from dsCompose, after hiding and before the watermark) ---------- */
+function dsSigDraw(p, x, W, H){
+  (p.sig || []).forEach(s => { const w = s.w * W, h = w * s.c.height / s.c.width; x.drawImage(s.c, s.x * W, s.y * H, w, h); });
+}
+function dsSigHTML(){
+  const n = DSC ? DSC.pages.reduce((a, p) => a + (p.sig || []).length, 0) : 0;
+  return `<h4 class="ds-q">✍️ ${sgE(t('sg_title'))}</h4><p class="fine">${sgE(t('sg_hint'))}</p>
+    <div class="btnrow"><button type="button" class="btn" id="sg_open">✍️ ${sgE(t(n ? 'sg_more' : 'sg_add'))}</button>${n ? `<button type="button" class="mv" id="sg_undo">↶ ${sgE(t('sg_undo'))}</button>` : ''}</div>
+    ${n ? `<p class="ds-found ds-found-s" role="status">✓ ${sgE(t('sg_count', {n}))}</p>` : ''}`;
+}
+
+/* ---------- the dialog ---------- */
+function sgOpen(){
+  if (!DSC || !DSC.pages.length) return;
+  Object.assign(DSG, {view: 'make', strokes: [], img: null, sig: null, pg: DSC.pages.length - 1, all: false});
+  DSG.keep = !!sgSaved();
+  let o = $('#dssg');
+  if (!o){ document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="dssg" hidden><div class="cp-box sg-box" role="dialog" aria-modal="true" aria-labelledby="dssg_t"><div class="cp-top"><h3 id="dssg_t"></h3><button type="button" class="cp-x" id="dssg_x">×</button></div><div id="dssg_b"></div></div></div>`); o = $('#dssg'); }
+  o.hidden = false; document.body.classList.add('cp-lock'); sgPanel();
+  setTimeout(() => { const f = $('#dssg_b button'); if (f) f.focus(); }, 30);
+}
+function sgClose(){ const o = $('#dssg'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); const b = $('#sg_open'); if (b) b.focus(); } }
+function sgPanel(){
+  const E = sgE, saved = sgSaved();
+  $('#dssg_x').setAttribute('aria-label', t('cp_close'));
+  if (DSG.view === 'place') return sgPlacePanel();
+  $('#dssg_t').textContent = '✍️ ' + t('sg_makeT');
+  const tabs = [['draw', '✍️'], ['type', '⌨️'], ['img', '🖼️']];
+  $('#dssg_b').innerHTML = `
+    ${saved ? `<div class="sg-saved"><img src="${saved}" alt="${E(t('sg_savedA'))}"><div class="btnrow"><button type="button" class="gold-btn" id="sg_useSaved">✓ ${E(t('sg_useSaved'))}</button><button type="button" class="mv" id="sg_delSaved">🗑️ ${E(t('sg_delSaved'))}</button></div></div><p class="fine">${E(t('sg_orNew'))}</p>` : ''}
+    <div class="seg sg-tabs" role="tablist">${tabs.map(([k, ic]) => `<button type="button" role="tab" aria-selected="${DSG.how === k}" class="${DSG.how === k ? 'on' : ''}" data-sgh="${k}">${ic} ${E(t('sg_h_' + k))}</button>`).join('')}</div>
+    <div id="sg_body">${DSG.how === 'draw' ? `<div class="sg-padw"><canvas id="sg_pad" aria-label="${E(t('sg_padA'))}"></canvas><span class="sg-line" aria-hidden="true"></span><span class="sg-ph" aria-hidden="true"${DSG.strokes.length ? ' hidden' : ''}>${E(t('sg_padPh'))}</span></div>
+        <div class="btnrow"><button type="button" class="mv" id="sg_clr">🧽 ${E(t('sg_clear'))}</button><button type="button" class="mv" id="sg_bk">↶ ${E(t('sg_back1'))}</button></div><p class="fine">${E(t('sg_drawH'))}</p>`
+      : DSG.how === 'type' ? `<div class="field"><label for="sg_name">${E(t('sg_name'))}</label><div class="control"><input id="sg_name" type="text" maxlength="40" dir="auto" autocomplete="off" value="${E(DSG.name)}"></div></div>
+        <div class="sg-fonts" role="radiogroup" aria-label="${E(t('sg_style'))}">${SG_FONTS.map((f, i) => `<button type="button" role="radio" aria-checked="${DSG.font === i}" class="sg-font${DSG.font === i ? ' on' : ''}" data-sgf="${i}" style="font:${E(f.replace('{s}', 26))};color:${DSG.pen}">${E(DSG.name || t('sg_sample'))}</button>`).join('')}</div>`
+      : `<div class="btnrow"><button type="button" class="btn" id="sg_pickImg">📷 ${E(t('sg_pickImg'))}</button><input type="file" accept="image/*" id="sg_file" hidden></div>${DSG.img ? `<div class="sg-prev" id="sg_imgPrev"></div>` : ''}<p class="fine">${E(t('sg_imgH'))}</p>`}</div>
+    <div class="sg-pens" role="radiogroup" aria-label="${E(t('sg_pen'))}">${[['#10204a', 'sg_pBlue'], ['#111111', 'sg_pBlack'], ['#1d4ed8', 'sg_pBright']].map(([c, l]) => `<button type="button" role="radio" aria-checked="${DSG.pen === c}" class="sg-pen${DSG.pen === c ? ' on' : ''}" data-sgp="${c}"><i style="background:${c}"></i>${E(t(l))}</button>`).join('')}</div>
+    <label class="prn-ck"><input type="checkbox" id="sg_date"${DSG.date ? ' checked' : ''}> ${E(t('sg_date'))}</label>
+    <label class="prn-ck"><input type="checkbox" id="sg_keep"${DSG.keep ? ' checked' : ''}> ${E(t('sg_keep'))}</label>
+    <div class="btnrow"><button type="button" class="gold-btn" id="sg_next">${E(t('sg_next'))} ›</button></div>
+    <p class="fine sl-priv">🔒 ${E(t('sg_priv'))}</p>`;
+  if (DSG.how === 'draw') sgPadDraw();
+  if (DSG.how === 'img' && DSG.img){ const c = sgFromImg(), b = $('#sg_imgPrev'); if (b){ if (c){ c.setAttribute('aria-label', t('sg_savedA')); b.appendChild(c); } else b.textContent = t('sg_none'); } }
+}
+function sgPadDraw(){
+  const cv = $('#sg_pad'); if (!cv) return; const w = cv.clientWidth || 320, h = cv.clientHeight || 180, r = Math.min(3, window.devicePixelRatio || 1);
+  cv.width = w * r; cv.height = h * r; const x = cv.getContext('2d'); x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, cv.width, cv.height); sgPaint(x, r);
+  const ph = $('#dssg .sg-ph'); if (ph) ph.hidden = !!DSG.strokes.length;
+}
+/* step 2: put it on the page */
+function sgPlacePanel(){
+  const E = sgE, P = DSC.pages, many = P.length > 1;
+  $('#dssg_t').textContent = '✍️ ' + t('sg_placeT');
+  $('#dssg_b').innerHTML = `
+    ${many ? `<div class="ds-chips" role="radiogroup" aria-label="${E(t('sg_page'))}">${P.map((_, i) => `<button type="button" role="radio" class="ds-chip${i === DSG.pg ? ' on' : ''}" aria-checked="${i === DSG.pg}" data-sgpg="${i}">${E(t('ds_side', {n: i + 1}))}</button>`).join('')}</div>` : ''}
+    <p class="fine">${E(t('sg_placeH'))}</p>
+    <div class="sg-stage" id="sg_stage"><canvas id="sg_pagecv" aria-hidden="true"></canvas><img id="sg_mark" tabindex="0" role="img" alt="" draggable="false"></div>
+    <div class="field"><label for="sg_size">${E(t('sg_size'))}</label><input type="range" id="sg_size" min="8" max="70" step="1" value="${Math.round(DSG.w * 100)}"></div>
+    ${many ? `<label class="prn-ck"><input type="checkbox" id="sg_all"${DSG.all ? ' checked' : ''}> ${E(t('sg_all'))}</label>` : ''}
+    <div class="btnrow"><button type="button" class="gold-btn" id="sg_apply">✓ ${E(t('sg_apply'))}</button><button type="button" class="mv" id="sg_back">‹ ${E(t('sg_backMake'))}</button></div>
+    <p class="fine">${E(t('sg_legalShort'))}</p>`;
+  const m = $('#sg_mark'); m.src = DSG.sig.toDataURL('image/png'); m.setAttribute('aria-label', t('sg_markA'));
+  sgStageDraw();
+}
+function sgStageDraw(){
+  const cv = $('#sg_pagecv'), st = $('#sg_stage'); if (!cv || !st) return;
+  const p = DSC.pages[DSG.pg], c = dsCompose(p, 1200); cv.width = c.width; cv.height = c.height; cv.getContext('2d').drawImage(c, 0, 0);
+  sgMarkPos();
+}
+function sgMarkPos(){
+  const m = $('#sg_mark'), p = DSC.pages[DSG.pg]; if (!m || !p) return;
+  const hFrac = DSG.w * DSG.sig.height / DSG.sig.width * p.base.width / p.base.height;
+  DSG.x = Math.max(0, Math.min(1 - DSG.w, DSG.x)); DSG.y = Math.max(0, Math.min(1 - hFrac, DSG.y));
+  m.style.left = (DSG.x * 100) + '%'; m.style.top = (DSG.y * 100) + '%'; m.style.width = (DSG.w * 100) + '%';
+}
+function sgToPlace(){
+  const c = sgFinish(sgMake()); if (!c){ toast(t('sg_none')); return; }
+  DSG.sig = c;
+  if (DSG.keep){ try { sgSave(sgMake().toDataURL('image/png')); } catch (e) {} }
+  sgStartPlace();
+}
+function sgStartPlace(){
+  const p = DSC.pages[DSG.pg], rtl = document.documentElement.dir === 'rtl', size = (DS_CARDS.find(c => c[0] === DSC.type) || [0, 0, 'free'])[2];
+  DSG.w = size === 'card' || size === 'pass' ? 0.4 : 0.3;
+  const hFrac = DSG.w * DSG.sig.height / DSG.sig.width * p.base.width / p.base.height;
+  DSG.x = rtl ? 0.08 : 1 - DSG.w - 0.08; DSG.y = Math.max(0, 0.86 - hFrac);
+  DSG.view = 'place'; sgPanel(); setTimeout(() => { const m = $('#sg_mark'); if (m) m.focus(); }, 40);
+}
+function sgApply(){
+  const L = DSG.all ? DSC.pages : [DSC.pages[DSG.pg]];
+  L.forEach(p => { (p.sig = p.sig || []).push({c: DSG.sig, x: DSG.x, y: DSG.y, w: DSG.w}); });
+  sgClose(); dscRender(); toast(t('sg_done'));
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest) return; let b;
+  if (t0.closest('#sg_open')){ sgOpen(); return; }
+  if (t0.closest('#sg_undo')){ for (let i = DSC.pages.length - 1; i >= 0; i--){ const s = DSC.pages[i].sig; if (s && s.length){ const last = s[s.length - 1]; DSC.pages.forEach(p => { if (p.sig && p.sig[p.sig.length - 1] === last) p.sig.pop(); }); break; } } dscRender(); const u = $('#sg_undo') || $('#sg_open'); if (u) u.focus(); return; }
+  if (!t0.closest('#dssg')) return;
+  if (t0.closest('#dssg_x') || t0.id === 'dssg'){ sgClose(); return; }
+  if ((b = t0.closest('[data-sgh]'))){ DSG.how = b.dataset.sgh; sgPanel(); const n = $(`#dssg [data-sgh="${DSG.how}"]`); if (n) n.focus(); return; }
+  if ((b = t0.closest('[data-sgp]'))){ DSG.pen = b.dataset.sgp; sgPanel(); const n = $(`#dssg [data-sgp="${DSG.pen}"]`); if (n) n.focus(); return; }
+  if ((b = t0.closest('[data-sgf]'))){ DSG.font = +b.dataset.sgf; sgPanel(); const n = $(`#dssg [data-sgf="${DSG.font}"]`); if (n) n.focus(); return; }
+  if (t0.closest('#sg_clr')){ DSG.strokes = []; sgPadDraw(); return; }
+  if (t0.closest('#sg_bk')){ DSG.strokes.pop(); sgPadDraw(); return; }
+  if (t0.closest('#sg_pickImg')){ const f = $('#sg_file'); if (f) f.click(); return; }
+  if (t0.closest('#sg_useSaved')){ sgLoadUrl(sgSaved()).then(c => { DSG.sig = sgFinish(c); sgStartPlace(); }).catch(() => toast(t('sg_none'))); return; }
+  if (t0.closest('#sg_delSaved')){ sgSave(''); DSG.keep = false; sgPanel(); toast(t('sg_deleted')); return; }
+  if (t0.closest('#sg_next')){ sgToPlace(); return; }
+  if (t0.closest('#sg_back')){ DSG.view = 'make'; sgPanel(); return; }
+  if ((b = t0.closest('[data-sgpg]'))){ DSG.pg = +b.dataset.sgpg; sgPlacePanel(); return; }
+  if (t0.closest('#sg_apply')){ sgApply(); return; }
+});
+document.addEventListener('change', e => {
+  const el = e.target; if (!el || !el.closest || !el.closest('#dssg')) return;
+  if (el.id === 'sg_date') DSG.date = el.checked;
+  if (el.id === 'sg_keep'){ DSG.keep = el.checked; if (!el.checked && sgSaved()){ sgSave(''); toast(t('sg_deleted')); } }
+  if (el.id === 'sg_all') DSG.all = el.checked;
+  if (el.id === 'sg_file' && el.files && el.files[0]){ dsLoad(el.files[0]).then(c => { DSG.img = c; sgPanel(); }).catch(() => toast(t('ph_fail'))); el.value = ''; }
+});
+document.addEventListener('input', e => {
+  const el = e.target; if (!el) return;
+  if (el.id === 'sg_name'){ DSG.name = el.value.slice(0, 40); $$('#dssg .sg-font').forEach(b => b.textContent = DSG.name || t('sg_sample')); }
+  if (el.id === 'sg_size'){ DSG.w = +el.value / 100; sgMarkPos(); }
+});
+/* drawing on the pad, and dragging the signature on the page */
+document.addEventListener('pointerdown', e => {
+  const t0 = e.target; if (!t0.closest) return;
+  if (t0.id === 'sg_pad'){ e.preventDefault(); const r = t0.getBoundingClientRect(); DSG.drag = {pad: t0}; DSG.strokes.push([[e.clientX - r.left, e.clientY - r.top]]); try { t0.setPointerCapture(e.pointerId); } catch (er) {} sgPadDraw(); return; }
+  if (t0.id === 'sg_mark'){ e.preventDefault(); const r = $('#sg_stage').getBoundingClientRect(); DSG.drag = {mark: true, dx: (e.clientX - r.left) / r.width - DSG.x, dy: (e.clientY - r.top) / r.height - DSG.y}; try { t0.setPointerCapture(e.pointerId); } catch (er) {} t0.focus(); }
+});
+document.addEventListener('pointermove', e => {
+  const D = DSG.drag; if (!D) return;
+  if (D.pad){ const r = D.pad.getBoundingClientRect(); DSG.strokes[DSG.strokes.length - 1].push([e.clientX - r.left, e.clientY - r.top]); sgPadDraw(); return; }
+  if (D.mark){ const r = $('#sg_stage').getBoundingClientRect(); DSG.x = (e.clientX - r.left) / r.width - D.dx; DSG.y = (e.clientY - r.top) / r.height - D.dy; sgMarkPos(); }
+});
+const sgUp = () => { DSG.drag = null; };
+document.addEventListener('pointerup', sgUp); document.addEventListener('pointercancel', sgUp);
+document.addEventListener('keydown', e => {
+  const o = $('#dssg'); if (!o || o.hidden) return;
+  if (e.key === 'Escape'){ sgClose(); return; }
+  if (e.target && e.target.id === 'sg_mark'){
+    const s = e.shiftKey ? 0.05 : 0.01, m = {ArrowLeft: [-s, 0], ArrowRight: [s, 0], ArrowUp: [0, -s], ArrowDown: [0, s]}[e.key];
+    if (m){ e.preventDefault(); DSG.x += m[0]; DSG.y += m[1]; sgMarkPos(); return; }
+    if (e.key === '+' || e.key === '='){ e.preventDefault(); DSG.w = Math.min(0.7, DSG.w + 0.02); sgMarkPos(); const r = $('#sg_size'); if (r) r.value = Math.round(DSG.w * 100); return; }
+    if (e.key === '-'){ e.preventDefault(); DSG.w = Math.max(0.08, DSG.w - 0.02); sgMarkPos(); const r = $('#sg_size'); if (r) r.value = Math.round(DSG.w * 100); return; }
+    if (e.key === 'Enter'){ e.preventDefault(); sgApply(); return; }
+  }
+  if (e.key === 'Tab'){ const f = [...o.querySelectorAll('button,input,[tabindex="0"]')].filter(x => x.offsetParent && !x.disabled && x.type !== 'file'); if (!f.length) return; const a = f[0], z = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === a){ e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z){ e.preventDefault(); a.focus(); } }
+});
+window.addEventListener('resize', () => { const o = $('#dssg'); if (o && !o.hidden){ if (DSG.view === 'make' && DSG.how === 'draw') sgPadDraw(); else if (DSG.view === 'place') sgMarkPos(); } });
+{ const alSg = applyLang; applyLang = function(){ const r = alSg.apply(this, arguments); try { const o = $('#dssg'); if (o && !o.hidden) sgPanel(); } catch (e) {} return r; }; }
+try { GS_SYN.docscan += ' חתימה לחתום חתימה דיגיטלית חתימה אלקטרונית sign signature e-signature توقيع توقيع إلكتروني'; } catch (e) {}
 
 /* ---------- 13.5: Tax Free — VAT refund on shopping abroad (and for tourists shopping in Israel) ----------
    Rules change from time to time: the minimums and rates here were checked in October 2026 and are shown as a guide,

@@ -249,6 +249,7 @@ function dsCompose(p, maxSide){
   const k = maxSide ? Math.min(1, maxSide / Math.max(p.base.width, p.base.height)) : 1, W = Math.round(p.base.width * k), H = Math.round(p.base.height * k);
   const c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(p._f, 0, 0, W, H);
   x.fillStyle = '#000'; (p.red || []).forEach(r => x.fillRect(r[0] * W, r[1] * H, r[2] * W, r[3] * H));
+  try { dsSigDraw(p, x, W, H); } catch (e) {}
   const wm = String(DSC.wm || '').trim();
   if (wm){
     const txt = wm + ' · ' + new Date().toLocaleDateString('he-IL'), fs = Math.max(14, Math.round(Math.min(W, H) / 11));
@@ -303,6 +304,7 @@ function dsCardRender(root){
     <div class="ds-chips" role="radiogroup" aria-label="${slE(t('ds_filt'))}">${['auto', 'doc', 'orig', 'gray', 'bw'].map(f => `<button type="button" role="radio" class="ds-chip${f === C.filt ? ' on' : ''}" aria-checked="${f === C.filt}" data-dfl="${f}">${slE(t('ds_f_' + f))}</button>`).join('')}</div>
     <h4 class="ds-q">${slE(t('ds_red'))}</h4><p class="fine">${slE(t(C.type === 'credit' ? 'ds_credit' : 'ds_redH'))}</p>
     <div class="btnrow"><button type="button" class="btn${DSX.red ? ' on' : ''}" id="ds_redb" aria-pressed="${DSX.red}">🖍️ ${slE(t(DSX.red ? 'ds_redOn' : 'ds_redGo'))}</button><button type="button" class="mv" id="ds_redu">↶ ${slE(t('ds_redUndo'))}</button></div>
+    ${typeof dsSigHTML === 'function' ? dsSigHTML() : ''}
     <div class="field ds-wmf"><label for="ds_wm">💧 ${slE(t('ds_wm'))}</label><div class="control"><input id="ds_wm" type="text" maxlength="60" dir="auto" value="${slE(C.wm)}" placeholder="${slE(t('ds_wmPh'))}"></div></div><p class="fine">${slE(t('ds_wmH'))}</p>
     ${size === 'card' || size === 'pass' ? `<div class="field cv-f"><label for="ds_lay">${slE(t('ds_lay'))}</label><select id="ds_lay">${['sheet', 'sep'].map(v => `<option value="${v}"${v === C.lay ? ' selected' : ''}>${slE(t('ds_lay_' + v))}</option>`).join('')}</select></div>` : ''}
     <div class="field cv-f"><label for="ds_q">${slE(t('ds_q'))}</label><select id="ds_q">${['max', 'std'].map(v => `<option value="${v}"${v === (C.q || 'max') ? ' selected' : ''}>${slE(t('ds_q_' + v))}</option>`).join('')}</select></div>
