@@ -6100,6 +6100,14 @@
   "tf_pcIn": "Price",
   "tf_pcNet": "Price before tax",
   "tf_pcTax": "Tax inside the price",
-  "tf_pcTot": "To pay with tax"
+  "tf_pcTot": "To pay with tax",
+  "ds_f_doc": "Document (white page)",
+  "ds_blurry": "The scan looks blurred – take it again, steady and in good light.",
+  "ds_lowres": "The photo holds only about {d} DPI. For the best quality, shoot closer so the document fills the screen.",
+  "ds_q": "File quality",
+  "ds_q_max": "Highest – full resolution (up to 600 DPI)",
+  "ds_q_std": "Smaller file for sending (300 DPI)",
+  "ds_tipsT": "Tips for the best scan",
+  "ds_tips": "Daylight or strong light without shadows, and no flash (it causes glare). Lay the document flat on a dark surface, shoot straight from above so it nearly fills the screen, and hold steady for a moment after tapping. Use the main camera, without digital zoom."
  }
 }
