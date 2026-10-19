@@ -640,6 +640,7 @@ function applyMacro(d){
   const c = +d.cpi12; if (useC && isFinite(c) && Math.abs(c) < 30) MKT.cpi = c;
   if (useC && /^\d{4}-\d{2}$/.test(d.cpiMonth || '')){ const [y, m] = d.cpiMonth.split('-'); MKT.cpiMonth = m + '/' + y;
     const ytd = +d.cpiYtd; if (isFinite(ytd) && Math.abs(ytd) < 30 && +y === 2026){ MKT.cpiYtd = ytd; MKT.cpiYtdTo = +m; INFL_IL[2026] = ytd; } }
+  const f95 = +d.fuel95; if (isFinite(f95) && f95 >= 5 && f95 <= 13 && typeof IL26 === 'object'){ IL26.fuel95 = f95; MKT.fuelMonth = d.fuelMonth || ''; }     // the monthly regulated petrol price
   if (useI) MKT.srcI = 'db'; if (useC) MKT.src = 'db'; macroAt = +d.asOf || 0;
   // keep the prime calculator in step unless the user typed their own rate
   const f = $('#pr_boi'); if (f && (+f.value === oldBoi || f.value === '')) f.value = MKT.boi;

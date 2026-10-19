@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261019.212211'){ try { if (!sessionStorage.getItem('fin-hb-20261019.212211')){ sessionStorage.setItem('fin-hb-20261019.212211', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261019.235804'){ try { if (!sessionStorage.getItem('fin-hb-20261019.235804')){ sessionStorage.setItem('fin-hb-20261019.235804', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -4974,6 +4974,107 @@ Object.assign(T, {
   lg_p_dev11:['מחשבון דלק: יומן התדלוקים (תאריך, מד ק״מ, ליטרים וסכום) והנתונים של הרכב נשמרים רק במכשיר. אפשר לייצא את היומן לקובץ או למחוק אותו.','حاسبة الوقود: سجل التعبئة (التاريخ، العداد، اللترات والمبلغ) وبيانات السيارة تُحفظ على الجهاز فقط. يمكن تصدير السجل إلى ملف أو حذفه.','Fuel calculator: the fill-up log (date, odometer, litres and amount) and your car details are kept on the device only. You can export the log to a file or delete it.'],
   lg_h_p1910j:['19.10.2026 – נוסף הסבר על יומן התדלוקים במחשבון הדלק.','19.10.2026 – أُضيف شرح عن سجل التعبئة في حاسبة الوقود.','19.10.2026 – added an explanation of the fuel calculator\'s fill-up log.'],
 });
+/* 13.19: reminders */
+Object.assign(T, {
+  tab_reminders:['תזכורות','تذكيرات','Reminders'],
+  d_reminders:['חידוש רישיון, ביטוח, החזר מס, ארנונה ותאריכים חשובים – עם התראה מראש, חזרה קבועה ויומן בטלפון.','تجديد رخصة، تأمين، استرداد ضريبة، أرنونا وتواريخ مهمة – مع تنبيه مسبق وتكرار وتقويم الهاتف.','Licence renewal, insurance, tax refund, arnona and other key dates – with early alerts, repeats and your phone\'s calendar.'],
+  rm_intro:['תאריכים שעולים כסף אם שוכחים אותם. כל תזכורת אפשר לערוך, לחזור עליה ולהוסיף ליומן בטלפון.','تواريخ تكلّف مالًا إذا نُسيت. يمكن تعديل كل تذكير وتكراره وإضافته إلى تقويم الهاتف.','Dates that cost money if you forget them. Every reminder can be edited, repeated and added to your phone\'s calendar.'],
+  rm_add:['תזכורת חדשה','تذكير جديد','New reminder'], rm_editT:['עריכת תזכורת','تعديل التذكير','Edit reminder'], rm_icsAll:['הכול ליומן','الكل إلى التقويم','All to calendar'], rm_notif:['התראות בטלפון','تنبيهات على الهاتف','Phone notifications'],
+  rm_search:['חיפוש בתזכורות','بحث في التذكيرات','Search reminders'], rm_filter:['סינון','تصفية','Filter'], rm_fUp:['פעילות','نشطة','Active'], rm_fLate:['באיחור','متأخرة','Overdue'], rm_fDone:['בוצעו','تمّت','Done'], rm_fAll:['הכול','الكل','All'],
+  rm_none:['עוד אין תזכורות. הוסיפו אחת, או בחרו מההצעות למטה.','لا توجد تذكيرات بعد. أضيفوا واحدًا أو اختاروا من الاقتراحات أدناه.','No reminders yet. Add one, or pick from the suggestions below.'], rm_noneF:['אין תזכורות שמתאימות.','لا توجد تذكيرات مطابقة.','No matching reminders.'],
+  rm_dueN:['{n} תזכורות להיום ולימים הקרובים.','{n} تذكيرات لليوم والأيام القريبة.','{n} reminders due now or soon.'], rm_lateN:['{n} מהן באיחור.','{n} منها متأخرة.','{n} of them overdue.'],
+  rm_today:['היום','اليوم','today'], rm_tomorrow:['מחר','غدًا','tomorrow'], rm_inDays:['בעוד {n} ימים','بعد {n} أيام','in {n} days'], rm_late:['באיחור של {n} ימים','متأخر {n} أيام','{n} days overdue'], rm_isDone:['בוצע','تمّ','done'],
+  rm_r_none:['פעם אחת','مرة واحدة','Once'], rm_r_week:['כל שבוע','كل أسبوع','Every week'], rm_r_month:['כל חודש','كل شهر','Every month'], rm_r_year:['כל שנה','كل سنة','Every year'],
+  rm_b_0:['ביום עצמו','في اليوم نفسه','On the day'], rm_b_n:['{n} ימים לפני','قبل {n} أيام','{n} days before'],
+  rm_c_car:['רכב','سيارة','Car'], rm_c_home:['בית','بيت','Home'], rm_c_tax:['מס','ضريبة','Tax'], rm_c_bills:['חשבונות','فواتير','Bills'], rm_c_insur:['ביטוח','تأمين','Insurance'], rm_c_docs:['מסמכים','مستندات','Documents'], rm_c_money:['כסף','مال','Money'], rm_c_family:['משפחה','عائلة','Family'], rm_c_other:['אחר','أخرى','Other'],
+  rm_fTitle:['מה צריך לעשות','ما الذي يجب فعله','What to do'], rm_fTitlePh:['למשל: חידוש רישיון רכב','مثلًا: تجديد رخصة السيارة','e.g. Renew the car licence'], rm_fDate:['תאריך','التاريخ','Date'], rm_fTime:['שעה (לא חובה)','الساعة (اختياري)','Time (optional)'], rm_fRep:['חזרה','التكرار','Repeat'], rm_fBefore:['להזכיר','التذكير','Remind me'], rm_fCat:['קטגוריה','الفئة','Category'], rm_fAmt:['סכום (לא חובה)','المبلغ (اختياري)','Amount (optional)'], rm_fNote:['הערה','ملاحظة','Note'],
+  rm_save:['שמירה','حفظ','Save'], rm_cancel:['ביטול','إلغاء','Cancel'], rm_delB:['מחיקה','حذف','Delete'],
+  rm_needTitle:['כתבו מה צריך לעשות.','اكتبوا ما يجب فعله.','Write what needs doing.'], rm_needDate:['בחרו תאריך.','اختاروا تاريخًا.','Pick a date.'],
+  rm_saved:['התזכורת עודכנה.','تم تحديث التذكير.','Reminder updated.'], rm_added:['התזכורת נוספה.','أُضيف التذكير.','Reminder added.'], rm_deleted:['התזכורת נמחקה.','حُذف التذكير.','Reminder deleted.'], rm_delQ:['למחוק את "{t}"?','حذف "{t}"؟','Delete "{t}"?'],
+  rm_done:['סימון "{t}" כבוצע','وضع علامة "تمّ" على "{t}"','Mark "{t}" as done'], rm_doneNext:['בוצע – להעביר את "{t}" למועד הבא','تمّ – نقل "{t}" إلى الموعد التالي','Done – move "{t}" to the next date'], rm_undo:['החזרת "{t}" לפעילות','إعادة "{t}" إلى النشطة','Make "{t}" active again'],
+  rm_edit:['עריכת "{t}"','تعديل "{t}"','Edit "{t}"'], rm_ics:['הוספת "{t}" ליומן','إضافة "{t}" إلى التقويم','Add "{t}" to the calendar'], rm_dup:['שכפול "{t}"','نسخ "{t}"','Duplicate "{t}"'], rm_del:['מחיקת "{t}"','حذف "{t}"','Delete "{t}"'], rm_copy:['(עותק)','(نسخة)','(copy)'],
+  rm_movedTo:['המועד הבא: {d}','الموعد التالي: {d}','Next date: {d}'],
+  rm_sugH:['הצעות','اقتراحات','Suggestions'],
+  rm_s_carLic:['חידוש רישיון רכב (אגרת רישוי)','تجديد رخصة السيارة','Car licence renewal'], rm_sn_carLic:['אפשר לשלם באתר משרד התחבורה. בלי רישיון בתוקף הביטוח עלול לא לכסות.','يمكن الدفع في موقع وزارة المواصلات. بدون رخصة سارية قد لا يغطي التأمين.','Pay on the Ministry of Transport site. Without a valid licence the insurance may not cover you.'],
+  rm_s_carIns:['חידוש ביטוח רכב','تجديد تأمين السيارة','Car insurance renewal'], rm_sn_carIns:['כדאי להשוות הצעות חודש לפני – החידוש האוטומטי לרוב יקר יותר.','يُستحسن مقارنة العروض قبل شهر – التجديد التلقائي غالبًا أغلى.','Compare offers a month ahead – automatic renewal is usually dearer.'],
+  rm_s_carTest:['טסט שנתי לרכב','الفحص السنوي للسيارة','Annual car test'], rm_sn_carTest:['','',''],
+  rm_s_homeIns:['חידוש ביטוח דירה','تجديد تأمين الشقة','Home insurance renewal'], rm_sn_homeIns:['בדקו שסכום הביטוח מתאים לשווי התכולה והמבנה.','تأكدوا أن مبلغ التأمين يناسب قيمة المحتويات والمبنى.','Check the sum insured matches the contents and building.'],
+  rm_s_taxRefund:['בדיקת החזר מס','فحص استرداد الضريبة','Check for a tax refund'], rm_sn_taxRefund:['אפשר לבקש החזר מס עד 6 שנים אחורה. מחשבון החזר המס באפליקציה עוזר לבדוק.','يمكن طلب استرداد الضريبة حتى 6 سنوات للوراء. حاسبة الاسترداد في التطبيق تساعد.','You can claim a tax refund up to 6 years back. The tax refund calculator in the app helps.'],
+  rm_s_arnona:['תשלום ארנונה','دفع الأرنونا','Arnona payment'], rm_sn_arnona:['בדקו אם מגיעה לכם הנחה – יש כלי בדיקה באפליקציה.','افحصوا إن كان يحق لكم خصم – توجد أداة فحص في التطبيق.','Check whether you qualify for a discount – there\'s a checker in the app.'],
+  rm_s_passport:['תוקף דרכון','صلاحية جواز السفر','Passport expiry'], rm_sn_passport:['מדינות רבות דורשות דרכון בתוקף לפחות 6 חודשים מיום הכניסה.','دول كثيرة تشترط جوازًا ساريًا 6 أشهر على الأقل من يوم الدخول.','Many countries require a passport valid for at least 6 months after entry.'],
+  rm_s_drvLic:['חידוש רישיון נהיגה','تجديد رخصة القيادة','Driving licence renewal'], rm_sn_drvLic:['','',''],
+  rm_s_subEnd:['סוף תקופת ניסיון / מנוי','نهاية فترة التجربة / الاشتراك','End of a trial / subscription'], rm_sn_subEnd:['לבטל לפני שמתחיל חיוב מלא.','الإلغاء قبل بدء الخصم الكامل.','Cancel before full billing starts.'],
+  rm_s_warranty:['סוף אחריות על מוצר','نهاية الكفالة على منتج','Product warranty ends'], rm_sn_warranty:['בדקו שהכול תקין לפני שהאחריות נגמרת.','تأكدوا أن كل شيء سليم قبل انتهاء الكفالة.','Check everything works before the warranty ends.'],
+  rm_s_deposit:['פיקדון מסתיים','انتهاء الوديعة','Deposit matures'], rm_sn_deposit:['החליטו מראש איפה להשקיע – אחרת הכסף חוזר לעו״ש בלי ריבית.','قرروا مسبقًا أين تستثمرون – وإلا يعود المال للحساب الجاري بلا فائدة.','Decide in advance where to put it – or the money goes back to the current account with no interest.'],
+  rm_s_mortRev:['בדיקת מחזור משכנתה','فحص إعادة تمويل الرهن','Mortgage refinance check'], rm_sn_mortRev:['פעם בשנה כדאי לבדוק אם מחזור חוסך כסף.','مرة في السنة يُستحسن فحص إن كانت إعادة التمويل توفر مالًا.','Once a year, check whether refinancing saves money.'],
+  rm_homeH:['{n} תזכורות','{n} تذكيرات','{n} reminders'], rm_more:['ועוד {n}','و{n} أخرى','and {n} more'], rm_toast:['⏰ {n} תזכורות: {t}','⏰ {n} تذكيرات: {t}','⏰ {n} reminders: {t}'],
+  rm_priv:['התזכורות נשמרות רק במכשיר. ההתראות מופיעות כשפותחים את האפליקציה; ליומן בטלפון – "הכול ליומן".','التذكيرات تُحفظ على الجهاز فقط. التنبيهات تظهر عند فتح التطبيق؛ لتقويم الهاتف – "الكل إلى التقويم".','Reminders are kept on this device only. Alerts show when you open the app; for your phone\'s calendar use "All to calendar".'],
+  rm_c1:['מה הכי דחוף אצלי?','ما الأكثر إلحاحًا عندي؟','What\'s most urgent for me?'], rm_c2:['אילו תזכורות כדאי לי להוסיף?','ما التذكيرات التي يُستحسن إضافتها؟','Which reminders should I add?'],
+  d5_fRem:['תזכורת ל־{v}','تذكير لـ{v}','Reminder for {v}'], d5_fExp:['הוספת {v} להוצאות','إضافة {v} إلى المصاريف','Add {v} to expenses'],
+  lg_p_dev12:['תזכורות: הכותרות, התאריכים וההערות נשמרים רק במכשיר. קובץ יומן (‎.ics) נוצר רק כשמבקשים.','التذكيرات: العناوين والتواريخ والملاحظات تُحفظ على الجهاز فقط. ملف التقويم (‎.ics) يُنشأ فقط عند الطلب.','Reminders: titles, dates and notes are kept on the device only. A calendar file (.ics) is made only when you ask.'],
+  pic_h:['התמונה שלי','صورتي المالية','My picture'], pic_empty:['מלאו חשבונות בנק או הוצאות והכנסה – וכאן תופיע התמונה הכספית שלכם עם ציון ו־3 המלצות.','املأوا الحسابات البنكية أو المصاريف والدخل – وستظهر هنا صورتكم المالية مع علامة و3 توصيات.','Fill in your bank accounts or expenses and income – your financial picture appears here with a score and 3 tips.'],
+  pic_spend:['הוצאות החודש','مصاريف الشهر','Spent this month'], pic_sr:['חיסכון מההכנסה','الادخار من الدخل','Saved from income'], pic_bal:['יתרה בחשבונות','الرصيد في الحسابات','Bank balance'], pic_buf:['כרית ביטחון','احتياطي الأمان','Emergency buffer'], pic_months:['{n} חודשים','{n} أشهر','{n} months'], pic_debt:['חובות','ديون','Debts'], pic_fuel:['דלק בחודש','الوقود شهريًا','Fuel a month'],
+  pic_scoreA:['ציון בריאות פיננסית: {n} מתוך 100','علامة الصحة المالية: {n} من 100','Financial health score: {n} out of 100'], pic_good:['מצב טוב – להמשיך כך','وضع جيد – استمروا هكذا','In good shape – keep it up'], pic_ok:['סביר – יש מה לשפר','معقول – يمكن التحسين','Fair – room to improve'], pic_low:['כדאי לטפל בזה החודש','يُستحسن معالجة ذلك هذا الشهر','Worth tackling this month'], pic_more:['עוד נתונים יתנו ציון','بيانات إضافية ستعطي علامة','More data gives a score'],
+  pic_from:['מחושב מהכלים שמילאתם: חשבונות, הוצאות, חובות ודלק.','محسوب من الأدوات التي ملأتموها: الحسابات والمصاريف والديون والوقود.','Worked out from the tools you filled in: accounts, expenses, debts and fuel.'],
+  pic_tipsH:['3 דברים לעשות החודש','3 أمور لهذا الشهر','3 things to do this month'],
+  pic_tOver:['ההוצאות גבוהות מההכנסה – בדקו איפה לקצץ','المصاريف أعلى من الدخل – افحصوا أين تقلّصون','Spending is above income – see where to cut'], pic_tSave:['הוראת קבע לחיסכון ביום המשכורת – יעד: 10% מההכנסה','أمر دائم للادخار يوم الراتب – الهدف: 10% من الدخل','A standing order to savings on payday – aim for 10% of income'],
+  pic_tBud:['חריגה מהתקציב: {n}','تجاوز الميزانية: {n}','Over budget: {n}'], pic_tBuf:['להשלים כרית ביטחון של 3 חודשים – חסרים {m}','إكمال احتياطي 3 أشهر – ينقص {m}','Build a 3-month buffer – {m} to go'], pic_tOd:['לצאת מהמינוס','الخروج من السالب','Get out of the overdraft'],
+  pic_tFee:['עמלות בנק של {y} בשנה – אפשר להוריד','عمولات بنك {y} سنويًا – يمكن تخفيضها','Bank fees of {y} a year – they can come down'], pic_tDebt:['החובות גבוהים ביחס להכנסה – תוכנית החזר תחסוך ריבית','الديون مرتفعة مقارنة بالدخل – خطة سداد توفر الفائدة','Debts are high for your income – a payoff plan saves interest'], pic_tRem:['{n} תזכורות פתוחות – הראשונה: {t}','{n} تذكيرات مفتوحة – الأول: {t}','{n} open reminders – first: {t}'],
+  pic_priv:['מחושב רק בטלפון. לא נשלח לשום מקום.','محسوب على الهاتف فقط. لا يُرسل إلى أي مكان.','Worked out on the phone only. Nothing is sent.'],
+});
+/* 13.19: electricity suppliers, gift for an event, car cost, arnona discount */
+Object.assign(T, {
+  tab_elecsup:['השוואת ספקי חשמל','مقارنة مزودي الكهرباء','Electricity suppliers'], d_elecsup:['איזה ספק ומסלול חוסכים לכם הכי הרבה, לפי השעות שבהן אתם צורכים חשמל.','أي مزود ومسار يوفر لكم أكثر حسب ساعات استهلاككم.','Which supplier and plan saves you most, based on when you use electricity.'],
+  es_intro:['מאז רפורמת החשמל אפשר לקנות חשמל מספק פרטי בהנחה על חברת החשמל. ההנחה חלה על רכיב הצריכה בלבד, לא על התשלום הקבוע.','منذ إصلاح الكهرباء يمكن شراء الكهرباء من مزود خاص بخصم عن شركة الكهرباء. الخصم على مكوّن الاستهلاك فقط، لا على الرسوم الثابتة.','Since the electricity reform you can buy power from a private supplier at a discount on the Electric Company price. The discount is on consumption only, not the fixed charge.'],
+  es_kwh:['צריכה בחודש','الاستهلاك شهريًا','Use per month'], es_tar:['תעריף לקוט״ש','التعريفة لكل كيلوواط ساعة','Price per kWh'], es_prof:['מתי אתם צורכים חשמל','متى تستهلكون الكهرباء','When you use electricity'],
+  es_p_fam:['משפחה רגילה (ערב ובוקר)','عائلة عادية (مساء وصباح)','Typical family (evening and morning)'], es_p_home:['עבודה מהבית (שעות היום)','عمل من البيت (ساعات النهار)','Working from home (daytime)'], es_p_night:['הרבה בלילה (טעינת רכב, דוד)','كثير ليلًا (شحن سيارة، سخان)','A lot at night (EV charging, boiler)'], es_p_out:['לא בבית ביום','لست في البيت نهارًا','Out during the day'], es_p_custom:['אחר – אגדיר בעצמי','أخرى – سأحدد بنفسي','Other – I\'ll set it'],
+  es_we:['חלק הצריכה בסופ״ש','نسبة الاستهلاك في نهاية الأسبوع','Share used at weekends'], es_smart:['יש לי מונה חכם (נדרש למסלולי שעות)','لدي عداد ذكي (مطلوب لمسارات الساعات)','I have a smart meter (needed for time-of-day plans)'],
+  es_best:['הכי משתלם: {s}','الأكثر جدوى: {s}','Best: {s}'], es_bestSub:['{p} · הנחה בפועל {e}% · {m} בחודש','{p} · خصم فعلي {e}% · {m} شهريًا','{p} · actual discount {e}% · {m} a month'], es_yr:['שנה','سنة','year'],
+  es_plan:['ספק ומסלול','المزود والمسار','Supplier and plan'], es_disc:['הנחה','الخصم','Discount'], es_eff:['בפועל','فعليًا','Actual'], es_saveY:['חיסכון בשנה','التوفير سنويًا','Saving a year'],
+  es_s_cellcom:['סלקום אנרגיה','سيلكوم للطاقة','Cellcom Energy'], es_s_electra:['אלקטרה פאוור','إلكترا باور','Electra Power'], es_s_bezeq:['בזק אנרגיה','بيزك للطاقة','Bezeq Energy'], es_s_amisragaz:['אמישראגז חשמל','أميسراغاز كهرباء','Amisragaz Electricity'], es_s_partner:['פרטנר פאוור','بارتنر باور','Partner Power'], es_s_hot:['הוט אנרגיה','هوت للطاقة','HOT Energy'], es_s_pazgaz:['פזגז חשמל','بازغاز كهرباء','Pazgaz Electricity'],
+  es_k_fix:['הנחה קבועה','خصم ثابت','Fixed discount'], es_k_day:['מסלול יום','مسار النهار','Daytime plan'], es_k_fam:['מסלול משפחה','مسار العائلة','Family plan'], es_k_night:['מסלול לילה','مسار الليل','Night plan'],
+  es_w_all:['כל השעות','كل الساعات','all hours'], es_w_day:['07:00–17:00','07:00–17:00','07:00–17:00'], es_w_fam:['14:00–20:00','14:00–20:00','14:00–20:00'], es_w_night:['23:00–07:00','23:00–07:00','23:00–07:00'], es_wk:['א׳–ה׳','الأحد–الخميس','Sun–Thu'], es_needSmart:['מונה חכם','عداد ذكي','smart meter'],
+  es_nGas:['7% ללקוחות הגז','7% لزبائن الغاز','7% for gas customers'], es_nYears:['6% בשנה השנייה, 7% מהשלישית','6% في السنة الثانية، 7% من الثالثة','6% in year 2, 7% from year 3'], es_nHot:['6% ללקוחות HOT/NEXT','6% لزبائن HOT/NEXT','6% for HOT/NEXT customers'],
+  es_tSmart:['מונה חכם יחסוך עוד כ־{m} בשנה','العداد الذكي يوفر نحو {m} إضافية سنويًا','A smart meter would save about {m} more a year'], es_tSmartP:['אפשר לבקש מחברת החשמל להתקין מונה חכם, בלי תשלום.','يمكن طلب تركيب عداد ذكي من شركة الكهرباء مجانًا.','You can ask the Electric Company to install a smart meter, free of charge.'],
+  es_tHow:['איך עוברים','كيف تنتقلون','How to switch'], es_tHowP:['מצטרפים באתר או באפליקציה של הספק. אין החלפת מונה ואין הפסקת חשמל, והחשבון ממשיך להגיע מחברת החשמל או מהספק.','تنضمون عبر موقع أو تطبيق المزود. لا يُستبدل العداد ولا ينقطع التيار.','Join on the supplier\'s site or app. The meter isn\'t replaced and the power isn\'t cut.'],
+  es_tFix:['ההנחה רק על הצריכה','الخصم على الاستهلاك فقط','The discount is on consumption only'], es_tFixP:['התשלום הקבוע בחשבון נשאר כמו שהוא. בדקו את תנאי המסלול ומשך ההתחייבות לפני שעוברים.','الرسوم الثابتة تبقى كما هي. افحصوا شروط المسار ومدة الالتزام قبل الانتقال.','The fixed charge stays the same. Check the plan\'s terms and commitment period before switching.'],
+  es_note:['ההנחות כפי שפורסמו באוקטובר 2026; הספקים משנים אותן לעיתים קרובות – בדקו באתר הספק לפני מעבר. התעריף: חברת החשמל, 2026.','الخصومات كما نُشرت في أكتوبر 2026؛ المزودون يغيّرونها كثيرًا – افحصوا موقع المزود قبل الانتقال. التعريفة: شركة الكهرباء 2026.','Discounts as published in October 2026; suppliers change them often – check the supplier\'s site before switching. Tariff: Israel Electric Corporation, 2026.'],
+  tab_eventgift:['כמה לתת באירוע','كم أعطي في المناسبة','Gift for an event'], d_eventgift:['כמה לשים בחתונה, בר/בת מצווה או ברית – לפי הקרבה, המקום ומי מגיע.','كم أضع في العرس أو بار متسفا أو الختان – حسب القرابة والمكان ومن يحضر.','How much to give at a wedding, bar/bat mitzvah or brit – by closeness, venue and who comes.'],
+  eg_intro:['כיוון כללי לפי הסכומים המקובלים שפורסמו ל־2026. אין סכום "נכון" – תנו לפי היכולת.','توجيه عام حسب المبالغ المتعارف عليها المنشورة لعام 2026. لا يوجد مبلغ "صحيح" – أعطوا حسب القدرة.','A general guide based on the usual amounts published for 2026. There\'s no "right" amount – give what you can.'],
+  eg_ev:['אירוע','المناسبة','Event'], eg_e_wed:['חתונה','عرس','Wedding'], eg_e_bar:['בר/בת מצווה','بار/بات متسفا','Bar/bat mitzvah'], eg_e_brit:['ברית / בריתה','ختان / تسمية','Brit / baby naming'], eg_e_bday:['יום הולדת / אחר','عيد ميلاد / أخرى','Birthday / other'],
+  eg_rel:['הקרבה','القرابة','Closeness'], eg_r_acq:['מכר רחוק','معرفة بعيدة','Distant acquaintance'], eg_r_work:['עמית לעבודה','زميل عمل','Colleague'], eg_r_friend:['חבר','صديق','Friend'], eg_r_close:['חבר קרוב','صديق مقرّب','Close friend'], eg_r_rel:['בן משפחה (דוד, בן דוד)','قريب (عم، ابن عم)','Relative (uncle, cousin)'], eg_r_sib:['אח / הורה','أخ / أحد الوالدين','Sibling / parent'],
+  eg_who:['מי מגיע','من يحضر','Who\'s coming'], eg_w_one:['לבד','وحدي','Just me'], eg_w_two:['זוג','زوجان','A couple'], eg_w_kids:['משפחה עם ילדים','عائلة مع أطفال','Family with children'], eg_kids:['מספר ילדים','عدد الأطفال','Number of children'],
+  eg_ven:['המקום','المكان','Venue'], eg_v_hall:['אולם גדול','قاعة كبيرة','Large hall'], eg_v_garden:['גן אירועים','حديقة مناسبات','Garden venue'], eg_v_boutique:['אירוע בוטיק / מסעדה','مناسبة بوتيك / مطعم','Boutique / restaurant'], eg_v_home:['בבית / בחצר','في البيت / الساحة','At home / in a yard'],
+  eg_reg:['אזור','المنطقة','Area'], eg_g_center:['מרכז / ירושלים','المركز / القدس','Centre / Jerusalem'], eg_g_per:['פריפריה','الأطراف','Periphery'], eg_day:['יום','اليوم','Day'], eg_d_we:['חמישי–שישי','الخميس–الجمعة','Thursday–Friday'], eg_d_wk:['אמצע שבוע','وسط الأسبوع','Midweek'],
+  eg_bud:['המצב הכלכלי','الوضع المالي','Your budget'], eg_b_avg:['רגיל','عادي','Average'], eg_b_tight:['לחוץ','ضيّق','Tight'], eg_b_comf:['נוח','مريح','Comfortable'],
+  eg_rec:['סכום מומלץ','المبلغ المقترح','Suggested amount'], eg_range:['טווח מקובל: {a}–{b}','النطاق المتعارف: {a}–{b}','Usual range: {a}–{b}'], eg_chai:['בכפולות של 18 (חי)','بمضاعفات 18','In multiples of 18 (chai)'], eg_perGuest:['לכל אורח','لكل ضيف','Per guest'], eg_perHead:['בממוצע','في المتوسط','on average'],
+  eg_t1:['אין חובה לכסות את המנה','لا يلزم تغطية كلفة الوجبة','You don\'t have to cover the meal'], eg_t1P:['עלות מנה באולם היא בדרך כלל 250–500 ₪ לאורח. המתנה היא מחווה, לא חשבון – תנו לפי היכולת והקרבה.','كلفة الوجبة في القاعة عادة 250–500 ₪ للضيف. الهدية لفتة لا فاتورة – أعطوا حسب القدرة والقرابة.','A hall meal usually costs 250–500 ₪ a guest. A gift is a gesture, not a bill – give by your means and closeness.'],
+  eg_t2:['ביט / פייבוקס','بيت / بايبوكس','Bit / PayBox'], eg_t2P:['הרבה זוגות מקבלים היום העברה בטלפון. כתבו שם ברור בהערה כדי שיידעו ממי.','كثير من الأزواج يستقبلون اليوم تحويلًا بالهاتف. اكتبوا اسمًا واضحًا في الملاحظة.','Many couples now accept a phone transfer. Write a clear name in the note so they know who it\'s from.'],
+  eg_note:['מבוסס על טווחי הסכומים שפורסמו ל־2026 (אולם גדול: כ־550–650 ₪ לאורח יחיד, גן: 450–550, בוטיק: 400–500, פריפריה נמוך יותר). זו הערכה בלבד.','مبني على نطاقات المبالغ المنشورة لعام 2026 (قاعة كبيرة: نحو 550–650 ₪ للضيف الواحد، حديقة: 450–550، بوتيك: 400–500، الأطراف أقل). تقدير فقط.','Based on the ranges published for 2026 (large hall: about 550–650 ₪ for one guest, garden 450–550, boutique 400–500, lower in the periphery). An estimate only.'],
+  tab_carcost:['כמה באמת עולה הרכב','كم تكلّف السيارة فعلًا','Real cost of a car'], d_carcost:['ירידת ערך, דלק, ביטוח, רישוי, טיפולים וחניה – עלות לחודש ולק״מ.','الاهتلاك والوقود والتأمين والترخيص والصيانة والموقف – كلفة شهرية ولكل كم.','Depreciation, fuel, insurance, licence, servicing and parking – cost per month and per km.'],
+  cc_intro:['כל העלויות של הרכב במקום אחד. הדלק והק״מ נלקחים ממחשבון הדלק אם מילאתם אותו. הסכומים כאן הם הערכה – החליפו בשלכם.','كل تكاليف السيارة في مكان واحد. الوقود والكيلومترات من حاسبة الوقود إن ملأتموها. المبالغ هنا تقديرية – استبدلوها بأرقامكم.','All of the car\'s costs in one place. Fuel and km come from the fuel calculator if you filled it in. The amounts here are estimates – replace them with yours.'],
+  cc_hCar:['הרכב והנסיעה','السيارة والقيادة','The car and driving'], cc_val:['שווי הרכב היום','قيمة السيارة اليوم','Car value today'], cc_dep:['ירידת ערך בשנה','الاهتلاك سنويًا','Depreciation a year'], cc_km:['ק״מ בחודש','كم شهريًا','km a month'], cc_l100:['ליטר ל־100 ק״מ','لتر لكل 100 كم','L per 100 km'], cc_fp:['מחיר לליטר','السعر للتر','Price per litre'],
+  cc_hYear:['עלויות שנתיות','تكاليف سنوية','Yearly costs'], cc_ins:['ביטוח (חובה + מקיף)','تأمين (إلزامي + شامل)','Insurance (compulsory + comprehensive)'], cc_lic:['אגרת רישוי','رسوم الترخيص','Licence fee'], cc_test:['טסט','الفحص السنوي','Annual test'], cc_svc:['טיפולים ותיקונים','صيانة وتصليحات','Servicing and repairs'], cc_tire:['צמיגים (ממוצע לשנה)','إطارات (متوسط سنوي)','Tyres (yearly average)'],
+  cc_hMonth:['עלויות חודשיות','تكاليف شهرية','Monthly costs'], cc_park:['חניה','موقف','Parking'], cc_toll:['כבישי אגרה','طرق برسوم','Toll roads'], cc_loan:['החזר הלוואה לרכב','قسط قرض السيارة','Car loan payment'], cc_opp:['תשואה חלופית על הכסף','عائد بديل على المال','Alternative return on the money'],
+  cc_tot:['עלות הרכב','كلفة السيارة','Car cost'], cc_sub:['{k} לק״מ · {y} בשנה','{k} لكل كم · {y} سنويًا','{k} per km · {y} a year'],
+  cc_pDep:['ירידת ערך','الاهتلاك','Depreciation'], cc_pFuel:['דלק','الوقود','Fuel'], cc_pYear:['ביטוח, רישוי, טסט, טיפולים, צמיגים','تأمين، ترخيص، فحص، صيانة، إطارات','Insurance, licence, test, servicing, tyres'], cc_pMonth:['חניה, אגרות והלוואה','موقف، رسوم وقرض','Parking, tolls and loan'], cc_pOpp:['תשואה שהכסף לא מרוויח','العائد الذي لا يكسبه المال','Return the money isn\'t earning'],
+  cc_5y:['עלות כוללת ל־5 שנים','الكلفة الإجمالية لـ5 سنوات','Total cost over 5 years'], cc_val5:['שווי הרכב בעוד 5 שנים','قيمة السيارة بعد 5 سنوات','Car value in 5 years'],
+  cc_t1:['העלות הגדולה: {p}','الكلفة الأكبر: {p}','The biggest cost: {p}'], cc_t1P:['כאן החיסכון הכי משמעותי – השוו ביטוחים, בדקו את מחשבון הדלק, או שקלו רכב זול יותר בהחלפה הבאה.','هنا التوفير الأكبر – قارنوا التأمينات، افحصوا حاسبة الوقود، أو فكّروا بسيارة أرخص في التبديل القادم.','That\'s where the biggest saving is – compare insurance, check the fuel calculator, or consider a cheaper car next time.'],
+  cc_t2:['השוו לתחבורה ציבורית ומוניות','قارنوا بالمواصلات العامة وسيارات الأجرة','Compare with public transport and taxis'], cc_t2P:['אם הנסיעות שלכם אפשריות גם בלי רכב, {m} בחודש זה התקציב לתחבורה חלופית.','إذا كانت رحلاتكم ممكنة دون سيارة، فـ{m} شهريًا هي ميزانية المواصلات البديلة.','If your trips work without a car, {m} a month is the budget for other transport.'],
+  cc_note:['הערכה כללית. ירידת הערך בפועל תלויה בדגם, בגיל ובק״מ; אגרת הרישוי תלויה בקבוצת המחיר של הרכב.','تقدير عام. الاهتلاك الفعلي يعتمد على الطراز والعمر والكيلومترات؛ رسوم الترخيص تعتمد على فئة سعر السيارة.','A general estimate. Actual depreciation depends on model, age and mileage; the licence fee depends on the car\'s price group.'],
+  tab_arnona:['הנחה בארנונה','خصم الأرنونا','Arnona discount'], d_arnona:['האם מגיעה לכם הנחה בארנונה, כמה היא שווה ואיך מבקשים.','هل يحق لكم خصم في الأرنونا، كم يساوي وكيف تطلبونه.','Whether you qualify for an arnona discount, what it\'s worth and how to ask for it.'],
+  ar_intro:['ההנחות נקבעות בתקנות ארציות, והרשות המקומית נותנת אותן לפי בקשה. אפשר לקבל רק הנחה אחת – הגבוהה מביניהן.','الخصومات محددة بأنظمة قطرية، والسلطة المحلية تمنحها حسب الطلب. يمكن الحصول على خصم واحد فقط – الأعلى بينها.','Discounts are set by national regulations and the local authority gives them on request. You can get only one – the highest.'],
+  ar_amt:['ארנונה לשנה','الأرنونا سنويًا','Arnona a year'], ar_area:['שטח הדירה','مساحة الشقة','Home area'], ar_ppl:['נפשות בבית','عدد الأفراد في البيت','People in the home'], ar_inc:['הכנסה חודשית של כל הבית (ברוטו)','الدخل الشهري لكل البيت (إجمالي)','Monthly household income (gross)'], ar_who:['מה נכון לגביכם?','ما الذي ينطبق عليكم؟','What applies to you?'],
+  ar_c_oldInc:['אזרח ותיק עם השלמת הכנסה','مسنّ مع ضمان دخل','Senior with income support'], ar_c_senior:['אזרח ותיק (גיל פרישה, מקבל קצבת זקנה)','مسنّ (سن التقاعد، يتلقى مخصّص شيخوخة)','Senior (retirement age, receiving old-age pension)'], ar_c_disab75:['נכות – אי־כושר השתכרות 75% ומעלה','إعاقة – عدم قدرة على الكسب 75% فأكثر','Disability – 75%+ incapacity to work'], ar_c_disab90:['נכות רפואית 90% ומעלה','إعاقة طبية 90% فأكثر','Medical disability 90%+'], ar_c_blind:['עיוור / תעודת עיוור','كفيف / شهادة كفيف','Blind (certificate)'], ar_c_care:['מקבל גמלת סיעוד','يتلقى مخصّص تمريض','Receiving long-term care benefit'],
+  ar_c_childDis:['הורה לילד נכה','والد لطفل ذي إعاقة','Parent of a disabled child'], ar_c_single:['הורה יחיד','والد وحيد','Single parent'], ar_c_soldier:['חייל בשירות סדיר / שירות לאומי','جندي في الخدمة النظامية / خدمة وطنية','Soldier in regular service / national service'], ar_c_oleh:['עולה חדש (שנה ראשונה)','قادم جديد (السنة الأولى)','New immigrant (first year)'], ar_c_resCmd:['מפקד במילואים פעיל','قائد احتياط فعّال','Active reserve commander'], ar_c_reserve:['משרת מילואים פעיל','جندي احتياط فعّال','Active reservist'],
+  ar_incT:['מבחן הכנסה','فحص الدخل','Income test'], ar_best:['ההנחה הגבוהה שמגיעה לכם','أعلى خصم يحق لكم','Your highest discount'], ar_bestSub:['{n} · {p}% · כ־{m} בחודש','{n} · {p}% · نحو {m} شهريًا','{n} · {p}% · about {m} a month'], ar_kind:['סוג ההנחה','نوع الخصم','Discount'], ar_pct:['עד','حتى','Up to'], ar_upTo:['על עד {n} מ״ר','على حتى {n} م²','on up to {n} m²'],
+  ar_none:['לפי מה שסימנתם – כנראה לא מגיעה הנחה ארצית','حسب ما حددتم – على الأرجح لا يحق خصم قطري','From what you ticked, you probably don\'t qualify for a national discount'], ar_noneP:['יש רשויות שנותנות הנחות נוספות (למשל לסטודנטים או במצוקה). שווה לשאול במחלקת הגבייה.','بعض السلطات تمنح خصومات إضافية (للطلاب أو في الضائقة). يستحق السؤال في قسم الجباية.','Some authorities give extra discounts (e.g. students or hardship). Worth asking the collection department.'],
+  ar_one:['רק הנחה אחת','خصم واحد فقط','Only one discount'], ar_oneP:['מי שזכאי לכמה הנחות מקבל את הגבוהה ביותר בלבד.','من يستحق عدة خصومات يحصل على الأعلى فقط.','If you qualify for several, you get only the highest.'],
+  ar_how:['איך מבקשים','كيف تطلبون','How to apply'], ar_howP:['מגישים בקשה לרשות המקומית (באתר או במוקד) עם אישורים: מביטוח לאומי, תלושי שכר של 3 החודשים האחרונים או תעודה מתאימה. בקשה במבחן הכנסה מוגשת בכל שנה.','تُقدَّم الطلبات للسلطة المحلية (في الموقع أو المركز) مع الإثباتات: من التأمين الوطني، قسائم رواتب آخر 3 أشهر أو شهادة مناسبة. طلب فحص الدخل يُقدَّم كل سنة.','Apply to your local authority (online or at the office) with proof: National Insurance approval, the last 3 payslips or a suitable certificate. An income-test request is made every year.'],
+  ar_note:['האחוזים והשטחים לפי תקנות ההסדרים (הנחה מארנונה) כפי שהרשויות מפרסמות; ספי מבחן ההכנסה לפי הפרסום ל־2025 ומתעדכנים כל שנה. הערכה בלבד – הרשות קובעת.','النسب والمساحات حسب أنظمة التسويات (خصم الأرنونا) كما تنشرها السلطات؛ عتبات فحص الدخل حسب منشور 2025 وتُحدَّث سنويًا. تقدير فقط – السلطة تقرر.','Percentages and areas per the arnona-discount regulations as authorities publish them; income-test ceilings from the 2025 publication, updated yearly. An estimate only – the authority decides.'],
+  lg_h_p1910k:['19.10.2026 – נוסף הסבר על התזכורות.','19.10.2026 – أُضيف شرح عن التذكيرات.','19.10.2026 – added an explanation of reminders.'],
+  sc2_now:['עכשיו','الآن','Now'], sc2_diff:['הפרש','الفرق','Difference'], sc2_hint:['העמודה "עכשיו" מתעדכנת בזמן שמשנים ערכים; ההפרש לעומת "{n}".','عمود "الآن" يتحدث أثناء تغيير القيم؛ الفرق مقارنة بـ"{n}".','The "Now" column updates as you change values; the difference is against "{n}".'],
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -5126,12 +5227,12 @@ META.unix = 1791894003; META.official = true;
 const GROUPS = [
   ['g_main',    ['home','markets','saved','assist','settings']],
   ['g_job',     ['salary','empcost','selfemp','freelance','clients','overtime','leave','notice','severance','benefits','workgrant','reserve','carbenefit','joboffer','workdays','cv']],
-  ['g_taxes',   ['tax','taxrefund','taxfree','capital','rental','purchasetax','landtax','vat']],
+  ['g_taxes',   ['tax','taxrefund','taxfree','capital','rental','purchasetax','landtax','vat','arnona']],
   ['g_credit',  ['loan','loancmp','prime','gooddebt','prepay','creditcard','debtplan','carlease']],
   ['g_realty',  ['mortgage','mortcmp','mortcap','refi','rentbuy']],
   ['g_invest',  ['compound','savegoal','yield','dividends','avgcost','networth','kidsave','mmf','invfees','childallow']],
   ['g_retire',  ['retire','pensfix','oldage','pencmp','mgmtfees','hishtalmut','fire','freedom']],
-  ['g_budget',  ['expenses','bankacc','smartsplit','split','unitprice','discount','appliance','fuelcalc','evfuel','breakeven']],
+  ['g_budget',  ['expenses','reminders','bankacc','smartsplit','split','unitprice','discount','appliance','elecsup','eventgift','fuelcalc','carcost','evfuel','breakeven']],
   ['g_compare', ['insurance','cellcmp','phonecmp']],
   ['g_fxtools', ['mathx','docscan','convert','inflation','cpilink','percent']]
 ];
@@ -5164,7 +5265,7 @@ function devLang(){
   return 'en';                                              // any other language: English
 }
 function langAuto(){ try { return !LS.getItem('fin-lang'); } catch (e) { return true; } }
-const SET_DEF = {photoAccess:'ask', slip:{}, slips:[], tf:{}, bk:{}, fu:{}, axZoom:100, axLinks:'0', axSpace:'0', axFocus:'0', axGray:'0', axCursor:'0', axBtn:'1', ixShow:'', ixCustom:[], tvOn:'0', sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', myGross:'', myKids:'', myBYear:'', myEq:'', persona:'all', shareLang:'ui', words:'1', enTerms:'0', plain:'0', tts:'1', voiceIn:'0', dfmt:'auto', wkStart:'auto', trFix:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {photoAccess:'ask', slip:{}, slips:[], tf:{}, bk:{}, fu:{}, rm:{}, nt:{}, axZoom:100, axLinks:'0', axSpace:'0', axFocus:'0', axGray:'0', axCursor:'0', axBtn:'1', ixShow:'', ixCustom:[], tvOn:'0', sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', myGross:'', myKids:'', myBYear:'', myEq:'', persona:'all', shareLang:'ui', words:'1', enTerms:'0', plain:'0', tts:'1', voiceIn:'0', dfmt:'auto', wkStart:'auto', trFix:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -7201,6 +7302,19 @@ function fuPanelHTML(){
   return `<section class="panel panel-flat tool-panel" id="panel-fuelcalc" role="tabpanel" aria-labelledby="tab-fuelcalc" hidden><div id="fu_root"></div></section>`;
 }
 Object.assign(ICON, {fuelcalc: ic('<path d="M4 20V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v15"/><path d="M3 20h12"/><path d="M6.5 8h5"/><path d="M14 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/>')});
+/* ================= reminders: the panel shell (the module is rm.js) ================= */
+function rmPanelHTML(){
+  return `<section class="panel panel-flat tool-panel" id="panel-reminders" role="tabpanel" aria-labelledby="tab-reminders" hidden><div id="rm_root"></div></section>`;
+}
+Object.assign(ICON, {reminders: ic('<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><path d="M4 2.5 2 4.5M20 2.5l2 2"/>')});
+/* ================= four tools (module nt.js): the panel shells ================= */
+const ntPanelHTML = id => `<section class="panel panel-flat tool-panel" id="panel-${id}" role="tabpanel" aria-labelledby="tab-${id}" hidden><div id="nt_root_${id}"></div></section>`;
+Object.assign(ICON, {
+  elecsup: ic('<path d="M13 2 4 14h7l-1 8 9-12h-7z"/><path d="M19 3v4M21 5h-4"/>'),
+  eventgift: ic('<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M7.5 8a2.5 2.5 0 1 1 4.5-1.5A2.5 2.5 0 1 1 16.5 8"/>'),
+  carcost: ic('<path d="M5 17h14M6 17l1.5-5h9l1.5 5"/><circle cx="8" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/><path d="M17 4v5M15 6.5h4"/>'),
+  arnona: ic('<path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/><path d="M15 3.5h4M17 1.5v4"/>')
+});
 
 const navEl = $('#nav'), panelsEl = $('#panels');
 function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
@@ -7209,7 +7323,7 @@ function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
   }</div>`
 ).join(''); }
 renderNav();
-panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'saved' ? savedPanelHTML() : id === 'markets' ? marketsPanelHTML() : id === 'clients' ? clientsPanelHTML() : id === 'cv' ? cvPanelHTML() : id === 'mathx' ? mxPanelHTML() : id === 'docscan' ? dsPanelHTML() : id === 'taxfree' ? tfPanelHTML() : id === 'bankacc' ? bkPanelHTML() : id === 'fuelcalc' ? fuPanelHTML() : panelHTML(id)).join('');
+panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'saved' ? savedPanelHTML() : id === 'markets' ? marketsPanelHTML() : id === 'clients' ? clientsPanelHTML() : id === 'cv' ? cvPanelHTML() : id === 'mathx' ? mxPanelHTML() : id === 'docscan' ? dsPanelHTML() : id === 'taxfree' ? tfPanelHTML() : id === 'bankacc' ? bkPanelHTML() : id === 'fuelcalc' ? fuPanelHTML() : id === 'reminders' ? rmPanelHTML() : ['elecsup', 'eventgift', 'carcost', 'arnona'].includes(id) ? ntPanelHTML(id) : panelHTML(id)).join('');
 
 /* ================= language ================= */
 function updateHead(){
@@ -10845,6 +10959,7 @@ function applyMacro(d){
   const c = +d.cpi12; if (useC && isFinite(c) && Math.abs(c) < 30) MKT.cpi = c;
   if (useC && /^\d{4}-\d{2}$/.test(d.cpiMonth || '')){ const [y, m] = d.cpiMonth.split('-'); MKT.cpiMonth = m + '/' + y;
     const ytd = +d.cpiYtd; if (isFinite(ytd) && Math.abs(ytd) < 30 && +y === 2026){ MKT.cpiYtd = ytd; MKT.cpiYtdTo = +m; INFL_IL[2026] = ytd; } }
+  const f95 = +d.fuel95; if (isFinite(f95) && f95 >= 5 && f95 <= 13 && typeof IL26 === 'object'){ IL26.fuel95 = f95; MKT.fuelMonth = d.fuelMonth || ''; }     // the monthly regulated petrol price
   if (useI) MKT.srcI = 'db'; if (useC) MKT.src = 'db'; macroAt = +d.asOf || 0;
   // keep the prime calculator in step unless the user typed their own rate
   const f = $('#pr_boi'); if (f && (+f.value === oldBoi || f.value === '')) f.value = MKT.boi;
@@ -11592,8 +11707,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.18", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.212211';
+var CHANGELOG = [{"v": "13.19", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.235804';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -23516,7 +23631,7 @@ const LG_DOCS = {
   ], extra: () => `<p><a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? SITE_BASE : ''}lib/nerdamer.LICENSE.txt" target="_blank" rel="noopener">${lgE(t('lg_c_licLink'))}</a></p><p>${lgE(t('lg_c_licLinks'))} ${[['pdfjs/LICENSE.txt', 'pdf.js'], ['pdfjs/wasm/LICENSE_JBIG2', 'JBIG2'], ['pdfjs/wasm/LICENSE_OPENJPEG', 'OpenJPEG'], ['pdfjs/wasm/LICENSE_QCMS', 'QCMS'], ['pdf-lib.LICENSE.txt', 'pdf-lib'], ['jszip.LICENSE.txt', 'JSZip']].map(([f, n]) => `<a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? SITE_BASE : ''}lib/${f}" target="_blank" rel="noopener">${n}</a>`).join(' · ')}</p>`},
   priv: {t: 'lg_privT', ic: '🔒', parts: [
     ['', ['lg_p_intro']],
-    ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3', 'lg_p_dev4', 'lg_p_dev5', 'lg_p_dev6', 'lg_p_dev7', 'lg_p_dev8', 'lg_p_dev9', 'lg_p_dev10', 'lg_p_dev11']],
+    ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3', 'lg_p_dev4', 'lg_p_dev5', 'lg_p_dev6', 'lg_p_dev7', 'lg_p_dev8', 'lg_p_dev9', 'lg_p_dev10', 'lg_p_dev11', 'lg_p_dev12']],
     ['lg_p_usH', ['lg_p_us1', 'lg_p_us2', 'lg_p_us3', 'lg_p_us4'], true],
     ['lg_p_extH', ['lg_p_ext0', 'lg_p_ext1', 'lg_p_ext2', 'lg_p_ext3', 'lg_p_ext4', 'lg_p_ext5', 'lg_p_ext6'], true],
     ['lg_p_permH', ['lg_p_perm']],
@@ -23527,7 +23642,7 @@ const LG_DOCS = {
     ['lg_p_rightsH', ['lg_p_r1', 'lg_p_r2', 'lg_p_r3'], true],
     ['lg_p_chgH', ['lg_p_chg']],
     ['lg_contactH', ['lg_p_contact']],
-    ['lg_histH', ['lg_h_p1910j', 'lg_h_p1910i', 'lg_h_p1910h', 'lg_h_p1910g', 'lg_h_p1910f', 'lg_h_p1910e', 'lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_p1910k', 'lg_h_p1910j', 'lg_h_p1910i', 'lg_h_p1910h', 'lg_h_p1910g', 'lg_h_p1910f', 'lg_h_p1910e', 'lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
   ]}
 };
 const lgE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
@@ -26793,7 +26908,9 @@ function d5FoundHTML(){
   return `<div class="d5-found"><h4 class="ds-q">🔎 ${E(t('d5_foundH'))}</h4><p class="fine">${E(t('d5_foundP'))}</p><div class="ds-chips">${F.map((f, i) => f.k === 'tel' ? `<a class="ds-chip" href="tel:${E(f.v)}">${ic.tel} <span dir="ltr">${E(f.show)}</span></a>`
     : f.k === 'mail' ? `<a class="ds-chip" href="mailto:${E(f.v)}">${ic.mail} <span dir="ltr">${E(f.show)}</span></a>`
     : f.k === 'link' ? `<a class="ds-chip" href="${E(/^https?:/i.test(f.v) ? f.v : 'https://' + f.v)}" target="_blank" rel="noopener noreferrer">${ic.link} <span dir="ltr">${E(f.show.slice(0, 40))}</span></a>`
-    : `<button type="button" class="ds-chip" data-d5f="${i}" aria-label="${E(t(f.k === 'date' ? 'd5_fDate' : 'd5_fSum', {v: f.show}))}">${ic[f.k]} <span dir="ltr">${E(f.show)}</span></button>`).join('')}</div></div>`;
+    : `<button type="button" class="ds-chip" data-d5f="${i}" aria-label="${E(t(f.k === 'date' ? 'd5_fDate' : 'd5_fSum', {v: f.show}))}">${ic[f.k]} <span dir="ltr">${E(f.show)}</span></button>`
+      + (f.k === 'date' && typeof rmNew === 'function' ? `<button type="button" class="ds-chip" data-d5r="${i}" aria-label="${E(t('d5_fRem', {v: f.show}))}">⏰ ${E(t('tab_reminders'))}</button>` : '')
+      + (f.k === 'sum' && typeof expSheet === 'function' ? `<button type="button" class="ds-chip" data-d5x="${i}" aria-label="${E(t('d5_fExp', {v: f.show}))}">🧾 ${E(t('tab_expenses'))}</button>` : '')).join('')}</div></div>`;
 }
 {
   const card5b = dsCardRender;
@@ -26810,6 +26927,20 @@ document.addEventListener('click', e => {
   const d = f.v.replace(/-/g, ''), name = (String(DSC.name || '').trim() || t('ds_c_' + DSC.type)).replace(/[\;,\n]/g, ' '), now = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
   const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//fincalc//docscan//EN', 'BEGIN:VEVENT', 'UID:' + Date.now() + '@fincalc', 'DTSTAMP:' + now, 'DTSTART;VALUE=DATE:' + d, 'SUMMARY:' + name, 'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + name, 'TRIGGER:-P1D', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
   fileSave(new Blob([ics], {type: 'text/calendar'}), (name + ' ' + f.v).replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim() + '.ics', 'text/calendar').then(r => toast(t(r === 'saved' ? 'd5_fCal' : r === 'declined' ? 'pdf_declined' : 'pdf_fail'))).catch(() => toast(t('pdf_fail')));
+});
+
+/* a date → a reminder; a sum → an expense (the category guessed from the store's name) */
+const D5_CAT = [[/סופר|שופרסל|רמי לוי|יוחננוף|ויקטורי|אושר עד|מגה|טיב טעם|מכולת|supermarket|grocery|سوبر/i, 'food'], [/דלק|פז|סונול|דור אלון|ten\b|yellow|fuel|petrol|gas station|وقود/i, 'car'],
+  [/חשמל|מים|ארנונה|גז|חברת החשמל|תאגיד|electric|water|كهرباء|مياه/i, 'bills'], [/סופר[-\s]?פארם|בית מרקחת|קופת חולים|מכבי|כללית|מאוחדת|לאומית|pharm|clinic|صيدلية/i, 'health'],
+  [/מסעדה|קפה|בר\b|פיצה|restaurant|cafe|coffee|مطعم|مقهى/i, 'fun'], [/בגדים|אופנה|קסטרו|זארה|h&m|fashion|ملابس/i, 'clothes'], [/סלקום|פרטנר|פלאפון|הוט|בזק|גולן|cellcom|partner|bezeq|hot/i, 'comm'], [/ביטוח|insurance|تأمين/i, 'insur']];
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest || !t0.closest('#ds_root') || !DSC) return; let b;
+  if ((b = t0.closest('[data-d5r]'))){ const f = d5Found()[+b.dataset.d5r]; if (f) rmNew({title: (String(DSC.name || '').trim() || d5NameIdea() || t('ds_c_' + DSC.type)).slice(0, 80), date: f.v, cat: 'docs', before: 7}); return; }
+  if ((b = t0.closest('[data-d5x]'))){ const f = d5Found()[+b.dataset.d5x]; if (!f) return;
+    const txt = String(DSC.ocr || ''), hit = D5_CAT.find(([rx]) => rx.test(txt)), date = (d5Found().find(x => x.k === 'date') || {}).v, note = (String(DSC.name || '').trim() || d5NameIdea()).slice(0, 80);
+    activate('expenses'); EXP_CAT = hit ? hit[1] : 'other'; expSheet(null);
+    setTimeout(() => { const a = $('#exp_amt'), dt = $('#exp_date'), n = $('#exp_note'); if (a){ a.value = f.v; a.dispatchEvent(new Event('input', {bubbles: true})); } if (dt && date && date <= todayIso()) dt.value = date; if (n && note) n.value = note; }, 60);
+  }
 });
 
 /* ---------- 13.5: Tax Free — VAT refund on shopping abroad (and for tourists shopping in Israel) ----------
@@ -27605,6 +27736,395 @@ try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('fuelcalc'); if (Array.isArra
   const alFu = applyLang; applyLang = function(){ const r = alFu.apply(this, arguments); try { if (tab === 'fuelcalc') fuRender(); } catch (e) {} return r; };
   try { if (tab === 'fuelcalc') fuRender(); } catch (e) {}
 }
+
+/* ---------- 13.19: reminders – dates that cost money if you miss them ----------
+   Add, edit, repeat, mark done, export to the phone's calendar (.ics). Kept on this device only.
+   Shown on Home when something is due; the scanner can turn a date it found into a reminder. */
+const rmE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+const RM_CATS = [['car', '🚗'], ['home', '🏠'], ['tax', '🧾'], ['bills', '💡'], ['insur', '🛡️'], ['docs', '📄'], ['money', '💰'], ['family', '👪'], ['other', '📌']];
+const RM_REP = ['none', 'week', 'month', 'year'];
+const RM_BEFORE = [0, 1, 3, 7, 14, 30];
+/* ready-made reminders: [key, category, repeat, days before] */
+const RM_SUG = [['carLic', 'car', 'year', 14], ['carIns', 'car', 'year', 30], ['carTest', 'car', 'year', 14], ['homeIns', 'insur', 'year', 30], ['taxRefund', 'tax', 'year', 7],
+  ['arnona', 'bills', 'month', 3], ['passport', 'docs', 'none', 90], ['drvLic', 'docs', 'none', 30], ['subEnd', 'money', 'none', 3], ['warranty', 'home', 'none', 14], ['deposit', 'money', 'none', 3], ['mortRev', 'money', 'year', 30]];
+var RMV = {f: 'up', q: '', ed: null};
+function rmD(){ const d = SET.rm && typeof SET.rm === 'object' ? SET.rm : (SET.rm = {}); if (!Array.isArray(d.items)) d.items = []; return d; }
+const rmToday = () => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); };
+const rmParse = s => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || '')); return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null; };
+const rmIso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const rmDays = s => { const d = rmParse(s); return d ? Math.round((d - rmToday()) / 864e5) : NaN; };
+/* the next date of a repeating reminder (31 Jan + month = 28/29 Feb, never March) */
+function rmNext(s, rep){
+  const d = rmParse(s); if (!d) return s;
+  if (rep === 'week') d.setDate(d.getDate() + 7);
+  else if (rep === 'month' || rep === 'year'){ const day = d.getDate(); d.setDate(1); d.setMonth(d.getMonth() + (rep === 'year' ? 12 : 1)); const last = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate(); d.setDate(Math.min(day, last)); }
+  return rmIso(d);
+}
+const rmCat = k => RM_CATS.find(c => c[0] === k) || RM_CATS[RM_CATS.length - 1];
+const rmFmt = s => { const d = rmParse(s); if (!d) return ''; try { return new Intl.DateTimeFormat(locOf(), {weekday: 'short', day: 'numeric', month: 'short', year: d.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined}).format(d); } catch (e) { return s; } };
+function rmWhen(it){
+  const n = rmDays(it.date); if (!isFinite(n)) return '';
+  return n === 0 ? t('rm_today') : n === 1 ? t('rm_tomorrow') : n > 1 ? t('rm_inDays', {n}) : t('rm_late', {n: -n});
+}
+/* due = from "days before" until it's done */
+const rmDue = it => !it.done && isFinite(rmDays(it.date)) && rmDays(it.date) <= (+it.before || 0);
+function rmList(){
+  const q = RMV.q.trim().toLowerCase(), L = rmD().items.slice().sort((a, b) => (a.done - b.done) || String(a.date).localeCompare(String(b.date)) || String(a.time || '').localeCompare(String(b.time || '')));
+  return L.filter(it => (!q || (String(it.title) + ' ' + String(it.note || '')).toLowerCase().includes(q))
+    && (RMV.f === 'all' ? true : RMV.f === 'done' ? it.done : RMV.f === 'late' ? !it.done && rmDays(it.date) < 0 : RMV.f.startsWith('c:') ? it.cat === RMV.f.slice(2) && !it.done : !it.done));
+}
+
+/* ---- the screen ---- */
+function rmRender(){
+  const root = $('#rm_root'); if (!root) return; const E = rmE, d = rmD(), L = rmList(), late = d.items.filter(it => !it.done && rmDays(it.date) < 0).length, due = d.items.filter(rmDue).length;
+  const used = new Set(d.items.map(x => x.cat));
+  root.innerHTML = `<p class="fine">${E(t('rm_intro'))}</p>
+    ${due ? `<div class="ds-warn rm-ban" role="status"><span aria-hidden="true">⏰</span><p>${E(t('rm_dueN', {n: due}))}${late ? ' ' + E(t('rm_lateN', {n: late})) : ''}</p></div>` : ''}
+    <div class="btnrow"><button type="button" class="gold-btn" id="rm_add">＋ ${E(t('rm_add'))}</button>${d.items.length ? `<button type="button" class="btn" id="rm_icsAll">📅 ${E(t('rm_icsAll'))}</button>` : ''}${'Notification' in window && !IN_CLAUDE && Notification.permission === 'default' ? `<button type="button" class="mv" id="rm_notif">🔔 ${E(t('rm_notif'))}</button>` : ''}</div>
+    <div id="rm_ed"></div>
+    ${d.items.length ? `<div class="rm-bar"><input type="search" id="rm_q" value="${E(RMV.q)}" placeholder="${E(t('rm_search'))}" aria-label="${E(t('rm_search'))}" dir="auto">
+      <div class="ds-chips" role="radiogroup" aria-label="${E(t('rm_filter'))}">${[['up', t('rm_fUp')], ['late', t('rm_fLate') + (late ? ' (' + late + ')' : '')], ['done', t('rm_fDone')], ['all', t('rm_fAll')]].concat(RM_CATS.filter(c => used.has(c[0])).map(c => ['c:' + c[0], c[1] + ' ' + t('rm_c_' + c[0])])).map(([k, l]) => `<button type="button" role="radio" class="ds-chip${RMV.f === k ? ' on' : ''}" aria-checked="${RMV.f === k}" data-rmf="${E(k)}">${E(l)}</button>`).join('')}</div></div>` : ''}
+    <ul class="rm-list">${L.map(it => rmCard(it)).join('') || `<li class="fine bk-empty">${E(t(d.items.length ? 'rm_noneF' : 'rm_none'))}</li>`}</ul>
+    <h3 class="ds-q">💡 ${E(t('rm_sugH'))}</h3><div class="ds-chips rm-sug">${RM_SUG.filter(s => !d.items.some(x => x.sug === s[0])).map(s => `<button type="button" class="ds-chip" data-rmsug="${s[0]}">${rmCat(s[1])[1]} ${E(t('rm_s_' + s[0]))}</button>`).join('')}</div>
+    <p class="fine sl-priv">🔒 ${E(t('rm_priv'))}</p>`;
+  if (RMV.ed) rmEditor(RMV.ed === 'new' ? null : d.items.find(x => x.id === RMV.ed), RMV.pre);
+}
+function rmCard(it){
+  const E = rmE, c = rmCat(it.cat), n = rmDays(it.date), cls = it.done ? 'done' : n < 0 ? 'late' : rmDue(it) ? 'due' : '';
+  return `<li class="rm-it ${cls}"><div class="rm-ic" aria-hidden="true">${c[1]}</div><div class="rm-b"><b dir="auto">${E(it.title)}</b>
+    <span class="rm-w">${E(rmFmt(it.date))}${it.time ? ' · <span dir="ltr">' + E(it.time) + '</span>' : ''} · <span class="rm-rel">${E(it.done ? t('rm_isDone') : rmWhen(it))}</span>${it.rep !== 'none' ? ' · 🔁 ' + E(t('rm_r_' + it.rep)) : ''}${+it.amt ? ' · <span dir="ltr">' + E(M(+it.amt, 0, 'ILS')) + '</span>' : ''}</span>
+    ${it.note ? `<small dir="auto">${E(it.note)}</small>` : ''}
+    <div class="rm-acts"><button type="button" class="px-tb s" data-rmdone="${E(it.id)}" aria-label="${E(t(it.done ? 'rm_undo' : it.rep !== 'none' ? 'rm_doneNext' : 'rm_done', {t: it.title}))}" title="${E(t(it.done ? 'rm_undo' : it.rep !== 'none' ? 'rm_doneNext' : 'rm_done', {t: it.title}))}">${it.done ? '↩️' : '✓'}</button>
+    <button type="button" class="px-tb s" data-rmedit="${E(it.id)}" aria-label="${E(t('rm_edit', {t: it.title}))}" title="${E(t('rm_edit', {t: it.title}))}">✏️</button>
+    <button type="button" class="px-tb s" data-rmics="${E(it.id)}" aria-label="${E(t('rm_ics', {t: it.title}))}" title="${E(t('rm_ics', {t: it.title}))}">📅</button>
+    <button type="button" class="px-tb s" data-rmdup="${E(it.id)}" aria-label="${E(t('rm_dup', {t: it.title}))}" title="${E(t('rm_dup', {t: it.title}))}">⧉</button>
+    <button type="button" class="px-tb s" data-rmdel="${E(it.id)}" aria-label="${E(t('rm_del', {t: it.title}))}" title="${E(t('rm_del', {t: it.title}))}">🗑️</button></div></div></li>`;
+}
+/* the editor: everything about a reminder can be changed */
+function rmEditor(it, pre){
+  const box = $('#rm_ed'); if (!box) return; const E = rmE, v = Object.assign({title: '', date: rmIso(new Date(Date.now() + 7 * 864e5)), time: '', rep: 'none', cat: 'other', before: 3, note: '', amt: ''}, pre || {}, it || {});
+  box.innerHTML = `<form class="bk-acc rm-form" id="rm_form" novalidate><fieldset><legend>${it ? '✏️ ' + E(t('rm_editT')) : '＋ ' + E(t('rm_add'))}</legend>
+    <label class="bk-f"><span>${E(t('rm_fTitle'))}</span><input type="text" id="rmf_title" maxlength="80" dir="auto" value="${E(v.title)}" required placeholder="${E(t('rm_fTitlePh'))}"></label>
+    <div class="bk-grid"><label class="bk-f"><span>${E(t('rm_fDate'))}</span><input type="date" id="rmf_date" value="${E(v.date)}" required></label>
+    <label class="bk-f"><span>${E(t('rm_fTime'))}</span><input type="time" id="rmf_time" value="${E(v.time)}"></label>
+    <label class="bk-f"><span>${E(t('rm_fRep'))}</span><select id="rmf_rep">${RM_REP.map(r => `<option value="${r}"${v.rep === r ? ' selected' : ''}>${E(t('rm_r_' + r))}</option>`).join('')}</select></label>
+    <label class="bk-f"><span>${E(t('rm_fBefore'))}</span><select id="rmf_before">${RM_BEFORE.map(b => `<option value="${b}"${+v.before === b ? ' selected' : ''}>${E(b ? t('rm_b_n', {n: b}) : t('rm_b_0'))}</option>`).join('')}</select></label>
+    <label class="bk-f"><span>${E(t('rm_fCat'))}</span><select id="rmf_cat">${RM_CATS.map(([k, ic]) => `<option value="${k}"${v.cat === k ? ' selected' : ''}>${ic} ${E(t('rm_c_' + k))}</option>`).join('')}</select></label>
+    <label class="bk-f"><span>${E(t('rm_fAmt'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" id="rmf_amt" value="${E(v.amt || '')}" placeholder="0"></label></div>
+    <label class="bk-f"><span>${E(t('rm_fNote'))}</span><textarea id="rmf_note" rows="2" maxlength="300" dir="auto">${E(v.note || '')}</textarea></label>
+    <p class="fine" id="rmf_msg" role="status" aria-live="polite"></p>
+    <div class="btnrow"><button type="submit" class="gold-btn">✓ ${E(t('rm_save'))}</button><button type="button" class="btn" id="rmf_cancel">${E(t('rm_cancel'))}</button>${it ? `<button type="button" class="btn danger" data-rmdel="${E(it.id)}">🗑️ ${E(t('rm_delB'))}</button>` : ''}</div></fieldset></form>`;
+  box.dataset.sug = (pre && pre.sug) || (it && it.sug) || '';
+  setTimeout(() => { const f = $('#rmf_title'); if (f){ f.focus(); box.scrollIntoView({block: 'nearest', behavior: 'smooth'}); } }, 30);
+}
+function rmSave(){
+  const d = rmD(), title = $('#rmf_title').value.trim(), date = $('#rmf_date').value, msg = $('#rmf_msg');
+  if (!title){ msg.textContent = t('rm_needTitle'); $('#rmf_title').focus(); return; }
+  if (!rmParse(date)){ msg.textContent = t('rm_needDate'); $('#rmf_date').focus(); return; }
+  const amt = parseFloat(String($('#rmf_amt').value || '').replace(/[,\s₪]/g, ''));
+  const rec = {title: title.slice(0, 80), date, time: $('#rmf_time').value || '', rep: $('#rmf_rep').value, before: +$('#rmf_before').value || 0, cat: $('#rmf_cat').value, note: $('#rmf_note').value.trim().slice(0, 300), amt: amt > 0 ? Math.round(amt * 100) / 100 : ''};
+  const old = RMV.ed && RMV.ed !== 'new' ? d.items.find(x => x.id === RMV.ed) : null;
+  if (old){ Object.assign(old, rec); if (rmDays(date) >= 0) old.done = false; }
+  else { const sg = ($('#rm_ed') || {dataset: {}}).dataset.sug; d.items.push(Object.assign({id: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), done: false, at: Date.now()}, rec, sg ? {sug: sg} : {})); if (d.items.length > 500) d.items.splice(0, d.items.length - 500); }
+  RMV.ed = null; RMV.pre = null; saveSet(); rmRender(); rmHome(); toast(t(old ? 'rm_saved' : 'rm_added'));
+}
+/* ---- the phone's calendar ---- */
+function rmIcsEv(it){
+  const esc = s => String(s || '').replace(/\\/g, '\\\\').replace(/[;,]/g, m => '\\' + m).replace(/\r?\n/g, '\\n');
+  const d = String(it.date).replace(/-/g, ''), now = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+  const start = it.time ? 'DTSTART:' + d + 'T' + it.time.replace(':', '') + '00' : 'DTSTART;VALUE=DATE:' + d;
+  const rr = {week: 'FREQ=WEEKLY', month: 'FREQ=MONTHLY', year: 'FREQ=YEARLY'}[it.rep];
+  return ['BEGIN:VEVENT', 'UID:' + it.id + '@fincalc-rm', 'DTSTAMP:' + now, start, 'SUMMARY:' + esc(it.title)].concat(it.note ? ['DESCRIPTION:' + esc(it.note)] : [], rr ? ['RRULE:' + rr] : [],
+    ['BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc(it.title), 'TRIGGER:-P' + (+it.before || 0) + 'D' + (it.time || +it.before ? '' : 'T0H'), 'END:VALARM', 'END:VEVENT']);
+}
+function rmIcs(items, name){
+  const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//fincalc//reminders//EN', 'CALSCALE:GREGORIAN'].concat(...items.map(rmIcsEv), ['END:VCALENDAR']).join('\r\n');
+  fileSave(new Blob([ics], {type: 'text/calendar'}), String(name).replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim() + '.ics', 'text/calendar')
+    .then(r => toast(t(r === 'saved' ? 'd5_fCal' : r === 'declined' ? 'pdf_declined' : 'pdf_fail'))).catch(() => toast(t('pdf_fail')));
+}
+/* ---- on Home, and once a day when the app opens ---- */
+function rmHome(){
+  const hh = $('#hh'); if (!hh) return; let box = $('#hrm');
+  const due = rmD().items.filter(rmDue).sort((a, b) => String(a.date).localeCompare(String(b.date)));
+  if (!due.length){ if (box) box.remove(); return; }
+  if (!box){ hh.insertAdjacentHTML('afterend', '<div id="hrm" class="hrm"></div>'); box = $('#hrm'); }
+  const E = rmE;
+  box.innerHTML = `<button type="button" class="hrm-in" data-go="reminders"><span class="hrm-h">⏰ ${E(t('rm_homeH', {n: due.length}))}</span>${due.slice(0, 3).map(it => `<span class="hrm-r${rmDays(it.date) < 0 ? ' late' : ''}">${rmCat(it.cat)[1]} <b dir="auto">${E(it.title)}</b> · ${E(rmWhen(it))}</span>`).join('')}${due.length > 3 ? `<span class="hrm-m">${E(t('rm_more', {n: due.length - 3}))}</span>` : ''}</button>`;
+}
+function rmWake(){
+  const d = rmD(), today = rmIso(new Date()), due = d.items.filter(rmDue); if (!due.length || d.shown === today) return;
+  d.shown = today; saveSet();
+  setTimeout(() => toast(t('rm_toast', {n: due.length, t: due[0].title})), 1800);
+  try { if (!IN_CLAUDE && 'Notification' in window && Notification.permission === 'granted') new Notification(t('tab_reminders'), {body: due.slice(0, 3).map(x => x.title + ' – ' + rmWhen(x)).join('\n'), icon: 'icon-192.png', tag: 'rm-' + today}); } catch (e) {}
+}
+/* open the editor from elsewhere (the scanner's dates) */
+function rmNew(pre){ RMV.ed = 'new'; RMV.pre = pre || null; activate('reminders'); }
+
+/* what the assistant sees on this screen */
+function rmAiText(){
+  const L = rmD().items.filter(x => !x.done).sort((a, b) => String(a.date).localeCompare(String(b.date))).slice(0, 25);
+  return 'Reminders of the person (title, date, repeat):\n' + (L.map(x => `- ${x.title}: ${x.date}${x.rep !== 'none' ? ' (every ' + x.rep + ')' : ''}${+x.amt ? ', ' + x.amt + ' ILS' : ''}`).join('\n') || '(none)') + '\nToday is ' + rmIso(new Date()) + '. Help plan and prioritise in plain words.';
+}
+{ const aiStRm = aiScreenText; aiScreenText = function(id){ const s = aiStRm.apply(this, arguments); return id === 'reminders' ? s + '\n' + rmAiText() : s; }; }
+{ const aiChRm = aiChipKeys; aiChipKeys = function(id){ return id === 'reminders' ? ['rm_c1', 'rm_c2'] : aiChRm.apply(this, arguments); }; }
+
+/* events */
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest || !t0.closest('#rm_root')) return; const d = rmD(); let b;
+  if (t0.closest('#rm_add')){ RMV.ed = 'new'; RMV.pre = null; rmEditor(null); return; }
+  if (t0.closest('#rmf_cancel')){ RMV.ed = null; RMV.pre = null; $('#rm_ed').innerHTML = ''; const a = $('#rm_add'); if (a) a.focus(); return; }
+  if ((b = t0.closest('[data-rmsug]'))){ const s = RM_SUG.find(x => x[0] === b.dataset.rmsug); if (!s) return; RMV.ed = 'new'; RMV.pre = {title: t('rm_s_' + s[0]), cat: s[1], rep: s[2], before: s[3], note: t('rm_sn_' + s[0]), sug: s[0]}; rmEditor(null, RMV.pre); return; }
+  if ((b = t0.closest('[data-rmedit]'))){ RMV.ed = b.dataset.rmedit; RMV.pre = null; rmEditor(d.items.find(x => x.id === RMV.ed)); return; }
+  if ((b = t0.closest('[data-rmdone]'))){ const it = d.items.find(x => x.id === b.dataset.rmdone); if (!it) return;
+    if (it.done) it.done = false; else if (it.rep !== 'none'){ let n = rmNext(it.date, it.rep), g = 0; while (rmDays(n) < 0 && g++ < 600) n = rmNext(n, it.rep); it.date = n; toast(t('rm_movedTo', {d: rmFmt(n)})); } else it.done = true;
+    saveSet(); rmRender(); rmHome(); const n2 = $(`[data-rmdone="${it.id}"]`); if (n2) n2.focus(); return; }
+  if ((b = t0.closest('[data-rmdup]'))){ const it = d.items.find(x => x.id === b.dataset.rmdup); if (!it) return; const cp = Object.assign({}, it, {id: Date.now().toString(36) + 'c', title: it.title + ' ' + t('rm_copy'), done: false}); delete cp.sug; d.items.push(cp); saveSet(); RMV.ed = cp.id; rmRender(); return; }
+  if ((b = t0.closest('[data-rmdel]'))){ const it = d.items.find(x => x.id === b.dataset.rmdel); if (!it || !confirm(t('rm_delQ', {t: it.title}))) return; d.items = d.items.filter(x => x !== it); if (RMV.ed === it.id) RMV.ed = null; saveSet(); rmRender(); rmHome(); toast(t('rm_deleted')); return; }
+  if ((b = t0.closest('[data-rmics]'))){ const it = d.items.find(x => x.id === b.dataset.rmics); if (it) rmIcs([it], it.title + ' ' + it.date); return; }
+  if (t0.closest('#rm_icsAll')){ const L = d.items.filter(x => !x.done); if (L.length) rmIcs(L, t('tab_reminders')); return; }
+  if (t0.closest('#rm_notif')){ try { Notification.requestPermission().then(() => rmRender()); } catch (er) {} return; }
+  if ((b = t0.closest('[data-rmf]'))){ RMV.f = b.dataset.rmf; rmRender(); const n = $(`[data-rmf="${RMV.f}"]`); if (n) n.focus(); }
+});
+document.addEventListener('submit', e => { if (e.target && e.target.id === 'rm_form'){ e.preventDefault(); rmSave(); } });
+let RM_T = null;
+document.addEventListener('input', e => { if (e.target && e.target.id === 'rm_q'){ RMV.q = e.target.value; clearTimeout(RM_T); RM_T = setTimeout(() => { const box = $('#rm_root .rm-list'); if (box) box.innerHTML = rmList().map(rmCard).join('') || `<li class="fine bk-empty">${rmE(t('rm_noneF'))}</li>`; }, 150); } });
+CALC.reminders = () => null;
+try { GS_SYN.reminders = 'תזכורת תזכורות תאריך יומן חידוש רישיון רכב ביטוח החזר מס ארנונה דרכון תוקף מנוי אחריות פיקדון reminder reminders date calendar renewal licence insurance tax refund passport expiry subscription warranty تذكير تذكيرات تاريخ تقويم تجديد رخصة تأمين جواز'; } catch (e) {}
+if (typeof svKind === 'function'){ const svKindRm = svKind; svKind = function(id){ return id === 'reminders' ? '' : svKindRm.apply(this, arguments); }; }
+try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('reminders'); if (Array.isArray(EX_SKIP)) EX_SKIP.push('reminders'); } catch (e) {}
+{
+  const actRm = activate; activate = function(id){ const r = actRm.apply(this, arguments); if (id === 'reminders') rmRender(); else if (id === 'home') rmHome(); return r; };
+  const alRm = applyLang; applyLang = function(){ const r = alRm.apply(this, arguments); try { if (tab === 'reminders') rmRender(); rmHome(); } catch (e) {} return r; };
+  const chRm = calcHome; calcHome = function(){ const r = chRm.apply(this, arguments); try { rmHome(); } catch (e) {} return r; };
+  try { if (tab === 'reminders') rmRender(); rmHome(); rmWake(); } catch (e) {}
+}
+
+/* ---------- 13.19: "my picture" on Home – one card from your own tools ----------
+   Bank accounts, this month's expenses and income, the fuel log, debts and reminders, turned into a
+   financial health score with three things to do this month. Worked out on the phone; nothing is sent. */
+const picE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+function picData(){
+  const P = {parts: [], rows: [], tips: []}, add = (k, got, max) => P.parts.push({k, got: Math.max(0, Math.min(max, got)), max}), M0 = x => M(Math.round(x), 0, 'ILS');
+  /* this month: income and spending */
+  let inc = 0, spend = 0;
+  try { const ym = ymOf(new Date()), tt = expTotals(ym), ii = expIncome(ym); spend = tt.sum; inc = ii ? +ii.v || 0 : 0;
+    if (spend > 0) P.rows.push(['exp', '🧾', t('pic_spend'), M0(spend), 'expenses']);
+    if (inc > 0 && spend > 0){ const sr = (inc - spend) / inc; P.sr = sr; P.rows.push(['sr', '💰', t('pic_sr'), Math.round(sr * 100) + '%', 'expenses']);
+      add('sr', sr >= 0.2 ? 25 : sr >= 0.1 ? 15 + (sr - 0.1) * 100 : sr >= 0 ? 5 + sr * 100 : 0, 25);
+      if (sr < 0.1) P.tips.push({p: 60 + (0.1 - sr) * 100, ic: '💰', h: t(sr < 0 ? 'pic_tOver' : 'pic_tSave'), go: 'expenses'}); }
+    const bud = expData().budgets || {}, over = Object.keys(bud).filter(k => +bud[k] > 0 && (tt.by[k] || 0) > +bud[k]);
+    if (over.length){ add('bud', Math.max(0, 10 - over.length * 4), 10); P.tips.push({p: 40 + over.length * 5, ic: '📊', h: t('pic_tBud', {n: over.map(k => t('ec_' + k)).slice(0, 2).join(', ')}), go: 'expenses'}); }
+    else if (Object.keys(bud).some(k => +bud[k] > 0)) add('bud', 10, 10);
+  } catch (e) {}
+  /* bank accounts: balance, overdraft, buffer, fees */
+  try { const d = bkD(); if (d.accs.some(a => bkN(a.bal) || bkN(a.inc) || bkN(a.out))){
+    const R = bkAdvise(), neg = R.A.filter(x => x.bal < 0), exp = bkN(d.exp) || spend || R.tot.out, months = exp > 0 ? (R.liquid + R.saved) / exp : NaN;
+    P.rows.push(['bal', '🏦', t('pic_bal'), M0(R.tot.bal), 'bankacc']);
+    if (isFinite(months)){ P.rows.push(['buf', '🛟', t('pic_buf'), t('pic_months', {n: N(Math.max(0, months), 1)}), 'bankacc']); add('buf', months >= 6 ? 25 : months >= 3 ? 18 + (months - 3) * 2.3 : months >= 1 ? 8 + (months - 1) * 5 : months * 8, 25);
+      if (months < 3) P.tips.push({p: 70 - months * 10, ic: '🛟', h: t('pic_tBuf', {m: M0(Math.max(0, 3 * exp - R.liquid - R.saved))}), go: 'bankacc'}); }
+    add('od', neg.length ? Math.max(0, 20 - neg.length * 8 - neg.reduce((s, x) => s - x.bal, 0) / 1000) : 20, 20);
+    if (neg.length) P.tips.push({p: 90, ic: '➖', h: (R.out.find(o => o.k === 'move' || o.k === 'warn') || {h: t('pic_tOd')}).h, go: 'bankacc'});
+    if (R.tot.fees > 0){ add('fee', R.tot.fees <= 300 ? 10 : R.tot.fees <= 600 ? 6 : 3, 10); if (R.tot.fees > 300) P.tips.push({p: 30 + R.tot.fees / 50, ic: '✂️', h: t('pic_tFee', {y: M0(R.tot.fees)}), go: 'bankacc'}); }
+    const idle = R.out.find(o => o.k === 'idle'); if (idle) P.tips.push({p: 35, ic: '📈', h: idle.h, go: 'bankacc'});
+  } } catch (e) {}
+  /* debts (only if the debt plan was filled in) */
+  try { if (TOUCHED.includes('debtplan')){ const debt = [1, 2, 3].reduce((s, i) => s + Math.max(0, v('dp_b' + i) || 0), 0); if (debt > 0){ P.rows.push(['debt', '💳', t('pic_debt'), M0(debt), 'debtplan']);
+    const yr = (inc || 0) * 12; if (yr > 0){ const r = debt / yr; add('debt', r < 0.2 ? 15 : r < 0.5 ? 10 : r < 1 ? 5 : 0, 15); if (r >= 0.5) P.tips.push({p: 65, ic: '💳', h: t('pic_tDebt'), go: 'debtplan'}); } } } } catch (e) {}
+  /* fuel */
+  try { const S = fuLogStats(); if (S && isFinite(S.month)) P.rows.push(['fuel', '⛽', t('pic_fuel'), M0(S.month), 'fuelcalc']); } catch (e) {}
+  /* reminders */
+  try { const due = rmD().items.filter(rmDue); if (due.length) P.tips.push({p: 80 + due.length, ic: '⏰', h: t('pic_tRem', {n: due.length, t: due[0].title}), go: 'reminders'}); } catch (e) {}
+  const got = P.parts.reduce((s, x) => s + x.got, 0), max = P.parts.reduce((s, x) => s + x.max, 0);
+  P.score = max >= 40 ? Math.round(got / max * 100) : null;
+  P.tips.sort((a, b) => b.p - a.p); P.tips = P.tips.slice(0, 3);
+  return P;
+}
+function picRender(){
+  const hh = $('#hh'); if (!hh) return; let box = $('#hpic'); const E = picE, P = picData();
+  if (!box){ (($('#hrm') || hh)).insertAdjacentHTML('afterend', '<section id="hpic" class="hpic" aria-labelledby="hpic_t"></section>'); box = $('#hpic'); }
+  if (!P.rows.length){ box.innerHTML = `<h3 class="sec-t" id="hpic_t">📊 ${E(t('pic_h'))}</h3><p class="fine">${E(t('pic_empty'))}</p><div class="btnrow"><button type="button" class="btn" data-go="bankacc">🏦 ${E(t('tab_bankacc'))}</button><button type="button" class="btn" data-go="expenses">🧾 ${E(t('tab_expenses'))}</button></div>`; return; }
+  const sc = P.score, col = sc == null ? '' : sc >= 75 ? 'ok' : sc >= 50 ? 'mid' : 'low';
+  box.innerHTML = `<h3 class="sec-t" id="hpic_t">📊 ${E(t('pic_h'))}</h3>
+    <div class="hpic-top">${sc != null ? `<div class="hpic-score ${col}" role="img" aria-label="${E(t('pic_scoreA', {n: sc}))}" style="--p:${sc}"><b>${sc}</b><small dir="ltr">/100</small></div>` : ''}
+    <div class="hpic-st"><b>${E(sc == null ? t('pic_more') : t(sc >= 75 ? 'pic_good' : sc >= 50 ? 'pic_ok' : 'pic_low'))}</b><small>${E(t('pic_from'))}</small></div></div>
+    <div class="hpic-rows">${P.rows.map(([k, ic, l, val, go]) => `<button type="button" class="hpic-r" data-go="${go}"><span>${ic} ${E(l)}</span><b dir="ltr">${E(val)}</b></button>`).join('')}</div>
+    ${P.tips.length ? `<h4 class="ds-q">${E(t('pic_tipsH'))}</h4><ol class="hpic-tips">${P.tips.map(x => `<li><button type="button" data-go="${x.go}"><span aria-hidden="true">${x.ic}</span> ${E(x.h)}</button></li>`).join('')}</ol>` : ''}
+    <p class="fine sl-priv">🔒 ${E(t('pic_priv'))}</p>`;
+}
+{
+  const chPic = calcHome; calcHome = function(){ const r = chPic.apply(this, arguments); try { picRender(); } catch (e) {} return r; };
+  const actPic = activate; activate = function(id){ const r = actPic.apply(this, arguments); if (id === 'home'){ try { picRender(); } catch (e) {} } return r; };
+  try { if (tab === 'home') picRender(); } catch (e) {}
+}
+
+/* ---------- 13.19: four new tools – electricity suppliers, a gift for an event, the real cost of a car, an arnona discount ----------
+   Each keeps its own inputs on the phone (SET.nt[tool]); the published figures they use are dated in the texts. */
+const ntE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+const NT_TOOLS = ['elecsup', 'eventgift', 'carcost', 'arnona'];
+function ntD(id){ const a = SET.nt && typeof SET.nt === 'object' ? SET.nt : (SET.nt = {}); return a[id] && typeof a[id] === 'object' ? a[id] : (a[id] = {}); }
+const ntN = v => { const x = parseFloat(String(v == null ? '' : v).replace(/[,\s₪%]/g, '')); return isFinite(x) ? x : NaN; };
+const ntV = (id, k, def) => { const x = ntN(ntD(id)[k]); return isFinite(x) ? x : def; };
+const ntM = (x, d) => M(isFinite(x) ? x : 0, d == null ? 0 : d, 'ILS');
+const ntIn = (id, k, lab, ph, unit) => `<label class="bk-f"><span>${ntE(lab)}${unit ? ' (' + ntE(unit) + ')' : ''}</span><input type="text" inputmode="decimal" dir="ltr" data-ntt="${id}" data-ntk="${k}" value="${ntE(ntD(id)[k] == null ? '' : ntD(id)[k])}" placeholder="${ntE(ph == null ? '' : ph)}"></label>`;
+const ntSel = (id, k, lab, opts, def) => { const cur = ntD(id)[k] == null ? def : ntD(id)[k]; return `<label class="bk-f"><span>${ntE(lab)}</span><select data-ntt="${id}" data-ntk="${k}">${opts.map(([v, l]) => `<option value="${ntE(v)}"${String(cur) === String(v) ? ' selected' : ''}>${ntE(l)}</option>`).join('')}</select></label>`; };
+const ntCk = (id, k, lab) => `<label class="prn-ck"><input type="checkbox" data-ntt="${id}" data-ntk="${k}"${ntD(id)[k] ? ' checked' : ''}> ${ntE(lab)}</label>`;
+const ntRow = (a, b, key) => `<tr${key ? ' class="key"' : ''}><th scope="row">${ntE(a)}</th><td dir="auto">${ntE(b)}</td></tr>`;
+const ntHero = (lab, val, sub) => `<div class="bk-hero"><span>${ntE(lab)}</span><b dir="auto">${ntE(val)}</b>${sub ? `<small>${ntE(sub)}</small>` : ''}</div>`;
+const ntTip = (ic, h, p, k) => `<li class="bk-a${k ? ' bk-' + k : ''}"><span class="bk-ic" aria-hidden="true">${ic}</span><div><b>${ntE(h)}</b>${p ? `<p>${ntE(p)}</p>` : ''}</div></li>`;
+
+/* ======== 1) electricity suppliers ======== */
+/* published plans, checked October 2026: [supplier, kind, discount %, window, weekdays only, smart meter needed, note key]
+   windows: all = all hours; day = 07–17; fam = 14–20; night = 23–07 */
+const ES_PLANS = [['cellcom', 'fix', 7.5, 'all', true, false], ['electra', 'fix', 6.5, 'all', false, false], ['bezeq', 'fix', 6, 'all', false, false], ['amisragaz', 'fix', 6, 'all', false, false, 'es_nGas'],
+  ['partner', 'fix', 5, 'all', false, false, 'es_nYears'], ['hot', 'fix', 5, 'all', false, false, 'es_nHot'], ['pazgaz', 'fix', 5, 'all', false, false],
+  ['cellcom', 'day', 20, 'day', true, true], ['cellcom', 'fam', 18, 'fam', true, true], ['cellcom', 'night', 15, 'night', false, true],
+  ['bezeq', 'day', 15, 'day', true, true], ['bezeq', 'night', 20, 'night', true, true], ['partner', 'day', 15, 'day', true, true], ['partner', 'night', 20, 'night', true, true],
+  ['hot', 'day', 15, 'day', true, true], ['hot', 'night', 20, 'night', true, true]];
+/* how a home uses electricity over the day: shares of night 23–07, 07–14, 14–17, 17–20, 20–23, and of weekends */
+const ES_PROF = {fam: [22, 22, 12, 20, 24, 30], home: [20, 34, 18, 14, 14, 28], night: [45, 15, 8, 14, 18, 28], out: [26, 12, 8, 26, 28, 34]};
+function esShares(){
+  const d = ntD('elecsup'), p = d.prof || 'fam', base = ES_PROF[p] || ES_PROF.fam, c = p === 'custom' ? ['n', 'm', 'a', 'e', 'l', 'w'].map((k, i) => ntV('elecsup', 'p_' + k, base[i])) : base;
+  const tot = c[0] + c[1] + c[2] + c[3] + c[4] || 1, f = c.slice(0, 5).map(x => x / tot), we = Math.min(100, Math.max(0, c[5])) / 100;
+  return {night: f[0], day: f[1] + f[2], fam: f[2] + f[3], all: 1, we};
+}
+function esEff(pl, S){ const w = S[pl[3]]; return pl[2] / 100 * w * (pl[4] ? 1 - S.we : 1); }
+function esRender(v){
+  const E = ntE, d = ntD('elecsup'), prof = d.prof || 'fam';
+  v.innerHTML = `<p class="fine">${E(t('es_intro'))}</p><div class="bk-grid">${ntIn('elecsup', 'kwh', t('es_kwh'), '600', 'kWh')}${ntIn('elecsup', 'tar', t('es_tar'), N(typeof IL26 === 'object' ? IL26.kwh : 0.64, 4), '₪')}</div>
+    ${ntSel('elecsup', 'prof', t('es_prof'), [['fam', t('es_p_fam')], ['home', t('es_p_home')], ['night', t('es_p_night')], ['out', t('es_p_out')], ['custom', t('es_p_custom')]], 'fam')}
+    ${prof === 'custom' ? `<div class="bk-grid">${[['n', '23–07'], ['m', '07–14'], ['a', '14–17'], ['e', '17–20'], ['l', '20–23']].map(([k, h]) => ntIn('elecsup', 'p_' + k, h, String(ES_PROF.fam[['n', 'm', 'a', 'e', 'l'].indexOf(k)]), '%')).join('')}${ntIn('elecsup', 'p_w', t('es_we'), '30', '%')}</div>` : ''}
+    ${ntCk('elecsup', 'smart', t('es_smart'))}
+    <div id="nt_out_elecsup" aria-live="polite"></div>
+    <p class="fine">${E(t('es_note'))}</p>`;
+  esOut();
+}
+function esOut(){
+  const box = $('#nt_out_elecsup'); if (!box) return; const E = ntE, d = ntD('elecsup'), kwh = ntV('elecsup', 'kwh', 600), tar = ntV('elecsup', 'tar', typeof IL26 === 'object' ? IL26.kwh : 0.64), S = esShares(), cost = kwh * tar;
+  const R = ES_PLANS.map(pl => ({pl, eff: esEff(pl, S), ok: !pl[5] || d.smart})).map(r => Object.assign(r, {save: cost * r.eff})).sort((a, b) => (b.ok - a.ok) || (b.save - a.save));
+  const best = R.find(r => r.ok) || R[0], bestSmart = R.filter(r => r.pl[5]).sort((a, b) => b.save - a.save)[0];
+  box.innerHTML = ntHero(t('es_best', {s: t('es_s_' + best.pl[0])}), ntM(best.save * 12) + ' / ' + t('es_yr'), t('es_bestSub', {p: t('es_k_' + best.pl[1]), e: N(best.eff * 100, 1), m: ntM(best.save, 0)}))
+    + `<div class="bk-scroll"><table class="bk-plan es-t"><thead><tr><th scope="col">${E(t('es_plan'))}</th><th scope="col">${E(t('es_disc'))}</th><th scope="col">${E(t('es_eff'))}</th><th scope="col">${E(t('es_saveY'))}</th></tr></thead><tbody>${R.map(r => `<tr class="${r === best ? 'best' : ''}${r.ok ? '' : ' es-no'}"><th scope="row">${E(t('es_s_' + r.pl[0]))} · ${E(t('es_k_' + r.pl[1]))}<small><bdi dir="ltr">${E(t('es_w_' + r.pl[3]))}</bdi>${r.pl[4] ? ' · ' + E(t('es_wk')) : ''}${r.pl[5] ? ' · ' + E(t('es_needSmart')) : ''}${r.pl[6] ? ' · ' + E(t(r.pl[6])) : ''}</small></th><td dir="ltr">${N(r.pl[2], 1)}%</td><td dir="ltr">${N(r.eff * 100, 1)}%</td><td dir="ltr">${E(ntM(r.save * 12))}</td></tr>`).join('')}</tbody></table></div>
+    <ol class="bk-adv">${!d.smart && bestSmart && bestSmart.save > best.save ? ntTip('📟', t('es_tSmart', {m: ntM((bestSmart.save - best.save) * 12)}), t('es_tSmartP'), 'move') : ''}${ntTip('🔁', t('es_tHow'), t('es_tHowP'))}${ntTip('ℹ️', t('es_tFix'), t('es_tFixP'))}</ol>`;
+}
+
+/* ======== 2) a gift for an event ======== */
+/* rule-of-thumb from amounts published for 2026 (a single guest: large hall ~550–650 ₪, garden ~450–550, boutique ~400–500) */
+const EG_VEN = {hall: 600, garden: 500, boutique: 450, home: 350}, EG_REL = {acq: 0.7, work: 0.75, friend: 0.9, close: 1, rel: 1.05, sib: 1.7}, EG_EV = {wed: 1, bar: 0.85, brit: 0.6, bday: 0.4};
+function egRender(v){
+  v.innerHTML = `<p class="fine">${ntE(t('eg_intro'))}</p><div class="bk-grid">
+    ${ntSel('eventgift', 'ev', t('eg_ev'), Object.keys(EG_EV).map(k => [k, t('eg_e_' + k)]), 'wed')}${ntSel('eventgift', 'rel', t('eg_rel'), Object.keys(EG_REL).map(k => [k, t('eg_r_' + k)]), 'friend')}
+    ${ntSel('eventgift', 'who', t('eg_who'), [['one', t('eg_w_one')], ['two', t('eg_w_two')], ['kids', t('eg_w_kids')]], 'two')}${ntIn('eventgift', 'kids', t('eg_kids'), '2')}
+    ${ntSel('eventgift', 'ven', t('eg_ven'), Object.keys(EG_VEN).map(k => [k, t('eg_v_' + k)]), 'hall')}${ntSel('eventgift', 'reg', t('eg_reg'), [['center', t('eg_g_center')], ['per', t('eg_g_per')]], 'center')}
+    ${ntSel('eventgift', 'day', t('eg_day'), [['we', t('eg_d_we')], ['wk', t('eg_d_wk')]], 'we')}${ntSel('eventgift', 'bud', t('eg_bud'), [['avg', t('eg_b_avg')], ['tight', t('eg_b_tight')], ['comf', t('eg_b_comf')]], 'avg')}</div>
+    <div id="nt_out_eventgift" aria-live="polite"></div><p class="fine">${ntE(t('eg_note'))}</p>`;
+  egOut();
+}
+function egOut(){
+  const box = $('#nt_out_eventgift'); if (!box) return; const d = ntD('eventgift'), g = (k, def) => d[k] == null ? def : d[k];
+  const base = EG_VEN[g('ven', 'hall')] || 600, who = g('who', 'two'), kids = Math.max(0, Math.round(ntV('eventgift', 'kids', 2)));
+  let a = base * (EG_REL[g('rel', 'friend')] || 1) * (who === 'one' ? 1 : 1.5) * (EG_EV[g('ev', 'wed')] || 1) * (g('reg', 'center') === 'per' ? 0.85 : 1) * (g('day', 'we') === 'wk' ? 0.95 : 1) * ({tight: 0.85, comf: 1.12}[g('bud', 'avg')] || 1);
+  if (who === 'kids') a += kids * 150 * (EG_EV[g('ev', 'wed')] || 1);
+  const r50 = x => Math.max(50, Math.round(x / 50) * 50), r18 = x => Math.max(18, Math.round(x / 18) * 18), lo = r50(a * 0.9), hi = r50(a * 1.1);
+  box.innerHTML = ntHero(t('eg_rec'), ntM(r50(a)), t('eg_range', {a: ntM(lo), b: ntM(hi)}))
+    + `<table class="bk-plan"><tbody>${ntRow(t('eg_chai'), ntM(r18(a)) + ' (' + N(r18(a) / 18, 0) + ' × 18)')}${ntRow(t('eg_perGuest'), ntM(a / (who === 'one' ? 1 : who === 'two' ? 2 : 2 + kids)) + ' ' + t('eg_perHead'))}</tbody></table>
+    <ol class="bk-adv">${ntTip('💡', t('eg_t1'), t('eg_t1P'))}${ntTip('📲', t('eg_t2'), t('eg_t2P'))}</ol>`;
+}
+
+/* ======== 3) the real cost of a car ======== */
+function ccRender(v){
+  let km0 = 1250, l100 = 7, pr = typeof IL26 === 'object' ? IL26.fuel95 : 8;
+  try { const S = fuLogStats(); if (S && isFinite(S.kmMonth)) km0 = Math.round(S.kmMonth); const k = fuCons(); if (isFinite(k) && k > 0) l100 = Math.round(1000 / k) / 10; pr = fuPrice(); } catch (e) {}
+  v.innerHTML = `<p class="fine">${ntE(t('cc_intro'))}</p>
+    <h3 class="ds-q">${ntE(t('cc_hCar'))}</h3><div class="bk-grid">${ntIn('carcost', 'val', t('cc_val'), '90000', '₪')}${ntIn('carcost', 'dep', t('cc_dep'), '12', '%')}${ntIn('carcost', 'km', t('cc_km'), String(km0), 'km')}${ntIn('carcost', 'l100', t('cc_l100'), N(l100, 1))}${ntIn('carcost', 'fp', t('cc_fp'), N(pr, 2), '₪')}</div>
+    <h3 class="ds-q">${ntE(t('cc_hYear'))}</h3><div class="bk-grid">${ntIn('carcost', 'ins', t('cc_ins'), '5500', '₪')}${ntIn('carcost', 'lic', t('cc_lic'), '1400', '₪')}${ntIn('carcost', 'test', t('cc_test'), '150', '₪')}${ntIn('carcost', 'svc', t('cc_svc'), '2500', '₪')}${ntIn('carcost', 'tire', t('cc_tire'), '800', '₪')}</div>
+    <h3 class="ds-q">${ntE(t('cc_hMonth'))}</h3><div class="bk-grid">${ntIn('carcost', 'park', t('cc_park'), '150', '₪')}${ntIn('carcost', 'toll', t('cc_toll'), '80', '₪')}${ntIn('carcost', 'loan', t('cc_loan'), '0', '₪')}${ntIn('carcost', 'opp', t('cc_opp'), '4', '%')}</div>
+    <div id="nt_out_carcost" aria-live="polite"></div><p class="fine">${ntE(t('cc_note'))}</p>`;
+  ccOut();
+}
+function ccOut(){
+  const box = $('#nt_out_carcost'); if (!box) return; let km0 = 1250, l100 = 7, pr = typeof IL26 === 'object' ? IL26.fuel95 : 8;
+  try { const S = fuLogStats(); if (S && isFinite(S.kmMonth)) km0 = S.kmMonth; const k = fuCons(); if (isFinite(k) && k > 0) l100 = 100 / k; pr = fuPrice(); } catch (e) {}
+  const g = (k, d) => Math.max(0, ntV('carcost', k, d)), val = g('val', 90000), dep = g('dep', 12) / 100, km = g('km', km0), fuel = km / 100 * g('l100', l100) * g('fp', pr);
+  const depM = val * dep / 12, oppM = val * g('opp', 4) / 100 / 12, yearM = (g('ins', 5500) + g('lic', 1400) + g('test', 150) + g('svc', 2500) + g('tire', 800)) / 12, monthM = g('park', 150) + g('toll', 80) + g('loan', 0);
+  const tot = depM + oppM + yearM + monthM + fuel, parts = [['cc_pDep', depM], ['cc_pFuel', fuel], ['cc_pYear', yearM], ['cc_pMonth', monthM], ['cc_pOpp', oppM]].sort((a, b) => b[1] - a[1]);
+  let v5 = val, c5 = 0; for (let y = 0; y < 5; y++){ const dv = v5 * dep; c5 += dv + v5 * g('opp', 4) / 100 + (yearM + monthM + fuel) * 12; v5 -= dv; }
+  box.innerHTML = ntHero(t('cc_tot'), ntM(tot) + ' / ' + t('bk_mo'), t('cc_sub', {k: km ? ntM(tot / km, 2) : '—', y: ntM(tot * 12)}))
+    + `<table class="bk-plan"><tbody>${parts.map(([k, x]) => ntRow(t(k), ntM(x) + ' · ' + Math.round(x / (tot || 1) * 100) + '%')).join('')}${ntRow(t('cc_5y'), ntM(c5), true)}${ntRow(t('cc_val5'), ntM(v5))}</tbody></table>
+    <ol class="bk-adv">${ntTip('💡', t('cc_t1', {p: t(parts[0][0])}), t('cc_t1P'))}${ntTip('🚌', t('cc_t2'), t('cc_t2P', {m: ntM(tot)}))}</ol>`;
+}
+
+/* ======== 4) an arnona discount ======== */
+/* by the national arnona-discount regulations, as municipalities publish them: [key, discount %, area limit m² (0 = all)] – only the single highest discount applies */
+const AR_CATS = [['oldInc', 100, 100], ['senior', 25, 100], ['disab75', 80, 150], ['disab90', 40, 150], ['blind', 80, 0], ['care', 70, 0], ['childDis', 33, 100], ['single', 20, 0], ['soldier', 100, 70], ['oleh', 90, 100], ['resCmd', 25, 100], ['reserve', 5, 0]];
+/* income test – monthly household income ceilings published for 2025 (by household size): 80% / 60% / 40% (7+ persons: 90% / 70% / 50%) */
+const AR_INC = {1: [3218, 3701, 4184], 2: [4826, 5550, 6274], 3: [5599, 6439, 7279], 4: [6371, 7327, 8282], 5: [8155, 9378, 10601], 6: [9939, 11429, 12920], 7: [11722, 13481, 15239], 8: [13506, 15532, 17558], 9: [15290, 17583, 19877]};
+function arRender(v){
+  v.innerHTML = `<p class="fine">${ntE(t('ar_intro'))}</p><div class="bk-grid">${ntIn('arnona', 'amt', t('ar_amt'), '6000', '₪')}${ntIn('arnona', 'area', t('ar_area'), '90', 'm²')}${ntIn('arnona', 'ppl', t('ar_ppl'), '3')}${ntIn('arnona', 'inc', t('ar_inc'), '9000', '₪')}</div>
+    <fieldset class="bk-flags"><legend>${ntE(t('ar_who'))}</legend>${AR_CATS.map(c => ntCk('arnona', 'c_' + c[0], t('ar_c_' + c[0]))).join('')}</fieldset>
+    <div id="nt_out_arnona" aria-live="polite"></div><p class="fine">${ntE(t('ar_note'))}</p>`;
+  arOut();
+}
+function arIncPct(ppl, inc){
+  if (!(inc >= 0) || !(ppl >= 1)) return 0; const n = Math.min(9, Math.round(ppl)), L = AR_INC[n], big = n >= 7, P = big ? [90, 70, 50] : [80, 60, 40];
+  for (let i = 0; i < 3; i++) if (inc <= L[i]) return P[i]; return 0;
+}
+function arOut(){
+  const box = $('#nt_out_arnona'); if (!box) return; const d = ntD('arnona'), amt = ntV('arnona', 'amt', 0), area = ntV('arnona', 'area', 0), ppl = ntV('arnona', 'ppl', NaN), inc = ntV('arnona', 'inc', NaN);
+  const val = (pct, lim) => amt * pct / 100 * (lim && area > lim ? lim / area : 1);
+  const L = AR_CATS.filter(c => d['c_' + c[0]]).map(c => ({k: 'ar_c_' + c[0], pct: c[1], lim: c[2], save: val(c[1], c[2])}));
+  const ip = isFinite(ppl) && isFinite(inc) ? arIncPct(ppl, inc) : 0; if (ip) L.push({k: 'ar_incT', pct: ip, lim: 150, save: val(ip, 150)});
+  L.sort((a, b) => b.save - a.save);
+  if (!amt){ box.innerHTML = `<p class="fine bk-empty">${ntE(t('fu_fill'))}</p>`; return; }
+  if (!L.length){ box.innerHTML = `<ol class="bk-adv">${ntTip('🔎', t('ar_none'), t('ar_noneP'))}</ol>`; return; }
+  const b = L[0];
+  box.innerHTML = ntHero(t('ar_best'), ntM(b.save) + ' / ' + t('es_yr'), t('ar_bestSub', {n: t(b.k), p: b.pct, m: ntM(b.save / 12)}))
+    + `<table class="bk-plan"><thead><tr><th scope="col">${ntE(t('ar_kind'))}</th><th scope="col">${ntE(t('ar_pct'))}</th><th scope="col">${ntE(t('es_saveY'))}</th></tr></thead><tbody>${L.map(x => `<tr${x === b ? ' class="best"' : ''}><th scope="row">${ntE(t(x.k))}${x.lim ? `<small>${ntE(t('ar_upTo', {n: x.lim}))}</small>` : ''}</th><td dir="ltr">${x.pct}%</td><td dir="ltr">${ntE(ntM(x.save))}</td></tr>`).join('')}</tbody></table>
+    <ol class="bk-adv">${L.length > 1 ? ntTip('☝️', t('ar_one'), t('ar_oneP')) : ''}${ntTip('📝', t('ar_how'), t('ar_howP'))}</ol>`;
+}
+
+/* ---- shared wiring ---- */
+const NT_R = {elecsup: [esRender, esOut], eventgift: [egRender, egOut], carcost: [ccRender, ccOut], arnona: [arRender, arOut]};
+function ntRender(id){ const v = $('#nt_root_' + id); if (v && NT_R[id]) NT_R[id][0](v); }
+let NT_T = null;
+document.addEventListener('input', e => { const el = e.target; if (!el || !el.dataset || !el.dataset.ntt || el.type === 'checkbox' || el.tagName === 'SELECT') return; ntD(el.dataset.ntt)[el.dataset.ntk] = el.value; const id = el.dataset.ntt; clearTimeout(NT_T); NT_T = setTimeout(() => { saveSet(); NT_R[id][1](); }, 180); });
+document.addEventListener('change', e => { const el = e.target; if (!el || !el.dataset || !el.dataset.ntt || !(el.type === 'checkbox' || el.tagName === 'SELECT')) return; const id = el.dataset.ntt, k = el.dataset.ntk;
+  ntD(id)[k] = el.type === 'checkbox' ? el.checked : el.value; saveSet(); if (k === 'prof'){ ntRender(id); const n = $(`[data-ntt="${id}"][data-ntk="prof"]`); if (n) n.focus(); } else NT_R[id][1](); });
+NT_TOOLS.forEach(id => { CALC[id] = () => null; });
+try { GS_SYN.elecsup = 'ספק חשמל ספקי חשמל הנחה בחשמל רפורמת החשמל מונה חכם סלקום אנרגיה בזק אנרגיה פרטנר הוט אלקטרה אמישראגז פזגז electricity supplier power discount smart meter مزود كهرباء خصم عداد ذكي';
+  GS_SYN.eventgift = 'מתנה לחתונה כמה לתת בחתונה צ׳ק לחתונה בר מצווה בת מצווה ברית מתנה לאירוע wedding gift how much to give bar mitzvah هدية عرس كم أعطي';
+  GS_SYN.carcost = 'עלות רכב אחזקת רכב כמה עולה רכב בחודש ירידת ערך ביטוח טסט טיפולים car cost of ownership monthly car cost depreciation كلفة السيارة صيانة';
+  GS_SYN.arnona = 'ארנונה הנחה בארנונה זכאות הנחה מבחן הכנסה אזרח ותיק נכות חייל עולה חדש הורה יחיד arnona municipal tax discount أرنونا خصم'; } catch (e) {}
+if (typeof svKind === 'function'){ const svKindNt = svKind; svKind = function(id){ return NT_TOOLS.includes(id) ? '' : svKindNt.apply(this, arguments); }; }
+try { NT_TOOLS.forEach(id => { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push(id); if (Array.isArray(EX_SKIP)) EX_SKIP.push(id); }); } catch (e) {}
+{ const aiStNt = aiScreenText; aiScreenText = function(id){ const s = aiStNt.apply(this, arguments); if (!NT_TOOLS.includes(id)) return s; const o = $('#nt_out_' + id); return s + '\n' + (o ? o.innerText.slice(0, 1500) : '') + '\nGeneral information only; figures are estimates.'; }; }
+{
+  const actNt = activate; activate = function(id){ const r = actNt.apply(this, arguments); if (NT_TOOLS.includes(id)) ntRender(id); return r; };
+  const alNt = applyLang; applyLang = function(){ const r = alNt.apply(this, arguments); try { if (NT_TOOLS.includes(tab)) ntRender(tab); } catch (e) {} return r; };
+  try { if (NT_TOOLS.includes(tab)) ntRender(tab); } catch (e) {}
+}
+
+/* ---------- 13.19: scenarios side by side – the current values next to the saved ones, with the difference ---------- */
+const scnNum = s => { const m = String(s == null ? '' : s).replace(/[,‎‏\s]/g, '').match(/-?\d+(?:\.\d+)?/); return m ? parseFloat(m[0]) : NaN; };
+{
+  const rs2 = renderScn;
+  renderScn = function(id){
+    const r0 = rs2.apply(this, arguments);
+    try {
+      const box = $('#sc-' + id), list = SCN[id] || [], cur = LAST[id]; if (!box || !list.length || !cur || !cur.hero) return r0;
+      const cmp = $('.scn-cmp', box), nowRows = (cur.rows || []).map(x => [strip(x[0]), strip(x[1])]), base = list[0];
+      const labels = []; [base].concat(list).forEach(s => s.rows.forEach(r => { if (!labels.includes(r[0])) labels.push(r[0]); })); nowRows.forEach(r => { if (!labels.includes(r[0])) labels.push(r[0]); });
+      const cell = (a, b) => { const x = scnNum(a), y = scnNum(b); if (!isFinite(x) || !isFinite(y) || x === y) return '<td class="scn-d">—</td>'; const d = y - x; return `<td class="scn-d ${d > 0 ? 'up' : 'dn'}" dir="ltr">${d > 0 ? '+' : '−'}${N(Math.abs(d), Math.abs(d) < 10 && d % 1 ? 2 : 0)}</td>`; };
+      const nowHero = strip(cur.hero.value);
+      cmp.innerHTML = `<p class="fine">${esc(t('sc2_hint', {n: base.n}))}</p><table class="tbl scn2"><thead><tr><th scope="col"></th>${list.map(s => `<th scope="col">${esc(s.n)}</th>`).join('')}<th scope="col" class="scn-now">${esc(t('sc2_now'))}</th><th scope="col">${esc(t('sc2_diff'))}</th></tr></thead><tbody>
+        <tr class="key"><th scope="row">${t('sc_main')}</th>${list.map(s => `<td>${esc(s.hero.value)}</td>`).join('')}<td class="scn-now">${esc(nowHero)}</td>${cell(base.hero.value, nowHero)}</tr>
+        ${labels.map(l => { const nr = nowRows.find(x => x[0] === l), br = base.rows.find(x => x[0] === l); return `<tr><th scope="row">${esc(l)}</th>${list.map(s => { const r = s.rows.find(x => x[0] === l); return `<td>${r ? esc(r[1]) : '—'}</td>`; }).join('')}<td class="scn-now">${nr ? esc(nr[1]) : '—'}</td>${cell(br && br[1], nr && nr[1])}</tr>`; }).join('')}</tbody></table>`;
+    } catch (e) {}
+    return r0;
+  };
+  const calcSc2 = calc;
+  calc = function(id){ const r = calcSc2.apply(this, arguments); try { const box = $('#sc-' + id); if (box && box.open && (SCN[id] || []).length) renderScn(id); } catch (e) {} return r; };
+}
+document.addEventListener('toggle', e => { const d = e.target; if (d && d.classList && d.classList.contains('scn') && d.open && d.dataset.tab) try { renderScn(d.dataset.tab); } catch (er) {} }, true);
 
 /* ---------- 13.7: the accessibility button – one tap from every screen ----------
    Uses the app's own settings where they exist (contrast, readable font, motion), so the menu and Settings always agree. */

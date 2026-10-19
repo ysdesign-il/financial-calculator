@@ -175,7 +175,9 @@ function d5FoundHTML(){
   return `<div class="d5-found"><h4 class="ds-q">🔎 ${E(t('d5_foundH'))}</h4><p class="fine">${E(t('d5_foundP'))}</p><div class="ds-chips">${F.map((f, i) => f.k === 'tel' ? `<a class="ds-chip" href="tel:${E(f.v)}">${ic.tel} <span dir="ltr">${E(f.show)}</span></a>`
     : f.k === 'mail' ? `<a class="ds-chip" href="mailto:${E(f.v)}">${ic.mail} <span dir="ltr">${E(f.show)}</span></a>`
     : f.k === 'link' ? `<a class="ds-chip" href="${E(/^https?:/i.test(f.v) ? f.v : 'https://' + f.v)}" target="_blank" rel="noopener noreferrer">${ic.link} <span dir="ltr">${E(f.show.slice(0, 40))}</span></a>`
-    : `<button type="button" class="ds-chip" data-d5f="${i}" aria-label="${E(t(f.k === 'date' ? 'd5_fDate' : 'd5_fSum', {v: f.show}))}">${ic[f.k]} <span dir="ltr">${E(f.show)}</span></button>`).join('')}</div></div>`;
+    : `<button type="button" class="ds-chip" data-d5f="${i}" aria-label="${E(t(f.k === 'date' ? 'd5_fDate' : 'd5_fSum', {v: f.show}))}">${ic[f.k]} <span dir="ltr">${E(f.show)}</span></button>`
+      + (f.k === 'date' && typeof rmNew === 'function' ? `<button type="button" class="ds-chip" data-d5r="${i}" aria-label="${E(t('d5_fRem', {v: f.show}))}">⏰ ${E(t('tab_reminders'))}</button>` : '')
+      + (f.k === 'sum' && typeof expSheet === 'function' ? `<button type="button" class="ds-chip" data-d5x="${i}" aria-label="${E(t('d5_fExp', {v: f.show}))}">🧾 ${E(t('tab_expenses'))}</button>` : '')).join('')}</div></div>`;
 }
 {
   const card5b = dsCardRender;
@@ -192,4 +194,18 @@ document.addEventListener('click', e => {
   const d = f.v.replace(/-/g, ''), name = (String(DSC.name || '').trim() || t('ds_c_' + DSC.type)).replace(/[\;,\n]/g, ' '), now = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
   const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//fincalc//docscan//EN', 'BEGIN:VEVENT', 'UID:' + Date.now() + '@fincalc', 'DTSTAMP:' + now, 'DTSTART;VALUE=DATE:' + d, 'SUMMARY:' + name, 'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + name, 'TRIGGER:-P1D', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
   fileSave(new Blob([ics], {type: 'text/calendar'}), (name + ' ' + f.v).replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim() + '.ics', 'text/calendar').then(r => toast(t(r === 'saved' ? 'd5_fCal' : r === 'declined' ? 'pdf_declined' : 'pdf_fail'))).catch(() => toast(t('pdf_fail')));
+});
+
+/* a date → a reminder; a sum → an expense (the category guessed from the store's name) */
+const D5_CAT = [[/סופר|שופרסל|רמי לוי|יוחננוף|ויקטורי|אושר עד|מגה|טיב טעם|מכולת|supermarket|grocery|سوبر/i, 'food'], [/דלק|פז|סונול|דור אלון|ten\b|yellow|fuel|petrol|gas station|وقود/i, 'car'],
+  [/חשמל|מים|ארנונה|גז|חברת החשמל|תאגיד|electric|water|كهرباء|مياه/i, 'bills'], [/סופר[-\s]?פארם|בית מרקחת|קופת חולים|מכבי|כללית|מאוחדת|לאומית|pharm|clinic|صيدلية/i, 'health'],
+  [/מסעדה|קפה|בר\b|פיצה|restaurant|cafe|coffee|مطعم|مقهى/i, 'fun'], [/בגדים|אופנה|קסטרו|זארה|h&m|fashion|ملابس/i, 'clothes'], [/סלקום|פרטנר|פלאפון|הוט|בזק|גולן|cellcom|partner|bezeq|hot/i, 'comm'], [/ביטוח|insurance|تأمين/i, 'insur']];
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest || !t0.closest('#ds_root') || !DSC) return; let b;
+  if ((b = t0.closest('[data-d5r]'))){ const f = d5Found()[+b.dataset.d5r]; if (f) rmNew({title: (String(DSC.name || '').trim() || d5NameIdea() || t('ds_c_' + DSC.type)).slice(0, 80), date: f.v, cat: 'docs', before: 7}); return; }
+  if ((b = t0.closest('[data-d5x]'))){ const f = d5Found()[+b.dataset.d5x]; if (!f) return;
+    const txt = String(DSC.ocr || ''), hit = D5_CAT.find(([rx]) => rx.test(txt)), date = (d5Found().find(x => x.k === 'date') || {}).v, note = (String(DSC.name || '').trim() || d5NameIdea()).slice(0, 80);
+    activate('expenses'); EXP_CAT = hit ? hit[1] : 'other'; expSheet(null);
+    setTimeout(() => { const a = $('#exp_amt'), dt = $('#exp_date'), n = $('#exp_note'); if (a){ a.value = f.v; a.dispatchEvent(new Event('input', {bubbles: true})); } if (dt && date && date <= todayIso()) dt.value = date; if (n && note) n.value = note; }, 60);
+  }
 });

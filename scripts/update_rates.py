@@ -405,6 +405,42 @@ def live_fx(prev, log):
     return res
 
 
+
+FUEL_MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
+def fuel_price(prev_val, log):
+    """The maximum self-service price of petrol 95 for this month, from the Ministry of Energy's monthly notice (a PDF on gov.il).
+    Returns (price, 'YYYY-MM') or None. Any doubt -> None, and the previous value stays."""
+    try:
+        from pypdf import PdfReader
+    except Exception:
+        log.append("fuel: pypdf missing"); return None
+    import io, re, datetime as dt
+    now = dt.datetime.utcnow() + dt.timedelta(hours=3)
+    for back in (0, 1):
+        y, m = now.year, now.month - back
+        if m < 1: y, m = y - 1, 12
+        mn = FUEL_MONTHS[m - 1]
+        urls = ["https://www.gov.il/BlobFolder/news/fuel-%s-%d/he/fuel-%s-%d.pdf" % (mn, y, mn, y),
+                "https://www.gov.il/BlobFolder/news/fuel-%s-%d/he/fuel_%s%d.pdf" % (mn, y, mn, y),
+                "https://www.gov.il/BlobFolder/news/fuel-%s%d/he/fuel_%s%d.pdf" % (mn, y, mn, y)]
+        for u in urls:
+            try:
+                with urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=30) as r: raw = r.read()
+                if not raw or not raw[:5] == b"%PDF-": continue
+                txt = " ".join((pg.extract_text() or "") for pg in PdfReader(io.BytesIO(raw)).pages)
+                txt = re.sub(r"\s+", " ", txt)
+                cand = []
+                for mm in re.finditer(r"יעלה על\D{0,12}(\d{1,2}\.\d{2})", txt): cand.append(mm.group(1))
+                for mm in re.finditer(r"(\d{1,2}\.\d{2})\D{0,12}לע הלעי", txt): cand.append(mm.group(1))
+                for c in cand:
+                    v = float(c)
+                    if 5 <= v <= 13 and (not prev_val or abs(v - prev_val) <= 1.6):
+                        log.append("fuel %s %.2f" % (mn, v)); return v, "%04d-%02d" % (y, m)
+                log.append("fuel: no price in " + u)
+            except Exception as e:
+                log.append("fuel %s: %s" % (mn, str(e)[:80]))
+    return None
+
 def main():
     prev = json.load(open(PATH, encoding="utf-8"))
     out = json.loads(json.dumps(prev))
@@ -508,6 +544,12 @@ def main():
                 log.append("cpi " + new_month)
     except Exception as e:
         log.append("cpi failed: %s" % e)
+    try:
+        fp = fuel_price(float(macro.get("fuel95") or 0), log)
+        if fp and fp[1] >= macro.get("fuelMonth", ""):
+            macro["fuel95"], macro["fuelMonth"] = round(fp[0], 2), fp[1]
+    except Exception as e:
+        log.append("fuel failed: %s" % e)
     out["macro"] = macro
 
     try:
