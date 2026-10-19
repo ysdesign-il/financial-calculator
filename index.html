@@ -1435,6 +1435,27 @@ body:has(#panel-taxfree:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 .tf-facts.tf-f2{grid-template-columns:repeat(2,minmax(0,1fr))}.tf-note{margin:8px 0}
 .ds-qw{margin:4px 0 0;font-size:.82rem;line-height:1.4}.ds-pg figcaption span{min-width:0;overflow-wrap:anywhere}.ds-tips{margin:4px 0 8px}
 .ds-res{margin:2px 0 0;font-size:.78rem;opacity:.75;text-align:start}
+/* 13.7: the accessibility button and what it switches on */
+.ax-fab{position:fixed;z-index:30;inset-inline-start:16px;bottom:calc(24px + env(safe-area-inset-bottom,0px));width:46px;height:46px;border-radius:50%;border:2px solid #fff;background:#1F4FB8;color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.3);padding:0}
+.ax-fab svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.ax-fab svg circle{fill:currentColor;stroke:none}
+.ax-fab:focus-visible{outline:3px solid var(--gold-ui);outline-offset:3px}.ax-fab[hidden],.cp-lock .ax-fab{display:none}
+.ax-n{position:absolute;top:-4px;inset-inline-end:-4px;min-width:18px;height:18px;border-radius:9px;background:var(--gold-ui);color:#1a1405;font-size:.7rem;font-weight:800;display:grid;place-items:center;padding:0 4px}
+@media (max-width:959px){.ax-fab{bottom:calc(96px + env(safe-area-inset-bottom,0px))}}@media print{.ax-fab{display:none}}
+.ax-box{max-width:520px}.ax-zoom{display:flex;align-items:center;gap:10px;margin:0 0 12px;padding:10px 12px;border:1px solid var(--line);border-radius:14px}.ax-zoom span{flex:1;font-weight:700}.ax-zoom b{min-width:52px;text-align:center}
+.ax-zb{appearance:none;font:inherit;font-weight:800;min-width:48px;min-height:44px;border-radius:12px;border:1.5px solid var(--line);background:transparent;color:inherit;cursor:pointer}.ax-zb:disabled{opacity:.4;cursor:default}
+.ax-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.ax-o{appearance:none;font:inherit;color:inherit;text-align:start;display:flex;flex-direction:column;gap:2px;padding:10px 12px;min-height:64px;border-radius:14px;border:1.5px solid var(--line);background:transparent;cursor:pointer;min-width:0}
+.ax-o b{font-size:.92rem}.ax-o small{font-size:.76rem;opacity:.75;line-height:1.35}.ax-ic{font-size:1.1rem;line-height:1}
+.ax-o.on{border-color:#1F4FB8;background:color-mix(in srgb,#1F4FB8 14%,transparent);box-shadow:inset 0 0 0 1px #1F4FB8}
+.ax-o:focus-visible,.ax-zb:focus-visible{outline:3px solid var(--gold-ui);outline-offset:2px}
+.ax-foot{margin-top:12px;flex-wrap:wrap}.ax-hide{display:flex;gap:8px;align-items:center;margin:10px 0 4px;font-size:.88rem}
+:root[data-ax-links] :is(a,.lg-a,summary){text-decoration:underline !important;text-underline-offset:3px;text-decoration-thickness:2px}
+:root[data-ax-links] :is(button,.btn,.mv,.gold-btn,.ds-chip,.tile){outline:2px dashed color-mix(in srgb,currentColor 55%,transparent);outline-offset:2px}
+:root[data-ax-space] body{letter-spacing:.05em;word-spacing:.14em}:root[data-ax-space] :is(p,li,dd,small,label,.fine){line-height:1.9 !important}
+:root[data-ax-focus] :is(:focus,:focus-visible){outline:4px solid #ff9f1a !important;outline-offset:3px !important;box-shadow:0 0 0 7px rgba(0,0,0,.55) !important}
+:root[data-ax-gray]{filter:grayscale(1)}
+:root[data-ax-cursor],:root[data-ax-cursor] *{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 24 24'%3E%3Cpath d='M4 2l15 9-7 1.5L9 20z' fill='%23000' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E") 6 4,auto !important}
+#axx_b{max-height:calc(100dvh - 110px);overflow-y:auto;overscroll-behavior:contain;padding-bottom:4px}
 
 /* ================= 7.8: app designs (ORBIT, AURUM); the default design has none of these rules ================= */
 .dz-ban{display:none}
@@ -6532,6 +6553,7 @@ Object.assign(T, {
   lg_a_d7:['שלוש שפות – עברית, ערבית ואנגלית – עם כיוון כתיבה נכון לכל שפה.','ثلاث لغات – العبرية والعربية والإنجليزية – مع اتجاه كتابة صحيح لكل لغة.','Three languages – Hebrew, Arabic and English – each in its correct direction.'],
   lg_a_d8:['התאמה לטלפונים ולמסכים קטנים, וכפתורים בגודל נוח למגע.','ملاءمة للهواتف والشاشات الصغيرة، وأزرار بحجم مريح للّمس.','Works on phones and small screens, with buttons sized for touch.'],
   lg_a_d9:['בסורק המסמכים סוג המסמך נבחר מכפתורי בחירה עם תוויות, ואת נקודות הפינות אפשר להזיז גם במקלדת (חיצים).','في ماسح المستندات يُختار نوع المستند من أزرار اختيار ذات تسميات، ويمكن تحريك نقاط الزوايا بلوحة المفاتيح أيضًا (الأسهم).','In the document scanner the document type is chosen from labelled choice buttons, and the corner dots can also be moved with the keyboard (arrow keys).'],
+  lg_a_d10:['כפתור נגישות צף בכל מסך: הגדלת טקסט עד 175%, ניגודיות גבוהה, גופן קריא, עצירת אנימציות, הדגשת קישורים ומיקוד, ריווח טקסט, גווני אפור, סמן גדול והקראת המסך.','زر إتاحة عائم في كل شاشة: تكبير النص حتى 175%، تباين عالٍ، خط مقروء، إيقاف الحركة، إبراز الروابط والتركيز، تباعد النص، تدرّج رمادي، مؤشر كبير وقراءة الشاشة.','A floating accessibility button on every screen: text up to 175%, high contrast, readable font, stopping animations, highlighted links and focus, text spacing, grayscale, a big cursor and reading the screen aloud.'],
   lg_a_howH:['איך משתמשים בהתאמות','كيفية استخدام الملاءمات','How to use the adjustments'],
   lg_a_how:['כל ההתאמות נמצאות בהגדרות ← תצוגה ושפה ובהגדרות ← צלילים. הן נשמרות במכשיר ופועלות בכל המסכים.','جميع الملاءمات في الإعدادات ← العرض واللغة والإعدادات ← الأصوات. تُحفظ على الجهاز وتعمل في كل الشاشات.','All adjustments are in Settings → Display & language and Settings → Sounds. They are saved on the device and work on every screen.'],
   lg_a_limH:['מגבלות ידועות','قيود معروفة','Known limitations'],
@@ -6609,6 +6631,7 @@ Object.assign(T, {
   lg_h_p1910:['19.10.2026 – נוספו סורק המסמכים, בדיקת תלוש, תרגום מכתבים ו־Tax Free: מה נשלח ל־AI, מה מעובד רק בטלפון ומה נשמר במכשיר.','19.10.2026 – أُضيف ماسح المستندات وفحص القسيمة وترجمة الرسائل وTax Free: ما يُرسل إلى الذكاء الاصطناعي وما يُعالَج على الهاتف فقط وما يُحفظ على الجهاز.','19.10.2026 – added the document scanner, the payslip check, letter translation and Tax Free: what is sent to the AI, what is processed only on the phone and what is kept on the device.'],
   lg_h_t1910:['19.10.2026 – נוספו תנאים לתרגום מכתבים, לסריקת כרטיסים אישיים ולחישובי Tax Free.','19.10.2026 – أُضيفت شروط لترجمة الرسائل ومسح البطاقات الشخصية وحسابات Tax Free.','19.10.2026 – added terms for letter translation, scanning personal cards and Tax Free calculations.'],
   lg_h_a1910:['19.10.2026 – נוספו סורק המסמכים ו־Tax Free ונבדקה הנגישות שלהם.','19.10.2026 – أُضيف ماسح المستندات وTax Free وفُحصت إتاحتهما.','19.10.2026 – added the document scanner and Tax Free and checked their accessibility.'],
+  lg_h_a1910b:['19.10.2026 – נוסף כפתור נגישות בכל המסכים.','19.10.2026 – أُضيف زر إتاحة في كل الشاشات.','19.10.2026 – added an accessibility button on every screen.'],
 });
 Object.assign(T, {
   sl_t:['בדיקת תלוש','فحص قسيمة الراتب','Payslip check'],
@@ -6806,6 +6829,23 @@ Object.assign(T, {
   tf_rateSt:['מס על המוצר','الضريبة على المنتج','Tax on the item'], tf_inIls:['בשקלים (בערך)','بالشيكل (تقريبًا)','In shekels (approx.)'],
   tf_pc:['מחשבון מחיר','حاسبة السعر','Price check'], tf_pcIn:['מחיר','السعر','Price'], tf_pcNet:['מחיר לפני מס','السعر قبل الضريبة','Price before tax'], tf_pcTax:['המס בתוך המחיר','الضريبة ضمن السعر','Tax inside the price'], tf_pcTot:['לתשלום עם המס','للدفع مع الضريبة','To pay with tax'],
 });
+/* 13.7: the accessibility button */
+Object.assign(T, {
+  ax_btn:['תפריט נגישות','قائمة الإتاحة','Accessibility menu'], ax_title:['נגישות','الإتاحة','Accessibility'],
+  ax_size:['גודל טקסט','حجم النص','Text size'], ax_smaller:['הקטנת טקסט','تصغير النص','Smaller text'], ax_bigger:['הגדלת טקסט','تكبير النص','Bigger text'],
+  ax_contrast:['ניגודיות גבוהה','تباين عالٍ','High contrast'], ax_contrastH:['טקסט וקווים חדים יותר','نص وخطوط أوضح','Sharper text and lines'],
+  ax_font:['גופן קריא','خط مقروء','Readable font'], ax_fontH:['אותיות פשוטות וברורות','حروف بسيطة وواضحة','Plain, clear letters'],
+  ax_motion:['עצירת אנימציות','إيقاف الحركة','Stop animations'], ax_motionH:['בלי תנועה והבהובים','دون حركة أو وميض','No movement or flashing'],
+  ax_links:['הדגשת קישורים','إبراز الروابط','Highlight links'], ax_linksH:['קו תחתון לקישורים ומסגרת לכפתורים','خط تحت الروابط وإطار للأزرار','Underlined links, outlined buttons'],
+  ax_space:['ריווח טקסט','تباعد النص','Text spacing'], ax_spaceH:['יותר רווח בין שורות ואותיות','مسافة أكبر بين الأسطر والحروف','More space between lines and letters'],
+  ax_focus:['הדגשת מיקוד','إبراز التركيز','Focus highlight'], ax_focusH:['מסגרת בולטת סביב מה שנבחר','إطار بارز حول العنصر المحدد','A bold frame around what is selected'],
+  ax_gray:['גווני אפור','تدرّج رمادي','Grayscale'], ax_grayH:['בלי צבעים – לרגישות לצבע','دون ألوان – للحساسية للألوان','No colours – for colour sensitivity'],
+  ax_cursor:['סמן גדול','مؤشر كبير','Big cursor'], ax_cursorH:['חץ עכבר גדול (במחשב)','سهم فأرة كبير (في الحاسوب)','A large mouse pointer (on a computer)'],
+  ax_read:['הקראת המסך','قراءة الشاشة','Read the screen aloud'], ax_readH:['לחיצה נוספת עוצרת','الضغط مرة أخرى يوقف','Tap again to stop'], ax_reading:['מקריא… לחצו שוב על "הקראת המסך" כדי לעצור','جارٍ القراءة… اضغطوا "قراءة الشاشة" مرة أخرى للإيقاف','Reading… tap "Read the screen aloud" again to stop'],
+  ax_reset:['איפוס הנגישות','إعادة ضبط الإتاحة','Reset accessibility'], ax_resetDone:['הגדרות הנגישות אופסו','أُعيد ضبط إعدادات الإتاحة','Accessibility settings reset'],
+  ax_hideBtn:['הסתרת הכפתור הצף (התפריט נשאר בהגדרות ← מערכת)','إخفاء الزر العائم (تبقى القائمة في الإعدادات ← النظام)','Hide the floating button (the menu stays in Settings → System)'], ax_hidden:['הכפתור הוסתר. התפריט זמין בהגדרות ← מערכת.','أُخفي الزر. القائمة متاحة في الإعدادات ← النظام.','Button hidden. The menu is in Settings → System.'],
+  ax_note:['ההגדרות נשמרות במכשיר וחלות על כל המסכים.','تُحفظ الإعدادات على الجهاز وتسري على كل الشاشات.','Settings are saved on the device and apply to every screen.']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -6996,7 +7036,7 @@ function devLang(){
   return 'en';                                              // any other language: English
 }
 function langAuto(){ try { return !LS.getItem('fin-lang'); } catch (e) { return true; } }
-const SET_DEF = {photoAccess:'ask', slip:{}, slips:[], tf:{}, ixShow:'', ixCustom:[], tvOn:'0', sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', myGross:'', myKids:'', myBYear:'', myEq:'', persona:'all', shareLang:'ui', words:'1', enTerms:'0', plain:'0', tts:'1', voiceIn:'0', dfmt:'auto', wkStart:'auto', trFix:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {photoAccess:'ask', slip:{}, slips:[], tf:{}, axZoom:100, axLinks:'0', axSpace:'0', axFocus:'0', axGray:'0', axCursor:'0', axBtn:'1', ixShow:'', ixCustom:[], tvOn:'0', sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', myGross:'', myKids:'', myBYear:'', myEq:'', persona:'all', shareLang:'ui', words:'1', enTerms:'0', plain:'0', tts:'1', voiceIn:'0', dfmt:'auto', wkStart:'auto', trFix:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -13410,8 +13450,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.6", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.044122';
+var CHANGELOG = [{"v": "13.7", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.054030';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -25305,11 +25345,11 @@ const LG_DATE = '19.10.2026';
 const LG_DOCS = {
   a11y: {t: 'lg_a11yT', ic: '♿', parts: [
     ['', ['lg_a_intro']],
-    ['lg_a_doneH', ['lg_a_d1', 'lg_a_d2', 'lg_a_d3', 'lg_a_d4', 'lg_a_d5', 'lg_a_d6', 'lg_a_d7', 'lg_a_d8', 'lg_a_d9'], true],
+    ['lg_a_doneH', ['lg_a_d1', 'lg_a_d2', 'lg_a_d3', 'lg_a_d4', 'lg_a_d5', 'lg_a_d6', 'lg_a_d7', 'lg_a_d8', 'lg_a_d9', 'lg_a_d10'], true],
     ['lg_a_howH', ['lg_a_how']],
     ['lg_a_limH', ['lg_a_l1', 'lg_a_l2', 'lg_a_l3'], true],
     ['lg_contactH', ['lg_a_contact']],
-    ['lg_histH', ['lg_h_a1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_a1910b', 'lg_h_a1910', 'lg_h_1810'], true]
   ]},
   terms: {t: 'lg_termsT', ic: '📜', parts: [
     ['', ['lg_t_intro']],
@@ -26519,6 +26559,86 @@ try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('taxfree'); if (Array.isArray
   const alTf = applyLang; applyLang = function(){ const r = alTf.apply(this, arguments); try { if (tab === 'taxfree') tfRender(); } catch (e) {} return r; };
   try { if (tab === 'taxfree') tfRender(); } catch (e) {}
 }
+
+/* ---------- 13.7: the accessibility button – one tap from every screen ----------
+   Uses the app's own settings where they exist (contrast, readable font, motion), so the menu and Settings always agree. */
+const AX_ZOOM = [100, 115, 130, 150, 175];
+const axE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+/* [key, icon, is it on?, toggle] */
+const AX_OPTS = [
+  ['contrast', '◐', () => SET.contrast === 'high', () => { SET.contrast = SET.contrast === 'high' ? 'normal' : 'high'; }],
+  ['font', 'Aa', () => SET.font === 'readable', () => { SET.font = SET.font === 'readable' ? 'default' : 'readable'; }],
+  ['motion', '⏸', () => SET.motion === 'reduced', () => { SET.motion = SET.motion === 'reduced' ? 'full' : 'reduced'; }],
+  ['links', '🔗', () => SET.axLinks === '1', () => { SET.axLinks = SET.axLinks === '1' ? '0' : '1'; }],
+  ['space', '↕', () => SET.axSpace === '1', () => { SET.axSpace = SET.axSpace === '1' ? '0' : '1'; }],
+  ['focus', '⬚', () => SET.axFocus === '1', () => { SET.axFocus = SET.axFocus === '1' ? '0' : '1'; }],
+  ['gray', '◑', () => SET.axGray === '1', () => { SET.axGray = SET.axGray === '1' ? '0' : '1'; }],
+  ['cursor', '➤', () => SET.axCursor === '1', () => { SET.axCursor = SET.axCursor === '1' ? '0' : '1'; }]
+];
+function axApply(){
+  const r = document.documentElement;
+  ['links', 'space', 'focus', 'gray', 'cursor'].forEach(k => { const v = SET['ax' + k.charAt(0).toUpperCase() + k.slice(1)] === '1'; if (v) r.dataset['ax' + k.charAt(0).toUpperCase() + k.slice(1)] = '1'; else delete r.dataset['ax' + k.charAt(0).toUpperCase() + k.slice(1)]; });
+  try { applyTheme(); applySize(); } catch (e) {}
+  const b = $('#axb'); if (b) b.hidden = SET.axBtn === '0';
+}
+/* text size: on top of the size chosen in Settings */
+{ const asAx = applySize; applySize = function(){ const r = asAx.apply(this, arguments); const z = +SET.axZoom || 100; if (z !== 100){ const base = parseFloat(document.documentElement.style.fontSize) || 16; document.documentElement.style.fontSize = (base * z / 100) + 'px'; } return r; }; }
+function axCount(){ return AX_OPTS.filter(o => o[2]()).length + ((+SET.axZoom || 100) !== 100 ? 1 : 0); }
+function axBtnMount(){
+  if ($('#axb')) return;
+  document.body.insertAdjacentHTML('beforeend', `<button type="button" class="ax-fab" id="axb" aria-haspopup="dialog" aria-controls="axx"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.2" r="2.1"/><path d="M5 8.2c2.3.7 4.6 1 7 1s4.7-.3 7-1M12 9.2v5.3M12 14.5l-3.4 6.3M12 14.5l3.4 6.3"/></svg><span class="ax-n" hidden></span></button>`);
+  axBtnLabel();
+}
+function axBtnLabel(){ const b = $('#axb'); if (!b) return; b.setAttribute('aria-label', t('ax_btn')); b.title = t('ax_btn'); const n = axCount(), c = b.querySelector('.ax-n'); c.hidden = !n; c.textContent = n || ''; b.hidden = SET.axBtn === '0'; }
+function axOpen(){
+  let o = $('#axx');
+  if (!o){ document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="axx" hidden><div class="cp-box ax-box" role="dialog" aria-modal="true" aria-labelledby="axx_t"><div class="cp-top"><h3 id="axx_t"></h3><button type="button" class="cp-x" id="axx_x">×</button></div><div id="axx_b"></div></div></div>`); o = $('#axx'); }
+  axPanel(); o.hidden = false; document.body.classList.add('cp-lock'); setTimeout(() => { const f = $('#axx_b button:not([disabled])'); if (f) f.focus(); }, 30);
+}
+function axPanel(){
+  const z = +SET.axZoom || 100, zi = AX_ZOOM.indexOf(z);
+  $('#axx_t').textContent = '♿ ' + t('ax_title'); $('#axx_x').setAttribute('aria-label', t('cp_close'));
+  $('#axx_b').innerHTML = `<div class="ax-zoom" role="group" aria-label="${axE(t('ax_size'))}"><span>${axE(t('ax_size'))}</span>
+      <button type="button" class="ax-zb" data-axz="-1"${zi <= 0 ? ' disabled' : ''} aria-label="${axE(t('ax_smaller'))}">A−</button><b aria-live="polite">${z}%</b><button type="button" class="ax-zb" data-axz="1"${zi >= AX_ZOOM.length - 1 ? ' disabled' : ''} aria-label="${axE(t('ax_bigger'))}">A+</button></div>
+    <div class="ax-grid">${AX_OPTS.map(([k, ic, on]) => `<button type="button" class="ax-o${on() ? ' on' : ''}" aria-pressed="${on()}" data-axo="${k}"><span class="ax-ic" aria-hidden="true">${ic}</span><b>${axE(t('ax_' + k))}</b><small>${axE(t('ax_' + k + 'H'))}</small></button>`).join('')}
+      ${'speechSynthesis' in window ? `<button type="button" class="ax-o" data-axread="1"><span class="ax-ic" aria-hidden="true">🔊</span><b>${axE(t('ax_read'))}</b><small>${axE(t('ax_readH'))}</small></button>` : ''}</div>
+    <div class="btnrow ax-foot"><button type="button" class="btn" id="ax_reset">↺ ${axE(t('ax_reset'))}</button><button type="button" class="mv" data-axdoc="1">📄 ${axE(t('lg_a11yT'))}</button></div>
+    <label class="ax-hide"><input type="checkbox" id="ax_hidebtn"${SET.axBtn === '0' ? ' checked' : ''}> ${axE(t('ax_hideBtn'))}</label>
+    <p class="fine">${axE(t('ax_note'))}</p>`;
+}
+function axClose(){ const o = $('#axx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); const b = $('#axb'); if (b && !b.hidden) b.focus(); } }
+const axSave = () => { try { saveSet(); } catch (e) {} axApply(); axPanel(); axBtnLabel(); };
+/* read the open screen aloud: its title, the main result and the visible text of the panel */
+function axRead(){
+  const ss = window.speechSynthesis; if (ss.speaking){ ss.cancel(); return; }
+  const p = $(`#panel-${tab}`) || document.querySelector('main') || document.body, title = ($('#page-title') || {}).textContent || '';
+  const txt = (title + '. ' + (p.innerText || '')).replace(/[\u{1F300}-\u{1FAFF}☀-➿]/gu, ' ').replace(/\s+/g, ' ').slice(0, 6000);
+  const u = new SpeechSynthesisUtterance(txt); try { u.lang = bcp(lang); } catch (e) { u.lang = lang; }
+  const v = (ss.getVoices() || []).find(x => x.lang && x.lang.toLowerCase().startsWith(lang.split('-')[0])); if (v) u.voice = v;
+  axClose(); ss.speak(u); toast(t('ax_reading'));
+}
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest) return; let b;
+  if (t0.closest('#axb') || t0.closest('[data-axopen]')){ axOpen(); return; }
+  if (t0.closest('#axx_x') || t0.id === 'axx'){ axClose(); return; }
+  if (!t0.closest('#axx')) return;
+  if ((b = t0.closest('[data-axz]'))){ const z = +SET.axZoom || 100, i = Math.max(0, Math.min(AX_ZOOM.length - 1, AX_ZOOM.indexOf(z) + +b.dataset.axz)); SET.axZoom = AX_ZOOM[i]; axSave(); const nb = $(`#axx [data-axz="${b.dataset.axz}"]`); if (nb && !nb.disabled) nb.focus(); return; }
+  if ((b = t0.closest('[data-axo]'))){ const o = AX_OPTS.find(x => x[0] === b.dataset.axo); if (o){ o[3](); axSave(); const nb = $(`#axx [data-axo="${o[0]}"]`); if (nb) nb.focus(); } return; }
+  if (t0.closest('[data-axread]')){ axRead(); return; }
+  if (t0.closest('#ax_reset')){ SET.axZoom = 100; SET.contrast = 'normal'; SET.font = 'default'; SET.motion = 'full'; ['axLinks', 'axSpace', 'axFocus', 'axGray', 'axCursor'].forEach(k => SET[k] = '0'); axSave(); toast(t('ax_resetDone')); return; }
+  if (t0.closest('[data-axdoc]')){ axClose(); try { lgOpen('a11y'); } catch (er) {} return; }
+});
+document.addEventListener('change', e => { if (e.target && e.target.id === 'ax_hidebtn'){ SET.axBtn = e.target.checked ? '0' : '1'; axSave(); if (e.target.checked) toast(t('ax_hidden')); } });
+document.addEventListener('keydown', e => {
+  const o = $('#axx'); if (!o || o.hidden) return;
+  if (e.key === 'Escape'){ axClose(); return; }
+  if (e.key === 'Tab'){ const f = [...o.querySelectorAll('button:not([disabled]),input,[tabindex="0"]')].filter(x => x.offsetParent); if (!f.length) return; const a = f[0], z = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === a){ e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z){ e.preventDefault(); a.focus(); } }
+});
+/* also reachable from Settings → System, next to the accessibility statement (so it can come back after being hidden) */
+{ const lmAx = lgMount; lgMount = function(){ const r = lmAx.apply(this, arguments); const s = $('#lg_sec .lg-docs'); if (s && !s.querySelector('[data-axopen]')) s.insertAdjacentHTML('afterbegin', `<button type="button" class="btn" data-axopen="1">♿ ${axE(t('ax_title'))}</button>`); return r; }; }
+{ const alAx = applyLang; applyLang = function(){ const r = alAx.apply(this, arguments); try { axBtnLabel(); const o = $('#axx'); if (o && !o.hidden) axPanel(); const s = $('#lg_sec [data-axopen]'); if (s) s.innerHTML = '♿ ' + axE(t('ax_title')); } catch (e) {} return r; }; }
+try { axBtnMount(); axApply(); } catch (e) {}
 
 applyLang(false);
 activate(tab);

@@ -3,11 +3,11 @@ const LG_DATE = '19.10.2026';
 const LG_DOCS = {
   a11y: {t: 'lg_a11yT', ic: '♿', parts: [
     ['', ['lg_a_intro']],
-    ['lg_a_doneH', ['lg_a_d1', 'lg_a_d2', 'lg_a_d3', 'lg_a_d4', 'lg_a_d5', 'lg_a_d6', 'lg_a_d7', 'lg_a_d8', 'lg_a_d9'], true],
+    ['lg_a_doneH', ['lg_a_d1', 'lg_a_d2', 'lg_a_d3', 'lg_a_d4', 'lg_a_d5', 'lg_a_d6', 'lg_a_d7', 'lg_a_d8', 'lg_a_d9', 'lg_a_d10'], true],
     ['lg_a_howH', ['lg_a_how']],
     ['lg_a_limH', ['lg_a_l1', 'lg_a_l2', 'lg_a_l3'], true],
     ['lg_contactH', ['lg_a_contact']],
-    ['lg_histH', ['lg_h_a1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_a1910b', 'lg_h_a1910', 'lg_h_1810'], true]
   ]},
   terms: {t: 'lg_termsT', ic: '📜', parts: [
     ['', ['lg_t_intro']],
