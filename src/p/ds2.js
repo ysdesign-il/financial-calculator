@@ -301,7 +301,7 @@ function dsCardRender(root){
     <div class="ds-pages">${C.pages.map((p, i) => `<figure class="ds-pg"><div class="ds-pgw"><canvas data-pgc="${i}" aria-label="${slE(t('ds_side', {n: i + 1}))}"></canvas></div><figcaption><span>${slE(t('ds_side', {n: i + 1}))}</span> <button type="button" class="lg-a" data-pgdel="${i}">${slE(t('cv_rm'))}</button></figcaption><p class="ds-res" dir="ltr">${p.base.width} × ${p.base.height} px${p.dpi ? ' · ' + p.dpi + ' DPI' : ''}</p>${p.sharp < 60 ? `<p class="ds-qw">⚠️ ${slE(t('ds_blurry'))}</p>` : p.real && p.real < 280 ? `<p class="ds-qw">ℹ️ ${slE(t('ds_lowres', {d: p.real}))}</p>` : ''}</figure>`).join('')}</div>
     <div class="btnrow ds-tools">${dsPickBtns(false, 'ds_add').replace('class="btnrow ds-go"', 'class="ds-addw"')}</div>
     <h4 class="ds-q">${slE(t('ds_filt'))}</h4>
-    <div class="ds-chips" role="radiogroup" aria-label="${slE(t('ds_filt'))}">${['auto', 'doc', 'orig', 'gray', 'bw'].map(f => `<button type="button" role="radio" class="ds-chip${f === C.filt ? ' on' : ''}" aria-checked="${f === C.filt}" data-dfl="${f}">${slE(t('ds_f_' + f))}</button>`).join('')}</div>
+    <div class="ds-chips" role="radiogroup" aria-label="${slE(t('ds_filt'))}">${['auto', 'magic', 'doc', 'orig', 'gray', 'bw'].map(f => `<button type="button" role="radio" class="ds-chip${f === C.filt ? ' on' : ''}" aria-checked="${f === C.filt}" data-dfl="${f}">${slE(t('ds_f_' + f))}</button>`).join('')}</div>
     <h4 class="ds-q">${slE(t('ds_red'))}</h4><p class="fine">${slE(t(C.type === 'credit' ? 'ds_credit' : 'ds_redH'))}</p>
     <div class="btnrow"><button type="button" class="btn${DSX.red ? ' on' : ''}" id="ds_redb" aria-pressed="${DSX.red}">🖍️ ${slE(t(DSX.red ? 'ds_redOn' : 'ds_redGo'))}</button><button type="button" class="mv" id="ds_redu">↶ ${slE(t('ds_redUndo'))}</button></div>
     ${typeof dsSigHTML === 'function' ? dsSigHTML() : ''}
@@ -377,7 +377,7 @@ async function dsPdf(pages, qual){
   put('trailer\n<< /Size ' + n + ' /Root 1 0 R >>\nstartxref\n' + xref + '\n%%EOF');
   return new Blob(parts, {type: 'application/pdf'});
 }
-const dsFileName = ext => (dsCardName() + ' ' + new Date().toISOString().slice(0, 10)).replace(/[\\/:*?"<>|]+/g, ' ').trim() + '.' + ext;
+const dsFileName = ext => (dsCardName() + ' ' + new Date().toISOString().slice(0, 10)).replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim() + '.' + ext;
 async function dsOut(how){
   if (!DSC || !DSC.pages.length) return; toast(t('ds_making'));
   await new Promise(r => setTimeout(r, 30));
