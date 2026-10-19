@@ -1432,6 +1432,7 @@ body:has(#panel-taxfree:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 .tf-keep{display:flex;gap:8px;align-items:flex-start;margin:10px 0;font-size:.9rem}
 .tf-out{margin-top:10px}.tf-or{display:grid;grid-template-columns:1fr auto;gap:2px 8px;padding:8px 0;border-bottom:1px solid var(--line)}.tf-or small{grid-column:1/-1;opacity:.75}.tf-or b{overflow-wrap:anywhere}
 .tf-bigbox{max-width:560px}.tf-bg{padding:10px 0;border-bottom:1px solid var(--line)}.tf-bg small{display:block;opacity:.75;font-size:.9rem}.tf-bg b{display:block;font-size:1.5rem;line-height:1.3;overflow-wrap:anywhere}
+.tf-facts.tf-f2{grid-template-columns:repeat(2,minmax(0,1fr))}.tf-note{margin:8px 0}
 
 /* ================= 7.8: app designs (ORBIT, AURUM); the default design has none of these rules ================= */
 .dz-ban{display:none}
@@ -6543,7 +6544,7 @@ Object.assign(T, {
   lg_p_dev2:['כשנכנסים לחשבון, הנתונים מוצפנים במכשיר (AES-GCM, במפתח שנגזר מהסיסמה). החשבון עצמו מקומי: אין לנו שרת חשבונות, ואיננו יכולים לראות את הנתונים או לשחזר סיסמה.','عند تسجيل الدخول تُشفَّر البيانات على الجهاز (AES-GCM بمفتاح مشتق من كلمة المرور). الحساب نفسه محلي: لا خادم حسابات لدينا، ولا يمكننا رؤية البيانات أو استعادة كلمة المرور.','When you sign in, your data is encrypted on the device (AES-GCM, with a key derived from your password). The account itself is local: we have no account server and cannot see your data or recover a password.'],
   lg_p_dev3:['מפתח Gemini, אם שמרת, נשמר רק במכשיר ואינו נכלל בייצוא.','مفتاح Gemini، إن حفظته، يُحفظ على الجهاز فقط ولا يُضمَّن في التصدير.','A Gemini key, if you saved one, stays only on the device and is left out of exports.'],
   lg_p_dev4:['סורק המסמכים: כרטיס אישי (תעודת זהות, דרכון, רישיון ועוד) מעובד רק בטלפון – חיתוך, יישור, הסתרת פרטים וסימן מים – בלי AI ובלי שליחה לשום מקום, והסריקה לא נשמרת באפליקציה. נשאר רק הקובץ שבחרת להוריד או לשתף. בבדיקת תלוש נשמרים במכשיר רק המספרים, ואפשר למחוק אותם מהמסך עצמו.','ماسح المستندات: تُعالَج البطاقة الشخصية (الهوية، الجواز، الرخصة وغيرها) على الهاتف فقط – قصّ وتسوية وإخفاء تفاصيل وعلامة مائية – دون ذكاء اصطناعي ودون إرسال إلى أي مكان، ولا يُحفظ المسح في التطبيق. يبقى فقط الملف الذي اخترت تنزيله أو مشاركته. في فحص القسيمة تُحفظ الأرقام فقط على الجهاز، ويمكن حذفها من الشاشة نفسها.','The document scanner: a personal card (ID, passport, licence and more) is processed only on the phone – cropping, straightening, hiding details and the watermark – with no AI and nothing sent anywhere, and the scan is not kept in the app. Only the file you chose to download or share remains. In the payslip check only the numbers are kept on the device, and you can delete them on that screen.'],
-  lg_p_dev5:['Tax Free: הקניות שהזנת נשמרות במכשיר. הפרטים האישיים לטופס (שם, כתובת וכדומה) נשמרים רק אם סימנת "לזכור", ומספר הדרכון לעולם לא נשמר ולא נשלח ל־AI. בהכנת הטופס עם AI נשלחים רק שאר הפרטים, כדי לתרגם אותם.','Tax Free: المشتريات التي أدخلتها تُحفظ على الجهاز. التفاصيل الشخصية للنموذج (الاسم والعنوان وغيرها) تُحفظ فقط إذا اخترت "تذكّر"، ورقم الجواز لا يُحفظ أبدًا ولا يُرسل إلى الذكاء الاصطناعي. عند تجهيز النموذج بالذكاء الاصطناعي تُرسل بقية التفاصيل فقط لترجمتها.','Tax Free: the purchases you enter are kept on the device. Personal details for the form (name, address and so on) are kept only if you tick "remember", and the passport number is never kept and never sent to the AI. When the form is prepared with AI, only the other details are sent, to translate them.'],
+  lg_p_dev5:['Tax Free: הקניות שהזנת נשמרות במכשיר. הפרטים האישיים לטופס (שם, כתובת וכדומה) נשמרים רק אם סימנת "לזכור". אין באפליקציה שדה למספר דרכון, תעודת זהות, כרטיס או חשבון בנק. בהכנת הטופס עם AI נשלחים הפרטים שמילאת, רק כדי לתרגם אותם.','Tax Free: المشتريات التي أدخلتها تُحفظ على الجهاز. التفاصيل الشخصية للنموذج (الاسم والعنوان وغيرها) تُحفظ فقط إذا اخترت "تذكّر". لا يوجد في التطبيق حقل لرقم جواز أو هوية أو بطاقة أو حساب بنكي. عند تجهيز النموذج بالذكاء الاصطناعي تُرسل التفاصيل التي ملأتها لترجمتها فقط.','Tax Free: the purchases you enter are kept on the device. Personal details for the form (name, address and so on) are kept only if you tick "remember". The app has no field for a passport, ID, card or bank account number. When the form is prepared with AI, the details you filled in are sent only to translate them.'],
   lg_p_usH:['מה מגיע אלינו','ما يصل إلينا','What reaches us'],
   lg_p_us1:['משוב: רק מה שכתבת בטופס, ואם בחרת – חתימה בשם ו/או כתובת מייל לתשובה. באתר ההודעה מוצפנת במכשיר שלך ונשלחת דרך שירות העברה (ntfy.sh), ורק המפתח יכול לפתוח אותה. באפליקציית Claude היא נשמרת במסד הנתונים של האפליקציה, גלויה רק למפתח.','الملاحظات: فقط ما كتبته في النموذج، وإن اخترت – توقيع باسم و/أو بريد إلكتروني للرد. في الموقع تُشفَّر الرسالة على جهازك وتُرسل عبر خدمة نقل (ntfy.sh)، ولا يفتحها إلا المطوّر. في تطبيق Claude تُحفظ في قاعدة بيانات التطبيق، ولا يراها إلا المطوّر.','Feedback: only what you write in the form and, if you choose, a signed name and/or an e-mail address for a reply. On the website the message is encrypted on your device and sent through a relay service (ntfy.sh), and only the developer can open it. In the Claude app it is kept in the app\'s database, visible only to the developer.'],
   lg_p_us2:['כינוי, אם בחרת אחד: נשמר רק כקוד מגובב (hash), כדי שאחרים לא יבחרו אותו.','الاسم المستعار، إن اخترته: يُحفظ كرمز مُجزّأ (hash) فقط، كي لا يختاره غيرك.','A handle, if you chose one: kept only as a hash, so no one else can take it.'],
@@ -6731,14 +6732,14 @@ Object.assign(T, {
 });
 /* 13.5: Tax Free */
 Object.assign(T, {
-  tab_taxfree:['Tax Free – החזר מע״מ','Tax Free – استرداد الضريبة','Tax Free – VAT refund'], d_taxfree:['כמה מע״מ יחזור על קניות בחו״ל (או לתיירים בישראל): מינימום לכל מדינה, עמלות, צעדים בשדה, וטופס מוכן בשפה של המדינה.','كم ستسترد من ضريبة القيمة المضافة على المشتريات في الخارج (أو للسياح في إسرائيل): الحد الأدنى لكل دولة والعمولات وخطوات المطار ونموذج جاهز بلغة الدولة.','How much VAT you get back on shopping abroad (or as a tourist in Israel): each country\'s minimum, fees, airport steps and a form ready in the country\'s language.'],
+  tab_taxfree:['Tax Free – החזר מע״מ','Tax Free – استرداد الضريبة','Tax Free – VAT refund'], d_taxfree:['מס על קניות בכל מדינה: מע״מ, מס מכירה של מדינות בארה״ב ומחוזות בקנדה, וכמה יחזור ב־Tax Free – מינימום, עמלות, צעדים בשדה וטופס מוכן בשפה של המדינה.','الضريبة على المشتريات في كل دولة: ضريبة القيمة المضافة وضريبة المبيعات في الولايات الأمريكية والمقاطعات الكندية، وكم ستسترد في Tax Free – الحد الأدنى والعمولات وخطوات المطار ونموذج جاهز بلغة الدولة.','Tax on shopping in every country: VAT, US state and Canadian provincial sales tax, and how much comes back with Tax Free – minimums, fees, airport steps and a form ready in the country\'s language.'],
   tf_where:['איפה קונים?','أين تشترون؟','Where are you shopping?'], tf_country:['מדינה','الدولة','Country'], tf_forTourists:['לתיירים','للسياح','for tourists'],
   tf_vat:['מע״מ','ضريبة القيمة المضافة','VAT'], tf_min:['מינימום לקבלה','الحد الأدنى للإيصال','Minimum per receipt'], tf_inPrice:['חלק המע״מ במחיר','حصة الضريبة من السعر','VAT share of the price'], tf_noMin:['אין מינימום','لا حد أدنى','No minimum'],
   tf_verify:['הסכום מתעדכן מדי פעם – כדאי לאשר בחנות.','يتغيّر المبلغ من حين لآخر – يُستحسن التأكد في المتجر.','The amount changes from time to time – confirm it in the shop.'],
   tf_n_eu:['באיחוד האירופי: למי שגר מחוץ לאיחוד (גם ישראלים). את המוצרים מוציאים מהאיחוד עד 3 חודשים מסוף חודש הקנייה, ומאשרים את הטופס במכס בנמל האחרון באיחוד. המינימום הוא לקבלה אחת בחנות אחת.','في الاتحاد الأوروبي: لمن يقيم خارج الاتحاد (ومنهم الإسرائيليون). تُخرج البضائع من الاتحاد خلال 3 أشهر من نهاية شهر الشراء، ويُصادق على النموذج في الجمارك في آخر ميناء داخل الاتحاد. الحد الأدنى لإيصال واحد من متجر واحد.','In the EU: for people living outside the EU (Israelis too). Take the goods out of the EU within 3 months of the end of the month of purchase, and have the form validated by customs at the last EU port. The minimum is per receipt from one shop.'],
   tf_n_ot:['בדרך כלל: מבקשים טופס בחנות, מאשרים אותו במכס ביציאה מהמדינה, ומקבלים החזר בדלפק או לכרטיס.','عادةً: تطلبون نموذجًا في المتجر، وتصادقون عليه في الجمارك عند المغادرة، وتستردون في المكتب أو إلى البطاقة.','Usually: ask for a form in the shop, have it validated by customs as you leave the country, and get the refund at a desk or to your card.'],
   tf_n_gb:['בבריטניה אין החזר מע״מ לתיירים מאז 2021 (חוץ מקנייה שהחנות שולחת ישירות לחו״ל).','لا يوجد في بريطانيا استرداد للضريبة للسياح منذ 2021 (إلا لمشتريات يرسلها المتجر مباشرة إلى الخارج).','The UK has had no tourist VAT refund since 2021 (except for goods the shop sends straight abroad).'],
-  tf_n_us:['בארה״ב אין מע״מ אלא מס מכירה מקומי, ובדרך כלל אין עליו החזר לתיירים.','في الولايات المتحدة لا توجد ضريبة قيمة مضافة بل ضريبة مبيعات محلية، وعادةً لا تُسترد للسياح.','The US has no VAT but a local sales tax, which tourists usually cannot get back.'],
+  tf_n_us:['בארה״ב אין מע״מ: יש מס מכירה של המדינה ושל העיר, והוא לא כלול במחיר על המדף – הוא נוסף בקופה. בדרך כלל אין עליו החזר לתיירים.','لا توجد في الولايات المتحدة ضريبة قيمة مضافة: هناك ضريبة مبيعات للولاية والمدينة، وهي غير مشمولة في سعر الرف – تُضاف عند الدفع. وعادةً لا تُسترد للسياح.','The US has no VAT: there is a state and city sales tax, which is not included in the shelf price – it is added at the till. Tourists usually cannot get it back.'],
   tf_n_jp:['ביפן הפטור ניתן בחנות בהצגת דרכון. מ־1.11.2026 יפן עוברת לשיטת החזר: משלמים מחיר מלא ומקבלים את המס בחזרה אחרי בדיקה ביציאה.','في اليابان يُمنح الإعفاء في المتجر بعرض الجواز. ابتداءً من 1.11.2026 تنتقل اليابان إلى نظام الاسترداد: تدفعون السعر كاملًا وتستردون الضريبة بعد الفحص عند المغادرة.','In Japan the exemption is given in the shop on showing your passport. From 1.11.2026 Japan moves to a refund system: you pay the full price and get the tax back after a check on departure.'],
   tf_n_th:['בתאילנד: לפחות 2,000 באט בחנות ביום, ולפחות 5,000 באט בסך הכול בטיול. את הטופס מאשרים במכס לפני הצ׳ק־אין.','في تايلاند: 2,000 بات على الأقل في المتجر يوميًا، و5,000 بات على الأقل إجمالًا في الرحلة. يُصادق على النموذج في الجمارك قبل تسجيل الوصول.','In Thailand: at least 2,000 baht per shop per day and at least 5,000 baht in total for the trip. Have the form validated by customs before check-in.'],
   tf_n_ae:['באיחוד האמירויות: חוזר רוב המע״מ (כ־87%), פחות עמלה קבועה לכל טופס. האישור בקיוסק בשדה.','في الإمارات: يُسترد معظم الضريبة (نحو 87%) ناقص رسم ثابت لكل نموذج. المصادقة في كشك المطار.','In the UAE: most of the VAT (about 87%) comes back, less a fixed fee per form. Validation is at a kiosk in the airport.'],
@@ -6774,15 +6775,28 @@ Object.assign(T, {
   tf_s_jp3:['ביציאה מציגים דרכון ואת המוצרים בביקורת המכס.','عند المغادرة اعرضوا الجواز والبضائع في الجمارك.','On departure show your passport and the goods at customs.'],
   tf_form:['פרטים לטופס – בשפה של המדינה','تفاصيل النموذج – بلغة الدولة','Details for the form – in the country\'s language'],
   tf_formH:['כותבים בשפה שלכם, והאפליקציה מכינה את הפרטים באותיות לטיניות ובשפת הטופס – להעתקה או להצגה למוכר.','اكتبوا بلغتكم، ويجهّز التطبيق التفاصيل بحروف لاتينية وبلغة النموذج – للنسخ أو لعرضها على البائع.','Write in your own language and the app prepares the details in Latin letters and in the form\'s language – to copy or to show the shop assistant.'],
-  tf_formWarn:['אלה פרטים אישיים. הם נשארים בטלפון ולא נשמרים, אלא אם תסמנו "לזכור". מספר הדרכון אף פעם לא נשמר ולא נשלח ל־AI.','هذه تفاصيل شخصية. تبقى على الهاتف ولا تُحفظ إلا إذا اخترتم "تذكّر". رقم الجواز لا يُحفظ أبدًا ولا يُرسل إلى الذكاء الاصطناعي.','These are personal details. They stay on the phone and are not kept unless you tick "remember". The passport number is never kept and never sent to the AI.'],
+  tf_formWarn:['אלה פרטים אישיים. הם נשארים בטלפון ולא נשמרים, אלא אם תסמנו "לזכור". מספר דרכון לא נכתב כאן – ממלאים אותו ישירות בטופס של החנות.','هذه تفاصيل شخصية. تبقى على الهاتف ولا تُحفظ إلا إذا اخترتم "تذكّر". رقم الجواز لا يُكتب هنا – يُكتب مباشرة في نموذج المتجر.','These are personal details. They stay on the phone and are not kept unless you tick "remember". The passport number is not entered here – write it straight on the shop\'s form.'],
   tf_f_name:['שם מלא','الاسم الكامل','Full name'], tf_f_nat:['אזרחות','الجنسية','Nationality'], tf_f_res:['ארץ מגורים','بلد الإقامة','Country of residence'], tf_f_addr:['כתובת','العنوان','Address'], tf_f_city:['עיר','المدينة','City'], tf_f_zip:['מיקוד','الرمز البريدي','Postal code'],
-  tf_f_email:['דוא״ל','البريد الإلكتروني','E-mail'], tf_f_phone:['טלפון','الهاتف','Phone'], tf_f_pass:['מספר דרכון (לא נשמר)','رقم الجواز (لا يُحفظ)','Passport number (not kept)'], tf_f_flight:['מספר טיסה','رقم الرحلة','Flight number'], tf_f_dep:['תאריך יציאה','تاريخ المغادرة','Departure date'],
-  tf_keep:['לזכור את הפרטים במכשיר הזה (בלי מספר הדרכון)','تذكّر التفاصيل على هذا الجهاز (دون رقم الجواز)','Remember the details on this device (without the passport number)'],
+  tf_f_email:['דוא״ל','البريد الإلكتروني','E-mail'], tf_f_phone:['טלפון','الهاتف','Phone'], tf_f_flight:['מספר טיסה','رقم الرحلة','Flight number'], tf_f_dep:['תאריך יציאה','تاريخ المغادرة','Departure date'],
+  tf_keep:['לזכור את הפרטים במכשיר הזה','تذكّر التفاصيل على هذا الجهاز','Remember the details on this device'],
   tf_formLang:['שפת הטופס','لغة النموذج','Language of the form'], tf_trGo:['הכנת הפרטים לטופס','تجهيز التفاصيل للنموذج','Prepare the details for the form'], tf_trWait:['מתרגם…','جارٍ الترجمة…','Translating…'],
   tf_formEmpty:['מלאו לפחות פרט אחד.','املأوا تفصيلًا واحدًا على الأقل.','Fill in at least one detail.'], tf_ready:['מוכן לטופס ({l})','جاهز للنموذج ({l})','Ready for the form ({l})'],
   tf_offline:['הוכן בטלפון בלי AI: שמות וכתובות הומרו לאותיות לטיניות באופן בסיסי – תקנו לפי הדרכון.','جُهّز على الهاتف دون ذكاء اصطناعي: حُوّلت الأسماء والعناوين إلى حروف لاتينية بشكل أساسي – صحّحوها حسب الجواز.','Prepared on the phone without AI: names and addresses were turned into Latin letters roughly – correct them to match your passport.'],
   tf_checkPass:['השם צריך להיות בדיוק כמו בדרכון.','يجب أن يكون الاسم تمامًا كما في الجواز.','The name must match your passport exactly.'],
-  tf_cpAll:['העתקת הכול','نسخ الكل','Copy all'], tf_show:['הצגה למוכר','عرض للبائع','Show the shop assistant']
+  tf_cpAll:['העתקת הכול','نسخ الكل','Copy all'], tf_show:['הצגה למוכר','عرض للبائع','Show the shop assistant'],
+  tf_n_nz:['בניו זילנד אין החזר מע״מ (GST) לתיירים על קניות בחנות, חוץ ממוצרים שהחנות שולחת ישירות לחו״ל.','لا يوجد في نيوزيلندا استرداد لضريبة GST للسياح على مشتريات المتاجر، إلا للبضائع التي يرسلها المتجر مباشرة إلى الخارج.','New Zealand has no GST refund for tourists on shop purchases, except goods the shop sends straight abroad.'],
+  tf_n_zero:['במדינה הזו אין מע״מ או מס מכירה כללי על קניות, ולכן אין מה להחזיר.','لا توجد في هذه الدولة ضريبة قيمة مضافة أو ضريبة مبيعات عامة على المشتريات، لذا لا يوجد ما يُسترد.','This country has no general VAT or sales tax on shopping, so there is nothing to get back.'],
+  tf_n_unk:['אין לנו מידע מאומת על החזר מס לתיירים במדינה הזו. המחיר כולל בדרך כלל את המס שלמעלה – שאלו בחנות אם יש Tax Free.','ليست لدينا معلومات مؤكدة عن استرداد الضريبة للسياح في هذه الدولة. يشمل السعر عادةً الضريبة أعلاه – اسألوا في المتجر عن Tax Free.','We have no verified information about a tourist tax refund in this country. The price usually includes the tax above – ask in the shop whether Tax Free is offered.'],
+  tf_n_ca:['בקנדה המס לא כלול במחיר על המדף ונוסף בקופה: GST פדרלי, ובחלק מהמחוזות גם מס מחוזי (או HST משולב). אין החזר כללי לתיירים מאז 2007.','في كندا الضريبة غير مشمولة في سعر الرف وتُضاف عند الدفع: GST فيدرالية، وفي بعض المقاطعات ضريبة إقليمية أيضًا (أو HST موحدة). لا يوجد استرداد عام للسياح منذ 2007.','In Canada tax is not included in the shelf price and is added at the till: federal GST, and in some provinces a provincial tax too (or a combined HST). There has been no general visitor refund since 2007.'],
+  tf_approx:['השיעור הוא השיעור הכללי; על חלק מהמוצרים יש שיעור מופחת, והוא עשוי להשתנות.','النسبة هي النسبة العامة؛ لبعض المنتجات نسبة مخفضة وقد تتغير.','This is the standard rate; some goods have a reduced rate, and it may change.'],
+  tf_regUs:['מדינה בארה״ב','الولاية الأمريكية','US state'], tf_regCa:['מחוז','المقاطعة','Province or territory'],
+  tf_stState:['מס המדינה','ضريبة الولاية','State tax'], tf_stLocal:['מס מקומי (ממוצע)','ضريبة محلية (متوسط)','Local tax (average)'], tf_stFed:['GST פדרלי','GST فيدرالية','Federal GST'], tf_stProv:['מס מחוזי','ضريبة إقليمية','Provincial tax'], tf_stTot:['סה״כ מס','إجمالي الضريبة','Total tax'],
+  tf_stLocEd:['מס מקומי בעיר שלכם','الضريبة المحلية في مدينتكم','Local tax in your city'], tf_locH:['ברירת המחדל היא ממוצע המס המקומי במדינה (Tax Foundation, 1.7.2026). אם אתם יודעים את השיעור בעיר, הקלידו אותו.','الافتراضي هو متوسط الضريبة المحلية في الولاية (Tax Foundation، 1.7.2026). إن عرفتم نسبة المدينة فاكتبوها.','The default is the state\'s average local rate (Tax Foundation, 1.7.2026). If you know your city\'s rate, type it in.'],
+  tf_shelf:['מחיר על המדף (לפני מס)','سعر الرف (قبل الضريبة)','Shelf price (before tax)'], tf_itSt:['מס {v} · לתשלום {n}','ضريبة {v} · للدفع {n}','Tax {v} · to pay {n}'],
+  tf_pay:['לתשלום בקופה','للدفع عند الصندوق','To pay at the till'], tf_shelfSum:['מחירי המדף','أسعار الرف','Shelf prices'], tf_taxAdd:['מס שנוסף','الضريبة المضافة','Tax added'],
+  tf_stDisc:['הערכה: על חלק מהמוצרים (למשל מזון או ביגוד במדינות מסוימות) יש פטור או שיעור אחר, ובחלק מהערים יש מסים נוספים.','تقدير: بعض المنتجات (مثل الطعام أو الملابس في بعض الولايات) معفاة أو بنسبة أخرى، وفي بعض المدن ضرائب إضافية.','An estimate: some goods (such as food or clothing in some states) are exempt or taxed differently, and some cities add extra taxes.'],
+  tf_rateSt:['מס על המוצר','الضريبة على المنتج','Tax on the item'], tf_inIls:['בשקלים (בערך)','بالشيكل (تقريبًا)','In shekels (approx.)'],
+  tf_pc:['מחשבון מחיר','حاسبة السعر','Price check'], tf_pcIn:['מחיר','السعر','Price'], tf_pcNet:['מחיר לפני מס','السعر قبل الضريبة','Price before tax'], tf_pcTax:['המס בתוך המחיר','الضريبة ضمن السعر','Tax inside the price'], tf_pcTot:['לתשלום עם המס','للدفع مع الضريبة','To pay with tax'],
 });
 
 const t = (k, p) => {
@@ -13388,8 +13402,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.4", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.025353';
+var CHANGELOG = [{"v": "13.5", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.031040';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -26094,10 +26108,41 @@ const TF_C = [
   ['AE', '🇦🇪', 'AED', 5, 250, 'ar', 'ae', 13, 4.8], ['JP', '🇯🇵', 'JPY', 10, 5000, 'ja', 'jp', 0, 0], ['KR', '🇰🇷', 'KRW', 10, 15000, 'ko', 'ot', 15, 0, 1], ['SG', '🇸🇬', 'SGD', 9, 100, 'en', 'ot', 20, 0],
   ['TH', '🇹🇭', 'THB', 7, 2000, 'th', 'th', 20, 0], ['AU', '🇦🇺', 'AUD', 10, 300, 'en', 'au', 0, 0],
   ['IL', '🇮🇱', 'ILS', 18, 186, 'he', 'il', 0, 27],
-  ['GB', '🇬🇧', 'GBP', 20, -1, 'en', 'none', 0, 0], ['US', '🇺🇸', 'USD', 0, -1, 'en', 'none', 0, 0]
+  ['GB', '🇬🇧', 'GBP', 20, -1, 'en', 'none', 0, 0], ['NZ', '🇳🇿', 'NZD', 15, -1, 'en', 'none', 0, 0],
+  ['US', '🇺🇸', 'USD', 0, -1, 'en', 'st', 0, 0], ['CA', '🇨🇦', 'CAD', 5, -1, 'en', 'st', 0, 0],
+  ['CN', '🇨🇳', 'CNY', 13, 200, 'zh', 'ot', 20, 0, 1], ['TW', '🇹🇼', 'TWD', 5, 2000, 'zh', 'ot', 15, 0, 1], ['ID', '🇮🇩', 'IDR', 11, 500000, 'en', 'ot', 15, 0, 1], ['VN', '🇻🇳', 'VND', 10, 2000000, 'en', 'ot', 15, 0, 1],
+  ['PH', '🇵🇭', 'PHP', 12, 3000, 'en', 'ot', 15, 0, 1], ['ZA', '🇿🇦', 'ZAR', 15, 250, 'en', 'ot', 15, 0, 1], ['RS', '🇷🇸', 'RSD', 20, 6000, 'en', 'ot', 25, 0, 1], ['UZ', '🇺🇿', 'UZS', 12, 1000000, 'ru', 'ot', 20, 0, 1],
+  ['LI', '🇱🇮', 'CHF', 8.1, 300, 'de', 'ot', 25, 0], ['MC', '🇲🇨', 'EUR', 20, 100.01, 'fr', 'eu', 25, 0]
 ];
+/* every other country: the tax inside (or added to) the price, with no verified tourist refund scheme on record. [code:currency:rate] – a rate of 0 means no VAT/GST */
+const TF_X = 'AL:ALL:20 AD:EUR:4.5 AM:AMD:20 AZ:AZN:18 BY:BYN:20 BA:BAM:17 XK:EUR:18 MD:MDL:20 ME:EUR:21 MK:MKD:18 RU:RUB:22 UA:UAH:20 ' +
+  'HK:HKD:0 MO:MOP:0 MY:MYR:10 KH:KHR:10 LA:LAK:10 MM:MMK:5 IN:INR:18 LK:LKR:18 BD:BDT:15 NP:NPR:13 PK:PKR:18 BT:BTN:5 MV:MVR:8 MN:MNT:10 KZ:KZT:16 KG:KGS:12 TJ:TJS:14 BN:BND:0 ' +
+  'SA:SAR:15 BH:BHD:10 OM:OMR:5 QA:QAR:0 KW:KWD:0 JO:JOD:16 LB:LBP:11 EG:EGP:14 ' +
+  'TN:TND:19 DZ:DZD:19 KE:KES:16 TZ:TZS:18 UG:UGX:18 RW:RWF:18 ET:ETB:15 GH:GHS:20 NG:NGN:7.5 SN:XOF:18 CI:XOF:18 CM:XAF:19.25 MU:MUR:15 NA:NAD:15 BW:BWP:14 ZM:ZMW:16 ZW:ZWG:15.5 MZ:MZN:16 MG:MGA:20 SC:SCR:15 CV:CVE:15 AO:AOA:14 MW:MWK:17.5 ' +
+  'MX:MXN:16 BR:BRL:17 AR:ARS:21 CL:CLP:19 CO:COP:19 PE:PEN:18 UY:UYU:22 PY:PYG:10 BO:BOB:13 EC:USD:15 CR:CRC:13 PA:USD:7 DO:DOP:18 GT:GTQ:12 HN:HNL:15 SV:USD:13 NI:NIO:15 JM:JMD:15 BS:BSD:10 BB:BBD:17.5 TT:TTD:12.5 BZ:BZD:12.5 ' +
+  'FJ:FJD:15 PG:PGK:10 WS:WST:15';
+const tfFlag = c => String.fromCodePoint(...c.split('').map(x => 127397 + x.charCodeAt(0)));
+TF_X.split(' ').forEach(e => { const [c, cur, r] = e.split(':'); if (!TF_C.some(x => x[0] === c)) TF_C.push([c, tfFlag(c), cur, +r, -2, 'en', +r ? 'unk' : 'zero', 0, 0, 1]); });
+/* sales tax added at the till: US states (state rate, average local rate – Tax Foundation, 1.7.2026) and Canadian provinces (GST, provincial part) */
+const TF_US = [['AL', 'Alabama', 4, 5.46], ['AK', 'Alaska', 0, 1.82], ['AZ', 'Arizona', 5.6, 2.94], ['AR', 'Arkansas', 6.5, 2.98], ['CA', 'California', 7.25, 1.78], ['CO', 'Colorado', 2.9, 4.99], ['CT', 'Connecticut', 6.35, 0], ['DE', 'Delaware', 0, 0],
+  ['DC', 'District of Columbia', 6, 0], ['FL', 'Florida', 6, 0.98], ['GA', 'Georgia', 4, 3.56], ['HI', 'Hawaii', 4, 0.5], ['ID', 'Idaho', 6, 0.03], ['IL', 'Illinois', 6.25, 2.73], ['IN', 'Indiana', 7, 0], ['IA', 'Iowa', 6, 0.94],
+  ['KS', 'Kansas', 6.5, 2.21], ['KY', 'Kentucky', 6, 0], ['LA', 'Louisiana', 5, 5.13], ['ME', 'Maine', 5.5, 0], ['MD', 'Maryland', 6, 0], ['MA', 'Massachusetts', 6.25, 0], ['MI', 'Michigan', 6, 0], ['MN', 'Minnesota', 6.88, 1.26],
+  ['MS', 'Mississippi', 7, 0.06], ['MO', 'Missouri', 4.23, 4.22], ['MT', 'Montana', 0, 0], ['NE', 'Nebraska', 5.5, 1.48], ['NV', 'Nevada', 6.85, 1.39], ['NH', 'New Hampshire', 0, 0], ['NJ', 'New Jersey', 6.63, 0], ['NM', 'New Mexico', 4.88, 2.8],
+  ['NY', 'New York', 4, 4.54], ['NC', 'North Carolina', 4.75, 2.35], ['ND', 'North Dakota', 5, 2.09], ['OH', 'Ohio', 5.75, 1.54], ['OK', 'Oklahoma', 4.5, 4.56], ['OR', 'Oregon', 0, 0], ['PA', 'Pennsylvania', 6, 0.34], ['RI', 'Rhode Island', 7, 0],
+  ['SC', 'South Carolina', 6, 1.49], ['SD', 'South Dakota', 4.2, 1.91], ['TN', 'Tennessee', 7, 2.61], ['TX', 'Texas', 6.25, 1.95], ['UT', 'Utah', 6.1, 1.32], ['VT', 'Vermont', 6, 0.43], ['VA', 'Virginia', 5.3, 0.47], ['WA', 'Washington', 6.5, 3.07],
+  ['WV', 'West Virginia', 6, 0.6], ['WI', 'Wisconsin', 5, 0.72], ['WY', 'Wyoming', 4, 1.39]];
+const TF_CA = [['AB', 'Alberta', 5, 0, 'GST'], ['BC', 'British Columbia', 5, 7, 'GST + PST'], ['MB', 'Manitoba', 5, 7, 'GST + RST'], ['NB', 'New Brunswick', 0, 15, 'HST'], ['NL', 'Newfoundland and Labrador', 0, 15, 'HST'],
+  ['NS', 'Nova Scotia', 0, 14, 'HST'], ['NT', 'Northwest Territories', 5, 0, 'GST'], ['NU', 'Nunavut', 5, 0, 'GST'], ['ON', 'Ontario', 0, 13, 'HST'], ['PE', 'Prince Edward Island', 0, 15, 'HST'], ['QC', 'Quebec', 5, 9.975, 'GST + QST'],
+  ['SK', 'Saskatchewan', 5, 6, 'GST + PST'], ['YT', 'Yukon', 5, 0, 'GST']];
+function tfSt(){
+  const d = tfD(), us = d.c === 'US', L = us ? TF_US : TF_CA, r = L.find(x => x[0] === d.reg) || L.find(x => x[0] === (us ? 'NY' : 'ON'));
+  const a = r[2], b = us && d.loc !== '' && d.loc != null ? tfN(d.loc) : r[3];
+  return {us, L, r, a, b, rate: Math.round((a + b) * 1000) / 1000};
+}
 const TF_LANGS = ['en', 'he', 'ar', 'ru', 'fr', 'de', 'it', 'es', 'pt', 'nl', 'el', 'pl', 'cs', 'hu', 'ro', 'bg', 'hr', 'sk', 'sl', 'da', 'sv', 'fi', 'nb', 'is', 'et', 'lv', 'lt', 'tr', 'ka', 'ja', 'ko', 'zh', 'th', 'hi', 'uk', 'am'];
-const TF_FIELDS = ['name', 'nat', 'res', 'addr', 'city', 'zip', 'email', 'phone', 'pass', 'flight', 'dep'];
+/* no passport, ID, card or bank numbers: the app never asks for them (they are written on the form itself) */
+const TF_FIELDS = ['name', 'nat', 'res', 'addr', 'city', 'zip', 'email', 'phone', 'flight', 'dep'];
+const TF_LBL_KEYS = ['name', 'nat', 'res', 'addr', 'city', 'zip', 'email', 'phone', 'pass', 'flight', 'dep'], TFI = k => TF_LBL_KEYS.indexOf(k);
 /* the form labels, ready in the languages tax-free forms usually come in (any other language is translated by the AI) */
 const TF_LBL = {
   en: ['Full name (as in passport)', 'Nationality', 'Country of residence', 'Street address', 'City', 'Postal code', 'E-mail', 'Phone', 'Passport number', 'Flight number', 'Departure date'],
@@ -26115,14 +26160,15 @@ const TF_LBL = {
 var TFX = {tr: null, busy: false, big: false};
 const tfE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 function tfD(){ if (!SET.tf || typeof SET.tf !== 'object') SET.tf = {}; const d = SET.tf; if (!d.c) d.c = 'FR'; if (!Array.isArray(d.items)) d.items = []; if (!d.meth) d.meth = 'card'; if (d.form) delete d.form; return d; }
-/* the personal details live in memory; a copy without the passport number is saved only if you tick "remember" */
+/* the personal details live in memory; a copy is saved only if you tick "remember" */
 function tfForm(){ if (!TFX.form){ const d = tfD(); TFX.form = d.keepForm && d.savedForm && typeof d.savedForm === 'object' ? Object.assign({}, d.savedForm) : {}; } return TFX.form; }
 function tfKeepSave(){ const d = tfD(); if (d.keepForm){ const F = Object.assign({}, tfForm()); delete F.pass; d.savedForm = F; } else delete d.savedForm; saveSet(); }
 const tfC = code => TF_C.find(c => c[0] === code) || TF_C[0];
 const tfRegion = (code, l) => { try { return new Intl.DisplayNames([l || lang], {type: 'region'}).of(code) || code; } catch (e) { return code; } };
 const tfLangN = (code, l) => { try { const n = new Intl.DisplayNames([l || lang], {type: 'language'}).of(code); return n ? n.charAt(0).toLocaleUpperCase(l || lang) + n.slice(1) : code; } catch (e) { return code; } };
 const tfToIls = (x, c) => { try { if (c === 'ILS') return x; return RATES[c] && RATES.ILS ? x / RATES[c] * RATES.ILS : NaN; } catch (e) { return NaN; } };
-const tfM = (x, c, d) => M(x, d == null ? 2 : d, c);
+const tfSym = c => { const y = symOf(c); return (y === '$' && c !== 'USD') || y === 'kr' ? c : y; };
+const tfM = (x, c, d) => { const y = symOf(c); return (y === '$' && c !== 'USD') || y === 'kr' ? N(x, d == null ? 2 : d) + ' ' + c : M(x, d == null ? 2 : d, c); };
 const tfN = v => { const n = parseFloat(String(v == null ? '' : v).replace(/[^\d.\-]/g, '')); return isFinite(n) ? n : 0; };
 
 /* ---------- the calculation ---------- */
@@ -26145,6 +26191,22 @@ function tfCalc(){
   const thLow = grp === 'th' && vatOk > 0 && rows.filter(r => r.ok).reduce((s, r) => s + r.a, 0) < 5000;
   return {C, code, cur, grp, none, min, rows, spent, vatAll, vatOk, net, fee, fix, pct: spent > 0 ? net / spent * 100 : 0, thLow};
 }
+/* sales tax is added at the till: the shelf price + tax = what you pay */
+function tfCalcSt(){
+  const d = tfD(), S = tfSt(), cur = tfC(d.c)[2];
+  const rows = d.items.map(it => { const a = tfN(it.a), v = it.v === '' || it.v == null ? S.rate : tfN(it.v), tax = a * v / 100; return {it, a, v, tax, total: a + tax}; });
+  return {S, cur, rows, spent: rows.reduce((x, r) => x + r.a, 0), tax: rows.reduce((x, r) => x + r.tax, 0), total: rows.reduce((x, r) => x + r.total, 0)};
+}
+/* a quick price check for any country: what part of a price is tax, or what the till will add */
+function tfPcHTML(C, st){
+  const d = tfD(), cur = C[2], p = tfN(d.pc), v = st ? st.rate : C[3];
+  let out = '';
+  if (p > 0 && st){ const tax = p * v / 100; out = `<div class="tf-facts"><div><small>${tfE(t('tf_pcIn'))}</small><b>${tfM(p, cur)}</b></div><div><small>${tfE(t('tf_taxAdd'))} (${v}%)</small><b>${tfM(tax, cur)}</b></div><div><small>${tfE(t('tf_pcTot'))}</small><b>${tfM(p + tax, cur)}</b></div></div>`; }
+  else if (p > 0){ const net = p / (1 + v / 100); out = `<div class="tf-facts"><div><small>${tfE(t('tf_pcNet'))}</small><b>${tfM(net, cur)}</b></div><div><small>${tfE(t('tf_pcTax'))} (${v}%)</small><b>${tfM(p - net, cur)}</b></div><div><small>${tfE(t('tf_inIls'))}</small><b>${isFinite(tfToIls(p, cur)) ? M(tfToIls(p, cur), 0, 'ILS') : '—'}</b></div></div>`; }
+  return `<section class="tf-sec"><h3 class="ds-q">🧮 ${tfE(t('tf_pc'))}</h3>
+    <div class="fields"><div class="field"><span class="lc-l">${tfE(t(st ? 'tf_shelf' : 'tf_pcIn'))}</span><div class="control"><input type="number" inputmode="decimal" step="any" id="tf_pc" data-tfk="pc" value="${tfE(d.pc == null ? '' : d.pc)}" aria-label="${tfE(t(st ? 'tf_shelf' : 'tf_pcIn'))}"><span class="u">${tfE(tfSym(cur))}</span></div></div></div>
+    <div id="tf_pco" aria-live="polite">${out}</div></section>`;
+}
 
 /* ---------- the screen ---------- */
 function tfRender(){
@@ -26155,10 +26217,43 @@ function tfRender(){
   const meths = grp === 'il' ? ['cash', 'check', 'transfer'] : ['card', 'cash', 'store'];
   if (!meths.includes(d.meth)) d.meth = meths[0];
   const minTxt = min > 0 ? tfM(min, cur) : t('tf_noMin'), minIls = min > 0 && cur !== 'ILS' && isFinite(tfToIls(min, cur)) ? '≈ ' + M(tfToIls(min, cur), 0, 'ILS') : '';
+  const cSel = `<h3 class="ds-q">🌍 ${tfE(t('tf_where'))}</h3>
+    <div class="field cv-f"><label for="tf_c">${tfE(t('tf_country'))}</label><select id="tf_c" data-tfk="c">${sorted.map(c => `<option value="${c[0]}"${c[0] === code ? ' selected' : ''}>${c[1]} ${tfE(tfRegion(c[0]))}${c[0] === 'IL' ? ' – ' + tfE(t('tf_forTourists')) : ''}</option>`).join('')}</select></div>`;
+  const note = (k, ic) => `<div class="ds-warn tf-note" role="note"><span aria-hidden="true">${ic || 'ℹ️'}</span><p>${tfE(t(k))}</p></div>`;
+  if (['none', 'unk', 'zero'].includes(grp)){
+    root.innerHTML = `<section class="tf-sec">${cSel}
+      ${vat > 0 ? `<div class="tf-facts tf-f2"><div><small>${tfE(t('tf_vat'))}</small><b>${vat}%</b></div><div><small>${tfE(t('tf_inPrice'))}</small><b>${(vat / (100 + vat) * 100).toFixed(1)}%</b></div></div>` : ''}
+      ${note(grp === 'none' ? 'tf_n_' + code.toLowerCase() : grp === 'zero' ? 'tf_n_zero' : 'tf_n_unk')}${C[9] ? `<p class="fine">${tfE(t('tf_approx'))}</p>` : ''}</section>
+      ${vat > 0 ? tfPcHTML(C) : ''}`;
+    if (keep){ const el = root.querySelector(`[data-tfk="${keep}"]`); if (el){ el.focus(); try { if (selS != null && el.setSelectionRange) el.setSelectionRange(selS, selS); } catch (e) {} } }
+    return;
+  }
+  if (grp === 'st'){
+    const Q = tfCalcSt(), S = Q.S;
+    root.innerHTML = `<section class="tf-sec">${cSel}
+      <div class="field cv-f"><label for="tf_reg">${tfE(t(S.us ? 'tf_regUs' : 'tf_regCa'))}</label><select id="tf_reg" data-tfk="reg">${S.L.map(x => `<option value="${x[0]}"${x[0] === S.r[0] ? ' selected' : ''}>${tfE(x[1])}</option>`).join('')}</select></div>
+      <div class="tf-facts"><div><small>${tfE(t(S.us ? 'tf_stState' : 'tf_stFed'))}</small><b>${S.a}%</b></div><div><small>${tfE(t(S.us ? (d.loc !== '' && d.loc != null ? 'tf_stLocEd' : 'tf_stLocal') : 'tf_stProv'))}</small><b>${S.b}%</b></div><div><small>${tfE(t('tf_stTot'))}${S.us ? '' : ' · ' + tfE(S.r[4])}</small><b>${S.rate}%</b></div></div>
+      ${S.us ? `<div class="fields"><div class="field"><span class="lc-l">${tfE(t('tf_stLocEd'))}</span><div class="control"><input type="number" inputmode="decimal" step="any" id="tf_loc" data-tfk="loc" value="${tfE(d.loc == null ? '' : d.loc)}" placeholder="${S.r[3]}" aria-label="${tfE(t('tf_stLocEd'))}"><span class="u">%</span></div></div></div><p class="fine">${tfE(t('tf_locH'))}</p>` : ''}
+      ${note(S.us ? 'tf_n_us' : 'tf_n_ca')}</section>
+    <section class="tf-sec"><h3 class="ds-q">🛍️ ${tfE(t('tf_items'))}</h3>
+      <div id="tf_items">${Q.rows.map((r, i) => `<div class="lc-card tf-it">
+        <div class="tf-ith"><input type="text" class="lc-name" maxlength="40" dir="auto" data-tfi="${i}" data-tff="s" data-tfk="s${i}" value="${tfE(r.it.s || '')}" placeholder="${tfE(t('tf_store'))}" aria-label="${tfE(t('tf_store'))}"><button type="button" class="lc-del" data-tfdel="${i}" aria-label="${tfE(t('cv_rm'))}">✕</button></div>
+        <div class="fields"><div class="field"><span class="lc-l">${tfE(t('tf_shelf'))}</span><div class="control"><input type="number" inputmode="decimal" step="any" data-tfi="${i}" data-tff="a" data-tfk="a${i}" value="${tfE(r.it.a == null ? '' : r.it.a)}" aria-label="${tfE(t('tf_shelf'))}"><span class="u">${tfE(tfSym(cur))}</span></div></div>
+          <div class="field"><span class="lc-l">${tfE(t('tf_rateSt'))}</span><div class="control"><input type="number" inputmode="decimal" step="any" data-tfi="${i}" data-tff="v" data-tfk="v${i}" value="${tfE(r.it.v == null ? '' : r.it.v)}" placeholder="${S.rate}" aria-label="${tfE(t('tf_rateSt'))}"><span class="u">%</span></div></div></div>
+        <p class="fine tf-itr">${r.a > 0 ? tfE(t('tf_itSt', {v: tfM(r.tax, cur), n: tfM(r.total, cur)})) : tfE(t('tf_itEmpty'))}</p></div>`).join('')}</div>
+      <div class="btnrow"><button type="button" class="lc-add" id="tf_add"><span aria-hidden="true">＋</span> ${tfE(t('tf_add'))}</button></div>
+      ${eng ? `<div class="btnrow ds-go"><button type="button" class="btn" id="tf_scan">📷 ${tfE(t('tf_scan'))}</button><input type="file" accept="image/*" capture="environment" id="tf_file" hidden></div>` : ''}</section>
+    <section class="tf-sec tf-res" aria-live="polite"><h3 class="ds-q">💰 ${tfE(t('tf_result'))}</h3>
+      <div class="tf-big"><small>${tfE(t('tf_pay'))}</small><b>${tfM(Q.total, cur)}</b>${isFinite(tfToIls(Q.total, cur)) ? `<span>≈ ${M(tfToIls(Q.total, cur), 0, 'ILS')}</span>` : ''}</div>
+      <div class="tf-facts tf-f2"><div><small>${tfE(t('tf_shelfSum'))}</small><b>${tfM(Q.spent, cur)}</b></div><div><small>${tfE(t('tf_taxAdd'))}</small><b>${tfM(Q.tax, cur)}</b></div></div>
+      <p class="fine">${tfE(t('tf_stDisc'))}</p></section>
+    ${tfPcHTML(C, S)}`;
+    if (keep){ const el = root.querySelector(`[data-tfk="${keep}"]`); if (el){ el.focus(); try { if (selS != null && el.setSelectionRange) el.setSelectionRange(selS, selS); } catch (e) {} } }
+    return;
+  }
   root.innerHTML = `
-  <section class="tf-sec"><h3 class="ds-q">🌍 ${tfE(t('tf_where'))}</h3>
-    <div class="field cv-f"><label for="tf_c">${tfE(t('tf_country'))}</label><select id="tf_c" data-tfk="c">${sorted.map(c => `<option value="${c[0]}"${c[0] === code ? ' selected' : ''}>${c[1]} ${tfE(tfRegion(c[0]))}${c[0] === 'IL' ? ' – ' + tfE(t('tf_forTourists')) : ''}</option>`).join('')}</select></div>
-    ${R.none ? `<div class="ds-warn" role="note"><span aria-hidden="true">ℹ️</span><p>${tfE(t('tf_n_' + code.toLowerCase()))}</p></div>` : `
+  <section class="tf-sec">${cSel}
+    ${R.none ? '' : `
     <div class="tf-facts"><div><small>${tfE(t('tf_vat'))}</small><b>${vat}%</b></div><div><small>${tfE(t('tf_min'))}</small><b><bdi>${tfE(minTxt)}</bdi></b>${minIls ? `<small><bdi>${tfE(minIls)}</bdi></small>` : ''}</div><div><small>${tfE(t('tf_inPrice'))}</small><b>${(vat / (100 + vat) * 100).toFixed(1)}%</b></div></div>
     <p class="fine">${tfE(t('tf_n_' + (['eu', 'ot'].includes(grp) ? grp : code.toLowerCase())))}${C[9] ? ' ' + tfE(t('tf_verify')) : ''}</p>`}
   </section>
@@ -26167,7 +26262,7 @@ function tfRender(){
     <div id="tf_items">${R.rows.map((r, i) => `<div class="lc-card tf-it${r.ok ? '' : ' tf-no'}">
       <div class="tf-ith"><input type="text" class="lc-name" maxlength="40" dir="auto" data-tfi="${i}" data-tff="s" data-tfk="s${i}" value="${tfE(r.it.s || '')}" placeholder="${tfE(t('tf_store'))}" aria-label="${tfE(t('tf_store'))}"><button type="button" class="lc-del" data-tfdel="${i}" aria-label="${tfE(t('cv_rm'))}">✕</button></div>
       <div class="fields fields3">
-        <div class="field"><span class="lc-l">${tfE(t('tf_amount'))}</span><div class="control"><input type="number" inputmode="decimal" step="any" data-tfi="${i}" data-tff="a" data-tfk="a${i}" value="${tfE(r.it.a == null ? '' : r.it.a)}" aria-label="${tfE(t('tf_amount'))}"><span class="u">${tfE(symOf(cur))}</span></div></div>
+        <div class="field"><span class="lc-l">${tfE(t('tf_amount'))}</span><div class="control"><input type="number" inputmode="decimal" step="any" data-tfi="${i}" data-tff="a" data-tfk="a${i}" value="${tfE(r.it.a == null ? '' : r.it.a)}" aria-label="${tfE(t('tf_amount'))}"><span class="u">${tfE(tfSym(cur))}</span></div></div>
         <div class="field"><span class="lc-l">${tfE(t('tf_rate'))}</span><div class="control"><input type="number" inputmode="decimal" step="any" data-tfi="${i}" data-tff="v" data-tfk="v${i}" value="${tfE(r.it.v == null ? '' : r.it.v)}" placeholder="${vat}" aria-label="${tfE(t('tf_rate'))}"><span class="u">%</span></div></div>
         <div class="field"><span class="lc-l">${tfE(t('tf_date'))}</span><div class="control"><input type="date" data-tfi="${i}" data-tff="d" data-tfk="d${i}" value="${tfE(r.it.d || '')}" aria-label="${tfE(t('tf_date'))}"></div></div>
       </div>
@@ -26180,7 +26275,7 @@ function tfRender(){
     <div class="ds-chips" role="radiogroup" aria-label="${tfE(t('tf_how'))}">${meths.map(m => `<button type="button" role="radio" class="ds-chip${m === d.meth ? ' on' : ''}" aria-checked="${m === d.meth}" data-tfm="${m}">${tfE(t('tf_m_' + m))}</button>`).join('')}</div>
     ${grp === 'il' ? `<p class="fine">${tfE(t('tf_ilFees'))}</p>` : `<div class="fields">
       <div class="field"><span class="lc-l">${tfE(t('tf_fee'))}</span><div class="control"><input type="number" inputmode="decimal" step="any" id="tf_fee" data-tfk="fee" value="${tfE(d.fee == null ? '' : d.fee)}" placeholder="${R.fee}" aria-label="${tfE(t('tf_fee'))}"><span class="u">%</span></div></div>
-      <div class="field"><span class="lc-l">${tfE(t('tf_fix'))}</span><div class="control"><input type="number" inputmode="decimal" step="any" id="tf_fix" data-tfk="fix" value="${tfE(d.fix == null ? '' : d.fix)}" placeholder="${R.fix}" aria-label="${tfE(t('tf_fix'))}"><span class="u">${tfE(symOf(cur))}</span></div></div></div>
+      <div class="field"><span class="lc-l">${tfE(t('tf_fix'))}</span><div class="control"><input type="number" inputmode="decimal" step="any" id="tf_fix" data-tfk="fix" value="${tfE(d.fix == null ? '' : d.fix)}" placeholder="${R.fix}" aria-label="${tfE(t('tf_fix'))}"><span class="u">${tfE(tfSym(cur))}</span></div></div></div>
       <p class="fine">${tfE(t('tf_feeH'))}</p>`}
   </section>
   <section class="tf-sec tf-res" aria-live="polite"><h3 class="ds-q">💰 ${tfE(t('tf_result'))}</h3>
@@ -26191,7 +26286,7 @@ function tfRender(){
     <p class="fine">${tfE(t('tf_disc'))}</p>
   </section>
   <details class="tf-sec ds-det"${d.items.length ? '' : ' open'}><summary>📋 ${tfE(t('tf_steps'))}</summary><ol class="tf-steps">${tfSteps(grp).map(k => `<li>${tfE(t(k))}</li>`).join('')}</ol></details>
-  ${tfFormHTML(d, C)}`}`;
+  ${tfFormHTML(d, C)}${tfPcHTML(C)}`}`;
   if (keep){ const el = root.querySelector(`[data-tfk="${keep}"]`); if (el){ el.focus(); try { if (selS != null && el.setSelectionRange) el.setSelectionRange(selS, selS); } catch (e) {} } }
 }
 function tfSteps(grp){
@@ -26208,7 +26303,7 @@ function tfFormHTML(d, C){
   return `<details class="tf-sec ds-det" id="tf_formd"${d.formOpen ? ' open' : ''}><summary>📝 ${tfE(t('tf_form'))}</summary>
     <p class="fine">${tfE(t('tf_formH'))}</p>
     <div class="ds-warn" role="note"><span aria-hidden="true">⚠️</span><p>${tfE(t('tf_formWarn'))}</p></div>
-    <div class="fields tf-ff">${TF_FIELDS.map((k, i) => `<div class="field${k === 'addr' || k === 'name' ? ' wide' : ''}"><label for="tf_f_${k}">${tfE(t('tf_f_' + k))}</label><div class="control"><input id="tf_f_${k}" data-tfk="f_${k}" data-tfform="${k}" type="${k === 'email' ? 'email' : k === 'dep' ? 'date' : k === 'phone' ? 'tel' : 'text'}" dir="auto" maxlength="80" value="${tfE(F[k] || '')}"${k === 'pass' ? ' autocomplete="off"' : ''}></div></div>`).join('')}</div>
+    <div class="fields tf-ff">${TF_FIELDS.map((k, i) => `<div class="field${k === 'addr' || k === 'name' ? ' wide' : ''}"><label for="tf_f_${k}">${tfE(t('tf_f_' + k))}</label><div class="control"><input id="tf_f_${k}" data-tfk="f_${k}" data-tfform="${k}" type="${k === 'email' ? 'email' : k === 'dep' ? 'date' : k === 'phone' ? 'tel' : 'text'}" dir="auto" maxlength="80" value="${tfE(F[k] || '')}"></div></div>`).join('')}</div>
     <label class="tf-keep"><input type="checkbox" id="tf_keep"${d.keepForm ? ' checked' : ''}> ${tfE(t('tf_keep'))}</label>
     <div class="field cv-f"><label for="tf_fl">${tfE(t('tf_formLang'))}</label><select id="tf_fl">${TF_LANGS.map(c => `<option value="${c}"${c === tl ? ' selected' : ''}>${tfE(tfLangN(c, c))}</option>`).join('')}</select></div>
     <div class="btnrow"><button type="button" class="gold-btn" id="tf_tr">🌐 ${tfE(t('tf_trGo'))}</button></div>
@@ -26242,13 +26337,12 @@ function tfOffline(F, tl){
   TF_FIELDS.forEach(k => { const v = String(F[k] || '').trim(); if (!v) return;
     if (k === 'nat' || k === 'res'){ const c = tfCountryCode(v); out[k] = c ? tfRegion(c, tl) + (tl !== 'en' ? ' / ' + tfRegion(c, 'en') : '') : tfLatin(v); }
     else if (k === 'dep'){ const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v); out[k] = m ? m[3] + '/' + m[2] + '/' + m[1] : v; }
-    else out[k] = /[^\x00-\x7F]/.test(v) && !['email', 'phone', 'pass', 'flight', 'zip'].includes(k) ? tfLatin(v) : v; });
+    else out[k] = /[^\x00-\x7F]/.test(v) && !['email', 'phone', 'flight', 'zip'].includes(k) ? tfLatin(v) : v; });
   return {v: out, labels: TF_LBL[tl] || null, tl, ai: false};
 }
 async function tfTranslate(btn){
-  const d = tfD(), C = tfC(d.c), tl = d.fl || C[5] || 'en', FF = tfForm(), F = {}; TF_FIELDS.forEach(k => { const v = String(FF[k] || '').trim(); if (v && k !== 'pass') F[k] = v; });
-  const pass = String(FF.pass || '').trim();
-  if (!Object.keys(F).length && !pass){ toast(t('tf_formEmpty')); return; }
+  const d = tfD(), C = tfC(d.c), tl = d.fl || C[5] || 'en', FF = tfForm(), F = {}; TF_FIELDS.forEach(k => { const v = String(FF[k] || '').trim(); if (v) F[k] = v; });
+  if (!Object.keys(F).length){ toast(t('tf_formEmpty')); return; }
   let res = tfOffline(FF, tl);
   if (typeof slEngine === 'function' && slEngine()){
     const old = btn.textContent; btn.disabled = true; btn.textContent = '⏳ ' + t('tf_trWait');
@@ -26262,23 +26356,22 @@ Return ONLY JSON: {"values": {same keys as the details}, "labels": [11 labels in
     } catch (e) {}
     if (btn.isConnected){ btn.disabled = false; btn.textContent = old; }
   }
-  if (pass) res.v.pass = pass;                                        // the passport number is never sent to the AI
   TFX.tr = res; const o = $('#tf_out'); if (o){ o.innerHTML = tfOutHTML(res); o.scrollIntoView({block: 'nearest', behavior: 'smooth'}); }
 }
 function tfOutHTML(T){
   const L = T.labels || TF_LBL.en, dir = ['he', 'ar'].includes(T.tl) ? 'rtl' : 'ltr';
-  const rows = TF_FIELDS.map((k, i) => T.v[k] ? `<div class="tf-or"><small lang="${T.tl}" dir="${dir}">${tfE(L[i])}${T.tl !== 'en' ? ` · <span lang="en" dir="ltr">${tfE(TF_LBL.en[i])}</span>` : ''}</small><b dir="ltr">${tfE(T.v[k])}</b><button type="button" class="lg-a" data-tfcp="${k}">${tfE(t('ds_copy'))}</button></div>` : '').join('');
+  const rows = TF_FIELDS.map(k => T.v[k] ? `<div class="tf-or"><small lang="${T.tl}" dir="${dir}">${tfE(L[TFI(k)])}${T.tl !== 'en' ? ` · <span lang="en" dir="ltr">${tfE(TF_LBL.en[TFI(k)])}</span>` : ''}</small><b dir="ltr">${tfE(T.v[k])}</b><button type="button" class="lg-a" data-tfcp="${k}">${tfE(t('ds_copy'))}</button></div>` : '').join('');
   return `<div class="mx-card tf-out"><h4>${tfE(t('tf_ready', {l: tfLangN(T.tl)}))}</h4>${rows}
     ${T.ai ? '' : `<p class="fine">${tfE(t('tf_offline'))}</p>`}<p class="fine">${tfE(t('tf_checkPass'))}</p>
     <div class="btnrow"><button type="button" class="btn" id="tf_cpall">📋 ${tfE(t('tf_cpAll'))}</button><button type="button" class="gold-btn" id="tf_show">🔍 ${tfE(t('tf_show'))}</button></div></div>`;
 }
-const tfOutText = () => { const T = TFX.tr; if (!T) return ''; const L = T.labels || TF_LBL.en; return TF_FIELDS.map((k, i) => T.v[k] ? `${L[i]}: ${T.v[k]}` : '').filter(Boolean).join('\n'); };
+const tfOutText = () => { const T = TFX.tr; if (!T) return ''; const L = T.labels || TF_LBL.en; return TF_FIELDS.map(k => T.v[k] ? `${L[TFI(k)]}: ${T.v[k]}` : '').filter(Boolean).join('\n'); };
 /* a big, clear view to hand the phone to the shop assistant */
 function tfShowBig(){
   const T = TFX.tr; if (!T) return; const L = T.labels || TF_LBL.en, C = tfC(tfD().c);
   let o = $('#tfx'); if (!o){ document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="tfx" hidden><div class="cp-box tf-bigbox" role="dialog" aria-modal="true" aria-labelledby="tfx_t"><div class="cp-top"><h3 id="tfx_t"></h3><button type="button" class="cp-x" id="tfx_x">×</button></div><div id="tfx_b"></div></div></div>`); o = $('#tfx'); }
   $('#tfx_t').textContent = 'Tax Free · ' + tfRegion(C[0], T.tl); $('#tfx_x').setAttribute('aria-label', t('cp_close'));
-  $('#tfx_b').innerHTML = TF_FIELDS.map((k, i) => T.v[k] ? `<div class="tf-bg"><small lang="${T.tl}">${tfE(L[i])}</small><b dir="ltr">${tfE(T.v[k])}</b></div>` : '').join('');
+  $('#tfx_b').innerHTML = TF_FIELDS.map(k => T.v[k] ? `<div class="tf-bg"><small lang="${T.tl}">${tfE(L[TFI(k)])}</small><b dir="ltr">${tfE(T.v[k])}</b></div>` : '').join('');
   o.hidden = false; document.body.classList.add('cp-lock');
 }
 
@@ -26291,6 +26384,7 @@ function tfFromScan(j){
   if (!d.items.length && (byC || byCur)) d.c = (byC || byCur)[0];
   const cur = tfC(d.c)[2], rc = String(j.currency || '').toUpperCase();
   let a = total; if (rc && rc !== cur && RATES[rc] && RATES[cur]) a = Math.round(total / RATES[rc] * RATES[cur] * 100) / 100;
+  if (tfC(d.c)[6] === 'st'){ a = Math.round(a / (1 + tfSt().rate / 100) * 100) / 100; j.vatRate = null; }      // a till receipt includes the tax; keep the shelf price
   d.items.push({s: String(j.store || '').slice(0, 40), d: /^\d{4}-\d{2}-\d{2}$/.test(j.date || '') ? j.date : '', a, v: j.vatRate == null || j.vatRate === '' ? '' : tfN(j.vatRate)});
   saveSet(); if (tab === 'taxfree') tfRender();
 }
@@ -26301,12 +26395,15 @@ const tfLater = () => { clearTimeout(TFT); TFT = setTimeout(() => { try { saveSe
 document.addEventListener('input', e => {
   const el = e.target; if (!el || !el.closest || !el.closest('#tf_root')) return; const d = tfD();
   if (el.dataset.tfi != null){ const it = d.items[+el.dataset.tfi]; if (!it) return; const f = el.dataset.tff; it[f] = f === 's' || f === 'd' ? el.value.slice(0, 40) : el.value; if (f !== 's') tfLater(); else { clearTimeout(TFT); TFT = setTimeout(() => { try { saveSet(); } catch (er) {} }, 400); } return; }
+  if (el.id === 'tf_loc'){ d.loc = el.value; tfLater(); return; }
+  if (el.id === 'tf_pc'){ d.pc = el.value; clearTimeout(TFT); TFT = setTimeout(() => { try { saveSet(); } catch (er) {} const o = $('#tf_pco'); if (o){ const C = tfC(d.c), w = document.createElement('div'); w.innerHTML = tfPcHTML(C, C[6] === 'st' ? tfSt() : null); const n = w.querySelector('#tf_pco'); if (n) o.innerHTML = n.innerHTML; } }, 250); return; }
   if (el.id === 'tf_fee' || el.id === 'tf_fix'){ d[el.id === 'tf_fee' ? 'fee' : 'fix'] = el.value; tfLater(); return; }
   if (el.dataset.tfform){ tfForm()[el.dataset.tfform] = el.value.slice(0, 80); TFX.tr = null; if (d.keepForm){ clearTimeout(TFT); TFT = setTimeout(() => { try { tfKeepSave(); } catch (er) {} }, 400); } return; }
 }, true);
 document.addEventListener('change', e => {
   const el = e.target; if (!el || !el.closest || !el.closest('#tf_root')) return; const d = tfD();
-  if (el.id === 'tf_c'){ d.c = el.value; d.fee = ''; d.fix = ''; d.fl = ''; TFX.tr = null; saveSet(); tfRender(); return; }
+  if (el.id === 'tf_c'){ d.c = el.value; d.fee = ''; d.fix = ''; d.fl = ''; d.reg = ''; d.loc = ''; TFX.tr = null; saveSet(); tfRender(); return; }
+  if (el.id === 'tf_reg'){ d.reg = el.value; d.loc = ''; saveSet(); tfRender(); return; }
   if (el.id === 'tf_fl'){ d.fl = el.value; TFX.tr = null; saveSet(); const o = $('#tf_out'); if (o) o.innerHTML = ''; return; }
   if (el.id === 'tf_keep'){ d.keepForm = el.checked; tfKeepSave(); return; }
   if (el.id === 'tf_file'){ tfScanFile(el.files && el.files[0]); el.value = ''; return; }
