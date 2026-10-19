@@ -3,11 +3,11 @@ const LG_DATE = '19.10.2026';
 const LG_DOCS = {
   a11y: {t: 'lg_a11yT', ic: '♿', parts: [
     ['', ['lg_a_intro']],
-    ['lg_a_doneH', ['lg_a_d1', 'lg_a_d2', 'lg_a_d3', 'lg_a_d4', 'lg_a_d5', 'lg_a_d6', 'lg_a_d7', 'lg_a_d8', 'lg_a_d9', 'lg_a_d10', 'lg_a_d11', 'lg_a_d12', 'lg_a_d13', 'lg_a_d14'], true],
+    ['lg_a_doneH', ['lg_a_d1', 'lg_a_d2', 'lg_a_d3', 'lg_a_d4', 'lg_a_d5', 'lg_a_d6', 'lg_a_d7', 'lg_a_d8', 'lg_a_d9', 'lg_a_d10', 'lg_a_d11', 'lg_a_d12', 'lg_a_d13', 'lg_a_d14', 'lg_a_d15'], true],
     ['lg_a_howH', ['lg_a_how']],
-    ['lg_a_limH', ['lg_a_l1', 'lg_a_l2', 'lg_a_l3', 'lg_a_l4'], true],
+    ['lg_a_limH', ['lg_a_l1', 'lg_a_l2', 'lg_a_l3', 'lg_a_l4', 'lg_a_l5'], true],
     ['lg_contactH', ['lg_a_contact']],
-    ['lg_histH', ['lg_h_a1910f', 'lg_h_a1910e', 'lg_h_a1910d', 'lg_h_a1910c', 'lg_h_a1910b', 'lg_h_a1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_a1910g', 'lg_h_a1910f', 'lg_h_a1910e', 'lg_h_a1910d', 'lg_h_a1910c', 'lg_h_a1910b', 'lg_h_a1910', 'lg_h_1810'], true]
   ]},
   terms: {t: 'lg_termsT', ic: '📜', parts: [
     ['', ['lg_t_intro']],
@@ -16,9 +16,12 @@ const LG_DOCS = {
     ['lg_t_aiH', ['lg_t_ai', 'lg_t_tf']],
     ['lg_t_liabH', ['lg_t_liab']],
     ['lg_t_useH', ['lg_t_use1', 'lg_t_use2', 'lg_t_use3', 'lg_t_use4', 'lg_t_prn', 'lg_t_sig', 'lg_t_pdf', 'lg_t_qr', 'lg_t_stamp'], true],
+    ['lg_t_hostH', ['lg_t_host']],
+    ['lg_t_ipH', ['lg_t_ip']],
     ['lg_t_chgH', ['lg_t_chg']],
+    ['lg_t_lawH', ['lg_t_law']],
     ['lg_contactH', ['lg_t_contact']],
-    ['lg_histH', ['lg_h_t1910e', 'lg_h_t1910d', 'lg_h_t1910c', 'lg_h_t1910b', 'lg_h_t1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_t1910f', 'lg_h_t1910e', 'lg_h_t1910d', 'lg_h_t1910c', 'lg_h_t1910b', 'lg_h_t1910', 'lg_h_1810'], true]
   ]},
   cred: {t: 'lg_credT', ic: '🧾', parts: [
     ['', ['lg_c_intro']],
@@ -30,12 +33,15 @@ const LG_DOCS = {
     ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3', 'lg_p_dev4', 'lg_p_dev5', 'lg_p_dev6', 'lg_p_dev7', 'lg_p_dev8', 'lg_p_dev9']],
     ['lg_p_usH', ['lg_p_us1', 'lg_p_us2', 'lg_p_us3', 'lg_p_us4'], true],
     ['lg_p_extH', ['lg_p_ext0', 'lg_p_ext1', 'lg_p_ext2', 'lg_p_ext3', 'lg_p_ext4', 'lg_p_ext5', 'lg_p_ext6'], true],
+    ['lg_p_permH', ['lg_p_perm']],
+    ['lg_p_secH', ['lg_p_sec']],
     ['lg_p_noH', ['lg_p_no']],
     ['lg_p_privH', ['lg_p_priv']],
+    ['lg_p_lawH', ['lg_p_law']],
     ['lg_p_rightsH', ['lg_p_r1', 'lg_p_r2', 'lg_p_r3'], true],
     ['lg_p_chgH', ['lg_p_chg']],
     ['lg_contactH', ['lg_p_contact']],
-    ['lg_histH', ['lg_h_p1910g', 'lg_h_p1910f', 'lg_h_p1910e', 'lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_p1910h', 'lg_h_p1910g', 'lg_h_p1910f', 'lg_h_p1910e', 'lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
   ]}
 };
 const lgE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
