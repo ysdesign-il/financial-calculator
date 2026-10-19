@@ -57,7 +57,8 @@ function lgOpen(k){
   $('#lgx').hidden = false; document.body.classList.add('cp-lock'); $('#lgx_b').scrollTop = 0; setTimeout(() => { try { $('#lgx_x').focus(); } catch (e) {} }, 30);
 }
 function lgClose(){ const o = $('#lgx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); } }
-function lgLinks(){ return `<span class="lg-links">${['terms', 'priv', 'a11y'].map(k => `<button type="button" class="lg-a" data-lgo="${k}">${lgE(t(LG_DOCS[k].t))}</button>`).join(' · ')}</span>`; }
+const lgCopy = () => { const y = new Date().getFullYear(); return t('lg_copy', {y: y > 2026 ? '2026–' + y : '2026'}); };
+function lgLinks(){ return `<span class="lg-links">${['terms', 'priv', 'a11y'].map(k => `<button type="button" class="lg-a" data-lgo="${k}">${lgE(t(LG_DOCS[k].t))}</button>`).join(' · ')}<span class="lg-copy">${lgE(lgCopy())}</span></span>`; }
 /* links: at the foot of every screen, in Settings → System, and next to the feedback form (where an e-mail may be asked for) */
 function lgMount(){
   $$('.note').forEach(n => { const old = n.querySelector('.lg-links'); if (old && old.dataset.l === document.documentElement.lang) return; if (old) old.remove(); n.insertAdjacentHTML('beforeend', ' ' + lgLinks()); n.querySelector('.lg-links').dataset.l = document.documentElement.lang; });
