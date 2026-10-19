@@ -28,7 +28,7 @@ def api(path, method='GET', body=None):
     with urllib.request.urlopen(req, timeout=20) as r:
         return json.loads(r.read() or b'null')
 
-SITE = 'https://ysdesign-il.github.io/financial-calculator/'
+SITE = 'https://financial-calculator.design-il.workers.dev/'
 NB = r'(?<![A-Za-z0-9_-])'
 SECRET_PATTERNS = [(label, re.compile(NB + rx)) for label, rx in [
     ('Google API key', r'AIza[0-9A-Za-z_-]{35}'),

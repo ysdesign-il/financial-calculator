@@ -4,7 +4,7 @@ var PRIV = false; try { PRIV = window['local' + 'Storage'].getItem('fin-priv') =
 /* 13.8: which of the app's keys existed before this visit wrote anything (to tell a real user from a first visit when moving address) */
 var FIN_K0 = []; try { var _ls = window['local' + 'Storage']; for (var _i = 0; _i < _ls.length; _i++){ var _k = _ls.key(_i); if (_k && _k.indexOf('fin-') === 0) FIN_K0.push(_k); } } catch (e) {}
 /* 13.12: the site's own address – the Claude app reads the shared data files (rates, version…) from here */
-var SITE_BASE = 'https://ysdesign-il.github.io/financial-calculator/';
+var SITE_BASE = 'https://financial-calculator.design-il.workers.dev/';
 (function(){
   if (!PRIV){ document.write('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&family=Heebo:wght@400;700&family=Rubik:wght@400;700&display=swap" rel="stylesheet">'); return; }
   var own = function(x){ return x.origin === location.origin || x.origin === 'https://ysdesign-il.github.io' || x.origin === SITE_BASE.replace(/^(https?:\/\/[^\/]+).*$/, '$1') || /(^|\.)(claude\.ai|claudeusercontent\.com|anthropic\.com)$/.test(x.hostname); };

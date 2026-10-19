@@ -11,7 +11,7 @@ var PRIV = false; try { PRIV = window['local' + 'Storage'].getItem('fin-priv') =
 /* 13.8: which of the app's keys existed before this visit wrote anything (to tell a real user from a first visit when moving address) */
 var FIN_K0 = []; try { var _ls = window['local' + 'Storage']; for (var _i = 0; _i < _ls.length; _i++){ var _k = _ls.key(_i); if (_k && _k.indexOf('fin-') === 0) FIN_K0.push(_k); } } catch (e) {}
 /* 13.12: the site's own address – the Claude app reads the shared data files (rates, version…) from here */
-var SITE_BASE = 'https://ysdesign-il.github.io/financial-calculator/';
+var SITE_BASE = 'https://financial-calculator.design-il.workers.dev/';
 (function(){
   if (!PRIV){ document.write('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&family=Heebo:wght@400;700&family=Rubik:wght@400;700&display=swap" rel="stylesheet">'); return; }
   var own = function(x){ return x.origin === location.origin || x.origin === 'https://ysdesign-il.github.io' || x.origin === SITE_BASE.replace(/^(https?:\/\/[^\/]+).*$/, '$1') || /(^|\.)(claude\.ai|claudeusercontent\.com|anthropic\.com)$/.test(x.hostname); };
@@ -7187,6 +7187,10 @@ Object.assign(T, {
   lg_h_t1910e:['19.10.2026 – נוסף סעיף על חותמות ומספור עמודים.','19.10.2026 – أُضيف بند عن الأختام وترقيم الصفحات.','19.10.2026 – added a section on stamps and page numbers.'],
   lg_h_p1910f:['19.10.2026 – נוסף הסבר על טיוטת העורך ועל קבצים ששותפו לאפליקציה.','19.10.2026 – أُضيف شرح عن مسودة المحرر والملفات المشاركة مع التطبيق.','19.10.2026 – added an explanation of the editor draft and files shared to the app.']
 });
+Object.assign(T, {
+  lg_p_ext6:['האתר מתארח ב-Cloudflare (שירות Workers), שרואה את כתובת ה-IP בכל טעינה של האתר, לפי מדיניות הפרטיות של Cloudflare. הקוד והנתונים המשותפים (שערים, מדדים) נשמרים ב-GitHub, וקלאודפלייר מושך אותם משם. הכתובת הקודמת ב-GitHub Pages מעבירה לכאן, ובלחיצה אחת גם את הנתונים שלך – ישירות בתוך הטלפון.','الموقع مستضاف على Cloudflare (خدمة Workers)، التي ترى عنوان IP عند كل تحميل للموقع، وفق سياسة خصوصية Cloudflare. الكود والبيانات المشتركة (الأسعار والمؤشرات) محفوظة في GitHub وتسحبها Cloudflare من هناك. العنوان السابق على GitHub Pages يحوّل إلى هنا، وبضغطة واحدة ينقل بياناتك أيضًا – مباشرة داخل الهاتف.','The website is hosted on Cloudflare (Workers), which sees your IP address each time the site loads, under Cloudflare\'s privacy policy. The code and shared data (rates, indices) are kept on GitHub, and Cloudflare takes them from there. The previous GitHub Pages address forwards here and, with one tap, moves your data too – directly on your phone.'],
+  lg_h_p1910g:['19.10.2026 – האתר עבר לאחסון ב-Cloudflare; הכתובת הקודמת מעבירה לכאן עם הנתונים.','19.10.2026 – انتقل الموقع إلى استضافة Cloudflare؛ العنوان السابق يحوّل إلى هنا مع البيانات.','19.10.2026 – the site moved to Cloudflare hosting; the previous address forwards here with your data.']
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -13791,8 +13795,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.12", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.170829';
+var CHANGELOG = [{"v": "13.13", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.173300';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -25718,7 +25722,7 @@ const LG_DOCS = {
     ['lg_p_rightsH', ['lg_p_r1', 'lg_p_r2', 'lg_p_r3'], true],
     ['lg_p_chgH', ['lg_p_chg']],
     ['lg_contactH', ['lg_p_contact']],
-    ['lg_histH', ['lg_h_p1910f', 'lg_h_p1910e', 'lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_p1910g', 'lg_h_p1910f', 'lg_h_p1910e', 'lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
   ]}
 };
 const lgE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
@@ -29261,7 +29265,7 @@ try { prnBtnMount(); } catch (e) {}
      directly, phone to phone (window.postMessage between the two tabs – no server, nothing in the link);
    • on the new address the app receives it, but only from the old addresses listed here.
    Encrypted accounts stay encrypted. Leave MIG_TO empty until the new address is live. */
-const MIG_TO = '';                                         // e.g. 'https://example.co.il' – no trailing slash
+const MIG_TO = 'https://financial-calculator.design-il.workers.dev';                                         // e.g. 'https://example.co.il' – no trailing slash
 const MIG_FROM = ['https://ysdesign-il.github.io'];
 const migE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const migKeys = () => { const L = []; try { for (let i = 0; i < RAWLS.length; i++){ const k = RAWLS.key(i); if (k && k.indexOf('fin-') === 0 && k !== 'fin-migrated') L.push(k); } } catch (e) {} return L; };

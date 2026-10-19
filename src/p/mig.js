@@ -4,7 +4,7 @@
      directly, phone to phone (window.postMessage between the two tabs – no server, nothing in the link);
    • on the new address the app receives it, but only from the old addresses listed here.
    Encrypted accounts stay encrypted. Leave MIG_TO empty until the new address is live. */
-const MIG_TO = '';                                         // e.g. 'https://example.co.il' – no trailing slash
+const MIG_TO = 'https://financial-calculator.design-il.workers.dev';                                         // e.g. 'https://example.co.il' – no trailing slash
 const MIG_FROM = ['https://ysdesign-il.github.io'];
 const migE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const migKeys = () => { const L = []; try { for (let i = 0; i < RAWLS.length; i++){ const k = RAWLS.key(i); if (k && k.indexOf('fin-') === 0 && k !== 'fin-migrated') L.push(k); } } catch (e) {} return L; };

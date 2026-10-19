@@ -5731,7 +5731,7 @@
   "lg_p_ext3": "AI, only when you use it: the text you wrote and, when scanning, the photo (a payslip, an offer, an exercise, a letter to translate, or any document with auto-detect) is sent to Claude in the Claude app, or to Google's Gemini with your own key (in developer and family mode). The app does not keep the photo, the letter or the translation; for a payslip only the numbers are kept, on the device. Cover identifying details before taking the photo.",
   "lg_p_ext4": "A question to the assistant in an outside service (ChatGPT, Perplexity and the like) opens there only when you choose it.",
   "lg_p_ext5": "The live TradingView board loads only when you tap \"Show\", without telling it which site it is on and without keeping cookies in browsers that support this (such as Chrome).",
-  "lg_p_ext6": "The website is hosted on GitHub Pages, which sees your IP address each time the site loads, under GitHub's privacy policy.",
+  "lg_p_ext6": "The website is hosted on Cloudflare (Workers), which sees your IP address each time the site loads, under Cloudflare's privacy policy. The code and shared data (rates, indices) are kept on GitHub, and Cloudflare takes them from there. The previous GitHub Pages address forwards here and, with one tap, moves your data too – directly on your phone.",
   "lg_p_noH": "What we do not do",
   "lg_p_no": "No ads, no tracking or analytics tools, no selling information and no profiling.",
   "lg_p_privH": "Full private mode",
@@ -6676,6 +6676,7 @@
   "mig_recvH": "Keep this tab open for a few seconds.",
   "mig_ok": "Data received – loading…",
   "mig_over": "There is already data at this address. Replace it with the data from the previous address?",
-  "mig_fail": "The move did not work. Try again from the previous address, or use backup and restore."
+  "mig_fail": "The move did not work. Try again from the previous address, or use backup and restore.",
+  "lg_h_p1910g": "19.10.2026 – the site moved to Cloudflare hosting; the previous address forwards here with your data."
  }
 }
