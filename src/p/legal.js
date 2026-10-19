@@ -35,7 +35,7 @@ const LG_DOCS = {
     ['lg_p_rightsH', ['lg_p_r1', 'lg_p_r2', 'lg_p_r3'], true],
     ['lg_p_chgH', ['lg_p_chg']],
     ['lg_contactH', ['lg_p_contact']],
-    ['lg_histH', ['lg_h_p1910f', 'lg_h_p1910e', 'lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_p1910g', 'lg_h_p1910f', 'lg_h_p1910e', 'lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
   ]}
 };
 const lgE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
