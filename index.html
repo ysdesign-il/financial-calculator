@@ -1575,6 +1575,17 @@ body[data-tab="expenses"] .page-head .scan-btn + .prn-btn,body[data-tab="clients
 .bk-warn{border-color:#d97706;background:color-mix(in srgb,#d97706 8%,transparent)}.bk-ok{border-color:#16a34a;background:color-mix(in srgb,#16a34a 7%,transparent)}
 .bk-plan{width:100%;border-collapse:collapse;font-size:.88rem}.bk-plan th,.bk-plan td{padding:6px 4px;border-bottom:1px solid var(--line);text-align:start}.bk-plan .neg{color:#b42318}
 .bk-empty{padding:10px 0}
+.bk-tabs{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;margin-bottom:6px;scrollbar-width:none}.bk-tabs .ds-chip{flex:0 0 auto;white-space:nowrap}
+.bk-flags{border:1.5px solid var(--line);border-radius:14px;padding:8px 12px;margin:10px 0;display:flex;flex-direction:column;gap:4px}.bk-flags legend{font-weight:700;padding:0 4px}
+.bk-dec{list-style:none;padding:0;margin:0 0 8px;display:flex;flex-direction:column;gap:8px}
+.bk-steps{padding-inline-start:22px;margin:0 0 12px;display:flex;flex-direction:column;gap:6px}
+.bk-two{display:grid;grid-template-columns:1fr;gap:8px;margin:8px 0}@media(min-width:560px){.bk-two{grid-template-columns:1fr 1fr}}
+.bk-plan tr.best td,.bk-plan tr.best th{background:color-mix(in srgb,#16a34a 10%,transparent)}
+.bk-scroll{overflow-x:auto}.bk-move{border-color:#2563eb;background:color-mix(in srgb,#2563eb 7%,transparent)}.bk-open{border-color:#16a34a}.bk-close{border-color:#d97706}
+.bk-scroll td{white-space:nowrap}
+.d4-tools{display:inline-flex;gap:4px;flex-wrap:wrap;margin-inline-start:auto}.ds-pg figcaption{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ds-crop .d4-loupe{position:absolute;z-index:5;border-radius:50%;width:auto;box-shadow:0 4px 18px rgba(0,0,0,.45);pointer-events:none}
+.d4-adj{margin:8px 0}.d4-adj input[type=range]{width:100%;accent-color:#1F4FB8}
 
 /* ================= 7.8: app designs (ORBIT, AURUM); the default design has none of these rules ================= */
 .dz-ban{display:none}
@@ -7267,6 +7278,85 @@ Object.assign(T, {
 Object.assign(T, {
   lg_p_dev10:['ניהול חשבונות בנק: הכינויים, היתרות והסכומים נשמרים רק במכשיר. אין בכלי שדה למספר חשבון או סניף. לעוזר נשלחים כינויים וסכומים בלבד, ורק כשלוחצים "התייעצות עם העוזר".','إدارة الحسابات البنكية: الكنى والأرصدة والمبالغ تُحفظ على الجهاز فقط. لا يوجد في الأداة حقل لرقم حساب أو فرع. تُرسل للمساعد الكنى والمبالغ فقط، وفقط عند الضغط على "استشارة المساعد".','Bank accounts adviser: nicknames, balances and amounts are kept on the device only. The tool has no field for an account or branch number. Only nicknames and amounts go to the assistant, and only when you tap "Ask the assistant".'],
   lg_h_p1910i:['19.10.2026 – נוסף הסבר על כלי ניהול חשבונות הבנק.','19.10.2026 – أُضيف شرح عن أداة إدارة الحسابات البنكية.','19.10.2026 – added an explanation of the bank accounts adviser.']
+});
+/* 13.16: bank tools, open/close/switch advice, scanner improvements */
+Object.assign(T, {
+  bk_tab_adv:['ייעוץ','استشارة','Advice'], bk_tab_od:['עלות המינוס','كلفة السحب على المكشوف','Overdraft cost'], bk_tab_fees:['עמלות','العمولات','Fees'], bk_tab_save:['איפה לחסוך','أين أدّخر','Where to save'], bk_tab_switch:['מעבר בנק','نقل البنك','Switching banks'],
+  bk_mo:['חודש','شهر','month'],
+  bk_flagsH:['מה נכון לגביכם?','ما الذي ينطبق عليكم؟','What applies to you?'],
+  bk_fl_biz:['יש לי עסק או עבודה כעצמאי','لدي مصلحة أو عمل مستقل','I have a business or I am self-employed'],
+  bk_fl_partner:['יש לי בן/בת זוג עם הוצאות משותפות','لدي شريك/ة بمصاريف مشتركة','I have a partner and we share expenses'],
+  bk_fl_unhappy:['לא מרוצה מהבנק או קיבלתי הצעה טובה יותר','غير راضٍ عن البنك أو تلقيت عرضًا أفضل','Unhappy with my bank, or I got a better offer'],
+  bk_fl_loan:['יש לי הלוואה או משכנתה בבנק','لدي قرض أو رهن عقاري في البنك','I have a loan or a mortgage at the bank'],
+  bk_decH:['לפתוח עוד חשבון, לסגור או לעבור בנק?','فتح حساب آخر، إغلاق أم الانتقال إلى بنك آخر؟','Open another account, close one, or switch banks?'],
+  bk_dBiz:['כדאי לפתוח חשבון עסקי נפרד','يُستحسن فتح حساب تجاري منفصل','Open a separate business account'],
+  bk_dBizP:['הפרדה בין כסף פרטי לעסקי מקלה על הדוחות ועל רואה החשבון, ומונעת ערבוב הוצאות. השוו עמלות של מסלולים לעסקים קטנים.','الفصل بين المال الخاص والتجاري يسهّل التقارير وعمل المحاسب ويمنع خلط المصاريف. قارنوا عمولات مسارات المصالح الصغيرة.','Keeping business and personal money apart makes reports and the accountant\'s work easier and avoids mixing expenses. Compare small-business fee tracks.'],
+  bk_dJoint:['שקלו חשבון משותף להוצאות הבית','فكّروا في حساب مشترك لمصاريف البيت','Consider a joint account for household costs'],
+  bk_dJointP:['כל אחד מעביר סכום קבוע בהוראת קבע, וממנו יוצאות ההוצאות המשותפות. אפשר להמיר אחד החשבונות הקיימים למשותף במקום לפתוח חדש – ולחסוך דמי ניהול.','يحوّل كل طرف مبلغًا ثابتًا بأمر دائم وتُدفع منه المصاريف المشتركة. يمكن تحويل أحد الحسابات القائمة إلى مشترك بدل فتح جديد – وتوفير رسوم الإدارة.','Each of you sends a fixed amount by standing order and shared bills are paid from it. You can turn an existing account into a joint one instead of opening another and paying another fee.'],
+  bk_dCloseIdle:['לסגור את "{a}"?','إغلاق "{a}"؟','Close "{a}"?'],
+  bk_dCloseIdleP:['כמעט אין בו פעילות. לפני סגירה: העבירו הוראות קבע וחיובים, משכו את היתרה ובקשו אישור סגירה בכתב.','لا يكاد يوجد فيه نشاط. قبل الإغلاق: انقلوا الأوامر الدائمة والخصومات، اسحبوا الرصيد واطلبوا تأكيد إغلاق خطيًا.','It has almost no activity. Before closing: move standing orders and debits, withdraw the balance and ask for written confirmation of the closure.'],
+  bk_dSaveY:['חיסכון: {y} בשנה.','التوفير: {y} في السنة.','Saving: {y} a year.'],
+  bk_dTooMany:['{n} חשבונות עו״ש אישיים – יותר מדי','{n} حسابات جارية شخصية – أكثر من اللازم','{n} personal current accounts is too many'],
+  bk_dTooManyP:['לרוב מספיק חשבון ראשי אחד (ומשותף או עסקי אם צריך). כל חשבון נוסף הוא עוד דמי ניהול, עוד מסגרת ועוד מקום לשכוח חיוב.','عادةً يكفي حساب رئيسي واحد (ومشترك أو تجاري عند الحاجة). كل حساب إضافي يعني رسوم إدارة وحدًّا آخر ومكانًا آخر لنسيان خصم.','One main account is usually enough (plus a joint or business one if needed). Each extra account means another fee, another limit and another place to miss a charge.'],
+  bk_dMove:['עדיף לעבור בנק בניוד – לא לסגור ולפתוח מחדש','الأفضل الانتقال بخدمة النقل – لا الإغلاق وفتح حساب من جديد','Switch banks with the official switching service, not by closing and reopening'],
+  bk_dMoveP:['אם הבנק לא מתאים לכם, המעבר פשוט היום.','إذا كان البنك لا يناسبكم، فالانتقال اليوم بسيط.','If your bank doesn\'t suit you, moving is simple today.'],
+  bk_dMoveFee:['ממוצע העמלות שלכם ({m} לחודש) גבוה. אפשר לבקש מהבנק הנוכחי הנחה, ואם אין – לעבור.','متوسط عمولاتكم ({m} شهريًا) مرتفع. يمكن طلب خصم من البنك الحالي، وإن لم يوافق – الانتقال.','Your average fee ({m} a month) is high. Ask your bank for a discount, and if it says no, move.'],
+  bk_dMoveHow:['בניוד מגישים בקשה מקוונת לבנק החדש בלבד: היתרה, הוראות הקבע, ההרשאות לחיוב וחיובי הכרטיסים עוברים אוטומטית תוך 7 ימי עסקים, והמשכורת מנותבת לחשבון החדש למשך 3 שנים.','في النقل تقدّمون طلبًا إلكترونيًا للبنك الجديد فقط: الرصيد والأوامر الدائمة وتفويضات الخصم وخصومات البطاقات تنتقل تلقائيًا خلال 7 أيام عمل، ويُحوَّل الراتب إلى الحساب الجديد لمدة 3 سنوات.','You only apply online to the new bank: the balance, standing orders, debit authorisations and card charges move automatically within 7 business days, and your salary is redirected to the new account for 3 years.'],
+  bk_dLoan:['הלוואות ופיקדונות לא עוברים בניוד','القروض والودائع لا تنتقل بالنقل','Loans and deposits don\'t move when you switch'],
+  bk_dLoanP:['הלוואה נשארת בבנק הישן עד שתיפרע, ולפעמים התנאים שלה קשורים לחשבון. בדקו מול הבנק לפני המעבר, או מחזרו את ההלוואה בבנק החדש.','يبقى القرض في البنك القديم حتى سداده، وأحيانًا ترتبط شروطه بالحساب. افحصوا مع البنك قبل الانتقال أو أعيدوا تمويل القرض في البنك الجديد.','A loan stays at the old bank until it is repaid, and its terms are sometimes tied to the account. Check with the bank before switching, or refinance at the new bank.'],
+  bk_dNoOpen:['לא לפתוח עוד חשבון בלי סיבה','لا تفتحوا حسابًا آخر بلا سبب','Don\'t open another account without a reason'],
+  bk_dNoOpenP:['חשבון נוסף לא מוסיף ריבית ולא ביטחון. לחיסכון עדיף פיקדון או קרן כספית באותו חשבון (ראו "איפה לחסוך"), ולכרית ביטחון – תת-חשבון או פיקדון נזיל.','الحساب الإضافي لا يضيف فائدة ولا أمانًا. للادخار الأفضل وديعة أو صندوق نقدي في الحساب نفسه (انظروا "أين أدّخر")، وللاحتياطي – حساب فرعي أو وديعة سائلة.','Another account adds no interest and no safety. For savings, a deposit or a money-market fund in the same account is better (see "Where to save"); for a buffer, a sub-account or a liquid deposit.'],
+  bk_odIntro:['כמה עולה לכם להיות במינוס? הריבית במינוס מחושבת לפי ימים. ברירת המחדל: פריים + 4%.','كم يكلّفكم السحب على المكشوف؟ تُحسب الفائدة حسب الأيام. الافتراضي: البرايم + 4%.','What does the overdraft cost you? Interest is charged per day. Default: prime + 4%.'],
+  bk_odAmt:['מינוס ממוצע','متوسط السحب على المكشوف','Average overdraft'], bk_odDays:['ימים במינוס בחודש','أيام في السالب شهريًا','Days overdrawn a month'], bk_odRate:['ריבית המינוס','فائدة السحب على المكشوف','Overdraft rate'], bk_odLoan:['ריבית הלוואה לסגירת המינוס','فائدة قرض لإغلاق السالب','Loan rate to clear it'],
+  bk_odYear:['עלות המינוס בשנה','كلفة السالب في السنة','Overdraft cost per year'], bk_odMonth:['{m} בחודש','{m} شهريًا','{m} a month'],
+  bk_odFixed:['מינוס קבוע? הלוואה זולה יותר','سالب دائم؟ القرض أرخص','Always overdrawn? A loan is cheaper'],
+  bk_odFixedP:['הלוואה בריבית {r}% לסגירת המינוס תחסוך כ-{y} בשנה – בתנאי שלא חוזרים למינוס אחר כך.','قرض بفائدة {r}% لإغلاق السالب يوفّر نحو {y} في السنة – بشرط عدم العودة إلى السالب بعده.','A loan at {r}% to clear the overdraft saves about {y} a year, as long as you don\'t slip back into it.'],
+  bk_odTip1:['הקטינו את המסגרת בהדרגה','قلّلوا الحد تدريجيًا','Lower the limit step by step'],
+  bk_odTip1P:['מסגרת גבוהה מזמינה מינוס. הורדה של כמה מאות שקלים בחודש עוזרת לצאת ממנו לאט.','الحد المرتفع يغري بالسالب. خفضه بمئات قليلة شهريًا يساعد على الخروج منه ببطء.','A high limit invites the overdraft. Lowering it by a few hundred shekels a month helps you climb out slowly.'],
+  bk_odTip2:['הזיזו את מועדי החיוב','غيّروا مواعيد الخصم','Move your charge dates'],
+  bk_odTip2P:['בקשו שחיוב האשראי וההוראות הקבועות יירדו אחרי כניסת המשכורת – כך מצמצמים ימים במינוס.','اطلبوا أن تُخصم البطاقة والأوامر الدائمة بعد دخول الراتب – هكذا تقلّ أيام السالب.','Ask for card bills and standing orders to come out after your salary arrives, so you spend fewer days overdrawn.'],
+  bk_feIntro:['רפורמת העמלות של בנק ישראל: שירות "ניהול חשבון תשלום" חדש עם תקרה חודשית לכל הפעולות בכל הערוצים. השוו למה שאתם משלמים היום.','إصلاح العمولات من بنك إسرائيل: خدمة جديدة "إدارة حساب الدفع" بسقف شهري لكل العمليات في كل القنوات. قارنوا بما تدفعونه اليوم.','The Bank of Israel fee reform: a new "payment account management" service with a monthly cap for all actions in every channel. Compare it with what you pay today.'],
+  bk_feAct:['פעולות בחודש','عمليات شهريًا','Actions a month'], bk_feNow:['דמי ניהול היום','رسوم الإدارة اليوم','Account fee today'], bk_feCard:['דמי כרטיס חיוב מיידי','رسوم بطاقة الخصم الفوري','Debit card fee'],
+  bk_feCap:['התקרה לפי הרפורמה','السقف حسب الإصلاح','Cap under the reform'], bk_feCardCap:['כרטיס חיוב מיידי: עד {m}','بطاقة الخصم الفوري: حتى {m}','Debit card: up to {m}'],
+  bk_feSave:['אפשר לחסוך כ-{y} בשנה','يمكن توفير نحو {y} في السنة','You could save about {y} a year'],
+  bk_feSaveP:['בקשו מהבנק לעבור למסלול "ניהול חשבון תשלום" כשהוא זמין לכם. עד 100 פעולות: עד 10 ₪, עד 2 פעולות: 5 ₪, מעל 100: 1 ₪ לכל פעולה נוספת, וחשבון רדום – בחינם.','اطلبوا من البنك الانتقال إلى مسار "إدارة حساب الدفع" عند توفره لكم. حتى 100 عملية: حتى 10 ₪، حتى عمليتين: 5 ₪، فوق 100: 1 ₪ لكل عملية إضافية، والحساب الخامل – مجانًا.','Ask your bank for the "payment account management" track once it is available to you. Up to 100 actions: up to ₪10; 2 or fewer: ₪5; above 100: ₪1 per extra action; a dormant account is free.'],
+  bk_feOk:['אתם כבר משלמים פחות מהתקרה','أنتم تدفعون أقل من السقف','You already pay less than the cap'],
+  bk_feOkP:['אין צורך לשנות מסלול. בדקו פעם בשנה בדף העמלות שהגיע מהבנק.','لا حاجة لتغيير المسار. افحصوا مرة في السنة كشف العمولات من البنك.','No need to change tracks. Check the yearly fee statement from your bank.'],
+  bk_feWhen:['מתי זה נכנס?','متى يدخل حيز التنفيذ؟','When does it start?'],
+  bk_feWhenP:['בהדרגה מ-1.10.2026, ובמלואו עד 1.7.2027. עד אז אפשר לבקש את המסלול הבסיסי הקיים.','تدريجيًا من 1.10.2026، وبالكامل حتى 1.7.2027. حتى ذلك الحين يمكن طلب المسار الأساسي القائم.','Gradually from 1.10.2026, in full by 1.7.2027. Until then you can ask for the existing basic track.'],
+  bk_feSrc:['לפי הודעת בנק ישראל מ-21.6.2026.','حسب بيان بنك إسرائيل من 21.6.2026.','Based on the Bank of Israel announcement of 21.6.2026.'], bk_feSrcL:['להודעה','للبيان','Read it'],
+  bk_svIntro:['איפה כדאי להחזיק כסף שלא צריך עכשיו? השוואה אחרי מס ואינפלציה. הריביות הן הערכה – בדקו את ההצעה של הבנק או הקרן.','أين يُستحسن الاحتفاظ بمال لا تحتاجونه الآن؟ مقارنة بعد الضريبة والتضخم. الفوائد تقديرية – افحصوا عرض البنك أو الصندوق.','Where should money you don\'t need now sit? A comparison after tax and inflation. Rates are estimates – check the actual offer from the bank or fund.'],
+  bk_svAmt:['סכום','المبلغ','Amount'], bk_svMo:['חודשים','أشهر','Months'], bk_svDep:['ריבית פיקדון שקלי','فائدة وديعة شيكلية','Shekel deposit rate'], bk_svReal:['ריבית ריאלית בפיקדון צמוד','فائدة حقيقية في وديعة مرتبطة','Real rate, CPI-linked deposit'], bk_svMmf:['תשואת קרן כספית','عائد صندوق نقدي','Money-market fund yield'], bk_svInf:['אינפלציה צפויה','تضخم متوقع','Expected inflation'],
+  bk_svWhere:['איפה','أين','Where'], bk_svGross:['רווח','ربح','Gain'], bk_svTax:['מס','ضريبة','Tax'], bk_svNet:['נטו','صافٍ','Net'], bk_svRealNet:['אחרי אינפלציה','بعد التضخم','After inflation'],
+  bk_sv_cur:['עו״ש','حساب جارٍ','Current account'], bk_sv_dep:['פיקדון שקלי','وديعة شيكلية','Shekel deposit'], bk_sv_cpi:['פיקדון צמוד מדד','وديعة مرتبطة بالمؤشر','CPI-linked deposit'], bk_sv_mmf:['קרן כספית','صندوق نقدي','Money-market fund'],
+  bk_svBest:['הכי משתלם: {n} ({m} נטו)','الأكثر جدوى: {n} ({m} صافٍ)','Best: {n} ({m} net)'],
+  bk_svBestP:['קרן כספית נזילה תוך יום עסקים; פיקדון סגור עד מועד היציאה. השאירו בעו״ש רק את ההוצאות של החודש הקרוב.','الصندوق النقدي سائل خلال يوم عمل؛ الوديعة مغلقة حتى موعد الخروج. اتركوا في الحساب الجاري مصاريف الشهر القادم فقط.','A money-market fund is available within a business day; a deposit is locked until its exit date. Keep only next month\'s spending in the current account.'],
+  bk_svCur:['כסף בעו״ש נשחק','المال في الحساب الجاري يتآكل','Money in a current account loses value'],
+  bk_svCurP:['בתקופה הזו האינפלציה תשחק כ-{m} מהסכום.','في هذه الفترة سيأكل التضخم نحو {m} من المبلغ.','Over this period inflation will eat about {m} of it.'],
+  bk_svTaxNote:['מס: פיקדון שקלי לא צמוד – 15% מהריבית הנומינלית; פיקדון צמוד וקרן כספית – 25% מהרווח הריאלי. החישוב פשוט ואינו ייעוץ השקעות.','الضريبة: وديعة شيكلية غير مرتبطة – 15% من الفائدة الاسمية؛ وديعة مرتبطة وصندوق نقدي – 25% من الربح الحقيقي. الحساب مبسّط وليس استشارة استثمار.','Tax: unlinked shekel deposit – 15% of nominal interest; CPI-linked deposit and money-market fund – 25% of the real gain. A simplified calculation, not investment advice.'],
+  bk_swIntro:['ניוד חשבון: מעבר מבנק לבנק בבקשה מקוונת אחת לבנק החדש, בלי ללכת לסניף ובלי לסגור את החשבון הישן בעצמכם.','نقل الحساب: الانتقال من بنك إلى آخر بطلب إلكتروني واحد للبنك الجديد، دون الذهاب إلى الفرع ودون إغلاق الحساب القديم بأنفسكم.','Account switching: move from one bank to another with one online request to the new bank, without visiting a branch or closing the old account yourself.'],
+  bk_swHow:['איך עושים את זה','كيف يتم ذلك','How it works'],
+  bk_sw_s1:['השוו הצעות: דמי ניהול, ריבית מינוס, הטבות הצטרפות ושירות דיגיטלי.','قارنوا العروض: رسوم الإدارة، فائدة السالب، مزايا الانضمام والخدمة الرقمية.','Compare offers: account fee, overdraft rate, joining benefits and digital service.'],
+  bk_sw_s2:['פתחו חשבון בבנק החדש ובחרו בו "ניוד חשבון".','افتحوا حسابًا في البنك الجديد واختاروا "نقل الحساب".','Open an account at the new bank and choose "switch account".'],
+  bk_sw_s3:['סמנו מה לנייד: יתרה, הוראות קבע, הרשאות לחיוב, כרטיסים, ניירות ערך.','حدّدوا ما يُنقل: الرصيد، الأوامر الدائمة، تفويضات الخصم، البطاقات، الأوراق المالية.','Choose what to move: balance, standing orders, debit authorisations, cards, securities.'],
+  bk_sw_s4:['הבנק החדש מטפל בשאר מול הבנק הישן – עד 7 ימי עסקים.','البنك الجديد يتولى الباقي مع البنك القديم – حتى 7 أيام عمل.','The new bank handles the rest with the old one – up to 7 business days.'],
+  bk_sw_s5:['עדכנו את המעסיק במספר החשבון החדש (בינתיים המשכורת מנותבת אוטומטית).','أبلغوا صاحب العمل برقم الحساب الجديد (في الأثناء يُحوَّل الراتب تلقائيًا).','Give your employer the new account details (meanwhile your salary is redirected automatically).'],
+  bk_sw_s6:['בדקו בחודש הראשון שכל החיובים עברו, וטפלו בהלוואות ובפיקדונות שנשארו.','افحصوا في الشهر الأول أن كل الخصومات انتقلت، وعالجوا القروض والودائع المتبقية.','In the first month, check that all charges moved, and deal with loans and deposits left behind.'],
+  bk_swYes:['עובר אוטומטית','ينتقل تلقائيًا','Moves automatically'],
+  bk_swYesL:['יתרות, הוראות קבע, הרשאות לחיוב חשבון, חיובי כרטיסי אשראי, ניירות ערך שניתן להעביר. משכורת וזיכויים מנותבים 3 שנים.','الأرصدة، الأوامر الدائمة، تفويضات الخصم، خصومات بطاقات الائتمان، الأوراق المالية القابلة للنقل. يُحوَّل الراتب والإيداعات لمدة 3 سنوات.','Balances, standing orders, debit authorisations, credit card charges, transferable securities. Salary and incoming payments are redirected for 3 years.'],
+  bk_swNo:['לא עובר','لا ينتقل','Does not move'],
+  bk_swNoL:['הלוואות ומשכנתאות, פיקדונות ותוכניות חיסכון, ניירות ערך שלא ניתן להעביר.','القروض والرهون العقارية، الودائع وخطط الادخار، الأوراق المالية غير القابلة للنقل.','Loans and mortgages, deposits and savings plans, non-transferable securities.'],
+  bk_swVs:['ניוד או סגירה ופתיחה מחדש?','النقل أم الإغلاق والفتح من جديد؟','Switching, or closing and reopening?'],
+  bk_swVsP:['ניוד עדיף כמעט תמיד: לא שוכחים אף הוראת קבע, לא נוצרים חיובים שחוזרים, ואין חודש עם שני חשבונות פעילים. לסגור ולפתוח ידנית כדאי רק אם רוצים להתחיל נקי לגמרי בלי החיובים הישנים.','النقل أفضل تقريبًا دائمًا: لا يُنسى أي أمر دائم، لا تحدث خصومات مرتجعة، ولا يوجد شهر بحسابين نشطين. الإغلاق والفتح يدويًا مفيد فقط إذا أردتم بداية نظيفة تمامًا بلا الخصومات القديمة.','Switching is almost always better: no standing order is forgotten, no charges bounce, and there\'s no month with two active accounts. Close and reopen by hand only if you want a completely fresh start without the old charges.'],
+  bk_swCant:['שימו לב: בין ניוד לניוד צריך לעבור לפחות 3 חודשים, וההטבות בבנק הישן נשמרות לפחות 3 חודשים.','انتبهوا: يجب أن تمر 3 أشهر على الأقل بين نقل وآخر، والمزايا في البنك القديم تبقى 3 أشهر على الأقل.','Note: at least 3 months must pass between switches, and benefits at the old bank are kept for at least 3 months.'],
+  bk_swSrc:['מקור: כל זכות.','المصدر: كول زخوت.','Source: Kol Zchut.'], bk_swSrcL:['לפרטים המלאים','للتفاصيل الكاملة','Full details'],
+  ds_f_magic:['קסם','سحري','Magic'],
+  d4_adj:['בהירות וניגודיות','السطوع والتباين','Brightness and contrast'], d4_bright:['בהירות','السطوع','Brightness'], d4_contrast:['ניגודיות','التباين','Contrast'], d4_reset:['איפוס','إعادة ضبط','Reset'],
+  d4_rotL:['סיבוב עמוד {n} שמאלה','تدوير الصفحة {n} يسارًا','Turn page {n} left'], d4_rotR:['סיבוב עמוד {n} ימינה','تدوير الصفحة {n} يمينًا','Turn page {n} right'],
+  d4_up:['הקדמת עמוד {n}','تقديم الصفحة {n}','Move page {n} earlier'], d4_down:['דחיית עמוד {n}','تأخير الصفحة {n}','Move page {n} later'],
+  d4_recrop:['חיתוך מחדש של עמוד {n}','قصّ الصفحة {n} من جديد','Crop page {n} again'],
+  d4_loupeH:['בגרירת פינה מופיעה זכוכית מגדלת לדיוק.','عند سحب زاوية تظهر عدسة مكبّرة للدقة.','While dragging a corner, a magnifier appears for precision.'],
+  bk_c4:['כדאי לי לעבור בנק?','هل يُستحسن أن أنتقل إلى بنك آخر؟','Should I switch banks?'],
 });
 
 const t = (k, p) => {
@@ -13877,8 +13967,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.15", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.184715';
+var CHANGELOG = [{"v": "13.16", "date": "2026-10-19", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261019.190451';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -26372,7 +26462,7 @@ function dsCardRender(root){
     <div class="ds-pages">${C.pages.map((p, i) => `<figure class="ds-pg"><div class="ds-pgw"><canvas data-pgc="${i}" aria-label="${slE(t('ds_side', {n: i + 1}))}"></canvas></div><figcaption><span>${slE(t('ds_side', {n: i + 1}))}</span> <button type="button" class="lg-a" data-pgdel="${i}">${slE(t('cv_rm'))}</button></figcaption><p class="ds-res" dir="ltr">${p.base.width} × ${p.base.height} px${p.dpi ? ' · ' + p.dpi + ' DPI' : ''}</p>${p.sharp < 60 ? `<p class="ds-qw">⚠️ ${slE(t('ds_blurry'))}</p>` : p.real && p.real < 280 ? `<p class="ds-qw">ℹ️ ${slE(t('ds_lowres', {d: p.real}))}</p>` : ''}</figure>`).join('')}</div>
     <div class="btnrow ds-tools">${dsPickBtns(false, 'ds_add').replace('class="btnrow ds-go"', 'class="ds-addw"')}</div>
     <h4 class="ds-q">${slE(t('ds_filt'))}</h4>
-    <div class="ds-chips" role="radiogroup" aria-label="${slE(t('ds_filt'))}">${['auto', 'doc', 'orig', 'gray', 'bw'].map(f => `<button type="button" role="radio" class="ds-chip${f === C.filt ? ' on' : ''}" aria-checked="${f === C.filt}" data-dfl="${f}">${slE(t('ds_f_' + f))}</button>`).join('')}</div>
+    <div class="ds-chips" role="radiogroup" aria-label="${slE(t('ds_filt'))}">${['auto', 'magic', 'doc', 'orig', 'gray', 'bw'].map(f => `<button type="button" role="radio" class="ds-chip${f === C.filt ? ' on' : ''}" aria-checked="${f === C.filt}" data-dfl="${f}">${slE(t('ds_f_' + f))}</button>`).join('')}</div>
     <h4 class="ds-q">${slE(t('ds_red'))}</h4><p class="fine">${slE(t(C.type === 'credit' ? 'ds_credit' : 'ds_redH'))}</p>
     <div class="btnrow"><button type="button" class="btn${DSX.red ? ' on' : ''}" id="ds_redb" aria-pressed="${DSX.red}">🖍️ ${slE(t(DSX.red ? 'ds_redOn' : 'ds_redGo'))}</button><button type="button" class="mv" id="ds_redu">↶ ${slE(t('ds_redUndo'))}</button></div>
     ${typeof dsSigHTML === 'function' ? dsSigHTML() : ''}
@@ -26448,7 +26538,7 @@ async function dsPdf(pages, qual){
   put('trailer\n<< /Size ' + n + ' /Root 1 0 R >>\nstartxref\n' + xref + '\n%%EOF');
   return new Blob(parts, {type: 'application/pdf'});
 }
-const dsFileName = ext => (dsCardName() + ' ' + new Date().toISOString().slice(0, 10)).replace(/[\\/:*?"<>|]+/g, ' ').trim() + '.' + ext;
+const dsFileName = ext => (dsCardName() + ' ' + new Date().toISOString().slice(0, 10)).replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim() + '.' + ext;
 async function dsOut(how){
   if (!DSC || !DSC.pages.length) return; toast(t('ds_making'));
   await new Promise(r => setTimeout(r, 30));
@@ -28770,6 +28860,135 @@ document.addEventListener('click', e => { if (e.target.closest && e.target.close
 }
 try { GS_SYN.docscan += ' סריקה ברצף כמה דפים חותמת מספור עמודים סימן מים PDF עם חיפוש batch scan stamp page numbers watermark searchable مسح متعدد ختم ترقيم علامة مائية'; } catch (e) {}
 
+/* ---------- 13.16: scanner improvements ----------
+   • a magnifier while dragging a crop corner (precise on a phone)
+   • turn a scanned page 90°, and move pages earlier / later
+   • brightness and contrast for the whole scan
+   • a document photo shaped like A4 is recognised as a document page
+   • a "magic" look: clean white paper with stronger colours (stamps, signatures, highlighter)
+   • crop a scanned page again from its original photo */
+const d4E = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+
+/* ---- brightness / contrast, on top of the chosen filter ---- */
+{
+  const dsFilter4 = dsFilter;
+  dsFilter = function(c, f){
+    const out = f === 'magic' ? d4Magic(dsFilter4.call(this, c, 'doc')) : dsFilter4.apply(this, arguments), A = DSC && DSC.adj; if (!A || (!+A.b && !+A.c)) return out;
+    const b = (+A.b || 0) * 2.55, k = (259 * ((+A.c || 0) * 2.55 + 255)) / (255 * (259 - (+A.c || 0) * 2.55)), L = new Uint8ClampedArray(256);
+    for (let i = 0; i < 256; i++) L[i] = k * (i - 128) + 128 + b;
+    const x = out.getContext('2d'), H = out.height, W = out.width, step = Math.max(1, Math.floor(4e6 / W));
+    for (let y = 0; y < H; y += step){ const h = Math.min(step, H - y), D = x.getImageData(0, y, W, h), d = D.data; for (let i = 0; i < d.length; i += 4){ d[i] = L[d[i]]; d[i + 1] = L[d[i + 1]]; d[i + 2] = L[d[i + 2]]; } x.putImageData(D, 0, y); }
+    return out;
+  };
+}
+/* the magic look: the clean "document" paper, then the colours made more vivid (grey ink stays grey) */
+function d4Magic(out){
+  const x = out.getContext('2d'), H = out.height, W = out.width, step = Math.max(1, Math.floor(4e6 / W)), S = 1.45;
+  for (let y = 0; y < H; y += step){ const h = Math.min(step, H - y), D = x.getImageData(0, y, W, h), d = D.data;
+    for (let i = 0; i < d.length; i += 4){ const r = d[i], g = d[i + 1], b = d[i + 2], l = r * 0.299 + g * 0.587 + b * 0.114; d[i] = l + (r - l) * S; d[i + 1] = l + (g - l) * S; d[i + 2] = l + (b - l) * S; }
+    x.putImageData(D, 0, y); }
+  return out;
+}
+function d4AdjReset(){ (DSC.pages || []).forEach(p => { p._f = null; p._fk = null; }); }
+function d4AdjHTML(){
+  const A = DSC.adj || {b: 0, c: 0}, E = d4E;
+  return `<details class="ds-det d4-adj"${(+A.b || +A.c) ? ' open' : ''}><summary>☀️ ${E(t('d4_adj'))}</summary>
+    <div class="field"><label for="d4_b">${E(t('d4_bright'))} <b id="d4_bv">${+A.b || 0}</b></label><input type="range" id="d4_b" min="-50" max="50" step="1" value="${+A.b || 0}"></div>
+    <div class="field"><label for="d4_c">${E(t('d4_contrast'))} <b id="d4_cv">${+A.c || 0}</b></label><input type="range" id="d4_c" min="-50" max="50" step="1" value="${+A.c || 0}"></div>
+    <div class="btnrow"><button type="button" class="mv" id="d4_adjReset">↺ ${E(t('d4_reset'))}</button></div></details>`;
+}
+let D4_T = null;
+document.addEventListener('input', e => {
+  const el = e.target; if (!el || !DSC || (el.id !== 'd4_b' && el.id !== 'd4_c')) return;
+  DSC.adj = DSC.adj || {b: 0, c: 0}; DSC.adj[el.id === 'd4_b' ? 'b' : 'c'] = +el.value; const v = $('#' + el.id + 'v'); if (v) v.textContent = el.value;
+  clearTimeout(D4_T); D4_T = setTimeout(() => { d4AdjReset(); dsPagesDraw(); }, 180);
+});
+
+/* ---- turning and ordering pages ---- */
+function d4Rotate(i, dir){
+  const p = DSC.pages[i]; if (!p) return;
+  const s = p.base, c = document.createElement('canvas'); c.width = s.height; c.height = s.width; const x = c.getContext('2d');
+  if (dir > 0){ x.translate(c.width, 0); x.rotate(Math.PI / 2); } else { x.translate(0, c.height); x.rotate(-Math.PI / 2); }
+  x.drawImage(s, 0, 0);
+  const oW = s.width, oH = s.height;
+  /* hidden areas and signatures keep their place on the page */
+  p.red = (p.red || []).map(([rx, ry, rw, rh]) => dir > 0 ? [1 - ry - rh, rx, rh, rw] : [ry, 1 - rx - rw, rh, rw]);
+  p.sig = (p.sig || []).map(g => { const hF = g.w * g.c.height / g.c.width * oW / oH, cx = g.x + g.w / 2, cy = g.y + hF / 2, ncx = dir > 0 ? 1 - cy : cy, ncy = dir > 0 ? cx : 1 - cx, nw = g.w * oW / oH, nh = nw * g.c.height / g.c.width * oH / oW;
+    return Object.assign({}, g, {w: nw, x: ncx - nw / 2, y: ncy - nh / 2}); });
+  p.base = c; p._f = null; p._fk = null; delete p.qr;
+}
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest || !t0.closest('#ds_root') || !DSC) return; let b;
+  if ((b = t0.closest('[data-d4rot]'))){ const [i, d] = b.dataset.d4rot.split(':').map(Number); b.disabled = true; setTimeout(() => { d4Rotate(i, d); dscRender(); const n = $(`[data-d4rot="${i}:${d}"]`); if (n) n.focus(); }, 20); return; }
+  if ((b = t0.closest('[data-d4mv]'))){ const [i, d] = b.dataset.d4mv.split(':').map(Number), j = i + d; if (j < 0 || j >= DSC.pages.length) return; const P = DSC.pages; [P[i], P[j]] = [P[j], P[i]]; dscRender(); const n = $(`[data-d4mv="${j}:${d}"]`); if (n && !n.disabled) n.focus(); return; }
+  if ((b = t0.closest('[data-d4crop]'))){ const i = +b.dataset.d4crop, p = DSC.pages[i]; if (!p || !p.src) return; DSC.cur = {img: p.src.img, q: p.src.q.map(v => v.slice())}; DSC.recrop = i; DSC.guess = ''; dscRender(); const r = $('#ds_root'); if (r) r.scrollIntoView({block: 'start', behavior: 'smooth'}); return; }
+  if (t0.closest('#d4_adjReset')){ DSC.adj = {b: 0, c: 0}; d4AdjReset(); dscRender(); }
+});
+
+/* ---- the magnifier while dragging a corner ---- */
+function d4Loupe(show){
+  const box = $('#ds_crop'); if (!box) return; let L = $('#d4_loupe');
+  if (!show){ if (L) L.hidden = true; return; }
+  if (!L){ box.insertAdjacentHTML('beforeend', '<canvas id="d4_loupe" class="d4-loupe" width="240" height="240" aria-hidden="true"></canvas>'); L = $('#d4_loupe'); }
+  const cur = DSC && DSC.cur, i = DSD && DSD.i; if (!cur || i == null) return;
+  const [qx, qy] = cur.q[i], img = cur.img, x = L.getContext('2d'), Z = 3, R = 120 / Z, sx = qx * img.width, sy = qy * img.height, k = img.width / box.clientWidth;
+  x.clearRect(0, 0, 240, 240); x.save(); x.beginPath(); x.arc(120, 120, 118, 0, 7); x.clip(); x.fillStyle = '#000'; x.fillRect(0, 0, 240, 240);
+  x.drawImage(img, sx - R * k, sy - R * k, 2 * R * k, 2 * R * k, 0, 0, 240, 240);
+  /* the crop lines through this corner */
+  const toL = ([a, b2]) => [120 + (a * img.width - sx) / (R * k) * 120, 120 + (b2 * img.height - sy) / (R * k) * 120];
+  x.strokeStyle = '#f2c14e'; x.lineWidth = 2.5; [cur.q[(i + 1) % 4], cur.q[(i + 3) % 4]].forEach(o => { const [ox, oy] = toL(o); x.beginPath(); x.moveTo(120, 120); x.lineTo(ox, oy); x.stroke(); });
+  x.restore(); x.strokeStyle = '#fff'; x.lineWidth = 3; x.beginPath(); x.arc(120, 120, 118, 0, 7); x.stroke();
+  x.strokeStyle = '#ff3b30'; x.lineWidth = 1.5; x.beginPath(); x.moveTo(108, 120); x.lineTo(132, 120); x.moveTo(120, 108); x.lineTo(120, 132); x.stroke();
+  /* place it above the finger, away from the corner, inside the photo */
+  const bw = box.clientWidth, bh = box.clientHeight, px = qx * bw, py = qy * bh, size = Math.min(130, bw * 0.38);
+  L.style.width = size + 'px'; L.style.height = size + 'px';
+  let lx = px < bw / 2 ? bw - size - 8 : 8, ly = Math.max(8, Math.min(bh - size - 8, py - size - 40));
+  L.style.left = lx + 'px'; L.style.top = ly + 'px'; L.hidden = false;
+}
+document.addEventListener('pointermove', () => { if (DSD && DSD.el && DSC && DSC.cur) d4Loupe(true); });
+document.addEventListener('pointerdown', e => { if (e.target.closest && e.target.closest('#ds_crop .ds-hd')) setTimeout(() => d4Loupe(true), 0); }, true);
+const d4Up = () => d4Loupe(false); document.addEventListener('pointerup', d4Up); document.addEventListener('pointercancel', d4Up);
+
+/* ---- an A4-shaped photo is a document page ---- */
+{ const g4 = dsGuess; dsGuess = function(img, q){ const r = g4.apply(this, arguments); if (r !== 'cert' && r !== 'other') return r;
+    try { const sw = img.width, sh = img.height, mw = (dsDist(q[0], q[1], sw, sh) + dsDist(q[3], q[2], sw, sh)) / 2, mh = (dsDist(q[0], q[3], sw, sh) + dsDist(q[1], q[2], sw, sh)) / 2, rr = Math.max(mw, mh) / Math.min(mw, mh); if (mh > mw && rr >= 1.33 && rr <= 1.5) return 'doc'; } catch (e) {}
+    return r; }; }
+
+/* ---- wiring into the scanned-pages screen ---- */
+{
+  const card4 = dsCardRender;
+  dsCardRender = function(root){
+    const r = card4.apply(this, arguments);
+    if (DSC && !DSC.cur){
+      const n = DSC.pages.length;
+      $$('#ds_root .ds-pg').forEach((fig, i) => { const cap = fig.querySelector('figcaption'); if (!cap || cap.querySelector('.d4-tools')) return;
+        cap.insertAdjacentHTML('beforeend', `<span class="d4-tools">${DSC.pages[i].src ? `<button type="button" class="px-tb s" data-d4crop="${i}" aria-label="${d4E(t('d4_recrop', {n: i + 1}))}" title="${d4E(t('d4_recrop', {n: i + 1}))}">✂️</button>` : ''}<button type="button" class="px-tb s" data-d4rot="${i}:-1" aria-label="${d4E(t('d4_rotL', {n: i + 1}))}" title="${d4E(t('d4_rotL', {n: i + 1}))}">⟲</button><button type="button" class="px-tb s" data-d4rot="${i}:1" aria-label="${d4E(t('d4_rotR', {n: i + 1}))}" title="${d4E(t('d4_rotR', {n: i + 1}))}">⟳</button>${n > 1 ? `<button type="button" class="px-tb s" data-d4mv="${i}:-1" aria-label="${d4E(t('d4_up', {n: i + 1}))}"${i ? '' : ' disabled'}>↑</button><button type="button" class="px-tb s" data-d4mv="${i}:1" aria-label="${d4E(t('d4_down', {n: i + 1}))}"${i < n - 1 ? '' : ' disabled'}>↓</button>` : ''}</span>`); });
+      const fl = root.querySelector('[data-dfl]'); const chips = fl && fl.closest('.ds-chips'); if (chips && !root.querySelector('.d4-adj')) chips.insertAdjacentHTML('afterend', d4AdjHTML());
+    } else if (DSC && DSC.cur){ const tips = root.querySelector('.ds-tips'); if (tips && !root.querySelector('.d4-hint')) tips.insertAdjacentHTML('afterend', `<p class="fine d4-hint">🔍 ${d4E(t('d4_loupeH'))}</p>`); }
+    return r;
+  };
+}
+try { GS_SYN.docscan += ' סיבוב עמוד סידור עמודים בהירות ניגודיות rotate page reorder brightness contrast تدوير ترتيب سطوع تباين'; } catch (e) {}
+
+/* ---- crop again: keep the original photo of the last pages (up to 8, to spare the phone's memory) ---- */
+{
+  const cut4 = dsCut;
+  dsCut = function(){
+    const C = DSC, cur = C && C.cur; if (!cur) return cut4.apply(this, arguments);
+    const src = {img: cur.img, q: cur.q.map(v => v.slice())}, ri = C.recrop, n0 = C.pages.length;
+    const r = cut4.apply(this, arguments);
+    if (DSC && DSC.pages.length === n0 + 1){
+      const np = DSC.pages[n0]; np.src = src;
+      if (ri != null && ri >= 0 && ri < n0){ const old = DSC.pages[ri]; np.red = old.red || []; if (old.sig) np.sig = old.sig; DSC.pages.splice(n0, 1); DSC.pages[ri] = np; }
+      const withSrc = DSC.pages.filter(p => p.src); withSrc.slice(0, Math.max(0, withSrc.length - 8)).forEach(p => { delete p.src; });
+      DSC.recrop = null; if (DSX.view === 'card') dscRender();
+    }
+    return r;
+  };
+  const start4 = dsCardStart;
+  dsCardStart = async function(){ if (DSC) DSC.recrop = null; return start4.apply(this, arguments); };
+}
+
 /* ---------- 13.5: Tax Free — VAT refund on shopping abroad (and for tourists shopping in Israel) ----------
    Rules change from time to time: the minimums and rates here were checked in October 2026 and are shown as a guide,
    with a note to confirm in the shop. Nothing is sent anywhere; purchases are kept on this device. */
@@ -29169,8 +29388,7 @@ function bkAdvise(){
   out.sort((p, q) => q.pr - p.pr);
   return {A, out, tot, buf, liquid, saved, boi};
 }
-function bkRender(){
-  const root = $('#bk_root'); if (!root) return;
+function bkAdvRender(root){
   const d = bkD(), E = bkE;
   if (!d.accs.length){ d.accs.push(bkNew(), bkNew()); }
   const sel = (i, k, list, pre) => `<select data-bki="${i}" data-bkk="${k}" aria-label="${E(t('bk_f_' + k))}">${list.map(v => `<option value="${v}"${d.accs[i][k] === v ? ' selected' : ''}>${E(t(pre + v))}</option>`).join('')}</select>`;
@@ -29184,6 +29402,7 @@ function bkRender(){
       ${d.accs.length > 1 ? `<button type="button" class="lg-a bk-rm" data-bkrm="${i}">${E(t('cv_rm'))}</button>` : ''}</fieldset>`).join('')}</div>
     <div class="btnrow">${d.accs.length < 8 ? `<button type="button" class="btn" id="bk_add">＋ ${E(t('bk_add'))}</button>` : ''}</div>
     <div class="bk-grid bk-house">${`<label class="bk-f"><span>${E(t('bk_exp'))}</span><input type="text" inputmode="decimal" dir="ltr" id="bk_exp" value="${E(d.exp == null ? '' : d.exp)}" placeholder="${E(t('bk_expPh'))}"></label>`}<label class="bk-f"><span>${E(t('bk_buf'))}</span><select id="bk_buf">${[1, 2, 3, 4, 6].map(n => `<option value="${n}"${+d.buf === n ? ' selected' : ''}>${E(t('bk_bufN', {n}))}</option>`).join('')}</select></label></div>
+    <fieldset class="bk-flags"><legend>${E(t('bk_flagsH'))}</legend>${['biz', 'partner', 'unhappy', 'loan'].map(k => `<label class="prn-ck"><input type="checkbox" data-bkflag="${k}"${d.flags && d.flags[k] ? ' checked' : ''}> ${E(t('bk_fl_' + k))}</label>`).join('')}</fieldset>
     <div id="bk_out" aria-live="polite"></div>
     <div class="btnrow"><button type="button" class="gold-btn" id="bk_ai">✦ ${E(t('bk_ai'))}</button><button type="button" class="mv" id="bk_clear">🗑️ ${E(t('bk_clear'))}</button></div>
     <p class="fine sl-priv">🔒 ${E(t('bk_priv'))}</p><p class="fine">${E(t('bk_disc'))}</p>`;
@@ -29199,28 +29418,116 @@ function bkOut(){
     <ol class="bk-adv">${R.out.map(o => `<li class="bk-a bk-${o.k}"><span class="bk-ic" aria-hidden="true">${ic[o.k] || '•'}</span><div><b>${E(o.h)}</b>${o.p ? `<p>${E(o.p)}</p>` : ''}</div></li>`).join('') || `<li class="bk-a bk-ok"><span class="bk-ic">✅</span><div><b>${E(t('bk_allOk'))}</b></div></li>`}</ol>
     <h3 class="ds-q">${E(t('bk_planH'))}</h3>
     <table class="bk-plan"><thead><tr><th scope="col">${E(t('bk_f_nick'))}</th><th scope="col">${E(t('bk_role'))}</th><th scope="col">${E(t('bk_balS'))}</th><th scope="col">${E(t('bk_net'))}</th></tr></thead><tbody>${R.A.map(x => `<tr><th scope="row" dir="auto">${E(x.name)}</th><td>${E(t('bk_r_' + x.role))}</td><td dir="ltr" class="${x.bal < 0 ? 'neg' : ''}">${E(bkM(x.bal))}</td><td dir="ltr" class="${x.net < 0 ? 'neg' : ''}">${E((x.net >= 0 ? '+' : '') + bkM(x.net))}</td></tr>`).join('')}</tbody></table>
-    <p class="fine">${E(t('bk_roleH'))}</p>`;
+    <p class="fine">${E(t('bk_roleH'))}</p>
+    <h3 class="ds-q">${E(t('bk_decH'))}</h3><ul class="bk-dec">${bkDecide(R).map(x => `<li class="bk-a bk-${x.k}"><span class="bk-ic" aria-hidden="true">${{open: '➕', close: '➖', move: '🔀', keep: '✋', info: 'ℹ️'}[x.k]}</span><div><b>${E(x.h)}</b>${x.p ? `<p>${E(x.p)}</p>` : ''}</div></li>`).join('')}</ul>
+    <div class="btnrow"><button type="button" class="mv" data-bktab="switch">🔀 ${E(t('bk_tab_switch'))}</button></div>`;
+}
+/* open more accounts, close some, or move to another bank? */
+function bkDecide(R){
+  const d = bkD(), F = d.flags || {}, A = R.A, cur = A.filter(x => !x.save), pers = cur.filter(x => x.a.type === 'cur'), L = [];
+  if (F.biz && !A.some(x => x.a.type === 'biz')) L.push({k: 'open', h: t('bk_dBiz'), p: t('bk_dBizP')});
+  if (F.partner && !A.some(x => x.a.type === 'joint') && cur.length >= 2) L.push({k: 'open', h: t('bk_dJoint'), p: t('bk_dJointP')});
+  const idle = A.filter(x => x.role === 'idle'); idle.forEach(x => L.push({k: 'close', h: t('bk_dCloseIdle', {a: x.name}), p: t('bk_dCloseIdleP') + (x.fee ? ' ' + t('bk_dSaveY', {y: bkM(x.fee * 12)}) : '')}));
+  if (pers.length >= 3) L.push({k: 'close', h: t('bk_dTooMany', {n: pers.length}), p: t('bk_dTooManyP')});
+  const avgFee = cur.length ? cur.reduce((s, x) => s + x.fee, 0) / cur.length : 0;
+  if (F.unhappy || avgFee > 12) L.push({k: 'move', h: t('bk_dMove'), p: t(avgFee > 12 ? 'bk_dMoveFee' : 'bk_dMoveP', {m: bkM(avgFee)}) + ' ' + t('bk_dMoveHow')});
+  if (F.loan) L.push({k: 'info', h: t('bk_dLoan'), p: t('bk_dLoanP')});
+  if (!L.some(x => x.k === 'open')) L.push({k: 'keep', h: t('bk_dNoOpen'), p: t('bk_dNoOpenP')});
+  return L;
+}
+var BKT = 'adv';
+const BK_TABS = [['adv', '🧭'], ['od', '➖'], ['fees', '🧾'], ['save', '📈'], ['switch', '🔀']];
+function bkRender(){
+  const root = $('#bk_root'); if (!root) return; const E = bkE;
+  root.innerHTML = `<div class="ds-chips bk-tabs" role="tablist" aria-label="${E(t('tab_bankacc'))}">${BK_TABS.map(([k, ic]) => `<button type="button" role="tab" class="ds-chip${BKT === k ? ' on' : ''}" aria-selected="${BKT === k}" data-bktab="${k}">${ic} ${E(t('bk_tab_' + k))}</button>`).join('')}</div><div id="bk_view"></div>`;
+  const v = $('#bk_view'); if (BKT === 'adv') bkAdvRender(v); else if (BKT === 'od') bkOdRender(v); else if (BKT === 'fees') bkFeesRender(v); else if (BKT === 'save') bkSaveRender(v); else bkSwitchRender(v);
+}
+const bkIn = (id, lab, val, ph, unit) => `<label class="bk-f"><span>${bkE(lab)}${unit ? ' (' + bkE(unit) + ')' : ''}</span><input type="text" inputmode="decimal" dir="ltr" id="${id}" data-bkt="1" value="${bkE(val == null ? '' : val)}" placeholder="${bkE(ph == null ? '' : ph)}"></label>`;
+const bkT = () => { const d = bkD(); return d.t || (d.t = {}); };
+const bkV = (id, def) => { const v = bkT()[id]; return v === '' || v == null ? def : bkN(v); };
+/* the cost of the overdraft */
+function bkOdRender(v){
+  const E = bkE, T0 = bkT(), od = bkPrime() + 4, ln = bkPrime() + 2;
+  v.innerHTML = `<p class="fine">${E(t('bk_odIntro'))}</p><div class="bk-grid">${bkIn('od_amt', t('bk_odAmt'), T0.od_amt, '5000', '₪')}${bkIn('od_days', t('bk_odDays'), T0.od_days, '30')}${bkIn('od_rate', t('bk_odRate'), T0.od_rate, N(od, 1), '%')}${bkIn('od_loan', t('bk_odLoan'), T0.od_loan, N(ln, 1), '%')}</div><div id="bk_tout" aria-live="polite"></div>`;
+  bkOdOut();
+}
+function bkOdOut(){
+  const box = $('#bk_tout'); if (!box) return; const E = bkE, amt = Math.abs(bkV('od_amt', 0)), days = Math.min(31, Math.max(0, bkV('od_days', 30))), r = bkV('od_rate', bkPrime() + 4), lr = bkV('od_loan', bkPrime() + 2);
+  if (!amt){ box.innerHTML = `<p class="fine bk-empty">${E(t('bk_fill'))}</p>`; return; }
+  const mo = amt * r / 100 / 365 * days, yr = mo * 12, loanYr = amt * lr / 100, save = Math.max(0, yr - loanYr);
+  box.innerHTML = `<div class="bk-hero"><span>${E(t('bk_odYear'))}</span><b dir="ltr">${E(bkM(yr))}</b><small>${E(t('bk_odMonth', {m: bkM(mo)}))}</small></div>
+    <ol class="bk-adv">${days >= 20 ? `<li class="bk-a bk-move"><span class="bk-ic">🔁</span><div><b>${E(t('bk_odFixed'))}</b><p>${E(t('bk_odFixedP', {y: bkM(save), r: N(lr, 1)}))}</p></div></li>` : ''}
+    <li class="bk-a"><span class="bk-ic">💡</span><div><b>${E(t('bk_odTip1'))}</b><p>${E(t('bk_odTip1P'))}</p></div></li>
+    <li class="bk-a"><span class="bk-ic">📅</span><div><b>${E(t('bk_odTip2'))}</b><p>${E(t('bk_odTip2P'))}</p></div></li></ol>`;
+}
+/* the 2026 fee reform: what the account should cost */
+function bkFeesRender(v){
+  const E = bkE, T0 = bkT(), curFee = bkD().accs.filter(a => a.type !== 'save').reduce((s, a) => s + bkN(a.fee), 0);
+  v.innerHTML = `<p class="fine">${E(t('bk_feIntro'))}</p><div class="bk-grid">${bkIn('fe_act', t('bk_feAct'), T0.fe_act, '30')}${bkIn('fe_now', t('bk_feNow'), T0.fe_now, curFee ? String(curFee) : '25', '₪')}${bkIn('fe_card', t('bk_feCard'), T0.fe_card, '10', '₪')}</div><div id="bk_tout" aria-live="polite"></div>
+    <p class="fine">${E(t('bk_feSrc'))} <a href="https://www.boi.org.il/media/m4whhvkl/202616.pdf" target="_blank" rel="noopener">${E(t('bk_feSrcL'))}</a></p>`;
+  bkFeesOut();
+}
+function bkFeesOut(){
+  const box = $('#bk_tout'); if (!box) return; const E = bkE, act = Math.max(0, bkV('fe_act', 30)), now = bkV('fe_now', 25), card = bkV('fe_card', 10);
+  const cap = act <= 2 ? 5 : act <= 100 ? 10 : 10 + (act - 100), capCard = Math.min(card, 7), save = Math.max(0, (now - cap) + (card - capCard)) * 12;
+  box.innerHTML = `<div class="bk-hero"><span>${E(t('bk_feCap'))}</span><b dir="ltr">${E(bkM(cap))} / ${E(t('bk_mo'))}</b><small>${E(t('bk_feCardCap', {m: bkM(capCard)}))}</small></div>
+    <ol class="bk-adv"><li class="bk-a ${save > 0 ? 'bk-move' : 'bk-ok'}"><span class="bk-ic">${save > 0 ? '✂️' : '✅'}</span><div><b>${E(save > 0 ? t('bk_feSave', {y: bkM(save)}) : t('bk_feOk'))}</b><p>${E(t(save > 0 ? 'bk_feSaveP' : 'bk_feOkP'))}</p></div></li>
+    <li class="bk-a"><span class="bk-ic">📅</span><div><b>${E(t('bk_feWhen'))}</b><p>${E(t('bk_feWhenP'))}</p></div></li></ol>`;
+}
+/* where to keep savings: current account, deposits or a money-market fund – after tax and inflation */
+function bkSaveRender(v){
+  const E = bkE, T0 = bkT(), boi = typeof MKT !== 'undefined' && isFinite(+MKT.boi) ? +MKT.boi : 3, inf = typeof MKT !== 'undefined' && isFinite(+MKT.cpi) ? +MKT.cpi : 2.5;
+  v.innerHTML = `<p class="fine">${E(t('bk_svIntro'))}</p><div class="bk-grid">${bkIn('sv_amt', t('bk_svAmt'), T0.sv_amt, '50000', '₪')}${bkIn('sv_mo', t('bk_svMo'), T0.sv_mo, '12')}${bkIn('sv_dep', t('bk_svDep'), T0.sv_dep, N(Math.max(0, boi - 0.5), 2), '%')}${bkIn('sv_real', t('bk_svReal'), T0.sv_real, '1', '%')}${bkIn('sv_mmf', t('bk_svMmf'), T0.sv_mmf, N(Math.max(0, boi - 0.25), 2), '%')}${bkIn('sv_inf', t('bk_svInf'), T0.sv_inf, N(inf, 1), '%')}</div><div id="bk_tout" aria-live="polite"></div>`;
+  bkSaveOut();
+}
+function bkSaveOut(){
+  const box = $('#bk_tout'); if (!box) return; const E = bkE, boi = typeof MKT !== 'undefined' && isFinite(+MKT.boi) ? +MKT.boi : 3, infD = typeof MKT !== 'undefined' && isFinite(+MKT.cpi) ? +MKT.cpi : 2.5;
+  const A = bkV('sv_amt', 0), m = Math.max(1, bkV('sv_mo', 12)), y = m / 12, dep = bkV('sv_dep', Math.max(0, boi - 0.5)) / 100, real = bkV('sv_real', 1) / 100, mmf = bkV('sv_mmf', Math.max(0, boi - 0.25)) / 100, inf = bkV('sv_inf', infD) / 100;
+  if (!A){ box.innerHTML = `<p class="fine bk-empty">${E(t('bk_fill'))}</p>`; return; }
+  const infAmt = A * (Math.pow(1 + inf, y) - 1);
+  const rows = [['cur', 0, 0], ['dep', A * dep * y, 0.15], ['cpi', A * (Math.pow(1 + inf, y) * Math.pow(1 + real, y) - 1), 'real'], ['mmf', A * (Math.pow(1 + mmf, y) - 1), 'real']].map(([k, gross, tax]) => {
+    const tx = tax === 'real' ? Math.max(0, gross - infAmt) * 0.25 : gross * tax, net = gross - tx; return {k, gross, tx, net, realNet: net - infAmt}; });
+  const best = rows.slice(1).sort((p, q) => q.net - p.net)[0];
+  box.innerHTML = `<div class="bk-scroll"><table class="bk-plan"><thead><tr><th scope="col">${E(t('bk_svWhere'))}</th><th scope="col">${E(t('bk_svGross'))}</th><th scope="col">${E(t('bk_svTax'))}</th><th scope="col">${E(t('bk_svNet'))}</th><th scope="col">${E(t('bk_svRealNet'))}</th></tr></thead><tbody>${rows.map(r => `<tr${r === best ? ' class="best"' : ''}><th scope="row">${E(t('bk_sv_' + r.k))}</th><td dir="ltr">${E(bkM(r.gross))}</td><td dir="ltr">${E(bkM(r.tx))}</td><td dir="ltr"><b>${E(bkM(r.net))}</b></td><td dir="ltr" class="${r.realNet < 0 ? 'neg' : ''}">${E(bkM(r.realNet))}</td></tr>`).join('')}</tbody></table></div>
+    <ol class="bk-adv"><li class="bk-a bk-ok"><span class="bk-ic">🏆</span><div><b>${E(t('bk_svBest', {n: t('bk_sv_' + best.k), m: bkM(best.net)}))}</b><p>${E(t('bk_svBestP'))}</p></div></li>
+    <li class="bk-a"><span class="bk-ic">⚠️</span><div><b>${E(t('bk_svCur'))}</b><p>${E(t('bk_svCurP', {m: bkM(infAmt)}))}</p></div></li></ol>
+    <p class="fine">${E(t('bk_svTaxNote'))}</p>`;
+}
+/* moving to another bank (online switching) */
+function bkSwitchRender(v){
+  const E = bkE, steps = ['s1', 's2', 's3', 's4', 's5', 's6'];
+  v.innerHTML = `<p class="fine">${E(t('bk_swIntro'))}</p>
+    <h3 class="ds-q">${E(t('bk_swHow'))}</h3><ol class="bk-steps">${steps.map(k => `<li>${E(t('bk_sw_' + k))}</li>`).join('')}</ol>
+    <div class="bk-two"><div class="bk-a bk-ok"><div><b>✅ ${E(t('bk_swYes'))}</b><p>${E(t('bk_swYesL'))}</p></div></div><div class="bk-a bk-warn"><div><b>⛔ ${E(t('bk_swNo'))}</b><p>${E(t('bk_swNoL'))}</p></div></div></div>
+    <h3 class="ds-q">${E(t('bk_swVs'))}</h3><p>${E(t('bk_swVsP'))}</p>
+    <p class="fine">${E(t('bk_swCant'))}</p>
+    <p class="fine">${E(t('bk_swSrc'))} <a href="https://www.kolzchut.org.il/he/%D7%9E%D7%A2%D7%91%D7%A8_%D7%91%D7%99%D7%9F_%D7%91%D7%A0%D7%A7%D7%99%D7%9D_%D7%91%D7%90%D7%95%D7%A4%D7%9F_%D7%9E%D7%A7%D7%95%D7%95%D7%9F_(%D7%A0%D7%99%D7%95%D7%93)" target="_blank" rel="noopener">${E(t('bk_swSrcL'))}</a></p>`;
 }
 /* what the assistant sees on this screen (nicknames and numbers only) */
 function bkAiText(){
   const R = bkAdvise();
   return 'Bank accounts of the person (nicknames only, amounts in ILS per month unless stated):\n' + R.A.map(x => `- ${x.name}: bank ${t('bk_b_' + x.a.bank)}, type ${t('bk_t_' + x.a.type)}, balance ${Math.round(x.bal)}, overdraft limit ${Math.round(x.lim)}, overdraft rate ${N(x.od, 1)}%${x.odGuess ? ' (assumed)' : ''}, fees ${Math.round(x.fee)}/month, money in ${Math.round(x.inc)}, money out ${Math.round(x.out)}${x.a.sal ? ', salary paid here' : ''}`).join('\n')
-    + `\nHousehold monthly expenses: ${Math.round(bkN(bkD().exp) || R.tot.out)}; wanted emergency buffer: ${bkD().buf} months. Bank of Israel rate now: ${R.boi || 'unknown'}%.\nThe app's own suggestions: ` + R.out.map(o => o.h).join(' | ')
+    + (() => { const F = bkD().flags || {}, f = Object.keys(F).filter(k => F[k]); return f.length ? '\nAbout them: ' + f.map(k => t('bk_fl_' + k)).join('; ') : ''; })()
+    + `\nHousehold monthly expenses: ${Math.round(bkN(bkD().exp) || R.tot.out)}; wanted emergency buffer: ${bkD().buf} months. Bank of Israel rate now: ${R.boi || 'unknown'}%.\nThe app's own suggestions: ` + R.out.map(o => o.h).join(' | ') + '\nOpen/close/switch suggestions: ' + bkDecide(R).map(o => o.h).join(' | ')
     + '\nAdvise in plain words how to run these accounts together (where to keep what, transfers, standing orders, fees, buffer, idle money). Use their numbers. This is general information, not personal financial advice; mention checking with the bank where relevant.';
 }
 { const aiStBk = aiScreenText; aiScreenText = function(id){ const s = aiStBk.apply(this, arguments); return id === 'bankacc' ? s + '\n' + bkAiText() : s; }; }
-{ const aiChBk = aiChipKeys; aiChipKeys = function(id){ return id === 'bankacc' ? ['bk_c1', 'bk_c2', 'bk_c3'] : aiChBk.apply(this, arguments); }; }
+{ const aiChBk = aiChipKeys; aiChipKeys = function(id){ return id === 'bankacc' ? ['bk_c1', 'bk_c2', 'bk_c3', 'bk_c4'] : aiChBk.apply(this, arguments); }; }
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-bktab]'); if (!b || !b.closest('#bk_root')) return; BKT = b.dataset.bktab; bkRender(); const n = $(`#bk_root .bk-tabs [data-bktab="${BKT}"]`); if (n) n.focus(); const r = $('#bk_root'); if (r && b.closest('#bk_view')) r.scrollIntoView({block: 'start', behavior: 'smooth'}); });
 let BK_T = null;
 document.addEventListener('input', e => {
   const el = e.target; if (!el || !el.closest || !el.closest('#bk_root')) return; const d = bkD();
   if (el.dataset.bki != null){ const a = d.accs[+el.dataset.bki]; if (!a) return; const k = el.dataset.bkk; a[k] = el.type === 'checkbox' ? el.checked : el.value; }
-  else if (el.id === 'bk_exp') d.exp = el.value; else return;
+  else if (el.id === 'bk_exp') d.exp = el.value;
+  else if (el.dataset.bkt){ bkT()[el.id] = el.value; clearTimeout(BK_T); BK_T = setTimeout(() => { saveSet(); ({od: bkOdOut, fees: bkFeesOut, save: bkSaveOut})[BKT] && ({od: bkOdOut, fees: bkFeesOut, save: bkSaveOut})[BKT](); }, 200); return; }
+  else return;
   clearTimeout(BK_T); BK_T = setTimeout(() => { saveSet(); bkOut(); }, 250);
 });
 document.addEventListener('change', e => {
   const el = e.target; if (!el || !el.closest || !el.closest('#bk_root')) return; const d = bkD();
   if (el.dataset.bki != null){ const a = d.accs[+el.dataset.bki]; if (!a) return; const k = el.dataset.bkk; a[k] = el.type === 'checkbox' ? el.checked : el.value; saveSet(); if (k === 'type'){ bkRender(); const n = $(`#bk_root [data-bki="${el.dataset.bki}"][data-bkk="type"]`); if (n) n.focus(); } else bkOut(); return; }
-  if (el.id === 'bk_buf'){ d.buf = +el.value; saveSet(); bkOut(); }
+  if (el.id === 'bk_buf'){ d.buf = +el.value; saveSet(); bkOut(); return; }
+  if (el.dataset.bkflag){ (d.flags || (d.flags = {}))[el.dataset.bkflag] = el.checked; saveSet(); bkOut(); }
 });
 document.addEventListener('click', e => {
   const t0 = e.target; if (!t0.closest || !t0.closest('#bk_root')) return; const d = bkD(); let b;
