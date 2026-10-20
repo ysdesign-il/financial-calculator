@@ -1,13 +1,14 @@
-const GROUPS = [
-  ['g_main',    ['home','insights','markets','saved','assist','settings']],
-  ['g_job',     ['salary','empcost','selfemp','freelance','clients','overtime','leave','notice','severance','benefits','workgrant','reserve','carbenefit','joboffer','workdays','cv']],
-  ['g_taxes',   ['rights','tax','taxrefund','taxfree','capital','rental','purchasetax','landtax','vat','arnona']],
-  ['g_credit',  ['loan','loancmp','prime','gooddebt','prepay','creditcard','debtplan','carlease']],
-  ['g_realty',  ['mortgage','mortcmp','mortcap','refi','rentbuy']],
-  ['g_invest',  ['lifeplan','portfolio','compound','savegoal','yield','dividends','avgcost','networth','kidsave','mmf','invfees','childallow']],
-  ['g_retire',  ['retire','pensfix','oldage','pencmp','mgmtfees','hishtalmut','fire','freedom']],
-  ['g_budget',  ['expenses','reminders','household','travel','bankacc','smartsplit','split','unitprice','discount','appliance','elecsup','eventgift','fuelcalc','carcost','evfuel','breakeven']],
-  ['g_compare', ['insurance','cellcmp','phonecmp']],
-  ['g_fxtools', ['mathx','docscan','vault','convert','inflation','cpilink','percent']]
+/* 13.23: fewer categories – related calculators live together in one screen with sub-tabs */
+const FAMS = [
+  ['g_main',    [['home'], ['assist'], ['saved'], ['markets'], ['settings']]],
+  ['g_job',     [['salary', 'empcost', 'overtime', 'workdays', 'carbenefit'], ['selfemp', 'freelance', 'clients', 'breakeven'], ['leave', 'notice', 'severance', 'benefits', 'reserve', 'workgrant'], ['joboffer', 'cv']]],
+  ['g_taxes',   [['tax', 'taxrefund', 'rights'], ['capital', 'rental'], ['purchasetax', 'landtax'], ['vat', 'taxfree']]],
+  ['g_credit',  [['mortgage', 'mortcmp', 'mortcap', 'refi', 'rentbuy'], ['loan', 'loancmp', 'prepay', 'gooddebt', 'prime'], ['creditcard', 'debtplan']]],
+  ['g_invest',  [['compound', 'savegoal', 'yield', 'mmf', 'dividends', 'avgcost'], ['portfolio', 'networth', 'invfees'], ['retire', 'pencmp', 'mgmtfees', 'hishtalmut', 'pensfix', 'oldage'], ['lifeplan', 'fire', 'freedom'], ['kidsave', 'childallow']]],
+  ['g_budget',  [['expenses', 'insights', 'smartsplit', 'bankacc', 'reminders'], ['household', 'split'], ['travel', 'eventgift'], ['fuelcalc', 'carcost', 'evfuel', 'carlease'], ['elecsup', 'arnona', 'cellcmp', 'phonecmp', 'insurance', 'appliance'], ['unitprice', 'discount']]],
+  ['g_fxtools', [['convert', 'inflation', 'cpilink'], ['mathx', 'percent'], ['docscan', 'vault']]]
 ];
+const GROUPS = FAMS.map(([g, fs]) => [g, fs.flat()]);
 const TABS = GROUPS.flatMap(g => g[1]);
+const FAM_OF = {}; FAMS.forEach(([, fs]) => fs.forEach(f => f.forEach(id => { FAM_OF[id] = f; })));
+const famLead = id => (FAM_OF[id] || [id])[0];

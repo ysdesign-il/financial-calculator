@@ -955,8 +955,10 @@ const all3 = k => (T[k] || []).join(' ');
 function gsBuild(){
   const idx = [];
   const grpOf = id => { const g = GROUPS.find(x => x[1].includes(id)); return g ? t('gs_' + g[0].slice(2)) || t(g[0]) : ''; };
-  TABS.forEach(id => idx.push({type: 'calc', id, title: t('tab_' + id), sub: id === 'home' || id === 'settings' || id === 'assist' ? t('g_main') : grpOf(id),
-    text: gsNorm(all3('tab_' + id) + ' ' + all3('d_' + id) + ' ' + id + ' ' + (GS_SYN[id] || '')), icon: ICON[id] || ''}));
+  const famOf = id => { const F = typeof FAM_OF === 'object' && FAM_OF[id]; return F && F.length > 1 && T['fam_' + F[0]] ? F[0] : ''; };
+  const subOf = id => { const f = famOf(id); return f ? t('fam_' + f) + ' · ' + grpOf(id) : grpOf(id); };
+  TABS.forEach(id => idx.push({type: 'calc', id, title: t('tab_' + id), sub: id === 'home' || id === 'settings' || id === 'assist' ? t('g_main') : subOf(id),
+    text: gsNorm(all3('tab_' + id) + ' ' + all3('d_' + id) + ' ' + id + ' ' + (GS_SYN[id] || '') + (famOf(id) ? ' ' + all3('fam_' + famOf(id)) : '')), icon: ICON[id] || ''}));
   TABS.filter(id => !['home', 'settings', 'assist'].includes(id)).forEach(id => {
     const p = $('#panel-' + id); if (!p) return;
     const seen = new Set();
