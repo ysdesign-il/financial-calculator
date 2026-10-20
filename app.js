@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261020.113028'){ try { if (!sessionStorage.getItem('fin-hb-20261020.113028')){ sessionStorage.setItem('fin-hb-20261020.113028', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261020.113212'){ try { if (!sessionStorage.getItem('fin-hb-20261020.113212')){ sessionStorage.setItem('fin-hb-20261020.113212', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -11945,7 +11945,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "13.22", "date": "2026-10-20", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261020.113028';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261020.113212';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
