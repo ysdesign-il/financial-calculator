@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261020.013405'){ try { if (!sessionStorage.getItem('fin-hb-20261020.013405')){ sessionStorage.setItem('fin-hb-20261020.013405', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261020.113028'){ try { if (!sessionStorage.getItem('fin-hb-20261020.113028')){ sessionStorage.setItem('fin-hb-20261020.113028', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -5082,6 +5082,224 @@ Object.assign(T, {
   lg_t_host:['האתר מתארח אצל ספקים חיצוניים. הכתובת עשויה להשתנות; כשזה קורה, הכתובת הקודמת מפנה לחדשה ומאפשרת להעביר אליה את הנתונים שבמכשיר. אין התחייבות לזמינות רציפה, ותקלות אצל הספקים עשויות להשבית את האתר זמנית.','الموقع مستضاف لدى مزودين خارجيين. قد يتغير العنوان؛ وعندها يحوّل العنوان السابق إلى الجديد ويتيح نقل البيانات الموجودة على الجهاز. لا يوجد التزام بالتوفر المتواصل، وقد تعطّل الأعطال لدى المزودين الموقع مؤقتًا.','The site is hosted by outside providers. The address may change; when it does, the previous address forwards to the new one and lets you move the data on your device. Continuous availability isn\'t guaranteed, and provider outages may take the site down temporarily.'],
   lg_copy:['© {y} מחשבון פיננסי. כל הזכויות שמורות.','© {y} الحاسبة المالية. جميع الحقوق محفوظة.','© {y} Financial Calculator. All rights reserved.'],
 });
+/* 13.22: statement import, learning categories */
+Object.assign(T, {
+  x2_btn:['ייבוא מדף חשבון','استيراد من كشف حساب','Import a statement'], x2_title:['ייבוא הוצאות מדף חשבון או פירוט אשראי','استيراد المصاريف من كشف حساب أو بطاقة','Import expenses from a bank or card statement'],
+  x2_intro:['כל ההוצאות של החודש נכנסות בבת אחת, ממוינות לקטגוריות.','كل مصاريف الشهر تدخل دفعة واحدة مصنّفة إلى فئات.','All the month\'s expenses come in at once, sorted into categories.'],
+  x2_h1:['באתר או באפליקציה של הבנק או של חברת האשראי (ישראכרט, מקס, כאל וכו׳) – בחרו "ייצוא לאקסל" של התנועות או של פירוט החיובים.','في موقع أو تطبيق البنك أو شركة البطاقات – اختاروا "تصدير إلى إكسل" للحركات أو لتفاصيل الخصومات.','In your bank\'s or card company\'s site or app, choose "Export to Excel" for transactions or the charges list.'],
+  x2_h2:['שמרו את הקובץ בטלפון.','احفظوا الملف في الهاتف.','Save the file on your phone.'], x2_h3:['בחרו אותו כאן, סמנו מה להכניס ותקנו קטגוריות אם צריך.','اختاروه هنا، حدّدوا ما تُدخلونه وصحّحوا الفئات عند الحاجة.','Pick it here, tick what to add and fix categories if needed.'],
+  x2_pick:['בחירת קובץ (Excel / CSV)','اختيار ملف (Excel / CSV)','Choose a file (Excel / CSV)'], x2_priv:['הקובץ נקרא רק בטלפון ולא נשלח לשום מקום. אין צורך בסיסמה לבנק.','يُقرأ الملف على الهاتف فقط ولا يُرسل لأي مكان. لا حاجة لكلمة مرور البنك.','The file is read on the phone only and sent nowhere. No bank password is needed.'],
+  x2_reading:['קורא את הקובץ…','جارٍ قراءة الملف…','Reading the file…'], x2_noRows:['לא נמצאו בקובץ תנועות עם תאריך, תיאור וסכום. נסו את קובץ האקסל המקורי מהבנק או מחברת האשראי.','لم تُعثر في الملف على حركات بتاريخ ووصف ومبلغ. جرّبوا ملف الإكسل الأصلي.','No transactions with a date, description and amount were found. Try the original Excel file from the bank or card company.'],
+  x2_oldXls:['זה קובץ Excel ישן (‎.xls). שמרו אותו כ־‎.xlsx או כ־CSV ונסו שוב.','هذا ملف Excel قديم (‎.xls). احفظوه بصيغة ‎.xlsx أو CSV وحاولوا مجددًا.','This is an old Excel file (.xls). Save it as .xlsx or CSV and try again.'], x2_fail:['לא הצלחתי לקרוא את הקובץ.','لم أتمكن من قراءة الملف.','Couldn\'t read the file.'],
+  x2_found:['נמצאו {n} הוצאות ({k}).','وُجدت {n} مصاريف ({k}).','Found {n} expenses ({k}).'], x2_kBank:['דף חשבון בנק','كشف حساب بنكي','bank statement'], x2_kCard:['פירוט כרטיס אשראי','تفاصيل بطاقة ائتمان','card statement'], x2_dups:['{n} כבר קיימות ולא סומנו.','{n} موجودة مسبقًا ولم تُحدَّد.','{n} are already there and were left unticked.'], x2_dup:['כבר קיימת','موجودة مسبقًا','already added'],
+  x2_all:['לסמן הכול','تحديد الكل','Tick all'], x2_none:['לבטל הכול','إلغاء الكل','Untick all'], x2_do:['ייבוא {n} הוצאות ({m})','استيراد {n} مصاريف ({m})','Import {n} expenses ({m})'], x2_other:['קובץ אחר','ملف آخر','Another file'], x2_done:['{n} הוצאות נוספו.','أُضيفت {n} مصاريف.','{n} expenses added.'],
+  x2_learnH:['כשמשנים קטגוריה, האפליקציה זוכרת אותה לאותו בית עסק – גם בייבוא הבא וגם כשמוסיפים הוצאה ידנית.','عند تغيير الفئة يتذكرها التطبيق لنفس المصلحة – في الاستيراد القادم وعند الإضافة اليدوية.','When you change a category, the app remembers it for that store – next import and when adding by hand.'],
+});
+/* 13.22: insights */
+Object.assign(T, {
+  tab_insights:['תובנות','رؤى','Insights'], d_insights:['מה השתנה אצלך, מגמות וחריגות בהוצאות, מנויים נסתרים, יוקר המחיה שלך, השוואה לממוצע, דוח חודשי ואתגרים.','ما الذي تغيّر لديك، اتجاهات وشذوذ في المصاريف، اشتراكات خفية، غلاء معيشتك، مقارنة بالمتوسط، تقرير شهري وتحديات.','What changed for you, spending trends and surprises, hidden subscriptions, your cost of living, vs the average, a monthly report and challenges.'],
+  in_t_chg:['מה השתנה','ما الذي تغيّر','What changed'], in_t_trend:['מגמות','اتجاهات','Trends'], in_t_subs:['מנויים','اشتراكات','Subscriptions'], in_t_infl:['יוקר המחיה שלי','غلاء معيشتي','My cost of living'], in_t_bench:['מול הממוצע','مقابل المتوسط','Vs average'], in_t_report:['דוח חודשי','تقرير شهري','Monthly report'], in_t_chal:['אתגרים','تحديات','Challenges'],
+  in_open:['לפתוח את {n}','فتح {n}','Open {n}'],
+  in_chgIntro:['שינויים בנתונים הרשמיים ובכסף שלך מאז הפעם הקודמת – ומה הם אומרים עליך.','تغييرات في البيانات الرسمية وفي أموالك منذ المرة السابقة – وماذا تعني لك.','Changes in the official figures and in your money since last time – and what they mean for you.'],
+  in_chgNone:['אין שינויים חדשים. כשבנק ישראל, המדד, מחיר הדלק או ההוצאות שלך ישתנו – זה יופיע כאן.','لا تغييرات جديدة. عندما يتغير بنك إسرائيل أو المؤشر أو سعر الوقود أو مصاريفك – سيظهر هنا.','No new changes. When the Bank of Israel, the index, the fuel price or your spending change, it shows here.'],
+  in_e_boi:['ריבית בנק ישראל: {a}% → {b}%','فائدة بنك إسرائيل: {a}% ← {b}%','Bank of Israel rate: {a}% → {b}%'], in_e_cpi:['האינפלציה השנתית: {a}% → {b}%','التضخم السنوي: {a}% ← {b}%','Annual inflation: {a}% → {b}%'], in_e_fuel:['מחיר בנזין 95: {a} → {b} ₪','سعر بنزين 95: {a} ← {b} ₪','Petrol 95 price: {a} → {b} ₪'], in_e_usd:['הדולר: {a} → {b} ₪','الدولار: {a} ← {b} ₪','The dollar: {a} → {b} ₪'],
+  in_iBoi:['לכל 100 אלף ₪ במסלול פריים (20 שנה): {s}{m} בחודש.','لكل 100 ألف ₪ في مسار البرايم (20 سنة): {s}{m} شهريًا.','Per ₪100,000 on a prime track (20 years): {s}{m} a month.'], in_iOd:['על המינוס שלך: {s}{m} בשנה.','على السحب على المكشوف لديك: {s}{m} سنويًا.','On your overdraft: {s}{m} a year.'],
+  in_iCpi:['לכל 100 אלף ₪ בהלוואה צמודה: {s}{m} לקרן בשנה.','لكل 100 ألف ₪ في قرض مرتبط: {s}{m} على الأصل سنويًا.','Per ₪100,000 of a CPI-linked loan: {s}{m} on the balance a year.'], in_iFuel:['לפי הנסיעה שלך: {s}{m} בחודש.','حسب قيادتك: {s}{m} شهريًا.','For your driving: {s}{m} a month.'], in_iUsd:['הדולר {s} ב־{p}% – משפיע על קניות בחו״ל ועל מוצרים מיובאים.','الدولار {s} بـ{p}% – يؤثر على الشراء من الخارج والمنتجات المستوردة.','The dollar is {s} {p}% – this affects shopping abroad and imported goods.'], in_up:['עלה','ارتفع','up'], in_down:['ירד','انخفض','down'],
+  in_pUp:['ההוצאות החודש בקצב גבוה ב־{p}% מהחודש שעבר','المصاريف هذا الشهر أعلى بـ{p}% من الشهر الماضي','Spending this month is running {p}% above last month'], in_pDown:['ההוצאות החודש בקצב נמוך ב־{p}% מהחודש שעבר','المصاريف هذا الشهر أقل بـ{p}% من الشهر الماضي','Spending this month is running {p}% below last month'], in_pFc:['תחזית לסוף החודש: {m}','التوقع لنهاية الشهر: {m}','Month-end forecast: {m}'], in_pBud:['{a} מתוך תקציב של {b}','{a} من ميزانية {b}','{a} of a {b} budget'],
+  in_nowH:['הנתונים עכשיו','البيانات الآن','The figures now'], in_n_boi:['ריבית בנק ישראל','فائدة بنك إسرائيل','Bank of Israel rate'], in_n_cpi:['אינפלציה ב־12 חודשים','التضخم في 12 شهرًا','12-month inflation'], in_n_fuel:['בנזין 95 (שירות עצמי)','بنزين 95 (خدمة ذاتية)','Petrol 95 (self-service)'], in_n_usd:['דולר','دولار','US dollar'],
+  in_src:['{s} · {d}','{s} · {d}','{s} · {d}'], in_s_boi:['בנק ישראל','بنك إسرائيل','Bank of Israel'], in_s_cbs:['הלמ״ס','دائرة الإحصاء','CBS'], in_s_energy:['משרד האנרגיה','وزارة الطاقة','Ministry of Energy'],
+  in_noExp:['עוד אין הוצאות. הוסיפו הוצאות או ייבאו דף חשבון כדי לראות תובנות.','لا مصاريف بعد. أضيفوا مصاريف أو استوردوا كشف حساب لرؤية الرؤى.','No expenses yet. Add some or import a statement to see insights.'],
+  in_fcH:['תחזית לסוף החודש','التوقع لنهاية الشهر','Month-end forecast'], in_fcSub:['עד היום ({d} בחודש): {s} · ממוצע 3 חודשים: {a}','حتى اليوم ({d} من الشهر): {s} · متوسط 3 أشهر: {a}','So far (day {d}): {s} · 3-month average: {a}'],
+  in_tNow:['עד עכשיו','حتى الآن','So far'], in_tFc:['תחזית','التوقع','Forecast'], in_tAvg:['ממוצע','المتوسط','Average'],
+  in_unH:['חריג או חדש','غير عادي أو جديد','Unusual or new'], in_un:['{n}: {m} – גבוה מהרגיל','{n}: {m} – أعلى من المعتاد','{n}: {m} – higher than usual'], in_unP:['הוצאה רגילה בקטגוריה הזו: כ־{u}.','المصروف المعتاد في هذه الفئة: نحو {u}.','A usual expense in this category: about {u}.'], in_new:['בית עסק חדש: {n} ({m})','مصلحة جديدة: {n} ({m})','New place: {n} ({m})'],
+  in_subsIntro:['חיובים שחוזרים כל חודש באותו סכום בערך – מנויים, אפליקציות והוראות קבע. סמנו מה להשאיר ומה לבטל.','خصومات تتكرر كل شهر بنفس المبلغ تقريبًا – اشتراكات وتطبيقات وأوامر دائمة. حدّدوا ما تُبقون وما تُلغون.','Charges that repeat every month at about the same amount – subscriptions, apps and standing orders. Mark what to keep and what to cancel.'],
+  in_subsNone:['עוד לא נמצאו מנויים. הם יתגלו אחרי חודשיים של הוצאות – הכי מהר עם ייבוא דף חשבון.','لم تُكتشف اشتراكات بعد. ستظهر بعد شهرين من المصاريف – الأسرع عبر استيراد كشف حساب.','No subscriptions found yet. They show up after two months of expenses – fastest with a statement import.'],
+  in_subsTot:['{n} מנויים פעילים','{n} اشتراكات نشطة','{n} active subscriptions'], in_subsMo:['{m} בחודש','{m} شهريًا','{m} a month'], in_subsN:['{n} חודשים','{n} أشهر','{n} months'], in_subsLast:['אחרון: {d}','الأخير: {d}','last: {d}'],
+  in_keep:['להשאיר','إبقاء','Keep'], in_gone:['בוטל','أُلغي','Cancelled'], in_remCancel:['תזכורת לבטל','تذكير بالإلغاء','Remind me to cancel'], in_remT:['לבטל את {n}','إلغاء {n}','Cancel {n}'],
+  in_inflIntro:['כמה ההוצאות שלך השתנו – 3 החודשים האחרונים מול אותם חודשים לפני שנה (או מול 3 החודשים שלפניהם), לצד המדד הרשמי.','كم تغيّرت مصاريفك – آخر 3 أشهر مقابل نفس الأشهر قبل سنة (أو الأشهر الثلاثة السابقة)، بجانب المؤشر الرسمي.','How your spending changed – the last 3 months against the same months a year ago (or the 3 before), next to the official index.'],
+  in_inflNone:['צריך לפחות חצי שנה של הוצאות כדי להשוות.','يلزم نصف سنة على الأقل من المصاريف للمقارنة.','At least half a year of expenses is needed to compare.'], in_inflY:['ההוצאות שלך מול לפני שנה','مصاريفك مقابل قبل سنة','Your spending vs a year ago'], in_inflQ:['ההוצאות שלך מול 3 החודשים הקודמים','مصاريفك مقابل الأشهر الثلاثة السابقة','Your spending vs the previous 3 months'], in_inflCpi:['המדד הרשמי ב־12 חודשים: {c}%','المؤشر الرسمي في 12 شهرًا: {c}%','Official 12-month index: {c}%'],
+  in_before:['לפני (חודשי)','قبل (شهريًا)','Before (monthly)'], in_now3:['עכשיו (חודשי)','الآن (شهريًا)','Now (monthly)'], in_inflNote:['שינוי בהוצאות כולל גם שינוי בהרגלים, לא רק במחירים.','التغير في المصاريف يشمل تغيّر العادات أيضًا، لا الأسعار فقط.','A change in spending includes changes in habits, not only prices.'],
+  in_benchIntro:['ההוצאה החודשית שלך (ממוצע 3 חודשים) מול משק בית ממוצע בישראל.','مصروفك الشهري (متوسط 3 أشهر) مقابل أسرة متوسطة في إسرائيل.','Your monthly spending (3-month average) against an average Israeli household.'],
+  in_bTot:['סך ההוצאות','إجمالي المصاريف','Total spending'], in_bHome:['דיור','السكن','Housing'], in_bMove:['תחבורה ותקשורת','المواصلات والاتصالات','Transport and communication'], in_bFood:['מזון','الغذاء','Food'], in_me:['אני','أنا','Me'], in_avg:['ממוצע','المتوسط','Average'],
+  in_benchNote:['לפי סקר הוצאות משק הבית של הלמ״ס, 2023: הוצאה ממוצעת 18,088 ₪ בחודש; דיור 25.3%, תחבורה ותקשורת 18.6%, מזון 17.9%. גודל משק הבית שלכם משפיע.','حسب مسح نفقات الأسرة لدائرة الإحصاء 2023: متوسط 18,088 ₪ شهريًا؛ السكن 25.3%، المواصلات والاتصالات 18.6%، الغذاء 17.9%. حجم أسرتكم يؤثر.','From the CBS household expenditure survey, 2023: average 18,088 ₪ a month; housing 25.3%, transport and communication 18.6%, food 17.9%. Your household size matters.'],
+  in_repIntro:['דוח של עמוד אחד לחודש: הוצאות, הכנסה, חיסכון, קטגוריות, מנויים וציון. נשמר כ־PDF.','تقرير من صفحة واحدة للشهر: المصاريف والدخل والادخار والفئات والاشتراكات والعلامة. يُحفظ PDF.','A one-page report for the month: spending, income, savings, categories, subscriptions and score. Saved as PDF.'],
+  in_repM:['חודש','الشهر','Month'], in_repSub:['הכנסה {i} · נשאר {s}','الدخل {i} · تبقّى {s}','Income {i} · left {s}'], in_repNoInc:['הוסיפו הכנסה במסך ההוצאות כדי לראות חיסכון','أضيفوا الدخل في شاشة المصاريف لرؤية الادخار','Add income on the expenses screen to see savings'], in_repPdf:['הדוח כ־PDF','التقرير بصيغة PDF','Report as PDF'],
+  in_repTitle:['הדוח החודשי שלי','تقريري الشهري','My monthly report'], in_repSpent:['הוצאות','المصاريف','Spent'], in_repSaved:['נשאר לחיסכון','تبقّى للادخار','Left to save'], in_repVs:['מול החודש הקודם','مقابل الشهر السابق','Vs the previous month'], in_repSubs:['מנויים קבועים','اشتراكات ثابتة','Regular subscriptions'], in_repFoot:['נוצר במכשיר. לא נשלח לשום מקום.','أُنشئ على الجهاز. لم يُرسل لأي مكان.','Made on the device. Sent nowhere.'],
+  in_chalIntro:['אתגרים קטנים שבונים הרגלים. ההתקדמות מחושבת לבד מההוצאות שלך.','تحديات صغيرة تبني عادات. يُحسب التقدم تلقائيًا من مصاريفك.','Small challenges that build habits. Progress is worked out from your expenses.'],
+  in_c_nospend:['3 ימים בלי הוצאות בשבוע','3 أيام بلا مصاريف في الأسبوع','3 no-spend days a week'], in_c_nospendS:['{n} ימים בלי הוצאות ב־7 הימים האחרונים','{n} أيام بلا مصاريف في آخر 7 أيام','{n} no-spend days in the last 7'],
+  in_c_fun:['בילויים בתוך התקציב','الترفيه ضمن الميزانية','Fun within budget'], in_c_funS:['{s} מתוך {g} החודש','{s} من {g} هذا الشهر','{s} of {g} this month'],
+  in_c_save:['3 חודשים ברצף עם חיסכון','3 أشهر متتالية مع ادخار','3 months in a row saving'], in_c_saveS:['{n} חודשים ברצף שבהם ההכנסה גבוהה מההוצאות','{n} أشهر متتالية الدخل فيها أعلى من المصاريف','{n} months in a row with income above spending'],
+  in_c_fuel:['דלק בתוך התקציב','الوقود ضمن الميزانية','Fuel within budget'], in_c_fuelS:['{s} בחודש מתוך {g}','{s} شهريًا من {g}','{s} a month of {g}'], in_c_fuelNo:['מלאו את יומן התדלוקים במחשבון הדלק','املأوا سجل التعبئة في حاسبة الوقود','Fill in the fill-up log in the fuel calculator'],
+  in_target:['יעד','الهدف','Target'], in_badges:['תגים שהרווחת: {n}','شارات حصلت عليها: {n}','Badges earned: {n}'], in_badge:['🏅 עמדת באתגר: {n}','🏅 أنجزت التحدي: {n}','🏅 Challenge met: {n}'],
+  in_c1:['מה הדבר הכי חשוב לשפר אצלי?','ما أهم شيء يجب تحسينه لدي؟','What\'s the most important thing for me to improve?'], in_c2:['איזה מנויים כדאי לבטל?','ما الاشتراكات التي يُستحسن إلغاؤها؟','Which subscriptions should I cancel?'],
+});
+/* 13.22: commands */
+Object.assign(T, {
+  cm_h:['לבצע','تنفيذ','Do it'], cm_sub:['הקישו Enter או לחצו כדי לבצע','اضغطوا Enter أو انقروا للتنفيذ','Press Enter or tap to do it'],
+  cm_tip:['אפשר גם לכתוב משפט: "תדלקתי ב־320", "תזכיר לי ביטוח רכב ב־15/11", "כמה נטו על 18000", "המר 100 דולר".','يمكن أيضًا كتابة جملة: "دفعت 320 وقود"، "ذكرني تأمين السيارة 15/11"، "صافي 18000"، "حوّل 100 دولار".','You can also type a sentence: "spent 320 on fuel", "remind me car insurance 15/11", "net on 18000", "convert 100 dollars".'],
+  cm_rem:['תזכורת: {t} · {d}','تذكير: {t} · {d}','Reminder: {t} · {d}'], cm_pickDate:['בחירת תאריך','اختيار تاريخ','pick a date'],
+  cm_sal:['מחשבון שכר עם {m}','حاسبة الراتب مع {m}','Salary calculator with {m}'], cm_mort:['משכנתא לדירה של {m}','رهن لشقة بـ{m}','Mortgage for a {m} home'], cm_loan:['הלוואה של {m}','قرض بقيمة {m}','A loan of {m}'], cm_conv:['המרת {v} {c} לשקלים','تحويل {v} {c} إلى شيكل','Convert {v} {c} to shekels'],
+  cm_exp:['הוצאה: {m} · {n} ({c})','مصروف: {m} · {n} ({c})','Expense: {m} · {n} ({c})'], cm_fuel:['דלק','وقود','Fuel'], cm_added:['נוספה הוצאה של {m}','أُضيف مصروف بقيمة {m}','Added an expense of {m}'],
+});
+/* 13.22: rights and tax */
+Object.assign(T, {
+  tab_rights:['זכויות ומס','الحقوق والضريبة','Rights & tax'], d_rights:['מה כנראה מגיע לכם – נקודות זיכוי, החזר מס, קצבאות והנחות – ורשימת מס לסוף השנה.','ما الذي يحق لكم على الأرجح – نقاط ائتمان واسترداد ضريبة ومخصّصات وخصومات – وقائمة ضريبة لنهاية السنة.','What you\'re probably entitled to – tax credits, refunds, benefits and discounts – and a year-end tax checklist.'],
+  rt_t_find:['מה מגיע לי','ما الذي يحق لي','What I\'m entitled to'], rt_t_year:['סוף שנה במס','نهاية السنة الضريبية','Tax year end'],
+  rt_intro:['ענו על כמה שאלות – והרשימה מתעדכנת מיד. לכל זכות יש קישור לבדיקה באפליקציה או בכל זכות.','أجيبوا عن بعض الأسئلة – وتتحدث القائمة فورًا. لكل حق رابط للفحص في التطبيق أو في كول زخوت.','Answer a few questions – the list updates at once. Each item links to a check in the app or on Kol Zchut.'],
+  rt_qH:['מה נכון לגביכם?','ما الذي ينطبق عليكم؟','What applies to you?'],
+  rt_q_work:['עבודה','العمل','Work'], rt_w_emp:['שכיר/ה','موظف/ة','Employee'], rt_w_self:['עצמאי/ת','مستقل/ة','Self-employed'], rt_w_both:['גם וגם','كلاهما','Both'], rt_w_student:['סטודנט/ית','طالب/ة','Student'], rt_w_none:['לא עובד/ת כרגע','لا أعمل حاليًا','Not working now'], rt_w_ret:['בפנסיה','متقاعد/ة','Retired'],
+  rt_q_age:['גיל','العمر','Age'], rt_q_kids:['ילדים מתחת לגיל 18','أطفال دون 18','Children under 18'], rt_q_kidsSmall:['מתוכם עד גיל 5','منهم حتى سن 5','Of them aged 5 or under'],
+  rt_q_woman:['אישה','امرأة','Woman'], rt_q_single:['הורה יחיד','والد وحيد','Single parent'], rt_q_soldier:['השתחררתי מצבא / שירות לאומי ב־3 השנים האחרונות','تسرّحت من الجيش / الخدمة الوطنية في آخر 3 سنوات','Discharged from army / national service in the last 3 years'], rt_q_degree:['סיימתי תואר אקדמי בשנה האחרונה','أنهيت لقبًا أكاديميًا في السنة الأخيرة','Finished a university degree in the last year'],
+  rt_q_oleh:['עולה חדש/ה','قادم/ة جديد/ة','New immigrant'], rt_q_disab:['נכות או תעודת עיוור','إعاقة أو شهادة كفيف','Disability or blind certificate'], rt_q_reserve:['שירתתי במילואים השנה','خدمت في الاحتياط هذه السنة','Served in the reserves this year'], rt_q_lowInc:['הכנסה נמוכה','دخل منخفض','Low income'],
+  rt_q_jobs:['החלפתי עבודה השנה או יש לי יותר ממעסיק אחד','غيّرت عملي هذه السنة أو لدي أكثر من صاحب عمل','Changed jobs this year or have more than one employer'], rt_q_gapYear:['לא עבדתי חלק מהשנה','لم أعمل جزءًا من السنة','Didn\'t work part of the year'], rt_q_donate:['תרמתי לעמותה עם סעיף 46','تبرعت لجمعية مع البند 46','Donated to a charity with section 46'], rt_q_privPens:['הפקדתי לפנסיה או לביטוח חיים באופן פרטי','أودعت للتقاعد أو تأمين الحياة بشكل خاص','Paid privately into a pension or life insurance'],
+  rt_q_rent:['גר/ה בשכירות','أسكن بالإيجار','Renting'], rt_q_priority:['גר/ה ביישוב מזכה (פריפריה)','أسكن في بلدة مؤهلة (أطراف)','Living in a qualifying town (periphery)'], rt_q_retire:['פרשתי או עומד/ת לפרוש','تقاعدت أو على وشك التقاعد','Retired or about to retire'],
+  rt_worth:['שווי משוער של מה שאפשר להעריך','القيمة التقديرية لما يمكن تقديره','Estimated value of what can be estimated'], rt_worthS:['{n} זכויות שכדאי לבדוק','{n} حقوق يُستحسن فحصها','{n} rights worth checking'], rt_about:['כ־{m} בשנה','نحو {m} سنويًا','about {m} a year'], rt_kz:['כל זכות','كول زخوت','Kol Zchut'],
+  rt_none:['סמנו מה נכון לגביכם כדי לראות מה מגיע לכם.','حدّدوا ما ينطبق عليكم لرؤية مستحقاتكم.','Tick what applies to you to see what you\'re entitled to.'],
+  rt_note:['רשימה כללית ולא ייעוץ משפטי או מס. הזכאות הסופית נקבעת על ידי הגוף המוסמך (רשות המסים, ביטוח לאומי, הרשות המקומית).','قائمة عامة وليست استشارة قانونية أو ضريبية. الأهلية النهائية تحددها الجهة المختصة.','A general list, not legal or tax advice. Final eligibility is decided by the authority (Tax Authority, National Insurance, local authority).'],
+  rt_r_taxRefund:['ייתכן שמגיע לך החזר מס','قد يحق لك استرداد ضريبة','You may be due a tax refund'], rt_rp_taxRefund:['שינוי עבודה, תקופה בלי עבודה, תרומות או הפקדות פרטיות – כל אלה יוצרים לרוב החזר. אפשר לבקש עד 6 שנים אחורה.','تغيير العمل أو فترة بلا عمل أو تبرعات أو إيداعات خاصة – غالبًا تُنشئ استردادًا. يمكن الطلب حتى 6 سنوات للوراء.','Changing jobs, time without work, donations or private deposits often create a refund. You can claim up to 6 years back.'],
+  rt_r_soldier:['נקודות זיכוי לחייל/ת משוחרר/ת','نقاط ائتمان للجندي المسرّح','Tax credit points for discharged soldiers'], rt_rp_soldier:['עד 2 נקודות זיכוי בשנה ל־36 חודשים אחרי השחרור (לפי משך השירות). מקבלים דרך המעסיק או בהחזר מס.','حتى نقطتي ائتمان سنويًا لـ36 شهرًا بعد التسريح (حسب مدة الخدمة). عبر صاحب العمل أو باسترداد الضريبة.','Up to 2 credit points a year for 36 months after discharge (by length of service). Through your employer or a tax refund.'],
+  rt_r_degree:['נקודת זיכוי לבעלי תואר','نقطة ائتمان لحاملي اللقب','Credit point for a degree'], rt_rp_degree:['נקודת זיכוי לשנה אחת אחרי סיום תואר ראשון (חצי נקודה לתואר שני). צריך להגיש טופס 119.','نقطة ائتمان لسنة واحدة بعد اللقب الأول (نصف نقطة للثاني). يجب تقديم نموذج 119.','One credit point for a year after a first degree (half for a second). File form 119.'],
+  rt_r_kidsPts:['נקודות זיכוי בעד ילדים','نقاط ائتمان عن الأطفال','Credit points for children'], rt_rp_kidsPts:['לכל ילד מגיעות נקודות זיכוי לפי גילו (יותר לגילאי 0–5). בדקו שהמעסיק מחשב אותן נכון – מחשבון המס מראה.','لكل طفل نقاط ائتمان حسب عمره (أكثر لأعمار 0–5). تأكدوا أن صاحب العمل يحسبها صحيحًا.','Each child brings credit points by age (more for ages 0–5). Check your employer counts them – the tax calculator shows.'],
+  rt_r_single:['נקודת זיכוי נוספת להורה יחיד','نقطة ائتمان إضافية للوالد الوحيد','An extra credit point for a single parent'], rt_rp_single:['הורה יחיד שגר עם ילדיו מקבל נקודת זיכוי נוספת.','الوالد الوحيد الذي يسكن مع أطفاله يحصل على نقطة إضافية.','A single parent living with their children gets an extra credit point.'],
+  rt_r_oleh:['נקודות זיכוי לעולים','نقاط ائتمان للقادمين الجدد','Credit points for new immigrants'], rt_rp_oleh:['עולים חדשים מקבלים נקודות זיכוי בשנים הראשונות בארץ, ובחלק מהרשויות גם הנחה בארנונה.','القادمون الجدد يحصلون على نقاط ائتمان في السنوات الأولى، وفي بعض السلطات خصم في الأرنونا.','New immigrants get credit points in their first years, and some authorities give an arnona discount.'],
+  rt_r_childAllow:['קצבת ילדים','مخصّص الأطفال','Child allowance'], rt_rp_childAllow:['מביטוח לאומי לכל ילד עד גיל 18, באופן אוטומטי. בדקו שהיא מגיעה.','من التأمين الوطني لكل طفل حتى 18 تلقائيًا. تأكدوا أنه يصل.','From National Insurance for every child under 18, automatically. Check it arrives.'],
+  rt_r_kidSave:['חיסכון לכל ילד','توفير لكل طفل','Savings for every child'], rt_rp_kidSave:['המדינה מפקידה כל חודש לחיסכון על שם הילד. כדאי לבחור מסלול (ולהכפיל בעצמכם) – אחרת נבחר מסלול ברירת מחדל.','الدولة تودع شهريًا في توفير باسم الطفل. يُستحسن اختيار مسار (ومضاعفة الإيداع بأنفسكم).','The state deposits monthly into savings in the child\'s name. Pick a track (and double it yourself) – otherwise a default is chosen.'],
+  rt_r_workGrant:['מענק עבודה (מס הכנסה שלילי)','منحة العمل (ضريبة دخل سلبية)','Work grant (negative income tax)'], rt_rp_workGrant:['לעובדים בהכנסה נמוכה עם ילדים או מגיל 55. מגישים בקשה לרשות המסים כל שנה.','للعاملين بدخل منخفض مع أطفال أو من سن 55. يُقدَّم الطلب لسلطة الضرائب كل سنة.','For low-income workers with children or aged 55+. Apply to the Tax Authority every year.'],
+  rt_r_unemp:['דמי אבטלה','مخصّصات البطالة','Unemployment benefit'], rt_rp_unemp:['מי שעבד מספיק זמן לפני כן זכאי לדמי אבטלה. צריך להירשם בשירות התעסוקה.','من عمل فترة كافية قبل ذلك يستحق مخصّصات بطالة. يجب التسجيل في خدمة التشغيل.','If you worked long enough before, you may get unemployment benefit. Register with the Employment Service.'],
+  rt_r_reserve:['זכויות מילואים','حقوق جنود الاحتياط','Reservist rights'], rt_rp_reserve:['פיצוי על ימי מילואים, מענקים והטבות. בדקו במחשבון פיצוי המילואים.','تعويض عن أيام الاحتياط ومنح ومزايا. افحصوا في حاسبة تعويض الاحتياط.','Pay for reserve days, grants and benefits. Check in the reserve compensation calculator.'],
+  rt_r_disab:['פטור ממס הכנסה לנכים','إعفاء من ضريبة الدخل للمعاقين','Income-tax exemption for disability'], rt_rp_disab:['נכות של 90% ומעלה או עיוורון מזכים בפטור ממס על הכנסה מעבודה עד תקרה. מגישים לפקיד השומה.','إعاقة 90% فأكثر أو العمى تمنح إعفاءً من الضريبة على دخل العمل حتى سقف. يُقدَّم لمأمور التقييم.','A 90%+ disability or blindness gives an income-tax exemption on work income up to a ceiling. Apply to the tax office.'],
+  rt_r_arnona:['הנחה בארנונה','خصم في الأرنونا','Arnona discount'], rt_rp_arnona:['לפי מה שסימנתם ייתכן שמגיעה הנחה. הכלי באפליקציה מראה כמה.','حسب ما حددتم قد يحق لكم خصم. الأداة في التطبيق تبيّن كم.','From what you ticked you may qualify. The tool in the app shows how much.'],
+  rt_r_oldAge:['קצבת אזרח ותיק','مخصّص المسنين','Old-age pension'], rt_rp_oldAge:['מגיל הפרישה. אפשר לבדוק כמה ומתי באפליקציה.','من سن التقاعد. يمكن فحص كم ومتى في التطبيق.','From retirement age. Check how much and when in the app.'],
+  rt_r_pensFix:['קיבוע זכויות – פטור ממס על הפנסיה','تثبيت الحقوق – إعفاء ضريبي على التقاعد','Rights fixing – tax exemption on your pension'], rt_rp_pensFix:['מי שפורש יכול לקבל פטור ממס על חלק מהקצבה. צריך להגיש טופס 161ד.','المتقاعد يمكنه الحصول على إعفاء ضريبي على جزء من المخصّص. يجب تقديم نموذج 161د.','A retiree can get part of the pension tax-free. File form 161d.'],
+  rt_r_donate:['זיכוי ממס על תרומות','ائتمان ضريبي على التبرعات','Tax credit on donations'], rt_rp_donate:['35% מהתרומה חוזרים אליכם (לעמותות עם סעיף 46). שמרו קבלות.','35% من التبرع يعود إليكم (لجمعيات مع البند 46). احتفظوا بالإيصالات.','35% of the donation comes back to you (charities with section 46). Keep the receipts.'],
+  rt_r_privPens:['זיכוי על הפקדה פרטית לפנסיה','ائتمان على إيداع خاص للتقاعد','Credit for private pension deposits'], rt_rp_privPens:['הפקדה עצמאית לפנסיה או לביטוח חיים מזכה בזיכוי של 35% עד תקרה – לרוב דרך דוח שנתי או החזר מס.','الإيداع الذاتي للتقاعد أو تأمين الحياة يمنح ائتمانًا 35% حتى سقف – غالبًا عبر تقرير سنوي أو استرداد.','Paying into a pension or life insurance yourself gives a 35% credit up to a ceiling – usually via an annual report or refund.'],
+  rt_r_selfHish:['קרן השתלמות לעצמאים','صندوق استكمال للمستقلين','Study fund for the self-employed'], rt_rp_selfHish:['הפקדה עד התקרה מוכרת כהוצאה, והכסף פטור ממס אחרי 6 שנים. מפקידים עד 31.12.','الإيداع حتى السقف معترف به كمصروف، والمال معفى من الضريبة بعد 6 سنوات. الإيداع حتى 31.12.','Deposits up to the ceiling are deductible and tax-free after 6 years. Deposit by 31.12.'],
+  rt_r_priority:['הטבת מס ליישוב מזכה','ميزة ضريبية للبلدة المؤهلة','Tax benefit for qualifying towns'], rt_rp_priority:['תושבי יישובים מזכים מקבלים זיכוי באחוזים מההכנסה עד תקרה. בדקו אם היישוב שלכם ברשימה.','سكان البلدات المؤهلة يحصلون على ائتمان بنسبة من الدخل حتى سقف. افحصوا إن كانت بلدتكم في القائمة.','Residents of qualifying towns get a credit as a percentage of income up to a ceiling. Check if your town is on the list.'],
+  rt_r_rent:['סיוע בשכר דירה','مساعدة في الإيجار','Rent assistance'], rt_rp_rent:['משרד הבינוי והשיכון נותן סיוע בשכר דירה לפי קריטריונים של הכנסה ומצב משפחתי.','وزارة البناء والإسكان تمنح مساعدة في الإيجار حسب معايير الدخل والوضع العائلي.','The Housing Ministry gives rent assistance by income and family criteria.'],
+  rt_r_woman:['חצי נקודת זיכוי נוספת לאישה','نصف نقطة ائتمان إضافية للمرأة','An extra half credit point for women'], rt_rp_woman:['נשים מקבלות חצי נקודת זיכוי יותר. בדקו בתלוש שזה מחושב.','النساء يحصلن على نصف نقطة إضافية. تأكدن من احتسابها في القسيمة.','Women get an extra half credit point. Check it appears on the payslip.'],
+  rt_yIntro:['מה כדאי לעשות לפני סוף {y} כדי לשלם פחות מס או לקבל החזר. סמנו מה כבר עשיתם.','ما يُستحسن فعله قبل نهاية {y} لدفع ضريبة أقل أو للحصول على استرداد. حدّدوا ما فعلتم.','What to do before the end of {y} to pay less tax or get a refund. Tick what you\'ve done.'],
+  rt_yLeft:['ימים עד סוף השנה','أيام حتى نهاية السنة','Days to the end of the year'], rt_yDone:['{n} מתוך {m} בוצעו','{n} من {m} تمّت','{n} of {m} done'], rt_check:['לבדוק','فحص','Check'],
+  rt_y_r106:['לבקש טופס 106 מכל מעסיק','طلب نموذج 106 من كل صاحب عمل','Get form 106 from each employer'], rt_yp_r106:['מסכם את השכר והמס של השנה – בסיס לבדיקת החזר.','يلخص الراتب والضريبة للسنة – أساس لفحص الاسترداد.','It sums up the year\'s pay and tax – the basis for a refund check.'],
+  rt_y_coord:['תיאום מס אם יש יותר ממעסיק אחד','تنسيق ضريبي إن كان هناك أكثر من صاحب عمل','Tax coordination if you have more than one employer'], rt_yp_coord:['בלי תיאום, המשכורת השנייה מנוכה במס מרבי.','بدون تنسيق يُخصم من الراتب الثاني أقصى ضريبة.','Without it, the second salary is taxed at the top rate.'],
+  rt_y_donate:['לאסוף קבלות על תרומות (סעיף 46)','جمع إيصالات التبرعات (البند 46)','Collect donation receipts (section 46)'], rt_yp_donate:['35% מהסכום חוזרים. תרומה עד 31.12 נכנסת לשנה הזו.','35% من المبلغ يعود. التبرع حتى 31.12 يدخل هذه السنة.','35% comes back. A donation by 31.12 counts for this year.'],
+  rt_y_pens:['להשלים הפקדה לפנסיה (עצמאים ומי שמפקיד פרטי)','إكمال الإيداع للتقاعد (للمستقلين ومن يودع خاصة)','Top up pension deposits (self-employed and private)'], rt_yp_pens:['הפקדה עד סוף השנה מקטינה את המס של השנה.','الإيداع حتى نهاية السنة يقلل ضريبة السنة.','A deposit by year end lowers this year\'s tax.'],
+  rt_y_hish:['קרן השתלמות לעצמאים – להפקיד עד התקרה','صندوق الاستكمال للمستقلين – الإيداع حتى السقف','Self-employed study fund – deposit up to the ceiling'], rt_yp_hish:['מוכר כהוצאה ופטור ממס אחרי 6 שנים.','معترف به كمصروف ومعفى بعد 6 سنوات.','Deductible, and tax-free after 6 years.'],
+  rt_y_loss:['לקזז הפסדים בשוק ההון','مقاصة الخسائر في سوق المال','Offset capital-market losses'], rt_yp_loss:['מכירת מניה בהפסד לפני סוף השנה יכולה לקזז מס על רווחים.','بيع سهم بخسارة قبل نهاية السنة قد يقاص الضريبة على الأرباح.','Selling a share at a loss before year end can offset tax on gains.'],
+  rt_y_kids:['לבדוק נקודות זיכוי בעד ילדים בתלוש','فحص نقاط الأطفال في القسيمة','Check child credit points on your payslip'], rt_yp_kids:['טעות כאן נפוצה ושווה מאות שקלים בחודש.','الخطأ هنا شائع ويساوي مئات الشواكل شهريًا.','Mistakes here are common and worth hundreds a month.'],
+  rt_y_refund6:['החזר מס על {y} – זו השנה האחרונה לבקש','استرداد ضريبة عن {y} – هذه آخر سنة للطلب','Tax refund for {y} – the last year to claim'], rt_yp_refund6:['אפשר לבקש החזר עד 6 שנים אחורה. אחרי 31.12 השנה {y} כבר לא תהיה פתוחה.','يمكن طلب الاسترداد حتى 6 سنوات للوراء. بعد 31.12 لن تكون سنة {y} مفتوحة.','You can claim up to 6 years back. After 31.12, {y} closes.'],
+  rt_y_arnona:['לבדוק הנחה בארנונה לשנה הבאה','فحص خصم الأرنونا للسنة القادمة','Check an arnona discount for next year'], rt_yp_arnona:['בקשות להנחה לפי הכנסה מוגשות בתחילת כל שנה.','طلبات الخصم حسب الدخل تُقدَّم في بداية كل سنة.','Income-based requests are filed at the start of each year.'],
+  rt_y_docs:['לשמור אישורים שנתיים (בנק, פנסיה, ביטוח)','حفظ الشهادات السنوية (بنك، تقاعد، تأمين)','Keep annual statements (bank, pension, insurance)'], rt_yp_docs:['סורק המסמכים באפליקציה שומר אותם מסודרים.','ماسح المستندات في التطبيق يحفظها مرتبة.','The app\'s document scanner keeps them in order.'],
+  rt_priv:['התשובות נשמרות רק במכשיר.','الإجابات تُحفظ على الجهاز فقط.','Your answers are kept on this device only.'],
+});
+/* 13.22: life planning */
+Object.assign(T, {
+  tab_lifeplan:['תכנון חיים','تخطيط الحياة','Life planning'], d_lifeplan:['מה יקרה לכסף עם תינוק, דירה, עבודה חדשה או פרישה; כמה זמן תחזיקו בלי עבודה; יעדים; ומעבר דירה.','ماذا يحدث للمال مع طفل أو شقة أو عمل جديد أو تقاعد؛ كم تصمدون بلا عمل؛ أهداف؛ وانتقال سكن.','What happens to your money with a baby, a home, a new job or retiring; how long you last without work; goals; and moving.'],
+  lp_t_sim:['אירועי חיים','أحداث الحياة','Life events'], lp_t_job:['אם אאבד את העבודה','إذا فقدت عملي','If I lose my job'], lp_t_goals:['יעדים','أهداف','Goals'], lp_t_move:['מעבר דירה','انتقال سكن','Moving home'],
+  lp_simIntro:['מה יהיה החיסכון שלכם בכל שנה, עם האירועים שאתם מתכננים. ההתחלה נלקחת מההוצאות ומחשבונות הבנק אם מילאתם.','كيف سيكون ادخاركم كل سنة مع الأحداث المخططة. البداية من المصاريف والحسابات البنكية إن ملأتموها.','What your savings will be each year with the events you plan. The start comes from your expenses and bank accounts if filled.'],
+  lp_inc:['הכנסה נטו בחודש','الدخل الصافي شهريًا','Net income a month'], lp_exp:['הוצאות בחודש','المصاريف شهريًا','Spending a month'], lp_sav:['חסכונות היום','المدخرات اليوم','Savings today'], lp_ret:['תשואה שנתית על החיסכון','عائد سنوي على الادخار','Yearly return on savings'], lp_grow:['עליית שכר בשנה','ارتفاع الراتب سنويًا','Pay rise a year'], lp_yrs:['שנים קדימה','سنوات للأمام','Years ahead'],
+  lp_evH:['האירועים שלכם','أحداثكم','Your events'],
+  lp_e_baby:['תינוק/ת','مولود','A baby'], lp_e_home:['קניית דירה','شراء شقة','Buying a home'], lp_e_job:['שינוי שכר / עבודה חדשה','تغيير راتب / عمل جديد','Pay change / new job'], lp_e_car:['רכב חדש','سيارة جديدة','A new car'], lp_e_study:['לימודים','دراسة','Studying'], lp_e_retire:['פרישה','تقاعد','Retiring'], lp_e_move:['מעבר דירה','انتقال سكن','Moving home'],
+  lp_f_year:['בשנה מספר','في السنة رقم','In year no.'], lp_f_cost:['עלות חודשית','كلفة شهرية','Monthly cost'], lp_f_years:['למשך שנים','لمدة سنوات','For years'], lp_f_lose:['חודשי חופשה','أشهر إجازة','Months of leave'], lp_f_down:['הון עצמי','رأس مال ذاتي','Down payment'], lp_f_pay:['החזר חודשי','قسط شهري','Monthly payment'], lp_f_pct:['שינוי','تغيير','Change'], lp_f_price:['מחיר','السعر','Price'], lp_f_diff:['שינוי בהוצאה החודשית','تغيير في المصروف الشهري','Change in monthly cost'],
+  lp_del:['מחיקת {n}','حذف {n}','Delete {n}'],
+  lp_end:['החיסכון ב־{y}','الادخار في {y}','Savings in {y}'], lp_low:['החיסכון נגמר ב־{y} – כדאי לשנות משהו בתוכנית','تنفد المدخرات في {y} – يُستحسن تغيير شيء','Savings run out in {y} – worth changing the plan'], lp_ok:['החיסכון נשאר חיובי לאורך כל התקופה','تبقى المدخرات إيجابية طوال الفترة','Savings stay positive throughout'],
+  lp_chartA:['החיסכון לאורך השנים','المدخرات عبر السنين','Savings over the years'], lp_year:['שנה','سنة','Year'], lp_incY:['הכנסה','الدخل','Income'], lp_expY:['הוצאה','المصروف','Spending'], lp_savY:['חיסכון בסוף','الادخار في النهاية','Savings at end'],
+  lp_simNote:['הערכה פשוטה: עלויות גדלות עם המחירים, אירועים לפי מה שהזנתם. לא כולל מס על התשואה.','تقدير بسيط: التكاليف ترتفع مع الأسعار، والأحداث حسب ما أدخلتم. لا يشمل الضريبة على العائد.','A simple estimate: costs rise with prices, events as you entered them. Excludes tax on returns.'],
+  lp_jobIntro:['כמה חודשים הכסף יספיק אם תפסיקו לעבוד מחר – ומה אפשר לעשות כדי שיספיק יותר.','كم شهرًا سيكفي المال إذا توقفتم عن العمل غدًا – وما الذي يمكن فعله.','How many months your money lasts if you stop working tomorrow – and what to do so it lasts longer.'],
+  lp_jsav:['כסף זמין','مال متاح','Money available'], lp_jexp:['הוצאות חודשיות','مصاريف شهرية','Monthly spending'], lp_jben:['דמי אבטלה צפויים בחודש','مخصّصات بطالة متوقعة شهريًا','Expected unemployment benefit a month'], lp_jbenM:['לכמה חודשים','لكم شهرًا','For how many months'], lp_jcut:['מה אפשר לקצץ בחודש','ما يمكن تقليصه شهريًا','What you could cut a month'], lp_jside:['הכנסה צדדית','دخل جانبي','Side income'],
+  lp_runway:['הכסף יספיק ל־','المال يكفي لـ','The money lasts'], lp_withCut:['עם קיצוץ של {m}: {n} חודשים','مع تقليص {m}: {n} أشهر','With a {m} cut: {n} months'],
+  lp_jWarn:['פחות מ־3 חודשים – כדאי להתחיל לבנות כרית ביטחון כבר עכשיו','أقل من 3 أشهر – يُستحسن البدء ببناء احتياطي الآن','Less than 3 months – start building a buffer now'],
+  lp_j1:['להירשם לשירות התעסוקה ביום הראשון','التسجيل في خدمة التشغيل في اليوم الأول','Register with the Employment Service on day one'], lp_j1P:['דמי האבטלה נספרים מיום ההרשמה. מחשבון דמי האבטלה מעריך כמה תקבלו.','مخصّصات البطالة تُحسب من يوم التسجيل. الحاسبة تقدّر كم ستحصلون.','Benefit counts from the day you register. The benefit calculator estimates how much.'],
+  lp_j2:['לקצץ קודם בילויים, קניות ומנויים','التقليص أولًا في الترفيه والمشتريات والاشتراكات','Cut fun, shopping and subscriptions first'], lp_j2P:['לשמור על דיור, אוכל ותשלומים חובה. מסך התובנות מראה מנויים שאפשר לבטל.','حافظوا على السكن والطعام والمدفوعات الإلزامية. شاشة الرؤى تُظهر اشتراكات يمكن إلغاؤها.','Keep housing, food and required payments. The insights screen shows subscriptions to cancel.'],
+  lp_j3:['פיצויים וכספי פנסיה','تعويضات وأموال التقاعد','Severance and pension money'], lp_j3P:['בדקו כמה פיצויים מגיעים ומה המס עליהם לפני שמושכים.','افحصوا كم تعويض يحق لكم وما الضريبة عليه قبل السحب.','Check how much severance you\'re due and its tax before withdrawing.'],
+  lp_gIntro:['יעדים עם תאריך – כמה צריך לחסוך בחודש, והאם זה מסתדר עם מה שנשאר לכם.','أهداف بتاريخ – كم يجب الادخار شهريًا، وهل يتناسب مع ما يتبقى لكم.','Goals with a date – how much to save a month, and whether it fits what you have left.'],
+  lp_gName:['יעד','الهدف','Goal'], lp_gNamePh:['למשל: הון עצמי לדירה','مثلًا: رأس مال لشقة','e.g. Down payment'], lp_gTarget:['סכום','المبلغ','Amount'], lp_gSaved:['כבר נחסך','مُدّخر','Saved so far'], lp_gDate:['עד תאריך','حتى تاريخ','By date'],
+  lp_gNeed:['{m} בחודש ל־{n} חודשים','{m} شهريًا لـ{n} شهرًا','{m} a month for {n} months'], lp_gOk:['מסתדר (נשאר לכם {f})','يتناسب (يتبقى لكم {f})','Fits (you have {f} left)'], lp_gHard:['יותר ממה שנשאר לכם ({f})','أكثر مما يتبقى لكم ({f})','More than you have left ({f})'], lp_gPick:['בחרו תאריך יעד','اختاروا تاريخ الهدف','Pick a target date'], lp_gNone:['עוד אין יעדים – בחרו אחד מההצעות.','لا أهداف بعد – اختاروا من الاقتراحات.','No goals yet – pick one from the suggestions.'],
+  lp_gs_home:['הון עצמי לדירה','رأس مال لشقة','Down payment'], lp_gs_car:['רכב','سيارة','A car'], lp_gs_trip:['טיול','رحلة','A trip'], lp_gs_buffer:['כרית ביטחון (6 חודשים)','احتياطي (6 أشهر)','Buffer (6 months)'], lp_gs_study:['לימודים','دراسة','Studies'], lp_gs_wedding:['חתונה','عرس','Wedding'],
+  lp_mIntro:['השוו את העלות החודשית בין המקום הנוכחי למקום החדש – שכירות, ארנונה, נסיעות לעבודה, גן ועוד.','قارنوا الكلفة الشهرية بين المكان الحالي والجديد – الإيجار والأرنونا والمواصلات والروضة وغيرها.','Compare the monthly cost of where you live now and the new place – rent, arnona, commuting, nursery and more.'],
+  lp_mA:['המקום הנוכחי','المكان الحالي','Current place'], lp_mB:['המקום החדש','المكان الجديد','New place'], lp_mRent:['שכירות / משכנתא','إيجار / رهن','Rent / mortgage'], lp_mArn:['ארנונה בחודש','الأرنونا شهريًا','Arnona a month'], lp_mKm:['ק״מ לעבודה (כיוון אחד)','كم إلى العمل (اتجاه واحد)','km to work (one way)'], lp_mPt:['תחבורה ציבורית','مواصلات عامة','Public transport'], lp_mKid:['גן / צהרון','روضة / مركز نهاري','Nursery / after-school'], lp_mOth:['אחר','أخرى','Other'],
+  lp_mKmc:['עלות לק״מ ברכב','الكلفة لكل كم بالسيارة','Car cost per km'], lp_mDays:['ימי עבודה בחודש','أيام العمل شهريًا','Work days a month'], lp_mOnce:['עלות המעבר (הובלה, תיווך…)','كلفة الانتقال (نقل، سمسرة…)','Moving cost (removals, agent…)'],
+  lp_mSave:['המקום החדש חוסך','المكان الجديد يوفّر','The new place saves'], lp_mMore:['המקום החדש יקר יותר ב־','المكان الجديد أغلى بـ','The new place costs more by'], lp_mBe:['עלות המעבר חוזרת תוך {n} חודשים','كلفة الانتقال تعود خلال {n} أشهر','The moving cost pays back in {n} months'], lp_mNoBe:['עלות המעבר לא חוזרת','كلفة الانتقال لا تعود','The moving cost doesn\'t pay back'], lp_mYear:['הפרש בשנה','الفرق سنويًا','Difference a year'],
+  lp_mNote:['עלות לק״מ: מחשבון "כמה באמת עולה הרכב" נותן את המספר שלכם.','الكلفة لكل كم: حاسبة "كم تكلّف السيارة" تعطي رقمكم.','Cost per km: the "real cost of a car" calculator gives your number.'],
+});
+/* 13.22: documents and receipts */
+Object.assign(T, {
+  tab_vault:['מסמכים וקבלות','مستندات وإيصالات','Documents & receipts'], d_vault:['ארכיון קבלות ואחריות עם תזכורות, ובדיקה חכמה של הצעת הלוואה, פוליסה, חוזה שכירות או דוח פנסיה.','أرشيف إيصالات وكفالات مع تذكيرات، وفحص ذكي لعرض قرض أو بوليصة أو عقد إيجار أو تقرير تقاعد.','A receipts and warranty archive with reminders, and a smart check of a loan offer, policy, rental contract or pension report.'],
+  vt_t_rec:['קבלות ואחריות','إيصالات وكفالات','Receipts & warranties'], vt_t_chk:['בדיקת מסמך','فحص مستند','Check a document'],
+  vt_recIntro:['שמרו קבלה על כל מוצר עם אחריות. כשמשהו מתקלקל – הקבלה כבר כאן, ותזכורת תגיע לפני שהאחריות נגמרת.','احفظوا إيصال كل منتج بكفالة. عندما يتعطل شيء – الإيصال هنا، وسيصل تذكير قبل انتهاء الكفالة.','Keep a receipt for every product with a warranty. When something breaks, the receipt is here, and a reminder comes before the warranty ends.'],
+  vt_noPics:['במצב פרטי או בחשבון מוצפן התמונות לא נשמרות – רק הפרטים.','في الوضع الخاص أو الحساب المشفّر لا تُحفظ الصور – التفاصيل فقط.','In private mode or an encrypted account photos aren\'t kept – only the details.'],
+  vt_add:['קבלה חדשה','إيصال جديد','New receipt'], vt_editT:['עריכת קבלה','تعديل الإيصال','Edit receipt'], vt_name:['מוצר','المنتج','Product'], vt_namePh:['למשל: מקרר','مثلًا: ثلاجة','e.g. Fridge'], vt_store:['חנות','المتجر','Store'], vt_date:['תאריך קנייה','تاريخ الشراء','Purchase date'], vt_price:['מחיר','السعر','Price'], vt_months:['אחריות','الكفالة','Warranty'], vt_m:['{n} חודשים','{n} أشهر','{n} months'], vt_noWar:['בלי אחריות','بلا كفالة','No warranty'],
+  vt_photo:['צילום הקבלה','تصوير الإيصال','Photo of the receipt'], vt_gallery:['מהגלריה','من المعرض','From gallery'], vt_hasPhoto:['יש תמונה','توجد صورة','Photo added'], vt_needName:['כתבו את שם המוצר.','اكتبوا اسم المنتج.','Write the product name.'], vt_picFail:['לא הצלחתי לשמור את התמונה.','لم أتمكن من حفظ الصورة.','Couldn\'t save the photo.'], vt_picGone:['התמונה לא נמצאת במכשיר הזה.','الصورة غير موجودة على هذا الجهاز.','The photo isn\'t on this device.'],
+  vt_until:['אחריות עד {d} (עוד {n} ימים)','كفالة حتى {d} (بعد {n} يومًا)','Warranty until {d} ({n} days left)'], vt_expired:['האחריות הסתיימה ב־{d}','انتهت الكفالة في {d}','Warranty ended on {d}'], vt_view:['הצגת הקבלה של {n}','عرض إيصال {n}','Show the receipt for {n}'], vt_rem:['תזכורת לפני סוף האחריות של {n}','تذكير قبل نهاية كفالة {n}','Reminder before the warranty of {n} ends'],
+  vt_remT:['סוף אחריות: {n}','نهاية الكفالة: {n}','Warranty ends: {n}'], vt_remN:['לבדוק שהכול תקין לפני שהאחריות נגמרת.','التأكد أن كل شيء سليم قبل انتهاء الكفالة.','Check everything works before the warranty ends.'], vt_none:['עוד אין קבלות שמורות.','لا إيصالات محفوظة بعد.','No receipts saved yet.'],
+  vt_chkIntro:['צלמו הצעת הלוואה, פוליסת ביטוח, חוזה שכירות או דוח שנתי של פנסיה – וה־AI יסמן את המספרים החשובים, הסעיפים שכדאי לשים לב אליהם ומה לבקש.','صوّروا عرض قرض أو بوليصة تأمين أو عقد إيجار أو تقريرًا سنويًا للتقاعد – وسيبرز الذكاء الاصطناعي الأرقام المهمة والبنود التي يجب الانتباه لها وما تطلبونه.','Photograph a loan offer, insurance policy, rental contract or annual pension report – the AI marks the key numbers, the clauses to watch and what to ask for.'],
+  vt_kind:['סוג המסמך','نوع المستند','Document type'], vt_k_loan:['הצעת הלוואה','عرض قرض','Loan offer'], vt_k_insur:['ביטוח','تأمين','Insurance'], vt_k_rent:['חוזה שכירות','عقد إيجار','Rental contract'], vt_k_pens:['דוח פנסיה / קרן','تقرير تقاعد / صندوق','Pension / fund report'], vt_k_other:['אחר','أخرى','Other'],
+  vt_chkPhoto:['צילום המסמך','تصوير المستند','Photograph it'], vt_pages:['{n} עמודים מוכנים לבדיקה','{n} صفحات جاهزة للفحص','{n} pages ready'], vt_go:['לבדוק','افحص','Check it'], vt_clr:['התחלה מחדש','البدء من جديد','Start over'],
+  vt_chkPriv:['התמונות נשלחות ל־AI רק כשלוחצים "לבדוק", ולא נשמרות.','تُرسل الصور للذكاء الاصطناعي فقط عند الضغط على "افحص" ولا تُحفظ.','The photos go to the AI only when you tap "Check it", and aren\'t kept.'],
+  vt_chkNote:['בדיקה ממוחשבת לעזרה בלבד – לא ייעוץ משפטי או פיננסי. לפני חתימה כדאי להתייעץ עם איש מקצוע.','فحص آلي للمساعدة فقط – ليس استشارة قانونية أو مالية. قبل التوقيع يُستحسن استشارة مختص.','An automated check to help only – not legal or financial advice. Before signing, consult a professional.'],
+  lg_p_dev13:['מסמכים וקבלות: פרטי הקבלות נשמרים במכשיר, והתמונות באחסון הפנימי של הדפדפן (IndexedDB) – לא במצב פרטי ולא בחשבון מוצפן. בדיקת מסמך שולחת את התמונות ל־AI רק בלחיצה.','المستندات والإيصالات: تفاصيل الإيصالات تُحفظ على الجهاز، والصور في التخزين الداخلي للمتصفح (IndexedDB) – ليس في الوضع الخاص أو الحساب المشفّر. فحص المستند يرسل الصور للذكاء الاصطناعي فقط عند الضغط.','Documents & receipts: receipt details are kept on the device and photos in the browser\'s own storage (IndexedDB) – not in private mode or an encrypted account. A document check sends photos to the AI only when you tap.'],
+});
+/* 13.22: family, trips & events, savings & investments */
+Object.assign(T, {
+  tab_household:['משפחה','العائلة','Family'], d_household:['תקציב משותף לזוג בלי שרת – הודעה מוצפנת עם קוד – ודמי כיס לילדים עם יעד חיסכון.','ميزانية مشتركة للزوجين بلا خادم – رسالة مشفّرة برمز – ومصروف للأطفال مع هدف ادخار.','A shared couple budget with no server – an encrypted message with a code – and kids\' pocket money with a savings goal.'],
+  hh_t_couple:['תקציב זוגי','ميزانية الزوجين','Couple budget'], hh_t_kids:['דמי כיס','المصروف','Pocket money'],
+  hh_intro:['כל אחד מנהל את ההוצאות שלו בטלפון. פעם בכמה זמן שולחים זה לזה הודעה מוצפנת – ורואים יחד מי שילם כמה ומי חייב למי.','كل واحد يدير مصاريفه في هاتفه. من حين لآخر ترسلون لبعضكم رسالة مشفّرة – وترون معًا من دفع كم ومن يدين لمن.','Each of you keeps expenses on your own phone. Now and then you send each other an encrypted message – and see together who paid what and who owes whom.'],
+  hh_me:['השם שלי (יוצג לבן/בת הזוג)','اسمي (يظهر للشريك)','My name (shown to my partner)'], hh_mePh:['למשל: דנה','مثلًا: دانة','e.g. Dana'], hh_rule:['איך מתחלקים','كيف نتقاسم','How to split'], hh_rHalf:['חצי־חצי','نصف بنصف','Half and half'], hh_rInc:['לפי ההכנסה','حسب الدخل','By income'],
+  hh_month:['{m}','{m}','{m}'], hh_even:['מאוזנים – אף אחד לא חייב','متوازنون – لا أحد مدين','Even – nobody owes'], hh_owesMe:['{n} חייב/ת לך {m}','{n} مدين/ة لك بـ{m}','{n} owes you {m}'], hh_iOwe:['את/ה חייב/ת ל{n} {m}','أنت مدين/ة لـ{n} بـ{m}','You owe {n} {m}'],
+  hh_sum:['אני: {a} · {n}: {b} · החלק שלי {p}%','أنا: {a} · {n}: {b} · حصتي {p}%','Me: {a} · {n}: {b} · my share {p}%'], hh_partner:['בן/בת הזוג','الشريك/ة','Partner'], hh_got:['התקבלו {c} הוצאות מ{n} ({d})','وصلت {c} مصاريف من {n} ({d})','Received {c} expenses from {n} ({d})'],
+  hh_send:['לשלוח את ההוצאות שלי','إرسال مصاريفي','Send my expenses'], hh_sendH:['נוצרת הודעה מוצפנת עם ההוצאות של החודשיים האחרונים. בלי הקוד אי אפשר לפתוח אותה.','تُنشأ رسالة مشفّرة بمصاريف آخر شهرين. بدون الرمز لا يمكن فتحها.','An encrypted message with the last two months\' expenses is made. Without the code nobody can open it.'],
+  hh_mk:['יצירת הודעה מוצפנת','إنشاء رسالة مشفّرة','Make an encrypted message'], hh_code:['קוד','الرمز','Code'], hh_codeH:['שלחו את ההודעה ואת הקוד בנפרד (למשל הודעה בוואטסאפ וקוד בשיחה).','أرسلوا الرسالة والرمز بشكل منفصل (مثلًا الرسالة بواتساب والرمز بمكالمة).','Send the message and the code separately (e.g. the message on WhatsApp, the code by phone).'], hh_qrA:['קוד QR של ההודעה','رمز QR للرسالة','QR code of the message'], hh_copy:['העתקת ההודעה','نسخ الرسالة','Copy the message'], hh_shareT:['הוצאות משותפות','مصاريف مشتركة','Shared expenses'],
+  hh_recv:['לקבל הוצאות מבן/בת הזוג','استقبال مصاريف الشريك','Receive your partner\'s expenses'], hh_paste:['הדביקו כאן את ההודעה','الصقوا الرسالة هنا','Paste the message here'], hh_openB:['פתיחה','فتح','Open'], hh_forget:['מחיקת הנתונים של בן/בת הזוג','حذف بيانات الشريك','Delete partner\'s data'],
+  hh_ok:['התקבלו {n} הוצאות.','وصلت {n} مصاريف.','{n} expenses received.'], hh_badPkg:['זו לא הודעה של האפליקציה.','هذه ليست رسالة من التطبيق.','That isn\'t a message from the app.'], hh_badCode:['הקוד לא מתאים להודעה.','الرمز لا يطابق الرسالة.','The code doesn\'t match the message.'],
+  hh_priv:['ההודעה מוצפנת בטלפון ואין שום שרת באמצע. ההוצאות של בן/בת הזוג נשמרות רק אצלך ואפשר למחוק אותן בכל רגע.','الرسالة مشفّرة في الهاتف ولا يوجد خادم في الوسط. مصاريف الشريك تُحفظ عندك فقط ويمكن حذفها في أي وقت.','The message is encrypted on the phone and there\'s no server in between. Your partner\'s expenses are kept only on your phone and can be deleted any time.'],
+  hh_kIntro:['דמי כיס שבועיים, חיסכון למשהו שהילד רוצה, ומעקב פשוט אחרי כל הוצאה. טוב ללמוד על כסף מגיל צעיר.','مصروف أسبوعي، وادخار لشيء يريده الطفل، ومتابعة بسيطة لكل مصروف. جيد لتعلم المال من سن صغيرة.','Weekly pocket money, saving for something the child wants, and a simple record of each spend. A good way to learn about money early.'],
+  hh_kName:['שם','الاسم','Name'], hh_kWeek:['דמי כיס בשבוע','المصروف الأسبوعي','Pocket money a week'], hh_kGoalN:['חוסך/ת בשביל','يدّخر من أجل','Saving for'], hh_kGoalPh:['למשל: אופניים','مثلًا: دراجة','e.g. A bike'], hh_kGoal:['כמה זה עולה','كم يكلّف','What it costs'],
+  hh_kDone:['הגיע/ה ליעד: {g} 🎉','وصل/ت إلى الهدف: {g} 🎉','Goal reached: {g} 🎉'], hh_kLeft:['חסרים {m} – בערך {w} שבועות','ينقص {m} – نحو {w} أسابيع','{m} to go – about {w} weeks'], hh_kNoGoal:['הוסיפו יעד כדי לראות כמה זמן נשאר','أضيفوا هدفًا لرؤية كم بقي','Add a goal to see how long it takes'],
+  hh_kPay:['דמי כיס השבוע','مصروف هذا الأسبوع','This week\'s money'], hh_kAdd:['הפקדה','إيداع','Add money'], hh_kSpend:['הוצאה','مصروف','Spend'], hh_kAddQ:['כמה להוסיף?','كم تضيف؟','How much to add?'], hh_kSpendQ:['כמה הוציא/ה?','كم صرف/ت؟','How much was spent?'], hh_kNoMoney:['אין מספיק כסף בקופה','لا يوجد مال كافٍ في الحصّالة','Not enough money saved'], hh_kWhat:['על מה?','على ماذا؟','On what?'],
+  hh_kNone:['עוד לא הוספתם ילד.','لم تضيفوا طفلًا بعد.','No child added yet.'], hh_kNew:['ילד/ה','طفل/ة','Add a child'], hh_kTipsH:['רעיונות','أفكار','Ideas'],
+  hh_kt1:['יעד ברור','هدف واضح','A clear goal'], hh_kt1P:['תמונה של מה שחוסכים בשבילו עוזרת להתאפק.','صورة لما يُدّخر من أجله تساعد على الصبر.','A picture of what they\'re saving for helps them wait.'],
+  hh_kt2:['שלוש קופות','ثلاثة حصّالات','Three jars'], hh_kt2P:['לבזבז, לחסוך ולתת – חלוקה פשוטה של כל סכום.','للإنفاق والادخار والعطاء – تقسيم بسيط لكل مبلغ.','Spend, save and give – a simple split of every amount.'],
+  hh_kt3:['קנייה ביחד','الشراء معًا','Shop together'], hh_kt3P:['השוואת מחירים בסופר היא שיעור כסף מעולה.','مقارنة الأسعار في السوبر درس مالي ممتاز.','Comparing prices at the supermarket is a great money lesson.'],
+  tab_travel:['טיולים ואירועים','رحلات ومناسبات','Trips & events'], d_travel:['תקציב לטיול עם הוצאות במטבע המקומי בשער חי, ותקציב לאירוע – עלות, מתנות צפויות ונקודת איזון.','ميزانية رحلة مع مصاريف بالعملة المحلية بسعر حي، وميزانية مناسبة – الكلفة والهدايا المتوقعة ونقطة التعادل.','A trip budget with spending in the local currency at live rates, and an event budget – cost, expected gifts and break-even.'],
+  tv_t_trip:['טיול','رحلة','Trip'], tv_t_event:['אירוע','مناسبة','Event'],
+  tv_intro:['בחרו מדינה, תאריכים ותקציב. כל הוצאה בטיול נכנסת גם למסך ההוצאות, במטבע המקומי, ומומרת לשקלים לפי השער.','اختاروا البلد والتواريخ والميزانية. كل مصروف في الرحلة يدخل أيضًا إلى شاشة المصاريف بالعملة المحلية ويُحوَّل للشيكل.','Pick a country, dates and a budget. Every trip expense also goes into the expenses screen, in the local currency, converted to shekels.'],
+  tv_cc:['מדינה','البلد','Country'], tv_bud:['תקציב','الميزانية','Budget'], tv_from:['מתאריך','من تاريخ','From'], tv_to:['עד תאריך','حتى تاريخ','To'], tv_days:['{n} ימים','{n} أيام','{n} days'],
+  tv_left:['נשארו {m} · {d} ליום','تبقّى {m} · {d} لليوم','{m} left · {d} a day'], tv_over:['חריגה של {m}','تجاوز بـ{m}','Over by {m}'], tv_noBud:['הוסיפו תקציב כדי לראות כמה נשאר','أضيفوا ميزانية لرؤية كم بقي','Add a budget to see what\'s left'], tv_rate:['1 {c} = {r} ₪','1 {c} = {r} ₪','1 {c} = {r} ₪'],
+  tv_addH:['הוצאה בטיול','مصروف في الرحلة','A trip expense'], tv_amt:['סכום','المبلغ','Amount'], tv_add:['הוספה','إضافة','Add'], tv_none:['עוד אין הוצאות בטיול הזה.','لا مصاريف في هذه الرحلة بعد.','No expenses on this trip yet.'], tv_pick:['בחרו מדינה ותאריך התחלה.','اختاروا البلد وتاريخ البداية.','Pick a country and a start date.'],
+  tv_note2:['השערים מתעדכנים מהמקורות הרשמיים. חיוב בכרטיס אשראי בחו״ל כולל לרוב עמלת המרה של הבנק.','الأسعار تتحدث من المصادر الرسمية. الدفع بالبطاقة في الخارج يشمل غالبًا عمولة تحويل من البنك.','Rates update from the official sources. Card payments abroad usually include a bank conversion fee.'],
+  tv_evIntro:['כמה יעלה האירוע, כמה צפוי לחזור במתנות, והאם האירוע "מחזיר את עצמו".','كم ستكلّف المناسبة، وكم يُتوقع أن يعود بالهدايا، وهل "تغطي نفسها".','What the event will cost, what\'s likely to come back in gifts, and whether it "pays for itself".'],
+  tv_guests:['מוזמנים','المدعوون','Invited guests'], tv_att:['כמה יגיעו','كم سيحضر','Expected to come'], tv_pp:['מחיר מנה לאורח','سعر الوجبة للضيف','Price per guest'], tv_gift:['מתנה ממוצעת לזוג','الهدية المتوسطة للزوجين','Average gift per couple'],
+  tv_extras:['עוד עלויות','تكاليف أخرى','Other costs'], tv_x_venue:['אולם ומנות','القاعة والوجبات','Venue and meals'], tv_x_photo:['צילום','تصوير','Photography'], tv_x_music:['מוזיקה / די ג׳יי','موسيقى / دي جي','Music / DJ'], tv_x_dress:['לבוש','الملابس','Clothes'], tv_x_flowers:['עיצוב ופרחים','تزيين وورود','Decor and flowers'], tv_x_rabbi:['רב / טקס','رجل دين / مراسم','Officiant / ceremony'], tv_x_invites:['הזמנות','الدعوات','Invitations'], tv_x_other:['אחר','أخرى','Other'],
+  tv_evPlus:['צפוי עודף','فائض متوقع','Expected surplus'], tv_evMinus:['צפוי מימון עצמי של','تمويل ذاتي متوقع بقيمة','Expected out of pocket'], tv_evSub:['עלות {c} · מתנות {g} · {n} אורחים','الكلفة {c} · الهدايا {g} · {n} ضيفًا','Cost {c} · gifts {g} · {n} guests'],
+  tv_perGuest:['עלות לאורח','الكلفة للضيف','Cost per guest'], tv_breakEven:['מתנה לזוג שמכסה את העלות','هدية للزوجين تغطي الكلفة','A gift per couple that covers the cost'],
+  tv_evNote:['המתנות הן הערכה; כמה לתת באירוע של אחרים –','الهدايا تقديرية؛ كم تعطي في مناسبات الآخرين –','Gifts are an estimate; how much to give at others\' events –'],
+  tab_portfolio:['חסכונות והשקעות','المدخرات والاستثمار','Savings & investments'], d_portfolio:['כל החסכונות במפה אחת – פנסיה, השתלמות, גמל, חיסכון לילד, פיקדונות – ותיק השקעות עם פיזור ואזהרות.','كل المدخرات في خريطة واحدة – تقاعد واستكمال وتوفير وتوفير للطفل وودائع – ومحفظة استثمار مع التوزيع والتحذيرات.','All your savings on one map – pension, study fund, provident, kids\' savings, deposits – and a portfolio with allocation and warnings.'],
+  pf_t_map:['מפת החסכונות','خريطة المدخرات','Savings map'], pf_t_hold:['תיק השקעות','محفظة الاستثمار','Portfolio'],
+  pf_mapIntro:['הוסיפו כל חיסכון שיש לכם (את היתרות מוצאים בדוח השנתי או באתר הקרן). דמי ניהול גבוהים מסומנים.','أضيفوا كل ادخار لديكم (الأرصدة في التقرير السنوي أو موقع الصندوق). رسوم الإدارة المرتفعة مُعلّمة.','Add every saving you have (balances are on the annual report or the fund\'s site). High management fees are flagged.'],
+  pf_s_pension:['קרן פנסיה','صندوق تقاعد','Pension fund'], pf_s_hish:['קרן השתלמות','صندوق استكمال','Study fund'], pf_s_gemel:['קופת גמל','صندوق توفير','Provident fund'], pf_s_kids:['חיסכון לכל ילד','توفير لكل طفل','Kids\' savings'], pf_s_deposit:['פיקדון','وديعة','Deposit'], pf_s_mmf:['קרן כספית','صندوق نقدي','Money-market fund'], pf_s_broker:['תיק מניות','محفظة أسهم','Brokerage'], pf_s_crypto:['קריפטו','عملات مشفرة','Crypto'], pf_s_cash:['עו״ש / מזומן','حساب جارٍ / نقد','Current account / cash'], pf_s_other:['אחר','أخرى','Other'],
+  pf_type:['סוג','النوع','Type'], pf_name:['שם הקרן / הגוף','اسم الصندوق / الجهة','Fund / provider'], pf_namePh:['למשל: מגדל','مثلًا: مغدال','e.g. Migdal'], pf_bal:['יתרה','الرصيد','Balance'], pf_fee:['דמי ניהול מהצבירה','رسوم الإدارة من التراكم','Fee on savings'], pf_dep:['הפקדה חודשית','إيداع شهري','Monthly deposit'],
+  pf_feeHi:['דמי הניהול גבוהים מהמקובל (כ־{f}%) – הורדה תחסוך כ־{y} בשנה.','رسوم الإدارة أعلى من المعتاد (نحو {f}%) – التخفيض يوفر نحو {y} سنويًا.','The fee is above the usual (about {f}%) – lowering it saves about {y} a year.'],
+  pf_none:['עוד לא הוספתם חסכונות.','لم تضيفوا مدخرات بعد.','No savings added yet.'], pf_tot:['סך כל החסכונות','إجمالي المدخرات','All savings'], pf_depTot:['הפקדות','الإيداعات','Deposits'], pf_feeTot:['דמי ניהול בשנה (מהצבירה)','رسوم الإدارة سنويًا (من التراكم)','Fees a year (on savings)'],
+  pf_mapNote:['"מקובל" לפי דמי ניהול נפוצים בשוק – אפשר לבקש הנחה מהקרן או לעבור.','"المعتاد" حسب الرسوم الشائعة في السوق – يمكن طلب خصم من الصندوق أو الانتقال.','"Usual" means common market fees – you can ask the fund for a discount or move.'],
+  pf_holdIntro:['רשמו את ההשקעות שלכם לפי שווי – והאפליקציה תראה את הפיזור לפי סוג ולפי מטבע, ותתריע על ריכוזיות.','سجّلوا استثماراتكم حسب القيمة – وسيعرض التطبيق التوزيع حسب النوع والعملة ويحذّر من التركّز.','Enter your investments by value – the app shows the split by type and currency, and warns about concentration.'],
+  pf_byType:['לפי סוג','حسب النوع','By type'], pf_byCur:['לפי מטבע','حسب العملة','By currency'],
+  pf_h_stockIL:['מניה ישראלית','سهم إسرائيلي','Israeli share'], pf_h_stockUS:['מניה זרה','سهم أجنبي','Foreign share'], pf_h_etf:['קרן סל / מחקה','صندوق مؤشر','Index fund / ETF'], pf_h_bond:['אג״ח','سندات','Bond'], pf_h_fund:['קרן נאמנות','صندوق استثمار','Mutual fund'], pf_h_crypto:['קריפטו','عملات مشفرة','Crypto'], pf_h_cash:['מזומן בתיק','نقد في المحفظة','Cash in account'], pf_h_other:['אחר','أخرى','Other'],
+  pf_hName:['שם / סימול','الاسم / الرمز','Name / ticker'], pf_hNamePh:['למשל: S&P 500','مثلًا: S&P 500','e.g. S&P 500'], pf_val:['שווי היום','القيمة اليوم','Value today'], pf_cur:['מטבע הנכס','عملة الأصل','Asset currency'], pf_curO:['אחר','أخرى','Other'],
+  pf_hNone:['עוד לא הוספתם השקעות.','لم تضيفوا استثمارات بعد.','No investments added yet.'], pf_hAdd:['השקעה','استثمار','Add an investment'],
+  pf_conc:['{n} הוא {p}% מהתיק','{n} يمثل {p}% من المحفظة','{n} is {p}% of the portfolio'], pf_concP:['השקעה אחת גדולה מגדילה את הסיכון. פיזור רחב (למשל קרן מחקה) מקטין אותו.','استثمار واحد كبير يزيد المخاطرة. التوزيع الواسع (مثل صندوق مؤشر) يقللها.','One big holding raises risk. Broad diversification (e.g. an index fund) lowers it.'],
+  pf_holdNote:['מידע כללי בלבד ולא ייעוץ השקעות.','معلومات عامة فقط وليست استشارة استثمارية.','General information only, not investment advice.'],
+  lg_p_dev14:['תובנות, זכויות, תכנון, משפחה, טיולים וחסכונות: כל הנתונים שמזינים נשמרים רק במכשיר. בתקציב הזוגי ההוצאות נשלחות רק כהודעה מוצפנת שאתם יוצרים ומעבירים בעצמכם.','الرؤى والحقوق والتخطيط والعائلة والرحلات والمدخرات: كل البيانات تُحفظ على الجهاز فقط. في ميزانية الزوجين تُرسل المصاريف فقط كرسالة مشفّرة تنشئونها وتنقلونها بأنفسكم.','Insights, rights, planning, family, trips and savings: everything you enter is kept on the device only. In the couple budget, expenses travel only as an encrypted message you make and pass on yourself.'],
+  lg_h_p2010:['20.10.2026 – נוסף הסבר על המסכים החדשים (תובנות, זכויות, תכנון, מסמכים, משפחה, טיולים וחסכונות).','20.10.2026 – أُضيف شرح عن الشاشات الجديدة.','20.10.2026 – added an explanation of the new screens (insights, rights, planning, documents, family, trips and savings).'],
+});
+/* 13.22: smarter results */
+Object.assign(T, {
+  cx_sens:['מה הכי משפיע על התוצאה','ما الذي يؤثر أكثر على النتيجة','What moves the result most'],
+  cx_sensHow:['כמה התוצאה הראשית משתנה כשמעלים כל שדה ב־10%:','كم تتغير النتيجة الرئيسية عند رفع كل حقل بنسبة 10%:','How much the main result changes when each field goes up by 10%:'],
+  cx_sensNone:['כאן אין שדה מספרי שמשנה את התוצאה הראשית.','لا يوجد هنا حقل رقمي يغيّر النتيجة الرئيسية.','No number field here changes the main result.'],
+  cx_all:['לשתף עם העוזר את התמונה הכוללת שלי (הוצאות, תזכורות, חסכונות)','مشاركة الصورة الكاملة مع المساعد (مصاريف، تذكيرات، مدخرات)','Share my whole picture with the assistant (spending, reminders, savings)'],
+  cx_allOn:['העוזר יראה את התמונה הכוללת כשתשאלו בבית או בהוצאות.','سيرى المساعد الصورة الكاملة عند السؤال في الرئيسية أو المصاريف.','The assistant will see the whole picture when you ask on Home or Spending.'],
+  cx_allOff:['העוזר יראה רק את המסך הנוכחי.','سيرى المساعد الشاشة الحالية فقط.','The assistant will see only the current screen.'],
+  lg_p_dev15:['שיתוף התמונה הכוללת עם העוזר כבוי כברירת מחדל. כשמדליקים אותו, סיכום של ההוצאות, התזכורות והחסכונות נשלח יחד עם השאלה למנוע ה־AI שבחרתם.','مشاركة الصورة الكاملة مع المساعد مطفأة افتراضيًا. عند تشغيلها يُرسل ملخص المصاريف والتذكيرات والمدخرات مع السؤال إلى محرك الذكاء الاصطناعي الذي اخترتموه.','Sharing the whole picture with the assistant is off by default. When it\'s on, a summary of spending, reminders and savings is sent with the question to the AI engine you chose.'],
+});
 
 const t = (k, p) => {
   let s = (TX && TX[k] != null && langIdx() === 2 && lang !== 'en') ? TX[k] : (T[k] || [k,k,k])[langIdx()];
@@ -5232,16 +5450,16 @@ Object.assign(RATES, {"AUD":1.4331,"BRL":5.0165,"CAD":1.4241,"CHF":0.83232,"CNY"
 META.unix = 1791894003; META.official = true;
 
 const GROUPS = [
-  ['g_main',    ['home','markets','saved','assist','settings']],
+  ['g_main',    ['home','insights','markets','saved','assist','settings']],
   ['g_job',     ['salary','empcost','selfemp','freelance','clients','overtime','leave','notice','severance','benefits','workgrant','reserve','carbenefit','joboffer','workdays','cv']],
-  ['g_taxes',   ['tax','taxrefund','taxfree','capital','rental','purchasetax','landtax','vat','arnona']],
+  ['g_taxes',   ['rights','tax','taxrefund','taxfree','capital','rental','purchasetax','landtax','vat','arnona']],
   ['g_credit',  ['loan','loancmp','prime','gooddebt','prepay','creditcard','debtplan','carlease']],
   ['g_realty',  ['mortgage','mortcmp','mortcap','refi','rentbuy']],
-  ['g_invest',  ['compound','savegoal','yield','dividends','avgcost','networth','kidsave','mmf','invfees','childallow']],
+  ['g_invest',  ['lifeplan','portfolio','compound','savegoal','yield','dividends','avgcost','networth','kidsave','mmf','invfees','childallow']],
   ['g_retire',  ['retire','pensfix','oldage','pencmp','mgmtfees','hishtalmut','fire','freedom']],
-  ['g_budget',  ['expenses','reminders','bankacc','smartsplit','split','unitprice','discount','appliance','elecsup','eventgift','fuelcalc','carcost','evfuel','breakeven']],
+  ['g_budget',  ['expenses','reminders','household','travel','bankacc','smartsplit','split','unitprice','discount','appliance','elecsup','eventgift','fuelcalc','carcost','evfuel','breakeven']],
   ['g_compare', ['insurance','cellcmp','phonecmp']],
-  ['g_fxtools', ['mathx','docscan','convert','inflation','cpilink','percent']]
+  ['g_fxtools', ['mathx','docscan','vault','convert','inflation','cpilink','percent']]
 ];
 const TABS = GROUPS.flatMap(g => g[1]);
 
@@ -5272,7 +5490,7 @@ function devLang(){
   return 'en';                                              // any other language: English
 }
 function langAuto(){ try { return !LS.getItem('fin-lang'); } catch (e) { return true; } }
-const SET_DEF = {photoAccess:'ask', slip:{}, slips:[], tf:{}, bk:{}, fu:{}, rm:{}, nt:{}, axZoom:100, axLinks:'0', axSpace:'0', axFocus:'0', axGray:'0', axCursor:'0', axBtn:'1', ixShow:'', ixCustom:[], tvOn:'0', sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', myGross:'', myKids:'', myBYear:'', myEq:'', persona:'all', shareLang:'ui', words:'1', enTerms:'0', plain:'0', tts:'1', voiceIn:'0', dfmt:'auto', wkStart:'auto', trFix:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
+const SET_DEF = {photoAccess:'ask', slip:{}, slips:[], tf:{}, bk:{}, fu:{}, rm:{}, nt:{}, ins:{}, rt:{}, lp:{}, vt:{}, hh:{}, tv:{}, pf:{}, axZoom:100, axLinks:'0', axSpace:'0', axFocus:'0', axGray:'0', axCursor:'0', axBtn:'1', ixShow:'', ixCustom:[], tvOn:'0', sound:'soft', tapSnd:'0', mvAlert:'1', mvPct:'2', kbLang:'0', design:'default', country:'', hfx:'1', mktLive:'1', inGroup:'1', ptMode:'auto', ptVal:'', clockStyle:'digital', clock24:'1', clockSec:'0', clockHeb:'1', clockHijri:'0', holAuto:'all', holMig:'1', myGross:'', myKids:'', myBYear:'', myEq:'', persona:'all', shareLang:'ui', words:'1', enTerms:'0', plain:'0', tts:'1', voiceIn:'0', dfmt:'auto', wkStart:'auto', trFix:'1', autoUpd:'1', aiEngine:'perplexity', aiNet:'1', pmName:'', pmStyle:'short', liveFx:'1', fxInt:'1', liveFiat:'1', liveCrypto:'1', boiDb:'1', autoRef:'5', src_boiFx:'1', src_boiInt:'1', src_cpi:'1', src_ecb:'1', src_binance:'1', theme:'system', start:'home', digits:'latn', dec:'auto', size:'m', vat:'18', sex:'m',
   accent:'gold', motion:'full', contrast:'normal', font:'default', sliders:'1', cpos:'auto', sep:'auto', compact:'0',
   fee:'', pens:'', study:'', erPens:'', erSev:'', erStudy:'', loanRate:'', invRate:'', cpi:'', infl:'', gainTax:'',
   dealer:'murshe', buyer:'first', dtax:'25', deptime:'end', capkind:'sec',
@@ -7322,6 +7540,18 @@ Object.assign(ICON, {
   carcost: ic('<path d="M5 17h14M6 17l1.5-5h9l1.5 5"/><circle cx="8" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/><path d="M17 4v5M15 6.5h4"/>'),
   arnona: ic('<path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/><path d="M15 3.5h4M17 1.5v4"/>')
 });
+/* ================= 13.22: topic screens – the panel shells (modules: ins, rt, lp, vt, hh, tv, pf) ================= */
+const HUB_IDS = ['insights', 'rights', 'lifeplan', 'vault', 'household', 'travel', 'portfolio'];
+const hubPanelHTML = id => `<section class="panel panel-flat tool-panel" id="panel-${id}" role="tabpanel" aria-labelledby="tab-${id}" hidden><div id="hr_${id}"></div></section>`;
+Object.assign(ICON, {
+  insights: ic('<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/><circle cx="19" cy="5" r="2"/>'),
+  rights: ic('<path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/>'),
+  lifeplan: ic('<path d="M3 20h18"/><path d="M5 20V10l4-3 4 3v10"/><path d="M15 20v-6l3-2 3 2v6"/><path d="M9 4V2M5 6 4 5M13 6l1-1"/>'),
+  vault: ic('<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/><path d="m15 17 1.5 1.5L19 16"/>'),
+  household: ic('<circle cx="8" cy="7" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M2 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><path d="M14 20c0-2.6 1.3-4.6 3-4.6s4 2 4 4.6"/>'),
+  travel: ic('<path d="M2 16l20-8-6 12-3-5z"/><path d="m13 15-4 4"/>'),
+  portfolio: ic('<circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 6.4"/><path d="M12 12H3"/>')
+});
 
 const navEl = $('#nav'), panelsEl = $('#panels');
 function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
@@ -7330,7 +7560,7 @@ function renderNav(){ navEl.innerHTML = viewGroups().map(([gk, ids]) =>
   }</div>`
 ).join(''); }
 renderNav();
-panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'saved' ? savedPanelHTML() : id === 'markets' ? marketsPanelHTML() : id === 'clients' ? clientsPanelHTML() : id === 'cv' ? cvPanelHTML() : id === 'mathx' ? mxPanelHTML() : id === 'docscan' ? dsPanelHTML() : id === 'taxfree' ? tfPanelHTML() : id === 'bankacc' ? bkPanelHTML() : id === 'fuelcalc' ? fuPanelHTML() : id === 'reminders' ? rmPanelHTML() : ['elecsup', 'eventgift', 'carcost', 'arnona'].includes(id) ? ntPanelHTML(id) : panelHTML(id)).join('');
+panelsEl.innerHTML = TABS.map(id => id === 'percent' ? percentPanelHTML() : id === 'home' ? homePanelHTML() : id === 'settings' ? settingsPanelHTML() : id === 'assist' ? assistPanelHTML() : id === 'expenses' ? expensesPanelHTML() : id === 'saved' ? savedPanelHTML() : id === 'markets' ? marketsPanelHTML() : id === 'clients' ? clientsPanelHTML() : id === 'cv' ? cvPanelHTML() : id === 'mathx' ? mxPanelHTML() : id === 'docscan' ? dsPanelHTML() : id === 'taxfree' ? tfPanelHTML() : id === 'bankacc' ? bkPanelHTML() : id === 'fuelcalc' ? fuPanelHTML() : id === 'reminders' ? rmPanelHTML() : ['elecsup', 'eventgift', 'carcost', 'arnona'].includes(id) ? ntPanelHTML(id) : HUB_IDS.includes(id) ? hubPanelHTML(id) : panelHTML(id)).join('');
 
 /* ================= language ================= */
 function updateHead(){
@@ -11714,8 +11944,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.21", "date": "2026-10-20", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261020.013405';
+var CHANGELOG = [{"v": "13.22", "date": "2026-10-20", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261020.113028';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -13755,7 +13985,7 @@ applyLang = function(){ const r = _alFg.apply(this, arguments); fgRender(); lvRe
 figApply(true);
 
 /* ================= live indices: official price indices and market indices, used across the app and editable ================= */
-var IX_BUILT = {"idx":{"cpi":{"code":"120010","name":"Consumer Price Index - General","m":"2026-09","v":105.3,"base":"Average 2024","mom":-0.5,"yoy":1.6,"ytd":1.64,"hist":[["2005-01",70.6175],["2005-02",70.7588],["2005-03",70.6175],["2005-04",71.1119],["2005-05",71.3237],["2005-06",71.3943],["2005-07",72.1711],["2005-08",72.3124],["2005-09",72.383],["2005-10",72.9479],["2005-11",72.8773],["2005-12",72.7361],["2006-01",72.5242],["2006-02",72.9479],["2006-03",73.1598],["2006-04",73.7953],["2006-05",73.7953],["2006-06",73.8659],["2006-07",73.9366],["2006-08",73.9366],["2006-09",73.301],["2006-10",72.8067],["2006-11",72.6654],["2006-12",72.6654],["2007-01",72.5928],["2007-02",72.3728],["2007-03",72.5195],["2007-04",72.8861],["2007-05",72.8861],["2007-06",73.3994],["2007-07",74.206],["2007-08",74.7192],["2007-09",74.3526],["2007-10",74.4259],["2007-11",74.7192],["2007-12",75.1592],["2008-01",75.1592],["2008-02",75.0125],["2008-03",75.2325],["2008-04",76.3324],["2008-05",76.8457],["2008-06",76.919],["2008-07",77.7989],["2008-08",78.4589],["2008-09",78.4589],["2008-10",78.5322],["2008-11",78.0922],["2008-12",78.0189],["2009-01",77.6288],["2009-02",77.5517],["2009-03",77.9372],["2009-04",78.7081],["2009-05",79.0164],["2009-06",79.7102],["2009-07",80.5582],["2009-08",80.9436],["2009-09",80.7124],["2009-10",80.8666],["2009-11",81.0978],["2009-12",81.0978],["2010-01",80.5582],["2010-02",80.3269],["2010-03",80.404],["2010-04",81.0978],["2010-05",81.4062],["2010-06",81.6375],["2010-07",82.0229],["2010-08",82.4083],["2010-09",82.6396],["2010-10",82.8709],["2010-11",82.948],["2010-12",83.2563],["2011-01",83.4228],["2011-02",83.6682],["2011-03",83.8318],["2011-04",84.3225],["2011-05",84.7314],["2011-06",85.0586],["2011-07",84.8132],["2011-08",85.2222],["2011-09",85.0586],["2011-10",85.1404],["2011-11",85.0586],["2011-12",85.0586],["2012-01",85.0586],["2012-02",85.0586],["2012-03",85.3857],["2012-04",86.1218],["2012-05",86.1218],["2012-06",85.8764],["2012-07",85.9582],["2012-08",86.8579],["2012-09",86.8579],["2012-10",86.6943],["2012-11",86.2854],["2012-12",86.449],["2013-01",86.2761],["2013-02",86.2761],["2013-03",86.4481],["2013-04",86.7922],["2013-05",86.8782],["2013-06",87.5663],["2013-07",87.8244],["2013-08",87.9964],["2013-09",87.9964],["2013-10",88.2545],["2013-11",87.9104],["2013-12",87.9964],["2014-01",87.4803],["2014-02",87.3083],["2014-03",87.5663],["2014-04",87.6523],["2014-05",87.7384],["2014-06",87.9964],["2014-07",88.0824],["2014-08",87.9964],["2014-09",87.7384],["2014-10",87.9964],["2014-11",87.8244],["2014-12",87.8244],["2015-01",87.034],["2015-02",86.4198],["2015-03",86.683],["2015-04",87.2094],["2015-05",87.3849],["2015-06",87.6481],["2015-07",87.8236],["2015-08",87.6481],["2015-09",87.2972],["2015-10",87.3849],["2015-11",87.034],["2015-12",86.9462],["2016-01",86.5076],["2016-02",86.2443],["2016-03",86.0689],["2016-04",86.4198],["2016-05",86.683],["2016-06",86.9462],["2016-07",87.2972],["2016-08",87.034],["2016-09",86.9462],["2016-10",87.1217],["2016-11",86.7708],["2016-12",86.7708],["2017-01",86.5972],["2017-02",86.5972],["2017-03",86.8575],["2017-04",87.0311],["2017-05",87.3782],["2017-06",86.7708],["2017-07",86.684],["2017-08",86.9443],["2017-09",87.0311],["2017-10",87.2914],["2017-11",87.0311],["2017-12",87.1178],["2018-01",86.684],["2018-02",86.7708],["2018-03",87.0311],["2018-04",87.3782],["2018-05",87.812],["2018-06",87.8988],["2018-07",87.8988],["2018-08",87.9855],["2018-09",88.0723],["2018-10",88.3326],["2018-11",88.0723],["2018-12",87.812],["2019-01",87.7242],["2019-02",87.8118],["2019-03",88.25],["2019-04",88.5129],["2019-05",89.1264],["2019-06",88.6006],["2019-07",88.3377],["2019-08",88.5129],["2019-09",88.3377],["2019-10",88.6882],["2019-11",88.3377],["2019-12",88.3377],["2020-01",87.9871],["2020-02",87.8995],["2020-03",88.25],["2020-04",87.9871],["2020-05",87.7242],["2020-06",87.6366],["2020-07",87.8118],["2020-08",87.8118],["2020-09",87.7242],["2020-10",87.9871],["2020-11",87.8118],["2020-12",87.7242],["2021-01",87.6365],["2021-02",87.9002],["2021-03",88.4276],["2021-04",88.6913],["2021-05",89.0429],["2021-06",89.1308],["2021-07",89.4824],["2021-08",89.7461],["2021-09",89.9219],["2021-10",90.0098],["2021-11",89.9219],["2021-12",90.1856],["2022-01",90.3614],["2022-02",90.9767],["2022-03",91.5041],["2022-04",92.2073],["2022-05",92.7347],["2022-06",93.0863],["2022-07",94.1411],["2022-08",93.8774],["2022-09",94.0532],["2022-10",94.5806],["2022-11",94.6685],["2022-12",94.9322],["2023-01",95.217],["2023-02",95.6824],["2023-03",96.0547],["2023-04",96.7993],["2023-05",96.9854],["2023-06",96.9854],["2023-07",97.2647],["2023-08",97.73],["2023-09",97.637],["2023-10",98.1023],["2023-11",97.8231],["2023-12",97.73],["2024-01",97.73],["2024-02",98.1023],["2024-03",98.6608],["2024-04",99.4985],["2024-05",99.6846],["2024-06",99.7777],["2024-07",100.3362],["2024-08",101.2669],["2024-09",101.0808],["2024-10",101.5462],["2024-11",101.1739],["2024-12",100.8946],["2025-01",101.5],["2025-02",101.5],["2025-03",102.0],["2025-04",103.1],["2025-05",102.8],["2025-06",103.1],["2025-07",103.5],["2025-08",104.2],["2025-09",103.6],["2025-10",104.1],["2025-11",103.6],["2025-12",103.6],["2026-01",103.3],["2026-02",103.5],["2026-03",103.9],["2026-04",105.1],["2026-05",104.8],["2026-06",104.8],["2026-07",105.1],["2026-08",105.8],["2026-09",105.3]]},"build":{"code":"200010","name":"Price index of input in residential building - general","m":"2026-09","v":104.0,"base":"July 2025","mom":0.1,"yoy":3.6,"ytd":2.77,"hist":[["2005-01",56.8937],["2005-02",56.9482],["2005-03",57.1117],["2005-04",57.2752],["2005-05",57.3842],["2005-06",57.6566],["2005-07",59.2915],["2005-08",60.8719],["2005-09",61.0354],["2005-10",60.7084],["2005-11",60.1635],["2005-12",59.782],["2006-01",60.4904],["2006-02",60.7084],["2006-03",61.0354],["2006-04",61.4714],["2006-05",61.8528],["2006-06",62.4523],["2006-07",62.9972],["2006-08",63.4332],["2006-09",63.7057],["2006-10",63.4877],["2006-11",63.4877],["2006-12",63.3242],["2007-01",63.9237],["2007-02",64.0327],["2007-03",64.1962],["2007-04",64.1962],["2007-05",64.0872],["2007-06",64.5231],["2007-07",65.2316],["2007-08",65.3951],["2007-09",65.4496],["2007-10",65.3406],["2007-11",65.2861],["2007-12",65.2861],["2008-01",65.5585],["2008-02",65.2861],["2008-03",65.4496],["2008-04",66.3215],["2008-05",67.3569],["2008-06",68.0654],["2008-07",69.1553],["2008-08",69.2643],["2008-09",68.8283],["2008-10",67.6839],["2008-11",67.5204],["2008-12",67.4114],["2009-01",67.0844],["2009-02",67.0844],["2009-03",67.0844],["2009-04",67.1389],["2009-05",67.1389],["2009-06",67.1934],["2009-07",67.4114],["2009-08",67.3569],["2009-09",67.3569],["2009-10",67.1934],["2009-11",67.3024],["2009-12",67.4114],["2010-01",67.6294],["2010-02",67.9564],["2010-03",68.3923],["2010-04",68.9918],["2010-05",69.1553],["2010-06",68.9918],["2010-07",68.9373],["2010-08",69.2643],["2010-09",69.3733],["2010-10",69.4278],["2010-11",69.6457],["2010-12",70.0272],["2011-01",70.4632],["2011-02",70.8991],["2011-03",70.8991],["2011-04",70.8991],["2011-05",71.4441],["2011-06",71.9346],["2011-07",72.0981],["2011-08",72.3143],["2011-09",72.5306],["2011-10",72.6027],["2011-11",72.7469],["2011-12",72.6748],["2012-01",72.8911],["2012-02",73.2516],["2012-03",73.4679],["2012-04",73.9726],["2012-05",74.0447],["2012-06",74.261],["2012-07",74.4773],["2012-08",74.7657],["2012-09",74.7657],["2012-10",74.7657],["2012-11",74.982],["2012-12",75.0541],["2013-01",75.4146],["2013-02",75.5588],["2013-03",75.5588],["2013-04",75.4146],["2013-05",75.6309],["2013-06",75.7751],["2013-07",75.7751],["2013-08",75.8472],["2013-09",75.9913],["2013-10",76.0634],["2013-11",76.1355],["2013-12",76.1355],["2014-01",76.3518],["2014-02",76.3518],["2014-03",76.2797],["2014-04",76.3518],["2014-05",76.4239],["2014-06",76.3518],["2014-07",76.2797],["2014-08",76.3518],["2014-09",76.2797],["2014-10",76.496],["2014-11",76.6402],["2014-12",76.7123],["2015-01",76.7844],["2015-02",76.7123],["2015-03",76.8565],["2015-04",76.8565],["2015-05",76.8565],["2015-06",76.8565],["2015-07",76.9286],["2015-08",77.0728],["2015-09",77.1449],["2015-10",77.217],["2015-11",77.1449],["2015-12",77.4333],["2016-01",77.6496],["2016-02",77.5054],["2016-03",77.5054],["2016-04",77.7217],["2016-05",77.8659],["2016-06",77.938],["2016-07",78.2264],["2016-08",78.2264],["2016-09",78.4427],["2016-10",78.4427],["2016-11",78.5869],["2016-12",78.5869],["2017-01",78.5869],["2017-02",78.7311],["2017-03",78.7311],["2017-04",78.8753],["2017-05",78.8753],["2017-06",79.0195],["2017-07",79.1637],["2017-08",79.5242],["2017-09",79.6683],["2017-10",79.8125],["2017-11",79.8846],["2017-12",80.1009],["2018-01",80.5335],["2018-02",80.7498],["2018-03",80.8219],["2018-04",81.0382],["2018-05",81.1103],["2018-06",81.1824],["2018-07",81.3987],["2018-08",81.5429],["2018-09",81.5429],["2018-10",81.615],["2018-11",81.615],["2018-12",81.6871],["2019-01",82.1918],["2019-02",82.2639],["2019-03",82.2639],["2019-04",82.336],["2019-05",82.4081],["2019-06",82.4081],["2019-07",82.4081],["2019-08",82.4802],["2019-09",82.4802],["2019-10",82.4081],["2019-11",82.4081],["2019-12",82.5523],["2020-01",82.6965],["2020-02",82.6965],["2020-03",82.8407],["2020-04",82.7686],["2020-05",82.6965],["2020-06",82.6965],["2020-07",82.6965],["2020-08",82.7686],["2020-09",82.6965],["2020-10",82.6244],["2020-11",82.6244],["2020-12",82.9849],["2021-01",83.4895],["2021-02",83.6337],["2021-03",84.0663],["2021-04",84.7152],["2021-05",85.292],["2021-06",85.7967],["2021-07",86.013],["2021-08",86.5177],["2021-09",86.734],["2021-10",86.9503],["2021-11",87.3828],["2021-12",87.5991],["2022-01",88.3201],["2022-02",88.7527],["2022-03",89.6179],["2022-04",90.4831],["2022-05",90.9156],["2022-06",91.4203],["2022-07",91.8529],["2022-08",91.925],["2022-09",91.925],["2022-10",91.925],["2022-11",91.7808],["2022-12",91.7808],["2023-01",92.8623],["2023-02",92.7181],["2023-03",92.9344],["2023-04",93.2228],["2023-05",93.1507],["2023-06",93.4391],["2023-07",93.2228],["2023-08",93.2949],["2023-09",93.367],["2023-10",93.5112],["2023-11",93.5833],["2023-12",93.5833],["2024-01",93.8717],["2024-02",93.6554],["2024-03",93.8717],["2024-04",93.7996],["2024-05",94.2322],["2024-06",94.5926],["2024-07",94.9531],["2024-08",95.1694],["2024-09",95.5299],["2024-10",95.7462],["2024-11",96.0346],["2024-12",96.323],["2025-01",98.8464],["2025-02",99.279],["2025-03",99.6395],["2025-04",99.7837],["2025-05",99.9279],["2025-06",99.9279],["2025-07",100.0],["2025-08",100.4],["2025-09",100.4],["2025-10",100.5],["2025-11",101.1],["2025-12",101.2],["2026-01",101.3],["2026-02",101.5],["2026-03",101.7],["2026-04",102.8],["2026-05",103.4],["2026-06",103.6],["2026-07",103.5],["2026-08",103.9],["2026-09",104.0]]},"house":{"code":"40010","name":"Prices of Dwellings","m":"2026-07","v":590.0,"base":"Average 1993","mom":-0.6,"yoy":-1.8,"ytd":-1.7,"hist":[["2015-01",354.8],["2015-02",358.3],["2015-03",360.6],["2015-04",361.5],["2015-05",364.5],["2015-06",368.3],["2015-07",369.2],["2015-08",369.0],["2015-09",371.3],["2015-10",374.4],["2015-11",377.5],["2015-12",380.4],["2016-01",381.4],["2016-02",384.0],["2016-03",389.1],["2016-04",390.2],["2016-05",391.1],["2016-06",393.4],["2016-07",396.1],["2016-08",399.9],["2016-09",404.2],["2016-10",404.4],["2016-11",402.8],["2016-12",402.1],["2017-01",402.8],["2017-02",404.9],["2017-03",406.8],["2017-04",407.7],["2017-05",409.5],["2017-06",412.8],["2017-07",414.3],["2017-08",415.9],["2017-09",414.6],["2017-10",414.5],["2017-11",411.9],["2017-12",407.8],["2018-01",406.3],["2018-02",405.9],["2018-03",406.5],["2018-04",406.2],["2018-05",409.2],["2018-06",410.5],["2018-07",408.1],["2018-08",407.4],["2018-09",406.6],["2018-10",405.8],["2018-11",405.5],["2018-12",404.7],["2019-01",408.3],["2019-02",409.6],["2019-03",410.8],["2019-04",412.9],["2019-05",414.1],["2019-06",413.7],["2019-07",414.9],["2019-08",414.5],["2019-09",416.6],["2019-10",418.7],["2019-11",419.1],["2019-12",421.6],["2020-01",423.7],["2020-02",424.1],["2020-03",423.7],["2020-04",420.7],["2020-05",422.0],["2020-06",426.2],["2020-07",426.2],["2020-08",426.6],["2020-09",427.9],["2020-10",431.8],["2020-11",435.7],["2020-12",438.3],["2021-01",439.2],["2021-02",442.7],["2021-03",448.5],["2021-04",452.1],["2021-05",454.4],["2021-06",459.9],["2021-07",465.4],["2021-08",467.3],["2021-09",471.0],["2021-10",477.6],["2021-11",485.7],["2021-12",495.9],["2022-01",503.8],["2022-02",511.9],["2022-03",517.0],["2022-04",525.3],["2022-05",536.3],["2022-06",543.8],["2022-07",553.6],["2022-08",559.7],["2022-09",565.3],["2022-10",567.0],["2022-11",567.6],["2022-12",568.7],["2023-01",568.7],["2023-02",568.7],["2023-03",567.6],["2023-04",564.8],["2023-05",561.4],["2023-06",560.3],["2023-07",559.2],["2023-08",558.6],["2023-09",557.5],["2023-10",554.7],["2023-11",558.0],["2023-12",563.0],["2024-01",569.2],["2024-02",574.9],["2024-03",579.5],["2024-04",583.6],["2024-05",587.1],["2024-06",591.8],["2024-07",593.0],["2024-08",592.4],["2024-09",593.6],["2024-10",596.6],["2024-11",599.0],["2024-12",606.2],["2025-01",609.8],["2025-02",608.6],["2025-03",607.4],["2025-04",605.0],["2025-05",602.6],["2025-06",602.0],["2025-07",600.8],["2025-08",597.2],["2025-09",593.0],["2025-10",596.0],["2025-11",600.8],["2025-12",600.2],["2026-01",599.6],["2026-02",602.0],["2026-03",599.6],["2026-04",592.4],["2026-05",593.0],["2026-06",593.6],["2026-07",590.0]]}},"mkt":{"asOf":1792445662,"src":"cnbc","items":{"dji":{"n":"Dow Jones","sym":".DJI","p":51966.03,"pc":52002.41,"chp":-0.07,"t":1792442665,"cur":"USD","rt":true,"a":{"y1":[1759636800,45479.6],"y5":[1633838400,35294.7561],"y10":[1479013200,18867.9348],"ye":[1766898000,48382.39]},"hAt":1792417771,"y1":14.26,"r5":8.0,"r10":10.74,"ytd":7.41},"ta35":{"n":"TA-35","sym":".TA35","p":4197.4,"pc":4224.67,"chp":-0.45,"t":1792419242,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3276.85],"y5":[1633838400,1848.07],"y10":[1479013200,1432.48],"ye":[1766898000,3695.29]},"hAt":1792417769,"y1":28.09,"r5":17.73,"r10":11.43,"ytd":13.59},"ta125":{"n":"TA-125","sym":".TA125","p":4065.85,"pc":4091.37,"chp":-0.47,"t":1792419242,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3358.13],"y5":[1633838400,1909.51],"y10":[1479013200,1251.26],"ye":[1766898000,3733.08]},"hAt":1792417770,"y1":21.07,"r5":16.23,"r10":12.6,"ytd":8.91},"spx":{"n":"S&P 500","sym":".SPX","p":7690.73,"pc":7659.44,"chp":0.41,"t":1792442654,"cur":"USD","rt":true,"a":{"y1":[1759636800,6552.51],"y5":[1633838400,4471.37],"y10":[1479013200,2181.9],"ye":[1766898000,6858.47]},"hAt":1792417770,"y1":17.37,"r5":11.39,"r10":13.52,"ytd":12.13},"ndx":{"n":"Nasdaq 100","sym":".NDX","p":29529.345,"pc":29187.549,"chp":1.17,"t":1792444559,"cur":"USD","rt":true,"a":{"y1":[1759636800,24221.745],"y5":[1633838400,15146.921],"y10":[1479013200,4808.042],"ye":[1766898000,25206.168]},"hAt":1792417771,"y1":21.91,"r5":14.21,"r10":20.05,"ytd":17.15},"gold":{"n":"Gold","sym":"@GC.1","p":4160.3,"pc":4181.1,"chp":-0.5,"t":1792443599,"cur":"USD","rt":false,"a":{"y1":[1759636800,4000.4],"y5":[1633838400,1768.3],"y10":[1479013200,1208.7],"ye":[1766898000,4329.6]},"hAt":1792417773,"y1":4.0,"r5":18.56,"r10":13.25,"ytd":-3.91},"brent":{"n":"Brent","sym":"@LCO.1","p":109.28,"pc":109.86,"chp":-0.53,"t":1792445011,"cur":"USD","rt":false,"a":{"y1":[1759636800,62.73],"y5":[1633838400,84.86],"y10":[1479013200,46.86],"ye":[1766898000,60.75]},"hAt":1792417774,"y1":74.21,"r5":5.16,"r10":8.9,"ytd":79.88},"ixic":{"n":"Nasdaq Composite","sym":".IXIC","p":26430.886,"pc":26140.034,"chp":1.11,"t":1792444559,"cur":"USD","rt":true,"a":{"y1":[1759636800,22204.43],"y5":[1633838400,14897.34],"y10":[1479013200,5321.513],"ye":[1766898000,23235.629]},"hAt":1792417771,"y1":19.03,"r5":12.08,"r10":17.51,"ytd":13.75},"rut":{"n":"Russell 2000","sym":".RUT","p":2728.298,"pc":2721.37,"chp":0.25,"t":1792441800,"cur":"USD","rt":false,"a":{"y1":[1759636800,2394.595],"y5":[1633838400,2265.6544],"y10":[1479013200,1315.642],"ye":[1766898000,2508.2233]},"hAt":1792417771,"y1":13.94,"r5":3.77,"r10":7.62,"ytd":8.77},"vix":{"n":"VIX","sym":".VIX","p":18.44,"pc":19.99,"chp":-7.75,"t":1792440901,"cur":"USD","rt":true,"a":{"y1":[1759636800,21.66],"y5":[1633838400,16.3],"y10":[1479013200,12.85],"ye":[1766898000,14.51]},"hAt":1792417772,"y1":-14.87,"r5":2.48,"r10":3.7,"ytd":27.08},"ftse":{"n":"FTSE 100","sym":".FTSE","p":10764.69,"pc":10881.9,"chp":-1.08,"t":1792424100,"cur":"GBP","rt":false,"a":{"y1":[1759636800,9427.47],"y5":[1633838400,7234.03],"y10":[1479013200,6775.77],"ye":[1766898000,9951.14]},"hAt":1792417772,"y1":14.18,"r5":8.23,"r10":4.77,"ytd":8.18},"dax":{"n":"DAX","sym":".GDAXI","p":25319.77,"pc":25622.61,"chp":-1.18,"t":1792425600,"cur":"EUR","rt":false,"a":{"y1":[1759636800,24241.46],"y5":[1633838400,15587.36],"y10":[1479013200,10664.56],"ye":[1766898000,24539.34]},"hAt":1792417772,"y1":4.45,"r5":10.13,"r10":9.1,"ytd":3.18},"stoxx":{"n":"Euro Stoxx 50","sym":".STOXX50E","p":6144.81,"pc":6204.23,"chp":-0.96,"t":1792425600,"cur":"EUR","rt":false,"a":{"y1":[1759636800,5531.32],"y5":[1633838400,4182.91],"y10":[1479013200,3020.83],"ye":[1766898000,5850.38]},"hAt":1792417772,"y1":11.09,"r5":7.95,"r10":7.41,"ytd":5.03},"nikkei":{"n":"Nikkei 225","sym":".N225","p":64916.7,"pc":64916.7,"chp":null,"t":1792368000,"cur":"JPY","rt":false,"a":{"y1":[1760241600,47582.15],"y5":[1634443200,28804.85],"y10":[1479618000,18381.22],"ye":[1766898000,50339.48]},"hAt":1792417773,"y1":36.43,"r5":17.63,"r10":13.58,"ytd":28.96},"silver":{"n":"Silver","sym":"@SI.1","p":57.23,"pc":57.305,"chp":-0.13,"t":1792443597,"cur":"USD","rt":false,"a":{"y1":[1759636800,47.247],"y5":[1633838400,23.349],"y10":[1479013200,16.624],"ye":[1766898000,71.015]},"hAt":1792417773,"y1":21.13,"r5":19.53,"r10":13.25,"ytd":-19.41},"platinum":{"n":"Platinum","sym":"@PL.1","p":1647.6,"pc":1633.1,"chp":0.89,"t":1792443590,"cur":"USD","rt":false,"a":{"y1":[1759636800,1623.0],"y5":[1633838400,1058.9],"y10":[1479013200,922.0],"ye":[1766898000,2129.3]},"hAt":1792417774,"y1":1.52,"r5":9.19,"r10":6.02,"ytd":-22.62},"copper":{"n":"Copper","sym":"@HG.1","p":6.584,"pc":6.5735,"chp":0.16,"t":1792443598,"cur":"USD","rt":false,"a":{"y1":[1759636800,4.894],"y5":[1633838400,4.7295],"y10":[1479013200,2.4675],"ye":[1766898000,5.6915]},"hAt":1792417774,"y1":34.53,"r5":6.8,"r10":10.39,"ytd":15.68},"wti":{"n":"WTI crude","sym":"@CL.1","p":103.15,"pc":101.41,"chp":1.72,"t":1792443575,"cur":"USD","rt":false,"a":{"y1":[1759636800,58.9],"y5":[1633838400,82.28],"y10":[1479013200,45.69],"ye":[1766898000,57.32]},"hAt":1792417775,"y1":75.13,"r5":4.6,"r10":8.54,"ytd":79.95},"natgas":{"n":"Natural gas","sym":"@NG.1","p":3.039,"pc":3.116,"chp":-2.47,"t":1792443598,"cur":"USD","rt":false,"a":{"y1":[1759636800,3.106],"y5":[1633838400,5.41],"y10":[1479013200,2.843],"ye":[1766898000,3.618]},"hAt":1792417775,"y1":-2.16,"r5":-10.84,"r10":0.67,"ytd":-16.0},"dxy":{"n":"US Dollar Index","sym":".DXY","p":101.986,"pc":101.837,"chp":0.15,"t":1792445662,"cur":"USD","rt":true,"a":{"y1":[1759636800,98.978],"y5":[1633838400,93.937],"y10":[1479013200,101.21],"ye":[1766898000,98.424]},"hAt":1792402782,"y1":3.04,"r5":1.65,"r10":0.08,"ytd":3.62},"tsx":{"n":"S&P/TSX","sym":".GSPTSE","p":35928.63,"pc":36176.55,"chp":-0.69,"t":1792442862,"cur":"CAD","rt":false,"a":{"y1":[1759636800,29850.89],"y5":[1633838400,20928.1],"y10":[1479013200,14864.03],"ye":[1766898000,31883.37]},"hAt":1792402783,"y1":20.36,"r5":11.35,"r10":9.29,"ytd":12.69},"ipc":{"n":"IPC Mexico","sym":".MXX","p":69010.67,"pc":68929.72,"chp":0.12,"t":1792441560,"cur":"MXN","rt":false,"a":{"y1":[1759636800,60568.93],"y5":[1633838400,52798.38],"y10":[1479013200,44364.17],"ye":[1766898000,64141.36]},"hAt":1792402784,"y1":13.94,"r5":5.47,"r10":4.55,"ytd":7.59},"bovespa":{"n":"Bovespa","sym":".BVSP","p":205079.25,"pc":205430.33,"chp":-0.17,"t":1792441080,"cur":"BRL","rt":false,"a":{"y1":[1759636800,140680.34],"y5":[1633838400,114647.99],"y10":[1479013200,59961.7635],"ye":[1766898000,160538.69]},"hAt":1792402784,"y1":45.78,"r5":12.27,"r10":13.18,"ytd":27.74},"cac":{"n":"CAC 40","sym":".FCHI","p":7868.05,"pc":7956.7,"chp":-1.11,"t":1792425902,"cur":"EUR","rt":false,"a":{"y1":[1759636800,7918.0],"y5":[1633838400,6727.52],"y10":[1479013200,4504.35],"ye":[1766898000,8195.21]},"hAt":1792402785,"y1":-0.63,"r5":3.17,"r10":5.78,"ytd":-3.99},"ibex":{"n":"IBEX 35","sym":".IBEX","p":19039.3,"pc":19326.3,"chp":-1.49,"t":1792424130,"cur":"EUR","rt":false,"a":{"y1":[1759636800,15476.5],"y5":[1633838400,8997.0],"y10":[1479013200,8622.9],"ye":[1766898000,17492.4]},"hAt":1792402785,"y1":23.02,"r5":16.09,"r10":8.3,"ytd":8.84},"ftmib":{"n":"FTSE MIB","sym":".FTMIB","p":49086.27,"pc":49857.18,"chp":-1.55,"t":1792424100,"cur":"EUR","rt":false,"a":{"y1":[1759636800,42047.5],"y5":[1633838400,26489.18],"y10":[1479013200,16265.9],"ye":[1766898000,45374.03]},"hAt":1792402786,"y1":16.74,"r5":13.06,"r10":11.76,"ytd":8.18},"aex":{"n":"AEX","sym":".AEX","p":1141.38,"pc":1142.88,"chp":-0.13,"t":1792425902,"cur":"EUR","rt":false,"a":{"y1":[1759636800,940.46],"y5":[1633838400,800.41],"y10":[1479013200,450.68],"ye":[1766898000,967.59]},"hAt":1792402786,"y1":21.36,"r5":7.32,"r10":9.81,"ytd":17.96},"smi":{"n":"SMI","sym":".SSMI","p":14368.78,"pc":14391.31,"chp":-0.16,"t":1792423873,"cur":"CHF","rt":false,"a":{"y1":[1759636800,12481.41],"y5":[1633838400,11961.34],"y10":[1479013200,7904.55],"ye":[1766898000,13267.48]},"hAt":1792402787,"y1":15.12,"r5":3.72,"r10":6.2,"ytd":8.3},"hsi":{"n":"Hang Seng","sym":".HSI","p":24186.83,"pc":24062.72,"chp":0.52,"t":1792108800,"cur":"HKD","rt":false,"a":{"y1":[1759636800,26290.32],"y5":[1633838400,25330.96],"y10":[1479013200,22344.21],"ye":[1766898000,26338.47]},"hAt":1792402787,"y1":-8.0,"r5":-0.92,"r10":0.8,"ytd":-8.17},"ssec":{"n":"Shanghai Composite","sym":".SSEC","p":3730.92,"pc":3716.284,"chp":0.39,"t":1792393200,"cur":"CNY","rt":false,"a":{"y1":[1760241600,3839.7553],"y5":[1634443200,3582.6036],"y10":[1479618000,3261.9378],"ye":[1766898000,3968.8401]},"hAt":1792402787,"y1":-2.83,"r5":0.81,"r10":1.36,"ytd":-5.99},"kospi":{"n":"KOSPI","sym":".KS11","p":5768.01,"pc":5768.01,"chp":null,"t":1792368000,"cur":"KRW","rt":false,"a":{"y1":[1760241600,3748.89],"y5":[1634443200,3006.16],"y10":[1479618000,1974.46],"ye":[1766898000,4309.63]},"hAt":1792402788,"y1":53.86,"r5":13.91,"r10":11.42,"ytd":33.84},"asx":{"n":"S&P/ASX 200","sym":".AXJO","p":8845.7,"pc":8845.7,"chp":null,"t":1792368000,"cur":"AUD","rt":false,"a":{"y1":[1760241600,8995.3],"y5":[1634443200,7415.5],"y10":[1479618000,5507.8],"ye":[1766898000,8727.8]},"hAt":1792402789,"y1":-1.66,"r5":3.59,"r10":4.9,"ytd":1.35},"palladium":{"n":"Palladium","sym":"@PA.1","p":1119.0,"pc":1118.6,"chp":0.04,"t":1792443595,"cur":"USD","rt":false,"a":{"y1":[1759636800,1470.6],"y5":[1633838400,2076.6],"y10":[1479013200,727.8],"ye":[1766898000,1691.5]},"hAt":1792402790,"y1":-23.91,"r5":-11.58,"r10":4.43,"ytd":-33.85},"gasoline":{"n":"Gasoline","sym":"@RB.1","p":3.184,"pc":3.2354,"chp":-1.59,"t":1792443575,"cur":"USD","rt":false,"a":{"y1":[1759636800,1.8204],"y5":[1633838400,2.4864],"y10":[1479013200,1.3391],"ye":[1766898000,1.6982]},"hAt":1792402790,"y1":74.91,"r5":5.04,"r10":9.11,"ytd":87.49},"heatoil":{"n":"Heating oil","sym":"@HO.1","p":4.9339,"pc":4.8991,"chp":0.71,"t":1792443585,"cur":"USD","rt":false,"a":{"y1":[1759636800,2.2044],"y5":[1633838400,2.5737],"y10":[1479013200,1.4577],"ye":[1766898000,2.1151]},"hAt":1792402791,"y1":123.82,"r5":13.82,"r10":13.06,"ytd":133.27},"wheat":{"n":"Wheat","sym":"@W.1","p":656.0,"pc":660.5,"chp":-0.68,"t":1792433998,"cur":"USD","rt":false,"a":{"y1":[1759636800,498.5],"y5":[1633838400,734.0],"y10":[1479013200,408.0],"ye":[1766898000,506.5]},"hAt":1792402791,"y1":31.59,"r5":-2.21,"r10":4.9,"ytd":29.52},"corn":{"n":"Corn","sym":"@C.1","p":466.75,"pc":474.25,"chp":-1.58,"t":1792433999,"cur":"USD","rt":false,"a":{"y1":[1759636800,413.0],"y5":[1633838400,525.75],"y10":[1479013200,345.5],"ye":[1766898000,437.5]},"hAt":1792402792,"y1":13.01,"r5":-2.34,"r10":3.08,"ytd":6.69},"soy":{"n":"Soybeans","sym":"@S.1","p":1253.0,"pc":1261.25,"chp":-0.65,"t":1792433998,"cur":"USD","rt":false,"a":{"y1":[1759636800,1006.75],"y5":[1633838400,1217.75],"y10":[1479013200,993.75],"ye":[1766898000,1045.75]},"hAt":1792402792,"y1":24.46,"r5":0.57,"r10":2.36,"ytd":19.82},"coffee":{"n":"Coffee","sym":"@KC.1","p":313.75,"pc":305.6,"chp":2.67,"t":1792445054,"cur":"USD","rt":false,"a":{"y1":[1759636800,373.05],"y5":[1633838400,203.4],"y10":[1479013200,157.85],"ye":[1766898000,357.3]},"hAt":1792402793,"y1":-15.9,"r5":9.01,"r10":7.16,"ytd":-12.19},"sugar":{"n":"Sugar","sym":"@SB.1","p":20.59,"pc":20.85,"chp":-1.25,"t":1792445054,"cur":"USD","rt":false,"a":{"y1":[1759636800,16.1],"y5":[1633838400,19.8],"y10":[1479013200,20.15],"ye":[1766898000,14.6]},"hAt":1792402793,"y1":27.89,"r5":0.78,"r10":0.22,"ytd":41.03},"cocoa":{"n":"Cocoa","sym":"@CC.1","p":5695.0,"pc":5645.0,"chp":0.89,"t":1792445054,"cur":"USD","rt":false,"a":{"y1":[1759636800,5848.0],"y5":[1633838400,2607.0],"y10":[1479013200,2432.0],"ye":[1766898000,5871.0]},"hAt":1792402794,"y1":-2.62,"r5":16.82,"r10":8.94,"ytd":-3.0},"cotton":{"n":"Cotton","sym":"@CT.1","p":80.14,"pc":80.0,"chp":0.18,"t":1792445054,"cur":"USD","rt":false,"a":{"y1":[1759636800,63.84],"y5":[1633838400,107.33],"y10":[1479013200,73.4],"ye":[1766898000,64.01]},"hAt":1792402794,"y1":25.53,"r5":-5.65,"r10":0.89,"ytd":25.2},"nifty":{"n":"Nifty 50","sym":".NSEI","p":23146.15,"pc":22997.35,"chp":0.65,"t":1792108800,"cur":"INR","rt":false,"a":{"y1":[1759636800,25285.35],"y5":[1633838400,18338.55],"y10":[1479013200,8074.1],"ye":[1766898000,26328.55]},"hAt":1792402788,"y1":-8.46,"r5":4.75,"r10":11.2,"ytd":-12.09}}}};
+var IX_BUILT = {"idx":{"cpi":{"code":"120010","name":"Consumer Price Index - General","m":"2026-09","v":105.3,"base":"Average 2024","mom":-0.5,"yoy":1.6,"ytd":1.64,"hist":[["2005-01",70.6175],["2005-02",70.7588],["2005-03",70.6175],["2005-04",71.1119],["2005-05",71.3237],["2005-06",71.3943],["2005-07",72.1711],["2005-08",72.3124],["2005-09",72.383],["2005-10",72.9479],["2005-11",72.8773],["2005-12",72.7361],["2006-01",72.5242],["2006-02",72.9479],["2006-03",73.1598],["2006-04",73.7953],["2006-05",73.7953],["2006-06",73.8659],["2006-07",73.9366],["2006-08",73.9366],["2006-09",73.301],["2006-10",72.8067],["2006-11",72.6654],["2006-12",72.6654],["2007-01",72.5928],["2007-02",72.3728],["2007-03",72.5195],["2007-04",72.8861],["2007-05",72.8861],["2007-06",73.3994],["2007-07",74.206],["2007-08",74.7192],["2007-09",74.3526],["2007-10",74.4259],["2007-11",74.7192],["2007-12",75.1592],["2008-01",75.1592],["2008-02",75.0125],["2008-03",75.2325],["2008-04",76.3324],["2008-05",76.8457],["2008-06",76.919],["2008-07",77.7989],["2008-08",78.4589],["2008-09",78.4589],["2008-10",78.5322],["2008-11",78.0922],["2008-12",78.0189],["2009-01",77.6288],["2009-02",77.5517],["2009-03",77.9372],["2009-04",78.7081],["2009-05",79.0164],["2009-06",79.7102],["2009-07",80.5582],["2009-08",80.9436],["2009-09",80.7124],["2009-10",80.8666],["2009-11",81.0978],["2009-12",81.0978],["2010-01",80.5582],["2010-02",80.3269],["2010-03",80.404],["2010-04",81.0978],["2010-05",81.4062],["2010-06",81.6375],["2010-07",82.0229],["2010-08",82.4083],["2010-09",82.6396],["2010-10",82.8709],["2010-11",82.948],["2010-12",83.2563],["2011-01",83.4228],["2011-02",83.6682],["2011-03",83.8318],["2011-04",84.3225],["2011-05",84.7314],["2011-06",85.0586],["2011-07",84.8132],["2011-08",85.2222],["2011-09",85.0586],["2011-10",85.1404],["2011-11",85.0586],["2011-12",85.0586],["2012-01",85.0586],["2012-02",85.0586],["2012-03",85.3857],["2012-04",86.1218],["2012-05",86.1218],["2012-06",85.8764],["2012-07",85.9582],["2012-08",86.8579],["2012-09",86.8579],["2012-10",86.6943],["2012-11",86.2854],["2012-12",86.449],["2013-01",86.2761],["2013-02",86.2761],["2013-03",86.4481],["2013-04",86.7922],["2013-05",86.8782],["2013-06",87.5663],["2013-07",87.8244],["2013-08",87.9964],["2013-09",87.9964],["2013-10",88.2545],["2013-11",87.9104],["2013-12",87.9964],["2014-01",87.4803],["2014-02",87.3083],["2014-03",87.5663],["2014-04",87.6523],["2014-05",87.7384],["2014-06",87.9964],["2014-07",88.0824],["2014-08",87.9964],["2014-09",87.7384],["2014-10",87.9964],["2014-11",87.8244],["2014-12",87.8244],["2015-01",87.034],["2015-02",86.4198],["2015-03",86.683],["2015-04",87.2094],["2015-05",87.3849],["2015-06",87.6481],["2015-07",87.8236],["2015-08",87.6481],["2015-09",87.2972],["2015-10",87.3849],["2015-11",87.034],["2015-12",86.9462],["2016-01",86.5076],["2016-02",86.2443],["2016-03",86.0689],["2016-04",86.4198],["2016-05",86.683],["2016-06",86.9462],["2016-07",87.2972],["2016-08",87.034],["2016-09",86.9462],["2016-10",87.1217],["2016-11",86.7708],["2016-12",86.7708],["2017-01",86.5972],["2017-02",86.5972],["2017-03",86.8575],["2017-04",87.0311],["2017-05",87.3782],["2017-06",86.7708],["2017-07",86.684],["2017-08",86.9443],["2017-09",87.0311],["2017-10",87.2914],["2017-11",87.0311],["2017-12",87.1178],["2018-01",86.684],["2018-02",86.7708],["2018-03",87.0311],["2018-04",87.3782],["2018-05",87.812],["2018-06",87.8988],["2018-07",87.8988],["2018-08",87.9855],["2018-09",88.0723],["2018-10",88.3326],["2018-11",88.0723],["2018-12",87.812],["2019-01",87.7242],["2019-02",87.8118],["2019-03",88.25],["2019-04",88.5129],["2019-05",89.1264],["2019-06",88.6006],["2019-07",88.3377],["2019-08",88.5129],["2019-09",88.3377],["2019-10",88.6882],["2019-11",88.3377],["2019-12",88.3377],["2020-01",87.9871],["2020-02",87.8995],["2020-03",88.25],["2020-04",87.9871],["2020-05",87.7242],["2020-06",87.6366],["2020-07",87.8118],["2020-08",87.8118],["2020-09",87.7242],["2020-10",87.9871],["2020-11",87.8118],["2020-12",87.7242],["2021-01",87.6365],["2021-02",87.9002],["2021-03",88.4276],["2021-04",88.6913],["2021-05",89.0429],["2021-06",89.1308],["2021-07",89.4824],["2021-08",89.7461],["2021-09",89.9219],["2021-10",90.0098],["2021-11",89.9219],["2021-12",90.1856],["2022-01",90.3614],["2022-02",90.9767],["2022-03",91.5041],["2022-04",92.2073],["2022-05",92.7347],["2022-06",93.0863],["2022-07",94.1411],["2022-08",93.8774],["2022-09",94.0532],["2022-10",94.5806],["2022-11",94.6685],["2022-12",94.9322],["2023-01",95.217],["2023-02",95.6824],["2023-03",96.0547],["2023-04",96.7993],["2023-05",96.9854],["2023-06",96.9854],["2023-07",97.2647],["2023-08",97.73],["2023-09",97.637],["2023-10",98.1023],["2023-11",97.8231],["2023-12",97.73],["2024-01",97.73],["2024-02",98.1023],["2024-03",98.6608],["2024-04",99.4985],["2024-05",99.6846],["2024-06",99.7777],["2024-07",100.3362],["2024-08",101.2669],["2024-09",101.0808],["2024-10",101.5462],["2024-11",101.1739],["2024-12",100.8946],["2025-01",101.5],["2025-02",101.5],["2025-03",102.0],["2025-04",103.1],["2025-05",102.8],["2025-06",103.1],["2025-07",103.5],["2025-08",104.2],["2025-09",103.6],["2025-10",104.1],["2025-11",103.6],["2025-12",103.6],["2026-01",103.3],["2026-02",103.5],["2026-03",103.9],["2026-04",105.1],["2026-05",104.8],["2026-06",104.8],["2026-07",105.1],["2026-08",105.8],["2026-09",105.3]]},"build":{"code":"200010","name":"Price index of input in residential building - general","m":"2026-09","v":104.0,"base":"July 2025","mom":0.1,"yoy":3.6,"ytd":2.77,"hist":[["2005-01",56.8937],["2005-02",56.9482],["2005-03",57.1117],["2005-04",57.2752],["2005-05",57.3842],["2005-06",57.6566],["2005-07",59.2915],["2005-08",60.8719],["2005-09",61.0354],["2005-10",60.7084],["2005-11",60.1635],["2005-12",59.782],["2006-01",60.4904],["2006-02",60.7084],["2006-03",61.0354],["2006-04",61.4714],["2006-05",61.8528],["2006-06",62.4523],["2006-07",62.9972],["2006-08",63.4332],["2006-09",63.7057],["2006-10",63.4877],["2006-11",63.4877],["2006-12",63.3242],["2007-01",63.9237],["2007-02",64.0327],["2007-03",64.1962],["2007-04",64.1962],["2007-05",64.0872],["2007-06",64.5231],["2007-07",65.2316],["2007-08",65.3951],["2007-09",65.4496],["2007-10",65.3406],["2007-11",65.2861],["2007-12",65.2861],["2008-01",65.5585],["2008-02",65.2861],["2008-03",65.4496],["2008-04",66.3215],["2008-05",67.3569],["2008-06",68.0654],["2008-07",69.1553],["2008-08",69.2643],["2008-09",68.8283],["2008-10",67.6839],["2008-11",67.5204],["2008-12",67.4114],["2009-01",67.0844],["2009-02",67.0844],["2009-03",67.0844],["2009-04",67.1389],["2009-05",67.1389],["2009-06",67.1934],["2009-07",67.4114],["2009-08",67.3569],["2009-09",67.3569],["2009-10",67.1934],["2009-11",67.3024],["2009-12",67.4114],["2010-01",67.6294],["2010-02",67.9564],["2010-03",68.3923],["2010-04",68.9918],["2010-05",69.1553],["2010-06",68.9918],["2010-07",68.9373],["2010-08",69.2643],["2010-09",69.3733],["2010-10",69.4278],["2010-11",69.6457],["2010-12",70.0272],["2011-01",70.4632],["2011-02",70.8991],["2011-03",70.8991],["2011-04",70.8991],["2011-05",71.4441],["2011-06",71.9346],["2011-07",72.0981],["2011-08",72.3143],["2011-09",72.5306],["2011-10",72.6027],["2011-11",72.7469],["2011-12",72.6748],["2012-01",72.8911],["2012-02",73.2516],["2012-03",73.4679],["2012-04",73.9726],["2012-05",74.0447],["2012-06",74.261],["2012-07",74.4773],["2012-08",74.7657],["2012-09",74.7657],["2012-10",74.7657],["2012-11",74.982],["2012-12",75.0541],["2013-01",75.4146],["2013-02",75.5588],["2013-03",75.5588],["2013-04",75.4146],["2013-05",75.6309],["2013-06",75.7751],["2013-07",75.7751],["2013-08",75.8472],["2013-09",75.9913],["2013-10",76.0634],["2013-11",76.1355],["2013-12",76.1355],["2014-01",76.3518],["2014-02",76.3518],["2014-03",76.2797],["2014-04",76.3518],["2014-05",76.4239],["2014-06",76.3518],["2014-07",76.2797],["2014-08",76.3518],["2014-09",76.2797],["2014-10",76.496],["2014-11",76.6402],["2014-12",76.7123],["2015-01",76.7844],["2015-02",76.7123],["2015-03",76.8565],["2015-04",76.8565],["2015-05",76.8565],["2015-06",76.8565],["2015-07",76.9286],["2015-08",77.0728],["2015-09",77.1449],["2015-10",77.217],["2015-11",77.1449],["2015-12",77.4333],["2016-01",77.6496],["2016-02",77.5054],["2016-03",77.5054],["2016-04",77.7217],["2016-05",77.8659],["2016-06",77.938],["2016-07",78.2264],["2016-08",78.2264],["2016-09",78.4427],["2016-10",78.4427],["2016-11",78.5869],["2016-12",78.5869],["2017-01",78.5869],["2017-02",78.7311],["2017-03",78.7311],["2017-04",78.8753],["2017-05",78.8753],["2017-06",79.0195],["2017-07",79.1637],["2017-08",79.5242],["2017-09",79.6683],["2017-10",79.8125],["2017-11",79.8846],["2017-12",80.1009],["2018-01",80.5335],["2018-02",80.7498],["2018-03",80.8219],["2018-04",81.0382],["2018-05",81.1103],["2018-06",81.1824],["2018-07",81.3987],["2018-08",81.5429],["2018-09",81.5429],["2018-10",81.615],["2018-11",81.615],["2018-12",81.6871],["2019-01",82.1918],["2019-02",82.2639],["2019-03",82.2639],["2019-04",82.336],["2019-05",82.4081],["2019-06",82.4081],["2019-07",82.4081],["2019-08",82.4802],["2019-09",82.4802],["2019-10",82.4081],["2019-11",82.4081],["2019-12",82.5523],["2020-01",82.6965],["2020-02",82.6965],["2020-03",82.8407],["2020-04",82.7686],["2020-05",82.6965],["2020-06",82.6965],["2020-07",82.6965],["2020-08",82.7686],["2020-09",82.6965],["2020-10",82.6244],["2020-11",82.6244],["2020-12",82.9849],["2021-01",83.4895],["2021-02",83.6337],["2021-03",84.0663],["2021-04",84.7152],["2021-05",85.292],["2021-06",85.7967],["2021-07",86.013],["2021-08",86.5177],["2021-09",86.734],["2021-10",86.9503],["2021-11",87.3828],["2021-12",87.5991],["2022-01",88.3201],["2022-02",88.7527],["2022-03",89.6179],["2022-04",90.4831],["2022-05",90.9156],["2022-06",91.4203],["2022-07",91.8529],["2022-08",91.925],["2022-09",91.925],["2022-10",91.925],["2022-11",91.7808],["2022-12",91.7808],["2023-01",92.8623],["2023-02",92.7181],["2023-03",92.9344],["2023-04",93.2228],["2023-05",93.1507],["2023-06",93.4391],["2023-07",93.2228],["2023-08",93.2949],["2023-09",93.367],["2023-10",93.5112],["2023-11",93.5833],["2023-12",93.5833],["2024-01",93.8717],["2024-02",93.6554],["2024-03",93.8717],["2024-04",93.7996],["2024-05",94.2322],["2024-06",94.5926],["2024-07",94.9531],["2024-08",95.1694],["2024-09",95.5299],["2024-10",95.7462],["2024-11",96.0346],["2024-12",96.323],["2025-01",98.8464],["2025-02",99.279],["2025-03",99.6395],["2025-04",99.7837],["2025-05",99.9279],["2025-06",99.9279],["2025-07",100.0],["2025-08",100.4],["2025-09",100.4],["2025-10",100.5],["2025-11",101.1],["2025-12",101.2],["2026-01",101.3],["2026-02",101.5],["2026-03",101.7],["2026-04",102.8],["2026-05",103.4],["2026-06",103.6],["2026-07",103.5],["2026-08",103.9],["2026-09",104.0]]},"house":{"code":"40010","name":"Prices of Dwellings","m":"2026-07","v":590.0,"base":"Average 1993","mom":-0.6,"yoy":-1.8,"ytd":-1.7,"hist":[["2015-01",354.8],["2015-02",358.3],["2015-03",360.6],["2015-04",361.5],["2015-05",364.5],["2015-06",368.3],["2015-07",369.2],["2015-08",369.0],["2015-09",371.3],["2015-10",374.4],["2015-11",377.5],["2015-12",380.4],["2016-01",381.4],["2016-02",384.0],["2016-03",389.1],["2016-04",390.2],["2016-05",391.1],["2016-06",393.4],["2016-07",396.1],["2016-08",399.9],["2016-09",404.2],["2016-10",404.4],["2016-11",402.8],["2016-12",402.1],["2017-01",402.8],["2017-02",404.9],["2017-03",406.8],["2017-04",407.7],["2017-05",409.5],["2017-06",412.8],["2017-07",414.3],["2017-08",415.9],["2017-09",414.6],["2017-10",414.5],["2017-11",411.9],["2017-12",407.8],["2018-01",406.3],["2018-02",405.9],["2018-03",406.5],["2018-04",406.2],["2018-05",409.2],["2018-06",410.5],["2018-07",408.1],["2018-08",407.4],["2018-09",406.6],["2018-10",405.8],["2018-11",405.5],["2018-12",404.7],["2019-01",408.3],["2019-02",409.6],["2019-03",410.8],["2019-04",412.9],["2019-05",414.1],["2019-06",413.7],["2019-07",414.9],["2019-08",414.5],["2019-09",416.6],["2019-10",418.7],["2019-11",419.1],["2019-12",421.6],["2020-01",423.7],["2020-02",424.1],["2020-03",423.7],["2020-04",420.7],["2020-05",422.0],["2020-06",426.2],["2020-07",426.2],["2020-08",426.6],["2020-09",427.9],["2020-10",431.8],["2020-11",435.7],["2020-12",438.3],["2021-01",439.2],["2021-02",442.7],["2021-03",448.5],["2021-04",452.1],["2021-05",454.4],["2021-06",459.9],["2021-07",465.4],["2021-08",467.3],["2021-09",471.0],["2021-10",477.6],["2021-11",485.7],["2021-12",495.9],["2022-01",503.8],["2022-02",511.9],["2022-03",517.0],["2022-04",525.3],["2022-05",536.3],["2022-06",543.8],["2022-07",553.6],["2022-08",559.7],["2022-09",565.3],["2022-10",567.0],["2022-11",567.6],["2022-12",568.7],["2023-01",568.7],["2023-02",568.7],["2023-03",567.6],["2023-04",564.8],["2023-05",561.4],["2023-06",560.3],["2023-07",559.2],["2023-08",558.6],["2023-09",557.5],["2023-10",554.7],["2023-11",558.0],["2023-12",563.0],["2024-01",569.2],["2024-02",574.9],["2024-03",579.5],["2024-04",583.6],["2024-05",587.1],["2024-06",591.8],["2024-07",593.0],["2024-08",592.4],["2024-09",593.6],["2024-10",596.6],["2024-11",599.0],["2024-12",606.2],["2025-01",609.8],["2025-02",608.6],["2025-03",607.4],["2025-04",605.0],["2025-05",602.6],["2025-06",602.0],["2025-07",600.8],["2025-08",597.2],["2025-09",593.0],["2025-10",596.0],["2025-11",600.8],["2025-12",600.2],["2026-01",599.6],["2026-02",602.0],["2026-03",599.6],["2026-04",592.4],["2026-05",593.0],["2026-06",593.6],["2026-07",590.0]]}},"mkt":{"asOf":1792474467,"src":"cnbc","items":{"dji":{"n":"Dow Jones","sym":".DJI","p":51966.03,"pc":51966.03,"chp":-0.07,"t":1792368000,"cur":"USD","rt":true,"a":{"y1":[1759636800,45479.6],"y5":[1633838400,35294.7561],"y10":[1479013200,18867.9348],"ye":[1766898000,48382.39]},"hAt":1792417771,"y1":14.26,"r5":8.01,"r10":10.74,"ytd":7.41},"ta35":{"n":"TA-35","sym":".TA35","p":4205.72,"pc":4205.72,"chp":null,"t":1792368000,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3276.85],"y5":[1633838400,1848.07],"y10":[1479013200,1432.48],"ye":[1766898000,3695.29]},"hAt":1792417769,"y1":28.35,"r5":17.79,"r10":11.46,"ytd":13.81},"ta125":{"n":"TA-125","sym":".TA125","p":4072.11,"pc":4072.11,"chp":null,"t":1792368000,"cur":"ILS","rt":false,"a":{"y1":[1759636800,3358.13],"y5":[1633838400,1909.51],"y10":[1479013200,1251.26],"ye":[1766898000,3733.08]},"hAt":1792417770,"y1":21.26,"r5":16.27,"r10":12.62,"ytd":9.08},"spx":{"n":"S&P 500","sym":".SPX","p":7690.73,"pc":7690.73,"chp":0.41,"t":1792368000,"cur":"USD","rt":true,"a":{"y1":[1759636800,6552.51],"y5":[1633838400,4471.37],"y10":[1479013200,2181.9],"ye":[1766898000,6858.47]},"hAt":1792417770,"y1":17.37,"r5":11.4,"r10":13.53,"ytd":12.13},"ndx":{"n":"Nasdaq 100","sym":".NDX","p":29529.345,"pc":29529.345,"chp":1.17,"t":1792368000,"cur":"USD","rt":true,"a":{"y1":[1759636800,24221.745],"y5":[1633838400,15146.921],"y10":[1479013200,4808.042],"ye":[1766898000,25206.168]},"hAt":1792417771,"y1":21.91,"r5":14.21,"r10":20.06,"ytd":17.15},"gold":{"n":"Gold","sym":"@GC.1","p":4154.4,"pc":4160.1,"chp":-0.14,"t":1792473863,"cur":"USD","rt":false,"a":{"y1":[1759636800,4000.4],"y5":[1633838400,1768.3],"y10":[1479013200,1208.7],"ye":[1766898000,4329.6]},"hAt":1792417773,"y1":3.85,"r5":18.52,"r10":13.24,"ytd":-4.05},"brent":{"n":"Brent","sym":"@LCO.1","p":109.96,"pc":109.55,"chp":0.37,"t":1792473862,"cur":"USD","rt":false,"a":{"y1":[1759636800,62.73],"y5":[1633838400,84.86],"y10":[1479013200,46.86],"ye":[1766898000,60.75]},"hAt":1792417774,"y1":75.29,"r5":5.29,"r10":8.97,"ytd":81.0},"ixic":{"n":"Nasdaq Composite","sym":".IXIC","p":26430.886,"pc":26430.886,"chp":1.11,"t":1792368000,"cur":"USD","rt":true,"a":{"y1":[1759636800,22204.43],"y5":[1633838400,14897.34],"y10":[1479013200,5321.513],"ye":[1766898000,23235.629]},"hAt":1792417771,"y1":19.03,"r5":12.09,"r10":17.52,"ytd":13.75},"rut":{"n":"Russell 2000","sym":".RUT","p":2728.298,"pc":2728.298,"chp":0.25,"t":1792368000,"cur":"USD","rt":false,"a":{"y1":[1759636800,2394.595],"y5":[1633838400,2265.6544],"y10":[1479013200,1315.642],"ye":[1766898000,2508.2233]},"hAt":1792417771,"y1":13.94,"r5":3.77,"r10":7.62,"ytd":8.77},"vix":{"n":"VIX","sym":".VIX","p":18.44,"pc":19.99,"chp":-7.75,"t":1792368000,"cur":"USD","rt":true,"a":{"y1":[1759636800,21.66],"y5":[1633838400,16.3],"y10":[1479013200,12.85],"ye":[1766898000,14.51]},"hAt":1792417772,"y1":-14.87,"r5":2.49,"r10":3.7,"ytd":27.08},"ftse":{"n":"FTSE 100","sym":".FTSE","p":10764.69,"pc":10881.9,"chp":-1.08,"t":1792368000,"cur":"GBP","rt":false,"a":{"y1":[1759636800,9427.47],"y5":[1633838400,7234.03],"y10":[1479013200,6775.77],"ye":[1766898000,9951.14]},"hAt":1792417772,"y1":14.18,"r5":8.23,"r10":4.77,"ytd":8.18},"dax":{"n":"DAX","sym":".GDAXI","p":25319.77,"pc":25319.77,"chp":null,"t":1792368000,"cur":"EUR","rt":false,"a":{"y1":[1759636800,24241.46],"y5":[1633838400,15587.36],"y10":[1479013200,10664.56],"ye":[1766898000,24539.34]},"hAt":1792417772,"y1":4.45,"r5":10.14,"r10":9.1,"ytd":3.18},"stoxx":{"n":"Euro Stoxx 50","sym":".STOXX50E","p":6144.81,"pc":6144.81,"chp":null,"t":1792368000,"cur":"EUR","rt":false,"a":{"y1":[1759636800,5531.32],"y5":[1633838400,4182.91],"y10":[1479013200,3020.83],"ye":[1766898000,5850.38]},"hAt":1792417772,"y1":11.09,"r5":7.96,"r10":7.41,"ytd":5.03},"nikkei":{"n":"Nikkei 225","sym":".N225","p":63951.68,"pc":64916.7,"chp":-1.49,"t":1792473565,"cur":"JPY","rt":false,"a":{"y1":[1760241600,47582.15],"y5":[1634443200,28804.85],"y10":[1479618000,18381.22],"ye":[1766898000,50339.48]},"hAt":1792417773,"y1":34.4,"r5":17.27,"r10":13.4,"ytd":27.04},"silver":{"n":"Silver","sym":"@SI.1","p":57.405,"pc":57.273,"chp":0.23,"t":1792473864,"cur":"USD","rt":false,"a":{"y1":[1759636800,47.247],"y5":[1633838400,23.349],"y10":[1479013200,16.624],"ye":[1766898000,71.015]},"hAt":1792417773,"y1":21.5,"r5":19.6,"r10":13.29,"ytd":-19.16},"platinum":{"n":"Platinum","sym":"@PL.1","p":1649.5,"pc":1648.2,"chp":0.08,"t":1792473812,"cur":"USD","rt":false,"a":{"y1":[1759636800,1623.0],"y5":[1633838400,1058.9],"y10":[1479013200,922.0],"ye":[1766898000,2129.3]},"hAt":1792417774,"y1":1.63,"r5":9.22,"r10":6.03,"ytd":-22.53},"copper":{"n":"Copper","sym":"@HG.1","p":6.556,"pc":6.5755,"chp":-0.3,"t":1792473859,"cur":"USD","rt":false,"a":{"y1":[1759636800,4.894],"y5":[1633838400,4.7295],"y10":[1479013200,2.4675],"ye":[1766898000,5.6915]},"hAt":1792417774,"y1":33.96,"r5":6.71,"r10":10.34,"ytd":15.19},"wti":{"n":"WTI crude","sym":"@CL.1","p":103.99,"pc":103.66,"chp":0.32,"t":1792471302,"cur":"USD","rt":false,"a":{"y1":[1759636800,58.9],"y5":[1633838400,82.28],"y10":[1479013200,45.69],"ye":[1766898000,57.32]},"hAt":1792417775,"y1":76.55,"r5":4.77,"r10":8.63,"ytd":81.42},"natgas":{"n":"Natural gas","sym":"@NG.1","p":3.014,"pc":3.058,"chp":-1.44,"t":1792473865,"cur":"USD","rt":false,"a":{"y1":[1759636800,3.106],"y5":[1633838400,5.41],"y10":[1479013200,2.843],"ye":[1766898000,3.618]},"hAt":1792417775,"y1":-2.96,"r5":-10.99,"r10":0.59,"ytd":-16.69},"dxy":{"n":"US Dollar Index","sym":".DXY","p":101.769,"pc":101.98,"chp":-0.21,"t":1792474467,"cur":"USD","rt":true,"a":{"y1":[1759636800,98.978],"y5":[1633838400,93.937],"y10":[1479013200,101.21],"ye":[1766898000,98.424]},"hAt":1792402782,"y1":2.82,"r5":1.61,"r10":0.06,"ytd":3.4},"tsx":{"n":"S&P/TSX","sym":".GSPTSE","p":35928.63,"pc":36176.55,"chp":-0.69,"t":1792368000,"cur":"CAD","rt":false,"a":{"y1":[1759636800,29850.89],"y5":[1633838400,20928.1],"y10":[1479013200,14864.03],"ye":[1766898000,31883.37]},"hAt":1792402783,"y1":20.36,"r5":11.36,"r10":9.3,"ytd":12.69},"ipc":{"n":"IPC Mexico","sym":".MXX","p":69010.67,"pc":68929.72,"chp":0.12,"t":1792368000,"cur":"MXN","rt":false,"a":{"y1":[1759636800,60568.93],"y5":[1633838400,52798.38],"y10":[1479013200,44364.17],"ye":[1766898000,64141.36]},"hAt":1792402784,"y1":13.94,"r5":5.48,"r10":4.55,"ytd":7.59},"bovespa":{"n":"Bovespa","sym":".BVSP","p":205079.25,"pc":205430.33,"chp":-0.17,"t":1792368000,"cur":"BRL","rt":false,"a":{"y1":[1759636800,140680.34],"y5":[1633838400,114647.99],"y10":[1479013200,59961.7635],"ye":[1766898000,160538.69]},"hAt":1792402784,"y1":45.78,"r5":12.27,"r10":13.18,"ytd":27.74},"cac":{"n":"CAC 40","sym":".FCHI","p":7868.05,"pc":7868.05,"chp":null,"t":1792368000,"cur":"EUR","rt":false,"a":{"y1":[1759636800,7918.0],"y5":[1633838400,6727.52],"y10":[1479013200,4504.35],"ye":[1766898000,8195.21]},"hAt":1792402785,"y1":-0.63,"r5":3.17,"r10":5.78,"ytd":-3.99},"ibex":{"n":"IBEX 35","sym":".IBEX","p":19039.3,"pc":19039.3,"chp":null,"t":1792368000,"cur":"EUR","rt":false,"a":{"y1":[1759636800,15476.5],"y5":[1633838400,8997.0],"y10":[1479013200,8622.9],"ye":[1766898000,17492.4]},"hAt":1792402785,"y1":23.02,"r5":16.09,"r10":8.3,"ytd":8.84},"ftmib":{"n":"FTSE MIB","sym":".FTMIB","p":49086.27,"pc":49857.18,"chp":-1.55,"t":1792368000,"cur":"EUR","rt":false,"a":{"y1":[1759636800,42047.5],"y5":[1633838400,26489.18],"y10":[1479013200,16265.9],"ye":[1766898000,45374.03]},"hAt":1792402786,"y1":16.74,"r5":13.06,"r10":11.77,"ytd":8.18},"aex":{"n":"AEX","sym":".AEX","p":1141.38,"pc":1141.38,"chp":null,"t":1792368000,"cur":"EUR","rt":false,"a":{"y1":[1759636800,940.46],"y5":[1633838400,800.41],"y10":[1479013200,450.68],"ye":[1766898000,967.59]},"hAt":1792402786,"y1":21.36,"r5":7.32,"r10":9.81,"ytd":17.96},"smi":{"n":"SMI","sym":".SSMI","p":14368.78,"pc":14368.78,"chp":null,"t":1792368000,"cur":"CHF","rt":false,"a":{"y1":[1759636800,12481.41],"y5":[1633838400,11961.34],"y10":[1479013200,7904.55],"ye":[1766898000,13267.48]},"hAt":1792402787,"y1":15.12,"r5":3.72,"r10":6.2,"ytd":8.3},"hsi":{"n":"Hang Seng","sym":".HSI","p":23883.34,"pc":24186.83,"chp":-1.25,"t":1792473566,"cur":"HKD","rt":false,"a":{"y1":[1759636800,26290.32],"y5":[1633838400,25330.96],"y10":[1479013200,22344.21],"ye":[1766898000,26338.47]},"hAt":1792402787,"y1":-9.16,"r5":-1.16,"r10":0.67,"ytd":-9.32},"ssec":{"n":"Shanghai Composite","sym":".SSEC","p":3715.416,"pc":3730.92,"chp":-0.42,"t":1792473540,"cur":"CNY","rt":false,"a":{"y1":[1760241600,3839.7553],"y5":[1634443200,3582.6036],"y10":[1479618000,3261.9378],"ye":[1766898000,3968.8401]},"hAt":1792402787,"y1":-3.24,"r5":0.73,"r10":1.32,"ytd":-6.39},"kospi":{"n":"KOSPI","sym":".KS11","p":5545.54,"pc":5768.01,"chp":-3.86,"t":1792473260,"cur":"KRW","rt":false,"a":{"y1":[1760241600,3748.89],"y5":[1634443200,3006.16],"y10":[1479618000,1974.46],"ye":[1766898000,4309.63]},"hAt":1792402788,"y1":47.92,"r5":13.01,"r10":10.98,"ytd":28.68},"asx":{"n":"S&P/ASX 200","sym":".AXJO","p":8816.9,"pc":8845.7,"chp":-0.33,"t":1792473254,"cur":"AUD","rt":false,"a":{"y1":[1760241600,8995.3],"y5":[1634443200,7415.5],"y10":[1479618000,5507.8],"ye":[1766898000,8727.8]},"hAt":1792402789,"y1":-1.98,"r5":3.52,"r10":4.86,"ytd":1.02},"palladium":{"n":"Palladium","sym":"@PA.1","p":1115.5,"pc":1122.7,"chp":-0.64,"t":1792473859,"cur":"USD","rt":false,"a":{"y1":[1759636800,1470.6],"y5":[1633838400,2076.6],"y10":[1479013200,727.8],"ye":[1766898000,1691.5]},"hAt":1792402790,"y1":-24.15,"r5":-11.63,"r10":4.39,"ytd":-34.05},"gasoline":{"n":"Gasoline","sym":"@RB.1","p":3.1989,"pc":3.1914,"chp":0.24,"t":1792473474,"cur":"USD","rt":false,"a":{"y1":[1759636800,1.8204],"y5":[1633838400,2.4864],"y10":[1479013200,1.3391],"ye":[1766898000,1.6982]},"hAt":1792402790,"y1":75.73,"r5":5.14,"r10":9.16,"ytd":88.37},"heatoil":{"n":"Heating oil","sym":"@HO.1","p":4.9472,"pc":4.9201,"chp":0.55,"t":1792472814,"cur":"USD","rt":false,"a":{"y1":[1759636800,2.2044],"y5":[1633838400,2.5737],"y10":[1479013200,1.4577],"ye":[1766898000,2.1151]},"hAt":1792402791,"y1":124.42,"r5":13.88,"r10":13.09,"ytd":133.9},"wheat":{"n":"Wheat","sym":"@W.1","p":653.5,"pc":655.25,"chp":-0.27,"t":1792473842,"cur":"USD","rt":false,"a":{"y1":[1759636800,498.5],"y5":[1633838400,734.0],"y10":[1479013200,408.0],"ye":[1766898000,506.5]},"hAt":1792402791,"y1":31.09,"r5":-2.28,"r10":4.86,"ytd":29.02},"corn":{"n":"Corn","sym":"@C.1","p":465.25,"pc":467.0,"chp":-0.37,"t":1792473862,"cur":"USD","rt":false,"a":{"y1":[1759636800,413.0],"y5":[1633838400,525.75],"y10":[1479013200,345.5],"ye":[1766898000,437.5]},"hAt":1792402792,"y1":12.65,"r5":-2.4,"r10":3.04,"ytd":6.34},"soy":{"n":"Soybeans","sym":"@S.1","p":1250.0,"pc":1253.5,"chp":-0.28,"t":1792473842,"cur":"USD","rt":false,"a":{"y1":[1759636800,1006.75],"y5":[1633838400,1217.75],"y10":[1479013200,993.75],"ye":[1766898000,1045.75]},"hAt":1792402792,"y1":24.16,"r5":0.52,"r10":2.34,"ytd":19.53},"coffee":{"n":"Coffee","sym":"@KC.1","p":315.7,"pc":315.7,"chp":null,"t":1792473856,"cur":"USD","rt":false,"a":{"y1":[1759636800,373.05],"y5":[1633838400,203.4],"y10":[1479013200,157.85],"ye":[1766898000,357.3]},"hAt":1792402793,"y1":-15.37,"r5":9.14,"r10":7.23,"ytd":-11.64},"sugar":{"n":"Sugar","sym":"@SB.1","p":20.57,"pc":20.57,"chp":null,"t":1792473856,"cur":"USD","rt":false,"a":{"y1":[1759636800,16.1],"y5":[1633838400,19.8],"y10":[1479013200,20.15],"ye":[1766898000,14.6]},"hAt":1792402793,"y1":27.76,"r5":0.76,"r10":0.21,"ytd":40.89},"cocoa":{"n":"Cocoa","sym":"@CC.1","p":5687.0,"pc":5687.0,"chp":null,"t":1792473856,"cur":"USD","rt":false,"a":{"y1":[1759636800,5848.0],"y5":[1633838400,2607.0],"y10":[1479013200,2432.0],"ye":[1766898000,5871.0]},"hAt":1792402794,"y1":-2.75,"r5":16.78,"r10":8.93,"ytd":-3.13},"cotton":{"n":"Cotton","sym":"@CT.1","p":80.12,"pc":80.13,"chp":-0.01,"t":1792473859,"cur":"USD","rt":false,"a":{"y1":[1759636800,63.84],"y5":[1633838400,107.33],"y10":[1479013200,73.4],"ye":[1766898000,64.01]},"hAt":1792402794,"y1":25.5,"r5":-5.65,"r10":0.89,"ytd":25.17},"nifty":{"n":"Nifty 50","sym":".NSEI","p":23146.15,"pc":22997.35,"chp":0.65,"t":1792108800,"cur":"INR","rt":false,"a":{"y1":[1759636800,25285.35],"y5":[1633838400,18338.55],"y10":[1479013200,8074.1],"ye":[1766898000,26328.55]},"hAt":1792402788,"y1":-8.46,"r5":4.75,"r10":11.2,"ytd":-12.09}}}};
 var IX = {idx: Object.assign({}, (IX_BUILT && IX_BUILT.idx) || {}), mkt: Object.assign({}, ((IX_BUILT && IX_BUILT.mkt) || {}).items || {}), src: 'built', at: 0};
 var IX_MK = ['ta35', 'ta125', 'spx', 'ndx', 'dji', 'ixic', 'rut', 'vix', 'dxy', 'tsx', 'ipc', 'bovespa', 'ftse', 'dax', 'stoxx', 'cac', 'ibex', 'ftmib', 'aex', 'smi', 'nikkei', 'hsi', 'ssec', 'kospi', 'nifty', 'asx', 'gold', 'silver', 'platinum', 'palladium', 'copper', 'brent', 'wti', 'natgas', 'gasoline', 'heatoil', 'wheat', 'corn', 'soy', 'coffee', 'sugar', 'cocoa', 'cotton'], IX_COM = ['gold', 'silver', 'platinum', 'palladium', 'copper', 'brent', 'wti', 'natgas', 'gasoline', 'heatoil', 'wheat', 'corn', 'soy', 'coffee', 'sugar', 'cocoa', 'cotton'], IX_CENT = ['wheat', 'corn', 'soy', 'coffee', 'sugar', 'cotton'], IX_DEF = ['ta35', 'ta125', 'spx', 'ndx', 'dji', 'ixic', 'rut', 'vix', 'ftse', 'dax', 'stoxx', 'nikkei', 'gold', 'silver', 'platinum', 'copper', 'brent', 'wti', 'natgas'], IX_RET = ['ta125', 'ta35', 'spx', 'ndx', 'dji', 'gold'];
 var IX_SYM = {ta35: '.TA35', ta125: '.TA125', spx: '.SPX', ndx: '.NDX', dji: '.DJI', ixic: '.IXIC', rut: '.RUT', vix: '.VIX', ftse: '.FTSE', dax: '.GDAXI', stoxx: '.STOXX50E', nikkei: '.N225',
@@ -23638,7 +23868,7 @@ const LG_DOCS = {
   ], extra: () => `<p><a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? SITE_BASE : ''}lib/nerdamer.LICENSE.txt" target="_blank" rel="noopener">${lgE(t('lg_c_licLink'))}</a></p><p>${lgE(t('lg_c_licLinks'))} ${[['pdfjs/LICENSE.txt', 'pdf.js'], ['pdfjs/wasm/LICENSE_JBIG2', 'JBIG2'], ['pdfjs/wasm/LICENSE_OPENJPEG', 'OpenJPEG'], ['pdfjs/wasm/LICENSE_QCMS', 'QCMS'], ['pdf-lib.LICENSE.txt', 'pdf-lib'], ['jszip.LICENSE.txt', 'JSZip']].map(([f, n]) => `<a href="${(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? SITE_BASE : ''}lib/${f}" target="_blank" rel="noopener">${n}</a>`).join(' · ')}</p>`},
   priv: {t: 'lg_privT', ic: '🔒', parts: [
     ['', ['lg_p_intro']],
-    ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3', 'lg_p_dev4', 'lg_p_dev5', 'lg_p_dev6', 'lg_p_dev7', 'lg_p_dev8', 'lg_p_dev9', 'lg_p_dev10', 'lg_p_dev11', 'lg_p_dev12']],
+    ['lg_p_devH', ['lg_p_dev1', 'lg_p_dev2', 'lg_p_dev3', 'lg_p_dev4', 'lg_p_dev5', 'lg_p_dev6', 'lg_p_dev7', 'lg_p_dev8', 'lg_p_dev9', 'lg_p_dev10', 'lg_p_dev11', 'lg_p_dev12', 'lg_p_dev13', 'lg_p_dev14', 'lg_p_dev15']],
     ['lg_p_usH', ['lg_p_us1', 'lg_p_us2', 'lg_p_us3', 'lg_p_us4'], true],
     ['lg_p_extH', ['lg_p_ext0', 'lg_p_ext1', 'lg_p_ext2', 'lg_p_ext3', 'lg_p_ext4', 'lg_p_ext5', 'lg_p_ext6'], true],
     ['lg_p_permH', ['lg_p_perm']],
@@ -23649,7 +23879,7 @@ const LG_DOCS = {
     ['lg_p_rightsH', ['lg_p_r1', 'lg_p_r2', 'lg_p_r3'], true],
     ['lg_p_chgH', ['lg_p_chg']],
     ['lg_contactH', ['lg_p_contact']],
-    ['lg_histH', ['lg_h_p1910k', 'lg_h_p1910j', 'lg_h_p1910i', 'lg_h_p1910h', 'lg_h_p1910g', 'lg_h_p1910f', 'lg_h_p1910e', 'lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_p2010', 'lg_h_p1910k', 'lg_h_p1910j', 'lg_h_p1910i', 'lg_h_p1910h', 'lg_h_p1910g', 'lg_h_p1910f', 'lg_h_p1910e', 'lg_h_p1910d', 'lg_h_p1910c', 'lg_h_p1910', 'lg_h_1810'], true]
   ]}
 };
 const lgE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
@@ -28133,6 +28363,1025 @@ const scnNum = s => { const m = String(s == null ? '' : s).replace(/[,‎‏\s]/
   calc = function(id){ const r = calcSc2.apply(this, arguments); try { const box = $('#sc-' + id); if (box && box.open && (SCN[id] || []).length) renderScn(id); } catch (e) {} return r; };
 }
 document.addEventListener('toggle', e => { const d = e.target; if (d && d.classList && d.classList.contains('scn') && d.open && d.dataset.tab) try { renderScn(d.dataset.tab); } catch (er) {} }, true);
+
+/* ---------- 13.22: expenses – import a bank or credit-card statement, and categories that learn ----------
+   The file (CSV, Excel .xlsx, or the HTML ".xls" many Israeli banks export) is read on the phone; nothing is sent.
+   Each line gets a category from what you taught it (merchant → category), then from common store names. */
+const x2E = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+var X2 = null;     // the import in progress: {rows: [{date, desc, amt, cat, on, dup}], kind, name}
+const X2_KW = [[/סופר[-\s]?פארם|בית מרקחת|קופת חולים|מכבי|כללית|מאוחדת|לאומית|רופא|pharm|clinic|dent|صيدلية/i, 'health'], [/סופר|שופרסל|רמי לוי|rami levy|shufersal|yochananof|victory|osher ad|יוחננוף|ויקטורי|אושר עד|מגה|טיב טעם|קרפור|מכולת|יינות ביתן|חצי חינם|am:pm|supermarket|grocer|سوبر/i, 'food'],
+  [/דלק|פז(?=\s|$)|סונול|דור אלון|ten\b|yellow|fuel|petrol|חניון|פנגו|סלופארק|כביש 6|cellopark|pango|רכבת|אגד|דן(?=\s|$)|רב.?קו|moovit|gett|yango|car|vroom/i, 'car'],
+  [/חשמל|מים|ארנונה|עירייה|עיריית|גז(?=\s|$)|תאגיד|electric|water|כהרבאא|كهرباء/i, 'bills'], 
+  [/מסעד|קפה|ארומה|קופיקס|גרג|לנדוור|מקדונלד|בורגר|פיצה|וולט|תן ביס|wolt|10bis|restaurant|cafe|coffee|bar\b|cinema|סינמה|יס פלנט|netflix|spotify|disney|apple\.com|google play|مطعم|مقهى/i, 'fun'],
+  [/בגדים|אופנה|קסטרו|פוקס|זארה|h&m|הודיס|גולף|תמנון|נעליים|shein|asos|fashion|ملابس/i, 'clothes'], [/סלקום|פרטנר|פלאפון|הוט|בזק|גולן טלקום|019|012|we4g|cellcom|partner|bezeq|hot\b|yes\b/i, 'comm'],
+  [/ביטוח|הראל|מגדל|כלל|הפניקס|מנורה|איילון|ביטוח ישיר|insurance|تأمين/i, 'insur'], [/גן ילדים|צהרון|בית ספר|חוג|מתנ"ס|קייטנה|school|kinder|טויס|toys/i, 'kids'],
+  [/איקאה|ikea|הום סנטר|ace\b|טמבור|ווי? שופ|שכר דירה|שכירות|ועד בית|משכנתא|rent|home center/i, 'home'], [/הלוואה|ריבית|עמלה|כרטיס אשראי|loan|interest|fee\b/i, 'debt'], [/מתנה|gift|פרחים|flowers/i, 'gifts']];
+const x2Key = s => String(s || '').toLowerCase().replace(/[\d#*"'.,()\-_/\\|]+/g, ' ').replace(/\s+/g, ' ').trim().split(' ').slice(0, 2).join(' ');
+function x2Rules(){ const d = expData(); if (!d.rules || typeof d.rules !== 'object') d.rules = {}; return d.rules; }
+function x2Guess(desc){ const k = x2Key(desc), R = x2Rules(); if (k && R[k]) return R[k]; const hit = X2_KW.find(([rx]) => rx.test(String(desc || ''))); return hit ? hit[1] : 'other'; }
+function x2Learn(desc, cat){ const k = x2Key(desc); if (!k || k.length < 2 || !EXP_CATS.some(c => c[0] === cat)) return; const R = x2Rules(); if (R[k] === cat) return; R[k] = cat; const ks = Object.keys(R); if (ks.length > 600) delete R[ks[0]]; toolsSave('fin-exp', expData()); }
+
+/* ---- reading the file ---- */
+function x2Csv(txt){
+  const first = txt.split(/\r?\n/).find(l => l.trim()) || '', dl = [',', ';', '\t'].sort((a, b) => first.split(b).length - first.split(a).length)[0], rows = []; let row = [], cell = '', q = false;
+  for (let i = 0; i < txt.length; i++){ const ch = txt[i];
+    if (q){ if (ch === '"'){ const nx = txt[i + 1]; if (nx === '"'){ cell += '"'; i++; } else if (nx === undefined || nx === dl || nx === '\n' || nx === '\r') q = false; else cell += '"'; } else cell += ch; continue; }   // a stray quote inside a field (ת"א) stays
+    if (ch === '"') q = true; else if (ch === dl){ row.push(cell); cell = ''; } else if (ch === '\n' || ch === '\r'){ if (ch === '\r' && txt[i + 1] === '\n') i++; row.push(cell); rows.push(row); row = []; cell = ''; } else cell += ch; }
+  if (cell || row.length){ row.push(cell); rows.push(row); }
+  return rows;
+}
+function x2Html(txt){ const doc = new DOMParser().parseFromString(txt, 'text/html'); return [...doc.querySelectorAll('tr')].map(tr => [...tr.querySelectorAll('th,td')].map(c => c.textContent.replace(/\s+/g, ' ').trim())); }
+async function x2Xlsx(buf){
+  const JSZip = await pxZip(), z = await JSZip.loadAsync(buf), P = s => new DOMParser().parseFromString(s, 'application/xml');
+  const ss = z.file('xl/sharedStrings.xml') ? [...P(await z.file('xl/sharedStrings.xml').async('string')).getElementsByTagName('si')].map(si => [...si.getElementsByTagName('t')].map(t => t.textContent).join('')) : [];
+  const names = Object.keys(z.files).filter(n => /^xl\/worksheets\/sheet\d+\.xml$/.test(n)).sort(); const out = [];
+  for (const n of names.slice(0, 3)){ const doc = P(await z.file(n).async('string'));
+    for (const r of doc.getElementsByTagName('row')){ const row = [];
+      for (const c of r.getElementsByTagName('c')){ const ref = c.getAttribute('r') || '', col = ref.replace(/\d+/g, '').split('').reduce((s, ch) => s * 26 + ch.charCodeAt(0) - 64, 0) - 1, tp = c.getAttribute('t'), v = c.getElementsByTagName('v')[0], is = c.getElementsByTagName('is')[0];
+        let val = tp === 's' && v ? ss[+v.textContent] : tp === 'inlineStr' && is ? is.textContent : v ? v.textContent : ''; row[col >= 0 ? col : row.length] = val; }
+      out.push(Array.from(row, x => x == null ? '' : String(x))); } }
+  return out;
+}
+async function x2Read(file){
+  const name = file.name || '', buf = await file.arrayBuffer(), head = new Uint8Array(buf.slice(0, 4));
+  if (head[0] === 0x50 && head[1] === 0x4B) return x2Xlsx(buf);                                   // xlsx (zip)
+  if (head[0] === 0xD0 && head[1] === 0xCF) throw new Error('xls');                               // old binary Excel – ask for CSV/xlsx
+  let txt = new TextDecoder('utf-8').decode(buf); if (/�/.test(txt.slice(0, 2000))) txt = new TextDecoder('windows-1255').decode(buf);
+  return /^\s*</.test(txt) ? x2Html(txt) : x2Csv(txt);
+}
+/* ---- understanding the columns ---- */
+const X2_COL = {date: /תאריך עסקה|תאריך רכישה|תאריך ערך|תאריך|date/i, desc: /שם בית ה?עסק|בית עסק|תיאור|פרטים|הפעולה|אסמכתא|merchant|description|details|business/i,
+  charge: /סכום חיוב|סכום לחיוב|חיוב בש|charge amount|billing amount/i, amt: /סכום עסקה|סכום|amount|sum/i, debit: /חובה|בחובה|debit|withdraw/i, credit: /זכות|בזכות|credit|deposit/i};
+function x2Date(v){
+  const s = String(v || '').trim(); let m;
+  if (/^\d{5}(\.\d+)?$/.test(s)){ const d = new Date(Math.round((+s - 25569) * 864e5)); return isNaN(d) ? '' : d.toISOString().slice(0, 10); }   // Excel day number
+  if ((m = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(s))) return `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`;
+  if ((m = /^(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})/.exec(s))){ const y = m[3].length === 2 ? '20' + m[3] : m[3]; if (+m[2] >= 1 && +m[2] <= 12 && +m[1] >= 1 && +m[1] <= 31) return `${y}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}`; }
+  return '';
+}
+const x2Num = v => { let s = String(v == null ? '' : v).replace(/[₪$€\s‎‏]|ש"ח|NIS|ILS/g, ''); const neg = /^\(.*\)$/.test(s) || /-$/.test(s) || /^-/.test(s); s = s.replace(/[()\-]/g, ''); if (/,\d{2}$/.test(s) && !/\.\d/.test(s)) s = s.replace(/\./g, '').replace(',', '.'); else s = s.replace(/,/g, ''); const x = parseFloat(s); return isFinite(x) ? (neg ? -x : x) : NaN; };
+function x2Parse(rows){
+  rows = rows.filter(r => r && r.some(c => String(c).trim()));
+  let hi = -1, map = null;
+  for (let i = 0; i < Math.min(rows.length, 40); i++){ const r = rows[i].map(c => String(c)), f = k => r.findIndex(c => X2_COL[k].test(c));
+    const d = f('date'), ds = f('desc'), ch = f('charge'), a = f('amt'), db = f('debit'), cr = f('credit');
+    if (d >= 0 && ds >= 0 && (ch >= 0 || a >= 0 || db >= 0)){ hi = i; map = {d, ds, a: ch >= 0 ? ch : a, db, cr}; break; } }
+  if (!map) return null;
+  const out = [], kind = map.db >= 0 ? 'bank' : 'card';
+  for (const r of rows.slice(hi + 1)){
+    const date = x2Date(r[map.d]); if (!date) continue;
+    const desc = String(r[map.ds] || '').trim(); let amt = NaN;
+    if (map.db >= 0){ const db = x2Num(r[map.db]); amt = db > 0 ? db : NaN; }            // a bank statement: only money that went out
+    else { const a = x2Num(r[map.a]); amt = a > 0 ? a : NaN; }                             // a card statement: refunds (negative) are skipped
+    if (!(amt > 0) || !desc) continue;
+    out.push({date, desc: desc.slice(0, 80), amt: Math.round(amt * 100) / 100});
+  }
+  return {rows: out, kind};
+}
+/* ---- the import sheet ---- */
+function x2Open(){
+  if (!$('#x2x')) document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="x2x" hidden><div class="cp-box exp-box x2-box" role="dialog" aria-modal="true" aria-labelledby="x2_t"><div class="cp-top"><h3 id="x2_t"></h3><button type="button" class="cp-x" id="x2_close" aria-label="${x2E(t('cp_close'))}">✕</button></div><div id="x2_body"></div></div></div>`);
+  $('#x2_t').textContent = t('x2_title'); X2 = null; x2Draw(); $('#x2x').hidden = false; document.body.classList.add('cp-lock');
+}
+function x2Close(){ const o = $('#x2x'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); } X2 = null; }
+function x2Draw(){
+  const b = $('#x2_body'); if (!b) return; const E = x2E;
+  if (!X2){ b.innerHTML = `<p class="fine">${E(t('x2_intro'))}</p><ol class="x2-how"><li>${E(t('x2_h1'))}</li><li>${E(t('x2_h2'))}</li><li>${E(t('x2_h3'))}</li></ol>
+      <label class="gold-btn x2-pick">📄 ${E(t('x2_pick'))}<input type="file" id="x2_file" accept=".csv,.xlsx,.xls,.html,.htm,.txt,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden></label>
+      <p class="fine sl-priv">🔒 ${E(t('x2_priv'))}</p><p class="fine" id="x2_msg" role="status" aria-live="polite"></p>`; return; }
+  const on = X2.rows.filter(r => r.on), sum = on.reduce((s, r) => s + r.amt, 0), dups = X2.rows.filter(r => r.dup).length;
+  b.innerHTML = `<p class="ds-found" role="status">✓ ${E(t('x2_found', {n: X2.rows.length, k: t(X2.kind === 'bank' ? 'x2_kBank' : 'x2_kCard')}))}${dups ? ' ' + E(t('x2_dups', {n: dups})) : ''}</p>
+    <div class="btnrow"><button type="button" class="mv" id="x2_all">☑️ ${E(t('x2_all'))}</button><button type="button" class="mv" id="x2_none">⬜ ${E(t('x2_none'))}</button></div>
+    <ul class="x2-list">${X2.rows.map((r, i) => `<li class="${r.dup ? 'dup' : ''}"><label class="x2-ck"><input type="checkbox" data-x2on="${i}"${r.on ? ' checked' : ''} aria-label="${E(r.desc)}"></label>
+      <div class="x2-m"><b dir="auto">${E(r.desc)}</b><small>${E(dLabel(r.date))}${r.dup ? ' · ' + E(t('x2_dup')) : ''}</small></div>
+      <select data-x2cat="${i}" aria-label="${E(t('exp_cat'))}">${EXP_CATS.map(([k, ic]) => `<option value="${k}"${r.cat === k ? ' selected' : ''}>${ic} ${E(t('ec_' + k))}</option>`).join('')}</select>
+      <b class="x2-a num" dir="ltr">${E(M(r.amt, 0, 'ILS'))}</b></li>`).join('')}</ul>
+    <div class="btnrow x2-go"><button type="button" class="gold-btn" id="x2_do"${on.length ? '' : ' disabled'}>⬇️ ${E(t('x2_do', {n: on.length, m: M(sum, 0, 'ILS')}))}</button><button type="button" class="btn" id="x2_back">${E(t('x2_other'))}</button></div>
+    <p class="fine">${E(t('x2_learnH'))}</p>`;
+}
+async function x2File(f){
+  const msg = $('#x2_msg'); if (msg) msg.textContent = t('x2_reading');
+  try { const rows = await x2Read(f), P = x2Parse(rows);
+    if (!P || !P.rows.length){ if (msg) msg.textContent = t('x2_noRows'); return; }
+    const have = new Set(expData().items.map(it => it.date + '|' + Math.round(+it.amt * 100) + '|' + x2Key(it.note)));
+    X2 = {kind: P.kind, name: f.name, rows: P.rows.map(r => { const dup = have.has(r.date + '|' + Math.round(r.amt * 100) + '|' + x2Key(r.desc)); return Object.assign(r, {cat: x2Guess(r.desc), on: !dup, dup}); })};
+    x2Draw();
+  } catch (e) { if (msg) msg.textContent = t(String(e && e.message) === 'xls' ? 'x2_oldXls' : 'x2_fail'); }
+}
+function x2Import(){
+  const d = expData(), on = X2.rows.filter(r => r.on); if (!on.length) return;
+  on.forEach(r => d.items.push({id: tId(), t: Date.now(), amt: r.amt, bc: 'ILS', oamt: r.amt, cur: 'ILS', cat: r.cat, date: r.date, note: r.desc, pay: X2.kind === 'bank' ? 'transfer' : 'card', cc: 'IL', city: '', rec: false, imp: 1}));
+  toolsSave('fin-exp', d); const n = on.length; EXP_M = on.map(r => r.date).sort().pop().slice(0, 7); x2Close(); expRender(); toast(t('x2_done', {n}));
+}
+/* ---- wiring ---- */
+{
+  const er2 = expRender;
+  expRender = function(){ const r = er2.apply(this, arguments); try { const tl = $('#panel-expenses .exp-tools'); if (tl && !tl.querySelector('#x2_open')) tl.insertAdjacentHTML('beforeend', `<button type="button" class="btn" id="x2_open">⬇️ ${x2E(t('x2_btn'))}</button>`); else if (tl){ const b = tl.querySelector('#x2_open'); if (b) b.textContent = '⬇️ ' + t('x2_btn'); } } catch (e) {} return r; };
+  /* a saved expense teaches its category to the merchant name */
+  const es2 = expSave; expSave = function(){ const note = ($('#exp_note') || {}).value || '', cat = EXP_CAT; const r = es2.apply(this, arguments); try { if (note.trim()) x2Learn(note, cat); } catch (e) {} return r; };
+}
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest) return; let b;
+  if (t0.closest('#x2_open')){ x2Open(); return; }
+  if (!t0.closest('#x2x')) return;
+  if (t0.closest('#x2_close') || t0.id === 'x2x'){ x2Close(); return; }
+  if (t0.closest('#x2_do')){ x2Import(); return; }
+  if (t0.closest('#x2_back')){ X2 = null; x2Draw(); return; }
+  if (t0.closest('#x2_all') || t0.closest('#x2_none')){ const v = !!t0.closest('#x2_all'); X2.rows.forEach(r => { r.on = v; }); x2Draw(); return; }
+});
+document.addEventListener('change', e => {
+  const el = e.target; if (!el || !el.closest || !el.closest('#x2x')) return;
+  if (el.id === 'x2_file' && el.files && el.files[0]){ x2File(el.files[0]); el.value = ''; return; }
+  if (el.dataset.x2on != null){ X2.rows[+el.dataset.x2on].on = el.checked; const on = X2.rows.filter(r => r.on), b = $('#x2_do'); if (b){ b.disabled = !on.length; b.textContent = '⬇️ ' + t('x2_do', {n: on.length, m: M(on.reduce((s, r) => s + r.amt, 0), 0, 'ILS')}); } return; }
+  if (el.dataset.x2cat != null){ const r = X2.rows[+el.dataset.x2cat]; r.cat = el.value; x2Learn(r.desc, el.value);
+    const k = x2Key(r.desc); X2.rows.forEach((o, i) => { if (o !== r && x2Key(o.desc) === k){ o.cat = el.value; const s = $(`[data-x2cat="${i}"]`); if (s) s.value = el.value; } }); }
+});
+/* typing a store name in a new expense picks its learned category */
+document.addEventListener('input', e => { const el = e.target; if (!el || el.id !== 'exp_note' || EXP_ED) return; const k = x2Key(el.value), R = x2Rules(); const cat = (k && R[k]) || (el.value.length > 2 ? (X2_KW.find(([rx]) => rx.test(el.value)) || [])[1] : ''); if (cat && cat !== EXP_CAT){ const b = $(`#exx [data-excat="${cat}"]`); if (b) b.click(); } });
+try { GS_SYN.expenses = (GS_SYN.expenses || '') + ' ייבוא דף חשבון פירוט אשראי ישראכרט מקס כאל אקסל import statement csv excel credit card استيراد كشف حساب'; } catch (e) {}
+
+/* ---------- 13.22: insights – what changed for you, trends, subscriptions, your cost of living, a monthly report, challenges ----------
+   Everything is worked out on the phone from your own expenses, accounts and the official figures. */
+const inE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+const IN_TABS = [['chg', '🔔'], ['trend', '📈'], ['subs', '🔁'], ['infl', '🛒'], ['bench', '👥'], ['report', '🧾'], ['chal', '🏅']];
+var INT = 'chg';
+function inD(){ const d = SET.ins && typeof SET.ins === 'object' ? SET.ins : (SET.ins = {}); if (!Array.isArray(d.ev)) d.ev = []; if (!d.keep || typeof d.keep !== 'object') d.keep = {}; if (!Array.isArray(d.ch)) d.ch = []; return d; }
+const inM0 = x => M(Math.round(isFinite(x) ? x : 0), 0, 'ILS');
+const inYm = (d, n) => { const x = new Date(d.getFullYear(), d.getMonth() + (n || 0), 1); return x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0'); };
+const inTip = (ic, h, p, k, go) => `<li class="bk-a${k ? ' bk-' + k : ''}"><span class="bk-ic" aria-hidden="true">${ic}</span><div><b>${inE(h)}</b>${p ? `<p>${inE(p)}</p>` : ''}${go ? `<p><button type="button" class="lg-a" data-go="${go}">${inE(t('in_open', {n: t('tab_' + go)}))}</button></p>` : ''}</div></li>`;
+
+/* ---- 1) what changed: the official figures are remembered, and a change is turned into what it means for you ---- */
+const inPmt = (P, r, n) => r ? P * r / 1200 / (1 - Math.pow(1 + r / 1200, -n)) : P / n;
+function inNow(){ return {boi: +MKT.boi, cpi: +MKT.cpi, fuel: typeof IL26 === 'object' ? +IL26.fuel95 : NaN, usd: typeof RATES === 'object' ? +RATES.ILS : NaN}; }
+function inSnap(){
+  const d = inD(), n = inNow(), o = d.snap; if (!isFinite(n.boi) || !isFinite(n.cpi)) return;
+  if (o){ const day = new Date().toISOString().slice(0, 10), add = (k, a, b) => d.ev.unshift({k, a, b, day});
+    if (isFinite(o.boi) && Math.abs(n.boi - o.boi) >= 0.05) add('boi', o.boi, n.boi);
+    if (isFinite(o.cpi) && Math.abs(n.cpi - o.cpi) >= 0.05) add('cpi', o.cpi, n.cpi);
+    if (isFinite(o.fuel) && isFinite(n.fuel) && Math.abs(n.fuel - o.fuel) >= 0.05) add('fuel', o.fuel, n.fuel);
+    if (isFinite(o.usd) && isFinite(n.usd) && Math.abs(n.usd / o.usd - 1) >= 0.03) add('usd', o.usd, n.usd);
+    d.ev = d.ev.slice(0, 30); }
+  d.snap = n; saveSet();
+}
+function inImpact(e){
+  const L = [];
+  if (e.k === 'boi'){ const dr = e.b - e.a, m = inPmt(100000, 5.5 + dr, 240) - inPmt(100000, 5.5, 240); L.push(t('in_iBoi', {m: inM0(Math.abs(m)), s: dr > 0 ? '+' : '−'}));
+    try { const neg = bkD().accs.reduce((s, a) => s + Math.max(0, -bkN(a.bal)), 0); if (neg > 0) L.push(t('in_iOd', {m: inM0(neg * Math.abs(dr) / 100), s: dr > 0 ? '+' : '−'})); } catch (er) {} }
+  if (e.k === 'cpi') L.push(t('in_iCpi', {m: inM0(100000 * Math.abs(e.b - e.a) / 100), s: e.b > e.a ? '+' : '−'}));
+  if (e.k === 'fuel'){ try { const S = fuLogStats(), km = S && isFinite(S.kmMonth) ? S.kmMonth : 1250, l = km / fuCons(); L.push(t('in_iFuel', {m: inM0(Math.abs(e.b - e.a) * l), s: e.b > e.a ? '+' : '−'})); } catch (er) {} }
+  if (e.k === 'usd') L.push(t('in_iUsd', {p: N(Math.abs(e.b / e.a - 1) * 100, 1), s: e.b > e.a ? t('in_up') : t('in_down')}));
+  return L.join(' ');
+}
+function inPersonal(){
+  const out = [];
+  try { const ym = inYm(new Date()), now = expTotals(ym), prev = expTotals(inYm(new Date(), -1)), day = new Date().getDate(), dim = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
+    const fc = now.sum / Math.max(1, day) * dim; if (now.sum > 0 && prev.sum > 0 && day >= 7){ const pc = (fc / prev.sum - 1) * 100; if (Math.abs(pc) >= 10) out.push({ic: pc > 0 ? '📈' : '📉', h: t(pc > 0 ? 'in_pUp' : 'in_pDown', {p: Math.round(Math.abs(pc))}), p: t('in_pFc', {m: inM0(fc)}), go: 'expenses', k: pc > 0 ? 'warn' : 'ok'}); }
+    const bud = expData().budgets || {}; Object.keys(bud).forEach(k => { const b = +bud[k]; if (b > 0 && (now.by[k] || 0) > b) out.push({ic: '📊', h: t('pic_tBud', {n: t('ec_' + k)}), p: t('in_pBud', {a: inM0(now.by[k]), b: inM0(b)}), go: 'expenses', k: 'warn'}); });
+  } catch (er) {}
+  try { const due = rmD().items.filter(rmDue); if (due.length) out.push({ic: '⏰', h: t('pic_tRem', {n: due.length, t: due[0].title}), go: 'reminders', k: 'warn'}); } catch (er) {}
+  return out;
+}
+function inChg(v){
+  const d = inD(), E = inE, ev = d.ev.slice(0, 12), P = inPersonal(), n = inNow();
+  v.innerHTML = `<p class="fine">${E(t('in_chgIntro'))}</p>
+    <ol class="bk-adv">${P.map(x => inTip(x.ic, x.h, x.p, x.k, x.go)).join('')}${ev.map(e => inTip({boi: '🏦', cpi: '📊', fuel: '⛽', usd: '💵'}[e.k], t('in_e_' + e.k, {a: N(e.a, 2), b: N(e.b, 2)}) + ' · ' + fmtDay(e.day), inImpact(e), e.b > e.a && e.k !== 'usd' ? 'warn' : 'ok')).join('') || ''}</ol>
+    ${!P.length && !ev.length ? `<p class="fine bk-empty">${E(t('in_chgNone'))}</p>` : ''}
+    <h3 class="ds-q">${E(t('in_nowH'))}</h3><table class="bk-plan"><tbody>
+      <tr><th scope="row">${E(t('in_n_boi'))}</th><td dir="ltr">${N(n.boi, 2)}% <small class="in-src">${E(t('in_src', {s: t('in_s_boi'), d: MKT.boiDate || ''}))}</small></td></tr>
+      <tr><th scope="row">${E(t('in_n_cpi'))}</th><td dir="ltr">${N(n.cpi, 1)}% <small class="in-src">${E(t('in_src', {s: t('in_s_cbs'), d: MKT.cpiMonth || ''}))}</small></td></tr>
+      ${isFinite(n.fuel) ? `<tr><th scope="row">${E(t('in_n_fuel'))}</th><td dir="ltr">${M(n.fuel, 2, 'ILS')} <small class="in-src">${E(t('in_src', {s: t('in_s_energy'), d: MKT.fuelMonth || ''}))}</small></td></tr>` : ''}
+      ${isFinite(n.usd) ? `<tr><th scope="row">${E(t('in_n_usd'))}</th><td dir="ltr">${N(n.usd, 3)} ₪</td></tr>` : ''}</tbody></table>`;
+  d.seen = d.ev.length ? d.ev[0].day + d.ev[0].k : ''; saveSet();
+}
+const fmtDay = s => { try { const [y, m, dd] = String(s).split('-').map(Number); return new Intl.DateTimeFormat(locOf(), {day: 'numeric', month: 'short'}).format(new Date(y, m - 1, dd)); } catch (e) { return s; } };
+
+/* ---- 2) trends, unusual charges and the month-end forecast ---- */
+function inTrend(v){
+  const E = inE, now = new Date(), ym = inYm(now), cur = expTotals(ym), pm = [1, 2, 3].map(i => expTotals(inYm(now, -i))), have = pm.filter(x => x.sum > 0);
+  const day = now.getDate(), dim = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(), fc = cur.sum / Math.max(1, day) * dim;
+  if (!cur.sum && !have.length){ v.innerHTML = `<p class="fine bk-empty">${E(t('in_noExp'))}</p><div class="btnrow"><button type="button" class="btn" data-go="expenses">🧾 ${E(t('tab_expenses'))}</button></div>`; return; }
+  const avg = k => have.length ? have.reduce((s, x) => s + (x.by[k] || 0), 0) / have.length : 0, avgAll = have.length ? have.reduce((s, x) => s + x.sum, 0) / have.length : 0;
+  const rows = EXP_CATS.map(c => c[0]).filter(k => cur.by[k] || avg(k)).map(k => ({k, now: cur.by[k] || 0, fc: (cur.by[k] || 0) / Math.max(1, day) * dim, avg: avg(k)})).sort((a, b) => b.now - a.now);
+  /* unusual: an expense more than 2.5× the usual one in its category */
+  const items = expData().items.filter(it => !it.rec && it.date && it.date.slice(0, 7) >= inYm(now, -3)), un = [];
+  EXP_CATS.forEach(([k]) => { const L = items.filter(it => it.cat === k).map(it => +it.amt).sort((a, b) => a - b); if (L.length < 4) return; const med = L[Math.floor(L.length / 2)];
+    items.filter(it => it.cat === k && it.date.slice(0, 7) === ym && +it.amt > med * 2.5 && +it.amt > 150).forEach(it => un.push({it, med})); });
+  /* new: a store you never paid before, appearing this month */
+  const seen = new Set(expData().items.filter(it => it.date && it.date.slice(0, 7) < ym).map(it => x2Key(it.note)).filter(Boolean)), fresh = expData().items.filter(it => it.date && it.date.slice(0, 7) === ym && it.note && !seen.has(x2Key(it.note)));
+  v.innerHTML = `<div class="bk-hero"><span>${E(t('in_fcH'))}</span><b dir="ltr">${E(inM0(fc))}</b><small>${E(t('in_fcSub', {s: inM0(cur.sum), d: day, a: avgAll ? inM0(avgAll) : '—'}))}</small></div>
+    <div class="bk-scroll"><table class="bk-plan"><thead><tr><th scope="col">${E(t('exp_cat'))}</th><th scope="col">${E(t('in_tNow'))}</th><th scope="col">${E(t('in_tFc'))}</th><th scope="col">${E(t('in_tAvg'))}</th></tr></thead><tbody>${rows.map(r => { const pc = r.avg ? (r.fc / r.avg - 1) * 100 : 0;
+      return `<tr><th scope="row">${E((EXP_CATS.find(c => c[0] === r.k) || [, ''])[1] + ' ' + t('ec_' + r.k))}</th><td dir="ltr">${E(inM0(r.now))}</td><td dir="ltr">${E(inM0(r.fc))}${r.avg && Math.abs(pc) >= 15 ? ` <small class="${pc > 0 ? 'in-up' : 'in-dn'}">${pc > 0 ? '▲' : '▼'}${Math.round(Math.abs(pc))}%</small>` : ''}</td><td dir="ltr">${E(r.avg ? inM0(r.avg) : '—')}</td></tr>`; }).join('')}</tbody></table></div>
+    ${un.length || fresh.length ? `<h3 class="ds-q">${E(t('in_unH'))}</h3><ol class="bk-adv">${un.slice(0, 5).map(({it, med}) => inTip('⚠️', t('in_un', {n: it.note || t('ec_' + it.cat), m: inM0(it.amt)}), t('in_unP', {u: inM0(med)}), 'warn')).join('')}${fresh.slice(0, 5).map(it => inTip('🆕', t('in_new', {n: it.note, m: inM0(it.amt)}), '')).join('')}</ol>` : ''}`;
+}
+
+/* ---- 3) subscriptions: the same store, a similar amount, month after month ---- */
+function inSubsList(){
+  const items = expData().items.filter(it => it.note || it.rec), G = {};
+  items.forEach(it => { const k = it.rec ? 'rec:' + it.id : x2Key(it.note); if (!k) return; (G[k] = G[k] || []).push(it); });
+  const out = [];
+  Object.entries(G).forEach(([k, L]) => {
+    if (k.startsWith('rec:')){ const it = L[0]; out.push({k, name: it.note || t('ec_' + it.cat), amt: +it.amt, last: it.date, n: 0, rec: true, cat: it.cat}); return; }
+    if (['food', 'car', 'clothes', 'health', 'gifts'].includes(L[0].cat)) return;                 // shopping, not a subscription
+    const byM = {}, cnt = {}; L.forEach(it => { const m = String(it.date).slice(0, 7); byM[m] = byM[m] || it; cnt[m] = (cnt[m] || 0) + 1; });
+    if (Object.values(cnt).some(c => c > 1)) return;                                                    // a subscription is charged once a month
+    const ms = Object.keys(byM).sort(), amts = ms.map(m => +byM[m].amt); if (ms.length < 2) return;
+    const span = (+ms[ms.length - 1].slice(0, 4) - +ms[0].slice(0, 4)) * 12 + (+ms[ms.length - 1].slice(5) - +ms[0].slice(5)) + 1; if (ms.length < span * 0.8) return;   // month after month, not now and then
+    const avg = amts.reduce((s, x) => s + x, 0) / amts.length; if (!amts.every(a => Math.abs(a - avg) <= Math.max(5, avg * 0.1)) || avg > 2500) return;
+    const last = byM[ms[ms.length - 1]]; out.push({k, name: last.note, amt: avg, last: last.date, n: ms.length, cat: last.cat});
+  });
+  return out.sort((a, b) => b.amt - a.amt);
+}
+function inSubs(v){
+  const E = inE, d = inD(), L = inSubsList(), act = L.filter(s => d.keep[s.k] !== 'gone'), tot = act.reduce((s, x) => s + x.amt, 0);
+  if (!L.length){ v.innerHTML = `<p class="fine">${E(t('in_subsIntro'))}</p><p class="fine bk-empty">${E(t('in_subsNone'))}</p><div class="btnrow"><button type="button" class="btn" id="x2_open">⬇️ ${E(t('x2_btn'))}</button></div>`; return; }
+  v.innerHTML = `<p class="fine">${E(t('in_subsIntro'))}</p><div class="bk-hero"><span>${E(t('in_subsTot', {n: act.length}))}</span><b dir="ltr">${E(inM0(tot * 12))} / ${E(t('es_yr'))}</b><small>${E(t('in_subsMo', {m: inM0(tot)}))}</small></div>
+    <ul class="rm-list">${L.map(s => { const st = d.keep[s.k] || ''; return `<li class="rm-it${st === 'gone' ? ' done' : ''}"><div class="rm-ic" aria-hidden="true">${(EXP_CATS.find(c => c[0] === s.cat) || [, '🔁'])[1]}</div><div class="rm-b"><b dir="auto">${E(s.name)}</b>
+      <span class="rm-w" dir="auto">${E(inM0(s.amt))} / ${E(t('bk_mo'))} · ${E(inM0(s.amt * 12))} / ${E(t('es_yr'))}${s.n ? ' · ' + E(t('in_subsN', {n: s.n})) : ''} · ${E(t('in_subsLast', {d: dLabel(s.last)}))}</span>
+      <div class="rm-acts"><button type="button" class="mv" data-insk="${E(s.k)}" data-inst="keep"${st === 'keep' ? ' aria-pressed="true"' : ''}>👍 ${E(t('in_keep'))}</button><button type="button" class="mv" data-insk="${E(s.k)}" data-inst="gone">✂️ ${E(t('in_gone'))}</button><button type="button" class="mv" data-insrem="${E(s.name)}">⏰ ${E(t('in_remCancel'))}</button></div></div></li>`; }).join('')}</ul>`;
+}
+
+/* ---- 4) your cost of living: your spending now against a year ago (or the months before), next to the index ---- */
+function inInfl(v){
+  const E = inE, now = new Date(), win = o => [1, 2, 3].map(i => expTotals(inYm(now, -i - o))), a = win(0), b = win(12), c = win(3), s = L => L.reduce((x, y) => x + y.sum, 0), full = L => L.every(m => m.sum > 0);
+  const useY = full(b), base = useY ? b : c, sa = full(a) ? s(a) : 0, sb = full(base) ? s(base) : 0;
+  if (!sa || !sb){ v.innerHTML = `<p class="fine">${E(t('in_inflIntro'))}</p><p class="fine bk-empty">${E(t('in_inflNone'))}</p>`; return; }
+  const pc = (sa / sb - 1) * 100, rows = EXP_CATS.map(([k]) => { const x = a.reduce((q, m) => q + (m.by[k] || 0), 0), y = base.reduce((q, m) => q + (m.by[k] || 0), 0); return {k, x, y}; }).filter(r => r.x || r.y).sort((p, q) => (q.x - q.y) - (p.x - p.y));
+  v.innerHTML = `<p class="fine">${E(t('in_inflIntro'))}</p><div class="bk-hero"><span>${E(t(useY ? 'in_inflY' : 'in_inflQ'))}</span><b dir="ltr">${pc >= 0 ? '+' : '−'}${N(Math.abs(pc), 1)}%</b><small>${E(t('in_inflCpi', {c: N(+MKT.cpi, 1)}))}</small></div>
+    <table class="bk-plan"><thead><tr><th scope="col">${E(t('exp_cat'))}</th><th scope="col">${E(t('in_before'))}</th><th scope="col">${E(t('in_now3'))}</th></tr></thead><tbody>${rows.map(r => `<tr><th scope="row">${E(t('ec_' + r.k))}</th><td dir="ltr">${E(inM0(r.y / 3))}</td><td dir="ltr">${E(inM0(r.x / 3))}${r.y ? ` <small class="${r.x > r.y ? 'in-up' : 'in-dn'}">${r.x >= r.y ? '+' : '−'}${Math.round(Math.abs(r.x / r.y - 1) * 100)}%</small>` : ''}</td></tr>`).join('')}</tbody></table>
+    <p class="fine">${E(t('in_inflNote'))}</p>`;
+}
+
+/* ---- 5) against the average Israeli household (CBS household expenditure survey, 2023) ---- */
+const IN_AVG = {tot: 18088, home: 0.253, move: 0.186, food: 0.179};
+function inBench(v){
+  const E = inE, now = new Date(), L = [1, 2, 3].map(i => expTotals(inYm(now, -i))).filter(x => x.sum > 0), cur = expTotals(inYm(now));
+  const use = L.length ? L : (cur.sum ? [cur] : []); if (!use.length){ v.innerHTML = `<p class="fine bk-empty">${E(t('in_noExp'))}</p>`; return; }
+  const avg = k => use.reduce((s, x) => s + (k ? (Array.isArray(k) ? k.reduce((q, kk) => q + (x.by[kk] || 0), 0) : (x.by[k] || 0)) : x.sum), 0) / use.length;
+  const R = [['in_bTot', avg(), IN_AVG.tot], ['in_bHome', avg('home'), IN_AVG.tot * IN_AVG.home], ['in_bMove', avg(['car', 'comm']), IN_AVG.tot * IN_AVG.move], ['in_bFood', avg('food'), IN_AVG.tot * IN_AVG.food]];
+  v.innerHTML = `<p class="fine">${E(t('in_benchIntro'))}</p><ul class="in-bars">${R.map(([k, me, av]) => { const mx = Math.max(me, av, 1); return `<li><b>${E(t(k))}</b><div class="in-bar"><span>${E(t('in_me'))}</span><i style="width:${(me / mx * 100).toFixed(1)}%"></i><em dir="ltr">${E(inM0(me))}</em></div><div class="in-bar avg"><span>${E(t('in_avg'))}</span><i style="width:${(av / mx * 100).toFixed(1)}%"></i><em dir="ltr">${E(inM0(av))}</em></div></li>`; }).join('')}</ul>
+    <p class="fine">${E(t('in_benchNote'))}</p>`;
+}
+
+/* ---- 6) the monthly report: one page, drawn on the phone, saved as PDF ---- */
+function inReportData(ym){
+  const T0 = expTotals(ym), inc = expIncome(ym), prev = expTotals(inYm(new Date(+ym.slice(0, 4), +ym.slice(5) - 1, 1), -1));
+  const cats = EXP_CATS.map(c => ({k: c[0], ic: c[1], col: c[2], v: T0.by[c[0]] || 0})).filter(c => c.v > 0).sort((a, b) => b.v - a.v);
+  let score = null; try { score = picData().score; } catch (e) {}
+  return {ym, sum: T0.sum, inc: inc ? +inc.v : 0, prev: prev.sum, cats, score, subs: (() => { try { return inSubsList().reduce((s, x) => s + x.amt, 0); } catch (e) { return 0; } })()};
+}
+function inReport(v){
+  const E = inE, d = inD(), ym = d.rym || inYm(new Date(), -1), R = inReportData(ym), opts = [0, -1, -2, -3, -4, -5].map(i => inYm(new Date(), i));
+  v.innerHTML = `<p class="fine">${E(t('in_repIntro'))}</p><label class="bk-f"><span>${E(t('in_repM'))}</span><select id="in_rym">${opts.map(m => `<option value="${m}"${m === ym ? ' selected' : ''}>${E(ymLabel(m))}</option>`).join('')}</select></label>
+    <div class="bk-hero"><span>${E(ymLabel(ym))}</span><b dir="ltr">${E(inM0(R.sum))}</b><small>${E(R.inc ? t('in_repSub', {i: inM0(R.inc), s: inM0(R.inc - R.sum)}) : t('in_repNoInc'))}</small></div>
+    <div class="btnrow"><button type="button" class="gold-btn" id="in_pdf"${R.sum ? '' : ' disabled'}>📄 ${E(t('in_repPdf'))}</button></div>`;
+}
+async function inReportPdf(){
+  const d = inD(), ym = d.rym || inYm(new Date(), -1), R = inReportData(ym), W = 1240, H = 1754, c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d'), rtl = document.documentElement.dir === 'rtl', F = (w, s) => w + ' ' + s + 'px -apple-system,"Segoe UI","Noto Sans Hebrew","Noto Sans Arabic",Arial,sans-serif', X = v => rtl ? W - v : v;
+  x.fillStyle = '#fff'; x.fillRect(0, 0, W, H); x.direction = rtl ? 'rtl' : 'ltr'; x.textAlign = 'start'; x.fillStyle = '#0B1F3A'; x.fillRect(0, 0, W, 170);
+  x.fillStyle = '#F2C45A'; x.font = F('700', 54); x.fillText(t('in_repTitle'), X(80), 95); x.fillStyle = '#fff'; x.font = F('400', 34); x.fillText(ymLabel(ym), X(80), 145);
+  let y = 260; const line = (l, v, big) => { x.fillStyle = '#4E5B6E'; x.font = F('400', big ? 34 : 30); x.textAlign = 'start'; x.fillText(l, X(80), y); x.fillStyle = '#0B1F3A'; x.font = F('700', big ? 44 : 32); x.textAlign = 'end'; x.fillText(v, X(W - 80), y); x.textAlign = 'start'; y += big ? 70 : 54; };
+  line(t('in_repSpent'), inM0(R.sum), true); if (R.inc){ line(t('exp_income'), inM0(R.inc)); line(t('in_repSaved'), inM0(R.inc - R.sum) + '  (' + Math.round((R.inc - R.sum) / R.inc * 100) + '%)'); }
+  if (R.prev) line(t('in_repVs'), '\u200e' + (R.sum >= R.prev ? '+' : '−') + inM0(Math.abs(R.sum - R.prev)));
+  if (R.subs) line(t('in_repSubs'), inM0(R.subs)); if (R.score != null) line(t('pic_h'), R.score + ' / 100');
+  y += 30; x.fillStyle = '#0B1F3A'; x.font = F('700', 38); x.fillText(t('exp_breakdown'), X(80), y); y += 50;
+  const mx = Math.max(1, ...R.cats.map(c2 => c2.v));
+  R.cats.slice(0, 12).forEach(cc => { x.fillStyle = '#0B1F3A'; x.font = F('400', 30); x.fillText(t('ec_' + cc.k), X(80), y + 30); x.textAlign = 'end'; x.font = F('700', 30); x.fillText(inM0(cc.v) + '  ' + Math.round(cc.v / R.sum * 100) + '%', X(W - 80), y + 30); x.textAlign = 'start';
+    const bw = (W - 160) * cc.v / mx; x.fillStyle = cc.col; x.fillRect(rtl ? W - 80 - bw : 80, y + 44, bw, 14); y += 80; });
+  x.fillStyle = '#8A94A6'; x.font = F('400', 24); x.fillText(t('in_repFoot'), X(80), H - 70);
+  try { const blob = await dsPdf([{items: [{c, x: 0, y: 0, w: 595.28, h: 841.89}]}], 0.9), r = await fileSave(blob, (t('in_repTitle') + ' ' + ym).replace(/[\\/:*?"<>|]+/g, ' ') + '.pdf', 'application/pdf'); toast(t(r === 'saved' ? 'ds_fileOk' : r === 'declined' ? 'pdf_declined' : 'pdf_fail')); } catch (e) { toast(t('pdf_fail')); }
+}
+
+/* ---- 7) challenges and streaks ---- */
+const IN_CH = [['nospend', 7, '🚫'], ['fun', 30, '🎉'], ['save', 3, '💰'], ['fuel', 30, '⛽']];
+function inChalState(k, ch){
+  const now = new Date(), it = expData().items;
+  if (k === 'nospend'){ const days = new Set(it.filter(x => !x.rec).map(x => x.date)); let n = 0; for (let i = 0; i < 7; i++){ const d = new Date(now - i * 864e5).toISOString().slice(0, 10); if (!days.has(d)) n++; } return {got: n, goal: 3, txt: t('in_c_nospendS', {n})}; }
+  if (k === 'fun'){ const s = expTotals(inYm(now)).by.fun || 0, goal = +(ch && ch.target) || 500; return {got: Math.max(0, goal - s), goal, ok: s <= goal, txt: t('in_c_funS', {s: inM0(s), g: inM0(goal)})}; }
+  if (k === 'save'){ let n = 0; for (let i = 1; i <= 24; i++){ const ym = inYm(now, -i), s = expTotals(ym).sum, inc = expIncome(ym); if (inc && +inc.v > s && s > 0) n++; else break; } return {got: n, goal: 3, txt: t('in_c_saveS', {n})}; }
+  if (k === 'fuel'){ let m = NaN; try { const S = fuLogStats(); m = S ? +S.month : NaN; } catch (e) {} const goal = +(ch && ch.target) || 600; return {got: Number.isFinite(m) ? Math.max(0, goal - m) : 0, goal, ok: Number.isFinite(m) && m <= goal, txt: Number.isFinite(m) ? t('in_c_fuelS', {s: inM0(m), g: inM0(goal)}) : t('in_c_fuelNo')}; }
+  return {got: 0, goal: 1, txt: ''};
+}
+function inChal(v){
+  const E = inE, d = inD();
+  v.innerHTML = `<p class="fine">${E(t('in_chalIntro'))}</p><ul class="rm-list">${IN_CH.map(([k, , ic]) => { const ch = d.ch.find(x => x.k === k), S = inChalState(k, ch), pct = Math.max(0, Math.min(100, S.goal ? S.got / S.goal * 100 : 0)), done = S.ok || S.got >= S.goal;
+    return `<li class="rm-it${done ? ' in-done' : ''}"><div class="rm-ic" aria-hidden="true">${done ? '🏅' : ic}</div><div class="rm-b"><b>${E(t('in_c_' + k))}</b><span class="rm-w">${E(S.txt)}</span><span class="in-prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pct)}"><i style="width:${pct.toFixed(0)}%"></i></span>
+      ${k === 'fun' || k === 'fuel' ? `<label class="bk-f in-tg"><span>${E(t('in_target'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" data-inct="${k}" value="${E(ch && ch.target || '')}" placeholder="${k === 'fun' ? 500 : 600}"></label>` : ''}</div></li>`; }).join('')}</ul>
+    <p class="fine">${E(t('in_badges', {n: (d.badges || []).length}))}</p>`;
+}
+
+/* ---- the screen ---- */
+function inRender(){
+  const root = $('#hr_insights'); if (!root) return; inSnap(); const E = inE, d = inD(), unseen = d.ev.length && d.seen !== d.ev[0].day + d.ev[0].k;
+  root.innerHTML = `<div class="ds-chips bk-tabs" role="tablist" aria-label="${E(t('tab_insights'))}">${IN_TABS.map(([k, ic]) => `<button type="button" role="tab" class="ds-chip${INT === k ? ' on' : ''}" aria-selected="${INT === k}" data-intab="${k}">${ic} ${E(t('in_t_' + k))}${k === 'chg' && unseen ? ' •' : ''}</button>`).join('')}</div><div id="in_view"></div><p class="fine sl-priv">🔒 ${E(t('pic_priv'))}</p>`;
+  const v = $('#in_view'); ({chg: inChg, trend: inTrend, subs: inSubs, infl: inInfl, bench: inBench, report: inReport, chal: inChal})[INT](v);
+}
+/* a badge when a challenge is met (kept, never shown twice) */
+function inBadges(){ try { const d = inD(); d.badges = d.badges || []; IN_CH.forEach(([k]) => { const S = inChalState(k, d.ch.find(x => x.k === k)), id = k + ':' + inYm(new Date()); if ((S.ok || S.got >= S.goal) && !d.badges.includes(id)){ d.badges.push(id); if (d.badges.length > 120) d.badges.shift(); setTimeout(() => toast(t('in_badge', {n: t('in_c_' + k)})), 2500); } }); saveSet(); } catch (e) {} }
+/* on Home: a line when something changed since the last look */
+function inHome(){
+  const hh = $('#hh'); if (!hh) return; const d = inD(); let box = $('#hin');
+  const fresh = d.ev.length && d.seen !== d.ev[0].day + d.ev[0].k ? d.ev[0] : null;
+  if (!fresh){ if (box) box.remove(); return; }
+  if (!box){ (($('#hpic') || $('#hrm') || hh)).insertAdjacentHTML('beforebegin', '<div id="hin" class="hrm hin"></div>'); box = $('#hin'); }
+  box.innerHTML = `<button type="button" class="hrm-in" data-go="insights"><span class="hrm-h">🔔 ${inE(t('in_e_' + fresh.k, {a: N(fresh.a, 2), b: N(fresh.b, 2)}))}</span><span class="hrm-r">${inE(inImpact(fresh))}</span></button>`;
+}
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest || !t0.closest('#hr_insights')) return; const d = inD(); let b;
+  if ((b = t0.closest('[data-intab]'))){ INT = b.dataset.intab; inRender(); const n = $(`[data-intab="${INT}"]`); if (n) n.focus(); return; }
+  if ((b = t0.closest('[data-insk]'))){ const k = b.dataset.insk, st = b.dataset.inst; d.keep[k] = d.keep[k] === st ? '' : st; saveSet(); inRender(); return; }
+  if ((b = t0.closest('[data-insrem]'))){ rmNew({title: t('in_remT', {n: b.dataset.insrem}), cat: 'money', before: 1, date: new Date(Date.now() + 3 * 864e5).toISOString().slice(0, 10)}); return; }
+  if (t0.closest('#in_pdf')){ inReportPdf(); }
+});
+document.addEventListener('change', e => { const el = e.target; if (!el || !el.closest || !el.closest('#hr_insights')) return; if (el.id === 'in_rym'){ inD().rym = el.value; saveSet(); inRender(); } });
+document.addEventListener('input', e => { const el = e.target; if (!el || !el.dataset || !el.dataset.inct) return; const d = inD(), k = el.dataset.inct; let ch = d.ch.find(x => x.k === k); if (!ch){ ch = {k}; d.ch.push(ch); } ch.target = el.value; clearTimeout(inD.t); inD.t = setTimeout(() => { saveSet(); const S = inChalState(k, ch), li = el.closest('.rm-b'); if (li){ li.querySelector('.rm-w').textContent = S.txt; const pct = Math.max(0, Math.min(100, S.goal ? S.got / S.goal * 100 : 0)); li.querySelector('.in-prog i').style.width = pct.toFixed(0) + '%'; } }, 250); });
+function inAiText(){ try { const ym = inYm(new Date()), c = expTotals(ym), s = inSubsList(); return `Insights: spent this month ${Math.round(c.sum)} ILS; subscriptions found: ${s.length} (${Math.round(s.reduce((q, x) => q + x.amt, 0))} ILS a month); recent official changes: ${inD().ev.slice(0, 5).map(e => e.k + ' ' + e.a + '→' + e.b).join(', ') || 'none'}.`; } catch (e) { return ''; } }
+{ const aiStIn = aiScreenText; aiScreenText = function(id){ const s = aiStIn.apply(this, arguments); return id === 'insights' ? s + '\n' + inAiText() : s; }; }
+{ const aiChIn = aiChipKeys; aiChipKeys = function(id){ return id === 'insights' ? ['in_c1', 'in_c2'] : aiChIn.apply(this, arguments); }; }
+CALC.insights = () => null;
+try { GS_SYN.insights = 'תובנות מגמות חריגות תחזית מנויים מנוי חודשי אינפלציה אישית יוקר המחיה השוואה לממוצע דוח חודשי אתגרים רצף מה השתנה insights trends subscriptions forecast monthly report challenges what changed رؤى اتجاهات اشتراكات تقرير شهري تحديات'; } catch (e) {}
+if (typeof svKind === 'function'){ const svKindIn = svKind; svKind = function(id){ return id === 'insights' ? '' : svKindIn.apply(this, arguments); }; }
+try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('insights'); if (Array.isArray(EX_SKIP)) EX_SKIP.push('insights'); } catch (e) {}
+{
+  const actIn = activate; activate = function(id){ const r = actIn.apply(this, arguments); if (id === 'insights') inRender(); else if (id === 'home'){ try { inHome(); } catch (e) {} } return r; };
+  const alIn = applyLang; applyLang = function(){ const r = alIn.apply(this, arguments); try { if (tab === 'insights') inRender(); inHome(); } catch (e) {} return r; };
+  const chIn = calcHome; calcHome = function(){ const r = chIn.apply(this, arguments); try { inHome(); } catch (e) {} return r; };
+  setTimeout(() => { try { inSnap(); inHome(); inBadges(); } catch (e) {} }, 9000);
+  try { if (tab === 'insights') inRender(); } catch (e) {}
+}
+
+/* ---------- 13.22: say it in one sentence – commands in the search box ----------
+   "תדלקתי ב-320" → an expense; "תזכיר לי ביטוח רכב ב-15/11" → a reminder; "כמה נטו על 18000" → the salary calculator.
+   Understood on the phone with simple rules (Hebrew, Arabic, English); nothing is sent. */
+const cmE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+const CM_NUM = /(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)\s*(אלף|k|K|الف|ألف|מיליון|million|m\b|M\b|مليون)?/;
+const cmAmt = m => { let v = parseFloat(String(m[1]).replace(/,/g, '')); if (m[2]) v *= /מיליון|million|m|M|مليون/.test(m[2]) && !/^k$/i.test(m[2]) ? 1e6 : 1000; return v; };
+function cmDate(q){
+  const now = new Date(), iso = d => d.toISOString().slice(0, 10); let m;
+  if (/מחרתיים|after tomorrow|بعد غد/i.test(q)) return iso(new Date(now.getTime() + 2 * 864e5));
+  if (/מחר|tomorrow|غدا|غدًا/i.test(q)) return iso(new Date(now.getTime() + 864e5));
+  if ((m = /(?:בעוד|in|بعد)\s*(\d{1,3})\s*(ימים|יום|days?|أيام|يوم)/i.exec(q))) return iso(new Date(now.getTime() + +m[1] * 864e5));
+  if ((m = /(?:בעוד|in|بعد)\s*(\d{1,2})?\s*(שבועות|שבוע|weeks?|أسابيع|أسبوع)/i.exec(q))) return iso(new Date(now.getTime() + (+m[1] || 1) * 7 * 864e5));
+  if ((m = /(?:בעוד|in|بعد)\s*(\d{1,2})?\s*(חודשים|חודש|months?|أشهر|شهر)/i.exec(q))){ const d = new Date(now); d.setMonth(d.getMonth() + (+m[1] || 1)); return iso(d); }
+  if ((m = /(\d{1,2})[./](\d{1,2})(?:[./](\d{2,4}))?/.exec(q))){ let y = m[3] ? (m[3].length === 2 ? 2000 + +m[3] : +m[3]) : now.getFullYear(); const d = new Date(y, +m[2] - 1, +m[1]); if (!m[3] && d < new Date(now.getFullYear(), now.getMonth(), now.getDate())) d.setFullYear(y + 1); return isNaN(d) ? '' : rmIso(d); }
+  return '';
+}
+const CM_SKIP = new Set(['ב', 'ב-', 'ב־', 'על', 'של', 'ל', 'ל-', 'ל־', 'עבור', 'of', 'for', 'on', 'in', 'at', 'to', 'بـ', 'ب', 'على', 'في', 'لـ']);
+/* "בשופרסל" → "שופרסל", "לחשמל" → "חשמל" – a Hebrew prefix comes off only when what's left is a known store or bill */
+function cmClean(s){ return s.split(/\s+/).filter(w => w && !CM_SKIP.has(w)).map(w => { const st = w.replace(/^[בלו][-־]?/, ''); if (st !== w && st.length >= 3 && X2_KW.some(([rx]) => { const m = rx.exec(st); return m && m.index === 0; })) return st; return w; }).join(' '); }
+function cmParse(q){
+  q = String(q || '').trim(); if (q.length < 3) return null; let m;
+  /* a reminder */
+  if ((m = /^(?:תזכיר(?:י)? לי|תזכורת|להזכיר לי|remind me(?: to)?|reminder|ذكرني|ذكّرني|تذكير)\s+(.+)$/i.exec(q))){
+    const date = cmDate(m[1]), title = m[1].replace(/(?:ב|ב-|ב־|on|في)?\s*\d{1,2}[./]\d{1,2}(?:[./]\d{2,4})?/g, '').replace(/מחרתיים|מחר|tomorrow|غدًا|غدا|(?:בעוד|in|بعد)\s*\d*\s*(ימים|יום|days?|שבועות|שבוע|weeks?|חודשים|חודש|months?|أيام|يوم|أسابيع|أسبوع|أشهر|شهر)/gi, '').replace(/\s+/g, ' ').trim();
+    if (title) return {k: 'rem', title: title.slice(0, 80), date, ic: '⏰', h: t('cm_rem', {t: title, d: date ? rmFmt(date) : t('cm_pickDate')})};
+  }
+  /* the salary calculator */
+  if ((m = /(?:כמה נטו|נטו|ברוטו|משכורת|שכר|net|gross|salary|راتب|صافي)\D{0,12}/i.exec(q)) && (m = CM_NUM.exec(q))){ const v = cmAmt(m); if (v >= 1000 && v < 1e6) return {k: 'calc', id: 'salary', set: {s_amount: v}, ic: '💼', h: t('cm_sal', {m: M(v, 0, 'ILS')})}; }
+  if (/משכנת|mortgage|رهن/i.test(q) && (m = CM_NUM.exec(q))){ const v = cmAmt(m); if (v >= 10000) return {k: 'calc', id: 'mortgage', set: {m_price: v}, ic: '🏠', h: t('cm_mort', {m: M(v, 0, 'ILS')})}; }
+  if (/הלוואה|loan|قرض/i.test(q) && (m = CM_NUM.exec(q))){ const v = cmAmt(m); if (v >= 500) return {k: 'calc', id: 'loan', set: {l_amount: v}, ic: '💳', h: t('cm_loan', {m: M(v, 0, 'ILS')})}; }
+  if ((m = /(?:המר|תמיר|להמיר|convert|حوّل|حول)\s*(\d[\d,.]*)\s*(דולר|יורו|ליש"ט|פאונד|usd|eur|gbp|\$|€|£|دولار|يورو)?/i.exec(q))){ const v = parseFloat(m[1].replace(/,/g, '')), c = (m[2] || '').toLowerCase(), cur = /יורו|eur|€|يورو/.test(c) ? 'EUR' : /ליש|פאונד|gbp|£/.test(c) ? 'GBP' : 'USD'; return {k: 'calc', id: 'convert', set: {x_amount: v, x_from: cur, x_to: 'ILS'}, ic: '💱', h: t('cm_conv', {v: N(v, 0), c: cur})}; }
+  /* an expense: a verb or a store, and an amount */
+  const verb = /(קניתי|שילמתי|הוצאתי|הוצאה|תדלקתי|תדלוק|spent|paid|bought|expense|fuel|دفعت|اشتريت|مصروف)/i, n = CM_NUM.exec(q);
+  if (n && (verb.test(q) || /₪|ש"ח|שקל|nis|ils/i.test(q))){
+    const amt = cmAmt(n); if (!(amt > 0 && amt < 1e6)) return null;
+    const fuel = /תדלק|דלק|fuel|petrol|وقود|بنزين/i.test(q);
+    let note = cmClean(q.replace(n[0], ' ').replace(verb, ' ').replace(/₪|ש"ח|שקלים|שקל|nis|ils/gi, ' ').replace(/\s+/g, ' ').trim());
+    if (fuel && (!note || /^(דלק|fuel|petrol|وقود|بنزين)$/i.test(note))) note = t('cm_fuel');
+    const cat = fuel ? 'car' : x2Guess(note), date = cmDate(q.replace(n[0], ''));
+    return {k: 'exp', amt, note: note.slice(0, 80), cat, date: date && date <= todayIso() ? date : todayIso(), ic: '🧾', h: t('cm_exp', {m: M(amt, 0, 'ILS'), n: note || t('ec_' + cat), c: t('ec_' + cat)})};
+  }
+  return null;
+}
+function cmRun(c){
+  if (c.k === 'rem'){ rmNew({title: c.title, date: c.date || undefined, cat: 'other', before: 1}); return; }
+  if (c.k === 'calc'){ activate(c.id); setTimeout(() => { try { setVals(Object.fromEntries(Object.entries(c.set).map(([k, v]) => [k, String(v)]))); Object.keys(c.set).forEach(k => { const e = $('#' + k); if (e){ e.dispatchEvent(new Event('input', {bubbles: true})); e.dispatchEvent(new Event('change', {bubbles: true})); } }); calc(c.id); } catch (e) {} }, 60); return; }
+  if (c.k === 'exp'){
+    const d = expData(); d.items.push({id: tId(), t: Date.now(), amt: c.amt, bc: 'ILS', oamt: c.amt, cur: 'ILS', cat: c.cat, date: c.date, note: c.note, pay: (d.last && d.last.pay) || 'card', cc: 'IL', city: '', rec: false});
+    toolsSave('fin-exp', d); try { if (c.note) x2Learn(c.note, c.cat); } catch (e) {}
+    EXP_M = c.date.slice(0, 7); activate('expenses'); toast(t('cm_added', {m: M(c.amt, 0, 'ILS')}));
+  }
+}
+var CM_LAST = null;
+{
+  const gsR2 = gsRender;
+  gsRender = function(){
+    const r = gsR2.apply(this, arguments); const box = $('#gs_list'), q = ($('#gs_q') || {}).value || ''; CM_LAST = cmParse(q);
+    if (box){
+      if (CM_LAST) box.insertAdjacentHTML('afterbegin', `<div class="cp-h">${cmE(t('cm_h'))}</div><button type="button" class="gs-it gs-cmd" role="option" data-n="-1"><span class="gs-ic" aria-hidden="true">${CM_LAST.ic}</span><span class="gs-tx"><b>${cmE(CM_LAST.h)}</b><small>${cmE(t('cm_sub'))}</small></span></button>`);
+      else if (!q.trim()) box.insertAdjacentHTML('beforeend', `<p class="gs-tip">💬 ${cmE(t('cm_tip'))}</p>`);
+    }
+    return r;
+  };
+  const gsG2 = gsGo;
+  gsGo = function(n){ if (n === -1 && CM_LAST){ const c = CM_LAST; $('#gsx').hidden = true; document.body.classList.remove('cp-lock'); cmRun(c); return; } return gsG2.apply(this, arguments); };
+}
+
+/* ---------- 13.22: rights and tax – what you are probably entitled to, and the year-end tax checklist ----------
+   A few questions → a list of benefits with where to check each one in the app. The answers stay on the phone. */
+const rtE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+var RTT = 'find';
+function rtD(){ const d = SET.rt && typeof SET.rt === 'object' ? SET.rt : (SET.rt = {}); if (!d.a || typeof d.a !== 'object') d.a = {}; if (!d.done || typeof d.done !== 'object') d.done = {}; return d; }
+/* the questions: [key, type] – ck = yes/no, num = a number */
+const RT_Q = [['work', 'sel'], ['age', 'num'], ['woman', 'ck'], ['kids', 'num'], ['kidsSmall', 'num'], ['single', 'ck'], ['soldier', 'ck'], ['degree', 'ck'], ['oleh', 'ck'], ['disab', 'ck'], ['reserve', 'ck'], ['lowInc', 'ck'], ['jobs', 'ck'], ['gapYear', 'ck'], ['donate', 'ck'], ['privPens', 'ck'], ['rent', 'ck'], ['priority', 'ck'], ['retire', 'ck']];
+const kz = q => 'https://www.kolzchut.org.il/w/index.php?search=' + encodeURIComponent(q);
+/* the benefits: [key, when(a), app screen or '', kol-zchut search, value(a) in ILS a year or 0] */
+const RT_LIST = [
+  ['taxRefund', a => a.jobs || a.gapYear || a.donate || a.privPens || a.work === 'emp' && a.reserve, 'taxrefund', 'החזר מס', () => 0],
+  ['soldier', a => a.soldier, 'tax', 'נקודות זיכוי לחיילים משוחררים', () => 2 * TAX.point],
+  ['degree', a => a.degree, 'tax', 'נקודות זיכוי לבעלי תואר אקדמי', () => TAX.point],
+  ['kidsPts', a => +a.kids > 0, 'tax', 'נקודות זיכוי בעד ילדים', () => 0],
+  ['single', a => a.single && +a.kids > 0, 'tax', 'נקודות זיכוי להורה יחיד', () => TAX.point],
+  ['oleh', a => a.oleh, 'tax', 'נקודות זיכוי לעולים חדשים', () => 0],
+  ['childAllow', a => +a.kids > 0, 'childallow', 'קצבת ילדים', () => 0],
+  ['kidSave', a => +a.kids > 0, 'kidsave', 'חיסכון לכל ילד', a => (+a.kids || 0) * (typeof IL26 === 'object' ? IL26.childDep : 58) * 12],
+  ['workGrant', a => a.lowInc && (a.work === 'emp' || a.work === 'self') && (+a.kids > 0 || +a.age >= 55), 'workgrant', 'מענק עבודה', () => 0],
+  ['unemp', a => a.work === 'none' && +a.age < 67, 'benefits', 'דמי אבטלה', () => 0],
+  ['reserve', a => a.reserve, 'reserve', 'זכויות משרתי מילואים', () => 0],
+  ['disab', a => a.disab, '', 'פטור ממס הכנסה לנכים', () => 0],
+  ['arnona', a => a.disab || a.single || a.soldier && +a.age < 25 || a.oleh || +a.age >= 67 || a.lowInc || a.reserve, 'arnona', 'הנחה בארנונה', () => 0],
+  ['oldAge', a => +a.age >= 62 || a.retire, 'oldage', 'קצבת אזרח ותיק', () => 0],
+  ['pensFix', a => a.retire || +a.age >= 60, 'pensfix', 'קיבוע זכויות', () => 0],
+  ['donate', a => a.donate, 'tax', 'זיכוי ממס על תרומות סעיף 46', () => 0],
+  ['privPens', a => a.privPens, 'tax', 'זיכוי ממס על הפקדה לפנסיה עצמאית', () => 0],
+  ['selfHish', a => a.work === 'self', 'hishtalmut', 'קרן השתלמות לעצמאים', () => 0],
+  ['priority', a => a.priority, '', 'הטבות מס ליישובים מזכים', () => 0],
+  ['rent', a => a.rent && a.lowInc, '', 'סיוע בשכר דירה', () => 0],
+  ['woman', a => a.woman, 'salary', 'נקודות זיכוי לאישה', () => TAX.point / 2]
+];
+/* the year-end checklist: [key, deadline note] */
+const RT_YEAR = ['r106', 'coord', 'donate', 'pens', 'hish', 'loss', 'kids', 'refund6', 'arnona', 'docs'];
+function rtFind(v){
+  const E = rtE, d = rtD(), a = d.a, q = ([k, ty]) => ty === 'ck' ? `<label class="prn-ck"><input type="checkbox" data-rtq="${k}"${a[k] ? ' checked' : ''}> ${E(t('rt_q_' + k))}</label>`
+    : ty === 'num' ? `<label class="bk-f"><span>${E(t('rt_q_' + k))}</span><input type="text" inputmode="numeric" dir="ltr" data-rtq="${k}" value="${E(a[k] == null ? '' : a[k])}"></label>`
+    : `<label class="bk-f"><span>${E(t('rt_q_' + k))}</span><select data-rtq="${k}">${['emp', 'self', 'both', 'student', 'none', 'ret'].map(o => `<option value="${o}"${(a[k] || 'emp') === o ? ' selected' : ''}>${E(t('rt_w_' + o))}</option>`).join('')}</select></label>`;
+  v.innerHTML = `<p class="fine">${E(t('rt_intro'))}</p><div class="bk-grid">${RT_Q.filter(x => x[1] !== 'ck').map(q).join('')}</div><fieldset class="bk-flags"><legend>${E(t('rt_qH'))}</legend>${RT_Q.filter(x => x[1] === 'ck').map(q).join('')}</fieldset><div id="rt_out" aria-live="polite"></div>`;
+  rtOut();
+}
+function rtOut(){
+  const box = $('#rt_out'); if (!box) return; const E = rtE, a = Object.assign({work: 'emp'}, rtD().a), L = RT_LIST.filter(r => { try { return r[1](a); } catch (e) { return false; } });
+  const tot = L.reduce((s, r) => s + (r[4](a) || 0), 0);
+  box.innerHTML = L.length ? `${tot ? `<div class="bk-hero"><span>${E(t('rt_worth'))}</span><b dir="ltr">${E(M(tot, 0, 'ILS'))} / ${E(t('es_yr'))}</b><small>${E(t('rt_worthS', {n: L.length}))}</small></div>` : ''}
+    <ol class="bk-adv">${L.map(r => { const val = r[4](a); return `<li class="bk-a"><span class="bk-ic" aria-hidden="true">✅</span><div><b>${E(t('rt_r_' + r[0]))}${val ? ' · ' + E(t('rt_about', {m: M(val, 0, 'ILS')})) : ''}</b><p>${E(t('rt_rp_' + r[0]))}</p><p class="rt-acts">${r[2] && TABS.includes(r[2]) ? `<button type="button" class="lg-a" data-go="${r[2]}">${E(t('in_open', {n: t('tab_' + r[2])}))}</button> · ` : ''}<a href="${kz(r[3])}" target="_blank" rel="noopener">${E(t('rt_kz'))}</a></p></div></li>`; }).join('')}</ol>
+    <p class="fine">${E(t('rt_note'))}</p>` : `<p class="fine bk-empty">${E(t('rt_none'))}</p>`;
+}
+function rtYear(v){
+  const E = rtE, d = rtD(), y = new Date().getFullYear(), left = Math.ceil((new Date(y, 11, 31) - new Date()) / 864e5), done = RT_YEAR.filter(k => d.done[y + ':' + k]).length;
+  v.innerHTML = `<p class="fine">${E(t('rt_yIntro', {y}))}</p><div class="bk-hero"><span>${E(t('rt_yLeft'))}</span><b dir="ltr">${left}</b><small>${E(t('rt_yDone', {n: done, m: RT_YEAR.length}))}</small></div>
+    <ul class="rm-list">${RT_YEAR.map(k => { const id = y + ':' + k, ck = !!d.done[id]; return `<li class="rm-it${ck ? ' done' : ''}"><label class="rt-yck"><input type="checkbox" data-rty="${id}"${ck ? ' checked' : ''}></label><div class="rm-b"><b>${E(t('rt_y_' + k, {y: y - 6}))}</b><small>${E(t('rt_yp_' + k, {y: y - 6}))}</small>
+      <div class="rm-acts"><button type="button" class="mv" data-rtrem="${k}">⏰ ${E(t('rm_add'))}</button>${({r106: 'taxrefund', donate: 'tax', pens: 'tax', hish: 'hishtalmut', loss: 'capital', kids: 'tax', refund6: 'taxrefund', arnona: 'arnona'})[k] ? `<button type="button" class="mv" data-go="${({r106: 'taxrefund', donate: 'tax', pens: 'tax', hish: 'hishtalmut', loss: 'capital', kids: 'tax', refund6: 'taxrefund', arnona: 'arnona'})[k]}">↗ ${E(t('rt_check'))}</button>` : ''}</div></div></li>`; }).join('')}</ul>`;
+}
+function rtRender(){
+  const root = $('#hr_rights'); if (!root) return; const E = rtE;
+  root.innerHTML = `<div class="ds-chips bk-tabs" role="tablist">${[['find', '🔎'], ['year', '📅']].map(([k, ic]) => `<button type="button" role="tab" class="ds-chip${RTT === k ? ' on' : ''}" aria-selected="${RTT === k}" data-rttab="${k}">${ic} ${E(t('rt_t_' + k))}</button>`).join('')}</div><div id="rt_view"></div><p class="fine sl-priv">🔒 ${E(t('rt_priv'))}</p>`;
+  (RTT === 'find' ? rtFind : rtYear)($('#rt_view'));
+}
+let RT_T = null;
+document.addEventListener('input', e => { const el = e.target; if (!el || !el.dataset || !el.dataset.rtq || el.type === 'checkbox' || el.tagName === 'SELECT') return; rtD().a[el.dataset.rtq] = el.value; clearTimeout(RT_T); RT_T = setTimeout(() => { saveSet(); rtOut(); }, 200); });
+document.addEventListener('change', e => { const el = e.target; if (!el || !el.dataset) return;
+  if (el.dataset.rtq && (el.type === 'checkbox' || el.tagName === 'SELECT')){ rtD().a[el.dataset.rtq] = el.type === 'checkbox' ? el.checked : el.value; saveSet(); rtOut(); }
+  if (el.dataset.rty){ const d = rtD(); if (el.checked) d.done[el.dataset.rty] = 1; else delete d.done[el.dataset.rty]; saveSet(); rtRender(); const n = $(`[data-rty="${el.dataset.rty}"]`); if (n) n.focus(); } });
+document.addEventListener('click', e => { const t0 = e.target; if (!t0.closest || !t0.closest('#hr_rights')) return; let b;
+  if ((b = t0.closest('[data-rttab]'))){ RTT = b.dataset.rttab; rtRender(); return; }
+  if ((b = t0.closest('[data-rtrem]'))){ const y = new Date().getFullYear(), k = b.dataset.rtrem; rmNew({title: t('rt_y_' + k, {y: y - 6}), date: rmIso(new Date(y, 11, k === 'refund6' ? 15 : 10)), cat: 'tax', before: 7}); } });
+CALC.rights = () => null;
+try { GS_SYN.rights = 'זכויות מה מגיע לי הטבות נקודות זיכוי החזר מס מענק קצבה הנחה סוף שנה מס תרומות סעיף 46 תיאום מס 106 rights benefits entitlements tax credits year end checklist حقوق مستحقات نقاط ائتمان استرداد ضريبة'; } catch (e) {}
+if (typeof svKind === 'function'){ const svKindRt = svKind; svKind = function(id){ return id === 'rights' ? '' : svKindRt.apply(this, arguments); }; }
+try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('rights'); if (Array.isArray(EX_SKIP)) EX_SKIP.push('rights'); } catch (e) {}
+{ const aiStRt = aiScreenText; aiScreenText = function(id){ const s = aiStRt.apply(this, arguments); if (id !== 'rights') return s; const o = $('#rt_out'); return s + '\nAnswers: ' + JSON.stringify(rtD().a) + '\nLikely benefits shown: ' + (o ? o.innerText.slice(0, 1200) : '') + '\nExplain in plain words what to do first. General information, not legal advice.'; }; }
+{
+  const actRt = activate; activate = function(id){ const r = actRt.apply(this, arguments); if (id === 'rights') rtRender(); return r; };
+  const alRt = applyLang; applyLang = function(){ const r = alRt.apply(this, arguments); try { if (tab === 'rights') rtRender(); } catch (e) {} return r; };
+  try { if (tab === 'rights') rtRender(); } catch (e) {}
+}
+
+/* ---------- 13.22: life planning – life events over the years, if I lose my job, goals, moving home ---------- */
+const lpE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+var LPT = 'sim';
+function lpD(){ const d = SET.lp && typeof SET.lp === 'object' ? SET.lp : (SET.lp = {}); ['ev', 'goals'].forEach(k => { if (!Array.isArray(d[k])) d[k] = []; }); if (!d.v || typeof d.v !== 'object') d.v = {}; return d; }
+const lpN = v => { const x = parseFloat(String(v == null ? '' : v).replace(/[,\s₪%]/g, '')); return isFinite(x) ? x : NaN; };
+const lpV = (k, def) => { const x = lpN(lpD().v[k]); return isFinite(x) ? x : def; };
+const lpM = x => M(Math.round(isFinite(x) ? x : 0), 0, 'ILS');
+const lpIn = (k, lab, ph, unit) => `<label class="bk-f"><span>${lpE(lab)}${unit ? ' (' + lpE(unit) + ')' : ''}</span><input type="text" inputmode="decimal" dir="ltr" data-lpv="${k}" value="${lpE(lpD().v[k] == null ? '' : lpD().v[k])}" placeholder="${lpE(ph == null ? '' : ph)}"></label>`;
+/* what we already know about you, as starting values */
+function lpBase(){
+  let inc = 0, exp = 0, sav = 0;
+  try { const ym = ymOf(new Date()), ii = expIncome(ym); if (ii) inc = +ii.v; const L = [1, 2, 3].map(i => expTotals(ymAdd(ym, -i)).sum).filter(x => x > 0); if (L.length) exp = L.reduce((s, x) => s + x, 0) / L.length; } catch (e) {}
+  try { const R = bkAdvise(); if (R.A.length){ sav = Math.max(0, R.liquid + R.saved); if (!exp) exp = bkN(bkD().exp) || R.tot.out; if (!inc) inc = R.tot.inc; } } catch (e) {}
+  return {inc: Math.round(inc) || 15000, exp: Math.round(exp) || 12000, sav: Math.round(sav) || 50000};
+}
+/* ---- 1) life events ---- */
+const LP_EV = {baby: ['👶', {cost: 1500, years: 18, lose: 3}], home: ['🏠', {down: 400000, pay: 5500, years: 25}], job: ['💼', {pct: 15}], car: ['🚗', {price: 120000, cost: 1200}], study: ['🎓', {years: 3, pct: 50, cost: 1000}], retire: ['🌴', {pct: 60}], move: ['🚚', {cost: 15000, diff: -800}]};
+function lpSim(v){
+  const E = lpE, d = lpD(), B = lpBase();
+  v.innerHTML = `<p class="fine">${E(t('lp_simIntro'))}</p><div class="bk-grid">${lpIn('inc', t('lp_inc'), B.inc, '₪')}${lpIn('exp', t('lp_exp'), B.exp, '₪')}${lpIn('sav', t('lp_sav'), B.sav, '₪')}${lpIn('ret', t('lp_ret'), '4', '%')}${lpIn('grow', t('lp_grow'), '2', '%')}${lpIn('yrs', t('lp_yrs'), '15')}</div>
+    <h3 class="ds-q">${E(t('lp_evH'))}</h3><ul class="rm-list">${d.ev.map((e, i) => lpEvRow(e, i)).join('')}</ul>
+    <div class="ds-chips">${Object.keys(LP_EV).map(k => `<button type="button" class="ds-chip" data-lpadd="${k}">${LP_EV[k][0]} ${E(t('lp_e_' + k))}</button>`).join('')}</div>
+    <div id="lp_out" aria-live="polite"></div>`;
+  lpSimOut();
+}
+function lpEvRow(e, i){
+  const E = lpE, P = LP_EV[e.k][1], f = (k, unit) => `<label class="bk-f"><span>${E(t('lp_f_' + k))}${unit ? ' (' + unit + ')' : ''}</span><input type="text" inputmode="decimal" dir="ltr" data-lpe="${i}" data-lpk="${k}" value="${E(e[k] == null ? P[k] : e[k])}"></label>`;
+  return `<li class="rm-it"><div class="rm-ic" aria-hidden="true">${LP_EV[e.k][0]}</div><div class="rm-b"><b>${E(t('lp_e_' + e.k))}</b><div class="bk-grid">${f('year')}${Object.keys(P).map(k => f(k, /pct/.test(k) ? '%' : /years|lose/.test(k) ? '' : '₪')).join('')}</div>
+    <div class="rm-acts"><button type="button" class="px-tb s" data-lpdel="${i}" aria-label="${E(t('lp_del', {n: t('lp_e_' + e.k)}))}">🗑️</button></div></div></li>`;
+}
+function lpProject(){
+  const d = lpD(), B = lpBase(), yrs = Math.max(1, Math.min(40, Math.round(lpV('yrs', 15)))), r = lpV('ret', 4) / 100, g = lpV('grow', 2) / 100;
+  let inc = lpV('inc', B.inc), exp = lpV('exp', B.exp), sav = lpV('sav', B.sav); const rows = [], y0 = new Date().getFullYear();
+  for (let y = 1; y <= yrs; y++){
+    let incY = inc * 12 * Math.pow(1 + g, y - 1), expY = exp * 12 * Math.pow(1 + g * 0.8, y - 1), once = 0, notes = [];
+    d.ev.forEach(e => { const P = Object.assign({}, LP_EV[e.k][1], e), at = Math.round(+P.year || 1), N1 = k => +P[k] || 0;
+      if (e.k === 'baby' && y >= at && y < at + N1('years')){ expY += N1('cost') * 12; if (y === at){ incY -= inc * N1('lose') * 0.25; notes.push('👶'); } }
+      if (e.k === 'home' && y === at){ once -= N1('down'); notes.push('🏠'); } if (e.k === 'home' && y >= at && y < at + N1('years')) expY += N1('pay') * 12;
+      if (e.k === 'job' && y >= at){ incY *= 1 + N1('pct') / 100; if (y === at) notes.push('💼'); }
+      if (e.k === 'car' && y === at){ once -= N1('price'); notes.push('🚗'); } if (e.k === 'car' && y >= at) expY += N1('cost') * 12;
+      if (e.k === 'study' && y >= at && y < at + N1('years')){ incY *= 1 - N1('pct') / 100; expY += N1('cost') * 12; if (y === at) notes.push('🎓'); }
+      if (e.k === 'retire' && y >= at){ incY *= N1('pct') / 100; if (y === at) notes.push('🌴'); }
+      if (e.k === 'move' && y === at){ once -= N1('cost'); notes.push('🚚'); } if (e.k === 'move' && y >= at) expY += N1('diff') * 12; });
+    sav = sav * (1 + (sav > 0 ? r : 0)) + incY - expY + once;
+    rows.push({y: y0 + y, inc: incY, exp: expY, once, sav, notes});
+  }
+  return rows;
+}
+function lpSimOut(){
+  const box = $('#lp_out'); if (!box) return; const E = lpE, R = lpProject(), mx = Math.max(1, ...R.map(r => Math.abs(r.sav))), low = R.find(r => r.sav < 0), end = R[R.length - 1];
+  box.innerHTML = `<div class="bk-hero"><span>${E(t('lp_end', {y: end.y}))}</span><b dir="ltr">${E(lpM(end.sav))}</b><small>${E(low ? t('lp_low', {y: low.y}) : t('lp_ok'))}</small></div>
+    <div class="lp-chart" role="img" aria-label="${E(t('lp_chartA'))}">${R.map(r => `<div class="lp-col${r.sav < 0 ? ' neg' : ''}" title="${r.y}: ${E(lpM(r.sav))}"><i style="height:${(Math.abs(r.sav) / mx * 100).toFixed(1)}%"></i><small>${String(r.y).slice(2)}</small><span class="lp-n">${r.notes.join('')}</span></div>`).join('')}</div>
+    <div class="bk-scroll"><table class="bk-plan"><thead><tr><th scope="col">${E(t('lp_year'))}</th><th scope="col">${E(t('lp_incY'))}</th><th scope="col">${E(t('lp_expY'))}</th><th scope="col">${E(t('lp_savY'))}</th></tr></thead><tbody>${R.map(r => `<tr${r.sav < 0 ? ' class="lp-neg"' : ''}><th scope="row">${r.y} ${r.notes.join('')}</th><td dir="ltr">${E(lpM(r.inc))}</td><td dir="ltr">${E(lpM(r.exp - r.once))}</td><td dir="ltr">${E(lpM(r.sav))}</td></tr>`).join('')}</tbody></table></div>
+    <p class="fine">${E(t('lp_simNote'))}</p>`;
+}
+/* ---- 2) if I lose my job ---- */
+function lpJob(v){
+  const E = lpE, B = lpBase(); let cut = 0; try { const ym = ymOf(new Date()), L = [1, 2, 3].map(i => expTotals(ymAdd(ym, -i))).filter(x => x.sum > 0); if (L.length) cut = ['fun', 'clothes', 'gifts', 'other'].reduce((s, k) => s + L.reduce((q, x) => q + (x.by[k] || 0), 0) / L.length, 0) * 0.5; } catch (e) {}
+  v.innerHTML = `<p class="fine">${E(t('lp_jobIntro'))}</p><div class="bk-grid">${lpIn('jsav', t('lp_jsav'), B.sav, '₪')}${lpIn('jexp', t('lp_jexp'), B.exp, '₪')}${lpIn('jben', t('lp_jben'), '0', '₪')}${lpIn('jben_m', t('lp_jbenM'), '6')}${lpIn('jcut', t('lp_jcut'), String(Math.round(cut)), '₪')}${lpIn('jside', t('lp_jside'), '0', '₪')}</div><div id="lp_out" aria-live="polite"></div>`;
+  lpJobOut();
+}
+function lpJobOut(){
+  const box = $('#lp_out'); if (!box) return; const E = lpE, B = lpBase(), sav = lpV('jsav', B.sav), exp = lpV('jexp', B.exp), ben = lpV('jben', 0), bm = lpV('jben_m', 6), cut = lpV('jcut', 0), side = lpV('jside', 0);
+  const run = c => { let s = sav, m = 0; while (s > 0 && m < 600){ s -= exp - c - side - (m < bm ? ben : 0); m++; } return m; }, a = run(0), b = run(cut);
+  box.innerHTML = `<div class="bk-hero"><span>${E(t('lp_runway'))}</span><b dir="ltr">${a >= 600 ? '∞' : t('pic_months', {n: a})}</b><small>${E(cut ? t('lp_withCut', {n: b >= 600 ? '∞' : b, m: lpM(cut)}) : '')}</small></div>
+    <ol class="bk-adv">${a < 3 ? '<li class="bk-a bk-warn"><span class="bk-ic">⚠️</span><div><b>' + E(t('lp_jWarn')) + '</b></div></li>' : ''}<li class="bk-a"><span class="bk-ic">📝</span><div><b>${E(t('lp_j1'))}</b><p>${E(t('lp_j1P'))}</p><p><button type="button" class="lg-a" data-go="benefits">${E(t('in_open', {n: t('tab_benefits')}))}</button></p></div></li>
+    <li class="bk-a"><span class="bk-ic">✂️</span><div><b>${E(t('lp_j2'))}</b><p>${E(t('lp_j2P'))}</p></div></li><li class="bk-a"><span class="bk-ic">💰</span><div><b>${E(t('lp_j3'))}</b><p>${E(t('lp_j3P'))}</p><p><button type="button" class="lg-a" data-go="severance">${E(t('in_open', {n: t('tab_severance')}))}</button></p></div></li></ol>`;
+}
+/* ---- 3) goals ---- */
+function lpGoals(v){
+  const E = lpE, d = lpD(), B = lpBase(), free = lpV('inc', B.inc) - lpV('exp', B.exp);
+  v.innerHTML = `<p class="fine">${E(t('lp_gIntro'))}</p><ul class="rm-list">${d.goals.map((g, i) => { const left = Math.max(0, (+g.target || 0) - (+g.saved || 0)), dd = rmParse(g.date), mo = dd ? Math.max(1, (dd.getFullYear() - new Date().getFullYear()) * 12 + dd.getMonth() - new Date().getMonth()) : 0, need = mo ? left / mo : 0, pct = +g.target ? Math.min(100, (+g.saved || 0) / +g.target * 100) : 0;
+    return `<li class="rm-it"><div class="rm-ic" aria-hidden="true">${pct >= 100 ? '🏁' : '🎯'}</div><div class="rm-b"><div class="bk-grid">
+      <label class="bk-f"><span>${E(t('lp_gName'))}</span><input type="text" dir="auto" maxlength="40" data-lpg="${i}" data-lpk="name" value="${E(g.name || '')}" placeholder="${E(t('lp_gNamePh'))}"></label>
+      <label class="bk-f"><span>${E(t('lp_gTarget'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" data-lpg="${i}" data-lpk="target" value="${E(g.target || '')}"></label>
+      <label class="bk-f"><span>${E(t('lp_gSaved'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" data-lpg="${i}" data-lpk="saved" value="${E(g.saved || '')}"></label>
+      <label class="bk-f"><span>${E(t('lp_gDate'))}</span><input type="date" data-lpg="${i}" data-lpk="date" value="${E(g.date || '')}"></label></div>
+      <span class="in-prog"><i style="width:${pct.toFixed(0)}%"></i></span><span class="rm-w">${E(mo ? t('lp_gNeed', {m: lpM(need), n: mo}) + (free > 0 ? ' · ' + t(need <= free ? 'lp_gOk' : 'lp_gHard', {f: lpM(free)}) : '') : t('lp_gPick'))}</span>
+      <div class="rm-acts"><button type="button" class="px-tb s" data-lpgdel="${i}" aria-label="${E(t('lp_del', {n: g.name || ''}))}">🗑️</button></div></div></li>`; }).join('') || `<li class="fine bk-empty">${E(t('lp_gNone'))}</li>`}</ul>
+    <div class="ds-chips">${['home', 'car', 'trip', 'buffer', 'study', 'wedding'].map(k => `<button type="button" class="ds-chip" data-lpgadd="${k}">＋ ${E(t('lp_gs_' + k))}</button>`).join('')}</div>`;
+}
+/* ---- 4) moving home ---- */
+function lpMove(v){
+  const E = lpE, side = s => `<fieldset class="bk-acc"><legend>${E(t('lp_m' + s))}</legend><div class="bk-grid">${lpIn('m' + s + '_rent', t('lp_mRent'), s === 'A' ? '5500' : '4500', '₪')}${lpIn('m' + s + '_arn', t('lp_mArn'), '450', '₪')}${lpIn('m' + s + '_km', t('lp_mKm'), s === 'A' ? '10' : '35')}${lpIn('m' + s + '_pt', t('lp_mPt'), '0', '₪')}${lpIn('m' + s + '_kid', t('lp_mKid'), '0', '₪')}${lpIn('m' + s + '_oth', t('lp_mOth'), '0', '₪')}</div></fieldset>`;
+  v.innerHTML = `<p class="fine">${E(t('lp_mIntro'))}</p>${side('A')}${side('B')}<div class="bk-grid">${lpIn('m_kmc', t('lp_mKmc'), '1.5', '₪')}${lpIn('m_days', t('lp_mDays'), '21')}${lpIn('m_once', t('lp_mOnce'), '12000', '₪')}</div><div id="lp_out" aria-live="polite"></div>`;
+  lpMoveOut();
+}
+function lpMoveOut(){
+  const box = $('#lp_out'); if (!box) return; const E = lpE, kmc = lpV('m_kmc', 1.5), days = lpV('m_days', 21);
+  const cost = s => lpV('m' + s + '_rent', s === 'A' ? 5500 : 4500) + lpV('m' + s + '_arn', 450) + lpV('m' + s + '_km', s === 'A' ? 10 : 35) * 2 * days * kmc + lpV('m' + s + '_pt', 0) + lpV('m' + s + '_kid', 0) + lpV('m' + s + '_oth', 0);
+  const a = cost('A'), b = cost('B'), diff = a - b, once = lpV('m_once', 12000), be = diff > 0 ? once / diff : NaN;
+  box.innerHTML = `<div class="bk-hero"><span>${E(t(diff > 0 ? 'lp_mSave' : 'lp_mMore'))}</span><b dir="ltr">${E(lpM(Math.abs(diff)))} / ${E(t('bk_mo'))}</b><small>${E(isFinite(be) ? t('lp_mBe', {n: N(be, 1)}) : t('lp_mNoBe'))}</small></div>
+    <table class="bk-plan"><tbody><tr><th scope="row">${E(t('lp_mA'))}</th><td dir="ltr">${E(lpM(a))}</td></tr><tr><th scope="row">${E(t('lp_mB'))}</th><td dir="ltr">${E(lpM(b))}</td></tr><tr class="key"><th scope="row">${E(t('lp_mYear'))}</th><td dir="ltr">${E(lpM(diff * 12))}</td></tr></tbody></table>
+    <p class="fine">${E(t('lp_mNote'))}</p>`;
+}
+function lpRender(){
+  const root = $('#hr_lifeplan'); if (!root) return; const E = lpE;
+  root.innerHTML = `<div class="ds-chips bk-tabs" role="tablist">${[['sim', '🗺️'], ['job', '🛟'], ['goals', '🎯'], ['move', '🚚']].map(([k, ic]) => `<button type="button" role="tab" class="ds-chip${LPT === k ? ' on' : ''}" aria-selected="${LPT === k}" data-lptab="${k}">${ic} ${E(t('lp_t_' + k))}</button>`).join('')}</div><div id="lp_view"></div><p class="fine sl-priv">🔒 ${E(t('pic_priv'))}</p>`;
+  ({sim: lpSim, job: lpJob, goals: lpGoals, move: lpMove})[LPT]($('#lp_view'));
+}
+const lpOut = () => ({sim: lpSimOut, job: lpJobOut, move: lpMoveOut})[LPT];
+let LP_T = null;
+document.addEventListener('input', e => { const el = e.target; if (!el || !el.dataset || !el.closest || !el.closest('#hr_lifeplan')) return; const d = lpD();
+  if (el.dataset.lpv) d.v[el.dataset.lpv] = el.value; else if (el.dataset.lpe != null) d.ev[+el.dataset.lpe][el.dataset.lpk] = el.value; else if (el.dataset.lpg != null){ d.goals[+el.dataset.lpg][el.dataset.lpk] = el.value; clearTimeout(LP_T); LP_T = setTimeout(saveSet, 300); return; } else return;
+  clearTimeout(LP_T); LP_T = setTimeout(() => { saveSet(); const f = lpOut(); if (f) f(); }, 200); });
+document.addEventListener('change', e => { const el = e.target; if (el && el.dataset && el.dataset.lpg != null && el.closest('#hr_lifeplan')){ saveSet(); const i = el.dataset.lpg, k = el.dataset.lpk; lpRender(); const n = $(`[data-lpg="${i}"][data-lpk="${k}"]`); if (n) n.focus(); } });
+document.addEventListener('click', e => { const t0 = e.target; if (!t0.closest || !t0.closest('#hr_lifeplan')) return; const d = lpD(); let b;
+  if ((b = t0.closest('[data-lptab]'))){ LPT = b.dataset.lptab; lpRender(); return; }
+  if ((b = t0.closest('[data-lpadd]'))){ if (d.ev.length >= 8) return; d.ev.push({k: b.dataset.lpadd, year: 2}); saveSet(); lpRender(); return; }
+  if ((b = t0.closest('[data-lpdel]'))){ d.ev.splice(+b.dataset.lpdel, 1); saveSet(); lpRender(); return; }
+  if ((b = t0.closest('[data-lpgadd]'))){ const k = b.dataset.lpgadd, y = new Date().getFullYear(); d.goals.push({name: t('lp_gs_' + k), target: {home: 300000, car: 80000, trip: 15000, buffer: lpBase().exp * 6, study: 60000, wedding: 100000}[k], saved: 0, date: (y + ({home: 4, car: 2, trip: 1, buffer: 1, study: 3, wedding: 2}[k])) + '-01-01'}); saveSet(); lpRender(); return; }
+  if ((b = t0.closest('[data-lpgdel]'))){ d.goals.splice(+b.dataset.lpgdel, 1); saveSet(); lpRender(); } });
+CALC.lifeplan = () => null;
+try { GS_SYN.lifeplan = 'תכנון חיים אירועי חיים תינוק דירה החלפת עבודה פרישה מוקדמת לימודים אם אאבד את העבודה פיטורים כרית יעדים יעד חיסכון מעבר דירה עיר life planning life events baby home job loss runway goals moving تخطيط الحياة طفل شقة فقدان العمل أهداف انتقال'; } catch (e) {}
+if (typeof svKind === 'function'){ const svKindLp = svKind; svKind = function(id){ return id === 'lifeplan' ? '' : svKindLp.apply(this, arguments); }; }
+try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('lifeplan'); if (Array.isArray(EX_SKIP)) EX_SKIP.push('lifeplan'); } catch (e) {}
+{ const aiStLp = aiScreenText; aiScreenText = function(id){ const s = aiStLp.apply(this, arguments); if (id !== 'lifeplan') return s; const o = $('#lp_out'); return s + '\nLife plan: ' + JSON.stringify({v: lpD().v, events: lpD().ev, goals: lpD().goals}).slice(0, 1500) + '\n' + (o ? o.innerText.slice(0, 800) : ''); }; }
+{
+  const actLp = activate; activate = function(id){ const r = actLp.apply(this, arguments); if (id === 'lifeplan') lpRender(); return r; };
+  const alLp = applyLang; applyLang = function(){ const r = alLp.apply(this, arguments); try { if (tab === 'lifeplan') lpRender(); } catch (e) {} return r; };
+  try { if (tab === 'lifeplan') lpRender(); } catch (e) {}
+}
+
+/* ---------- 13.22: documents and receipts – a warranty archive on the phone, and an AI check of an offer or a contract ----------
+   Receipt photos are kept in this browser's own storage (IndexedDB), never uploaded. The AI check sends the photos only when asked. */
+const vtE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+var VTT = 'rec', VTX = {ed: null, img: null, chk: null, busy: false, kind: 'loan', files: []};
+function vtD(){ const d = SET.vt && typeof SET.vt === 'object' ? SET.vt : (SET.vt = {}); if (!Array.isArray(d.items)) d.items = []; return d; }
+const vtNoPics = () => (typeof PRIV !== 'undefined' && PRIV) || (typeof FUSER !== 'undefined' && FUSER);      // private mode / an encrypted account: no photos at rest
+/* ---- the photo store ---- */
+function vtDb(){ return new Promise((ok, no) => { try { const r = indexedDB.open('fin-vault', 1); r.onupgradeneeded = () => r.result.createObjectStore('img'); r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); } catch (e) { no(e); } }); }
+async function vtPut(k, blob){ const db = await vtDb(); return new Promise((ok, no) => { const tx = db.transaction('img', 'readwrite'); tx.objectStore('img').put(blob, k); tx.oncomplete = () => ok(); tx.onerror = () => no(tx.error); }); }
+async function vtGet(k){ const db = await vtDb(); return new Promise(ok => { const r = db.transaction('img').objectStore('img').get(k); r.onsuccess = () => ok(r.result || null); r.onerror = () => ok(null); }); }
+async function vtDel(k){ try { const db = await vtDb(); db.transaction('img', 'readwrite').objectStore('img').delete(k); } catch (e) {} }
+async function vtShrink(file, max){ const img = await dsLoad(file), k = Math.min(1, (max || 1600) / Math.max(img.width, img.height)), c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); return new Promise(r => c.toBlob(r, 'image/jpeg', 0.82)); }
+/* ---- warranties ---- */
+const vtEnd = it => { const d = rmParse(it.date); if (!d || !(+it.months > 0)) return ''; d.setMonth(d.getMonth() + +it.months); return rmIso(d); };
+function vtRec(v){
+  const E = vtE, d = vtD(), L = d.items.slice().sort((a, b) => String(vtEnd(a) || '9999').localeCompare(String(vtEnd(b) || '9999')));
+  v.innerHTML = `<p class="fine">${E(t('vt_recIntro'))}</p>${vtNoPics() ? `<div class="ds-warn" role="note"><span aria-hidden="true">🔒</span><p>${E(t('vt_noPics'))}</p></div>` : ''}
+    <div class="btnrow"><button type="button" class="gold-btn" id="vt_add">＋ ${E(t('vt_add'))}</button></div><div id="vt_ed"></div>
+    <ul class="rm-list">${L.map(it => { const end = vtEnd(it), n = end ? rmDays(end) : NaN, cls = !end ? '' : n < 0 ? 'done' : n <= 30 ? 'due' : '';
+      return `<li class="rm-it ${cls}"><div class="rm-ic" aria-hidden="true">${it.img ? '🧾' : '📦'}</div><div class="rm-b"><b dir="auto">${E(it.name)}</b><span class="rm-w">${E([it.store, it.date ? rmFmt(it.date) : '', +it.price ? M(+it.price, 0, 'ILS') : ''].filter(Boolean).join(' · '))}</span>
+        <span class="rm-w">${E(end ? (n < 0 ? t('vt_expired', {d: rmFmt(end)}) : t('vt_until', {d: rmFmt(end), n})) : t('vt_noWar'))}</span>${it.note ? `<small dir="auto">${E(it.note)}</small>` : ''}
+        <div class="rm-acts">${it.img ? `<button type="button" class="px-tb s" data-vtimg="${E(it.id)}" aria-label="${E(t('vt_view', {n: it.name}))}">👁️</button>` : ''}<button type="button" class="px-tb s" data-vted="${E(it.id)}" aria-label="${E(t('rm_edit', {t: it.name}))}">✏️</button>${end && n >= 0 ? `<button type="button" class="px-tb s" data-vtrem="${E(it.id)}" aria-label="${E(t('vt_rem', {n: it.name}))}">⏰</button>` : ''}<button type="button" class="px-tb s" data-vtdel="${E(it.id)}" aria-label="${E(t('rm_del', {t: it.name}))}">🗑️</button></div></div></li>`; }).join('') || `<li class="fine bk-empty">${E(t('vt_none'))}</li>`}</ul>`;
+  if (VTX.ed) vtEditor(VTX.ed === 'new' ? null : d.items.find(x => x.id === VTX.ed));
+}
+function vtEditor(it){
+  const box = $('#vt_ed'); if (!box) return; const E = vtE, v = Object.assign({name: '', store: '', date: todayIso(), price: '', months: 12, note: ''}, it || {});
+  box.innerHTML = `<form class="bk-acc rm-form" id="vt_form" novalidate><fieldset><legend>${it ? '✏️' : '＋'} ${E(t(it ? 'vt_editT' : 'vt_add'))}</legend>
+    <label class="bk-f"><span>${E(t('vt_name'))}</span><input type="text" id="vtf_name" maxlength="60" dir="auto" value="${E(v.name)}" placeholder="${E(t('vt_namePh'))}"></label>
+    <div class="bk-grid"><label class="bk-f"><span>${E(t('vt_store'))}</span><input type="text" id="vtf_store" maxlength="40" dir="auto" value="${E(v.store)}"></label><label class="bk-f"><span>${E(t('vt_date'))}</span><input type="date" id="vtf_date" value="${E(v.date)}"></label>
+    <label class="bk-f"><span>${E(t('vt_price'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" id="vtf_price" value="${E(v.price)}"></label><label class="bk-f"><span>${E(t('vt_months'))}</span><select id="vtf_months">${[0, 3, 6, 12, 24, 36, 60].map(m => `<option value="${m}"${+v.months === m ? ' selected' : ''}>${E(m ? t('vt_m', {n: m}) : t('vt_noWar'))}</option>`).join('')}</select></label></div>
+    <label class="bk-f"><span>${E(t('rm_fNote'))}</span><textarea id="vtf_note" rows="2" maxlength="200" dir="auto">${E(v.note)}</textarea></label>
+    ${vtNoPics() ? '' : `<div class="btnrow"><label class="btn">📷 ${E(t('vt_photo'))}<input type="file" accept="image/*" capture="environment" id="vtf_cam" hidden></label><label class="btn">🖼️ ${E(t('vt_gallery'))}<input type="file" accept="image/*" id="vtf_pick" hidden></label><span class="fine" id="vtf_ph">${v.img || VTX.img ? '✓ ' + E(t('vt_hasPhoto')) : ''}</span></div>`}
+    <div class="btnrow"><button type="submit" class="gold-btn">✓ ${E(t('rm_save'))}</button><button type="button" class="btn" id="vtf_cancel">${E(t('rm_cancel'))}</button></div></fieldset></form>`;
+}
+async function vtSave(){
+  const d = vtD(), name = $('#vtf_name').value.trim(); if (!name){ $('#vtf_name').focus(); toast(t('vt_needName')); return; }
+  const rec = {name: name.slice(0, 60), store: $('#vtf_store').value.trim().slice(0, 40), date: $('#vtf_date').value, price: $('#vtf_price').value.replace(/[^\d.]/g, ''), months: +$('#vtf_months').value || 0, note: $('#vtf_note').value.trim().slice(0, 200)};
+  let it = VTX.ed && VTX.ed !== 'new' ? d.items.find(x => x.id === VTX.ed) : null;
+  if (it) Object.assign(it, rec); else { it = Object.assign({id: Date.now().toString(36) + Math.random().toString(36).slice(2, 5)}, rec); d.items.push(it); }
+  if (VTX.img && !vtNoPics()){ try { await vtPut(it.id, VTX.img); it.img = 1; } catch (e) { toast(t('vt_picFail')); } }
+  VTX.ed = null; VTX.img = null; saveSet(); vtRender(); toast(t('rm_saved'));
+}
+async function vtShow(id){
+  const b = await vtGet(id); if (!b){ toast(t('vt_picGone')); return; } const url = URL.createObjectURL(b);
+  if (!$('#vtx')) document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="vtx" hidden><div class="cp-box vt-box" role="dialog" aria-modal="true" aria-label="${vtE(t('vt_photo'))}"><div class="cp-top"><h3></h3><button type="button" class="cp-x" id="vtx_x" aria-label="${vtE(t('cp_close'))}">✕</button></div><img id="vtx_img" alt=""></div></div>`);
+  const it = vtD().items.find(x => x.id === id); $('#vtx h3').textContent = it ? it.name : ''; const im = $('#vtx_img'); if (im.dataset.u) URL.revokeObjectURL(im.dataset.u); im.src = url; im.dataset.u = url; im.alt = it ? it.name : '';
+  $('#vtx').hidden = false; document.body.classList.add('cp-lock');
+}
+/* ---- the AI check of a document ---- */
+const VT_KINDS = ['loan', 'insur', 'rent', 'pens', 'other'];
+const VT_PROMPT = {loan: 'a loan or credit offer: find the real yearly cost (APR including fees), interest type (fixed/prime/CPI-linked), all fees, early-repayment penalties and the total to repay',
+  insur: 'an insurance policy or offer: what is covered, deductibles, exclusions, price changes over time, cancellation terms, and anything unusual',
+  rent: 'a residential rental contract in Israel: rent and its linkage (CPI), guarantees and deposit amount, who pays for repairs, early-exit terms, option to extend, and clauses that are unfair to the tenant or unusual',
+  pens: 'an annual pension / provident / study fund report: management fees from deposits and from savings (compare with typical market fees of about 1% from deposits and 0.2% from savings), insurance cover, return, and whether the fees are worth negotiating',
+  other: 'a financial document: what it is, the key numbers, costs and anything the reader should check'};
+function vtChk(v){
+  const E = vtE, eng = slEngine(), inClaude = typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE, R = VTX.chk;
+  v.innerHTML = `<p class="fine">${E(t('vt_chkIntro'))}</p><div class="ds-chips" role="radiogroup" aria-label="${E(t('vt_kind'))}">${VT_KINDS.map(k => `<button type="button" role="radio" class="ds-chip${VTX.kind === k ? ' on' : ''}" aria-checked="${VTX.kind === k}" data-vtk="${k}">${E(t('vt_k_' + k))}</button>`).join('')}</div>
+    ${eng ? `<div class="btnrow"><label class="gold-btn">📷 ${E(t('vt_chkPhoto'))}<input type="file" accept="image/*" capture="environment" id="vt_cf" hidden multiple></label><label class="btn">🖼️ ${E(t('vt_gallery'))}<input type="file" accept="image/*" id="vt_cg" hidden multiple></label></div>
+      <p class="fine" id="vt_cst" aria-live="polite">${VTX.files.length ? E(t('vt_pages', {n: VTX.files.length})) : ''}</p>${VTX.files.length ? `<div class="btnrow"><button type="button" class="gold-btn" id="vt_go"${VTX.busy ? ' disabled' : ''}>✦ ${E(t(VTX.busy ? 'ph_reading' : 'vt_go'))}</button><button type="button" class="mv" id="vt_clr">🗑️ ${E(t('vt_clr'))}</button></div>` : ''}
+      <p class="fine sl-priv">🔒 ${E(t('vt_chkPriv'))}</p>`
+    : `<div class="gk-st new">${E(t(inClaude ? 'sl_noAiC' : gkNo('sl_noAi')))}</div>${inClaude || !(typeof gkAllowed === 'function' && gkAllowed()) ? '' : `<div class="btnrow"><button type="button" class="btn" data-gkgo="1">✦ ${E(t('xs_connect'))}</button></div>`}`}
+    ${R ? `<div class="bk-hero"><span>${E(t('vt_k_' + R.kind))}</span><b dir="auto">${E(R.title || '')}</b><small dir="auto">${E(R.summary || '')}</small></div>
+      ${Array.isArray(R.numbers) && R.numbers.length ? `<table class="bk-plan"><tbody>${R.numbers.slice(0, 12).map(n => `<tr><th scope="row" dir="auto">${E(n.label)}</th><td dir="auto">${E(n.value)}</td></tr>`).join('')}</tbody></table>` : ''}
+      <ol class="bk-adv">${(R.risks || []).slice(0, 8).map(x => `<li class="bk-a bk-warn"><span class="bk-ic">⚠️</span><div><b dir="auto">${E(x)}</b></div></li>`).join('')}${(R.actions || []).slice(0, 6).map(x => `<li class="bk-a bk-ok"><span class="bk-ic">✅</span><div><b dir="auto">${E(x)}</b></div></li>`).join('')}</ol>
+      <p class="fine">${E(t('vt_chkNote'))}</p>` : ''}`;
+}
+async function vtGo(){
+  if (!VTX.files.length || VTX.busy) return; VTX.busy = true; vtRender();
+  try { const blobs = []; for (const f of VTX.files.slice(0, 5)) blobs.push(await vtShrink(f, 2000));
+    const lang = ({he: 'Hebrew', ar: 'Arabic', en: 'English'})[document.documentElement.lang] || 'Hebrew';
+    const j = await dsAsk(`These are photos of ${VT_PROMPT[VTX.kind]}. Read them carefully. Answer in ${lang}, in plain words. Return ONLY JSON: {"title": what the document is (max 8 words), "summary": 2 sentences, "numbers": [{"label": ..., "value": ...}] key figures as written, "risks": [things to watch out for, each one short sentence], "actions": [what the reader should do or ask, each one short sentence]}. Do not invent figures that are not in the document.`, blobs);
+    VTX.chk = Object.assign({kind: VTX.kind}, j && typeof j === 'object' ? j : {summary: String(j || '')});
+  } catch (e) { toast(t('ph_fail')); }
+  VTX.busy = false; vtRender();
+}
+function vtRender(){
+  const root = $('#hr_vault'); if (!root) return; const E = vtE;
+  root.innerHTML = `<div class="ds-chips bk-tabs" role="tablist">${[['rec', '🧾'], ['chk', '🔍']].map(([k, ic]) => `<button type="button" role="tab" class="ds-chip${VTT === k ? ' on' : ''}" aria-selected="${VTT === k}" data-vttab="${k}">${ic} ${E(t('vt_t_' + k))}</button>`).join('')}</div><div id="vt_view"></div>`;
+  (VTT === 'rec' ? vtRec : vtChk)($('#vt_view'));
+}
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest) return; let b;
+  if (t0.closest('#vtx_x') || t0.id === 'vtx'){ const o = $('#vtx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); } return; }
+  if (!t0.closest('#hr_vault')) return; const d = vtD();
+  if ((b = t0.closest('[data-vttab]'))){ VTT = b.dataset.vttab; vtRender(); return; }
+  if (t0.closest('#vt_add')){ VTX.ed = 'new'; VTX.img = null; vtEditor(null); $('#vtf_name').focus(); return; }
+  if (t0.closest('#vtf_cancel')){ VTX.ed = null; VTX.img = null; $('#vt_ed').innerHTML = ''; return; }
+  if ((b = t0.closest('[data-vted]'))){ VTX.ed = b.dataset.vted; VTX.img = null; vtEditor(d.items.find(x => x.id === VTX.ed)); $('#vtf_name').focus(); return; }
+  if ((b = t0.closest('[data-vtimg]'))){ vtShow(b.dataset.vtimg); return; }
+  if ((b = t0.closest('[data-vtrem]'))){ const it = d.items.find(x => x.id === b.dataset.vtrem); if (it){ const end = vtEnd(it), dd = rmParse(end); dd.setDate(dd.getDate() - 14); rmNew({title: t('vt_remT', {n: it.name}), date: rmIso(dd), cat: 'home', before: 3, note: t('vt_remN')}); } return; }
+  if ((b = t0.closest('[data-vtdel]'))){ const it = d.items.find(x => x.id === b.dataset.vtdel); if (!it || !confirm(t('rm_delQ', {t: it.name}))) return; d.items = d.items.filter(x => x !== it); vtDel(it.id); saveSet(); vtRender(); return; }
+  if ((b = t0.closest('[data-vtk]'))){ VTX.kind = b.dataset.vtk; vtRender(); return; }
+  if (t0.closest('#vt_go')){ vtGo(); return; }
+  if (t0.closest('#vt_clr')){ VTX.files = []; VTX.chk = null; vtRender(); }
+});
+document.addEventListener('submit', e => { if (e.target && e.target.id === 'vt_form'){ e.preventDefault(); vtSave(); } });
+document.addEventListener('change', async e => {
+  const el = e.target; if (!el || !el.closest || !el.closest('#hr_vault') || !el.files || !el.files.length) return;
+  if (el.id === 'vtf_cam' || el.id === 'vtf_pick'){ try { VTX.img = await vtShrink(el.files[0], 1600); const s = $('#vtf_ph'); if (s) s.textContent = '✓ ' + t('vt_hasPhoto'); } catch (er) { toast(t('ph_fail')); } el.value = ''; return; }
+  if (el.id === 'vt_cf' || el.id === 'vt_cg'){ VTX.files = VTX.files.concat([...el.files]).slice(0, 5); VTX.chk = null; el.value = ''; vtRender(); }
+});
+CALC.vault = () => null;
+try { GS_SYN.vault = 'קבלות קבלה אחריות תעודת אחריות ארכיון מסמכים בדיקת חוזה חוזה שכירות הצעת הלוואה פוליסה ביטוח דוח שנתי פנסיה דמי ניהול receipts warranty documents contract check loan offer insurance policy pension report إيصالات كفالة مستندات فحص عقد إيجار قرض تأمين'; } catch (e) {}
+if (typeof svKind === 'function'){ const svKindVt = svKind; svKind = function(id){ return id === 'vault' ? '' : svKindVt.apply(this, arguments); }; }
+try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('vault'); if (Array.isArray(EX_SKIP)) EX_SKIP.push('vault'); } catch (e) {}
+{
+  const actVt = activate; activate = function(id){ const r = actVt.apply(this, arguments); if (id === 'vault') vtRender(); return r; };
+  const alVt = applyLang; applyLang = function(){ const r = alVt.apply(this, arguments); try { if (tab === 'vault') vtRender(); } catch (e) {} return r; };
+  try { if (tab === 'vault') vtRender(); } catch (e) {}
+}
+
+/* ---------- 13.22: family – a budget shared by a couple (no server: an encrypted message with a code), and kids' pocket money ---------- */
+const hhE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+var HHT = 'couple', HHX = {pkg: '', code: ''};
+function hhD(){ const d = SET.hh && typeof SET.hh === 'object' ? SET.hh : (SET.hh = {}); if (!Array.isArray(d.kids)) d.kids = []; if (!Array.isArray(d.partner)) d.partner = []; return d; }
+const hhM = x => M(Math.round(isFinite(x) ? x : 0), 0, 'ILS');
+/* ---- the couple: send my expenses, receive the partner's ---- */
+async function hhKey(code, salt){ return crypto.subtle.importKey('raw', await pbk(mvFmt(code).replace('-', ''), salt, 100000, 256), 'AES-GCM', false, ['encrypt', 'decrypt']); }
+async function hhSeal(){
+  const d = hhD(), from = ymAdd(ymOf(new Date()), -2), items = expData().items.filter(it => String(it.date).slice(0, 7) >= from).slice(-300).map(it => [it.date, Math.round(+it.amt * 100) / 100, it.cat, String(it.note || '').slice(0, 30), it.sh ? 1 : 0]);
+  const code = mvNewCode(), salt = rnd(16), iv = rnd(12), key = await hhKey(code, salt);
+  const ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, key, new TextEncoder().encode(JSON.stringify({v: 1, n: String(d.me || '').slice(0, 20), at: Date.now(), inc: (expIncome(ymOf(new Date())) || {}).v || 0, i: items})));
+  return {code: mvFmt(code), pkg: 'FINHH1:' + btoa(JSON.stringify({s: b64(salt), iv: b64(iv), ct: b64(ct)}))};
+}
+async function hhOpen(txt, code){
+  const m = /FINHH1:([A-Za-z0-9+/=]+)/.exec(String(txt || '')); if (!m) throw new Error('fmt');
+  const o = JSON.parse(atob(m[1])), key = await hhKey(code, u8(o.s)), pt = await crypto.subtle.decrypt({name: 'AES-GCM', iv: u8(o.iv)}, key, u8(o.ct));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+function hhCouple(v){
+  const E = hhE, d = hhD(), ym = ymOf(new Date()), mine = expTotals(ym).sum, part = d.partner.filter(x => String(x[0]).slice(0, 7) === ym).reduce((s, x) => s + +x[1], 0);
+  const myInc = +((expIncome(ym) || {}).v || 0), pInc = +(d.pInc || 0), rule = d.rule || 'half', share = rule === 'inc' && myInc + pInc > 0 ? myInc / (myInc + pInc) : 0.5, tot = mine + part, myPart = tot * share, diff = mine - myPart;
+  v.innerHTML = `<p class="fine">${E(t('hh_intro'))}</p><div class="bk-grid"><label class="bk-f"><span>${E(t('hh_me'))}</span><input type="text" maxlength="20" dir="auto" data-hhk="me" value="${E(d.me || '')}" placeholder="${E(t('hh_mePh'))}"></label>
+    <label class="bk-f"><span>${E(t('hh_rule'))}</span><select data-hhk="rule"><option value="half"${rule === 'half' ? ' selected' : ''}>${E(t('hh_rHalf'))}</option><option value="inc"${rule === 'inc' ? ' selected' : ''}>${E(t('hh_rInc'))}</option></select></label></div>
+    ${d.partner.length ? `<div class="bk-hero"><span>${E(t('hh_month', {m: ymLabel(ym)}))}</span><b dir="auto">${E(Math.abs(diff) < 1 ? t('hh_even') : diff > 0 ? t('hh_owesMe', {n: d.pName || t('hh_partner'), m: hhM(diff)}) : t('hh_iOwe', {n: d.pName || t('hh_partner'), m: hhM(-diff)}))}</b><small>${E(t('hh_sum', {a: hhM(mine), b: hhM(part), n: d.pName || t('hh_partner'), p: Math.round(share * 100)}))}</small></div>
+      <p class="fine">${E(t('hh_got', {n: d.pName || t('hh_partner'), c: d.partner.length, d: d.pAt ? new Date(d.pAt).toLocaleDateString(locOf()) : ''}))}</p>` : ''}
+    <h3 class="ds-q">📤 ${E(t('hh_send'))}</h3><p class="fine">${E(t('hh_sendH'))}</p><div class="btnrow"><button type="button" class="gold-btn" id="hh_mk">🔐 ${E(t('hh_mk'))}</button></div>
+    ${HHX.pkg ? `<div class="hh-pkg"><p><b>${E(t('hh_code'))}: <span dir="ltr" class="hh-code">${E(HHX.code)}</span></b></p><p class="fine">${E(t('hh_codeH'))}</p><div id="hh_qr"></div>
+      <div class="btnrow">${navigator.share ? `<button type="button" class="btn" id="hh_share">📤 ${E(t('ds_share'))}</button>` : ''}<button type="button" class="btn" id="hh_copy">📋 ${E(t('hh_copy'))}</button></div></div>` : ''}
+    <h3 class="ds-q">📥 ${E(t('hh_recv'))}</h3><label class="bk-f"><span>${E(t('hh_paste'))}</span><textarea id="hh_in" rows="3" dir="ltr" spellcheck="false" placeholder="FINHH1:…"></textarea></label>
+    <div class="bk-grid"><label class="bk-f"><span>${E(t('hh_code'))}</span><input type="text" id="hh_cin" dir="ltr" maxlength="9" autocapitalize="characters" placeholder="XXXX-XXXX"></label></div>
+    <div class="btnrow"><button type="button" class="gold-btn" id="hh_open">🔓 ${E(t('hh_openB'))}</button>${d.partner.length ? `<button type="button" class="mv" id="hh_forget">🗑️ ${E(t('hh_forget'))}</button>` : ''}</div><p class="fine" id="hh_msg" role="status" aria-live="polite"></p>
+    <p class="fine sl-priv">🔒 ${E(t('hh_priv'))}</p>`;
+  if (HHX.pkg && HHX.pkg.length < 1800 && typeof qrEncode === 'function'){ try { const c = qrCanvas(qrEncode(HHX.pkg, 'L'), {scale: 3}); c.setAttribute('role', 'img'); c.setAttribute('aria-label', t('hh_qrA')); $('#hh_qr').appendChild(c); } catch (e) {} }
+}
+/* ---- kids' pocket money ---- */
+function hhKids(v){
+  const E = hhE, d = hhD();
+  v.innerHTML = `<p class="fine">${E(t('hh_kIntro'))}</p><ul class="rm-list">${d.kids.map((k, i) => { const pct = +k.goal ? Math.min(100, Math.max(0, (+k.bal || 0) / +k.goal * 100)) : 0;
+    return `<li class="rm-it"><div class="rm-ic" aria-hidden="true">${pct >= 100 ? '🎉' : '🐷'}</div><div class="rm-b"><div class="bk-grid">
+      <label class="bk-f"><span>${E(t('hh_kName'))}</span><input type="text" maxlength="20" dir="auto" data-hhkid="${i}" data-hhkk="name" value="${E(k.name || '')}"></label>
+      <label class="bk-f"><span>${E(t('hh_kWeek'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" data-hhkid="${i}" data-hhkk="week" value="${E(k.week || '')}"></label>
+      <label class="bk-f"><span>${E(t('hh_kGoalN'))}</span><input type="text" maxlength="30" dir="auto" data-hhkid="${i}" data-hhkk="goalN" value="${E(k.goalN || '')}" placeholder="${E(t('hh_kGoalPh'))}"></label>
+      <label class="bk-f"><span>${E(t('hh_kGoal'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" data-hhkid="${i}" data-hhkk="goal" value="${E(k.goal || '')}"></label></div>
+      <b class="hh-bal" dir="ltr">${E(hhM(+k.bal || 0))}</b><span class="in-prog"><i style="width:${pct.toFixed(0)}%"></i></span>
+      <span class="rm-w">${E(+k.goal ? (pct >= 100 ? t('hh_kDone', {g: k.goalN || ''}) : t('hh_kLeft', {m: hhM(+k.goal - (+k.bal || 0)), w: +k.week > 0 ? Math.ceil((+k.goal - (+k.bal || 0)) / +k.week) : '—'})) : t('hh_kNoGoal'))}</span>
+      <div class="rm-acts"><button type="button" class="mv" data-hhpay="${i}">💰 ${E(t('hh_kPay'))}</button><button type="button" class="mv" data-hhadd="${i}">＋ ${E(t('hh_kAdd'))}</button><button type="button" class="mv" data-hhspend="${i}">➖ ${E(t('hh_kSpend'))}</button><button type="button" class="px-tb s" data-hhdel="${i}" aria-label="${E(t('lp_del', {n: k.name || ''}))}">🗑️</button></div>
+      ${(k.log || []).length ? `<small class="hh-log">${(k.log || []).slice(-4).reverse().map(l => E(l[0] + ' · ' + (l[1] >= 0 ? '+' : '−') + hhM(Math.abs(l[1])) + (l[2] ? ' · ' + l[2] : ''))).join('<br>')}</small>` : ''}</div></li>`; }).join('') || `<li class="fine bk-empty">${E(t('hh_kNone'))}</li>`}</ul>
+    <div class="btnrow"><button type="button" class="gold-btn" id="hh_kNew">＋ ${E(t('hh_kNew'))}</button></div>
+    <h3 class="ds-q">💡 ${E(t('hh_kTipsH'))}</h3><ol class="bk-adv">${[1, 2, 3].map(i => `<li class="bk-a"><span class="bk-ic">${['🎯', '🫙', '🛒'][i - 1]}</span><div><b>${E(t('hh_kt' + i))}</b><p>${E(t('hh_kt' + i + 'P'))}</p></div></li>`).join('')}</ol>`;
+}
+function hhRender(){
+  const root = $('#hr_household'); if (!root) return; const E = hhE;
+  root.innerHTML = `<div class="ds-chips bk-tabs" role="tablist">${[['couple', '💑'], ['kids', '🧒']].map(([k, ic]) => `<button type="button" role="tab" class="ds-chip${HHT === k ? ' on' : ''}" aria-selected="${HHT === k}" data-hhtab="${k}">${ic} ${E(t('hh_t_' + k))}</button>`).join('')}</div><div id="hh_view"></div>`;
+  (HHT === 'couple' ? hhCouple : hhKids)($('#hh_view'));
+}
+function hhKidMove(i, sign){ const k = hhD().kids[i]; if (!k) return; const v = parseFloat(String(prompt(t(sign > 0 ? 'hh_kAddQ' : 'hh_kSpendQ')) || '').replace(/[^\d.]/g, '')); if (!(v > 0)) return; if (sign < 0 && v > (+k.bal || 0)){ toast(t('hh_kNoMoney')); return; } const note = sign < 0 ? String(prompt(t('hh_kWhat')) || '').slice(0, 30) : '';
+  k.bal = Math.round(((+k.bal || 0) + sign * v) * 100) / 100; (k.log = k.log || []).push([new Date().toISOString().slice(0, 10), sign * v, note]); if (k.log.length > 60) k.log.shift(); saveSet(); hhRender(); }
+document.addEventListener('click', async e => {
+  const t0 = e.target; if (!t0.closest || !t0.closest('#hr_household')) return; const d = hhD(); let b;
+  if ((b = t0.closest('[data-hhtab]'))){ HHT = b.dataset.hhtab; hhRender(); return; }
+  if (t0.closest('#hh_mk')){ try { const r = await hhSeal(); HHX.pkg = r.pkg; HHX.code = r.code; hhRender(); } catch (er) { toast(t('m_nocrypto')); } return; }
+  if (t0.closest('#hh_copy')){ copyText(HHX.pkg); toast(t('st_copied')); return; }
+  if (t0.closest('#hh_share')){ try { await navigator.share({title: t('hh_shareT'), text: HHX.pkg}); } catch (er) {} return; }
+  if (t0.closest('#hh_open')){ const msg = $('#hh_msg'); try { const o = await hhOpen($('#hh_in').value, $('#hh_cin').value); d.partner = (o.i || []).filter(x => Array.isArray(x) && x.length >= 3).slice(0, 400); d.pName = String(o.n || '').slice(0, 20); d.pInc = +o.inc || 0; d.pAt = o.at || Date.now(); saveSet(); hhRender(); toast(t('hh_ok', {n: d.partner.length})); } catch (er) { if (msg) msg.textContent = t(String(er && er.message) === 'fmt' ? 'hh_badPkg' : 'hh_badCode'); } return; }
+  if (t0.closest('#hh_forget')){ d.partner = []; d.pName = ''; d.pInc = 0; saveSet(); hhRender(); return; }
+  if (t0.closest('#hh_kNew')){ d.kids.push({name: '', week: 20, bal: 0, goal: '', goalN: '', log: []}); saveSet(); hhRender(); return; }
+  if ((b = t0.closest('[data-hhpay]'))){ const k = d.kids[+b.dataset.hhpay]; if (k && +k.week > 0){ k.bal = (+k.bal || 0) + +k.week; (k.log = k.log || []).push([new Date().toISOString().slice(0, 10), +k.week, t('hh_kPay')]); saveSet(); hhRender(); } return; }
+  if ((b = t0.closest('[data-hhadd]'))){ hhKidMove(+b.dataset.hhadd, 1); return; }
+  if ((b = t0.closest('[data-hhspend]'))){ hhKidMove(+b.dataset.hhspend, -1); return; }
+  if ((b = t0.closest('[data-hhdel]'))){ const k = d.kids[+b.dataset.hhdel]; if (k && confirm(t('rm_delQ', {t: k.name || t('hh_kName')}))){ d.kids.splice(+b.dataset.hhdel, 1); saveSet(); hhRender(); } }
+});
+let HH_T = null;
+document.addEventListener('input', e => { const el = e.target; if (!el || !el.dataset || !el.closest || !el.closest('#hr_household')) return; const d = hhD();
+  if (el.dataset.hhk && el.tagName !== 'SELECT') d[el.dataset.hhk] = el.value; else if (el.dataset.hhkid != null) d.kids[+el.dataset.hhkid][el.dataset.hhkk] = el.value; else return; clearTimeout(HH_T); HH_T = setTimeout(saveSet, 300); });
+document.addEventListener('change', e => { const el = e.target; if (!el || !el.dataset || !el.closest || !el.closest('#hr_household')) return; if (el.dataset.hhk && el.tagName === 'SELECT'){ hhD()[el.dataset.hhk] = el.value; saveSet(); hhRender(); } else if (el.dataset.hhkid != null && /goal|week/.test(el.dataset.hhkk)){ saveSet(); const i = el.dataset.hhkid, k = el.dataset.hhkk; hhRender(); const n = $(`[data-hhkid="${i}"][data-hhkk="${k}"]`); if (n) n.focus(); } });
+CALC.household = () => null;
+try { GS_SYN.household = 'משפחה זוג תקציב משותף בן זוג בת זוג חלוקת הוצאות מי חייב דמי כיס ילדים חיסכון לילד family couple shared budget partner split pocket money kids عائلة زوجان ميزانية مشتركة مصروف الأطفال'; } catch (e) {}
+if (typeof svKind === 'function'){ const svKindHh = svKind; svKind = function(id){ return id === 'household' ? '' : svKindHh.apply(this, arguments); }; }
+try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('household'); if (Array.isArray(EX_SKIP)) EX_SKIP.push('household'); } catch (e) {}
+{
+  const actHh = activate; activate = function(id){ const r = actHh.apply(this, arguments); if (id === 'household') hhRender(); return r; };
+  const alHh = applyLang; applyLang = function(){ const r = alHh.apply(this, arguments); try { if (tab === 'household') hhRender(); } catch (e) {} return r; };
+  try { if (tab === 'household') hhRender(); } catch (e) {}
+}
+
+/* ---------- 13.22: trips and events – a trip budget with spending in the local currency, and an event budget ---------- */
+const tvlE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+var TVT = 'trip';
+function tvD(){ const d = SET.tv && typeof SET.tv === 'object' ? SET.tv : (SET.tv = {}); if (!d.trip || typeof d.trip !== 'object') d.trip = {}; if (!d.ev || typeof d.ev !== 'object') d.ev = {}; if (!Array.isArray(d.ev.items)) d.ev.items = null; return d; }
+const tvM = (x, c) => M(Math.round(isFinite(x) ? x : 0), 0, c || 'ILS');
+const tvN = v => { const x = parseFloat(String(v == null ? '' : v).replace(/[,\s₪]/g, '')); return isFinite(x) ? x : NaN; };
+/* ---- the trip: a country, dates and a budget; spending goes into the expenses tool with the country and currency ---- */
+function tvTripItems(){ const T0 = tvD().trip; if (!T0.cc || !T0.from) return []; const to = T0.to || '9999-12-31'; return expData().items.filter(it => (it.cc || 'IL') === T0.cc && it.date >= T0.from && it.date <= to); }
+function tvTrip(v){
+  const E = tvlE, T0 = tvD().trip, cur = EXP_COUNTRIES[T0.cc] || 'USD', ccs = Object.keys(EXP_COUNTRIES).filter(k => k !== 'IL').map(k => [k, ccName(k)]).sort((a, b) => a[1].localeCompare(b[1], lang));
+  const L = tvTripItems(), spent = L.reduce((s, it) => s + expBase(it), 0), bud = tvN(T0.bud) || 0, f = rmParse(T0.from), to = rmParse(T0.to), days = f && to ? Math.max(1, Math.round((to - f) / 864e5) + 1) : 0, gone = f ? Math.min(days || 1, Math.max(1, Math.round((rmToday() - f) / 864e5) + 1)) : 0, left = bud - spent;
+  v.innerHTML = `<p class="fine">${E(t('tv_intro'))}</p><div class="bk-grid">
+    <label class="bk-f"><span>${E(t('tv_cc'))}</span><select data-tvk="cc"><option value="">—</option>${ccs.map(([k, n]) => `<option value="${k}"${T0.cc === k ? ' selected' : ''}>${flagOf(k)} ${E(n)}</option>`).join('')}</select></label>
+    <label class="bk-f"><span>${E(t('tv_bud'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" data-tvk="bud" value="${E(T0.bud || '')}" placeholder="8000"></label>
+    <label class="bk-f"><span>${E(t('tv_from'))}</span><input type="date" data-tvk="from" value="${E(T0.from || '')}"></label><label class="bk-f"><span>${E(t('tv_to'))}</span><input type="date" data-tvk="to" value="${E(T0.to || '')}"></label></div>
+    ${T0.cc && T0.from ? `<div class="bk-hero"><span>${E(flagOf(T0.cc) + ' ' + ccName(T0.cc))}${days ? ' · ' + E(t('tv_days', {n: days})) : ''}</span><b dir="ltr">${E(tvM(spent))}${bud ? ' / ' + E(tvM(bud)) : ''}</b><small>${E(bud ? (left >= 0 ? t('tv_left', {m: tvM(left), d: days && gone < days ? tvM(left / (days - gone + 1)) : '—'}) : t('tv_over', {m: tvM(-left)})) : t('tv_noBud'))} · ${E(t('tv_rate', {c: cur, r: N(fxConv(1, cur, 'ILS'), 3)}))}</small></div>
+      <h3 class="ds-q">＋ ${E(t('tv_addH'))}</h3><div class="bk-grid"><label class="bk-f"><span>${E(t('tv_amt'))} (${cur})</span><input type="text" inputmode="decimal" dir="ltr" id="tv_amt" placeholder="0"></label><label class="bk-f"><span>${E(t('exp_cat'))}</span><select id="tv_cat">${EXP_CATS.map(([k, ic]) => `<option value="${k}"${k === 'food' ? ' selected' : ''}>${ic} ${E(t('ec_' + k))}</option>`).join('')}</select></label><label class="bk-f"><span>${E(t('exp_note'))}</span><input type="text" id="tv_note" maxlength="60" dir="auto"></label></div>
+      <div class="btnrow"><button type="button" class="gold-btn" id="tv_add">＋ ${E(t('tv_add'))}</button></div><p class="fine" id="tv_conv" aria-live="polite"></p>
+      <ul class="rm-list">${L.slice().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 40).map(it => `<li class="rm-it"><div class="rm-ic" aria-hidden="true">${(EXP_CATS.find(c => c[0] === it.cat) || [, '📦'])[1]}</div><div class="rm-b"><b dir="auto">${E(it.note || t('ec_' + it.cat))}</b><span class="rm-w" dir="auto">${E(dLabel(it.date))} · ${E(M(it.oamt != null ? it.oamt : it.amt, 2, it.cur || cur))} · ≈ ${E(tvM(expBase(it)))}</span></div></li>`).join('') || `<li class="fine bk-empty">${E(t('tv_none'))}</li>`}</ul>` : `<p class="fine bk-empty">${E(t('tv_pick'))}</p>`}
+    <p class="fine">${E(t('tv_note2'))}</p>`;
+}
+/* ---- an event budget ---- */
+const TV_EV = [['venue', 0], ['photo', 9000], ['music', 6000], ['dress', 5000], ['flowers', 4000], ['rabbi', 1500], ['invites', 1500], ['other', 3000]];
+function tvEvent(v){
+  const E = tvlE, ev = tvD().ev; if (!ev.items) ev.items = TV_EV.map(([k, c]) => ({k, c}));
+  const g = tvN(ev.guests) || 0, pp = tvN(ev.pp) || 0, gift = tvN(ev.gift) || 0, att = (tvN(ev.att) || 85) / 100, venue = g * att * pp, extra = ev.items.filter(x => x.k !== 'venue').reduce((s, x) => s + (tvN(x.c) || 0), 0), cost = venue + extra, gifts = g * att / 2 * gift, net = gifts - cost;
+  v.innerHTML = `<p class="fine">${E(t('tv_evIntro'))}</p><div class="bk-grid">
+    <label class="bk-f"><span>${E(t('tv_guests'))}</span><input type="text" inputmode="numeric" dir="ltr" data-tve="guests" value="${E(ev.guests || '')}" placeholder="300"></label>
+    <label class="bk-f"><span>${E(t('tv_att'))} (%)</span><input type="text" inputmode="numeric" dir="ltr" data-tve="att" value="${E(ev.att || '')}" placeholder="85"></label>
+    <label class="bk-f"><span>${E(t('tv_pp'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" data-tve="pp" value="${E(ev.pp || '')}" placeholder="350"></label>
+    <label class="bk-f"><span>${E(t('tv_gift'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" data-tve="gift" value="${E(ev.gift || '')}" placeholder="800"></label></div>
+    <h3 class="ds-q">${E(t('tv_extras'))}</h3><div class="bk-grid">${ev.items.filter(x => x.k !== 'venue').map((x, i) => `<label class="bk-f"><span>${E(t('tv_x_' + x.k))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" data-tvx="${x.k}" value="${E(x.c)}"></label>`).join('')}</div>
+    <div id="tv_out" aria-live="polite">${g && pp ? `<div class="bk-hero"><span>${E(t(net >= 0 ? 'tv_evPlus' : 'tv_evMinus'))}</span><b dir="ltr">${E(tvM(Math.abs(net)))}</b><small>${E(t('tv_evSub', {c: tvM(cost), g: tvM(gifts), n: Math.round(g * att)}))}</small></div>
+      <table class="bk-plan"><tbody><tr><th scope="row">${E(t('tv_x_venue'))}</th><td dir="ltr">${E(tvM(venue))}</td></tr><tr><th scope="row">${E(t('tv_extras'))}</th><td dir="ltr">${E(tvM(extra))}</td></tr><tr class="key"><th scope="row">${E(t('tv_perGuest'))}</th><td dir="ltr">${E(tvM(g * att ? cost / (g * att) : 0))}</td></tr><tr><th scope="row">${E(t('tv_breakEven'))}</th><td dir="ltr">${E(tvM(g * att ? cost / (g * att / 2) : 0))}</td></tr></tbody></table>` : `<p class="fine bk-empty">${E(t('fu_fill'))}</p>`}</div>
+    <p class="fine">${E(t('tv_evNote'))} <button type="button" class="lg-a" data-go="eventgift">${E(t('in_open', {n: t('tab_eventgift')}))}</button></p>`;
+}
+function tvRender(){
+  const root = $('#hr_travel'); if (!root) return; const E = tvlE;
+  root.innerHTML = `<div class="ds-chips bk-tabs" role="tablist">${[['trip', '✈️'], ['event', '🎉']].map(([k, ic]) => `<button type="button" role="tab" class="ds-chip${TVT === k ? ' on' : ''}" aria-selected="${TVT === k}" data-tvtab="${k}">${ic} ${E(t('tv_t_' + k))}</button>`).join('')}</div><div id="tv_view"></div><p class="fine sl-priv">🔒 ${E(t('pic_priv'))}</p>`;
+  (TVT === 'trip' ? tvTrip : tvEvent)($('#tv_view'));
+}
+let TV_T = null;
+document.addEventListener('input', e => { const el = e.target; if (!el || !el.closest || !el.closest('#hr_travel')) return; const d = tvD();
+  if (el.id === 'tv_amt'){ const a = tvN(el.value), cur = EXP_COUNTRIES[d.trip.cc] || 'USD', o = $('#tv_conv'); if (o) o.textContent = a > 0 ? '≈ ' + tvM(fxConv(a, cur, 'ILS')) : ''; return; }
+  if (el.dataset.tvk && el.tagName !== 'SELECT' && el.type !== 'date'){ d.trip[el.dataset.tvk] = el.value; clearTimeout(TV_T); TV_T = setTimeout(() => { saveSet(); }, 300); return; }
+  if (el.dataset.tve){ d.ev[el.dataset.tve] = el.value; } else if (el.dataset.tvx){ const x = d.ev.items.find(y => y.k === el.dataset.tvx); if (x) x.c = el.value; } else return;
+  clearTimeout(TV_T); TV_T = setTimeout(() => { saveSet(); const f = document.activeElement && document.activeElement.dataset ? [document.activeElement.dataset.tve, document.activeElement.dataset.tvx] : []; tvRender(); const n = f[0] ? $(`[data-tve="${f[0]}"]`) : f[1] ? $(`[data-tvx="${f[1]}"]`) : null; if (n){ n.focus(); const L = n.value.length; try { n.setSelectionRange(L, L); } catch (er) {} } }, 400); });
+document.addEventListener('change', e => { const el = e.target; if (!el || !el.closest || !el.closest('#hr_travel')) return; if (el.dataset.tvk && (el.tagName === 'SELECT' || el.type === 'date' || el.dataset.tvk === 'bud')){ tvD().trip[el.dataset.tvk] = el.value; saveSet(); tvRender(); } });
+document.addEventListener('click', e => { const t0 = e.target; if (!t0.closest || !t0.closest('#hr_travel')) return; let b;
+  if ((b = t0.closest('[data-tvtab]'))){ TVT = b.dataset.tvtab; tvRender(); return; }
+  if (t0.closest('#tv_add')){ const T0 = tvD().trip, a = tvN($('#tv_amt').value); if (!(a > 0)){ $('#tv_amt').focus(); return; } const cur = EXP_COUNTRIES[T0.cc] || 'USD', d = expData(), date = todayIso() >= T0.from && (!T0.to || todayIso() <= T0.to) ? todayIso() : T0.from;
+    d.items.push({id: tId(), t: Date.now(), amt: Math.round(fxConv(a, cur, expCur()) * 100) / 100, bc: expCur(), oamt: Math.round(a * 100) / 100, cur, cat: $('#tv_cat').value, date, note: $('#tv_note').value.trim().slice(0, 60), pay: 'card', cc: T0.cc, city: '', rec: false}); toolsSave('fin-exp', d); tvRender(); toast(t('cm_added', {m: tvM(fxConv(a, cur, 'ILS'))})); } });
+CALC.travel = () => null;
+try { GS_SYN.travel = 'טיול חופשה חו״ל תקציב טיול מטבע מקומי אירוע חתונה בר מצווה תקציב אירוע עלות אירוע מנה travel trip vacation abroad budget event wedding budget سفر رحلة عطلة ميزانية مناسبة عرس'; } catch (e) {}
+if (typeof svKind === 'function'){ const svKindTv = svKind; svKind = function(id){ return id === 'travel' ? '' : svKindTv.apply(this, arguments); }; }
+try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('travel'); if (Array.isArray(EX_SKIP)) EX_SKIP.push('travel'); } catch (e) {}
+{
+  const actTv = activate; activate = function(id){ const r = actTv.apply(this, arguments); if (id === 'travel') tvRender(); return r; };
+  const alTv = applyLang; applyLang = function(){ const r = alTv.apply(this, arguments); try { if (tab === 'travel') tvRender(); } catch (e) {} return r; };
+  try { if (tab === 'travel') tvRender(); } catch (e) {}
+}
+
+/* ---------- 13.22: savings and investments – all your savings on one map, and a simple portfolio view ---------- */
+const pfE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+var PFT = 'map';
+const PF_SAV = [['pension', '🧓', 0.22], ['hish', '🎓', 0.6], ['gemel', '🏦', 0.6], ['kids', '🧒', 0], ['deposit', '💵', 0], ['mmf', '💧', 0], ['broker', '📈', 0], ['crypto', '🪙', 0], ['cash', '👛', 0], ['other', '📦', 0]];
+const PF_HOLD = ['stockIL', 'stockUS', 'etf', 'bond', 'fund', 'crypto', 'cash', 'other'];
+const PF_COL = ['#5B8CFF', '#F5A524', '#2FD08A', '#F0705A', '#A47BFF', '#38BDF8', '#94A3B8', '#FB7185', '#22C55E', '#C084FC'];
+function pfD(){ const d = SET.pf && typeof SET.pf === 'object' ? SET.pf : (SET.pf = {}); if (!Array.isArray(d.sav)) d.sav = []; if (!Array.isArray(d.hold)) d.hold = []; return d; }
+const pfN = v => { const x = parseFloat(String(v == null ? '' : v).replace(/[,\s₪%]/g, '')); return isFinite(x) ? x : 0; };
+const pfM = x => M(Math.round(x || 0), 0, 'ILS');
+const pfDonut = parts => { const tot = parts.reduce((s, p) => s + p.v, 0) || 1; let a = 0; return `<div class="exp-donut pf-donut" style="background:conic-gradient(${parts.map(p => { const a0 = a; a += p.v / tot * 100; return `${p.col} ${a0.toFixed(2)}% ${a.toFixed(2)}%`; }).join(',')})" role="img" aria-label="${pfE(parts.map(p => p.n + ' ' + Math.round(p.v / tot * 100) + '%').join(', '))}"><div><b dir="ltr">${pfE(pfM(tot))}</b></div></div><ul class="pf-leg">${parts.map(p => `<li><i style="background:${p.col}"></i>${pfE(p.n)} <b dir="ltr">${Math.round(p.v / tot * 100)}%</b></li>`).join('')}</ul>`; };
+function pfMap(v){
+  const E = pfE, d = pfD(), tot = d.sav.reduce((s, x) => s + pfN(x.bal), 0), by = {}; d.sav.forEach(x => { by[x.type] = (by[x.type] || 0) + pfN(x.bal); });
+  const parts = PF_SAV.filter(s => by[s[0]] > 0).map((s, i) => ({n: s[1] + ' ' + t('pf_s_' + s[0]), v: by[s[0]], col: PF_COL[i % PF_COL.length]}));
+  const fees = d.sav.filter(x => pfN(x.fee) > 0).map(x => ({x, cost: pfN(x.bal) * pfN(x.fee) / 100}));
+  v.innerHTML = `<p class="fine">${E(t('pf_mapIntro'))}</p>${d.sav.length && tot ? `<div class="pf-top">${pfDonut(parts)}</div>` : ''}
+    <ul class="rm-list">${d.sav.map((x, i) => { const T = PF_SAV.find(s => s[0] === x.type) || PF_SAV[9], hi = T[2] && pfN(x.fee) > T[2];
+      return `<li class="rm-it${hi ? ' due' : ''}"><div class="rm-ic" aria-hidden="true">${T[1]}</div><div class="rm-b"><div class="bk-grid">
+        <label class="bk-f"><span>${E(t('pf_type'))}</span><select data-pfs="${i}" data-pfk="type">${PF_SAV.map(s => `<option value="${s[0]}"${x.type === s[0] ? ' selected' : ''}>${s[1]} ${E(t('pf_s_' + s[0]))}</option>`).join('')}</select></label>
+        <label class="bk-f"><span>${E(t('pf_name'))}</span><input type="text" maxlength="30" dir="auto" data-pfs="${i}" data-pfk="name" value="${E(x.name || '')}" placeholder="${E(t('pf_namePh'))}"></label>
+        <label class="bk-f"><span>${E(t('pf_bal'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" data-pfs="${i}" data-pfk="bal" value="${E(x.bal || '')}"></label>
+        <label class="bk-f"><span>${E(t('pf_fee'))} (%)</span><input type="text" inputmode="decimal" dir="ltr" data-pfs="${i}" data-pfk="fee" value="${E(x.fee || '')}" placeholder="${T[2] ? N(T[2], 2) : '0'}"></label>
+        <label class="bk-f"><span>${E(t('pf_dep'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" data-pfs="${i}" data-pfk="dep" value="${E(x.dep || '')}"></label></div>
+        ${hi ? `<span class="rm-w">⚠️ ${E(t('pf_feeHi', {f: N(T[2], 2), y: pfM(pfN(x.bal) * (pfN(x.fee) - T[2]) / 100)}))}</span>` : ''}
+        <div class="rm-acts"><button type="button" class="px-tb s" data-pfsdel="${i}" aria-label="${E(t('lp_del', {n: x.name || t('pf_s_' + x.type)}))}">🗑️</button></div></div></li>`; }).join('') || `<li class="fine bk-empty">${E(t('pf_none'))}</li>`}</ul>
+    <div class="ds-chips">${PF_SAV.map(s => `<button type="button" class="ds-chip" data-pfsadd="${s[0]}">＋ ${s[1]} ${E(t('pf_s_' + s[0]))}</button>`).join('')}</div>
+    ${tot ? `<table class="bk-plan"><tbody><tr class="key"><th scope="row">${E(t('pf_tot'))}</th><td dir="ltr">${E(pfM(tot))}</td></tr><tr><th scope="row">${E(t('pf_depTot'))}</th><td dir="ltr">${E(pfM(d.sav.reduce((s, x) => s + pfN(x.dep), 0)))} / ${E(t('bk_mo'))}</td></tr><tr><th scope="row">${E(t('pf_feeTot'))}</th><td dir="ltr">${E(pfM(fees.reduce((s, f) => s + f.cost, 0)))} / ${E(t('es_yr'))}</td></tr></tbody></table>
+      <p class="fine">${E(t('pf_mapNote'))} <button type="button" class="lg-a" data-go="mgmtfees">${E(t('in_open', {n: t('tab_mgmtfees')}))}</button></p>` : ''}`;
+}
+function pfHold(v){
+  const E = pfE, d = pfD(), tot = d.hold.reduce((s, x) => s + pfN(x.val), 0), by = {}, byC = {}; d.hold.forEach(x => { by[x.type] = (by[x.type] || 0) + pfN(x.val); byC[x.cur || 'ILS'] = (byC[x.cur || 'ILS'] || 0) + pfN(x.val); });
+  const big = d.hold.filter(x => tot && pfN(x.val) / tot > 0.25 && !['etf', 'fund', 'cash'].includes(x.type));
+  v.innerHTML = `<p class="fine">${E(t('pf_holdIntro'))}</p>${tot ? `<div class="pf-two"><div><h4 class="ds-q">${E(t('pf_byType'))}</h4>${pfDonut(PF_HOLD.filter(k => by[k] > 0).map((k, i) => ({n: t('pf_h_' + k), v: by[k], col: PF_COL[i % PF_COL.length]})))}</div><div><h4 class="ds-q">${E(t('pf_byCur'))}</h4>${pfDonut(Object.keys(byC).filter(k => byC[k] > 0).map((k, i) => ({n: k, v: byC[k], col: PF_COL[(i + 4) % PF_COL.length]})))}</div></div>` : ''}
+    ${big.length ? `<ol class="bk-adv">${big.map(x => `<li class="bk-a bk-warn"><span class="bk-ic">⚠️</span><div><b>${E(t('pf_conc', {n: x.name || t('pf_h_' + x.type), p: Math.round(pfN(x.val) / tot * 100)}))}</b><p>${E(t('pf_concP'))}</p></div></li>`).join('')}</ol>` : ''}
+    <ul class="rm-list">${d.hold.map((x, i) => `<li class="rm-it"><div class="rm-b"><div class="bk-grid">
+      <label class="bk-f"><span>${E(t('pf_hName'))}</span><input type="text" maxlength="30" dir="auto" data-pfh="${i}" data-pfk="name" value="${E(x.name || '')}" placeholder="${E(t('pf_hNamePh'))}"></label>
+      <label class="bk-f"><span>${E(t('pf_type'))}</span><select data-pfh="${i}" data-pfk="type">${PF_HOLD.map(k => `<option value="${k}"${x.type === k ? ' selected' : ''}>${E(t('pf_h_' + k))}</option>`).join('')}</select></label>
+      <label class="bk-f"><span>${E(t('pf_val'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" data-pfh="${i}" data-pfk="val" value="${E(x.val || '')}"></label>
+      <label class="bk-f"><span>${E(t('pf_cur'))}</span><select data-pfh="${i}" data-pfk="cur">${['ILS', 'USD', 'EUR', 'GBP', 'other'].map(c => `<option value="${c}"${(x.cur || 'ILS') === c ? ' selected' : ''}>${c === 'other' ? E(t('pf_curO')) : c}</option>`).join('')}</select></label></div>
+      <div class="rm-acts"><button type="button" class="px-tb s" data-pfhdel="${i}" aria-label="${E(t('lp_del', {n: x.name || ''}))}">🗑️</button></div></div></li>`).join('') || `<li class="fine bk-empty">${E(t('pf_hNone'))}</li>`}</ul>
+    <div class="btnrow"><button type="button" class="gold-btn" id="pf_hadd">＋ ${E(t('pf_hAdd'))}</button></div><p class="fine">${E(t('pf_holdNote'))}</p>`;
+}
+function pfRender(){
+  const root = $('#hr_portfolio'); if (!root) return; const E = pfE;
+  root.innerHTML = `<div class="ds-chips bk-tabs" role="tablist">${[['map', '🗺️'], ['hold', '📊']].map(([k, ic]) => `<button type="button" role="tab" class="ds-chip${PFT === k ? ' on' : ''}" aria-selected="${PFT === k}" data-pftab="${k}">${ic} ${E(t('pf_t_' + k))}</button>`).join('')}</div><div id="pf_view"></div><p class="fine sl-priv">🔒 ${E(t('pic_priv'))}</p>`;
+  (PFT === 'map' ? pfMap : pfHold)($('#pf_view'));
+}
+let PF_T = null;
+const pfRefocus = (attr, i, k) => { const n = $(`[${attr}="${i}"][data-pfk="${k}"]`); if (n){ n.focus(); try { const L = n.value.length; n.setSelectionRange(L, L); } catch (e) {} } };
+document.addEventListener('input', e => { const el = e.target; if (!el || !el.dataset || !el.closest || !el.closest('#hr_portfolio') || el.tagName === 'SELECT') return; const d = pfD();
+  const [arr, attr, i] = el.dataset.pfs != null ? [d.sav, 'data-pfs', el.dataset.pfs] : el.dataset.pfh != null ? [d.hold, 'data-pfh', el.dataset.pfh] : [null]; if (!arr) return;
+  arr[+i][el.dataset.pfk] = el.value; const k = el.dataset.pfk; clearTimeout(PF_T); PF_T = setTimeout(() => { saveSet(); if (k !== 'name'){ pfRender(); pfRefocus(attr, i, k); } }, 600); });
+document.addEventListener('change', e => { const el = e.target; if (!el || !el.dataset || !el.closest || !el.closest('#hr_portfolio') || el.tagName !== 'SELECT') return; const d = pfD();
+  if (el.dataset.pfs != null) d.sav[+el.dataset.pfs][el.dataset.pfk] = el.value; else if (el.dataset.pfh != null) d.hold[+el.dataset.pfh][el.dataset.pfk] = el.value; saveSet(); pfRender(); });
+document.addEventListener('click', e => { const t0 = e.target; if (!t0.closest || !t0.closest('#hr_portfolio')) return; const d = pfD(); let b;
+  if ((b = t0.closest('[data-pftab]'))){ PFT = b.dataset.pftab; pfRender(); return; }
+  if ((b = t0.closest('[data-pfsadd]'))){ d.sav.push({type: b.dataset.pfsadd, name: '', bal: '', fee: '', dep: ''}); saveSet(); pfRender(); pfRefocus('data-pfs', d.sav.length - 1, 'bal'); return; }
+  if ((b = t0.closest('[data-pfsdel]'))){ d.sav.splice(+b.dataset.pfsdel, 1); saveSet(); pfRender(); return; }
+  if (t0.closest('#pf_hadd')){ d.hold.push({name: '', type: 'etf', val: '', cur: 'ILS'}); saveSet(); pfRender(); pfRefocus('data-pfh', d.hold.length - 1, 'name'); return; }
+  if ((b = t0.closest('[data-pfhdel]'))){ d.hold.splice(+b.dataset.pfhdel, 1); saveSet(); pfRender(); } });
+CALC.portfolio = () => null;
+try { GS_SYN.portfolio = 'חסכונות מפת חסכונות פנסיה קרן השתלמות קופת גמל חיסכון לכל ילד פיקדון תיק השקעות מניות קרן סל פיזור savings map pension study fund provident portfolio stocks etf allocation diversification مدخرات تقاعد صندوق استكمال محفظة استثمار أسهم'; } catch (e) {}
+if (typeof svKind === 'function'){ const svKindPf = svKind; svKind = function(id){ return id === 'portfolio' ? '' : svKindPf.apply(this, arguments); }; }
+try { if (Array.isArray(DASH_SKIP)) DASH_SKIP.push('portfolio'); if (Array.isArray(EX_SKIP)) EX_SKIP.push('portfolio'); } catch (e) {}
+{ const aiStPf = aiScreenText; aiScreenText = function(id){ const s = aiStPf.apply(this, arguments); return id === 'portfolio' ? s + '\nSavings and holdings: ' + JSON.stringify({sav: pfD().sav, hold: pfD().hold}).slice(0, 1500) + '\nGeneral information only, not investment advice.' : s; }; }
+{
+  const actPf = activate; activate = function(id){ const r = actPf.apply(this, arguments); if (id === 'portfolio') pfRender(); return r; };
+  const alPf = applyLang; applyLang = function(){ const r = alPf.apply(this, arguments); try { if (tab === 'portfolio') pfRender(); } catch (e) {} return r; };
+  try { if (tab === 'portfolio') pfRender(); } catch (e) {}
+}
+
+/* 13.22: smarter results – what moves the result, explain a row, the whole picture for the assistant, quick shortcuts */
+const cxE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+let CX_BUSY = false;
+/* 1. "what moves the result most" under every calculator */
+function cxSensHTML(id){
+  let S = [];
+  CX_BUSY = true; try { S = aiSens(id); } catch (e) { S = []; } finally { CX_BUSY = false; }
+  if (!S.length) return `<p class="fine">${cxE(t('cx_sensNone'))}</p>`;
+  const max = Math.max.apply(null, S.map(s => Math.abs(s.d))) || 1;
+  return `<p class="fine">${cxE(t('cx_sensHow'))}</p><ul class="cx-sens">` + S.map(s => {
+    const w = Math.max(4, Math.round(Math.abs(s.d) / max * 100)), up = s.d > 0;
+    return `<li><span class="cx-l">${cxE(exClean(s.label))}</span><span class="cx-bar"><i class="${up ? 'up' : 'dn'}" style="width:${w}%"></i></span><bdi dir="ltr" class="num cx-v">${up ? '+' : '−'}${cxE(N(Math.abs(s.d), null, Math.abs(s.d) < 10 ? 2 : 0))}${isFinite(s.pct) ? ` (${up ? '+' : '−'}${cxE(N(Math.abs(s.pct), null, 1))}%)` : ''}</bdi></li>`;
+  }).join('') + '</ul>';
+}
+function cxSensFill(id){ const b = document.getElementById('cxs-' + id); if (b && b.closest('details').open) b.innerHTML = cxSensHTML(id); }
+let cxSensT = 0;
+function cxEnsure(id){
+  const led = document.getElementById('led-' + id); if (!led || document.getElementById('cxd-' + id)) return;
+  led.insertAdjacentHTML('afterend', `<details class="cx-d" id="cxd-${id}"><summary>🎯 <span data-cxt="cx_sens">${cxE(t('cx_sens'))}</span></summary><div id="cxs-${id}"></div></details>`);
+  document.getElementById('cxd-' + id).addEventListener('toggle', () => cxSensFill(id));
+  if (!EX_SKIP.includes(id)) cxLedObserve(led);
+  const p = document.getElementById('panel-' + id);
+  if (p) p.addEventListener('input', () => { clearTimeout(cxSensT); cxSensT = setTimeout(() => cxSensFill(id), 700); });
+}
+/* 2. result rows are explained on tap (existing); add keyboard access */
+function cxLedMark(led){ led.querySelectorAll('dt').forEach(dt => { if (!dt.hasAttribute('tabindex')){ dt.tabIndex = 0; dt.setAttribute('role', 'button'); } }); }
+function cxLedObserve(led){ cxLedMark(led); try { new MutationObserver(() => cxLedMark(led)).observe(led, {childList: true}); } catch (e) {} }
+document.addEventListener('keydown', e => {  /* the existing row explanation, now reachable by keyboard too */
+  const dt = e.target.closest && e.target.closest('.ledger dt');
+  if (dt && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); dt.click(); }
+});
+{ const cxAct = activate; activate = function(id){ const r = cxAct.apply(this, arguments); try { cxEnsure(id); } catch (e) {} return r; }; }
+try { cxEnsure(tab); } catch (e) {}
+/* 3. opt-in: share the whole picture with the assistant */
+function cxAll(){
+  const L = [];
+  try { const P = picData(); if (P.rows.length) L.push('Overview: ' + P.rows.map(r => r[2] + ' ' + exClean(r[3])).join('; ')); } catch (e) {}
+  try { const s = aiExpSummary(); if (s) L.push(s); } catch (e) {}
+  try { const R = rmD().items.filter(x => !x.done).sort((a, b) => String(a.date).localeCompare(String(b.date))).slice(0, 6); if (R.length) L.push('Upcoming reminders: ' + R.map(x => x.title + ' (' + x.date + (x.amt ? ', ' + MI(+x.amt) : '') + ')').join('; ')); } catch (e) {}
+  try { const d = pfD(), s = d.sav.reduce((a, x) => a + pfN(x.bal), 0), h = d.hold.reduce((a, x) => a + pfN(x.val), 0); if (s || h) L.push('Savings and investments: long-term savings ' + MI(s) + ', holdings ' + MI(h)); } catch (e) {}
+  try { const M2 = aiMine(); if (M2.length) L.push('Calculators filled in: ' + M2.join('; ')); } catch (e) {}
+  return L.length ? '\n\nThe person chose to share their whole picture from the app:\n' + L.map(x => '- ' + x).join('\n') : '';
+}
+{ const cxST = aiScreenText; aiScreenText = function(id){ let s = cxST.apply(this, arguments); try { if (SET.aiAll === '1' && (id === 'home' || id === 'assist' || id === 'expenses')) s += cxAll(); } catch (e) {} return s; }; }
+{ const cxOF = aiOpenFor; aiOpenFor = function(){
+  const r = cxOF.apply(this, arguments);
+  try {
+    if (!document.getElementById('aix_all')){
+      const row = document.querySelector('#aix .ai-engrow');
+      if (row){ row.insertAdjacentHTML('afterend', `<label class="cx-all"><input type="checkbox" id="aix_all"> <span id="aix_allL"></span></label>`);
+        document.getElementById('aix_all').addEventListener('change', e => { SET.aiAll = e.target.checked ? '1' : ''; saveSet(); toast(t(e.target.checked ? 'cx_allOn' : 'cx_allOff')); }); }
+    }
+    const c = document.getElementById('aix_all'); if (c){ c.checked = SET.aiAll === '1'; document.getElementById('aix_allL').textContent = t('cx_all'); }
+  } catch (e) {}
+  return r;
+}; }
+/* 4. home-screen shortcuts: ?go=screen[&add=1] */
+function cxGo(){
+  let q; try { q = new URLSearchParams(location.search); } catch (e) { return; }
+  const go = q.get('go'); if (!go) return;
+  try { q.delete('go'); q.delete('add'); const s = q.toString(); history.replaceState(null, '', location.pathname + (s ? '?' + s : '') + location.hash); } catch (e) {}
+  if (!TABS.includes(go)) return;
+  const add = CX_ADD;
+  activate(go);
+  if (!add) return;
+  setTimeout(() => {
+    try {
+      if (go === 'expenses') expSheet();
+      else if (go === 'reminders') rmNew();
+      else { const b = document.querySelector('#panel-' + go + ' [id$="_add"]'); if (b) b.click(); }
+    } catch (e) {}
+  }, 120);
+}
+const CX_ADD = /[?&]add=1/.test(location.search);
+setTimeout(cxGo, 0);
 
 /* ---------- 13.7: the accessibility button – one tap from every screen ----------
    Uses the app's own settings where they exist (contrast, readable font, motion), so the menu and Settings always agree. */

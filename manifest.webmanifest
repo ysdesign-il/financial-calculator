@@ -89,5 +89,51 @@
     ]
    }
   }
+ ],
+ "shortcuts": [
+  {
+   "name": "הוצאה חדשה",
+   "short_name": "הוצאה",
+   "url": "./?go=expenses&add=1",
+   "icons": [
+    {
+     "src": "icon-192.png",
+     "sizes": "192x192"
+    }
+   ]
+  },
+  {
+   "name": "סורק מסמכים",
+   "short_name": "סורק",
+   "url": "./?go=docscan",
+   "icons": [
+    {
+     "src": "icon-192.png",
+     "sizes": "192x192"
+    }
+   ]
+  },
+  {
+   "name": "תזכורת חדשה",
+   "short_name": "תזכורת",
+   "url": "./?go=reminders&add=1",
+   "icons": [
+    {
+     "src": "icon-192.png",
+     "sizes": "192x192"
+    }
+   ]
+  },
+  {
+   "name": "מחשבון דלק",
+   "short_name": "דלק",
+   "url": "./?go=fuelcalc",
+   "icons": [
+    {
+     "src": "icon-192.png",
+     "sizes": "192x192"
+    }
+   ]
+  }
  ]
 }
