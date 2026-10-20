@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261020.113212'){ try { if (!sessionStorage.getItem('fin-hb-20261020.113212')){ sessionStorage.setItem('fin-hb-20261020.113212', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261020.113315'){ try { if (!sessionStorage.getItem('fin-hb-20261020.113315')){ sessionStorage.setItem('fin-hb-20261020.113315', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -11945,7 +11945,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "13.22", "date": "2026-10-20", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261020.113212';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261020.113315';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -28406,7 +28406,7 @@ async function x2Read(file){
   const name = file.name || '', buf = await file.arrayBuffer(), head = new Uint8Array(buf.slice(0, 4));
   if (head[0] === 0x50 && head[1] === 0x4B) return x2Xlsx(buf);                                   // xlsx (zip)
   if (head[0] === 0xD0 && head[1] === 0xCF) throw new Error('xls');                               // old binary Excel – ask for CSV/xlsx
-  let txt = new TextDecoder('utf-8').decode(buf); if (/�/.test(txt.slice(0, 2000))) txt = new TextDecoder('windows-1255').decode(buf);
+  let txt = new TextDecoder('utf-8').decode(buf); if (/\uFFFD/.test(txt.slice(0, 2000))) txt = new TextDecoder('windows-1255').decode(buf);
   return /^\s*</.test(txt) ? x2Html(txt) : x2Csv(txt);
 }
 /* ---- understanding the columns ---- */
