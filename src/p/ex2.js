@@ -40,7 +40,7 @@ async function x2Read(file){
   const name = file.name || '', buf = await file.arrayBuffer(), head = new Uint8Array(buf.slice(0, 4));
   if (head[0] === 0x50 && head[1] === 0x4B) return x2Xlsx(buf);                                   // xlsx (zip)
   if (head[0] === 0xD0 && head[1] === 0xCF) throw new Error('xls');                               // old binary Excel – ask for CSV/xlsx
-  let txt = new TextDecoder('utf-8').decode(buf); if (/�/.test(txt.slice(0, 2000))) txt = new TextDecoder('windows-1255').decode(buf);
+  let txt = new TextDecoder('utf-8').decode(buf); if (/\uFFFD/.test(txt.slice(0, 2000))) txt = new TextDecoder('windows-1255').decode(buf);
   return /^\s*</.test(txt) ? x2Html(txt) : x2Csv(txt);
 }
 /* ---- understanding the columns ---- */
