@@ -1,6 +1,14 @@
 {
  "alerts": [
   {
+   "at": 1792480038,
+   "level": "medium",
+   "kind": "https",
+   "actor": "ysdesign-il",
+   "msg": "The site opens without HTTPS — turn on \"Enforce HTTPS\" in Settings → Pages",
+   "p": {}
+  },
+  {
    "at": 1792443531,
    "level": "medium",
    "kind": "workflow",
@@ -65,5 +73,5 @@
    }
   }
  ],
- "updated": 1792443531
+ "updated": 1792480038
 }
