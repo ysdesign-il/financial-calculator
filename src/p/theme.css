@@ -1390,3 +1390,7 @@ body[data-tab="expenses"] .page-head .scan-btn + .prn-btn,body[data-tab="clients
 .cx-l{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cx-bar{height:8px;border-radius:4px;background:color-mix(in srgb,var(--ink-2) 15%,transparent);overflow:hidden}.cx-bar i{display:block;height:100%;border-radius:4px;background:var(--gold,#c9a227)}.cx-bar i.dn{opacity:.55}.cx-v{font-size:.8rem;color:var(--ink-2)}
 .panel .ledger dt[role=button]{cursor:help}.panel .ledger dt[role=button]:focus-visible{outline:2px solid var(--gold,#c9a227);outline-offset:2px;border-radius:3px}
 .cx-all{display:flex;gap:8px;align-items:flex-start;font-size:.8rem;color:var(--ink-2);margin:2px 0 6px}
+.fam-row{margin:0 0 12px;display:flex;flex-direction:column;gap:6px}.fam-t{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--ink-2)}.fam-t svg{width:16px;height:16px}
+.fam-chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0 4px;-webkit-overflow-scrolling:touch}.fam-chips::-webkit-scrollbar{display:none}
+.fam-c{flex:0 0 auto;border:1px solid var(--line,rgba(0,0,0,.12));background:var(--card,transparent);color:var(--ink);border-radius:999px;padding:7px 13px;font:inherit;font-size:.84rem;cursor:pointer;white-space:nowrap}
+.fam-c.on{background:var(--gold,#9A6A06);border-color:var(--gold,#9A6A06);color:#fff;font-weight:600}.fam-n{color:var(--ink-2);font-weight:400}
