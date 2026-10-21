@@ -67,8 +67,11 @@ export async function adminGate(req,serve,o,env){
     if(!KV){if(!o.upstream)return J({ok:false,e:'store'},503);
       const fr=await fetch(o.upstream+p,{method:req.method,headers:{cookie:'adm='+id,'content-type':'application/json'},body:req.method==='POST'?await req.text():undefined});return new Response(fr.body,{status:fr.status,headers:{'content-type':'application/json','cache-control':'no-store'}})}
     const sk='st:'+o.app;let st=await kvGet(env,sk,{done:[],log:[],tpl:[]});
-    if(p==='/admin/__sessions'){const L=await kvGet(env,'ses:'+o.app,[]);return J({ok:true,list:L.map(s=>({at:s.at,dev:s.dev,cc:s.cc,me:s.id===id}))})}
-    if(p==='/admin/__revoke'&&req.method==='POST'){const L=await kvGet(env,'ses:'+o.app,[]);await env.CFG.put('ses:'+o.app,JSON.stringify(L.filter(s=>s.id===id)));st.log=(st.log||[]).concat({at:Date.now(),t:'נותקו כל המכשירים האחרים'}).slice(-300);await env.CFG.put(sk,JSON.stringify(st));return J({ok:true})}
+    if(p==='/admin/__sessions'){const L=await kvGet(env,'ses:'+o.app,[]);const out=[];for(const x of L)out.push({at:x.at,dev:x.dev,cc:x.cc,me:x.id===id,h:hex(await crypto.subtle.digest('SHA-256',enc.encode('h:'+x.id))).slice(0,16)});return J({ok:true,list:out})}
+    if(p==='/admin/__revoke'&&req.method==='POST'){let d={};try{d=await req.json()}catch(e){}const L=await kvGet(env,'ses:'+o.app,[]);let keep,msg;
+      if(d&&typeof d.one==='string'){const hs=[];for(const x of L)hs.push(hex(await crypto.subtle.digest('SHA-256',enc.encode('h:'+x.id))).slice(0,16));const tgt=L.find((x,i)=>hs[i]===d.one&&x.id!==id);if(!tgt)return J({ok:false,e:'nf'},404);keep=L.filter(x=>x!==tgt);msg='נותק מכשיר: '+(tgt.dev||'')}
+      else{keep=L.filter(x=>x.id===id);msg='נותקו כל המכשירים האחרים'}
+      await env.CFG.put('ses:'+o.app,JSON.stringify(keep));st.log=(st.log||[]).concat({at:Date.now(),t:msg}).slice(-300);await env.CFG.put(sk,JSON.stringify(st));return J({ok:true})}
     if(p==='/admin/__logins')return J({ok:true,list:await kvGet(env,'lg:'+o.app,[])});
     if(p==='/admin/__errs'){if(req.method==='POST'){await env.CFG.put('er:'+o.app,JSON.stringify({day:'',n:0,items:[]}));return J({ok:true,items:[]})}const L=await kvGet(env,'er:'+o.app,{items:[]});return J({ok:true,items:L.items||[]})}
     if(p==='/admin/__state'){if(req.method==='POST'){let d=null;try{d=await req.json()}catch(e){}const s2=d&&d.state||{};
