@@ -1,32 +1,25 @@
 {
- "started": "2026-10-21 04:36:36 UTC",
+ "started": "2026-10-21 07:24:47 UTC",
  "events": [
-  "published es",
-  "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
-  "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
-  "published fr",
+  "  gemini gemini-flash-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
+  "  gemini gemini-3.8-flash: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
   "published ru",
-  "published pt-BR",
-  "published it",
-  "published zh-CN",
-  "published hi"
+  "  gemini gemini-3.8-flash: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
+  "published pt-BR"
  ],
  "langs": {
-  "es": 9106,
-  "fr": 9106,
-  "ru": 9105,
-  "pt-BR": 9105,
-  "it": 9106,
+  "ru": 9106,
+  "pt-BR": 9106,
   "zh-CN": 9097,
   "hi": 9098
  },
- "finished": "2026-10-21 04:39:58 UTC",
+ "finished": "2026-10-21 07:32:59 UTC",
  "coverage": {
   "zh-CN": 9097,
   "fr": 9106,
   "hi": 9098,
-  "pt-BR": 9105,
-  "ru": 9105,
+  "pt-BR": 9106,
+  "ru": 9106,
   "es": 9106,
   "it": 9106
  },
