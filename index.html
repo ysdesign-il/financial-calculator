@@ -394,8 +394,8 @@ body[data-tab="home"] .ghost-btn,body[data-tab="settings"] .ghost-btn{display:no
 .refresh-btn #gStamp{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @keyframes rspin{to{transform:rotate(360deg)}}
 :root[data-motion="reduce"] .refresh-btn.spin svg{animation:none}
-.rail-ctrls{flex-wrap:wrap}
-.refresh-btn{flex:1 1 100%;justify-content:center;order:9;margin-top:2px}
+.rail-ctrls{flex-wrap:wrap;min-width:0;max-width:100%}
+.refresh-btn{flex:1 1 100%;justify-content:center;order:9;margin-top:2px;min-width:0}.refresh-btn #gStamp{min-width:0}
 .panel-home:not([hidden]){display:block}
 
 .sec-h{display:flex;align-items:center;gap:10px;margin:0 0 12px}
@@ -2547,7 +2547,7 @@ body:has(#panel-mathx:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 <div class="toast" id="toast" role="status" hidden></div>
 
 
-<script>var HTML_BUILD = '20261021.175052';</script>
-<script src="app.js?v=20261021.175052"></script>
+<script>var HTML_BUILD = '20261021.210527';</script>
+<script src="app.js?v=20261021.210527"></script>
 </body>
 </html>
