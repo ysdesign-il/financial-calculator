@@ -3820,8 +3820,8 @@ function devSha(str){
 /* only a hash of the unlock value lives in the page; the value itself comes from the name + code and is kept on the owner's device */
 var DEV_CHECK = '2ff82c4945c39ddf16442f25fdc6b3ee96b832d2ea9b26448813ba9087d1c285', DEV_ON = false;
 /* 13.25: a backup code (given to the owner once, never stored in the page – only this hash) also opens developer mode, for when the code is forgotten */
-var DEV_REC_CHECK = '89ea848f5bb55f17591fc7d3c03baee903a99026dafd423a5bed9ec1a9dbb0c2';
-const devOk = v => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) && (devSha(v) === DEV_CHECK || devSha(v) === DEV_REC_CHECK);
+var DEV_REC_CHECK = '';   // the RC- backup code is retired: the shared recovery code (below) is the way back in
+const devOk = v => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) && (devSha(v) === DEV_CHECK || (!!DEV_REC_CHECK && devSha(v) === DEV_REC_CHECK));
 try { DEV_ON = devOk(RAWLS.getItem('fin-dev')); } catch (e) {}
 var OFFI = {ils: NaN, eur: NaN, at: 0};
 const applyDbRatesSrc = applyDbRates;
@@ -3960,7 +3960,7 @@ async function devRecTry(){
   if (m) m.textContent = t('dev_rWait');
   let h = '';
   try { const b = await pbk('REC:' + n, new TextEncoder().encode('fincalc-dev-rec-v1'), 150000, 256); h = Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join(''); } catch (e) {}
-  if (h && devSha(h) === DEV_REC_CHECK){
+  if (h && DEV_REC_CHECK && devSha(h) === DEV_REC_CHECK){
     try { RAWLS.setItem('fin-dev', h); RAWLS.removeItem('fin-dev-n'); } catch (e) {}
     DEV_ON = true; DEV_NAME = ''; const bx = $('#dev_box'); if (bx) bx.remove(); liveApply(); devPermSync(); toast(t('dev_rOk')); return true;
   }
