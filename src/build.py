@@ -13,7 +13,7 @@ out.append(seg(232, 234)); out.append(P('body.html')); out.append(seg(267, 502))
 out.append(seg(503, 523)); out.append(P('crypto.js')); out.append(P('fx_official.js')); out.append(P('groups.js'))
 out.append(seg(530, 613)); out.append(P('ico.js'))
 out.append(seg(614, 615)); out.append(P('sico.js')+P('ui2a.js')+P('ui2b.js')+P('ui2d.js')+P('ui2c.js')+P('ui2e.js')+P('ui2f.js')+P('ui2g.js')+P('ui2h.js')+P('ui2i.js'))
-out.append(P('home.js')+P('settings_ui.js')+P('tools.js')+P('saved_pre.js')+P('cv_pre.js')+P('mx_pre.js')+P('ds_pre.js')+P('tf_pre.js')+P('bk_pre.js')+P('fu_pre.js')+P('rm_pre.js')+P('nt_pre.js')+P('hub_pre.js')); out.append(seg(744, 860)); out.append(P('c1.js')+P('c2.js')+P('c3.js')+P('c4.js')+P('c5.js')+P('c6.js')+P('c7.js')+P('c8.js')+P('c9.js')+P('c10.js')+P('c11.js')+P('c12.js')+P('c13.js'))
+out.append(P('home.js')+P('settings_ui.js')+P('tools.js')+P('saved_pre.js')+P('cv_pre.js')+P('mx_pre.js')+P('ds_pre.js')+P('tf_pre.js')+P('bk_pre.js')+P('fu_pre.js')+P('rm_pre.js')+P('nt_pre.js')+P('hub_pre.js')+P('mini_pre.js')); out.append(seg(744, 860)); out.append(P('c1.js')+P('c2.js')+P('c3.js')+P('c4.js')+P('c5.js')+P('c6.js')+P('c7.js')+P('c8.js')+P('c9.js')+P('c10.js')+P('c11.js')+P('c12.js')+P('c13.js'))
 out.append(seg(1244, len(L)))
 s = '\n'.join(out)
 # show(): warnings

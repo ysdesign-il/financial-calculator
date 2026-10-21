@@ -4,7 +4,7 @@ const rtE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&am
 var RTT = 'find';
 function rtD(){ const d = SET.rt && typeof SET.rt === 'object' ? SET.rt : (SET.rt = {}); if (!d.a || typeof d.a !== 'object') d.a = {}; if (!d.done || typeof d.done !== 'object') d.done = {}; return d; }
 /* the questions: [key, type] – ck = yes/no, num = a number */
-const RT_Q = [['work', 'sel'], ['age', 'num'], ['woman', 'ck'], ['kids', 'num'], ['kidsSmall', 'num'], ['single', 'ck'], ['soldier', 'ck'], ['degree', 'ck'], ['oleh', 'ck'], ['disab', 'ck'], ['reserve', 'ck'], ['lowInc', 'ck'], ['jobs', 'ck'], ['gapYear', 'ck'], ['donate', 'ck'], ['privPens', 'ck'], ['rent', 'ck'], ['priority', 'ck'], ['retire', 'ck']];
+const RT_Q = [['work', 'sel'], ['age', 'num'], ['woman', 'ck'], ['kids', 'num'], ['kidsSmall', 'num'], ['single', 'ck'], ['soldier', 'ck'], ['degree', 'ck'], ['oleh', 'ck'], ['oleh22', 'ck'], ['olehMo', 'num'], ['disab', 'ck'], ['reserve', 'ck'], ['lowInc', 'ck'], ['jobs', 'ck'], ['gapYear', 'ck'], ['donate', 'ck'], ['privPens', 'ck'], ['rent', 'ck'], ['priority', 'ck'], ['retire', 'ck']];
 const kz = q => 'https://www.kolzchut.org.il/w/index.php?search=' + encodeURIComponent(q);
 /* the benefits: [key, when(a), app screen or '', kol-zchut search, value(a) in ILS a year or 0] */
 const RT_LIST = [
@@ -13,7 +13,7 @@ const RT_LIST = [
   ['degree', a => a.degree, 'tax', 'נקודות זיכוי לבעלי תואר אקדמי', () => TAX.point],
   ['kidsPts', a => +a.kids > 0, 'tax', 'נקודות זיכוי בעד ילדים', () => 0],
   ['single', a => a.single && +a.kids > 0, 'tax', 'נקודות זיכוי להורה יחיד', () => TAX.point],
-  ['oleh', a => a.oleh, 'tax', 'נקודות זיכוי לעולים חדשים', () => 0],
+  ['oleh', a => a.oleh, 'tax', 'נקודות זיכוי לעולים חדשים', a => rtOlehPts(a) * TAX.point],
   ['childAllow', a => +a.kids > 0, 'childallow', 'קצבת ילדים', () => 0],
   ['kidSave', a => +a.kids > 0, 'kidsave', 'חיסכון לכל ילד', a => (+a.kids || 0) * (typeof IL26 === 'object' ? IL26.childDep : 58) * 12],
   ['workGrant', a => a.lowInc && (a.work === 'emp' || a.work === 'self') && (+a.kids > 0 || +a.age >= 55), 'workgrant', 'מענק עבודה', () => 0],
@@ -30,6 +30,12 @@ const RT_LIST = [
   ['rent', a => a.rent && a.lowInc, '', 'סיוע בשכר דירה', () => 0],
   ['woman', a => a.woman, 'salary', 'נקודות זיכוי לאישה', () => TAX.point / 2]
 ];
+/* new immigrants: credit points by months since aliyah (Kol Zchut) – arrivals from 2022: 1 / 3 / 2 / 1 points over 54 months; earlier: 3 / 2 / 1 over 42 months */
+function rtOlehPts(a){
+  const m = Math.floor(+a.olehMo); if (!a.oleh || !isFinite(m) || m < 0) return 0;
+  const S = a.oleh22 ? [[12, 1], [30, 3], [42, 2], [54, 1]] : [[18, 3], [30, 2], [42, 1]], hit = S.find(x => m < x[0]);
+  return hit ? hit[1] : 0;
+}
 /* the year-end checklist: [key, deadline note] */
 const RT_YEAR = ['r106', 'coord', 'donate', 'pens', 'hish', 'loss', 'kids', 'refund6', 'arnona', 'docs'];
 function rtFind(v){

@@ -7,11 +7,38 @@ function cxSensHTML(id){
   CX_BUSY = true; try { S = aiSens(id); } catch (e) { S = []; } finally { CX_BUSY = false; }
   if (!S.length) return `<p class="fine">${cxE(t('cx_sensNone'))}</p>`;
   const max = Math.max.apply(null, S.map(s => Math.abs(s.d))) || 1;
-  return `<p class="fine">${cxE(t('cx_sensHow'))}</p><ul class="cx-sens">` + S.map(s => {
+  CX_TOP[id] = S[0];
+  return cxWhatIf(id, S[0]) + `<p class="fine">${cxE(t('cx_sensHow'))}</p><ul class="cx-sens">` + S.map(s => {
     const w = Math.max(4, Math.round(Math.abs(s.d) / max * 100)), up = s.d > 0;
     return `<li><span class="cx-l">${cxE(exClean(s.label))}</span><span class="cx-bar"><i class="${up ? 'up' : 'dn'}" style="width:${w}%"></i></span><bdi dir="ltr" class="num cx-v">${up ? '+' : '−'}${cxE(N(Math.abs(s.d), null, Math.abs(s.d) < 10 ? 2 : 0))}${isFinite(s.pct) ? ` (${up ? '+' : '−'}${cxE(N(Math.abs(s.pct), null, 1))}%)` : ''}</bdi></li>`;
   }).join('') + '</ul>';
 }
+/* a quick "what if" slider for the field that moves the result most */
+const CX_TOP = {};
+function cxWhatIf(id, top){
+  const el = top && document.getElementById(top.id); if (!el || !isFinite(+el.value) || +el.value === 0) return '';
+  return `<div class="ux-wi" data-cxwi="${id}"><label for="cxwi-${id}">${cxE(t('ux_wiT', {f: exClean(top.label)}))}</label><input type="range" id="cxwi-${id}" min="-30" max="30" step="1" value="0" data-cxwr="${id}"><p class="ux-wi-out num" id="cxwo-${id}">${cxE(t('ux_wiNow'))}</p><button type="button" class="mv" data-cxwa="${id}" hidden>✔️ ${cxE(t('ux_wiApply'))}</button></div>`;
+}
+function cxWiCalc(id, pct){
+  const top = CX_TOP[id], el = top && document.getElementById(top.id), f = CALC[id]; if (!el || typeof f !== 'function') return null;
+  const old = el.value, nv = Math.round(+old * (1 + pct / 100) * 100) / 100; let r = null;
+  try { el.value = String(nv); r = f(); } catch (e) { r = null; } finally { el.value = old; }
+  return {nv, r};
+}
+document.addEventListener('input', e => {
+  const s = e.target; if (!s || !s.dataset || !s.dataset.cxwr) return; const id = s.dataset.cxwr, pct = +s.value, out = document.getElementById('cxwo-' + id), ap = document.querySelector(`[data-cxwa="${id}"]`);
+  if (!pct){ if (out) out.textContent = t('ux_wiNow'); if (ap) ap.hidden = true; return; }
+  const x = cxWiCalc(id, pct); if (!x || !x.r || !x.r.hero || !LAST[id] || !LAST[id].hero){ return; }
+  const b0 = aiNum(LAST[id].hero.value), b1 = aiNum(x.r.hero.value), d = b1 - b0;
+  const B = v => `<bdi dir="ltr">${cxE(v)}</bdi>`;
+  if (out) out.innerHTML = cxE(t('ux_wiRes')).replace('{f}', cxE(exClean(CX_TOP[id].label))).replace('{v}', B(N(x.nv, null, 2))).replace('{p}', B((pct > 0 ? '+' : '−') + Math.abs(pct) + '%')).replace('{h}', cxE(exClean(x.r.hero.label))).replace('{r}', B(exClean(x.r.hero.value))).replace('{d}', B(isFinite(d) ? (d >= 0 ? '+' : '−') + N(Math.abs(d), null, Math.abs(d) < 10 ? 2 : 0) : '—'));
+  if (ap){ ap.hidden = false; ap.dataset.nv = x.nv; }
+});
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-cxwa]'); if (!b) return; const id = b.dataset.cxwa, top = CX_TOP[id], el = top && document.getElementById(top.id); if (!el || b.dataset.nv == null) return;
+  el.value = b.dataset.nv; el.dispatchEvent(new Event('input', {bubbles: true})); el.dispatchEvent(new Event('change', {bubbles: true}));
+  try { calc(id); } catch (er) {} setTimeout(() => cxSensFill(id), 50);
+});
 function cxSensFill(id){ const b = document.getElementById('cxs-' + id); if (b && b.closest('details').open) b.innerHTML = cxSensHTML(id); }
 let cxSensT = 0;
 function cxEnsure(id){
@@ -20,7 +47,7 @@ function cxEnsure(id){
   document.getElementById('cxd-' + id).addEventListener('toggle', () => cxSensFill(id));
   if (!EX_SKIP.includes(id)) cxLedObserve(led);
   const p = document.getElementById('panel-' + id);
-  if (p) p.addEventListener('input', () => { clearTimeout(cxSensT); cxSensT = setTimeout(() => cxSensFill(id), 700); });
+  if (p) p.addEventListener('input', e => { if (e.target && e.target.closest && e.target.closest('.cx-d')) return; clearTimeout(cxSensT); cxSensT = setTimeout(() => cxSensFill(id), 700); });
 }
 /* 2. result rows are explained on tap (existing); add keyboard access */
 function cxLedMark(led){ led.querySelectorAll('dt').forEach(dt => { if (!dt.hasAttribute('tabindex')){ dt.tabIndex = 0; dt.setAttribute('role', 'button'); } }); }
