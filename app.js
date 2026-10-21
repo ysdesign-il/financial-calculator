@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261021.062251'){ try { if (!sessionStorage.getItem('fin-hb-20261021.062251')){ sessionStorage.setItem('fin-hb-20261021.062251', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261021.062632'){ try { if (!sessionStorage.getItem('fin-hb-20261021.062632')){ sessionStorage.setItem('fin-hb-20261021.062632', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -12000,8 +12000,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.26", "date": "2026-10-21", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261021.062251';
+var CHANGELOG = [{"v": "13.27", "date": "2026-10-21", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261021.062632';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -15815,7 +15815,7 @@ show = function(id, res){ return showRs.call(this, id, rsDedupe(res)); };
 /* ================= developer mode: "forgot code" recovery — shared with the owner's other apps =================
    One recovery code works in all the owner's apps. Only a fingerprint and an encrypted bundle live in the source;
    the bundle holds the developer unlock value encrypted with a key derived from the recovery code (useless without it). */
-var REC_CHECK = '', REC_BUNDLE = '';
+var REC_CHECK = 'f431ecb574470c5c7be8dd2591d55dead915527fcf366a3dd849787bb6139036', REC_BUNDLE = 'nsr1.iWUL8ojgMNK6qJIp.JxT7Dcnxml12WgcvhJdS7RFevhkpINNl462Eybdg5Swvm2Xlp0fOCA1Vn7FTTFJovZJXcZ/oBUHOA2qJA4K7sRMCFKCY6IYbvJll4kaeWHU=';
 Object.assign(T, {
   rec_forgot:['שכחתי קוד','نسيت الرمز','Forgot the code'], rec_title:['שחזור גישה למצב מפתח','استعادة الوصول إلى وضع المطوّر','Recover developer access'],
   rec_code:['קוד שחזור','رمز الاستعادة','Recovery code'], rec_go:['שחזור','استعادة','Recover'], rec_back:['חזרה','رجوع','Back'],
