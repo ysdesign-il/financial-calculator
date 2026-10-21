@@ -4,7 +4,7 @@ const MINI_IDS = [
   'rentlaw', 'renov', 'invapt', 'vaad',
   'emergency', 'idlecash', 'windfall', 'latte', 'lumpsum', 'gradual', 'consol', 'tracks', 'kidcost', 'daycare', 'kidevent', 'teen',
   'afford', 'payday', 'fincal', 'famgoal', 'divorce', 'wedding', 'carvsbus', 'carsell', 'cardocs', 'deduct', 'renewals', 'insoverlap', 'lifeins', 'installments', 'letter', 'glossary', 'sources',
-  'calcbasic', 'scical', 'units', 'stats', 'practice', 'dualinc'
+  'calcbasic', 'scical', 'units', 'stats', 'practice', 'dualinc', 'rcpt', 'bring', 'miluim'
 ];
 HUB_IDS.push.apply(HUB_IDS, MINI_IDS);
 ICON.glossary = ic('<path d="M4 4h11a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M4 17a3 3 0 0 1 3-3h11"/><path d="M8 8h6"/>');
@@ -14,4 +14,7 @@ ICON.scical = ic('<path d="M4 6h6M7 3v6"/><path d="M14 6h6"/><path d="M4.5 15.5l
 ICON.units = ic('<path d="M3 7h18M3 7l3-3M3 7l3 3M21 17H3M21 17l-3-3M21 17l-3 3"/>');
 ICON.stats = ic('<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>');
 ICON.practice = ic('<path d="M4 19.5V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="m9 10 2 2 4-4"/>');
+ICON.rcpt = ic('<path d="M6 2.5h12v19l-2-1.4-2 1.4-2-1.4-2 1.4-2-1.4-2 1.4z"/><path d="M9 7.5h6M9 11h6M9 14.5h4"/>');
+ICON.bring = ic('<path d="M9 5h11M9 12h11M9 19h11"/><path d="m3.5 5 1.5 1.5L7.5 4M3.5 12l1.5 1.5L7.5 11"/><circle cx="5" cy="19" r="1.6"/>');
+ICON.miluim = ic('<path d="M12 2.5 4.5 5.5v6c0 4.6 3.2 8.3 7.5 10 4.3-1.7 7.5-5.4 7.5-10v-6z"/><path d="m12 8 1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z"/>');
 MINI_IDS.forEach(id => { if (!ICON[id]) ICON[id] = ICON[famLead(id)] || ''; });

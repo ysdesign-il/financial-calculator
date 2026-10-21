@@ -6,7 +6,7 @@ self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Pr
 self.addEventListener('fetch', e => {
   const r = e.request;
   /* the admin version and the published settings always come from the network (the server locks /admin/) */
-  { const p0 = new URL(r.url); if (p0.origin === location.origin && (p0.pathname.indexOf('/admin') === 0 || p0.pathname === '/cfg.json')) return; }
+  { const p0 = new URL(r.url); if (p0.origin === location.origin && (p0.pathname.indexOf('/admin') === 0 || p0.pathname.indexOf('/api/') === 0 || p0.pathname === '/cfg.json')) return; }
   /* files shared to the installed app from other apps (Android "Share"): kept here for a moment, then the app opens them */
   if (r.method === 'POST' && new URL(r.url).pathname.endsWith('/share-target')){
     e.respondWith((async () => {
