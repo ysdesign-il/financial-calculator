@@ -9,8 +9,7 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "none",
     "binding": "ASSETS",
-    "run_worker_first": ["/", "/index.html", "/admin", "/admin/*", "/cfg.json", "/__pub.js", "/__err", "/api/*", "/__ping"]
+    "run_worker_first": ["/", "/index.html", "/admin", "/admin/*", "/cfg.json", "/__pub.js", "/__err", "/__ping"]
   },
-  "kv_namespaces": [{ "binding": "CFG", "id": "a44762eefe234d5ebaf128cc9aba83ec" }],
-  "d1_databases": [{ "binding": "DB", "database_name": "fin-bring", "database_id": "f7da9d04-5eb8-41ef-a2e4-a5c44e5ff9d9" }]
+  "kv_namespaces": [{ "binding": "CFG", "id": "a44762eefe234d5ebaf128cc9aba83ec" }]
 }
