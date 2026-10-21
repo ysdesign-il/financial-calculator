@@ -32,6 +32,7 @@ async function ibKey(){
   const sec = (() => { try { return RAWLS.getItem('fin-dev') || ''; } catch (e) { return ''; } })(); if (!sec) return null;
   const tries = [];
   try { const w = RAWLS.getItem('fin-ibkey'); if (w) tries.push(w); } catch (e) {}
+  try { const w = RAWLS.getItem('fin-ibkey-next'); if (w) tries.push(w); } catch (e) {}
   try { const r = await fetch('inboxkey.json?v=' + Date.now(), {cache: 'no-store'}); if (r.ok){ const j = await r.json(); if (j && j.w) tries.push(j.w); } } catch (e) {}
   for (const w of tries){ try { IB.key = await ibUnwrap(w, sec); if (IB.key) return IB.key; } catch (e) {} }
   return null;
