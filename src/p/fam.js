@@ -57,7 +57,8 @@ function famRow(){
   row.innerHTML = `<span class="fam-t">${ICON[F[0]] || ''}<b>${famE(famName(tab))}</b></span><div class="fam-chips">` + F.map(id =>
     `<button type="button" class="fam-c${id === tab ? ' on' : ''}${famLocked(id) ? ' locked' : ''}" data-famgo="${id}"${id === tab ? ' aria-current="page"' : ''}>${famLocked(id) ? '🔒 ' : ''}${famE(t('tab_' + id))}</button>`).join('') + '</div>';
   row.hidden = false;
-  const on = row.querySelector('.fam-c.on'); if (on) try { on.scrollIntoView({block: 'nearest', inline: 'center'}); } catch (e) {}
+  const on = row.querySelector('.fam-c.on'), box = row.querySelector('.fam-chips');   // keep the open one in view, without scrolling the page (13.32)
+  if (on && box) requestAnimationFrame(() => { try { const r = on.offsetLeft + on.offsetWidth / 2 - box.clientWidth / 2; box.scrollLeft = r; } catch (e) {} });
 }
 document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-famgo]'); if (b && b.dataset.famgo !== tab){ activate(b.dataset.famgo); try { window.scrollTo({top: 0}); } catch (er) {} } });
 { const fAct = activate; activate = function(){ const r = fAct.apply(this, arguments); try { famRow(); markNav(); renderBottom(); } catch (e) {} return r; }; }
