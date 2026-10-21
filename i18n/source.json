@@ -9222,6 +9222,11 @@
   "bz_write": "Write the link to an NFC sticker",
   "bz_needUrl": "Enter the link first",
   "bz_how": "Print it, put an NFC sticker behind the symbol, and write the link to it with the button above (Chrome on Android). NTAG213/215 stickers work.",
-  "bz_t_wave": "Wave"
+  "bz_t_wave": "Wave",
+  "bz_shape": "Shape",
+  "bz_sh_rect": "Rectangle",
+  "bz_sh_square": "Square",
+  "bz_sh_circle": "Circle",
+  "bz_sh_triangle": "Triangle"
  }
 }
