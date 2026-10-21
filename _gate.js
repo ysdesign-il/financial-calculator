@@ -9,42 +9,78 @@ const REC_BUNDLE='nsr1.iWUL8ojgMNK6qJIp.JxT7Dcnxml12WgcvhJdS7RFevhkpINNl462Eybdg
 const enc=new TextEncoder();
 const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
 async function keyOk(h){return typeof h==='string'&&/^[0-9a-f]{64}$/.test(h)&&hex(await crypto.subtle.digest('SHA-256',enc.encode(h)))===DEV_CHECK}
-function cookieKey(req){const m=/(?:^|;\s*)adm=([0-9a-f]{64})/.exec(req.headers.get('cookie')||'');return m?m[1]:''}
-const FAILS=new Map();
+function cookieSes(req){const m=/(?:^|;\s*)adm=([0-9a-f]{40})(?:;|$)/.exec(req.headers.get('cookie')||'');return m?m[1]:''}
+const FAILS=new Map(),ERRRATE=new Map(),OKSES=new Map();
 function tooMany(ip){const now=Date.now(),a=(FAILS.get(ip)||[]).filter(t=>now-t<15*60e3);FAILS.set(ip,a);return a.length>=8}
 function fail(ip){const a=FAILS.get(ip)||[];a.push(Date.now());FAILS.set(ip,a)}
 const J=(o,st,extra)=>new Response(JSON.stringify(o),{status:st||200,headers:Object.assign({'content-type':'application/json','cache-control':'no-store'},extra||{})});
 const SEC={'x-robots-tag':'noindex, nofollow','referrer-policy':'no-referrer','x-frame-options':'DENY','cache-control':'no-store, private'};
 async function kvGet(env,k,d){try{const v=await env.CFG.get(k,'json');return v==null?d:v}catch(e){return d}}
+const rid=()=>hex(crypto.getRandomValues(new Uint8Array(20)));
+function devOf(req){const ua=req.headers.get('user-agent')||'';const os=/iPhone|iPad/.test(ua)?'iPhone/iPad':/Android/.test(ua)?'Android':/Windows/.test(ua)?'Windows':/Mac OS/.test(ua)?'Mac':'אחר';const br=/Edg\//.test(ua)?'Edge':/Chrome\//.test(ua)?'Chrome':/Firefox\//.test(ua)?'Firefox':/Safari\//.test(ua)?'Safari':'';return os+(br?' · '+br:'')}
+const COOK=(id,age)=>`adm=${id}; Path=/admin; Max-Age=${age}; HttpOnly; Secure; SameSite=Lax`;
+/* ---------- sessions (kept in KV; the Pages site asks its Worker copy) ---------- */
+async function sesNew(env,o,req,via){const k='ses:'+o.app,L=await kvGet(env,k,[]),id=rid(),cc=(req.cf&&req.cf.country)||'';
+  L.push({id,at:Date.now(),dev:via&&via.dev||devOf(req),cc:via&&via.cc||cc});await env.CFG.put(k,JSON.stringify(L.slice(-20)));
+  const lk='lg:'+o.app,G=await kvGet(env,lk,[]);G.push({at:Date.now(),dev:via&&via.dev||devOf(req),cc:via&&via.cc||cc});await env.CFG.put(lk,JSON.stringify(G.slice(-100)));return id}
+async function sesOk(env,o,id,req){if(!id)return false;
+  if(env&&env.CFG){const L=await kvGet(env,'ses:'+o.app,[]);return L.some(s=>s.id===id)}
+  if(!o.upstream)return false;const c=OKSES.get(id);if(c&&Date.now()-c<60e3)return true;
+  try{const r=await fetch(o.upstream+'/admin/__who',{headers:{cookie:'adm='+id}});if(r.ok){OKSES.set(id,Date.now());return true}return false}catch(e){return false}}
+/* ---------- public: settings, the public script, anonymous crash reports ---------- */
 export async function publicConfig(app,env,o){
   if(env&&env.CFG){const c=await kvGet(env,'cfg:'+app,{});return J(c,200,{'cache-control':'public, max-age=20'})}
   if(o&&o.upstream){try{const r=await fetch(o.upstream+'/cfg.json',{cf:{cacheTtl:20}});if(r.ok)return J(await r.json(),200,{'cache-control':'public, max-age=20'})}catch(e){}}
   return J({},200,{'cache-control':'public, max-age=20'})}
-export function pubScript(o){return new Response('window.__ADMPUBCFG='+JSON.stringify({parts:o.parts||[],accent:o.accent})+';\n'+PUB,{headers:{'content-type':'text/javascript; charset=utf-8','cache-control':'public, max-age=300'}})}
+export function pubScript(o){return new Response('window.__ADMPUBCFG='+JSON.stringify({parts:o.parts||[],accent:o.accent,priv:o.priv||''})+';\n'+PUB,{headers:{'content-type':'text/javascript; charset=utf-8','cache-control':'public, max-age=300'}})}
 export async function injectPub(r){const ct=r.headers.get('content-type')||'';if(!ct.includes('text/html'))return r;const h=(await r.text()).replace('</body>','<script src="/__pub.js" defer></script></body>');const hd=new Headers(r.headers);hd.delete('content-length');return new Response(h,{status:r.status,headers:hd})}
+const clean=s=>String(s==null?'':s).replace(/[^\s@]+@[^\s@]+\.[^\s@]+/g,'[…]').replace(/\+?\d[\d\s\-]{7,}\d/g,'[…]').replace(/[?#].*$/,'').slice(0,300);
+export async function errReport(req,app,env,o){
+  if(req.method!=='POST')return J({ok:false},405);
+  if(!(env&&env.CFG)){if(!o||!o.upstream)return J({ok:true});try{await fetch(o.upstream+'/__err',{method:'POST',headers:{'content-type':'application/json'},body:await req.text()})}catch(e){}return J({ok:true})}
+  const ip=req.headers.get('cf-connecting-ip')||'?',now=Date.now(),a=(ERRRATE.get(ip)||[]).filter(t=>now-t<10*60e3);if(a.length>=5)return J({ok:true});a.push(now);ERRRATE.set(ip,a);
+  let d={};try{d=await req.json()}catch(e){}const k='er:'+app,day=new Date().toISOString().slice(0,10);const L=await kvGet(env,k,{day,n:0,items:[]});if(L.day!==day){L.day=day;L.n=0}if(L.n>=60)return J({ok:true});L.n++;
+  const it={at:now,m:clean(d.m),src:clean(d.src),v:String(d.v||'').slice(0,40),s:String(d.s||'').slice(0,40),l:String(d.l||'').slice(0,5),dev:devOf(req)};
+  const same=L.items.find(x=>x.m===it.m&&x.src===it.src);if(same){same.n=(same.n||1)+1;same.at=now;same.v=it.v}else L.items.push(it);L.items=L.items.slice(-200);await env.CFG.put(k,JSON.stringify(L));return J({ok:true})}
+/* ---------- the lock ---------- */
 export async function adminGate(req,serve,o,env){
-  const u=new URL(req.url),p=u.pathname,ip=req.headers.get('cf-connecting-ip')||'?';
+  const u=new URL(req.url),p=u.pathname,ip=req.headers.get('cf-connecting-ip')||'?',KV=!!(env&&env.CFG);
   if(p==='/admin')return Response.redirect(u.origin+'/admin/',302);
   if(p==='/admin/__login'&&req.method==='POST'){
     if(tooMany(ip))return J({ok:false,e:'wait'},429);
     let h='';try{h=(await req.json()).h}catch(e){}
-    if(await keyOk(h)){FAILS.delete(ip);return J({ok:true},200,{'set-cookie':`adm=${h}; Path=/admin; Max-Age=2592000; HttpOnly; Secure; SameSite=Lax`})}
-    fail(ip);return J({ok:false},401)}
-  if(p==='/admin/__logout')return new Response(null,{status:302,headers:{location:u.origin+'/admin/','set-cookie':'adm=; Path=/admin; Max-Age=0; HttpOnly; Secure; SameSite=Lax','cache-control':'no-store'}});
-  const h=cookieKey(req);
-  if(!(await keyOk(h))){if(req.method!=='GET'&&req.method!=='HEAD')return J({ok:false},401);
+    if(!(await keyOk(h))){fail(ip);return J({ok:false},401)}
+    FAILS.delete(ip);let id='';
+    if(KV)id=await sesNew(env,o,req);
+    else if(o.upstream){try{const r=await fetch(o.upstream+'/admin/__newses',{method:'POST',headers:{'content-type':'application/json','x-adm-key':h},body:JSON.stringify({dev:devOf(req),cc:(req.cf&&req.cf.country)||''})});const j=await r.json();id=j.id||''}catch(e){}}
+    if(!id)return J({ok:false,e:'store'},503);
+    return J({ok:true},200,{'set-cookie':COOK(id,2592000)})}
+  if(p==='/admin/__newses'&&req.method==='POST'&&KV){if(!(await keyOk(req.headers.get('x-adm-key')||'')))return J({ok:false},401);let v={};try{v=await req.json()}catch(e){}return J({ok:true,id:await sesNew(env,o,req,v)})}
+  const id=cookieSes(req);
+  if(p==='/admin/__logout'){if(id){if(KV){const L=await kvGet(env,'ses:'+o.app,[]);await env.CFG.put('ses:'+o.app,JSON.stringify(L.filter(s=>s.id!==id)))}else if(o.upstream){try{await fetch(o.upstream+'/admin/__logout',{headers:{cookie:'adm='+id},redirect:'manual'})}catch(e){}}OKSES.delete(id)}
+    return new Response(null,{status:302,headers:{location:u.origin+'/admin/','set-cookie':COOK('',0),'cache-control':'no-store'}})}
+  if(!(await sesOk(env,o,id,req))){if(req.method!=='GET'&&req.method!=='HEAD'||p.startsWith('/admin/__'))return J({ok:false},401);
     return new Response(loginPage(o),{status:200,headers:Object.assign({'content-type':'text/html; charset=utf-8'},SEC)})}
   if(p==='/admin/__kit.js')return new Response('window.__ADMKIT='+JSON.stringify(Object.assign({app:o.app,title:o.title,accent:o.accent,parts:o.parts||[]},o.kit||{}))+';\n'+KIT,{headers:Object.assign({'content-type':'text/javascript; charset=utf-8'},SEC)});
-  if(p==='/admin/__cfg'||p==='/admin/__state'){
-    if(!(env&&env.CFG)){if(!o.upstream)return J({ok:false,e:'store'},503);
-      const fr=await fetch(o.upstream+p,{method:req.method,headers:{cookie:'adm='+h,'content-type':'application/json'},body:req.method==='POST'?await req.text():undefined});return new Response(fr.body,{status:fr.status,headers:{'content-type':'application/json','cache-control':'no-store'}})}
-    const sk='st:'+o.app;let st=await kvGet(env,sk,{done:[],log:[]});
-    if(p==='/admin/__state'){if(req.method==='POST'){let d=null;try{d=await req.json()}catch(e){}if(d&&d.state&&Array.isArray(d.state.done)){st.done=d.state.done.filter(x=>typeof x==='string').slice(-3000);await env.CFG.put(sk,JSON.stringify(st))}}return J({ok:true,state:st})}
-    if(req.method!=='POST')return J({ok:false},405);
-    let d=null;try{d=await req.json()}catch(e){}if(!d||typeof d.cfg!=='object'||!d.cfg)return J({ok:false,e:'bad'},400);
-    const txt=JSON.stringify(d.cfg);if(txt.length>20000)return J({ok:false,e:'big'},413);
-    await env.CFG.put('cfg:'+o.app,txt);if(d.log&&d.log.t){st.log=(st.log||[]).concat({at:Date.now(),t:String(d.log.t).slice(0,200)}).slice(-300);await env.CFG.put(sk,JSON.stringify(st))}
-    return J({ok:true,state:st})}
+  if(p==='/admin/__who')return J({ok:true});
+  if(p.startsWith('/admin/__')){
+    if(!KV){if(!o.upstream)return J({ok:false,e:'store'},503);
+      const fr=await fetch(o.upstream+p,{method:req.method,headers:{cookie:'adm='+id,'content-type':'application/json'},body:req.method==='POST'?await req.text():undefined});return new Response(fr.body,{status:fr.status,headers:{'content-type':'application/json','cache-control':'no-store'}})}
+    const sk='st:'+o.app;let st=await kvGet(env,sk,{done:[],log:[],tpl:[]});
+    if(p==='/admin/__sessions'){const L=await kvGet(env,'ses:'+o.app,[]);return J({ok:true,list:L.map(s=>({at:s.at,dev:s.dev,cc:s.cc,me:s.id===id}))})}
+    if(p==='/admin/__revoke'&&req.method==='POST'){const L=await kvGet(env,'ses:'+o.app,[]);await env.CFG.put('ses:'+o.app,JSON.stringify(L.filter(s=>s.id===id)));st.log=(st.log||[]).concat({at:Date.now(),t:'נותקו כל המכשירים האחרים'}).slice(-300);await env.CFG.put(sk,JSON.stringify(st));return J({ok:true})}
+    if(p==='/admin/__logins')return J({ok:true,list:await kvGet(env,'lg:'+o.app,[])});
+    if(p==='/admin/__errs'){if(req.method==='POST'){await env.CFG.put('er:'+o.app,JSON.stringify({day:'',n:0,items:[]}));return J({ok:true,items:[]})}const L=await kvGet(env,'er:'+o.app,{items:[]});return J({ok:true,items:L.items||[]})}
+    if(p==='/admin/__state'){if(req.method==='POST'){let d=null;try{d=await req.json()}catch(e){}const s2=d&&d.state||{};
+        if(Array.isArray(s2.done))st.done=s2.done.filter(x=>typeof x==='string').slice(-3000);
+        if(Array.isArray(s2.tpl))st.tpl=s2.tpl.filter(x=>typeof x==='string').map(x=>x.slice(0,1500)).slice(0,20);
+        await env.CFG.put(sk,JSON.stringify(st))}return J({ok:true,state:st})}
+    if(p==='/admin/__cfg'){if(req.method!=='POST')return J({ok:false},405);
+      let d=null;try{d=await req.json()}catch(e){}if(!d||typeof d.cfg!=='object'||!d.cfg)return J({ok:false,e:'bad'},400);
+      const txt=JSON.stringify(d.cfg);if(txt.length>20000)return J({ok:false,e:'big'},413);
+      await env.CFG.put('cfg:'+o.app,txt);if(d.log&&d.log.t){st.log=(st.log||[]).concat({at:Date.now(),t:String(d.log.t).slice(0,200)}).slice(-300);await env.CFG.put(sk,JSON.stringify(st))}
+      return J({ok:true,state:st})}
+    return J({ok:false},404)}
   const r=await serve(req);const hd=new Headers(r.headers);for(const k in SEC)hd.set(k,SEC[k]);
   if((hd.get('content-type')||'').includes('text/html')){hd.delete('content-length');const t=(await r.text()).replace('</body>','<script src="/admin/__kit.js" defer></script></body>');return new Response(t,{status:r.status,headers:hd})}
   return new Response(r.body,{status:r.status,headers:hd})}
