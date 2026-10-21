@@ -56,6 +56,7 @@ document.addEventListener('keydown', e => {  /* the existing row explanation, no
   const dt = e.target.closest && e.target.closest('.ledger dt');
   if (dt && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); dt.click(); }
 });
+{ const cxAL = applyLang; applyLang = function(){ const r = cxAL.apply(this, arguments); try { document.querySelectorAll('[data-cxt]').forEach(x => { x.textContent = t(x.dataset.cxt); }); document.querySelectorAll('.cx-d[open] [id^="cxs-"]').forEach(x => cxSensFill(x.id.slice(4))); } catch (e) {} return r; }; }
 { const cxAct = activate; activate = function(id){ const r = cxAct.apply(this, arguments); try { cxEnsure(id); } catch (e) {} return r; }; }
 try { cxEnsure(tab); } catch (e) {}
 /* 3. opt-in: share the whole picture with the assistant */

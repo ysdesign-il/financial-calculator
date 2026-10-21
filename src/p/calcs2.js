@@ -1,6 +1,6 @@
 /* 13.31: unit converter, statistics and practice mode – inside the "calculators" topic (engine: mx_engine.js, steps: mx_solve.js) */
 (function cs2Css(){ if (document.getElementById('cs2css')) return; const st = document.createElement('style'); st.id = 'cs2css';
-  st.textContent = `.un-row{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:end}.un-swap{min-height:40px;min-width:44px;font-size:1.1rem}
+  st.textContent = `.un-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:end}.un-row .bk-f{min-width:0}.un-row select{width:100%;max-width:100%}.un-swap{min-height:40px;min-width:44px;font-size:1.1rem}
 .un-tbl,.st2-tbl{width:100%;border-collapse:collapse;font-size:.86rem;margin:6px 0}.un-tbl td,.st2-tbl td,.st2-tbl th{padding:5px 6px;border-bottom:1px solid var(--line);text-align:start}.un-tbl td:last-child{text-align:end;font-variant-numeric:tabular-nums}
 .st2-tbl th{color:var(--ink-2);font-weight:600}.st2-tbl td.n{text-align:end;font-variant-numeric:tabular-nums}.st2-ta{width:100%;min-height:96px;font:16px/1.4 ui-monospace,Menlo,monospace;border:1px solid var(--line);border-radius:12px;padding:8px;background:var(--surface,transparent);color:var(--ink)}
 .st2-plot{width:100%;height:auto;margin:6px 0}.pr-q{font-size:1.5rem;font-weight:600;margin:6px 0 10px;text-align:center}.pr-txt{font-size:1.05rem;margin:4px 0;text-align:center}
@@ -198,7 +198,7 @@ function prRender(){
   let q = ''; try { q = mxHTML(mxParse(c.expr)); } catch (e) { q = E(c.expr); }
   box.innerHTML = `<div class="mi-card">${c.q ? `<p class="pr-txt">${E(c.q)}</p>` : `<p class="pr-txt">${E(t(c.eq ? (c.ans.length > 1 || d.topic === 'quad' ? 'pr_solveQ' : 'pr_solveL') : 'pr_calc'))}</p>`}
       <div class="pr-q" dir="ltr">${q}</div>
-      <div class="pr-ans"><input id="pr_in" dir="ltr" autocomplete="off" inputmode="text" enterkeyhint="done" placeholder="${E(t(c.eq && d.topic === 'quad' ? 'pr_phRoots' : c.frac ? 'pr_phFrac' : 'pr_ph'))}" value="${E(d.last || '')}"><button type="button" class="gold-btn" id="pr_chk">${E(t('pr_check'))}</button></div>
+      <div class="pr-ans"><input id="pr_in" dir="ltr" autocomplete="off" inputmode="text" enterkeyhint="done" placeholder="${E(t(c.eq && d.topic === 'quad' ? 'pr_phRoots' : c.frac ? 'pr_phFrac' : 'pr_ph'))}" aria-label="${E(t(c.eq && d.topic === 'quad' ? 'pr_phRoots' : c.frac ? 'pr_phFrac' : 'pr_ph'))}" value="${E(d.last || '')}"><button type="button" class="gold-btn" id="pr_chk">${E(t('pr_check'))}</button></div>
       <div id="pr_res" aria-live="polite">${d.res ? (d.res === 'ok' ? `<p class="pr-ok">✓ ${E(t('pr_right'))}</p>` : `<p class="pr-no">✗ ${E(t('pr_wrong'))}${d.shown ? ' ' + E(t('pr_answerIs', {a: prAnsTxt(c)})) : ''}</p>`) : ''}</div>
       <div class="btnrow"><button type="button" class="mv" id="pr_sol">🪜 ${E(t('pr_show'))}</button><button type="button" class="mv" id="pr_next">➡️ ${E(t('pr_next'))}</button></div></div>
     <div id="pr_steps"></div>

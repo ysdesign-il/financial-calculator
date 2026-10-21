@@ -49,7 +49,7 @@ function calcConvert(){
 function calcVat(){
   const amt = Math.max(0, v('v_amount')), mode = $('#v_mode').value, preset = $('#v_preset').value;
   const rate = Math.max(0, preset === 'c' ? v('v_rate') : parseFloat(preset)) / 100;
-  const qty = v('v_qty') > 0 ? v('v_qty') : 1, disc = Math.max(0, v('v_disc')) / 100;
+  const qty = v('v_qty') > 0 ? v('v_qty') : 1, disc = Math.min(100, Math.max(0, v('v_disc'))) / 100;
   let uNet, uVat, preNet;
   if (mode === 'add'){ preNet = amt; uNet = amt * (1 - disc); uVat = uNet * rate; }
   else if (mode === 'extract'){ preNet = amt / (1 + rate); uNet = amt * (1 - disc) / (1 + rate); uVat = uNet * rate; }

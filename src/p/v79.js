@@ -66,7 +66,7 @@ function flRender(box){
   const E = asEsc, all = flAll(), q = SVD.q.trim().toLowerCase();
   const list = all.filter(f => !q || (t('tab_' + f.tab) + ' ' + (f.n || '') + ' ' + ((f.hero && f.hero.value) || '')).toLowerCase().includes(q));
   const top = box.querySelector('.svd-top'); if (top){ const p = top.querySelector('p.fine'); if (p) p.textContent = t('fl_intro'); }
-  let h = `<input id="svd_q" type="search" class="cl-q" autocomplete="off" placeholder="${E(t('svd_search'))}" value="${E(SVD.q)}" data-pii-ok>`;
+  let h = `<input id="svd_q" type="search" class="cl-q" autocomplete="off" placeholder="${E(t('svd_search'))}" aria-label="${E(t('svd_search'))}" value="${E(SVD.q)}" data-pii-ok>`;
   if (all.length) h += `<div class="btnrow fl-bar"><button type="button" class="btn danger" data-fl="all">🗑️ ${E(t(FL.sure ? 'fl_delAllSure' : 'fl_delAll', {n: all.length}))}</button></div>`;
   if (!list.length) h += `<div class="svd-empty"><b>${E(t(q ? 'svd_noMatch' : 'fl_empty'))}</b><p class="fine">${E(t(SV.mode === 'none' ? 'fl_howNone' : 'fl_how'))}</p></div>`;
   list.forEach(f => {

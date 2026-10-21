@@ -325,7 +325,7 @@ function svdRender(){
   let h = `<div class="svd-top"><p class="fine">${E(t('svd_intro'))}</p>
     <div class="seg svd-tabs" role="group"><button type="button" data-svdv="all" aria-pressed="${SVD.view === 'all'}">${E(t('svd_tabAll'))} · ${nItems}</button><button type="button" data-svdv="bin" aria-pressed="${SVD.view === 'bin'}">🗑️ ${E(t('svd_tabBin'))} · ${bin.length}</button></div></div>`;
   if (SVD.view === 'all'){
-    h += `<input id="svd_q" type="search" class="cl-q" autocomplete="off" placeholder="${E(t('svd_search'))}" value="${E(SVD.q)}" data-pii-ok>`;
+    h += `<input id="svd_q" type="search" class="cl-q" autocomplete="off" placeholder="${E(t('svd_search'))}" aria-label="${E(t('svd_search'))}" value="${E(SVD.q)}" data-pii-ok>`;
     if (!cats.length) h += `<div class="svd-empty"><b>${E(t(SVD.q ? 'svd_noMatch' : 'svd_empty'))}</b><p class="fine">${E(t('svd_howTo'))}</p></div>`;
     cats.forEach(({id, items}) => {
       h += `<section class="svd-cat"><h3 class="svd-ch"><span class="svd-ic">${ICON[id] || ''}</span><span>${E(t('tab_' + id))}</span><small>${items.length}</small><button type="button" class="fg-x" data-svdgo="${id}">${E(t('svd_openCalc'))}</button></h3>`;
