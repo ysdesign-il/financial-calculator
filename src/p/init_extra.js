@@ -3821,7 +3821,9 @@ function devSha(str){
 var DEV_CHECK = '2ff82c4945c39ddf16442f25fdc6b3ee96b832d2ea9b26448813ba9087d1c285', DEV_ON = false;
 /* 13.25: a backup code (given to the owner once, never stored in the page – only this hash) also opens developer mode, for when the code is forgotten */
 var DEV_REC_CHECK = '';   // the RC- backup code is retired: the shared recovery code (below) is the way back in
-const devOk = v => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) && (devSha(v) === DEV_CHECK || (!!DEV_REC_CHECK && devSha(v) === DEV_REC_CHECK));
+/* the regular site never opens developer mode: only the admin version (/admin/, locked on the server) or the Claude app can */
+var ADMIN_V = (!!window.__FIN_ADMIN__ && /(^|\.)workers\.dev$|^localhost$/.test(location.hostname) && location.pathname.indexOf('/admin/') === 0) || (typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE);
+const devOk = v => ADMIN_V && typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) && (devSha(v) === DEV_CHECK || (!!DEV_REC_CHECK && devSha(v) === DEV_REC_CHECK));
 try { DEV_ON = devOk(RAWLS.getItem('fin-dev')); } catch (e) {}
 var OFFI = {ils: NaN, eur: NaN, at: 0};
 const applyDbRatesSrc = applyDbRates;
@@ -3923,7 +3925,7 @@ document.addEventListener('click', e => { if (e.target.closest('.sh-row[data-sca
 /* developer mode on the website: tap the version number five times, then enter your private developer code */
 var DEV_TAPS = [];
 document.addEventListener('click', e => {
-  if (!e.target.closest('#upd_cur')) return;
+  if (!e.target.closest('#upd_cur') || !ADMIN_V) return;
   const now = Date.now(); DEV_TAPS = DEV_TAPS.filter(x => now - x < 3000).concat(now);
   if (DEV_TAPS.length < 5 || $('#dev_box')) return;
   DEV_TAPS = [];
@@ -3983,6 +3985,7 @@ document.addEventListener('paste', e => { if (e.target && (e.target.id === 'dev_
 document.addEventListener('input', e => { if (e.target && (e.target.id === 'dev_code' || e.target.id === 'dev_name')) devTry(null, null, true); });
 async function devFromHash(){
   if (IN_CLAUDE) return;
+  if (!ADMIN_V) return;
   const m = /[#&]dev=([^&]+)/i.exec(location.hash || ''); if (!m) return;
   const raw = decodeURIComponent(m[1]), pair = /^([^~:]+)[~:](.+)$/.exec(raw);
   try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
