@@ -5205,7 +5205,7 @@ show = function(id, res){ return showRs.call(this, id, rsDedupe(res)); };
 /* ================= developer mode: "forgot code" recovery — shared with the owner's other apps =================
    One recovery code works in all the owner's apps. Only a fingerprint and an encrypted bundle live in the source;
    the bundle holds the developer unlock value encrypted with a key derived from the recovery code (useless without it). */
-var REC_CHECK = '', REC_BUNDLE = '';
+var REC_CHECK = 'f431ecb574470c5c7be8dd2591d55dead915527fcf366a3dd849787bb6139036', REC_BUNDLE = 'nsr1.iWUL8ojgMNK6qJIp.JxT7Dcnxml12WgcvhJdS7RFevhkpINNl462Eybdg5Swvm2Xlp0fOCA1Vn7FTTFJovZJXcZ/oBUHOA2qJA4K7sRMCFKCY6IYbvJll4kaeWHU=';
 Object.assign(T, {
   rec_forgot:['שכחתי קוד','نسيت الرمز','Forgot the code'], rec_title:['שחזור גישה למצב מפתח','استعادة الوصول إلى وضع المطوّر','Recover developer access'],
   rec_code:['קוד שחזור','رمز الاستعادة','Recovery code'], rec_go:['שחזור','استعادة','Recover'], rec_back:['חזרה','رجوع','Back'],
