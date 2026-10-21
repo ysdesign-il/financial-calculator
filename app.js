@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261021.063450'){ try { if (!sessionStorage.getItem('fin-hb-20261021.063450')){ sessionStorage.setItem('fin-hb-20261021.063450', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261021.063624'){ try { if (!sessionStorage.getItem('fin-hb-20261021.063624')){ sessionStorage.setItem('fin-hb-20261021.063624', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -12006,8 +12006,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.28", "date": "2026-10-21", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261021.063450';
+var CHANGELOG = [{"v": "13.29", "date": "2026-10-21", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261021.063624';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -14436,8 +14436,8 @@ function devSha(str){
 /* only a hash of the unlock value lives in the page; the value itself comes from the name + code and is kept on the owner's device */
 var DEV_CHECK = '2ff82c4945c39ddf16442f25fdc6b3ee96b832d2ea9b26448813ba9087d1c285', DEV_ON = false;
 /* 13.25: a backup code (given to the owner once, never stored in the page – only this hash) also opens developer mode, for when the code is forgotten */
-var DEV_REC_CHECK = '89ea848f5bb55f17591fc7d3c03baee903a99026dafd423a5bed9ec1a9dbb0c2';
-const devOk = v => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) && (devSha(v) === DEV_CHECK || devSha(v) === DEV_REC_CHECK);
+var DEV_REC_CHECK = '';   // the RC- backup code is retired: the shared recovery code (below) is the way back in
+const devOk = v => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) && (devSha(v) === DEV_CHECK || (!!DEV_REC_CHECK && devSha(v) === DEV_REC_CHECK));
 try { DEV_ON = devOk(RAWLS.getItem('fin-dev')); } catch (e) {}
 var OFFI = {ils: NaN, eur: NaN, at: 0};
 const applyDbRatesSrc = applyDbRates;
@@ -14576,7 +14576,7 @@ async function devRecTry(){
   if (m) m.textContent = t('dev_rWait');
   let h = '';
   try { const b = await pbk('REC:' + n, new TextEncoder().encode('fincalc-dev-rec-v1'), 150000, 256); h = Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join(''); } catch (e) {}
-  if (h && devSha(h) === DEV_REC_CHECK){
+  if (h && DEV_REC_CHECK && devSha(h) === DEV_REC_CHECK){
     try { RAWLS.setItem('fin-dev', h); RAWLS.removeItem('fin-dev-n'); } catch (e) {}
     DEV_ON = true; DEV_NAME = ''; const bx = $('#dev_box'); if (bx) bx.remove(); liveApply(); devPermSync(); toast(t('dev_rOk')); return true;
   }
