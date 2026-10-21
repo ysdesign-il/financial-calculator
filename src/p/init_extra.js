@@ -5201,3 +5201,57 @@ function rsDedupe(res){
 }
 const showRs = show;
 show = function(id, res){ return showRs.call(this, id, rsDedupe(res)); };
+
+/* ================= developer mode: "forgot code" recovery — shared with the owner's other apps =================
+   One recovery code works in all the owner's apps. Only a fingerprint and an encrypted bundle live in the source;
+   the bundle holds the developer unlock value encrypted with a key derived from the recovery code (useless without it). */
+var REC_CHECK = '', REC_BUNDLE = '';
+Object.assign(T, {
+  rec_forgot:['שכחתי קוד','نسيت الرمز','Forgot the code'], rec_title:['שחזור גישה למצב מפתח','استعادة الوصول إلى وضع المطوّر','Recover developer access'],
+  rec_code:['קוד שחזור','رمز الاستعادة','Recovery code'], rec_go:['שחזור','استعادة','Recover'], rec_back:['חזרה','رجوع','Back'],
+  rec_hint:['הקלידו את קוד השחזור ששמרתם.','اكتبوا رمز الاستعادة الذي حفظتموه.','Type the recovery code you saved.'],
+  rec_none:['עוד לא הוגדר קוד שחזור. צרו אותו במצב מפתח באחת האפליקציות שלכם.','لم يُضبط رمز استعادة بعد. أنشئوه في وضع المطوّر في أحد تطبيقاتكم.','No recovery code has been set up yet. Create one in developer mode in one of your apps.'],
+  rec_bad:['קוד השחזור לא נכון','رمز الاستعادة غير صحيح','The recovery code is not correct'], rec_lock:['יותר מדי ניסיונות. נסו שוב בעוד דקה.','محاولات كثيرة. حاولوا بعد دقيقة.','Too many attempts. Try again in a minute.'],
+  rec_ok:['הגישה שוחזרה ✓','تمت استعادة الوصول ✓','Access restored ✓'], rec_new:['יצירת קוד שחזור','إنشاء رمز استعادة','Create a recovery code'], rec_have:['יש לי כבר קוד שחזור','لديّ رمز استعادة بالفعل','I already have a recovery code'],
+  rec_show:['זה קוד השחזור שלכם. שמרו אותו במקום בטוח, למשל במנהל סיסמאות. הוא מוצג רק עכשיו. אפשר להשתמש בו בכל האפליקציות שלכם.','هذا رمز الاستعادة الخاص بكم. احفظوه في مكان آمن، مثل مدير كلمات المرور. يظهر الآن فقط، ويمكن استخدامه في كل تطبيقاتكم.','This is your recovery code. Keep it somewhere safe, like a password manager. It is shown only now, and it works in all your apps.'],
+  rec_never:['אל תשלחו את קוד השחזור לאף אחד, גם לא בצ׳אט.','لا ترسلوا رمز الاستعادة لأي أحد، ولا حتى في المحادثة.','Never send the recovery code to anyone, not even in a chat.'],
+  rec_send:['כדי להפעיל אותו, שלחו לפיתוח רק את השורה הזו. היא לא חושפת את הקוד:','لتفعيله، أرسلوا إلى التطوير هذا السطر فقط. لا يكشف الرمز:','To activate it, send only this line to development. It does not reveal the code:'],
+  rec_copyCode:['העתקת הקוד','نسخ الرمز','Copy the code'], rec_copyLine:['העתקת השורה','نسخ السطر','Copy the line'], rec_copied:['הועתק','تم النسخ','Copied'], rec_close:['סגירה','إغلاق','Close'],
+  rec_enter:['הקלידו את קוד השחזור הקיים. הוא לא נשלח לשום מקום.','اكتبوا رمز الاستعادة الحالي. لا يُرسَل إلى أي مكان.','Type your existing recovery code. It is not sent anywhere.'], rec_make:['הפקת השורה','إنشاء السطر','Create the line'],
+  rec_len:['הקוד צריך 20 תווים','الرمز يحتاج 20 حرفًا','The code needs 20 characters']
+});
+const recB64 = u => btoa(String.fromCharCode(...new Uint8Array(u))), recUn64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const recHex = b => Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join('');
+async function recDerive(code){ const c = String(code || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); const k = await crypto.subtle.importKey('raw', new TextEncoder().encode('NSREC:' + c), 'PBKDF2', false, ['deriveBits']);
+  return new Uint8Array(await crypto.subtle.deriveBits({name: 'PBKDF2', hash: 'SHA-256', salt: new TextEncoder().encode('ns-recover-v1'), iterations: 200000}, k, 256)); }
+async function recCheckOf(bytes){ return recHex(await crypto.subtle.digest('SHA-256', new Uint8Array([...new TextEncoder().encode('chk:'), ...bytes]))); }
+const recAes = bytes => crypto.subtle.importKey('raw', bytes, 'AES-GCM', false, ['encrypt', 'decrypt']);
+function recNewCode(){ const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = crypto.getRandomValues(new Uint8Array(20)); let s = ''; for (let i = 0; i < 20; i++){ s += A[r[i] % A.length]; if (i % 4 === 3 && i < 19) s += '-'; } return s; }
+async function recLine(code){ let h = ''; try { h = RAWLS.getItem('fin-dev') || ''; } catch (e) {} if (!DEV_ON || !devOk(h)) return null;
+  const kb = await recDerive(code), chk = await recCheckOf(kb), iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, await recAes(kb), new TextEncoder().encode(h)); return 'NSREC1~' + chk + '~nsr1.' + recB64(iv) + '.' + recB64(ct); }
+function recModal(html){ let o = $('#rec_modal'); if (o) o.remove(); document.body.insertAdjacentHTML('beforeend', `<div id="rec_modal" class="rec-ov" role="dialog" aria-modal="true"><div class="rec-card">${html}<div class="btnrow"><button type="button" class="mv wide" data-rec="close">${asEsc(t('rec_close'))}</button></div></div></div>`); }
+function recShowLine(line, code){ recModal(`${code ? `<p>${asEsc(t('rec_show'))}</p><div class="rec-code" dir="ltr">${code}</div><button type="button" class="mv wide" data-rec="copy" data-v="${code}">${asEsc(t('rec_copyCode'))}</button><p class="rec-warn">${asEsc(t('rec_never'))}</p>` : ''}
+  <p>${asEsc(t('rec_send'))}</p><textarea class="rec-line" readonly rows="4" dir="ltr">${line}</textarea><button type="button" class="gold-btn" data-rec="copy" data-v="${line}">${asEsc(t('rec_copyLine'))}</button>`); }
+async function recCreate(){ const code = recNewCode(), line = await recLine(code); if (line) recShowLine(line, code); }
+function recExisting(){ recModal(`<p>${asEsc(t('rec_enter'))}</p><input id="rec_ex" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX"><button type="button" class="gold-btn" data-rec="make">${asEsc(t('rec_make'))}</button><small class="hint" id="rec_exm"></small>`); }
+function recForm(){ const b = $('#dev_box'); if (!b) return; b.innerHTML = REC_CHECK && REC_BUNDLE
+  ? `<div class="dev-f"><label for="rec_code">${asEsc(t('rec_code'))}</label><input id="rec_code" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX"></div><small class="hint">${asEsc(t('rec_hint'))}</small><div class="dev-row"><button type="button" class="gold-btn" data-rec="try">${asEsc(t('rec_go'))}</button></div><small class="hint" id="rec_msg"></small>`
+  : `<small class="hint">${asEsc(t('rec_none'))}</small>`; }
+async function recTry(){ const i = $('#rec_code'), m = $('#rec_msg'); let lock = 0; try { lock = +(RAWLS.getItem('fin-rec-lock') || 0); } catch (e) {} if (Date.now() < lock){ if (m) m.textContent = t('rec_lock'); return; }
+  if (m) m.textContent = '…'; let ok = false;
+  try { const kb = await recDerive(i && i.value); if (await recCheckOf(kb) === REC_CHECK){ const p = REC_BUNDLE.split('.'); const pt = await crypto.subtle.decrypt({name: 'AES-GCM', iv: recUn64(p[1])}, await recAes(kb), recUn64(p[2]));
+    const h = new TextDecoder().decode(pt); if (devOk(h)){ try { RAWLS.setItem('fin-dev', h); RAWLS.removeItem('fin-rec-fail'); } catch (e) {} DEV_ON = true; ok = true; } } } catch (e) {}
+  if (ok){ const b = $('#dev_box'); if (b) b.remove(); liveApply(); devPermSync(); toast(t('rec_ok')); return; }
+  let f = 0; try { f = +(RAWLS.getItem('fin-rec-fail') || 0) + 1; if (f >= 5){ RAWLS.setItem('fin-rec-lock', Date.now() + 60e3); f = 0; } RAWLS.setItem('fin-rec-fail', f); } catch (e) {}
+  if (m) m.textContent = t('rec_bad'); }
+document.addEventListener('click', async e => { const b = e.target.closest('[data-rec]'); if (!b) return; const a = b.dataset.rec;
+  if (a === 'forgot') recForm(); else if (a === 'try') recTry(); else if (a === 'new') recCreate(); else if (a === 'have') recExisting();
+  else if (a === 'close'){ const o = $('#rec_modal'); if (o) o.remove(); }
+  else if (a === 'copy'){ try { await navigator.clipboard.writeText(b.dataset.v); const o = b.textContent; b.textContent = t('rec_copied'); setTimeout(() => b.textContent = o, 1500); } catch (err) { const ta = $('#rec_modal .rec-line'); if (ta){ ta.focus(); ta.select(); } } }
+  else if (a === 'make'){ const v = String(($('#rec_ex') || {}).value || '').toUpperCase().replace(/[^A-Z0-9]/g, ''), m = $('#rec_exm'); if (v.length !== 20){ if (m) m.textContent = t('rec_len'); return; } if (m) m.textContent = '…'; const line = await recLine(v); if (line) recShowLine(line, ''); }
+});
+new MutationObserver(() => {
+  const box = $('#dev_box'); if (box && !box.querySelector('[data-rec]') && !box.dataset.recDone){ box.dataset.recDone = '1'; box.insertAdjacentHTML('beforeend', `<div class="dev-row"><button type="button" class="mv wide" data-rec="forgot">${asEsc(t('rec_forgot'))}</button></div>`); }
+  const off = $('#dev_off'); if (off && DEV_ON && !$('#rec_row')) off.closest('.btnrow').insertAdjacentHTML('afterend', `<div class="btnrow" id="rec_row"><button type="button" class="mv wide" data-rec="new">${asEsc(t('rec_new'))}</button><button type="button" class="mv wide" data-rec="have">${asEsc(t('rec_have'))}</button></div>`);
+}).observe(document.body, {childList: true, subtree: true});
