@@ -13,3 +13,5 @@ README.md
 enhancements.js
 cars_probe.json
 .wrangler
+worker.js
+_gate.js

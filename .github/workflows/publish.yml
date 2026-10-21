@@ -34,7 +34,7 @@ jobs:
         run: |
           git config user.name "publish-bot"
           git config user.email "publish-bot@users.noreply.github.com"
-          git add index.html app.js version.json
+          git add index.html app.js version.json admin/index.html
           git diff --cached --quiet || git commit -m "Build site"
           git pull --rebase origin main
           git push origin HEAD:main
