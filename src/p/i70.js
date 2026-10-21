@@ -12,4 +12,10 @@ Object.assign(T, {
   fam_compound:['חיסכון והשקעה','الادخار والاستثمار','Saving & investing'], fam_portfolio:['התיק שלי','محفظتي','My portfolio'], fam_retire:['פנסיה ופרישה','التقاعد','Pension & retirement'], fam_lifeplan:['תכנון וחופש כלכלי','التخطيط والحرية المالية','Planning & financial freedom'], fam_kidsave:['ילדים','الأطفال','Children'],
   fam_expenses:['הוצאות ותקציב','المصاريف والميزانية','Spending & budget'], fam_household:['משפחה וחברים','العائلة والأصدقاء','Family & friends'], fam_travel:['טיולים ואירועים','الرحلات والمناسبات','Trips & events'], fam_fuelcalc:['רכב ודלק','السيارة والوقود','Car & fuel'], fam_elecsup:['חשבונות הבית','فواتير البيت','Home bills'], fam_unitprice:['קניות חכמות','تسوق ذكي','Smart shopping'],
   fam_convert:['מטבע ומדד','العملة والمؤشر','Currency & CPI'], fam_mathx:['מחשבון ואחוזים','الآلة الحاسبة والنسب','Calculator & percent'], fam_docscan:['מסמכים','المستندات','Documents'],
+  dev_forgot:['שכחתי קוד','نسيت الرمز','Forgot the code'],
+  dev_recHow:['הקלידו את קוד הגיבוי שקיבלתם (מתחיל ב־RC). הוא פותח את מצב המפתח במכשיר הזה גם בלי השם והקוד.','اكتبوا رمز الاحتياط الذي حصلتم عليه (يبدأ بـ RC). يفتح وضع المطوّر على هذا الجهاز حتى بدون الاسم والرمز.','Type the backup code you were given (it starts with RC). It opens developer mode on this device without the name and code.'],
+  dev_rcode:['קוד גיבוי','رمز الاحتياط','Backup code'], dev_rgo:['כניסה עם קוד גיבוי','الدخول برمز الاحتياط','Enter with the backup code'],
+  dev_rNeed:['קוד הגיבוי מתחיל ב־RC ויש בו 20 תווים אחריו.','رمز الاحتياط يبدأ بـ RC وبعده 20 حرفًا.','The backup code starts with RC followed by 20 characters.'],
+  dev_rWait:['בודק…','جارٍ التحقق…','Checking…'], dev_rBad:['קוד הגיבוי לא נכון.','رمز الاحتياط غير صحيح.','The backup code is wrong.'],
+  dev_rOk:['מצב מפתח הופעל עם קוד הגיבוי','تم تفعيل وضع المطوّر برمز الاحتياط','Developer mode is on with the backup code'],
 });

@@ -1,5 +1,6 @@
 [
  {
+<<<<<<< HEAD
   "v": "13.27",
   "date": "2026-10-21",
   "notes": {
@@ -9,6 +10,8 @@
   }
  },
  {
+=======
+>>>>>>> c444021 (13.26: market board drawn once per batch of updates, locked sub-tabs show a lock, developer backup code ('forgot the code'), smoke test walks sub-tabs)
   "v": "13.26",
   "date": "2026-10-21",
   "notes": {

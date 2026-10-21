@@ -46,7 +46,8 @@ moveTab = function(id, dir){
   const a = SET.order.indexOf(sorted[i]), b = SET.order.indexOf(sorted[j]);
   [SET.order[a], SET.order[b]] = [SET.order[b], SET.order[a]];
 };
-/* the sub-tab row */
+/* the sub-tab row; calculators that need an account show a lock, like the home tiles */
+const famLocked = id => { try { return typeof mbLocked === 'function' && mbLocked(id); } catch (e) { return false; } };
 function famRow(){
   let row = document.getElementById('famrow');
   if (!row){ panelsEl.insertAdjacentHTML('beforebegin', '<div id="famrow" class="fam-row" role="navigation" hidden></div>'); row = document.getElementById('famrow'); }
@@ -54,7 +55,7 @@ function famRow(){
   if (F.length < 2){ row.hidden = true; row.innerHTML = ''; return; }
   row.setAttribute('aria-label', famName(tab));
   row.innerHTML = `<span class="fam-t">${ICON[F[0]] || ''}<b>${famE(famName(tab))}</b></span><div class="fam-chips">` + F.map(id =>
-    `<button type="button" class="fam-c${id === tab ? ' on' : ''}" data-famgo="${id}"${id === tab ? ' aria-current="page"' : ''}>${famE(t('tab_' + id))}</button>`).join('') + '</div>';
+    `<button type="button" class="fam-c${id === tab ? ' on' : ''}${famLocked(id) ? ' locked' : ''}" data-famgo="${id}"${id === tab ? ' aria-current="page"' : ''}>${famLocked(id) ? '🔒 ' : ''}${famE(t('tab_' + id))}</button>`).join('') + '</div>';
   row.hidden = false;
   const on = row.querySelector('.fam-c.on'); if (on) try { on.scrollIntoView({block: 'nearest', inline: 'center'}); } catch (e) {}
 }

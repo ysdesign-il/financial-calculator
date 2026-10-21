@@ -8924,6 +8924,14 @@
   "ux_gt_hish": "study fund",
   "ux_gd_hish": "Medium-term savings with a tax benefit. Tax-free withdrawal after 6 years.",
   "ux_gt_equity": "down payment",
-  "ux_gd_equity": "Your own money in a home purchase, without the mortgage. A first home needs at least 25% of the price."
+  "ux_gd_equity": "Your own money in a home purchase, without the mortgage. A first home needs at least 25% of the price.",
+  "dev_forgot": "Forgot the code",
+  "dev_recHow": "Type the backup code you were given (it starts with RC). It opens developer mode on this device without the name and code.",
+  "dev_rcode": "Backup code",
+  "dev_rgo": "Enter with the backup code",
+  "dev_rNeed": "The backup code starts with RC followed by 20 characters.",
+  "dev_rWait": "Checking…",
+  "dev_rBad": "The backup code is wrong.",
+  "dev_rOk": "Developer mode is on with the backup code"
  }
 }

@@ -1399,8 +1399,12 @@ body[data-tab="expenses"] .page-head .scan-btn + .prn-btn,body[data-tab="clients
 .mi-out .hero{margin-bottom:10px}.mi-led{margin:6px 0}.mi-tips{margin:8px 0;padding-inline-start:20px;font-size:.88rem;display:flex;flex-direction:column;gap:4px}.mi-links{display:flex;flex-wrap:wrap;gap:8px}.mi-disc{margin-top:14px}.mi-acts{margin-top:8px}
 .mi-list{list-style:none;padding:0;margin:8px 0;display:flex;flex-direction:column;gap:8px}.mi-item{border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--card,transparent)}.mi-item h4{margin:0 0 4px;font-size:.95rem}.mi-item p{margin:2px 0;font-size:.86rem}
 .mini-panel > .svbar{display:none}
+<<<<<<< HEAD
 .rec-ov{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px}
 .rec-card{background:var(--surface);color:var(--ink);border-radius:16px;padding:18px;max-width:440px;width:100%;max-height:90vh;overflow:auto;display:flex;flex-direction:column;gap:10px}
 .rec-code{font:700 20px/1.4 ui-monospace,Menlo,monospace;letter-spacing:1px;text-align:center;padding:12px;border-radius:12px;background:var(--field,var(--bg));word-break:break-all;user-select:all}
 .rec-line{width:100%;font:12px ui-monospace,Menlo,monospace}.rec-warn{color:#b3261e;font-weight:600}
 .rec-card input{width:100%;font:16px ui-monospace,Menlo,monospace;padding:10px;border-radius:10px;border:1px solid var(--line)}
+=======
+.dev-forgot{background:none;border:0;color:var(--ink-2);text-decoration:underline;font:inherit;font-size:.8rem;cursor:pointer;padding:6px 0;margin-top:4px}.dev-rec{margin-top:6px}
+>>>>>>> c444021 (13.26: market board drawn once per batch of updates, locked sub-tabs show a lock, developer backup code ('forgot the code'), smoke test walks sub-tabs)

@@ -3819,7 +3819,9 @@ function devSha(str){
 }
 /* only a hash of the unlock value lives in the page; the value itself comes from the name + code and is kept on the owner's device */
 var DEV_CHECK = '2ff82c4945c39ddf16442f25fdc6b3ee96b832d2ea9b26448813ba9087d1c285', DEV_ON = false;
-const devOk = v => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) && devSha(v) === DEV_CHECK;
+/* 13.25: a backup code (given to the owner once, never stored in the page – only this hash) also opens developer mode, for when the code is forgotten */
+var DEV_REC_CHECK = '89ea848f5bb55f17591fc7d3c03baee903a99026dafd423a5bed9ec1a9dbb0c2';
+const devOk = v => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) && (devSha(v) === DEV_CHECK || devSha(v) === DEV_REC_CHECK);
 try { DEV_ON = devOk(RAWLS.getItem('fin-dev')); } catch (e) {}
 var OFFI = {ils: NaN, eur: NaN, at: 0};
 const applyDbRatesSrc = applyDbRates;
@@ -3928,7 +3930,10 @@ document.addEventListener('click', e => {
   const box = e.target.closest('.upd-box') || e.target.parentNode;
   box.insertAdjacentHTML('beforeend', `<div class="dev-box" id="dev_box"><div class="dev-two"><div class="dev-f dev-fn"><label for="dev_name">${asEsc(t('dev_name'))}</label><input id="dev_name" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr"></div>
     <div class="dev-f"><label for="dev_code">${asEsc(t('dev_code'))}</label><input id="dev_code" type="text" inputmode="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" placeholder="FC-XXXX-XXXX-XXXX"></div></div>
-    <div class="dev-row"><button type="button" class="mv wide" id="dev_paste">${asEsc(t('dev_paste'))}</button><button type="button" class="gold-btn" id="dev_go">${asEsc(t('dev_go'))}</button></div><small class="hint" id="dev_msg"></small></div>`);
+    <div class="dev-row"><button type="button" class="mv wide" id="dev_paste">${asEsc(t('dev_paste'))}</button><button type="button" class="gold-btn" id="dev_go">${asEsc(t('dev_go'))}</button></div><small class="hint" id="dev_msg"></small>
+    <button type="button" class="dev-forgot" id="dev_forgot">${asEsc(t('dev_forgot'))}</button>
+    <div class="dev-rec" id="dev_rec" hidden><p class="fine">${asEsc(t('dev_recHow'))}</p><div class="dev-f"><label for="dev_rcode">${asEsc(t('dev_rcode'))}</label><input id="dev_rcode" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" placeholder="RC-XXXXX-XXXXX-XXXXX-XXXXX"></div>
+    <div class="dev-row"><button type="button" class="gold-btn" id="dev_rgo">${asEsc(t('dev_rgo'))}</button></div><small class="hint" id="dev_rmsg"></small></div></div>`);
   setTimeout(() => { const i = $('#dev_name'); if (i) i.focus(); }, 50);
 });
 /* both the owner's name and the developer code are needed; only a fingerprint of the pair is kept in the app */
@@ -3947,6 +3952,26 @@ async function devTry(rawName, rawCode, quiet){
   if (m) m.textContent = t('dev_bad2');
   return false;
 }
+/* forgot the code: the one-time backup code opens developer mode on this device */
+async function devRecTry(){
+  const i = $('#dev_rcode'), m = $('#dev_rmsg'); if (!i) return false;
+  const n = String(i.value || '').toUpperCase().replace(/[^0-9A-Z]/g, '');
+  if (!/^RC[0-9A-Z]{20}$/.test(n)){ if (m) m.textContent = t('dev_rNeed'); return false; }
+  if (m) m.textContent = t('dev_rWait');
+  let h = '';
+  try { const b = await pbk('REC:' + n, new TextEncoder().encode('fincalc-dev-rec-v1'), 150000, 256); h = Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join(''); } catch (e) {}
+  if (h && devSha(h) === DEV_REC_CHECK){
+    try { RAWLS.setItem('fin-dev', h); RAWLS.removeItem('fin-dev-n'); } catch (e) {}
+    DEV_ON = true; DEV_NAME = ''; const bx = $('#dev_box'); if (bx) bx.remove(); liveApply(); devPermSync(); toast(t('dev_rOk')); return true;
+  }
+  if (m) m.textContent = t('dev_rBad');
+  return false;
+}
+document.addEventListener('click', e => {
+  if (e.target.closest('#dev_forgot')){ const r = $('#dev_rec'); if (r){ r.hidden = !r.hidden; if (!r.hidden){ const i = $('#dev_rcode'); if (i) i.focus(); } } return; }
+  if (e.target.closest('#dev_rgo')) devRecTry();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target && e.target.id === 'dev_rcode'){ e.preventDefault(); devRecTry(); } });
 /* paste the code: a paste button, pasting straight into the field, or opening the site with #dev=CODE */
 document.addEventListener('click', async e => {
   if (!e.target.closest('#dev_paste')) return;

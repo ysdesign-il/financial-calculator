@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261021.062857'){ try { if (!sessionStorage.getItem('fin-hb-20261021.062857')){ sessionStorage.setItem('fin-hb-20261021.062857', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261021.062908'){ try { if (!sessionStorage.getItem('fin-hb-20261021.062908')){ sessionStorage.setItem('fin-hb-20261021.062908', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -5314,6 +5314,12 @@ Object.assign(T, {
   fam_compound:['חיסכון והשקעה','الادخار والاستثمار','Saving & investing'], fam_portfolio:['התיק שלי','محفظتي','My portfolio'], fam_retire:['פנסיה ופרישה','التقاعد','Pension & retirement'], fam_lifeplan:['תכנון וחופש כלכלי','التخطيط والحرية المالية','Planning & financial freedom'], fam_kidsave:['ילדים','الأطفال','Children'],
   fam_expenses:['הוצאות ותקציב','المصاريف والميزانية','Spending & budget'], fam_household:['משפחה וחברים','العائلة والأصدقاء','Family & friends'], fam_travel:['טיולים ואירועים','الرحلات والمناسبات','Trips & events'], fam_fuelcalc:['רכב ודלק','السيارة والوقود','Car & fuel'], fam_elecsup:['חשבונות הבית','فواتير البيت','Home bills'], fam_unitprice:['קניות חכמות','تسوق ذكي','Smart shopping'],
   fam_convert:['מטבע ומדד','العملة والمؤشر','Currency & CPI'], fam_mathx:['מחשבון ואחוזים','الآلة الحاسبة والنسب','Calculator & percent'], fam_docscan:['מסמכים','المستندات','Documents'],
+  dev_forgot:['שכחתי קוד','نسيت الرمز','Forgot the code'],
+  dev_recHow:['הקלידו את קוד הגיבוי שקיבלתם (מתחיל ב־RC). הוא פותח את מצב המפתח במכשיר הזה גם בלי השם והקוד.','اكتبوا رمز الاحتياط الذي حصلتم عليه (يبدأ بـ RC). يفتح وضع المطوّر على هذا الجهاز حتى بدون الاسم والرمز.','Type the backup code you were given (it starts with RC). It opens developer mode on this device without the name and code.'],
+  dev_rcode:['קוד גיבוי','رمز الاحتياط','Backup code'], dev_rgo:['כניסה עם קוד גיבוי','الدخول برمز الاحتياط','Enter with the backup code'],
+  dev_rNeed:['קוד הגיבוי מתחיל ב־RC ויש בו 20 תווים אחריו.','رمز الاحتياط يبدأ بـ RC وبعده 20 حرفًا.','The backup code starts with RC followed by 20 characters.'],
+  dev_rWait:['בודק…','جارٍ التحقق…','Checking…'], dev_rBad:['קוד הגיבוי לא נכון.','رمز الاحتياط غير صحيح.','The backup code is wrong.'],
+  dev_rOk:['מצב מפתח הופעל עם קוד הגיבוי','تم تفعيل وضع المطوّر برمز الاحتياط','Developer mode is on with the backup code'],
 });
 
 const t = (k, p) => {
@@ -12000,8 +12006,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.27", "date": "2026-10-21", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261021.062857';
+var CHANGELOG = [{"v": "13.26", "date": "2026-10-21", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261021.062908';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -14429,7 +14435,9 @@ function devSha(str){
 }
 /* only a hash of the unlock value lives in the page; the value itself comes from the name + code and is kept on the owner's device */
 var DEV_CHECK = '2ff82c4945c39ddf16442f25fdc6b3ee96b832d2ea9b26448813ba9087d1c285', DEV_ON = false;
-const devOk = v => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) && devSha(v) === DEV_CHECK;
+/* 13.25: a backup code (given to the owner once, never stored in the page – only this hash) also opens developer mode, for when the code is forgotten */
+var DEV_REC_CHECK = '89ea848f5bb55f17591fc7d3c03baee903a99026dafd423a5bed9ec1a9dbb0c2';
+const devOk = v => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) && (devSha(v) === DEV_CHECK || devSha(v) === DEV_REC_CHECK);
 try { DEV_ON = devOk(RAWLS.getItem('fin-dev')); } catch (e) {}
 var OFFI = {ils: NaN, eur: NaN, at: 0};
 const applyDbRatesSrc = applyDbRates;
@@ -14538,7 +14546,10 @@ document.addEventListener('click', e => {
   const box = e.target.closest('.upd-box') || e.target.parentNode;
   box.insertAdjacentHTML('beforeend', `<div class="dev-box" id="dev_box"><div class="dev-two"><div class="dev-f dev-fn"><label for="dev_name">${asEsc(t('dev_name'))}</label><input id="dev_name" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr"></div>
     <div class="dev-f"><label for="dev_code">${asEsc(t('dev_code'))}</label><input id="dev_code" type="text" inputmode="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" placeholder="FC-XXXX-XXXX-XXXX"></div></div>
-    <div class="dev-row"><button type="button" class="mv wide" id="dev_paste">${asEsc(t('dev_paste'))}</button><button type="button" class="gold-btn" id="dev_go">${asEsc(t('dev_go'))}</button></div><small class="hint" id="dev_msg"></small></div>`);
+    <div class="dev-row"><button type="button" class="mv wide" id="dev_paste">${asEsc(t('dev_paste'))}</button><button type="button" class="gold-btn" id="dev_go">${asEsc(t('dev_go'))}</button></div><small class="hint" id="dev_msg"></small>
+    <button type="button" class="dev-forgot" id="dev_forgot">${asEsc(t('dev_forgot'))}</button>
+    <div class="dev-rec" id="dev_rec" hidden><p class="fine">${asEsc(t('dev_recHow'))}</p><div class="dev-f"><label for="dev_rcode">${asEsc(t('dev_rcode'))}</label><input id="dev_rcode" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" placeholder="RC-XXXXX-XXXXX-XXXXX-XXXXX"></div>
+    <div class="dev-row"><button type="button" class="gold-btn" id="dev_rgo">${asEsc(t('dev_rgo'))}</button></div><small class="hint" id="dev_rmsg"></small></div></div>`);
   setTimeout(() => { const i = $('#dev_name'); if (i) i.focus(); }, 50);
 });
 /* both the owner's name and the developer code are needed; only a fingerprint of the pair is kept in the app */
@@ -14557,6 +14568,26 @@ async function devTry(rawName, rawCode, quiet){
   if (m) m.textContent = t('dev_bad2');
   return false;
 }
+/* forgot the code: the one-time backup code opens developer mode on this device */
+async function devRecTry(){
+  const i = $('#dev_rcode'), m = $('#dev_rmsg'); if (!i) return false;
+  const n = String(i.value || '').toUpperCase().replace(/[^0-9A-Z]/g, '');
+  if (!/^RC[0-9A-Z]{20}$/.test(n)){ if (m) m.textContent = t('dev_rNeed'); return false; }
+  if (m) m.textContent = t('dev_rWait');
+  let h = '';
+  try { const b = await pbk('REC:' + n, new TextEncoder().encode('fincalc-dev-rec-v1'), 150000, 256); h = Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join(''); } catch (e) {}
+  if (h && devSha(h) === DEV_REC_CHECK){
+    try { RAWLS.setItem('fin-dev', h); RAWLS.removeItem('fin-dev-n'); } catch (e) {}
+    DEV_ON = true; DEV_NAME = ''; const bx = $('#dev_box'); if (bx) bx.remove(); liveApply(); devPermSync(); toast(t('dev_rOk')); return true;
+  }
+  if (m) m.textContent = t('dev_rBad');
+  return false;
+}
+document.addEventListener('click', e => {
+  if (e.target.closest('#dev_forgot')){ const r = $('#dev_rec'); if (r){ r.hidden = !r.hidden; if (!r.hidden){ const i = $('#dev_rcode'); if (i) i.focus(); } } return; }
+  if (e.target.closest('#dev_rgo')) devRecTry();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target && e.target.id === 'dev_rcode'){ e.preventDefault(); devRecTry(); } });
 /* paste the code: a paste button, pasting straight into the field, or opening the site with #dev=CODE */
 document.addEventListener('click', async e => {
   if (!e.target.closest('#dev_paste')) return;
@@ -15811,60 +15842,6 @@ function rsDedupe(res){
 }
 const showRs = show;
 show = function(id, res){ return showRs.call(this, id, rsDedupe(res)); };
-
-/* ================= developer mode: "forgot code" recovery — shared with the owner's other apps =================
-   One recovery code works in all the owner's apps. Only a fingerprint and an encrypted bundle live in the source;
-   the bundle holds the developer unlock value encrypted with a key derived from the recovery code (useless without it). */
-var REC_CHECK = 'f431ecb574470c5c7be8dd2591d55dead915527fcf366a3dd849787bb6139036', REC_BUNDLE = 'nsr1.iWUL8ojgMNK6qJIp.JxT7Dcnxml12WgcvhJdS7RFevhkpINNl462Eybdg5Swvm2Xlp0fOCA1Vn7FTTFJovZJXcZ/oBUHOA2qJA4K7sRMCFKCY6IYbvJll4kaeWHU=';
-Object.assign(T, {
-  rec_forgot:['שכחתי קוד','نسيت الرمز','Forgot the code'], rec_title:['שחזור גישה למצב מפתח','استعادة الوصول إلى وضع المطوّر','Recover developer access'],
-  rec_code:['קוד שחזור','رمز الاستعادة','Recovery code'], rec_go:['שחזור','استعادة','Recover'], rec_back:['חזרה','رجوع','Back'],
-  rec_hint:['הקלידו את קוד השחזור ששמרתם.','اكتبوا رمز الاستعادة الذي حفظتموه.','Type the recovery code you saved.'],
-  rec_none:['עוד לא הוגדר קוד שחזור. צרו אותו במצב מפתח באחת האפליקציות שלכם.','لم يُضبط رمز استعادة بعد. أنشئوه في وضع المطوّر في أحد تطبيقاتكم.','No recovery code has been set up yet. Create one in developer mode in one of your apps.'],
-  rec_bad:['קוד השחזור לא נכון','رمز الاستعادة غير صحيح','The recovery code is not correct'], rec_lock:['יותר מדי ניסיונות. נסו שוב בעוד דקה.','محاولات كثيرة. حاولوا بعد دقيقة.','Too many attempts. Try again in a minute.'],
-  rec_ok:['הגישה שוחזרה ✓','تمت استعادة الوصول ✓','Access restored ✓'], rec_new:['יצירת קוד שחזור','إنشاء رمز استعادة','Create a recovery code'], rec_have:['יש לי כבר קוד שחזור','لديّ رمز استعادة بالفعل','I already have a recovery code'],
-  rec_show:['זה קוד השחזור שלכם. שמרו אותו במקום בטוח, למשל במנהל סיסמאות. הוא מוצג רק עכשיו. אפשר להשתמש בו בכל האפליקציות שלכם.','هذا رمز الاستعادة الخاص بكم. احفظوه في مكان آمن، مثل مدير كلمات المرور. يظهر الآن فقط، ويمكن استخدامه في كل تطبيقاتكم.','This is your recovery code. Keep it somewhere safe, like a password manager. It is shown only now, and it works in all your apps.'],
-  rec_never:['אל תשלחו את קוד השחזור לאף אחד, גם לא בצ׳אט.','لا ترسلوا رمز الاستعادة لأي أحد، ولا حتى في المحادثة.','Never send the recovery code to anyone, not even in a chat.'],
-  rec_send:['כדי להפעיל אותו, שלחו לפיתוח רק את השורה הזו. היא לא חושפת את הקוד:','لتفعيله، أرسلوا إلى التطوير هذا السطر فقط. لا يكشف الرمز:','To activate it, send only this line to development. It does not reveal the code:'],
-  rec_copyCode:['העתקת הקוד','نسخ الرمز','Copy the code'], rec_copyLine:['העתקת השורה','نسخ السطر','Copy the line'], rec_copied:['הועתק','تم النسخ','Copied'], rec_close:['סגירה','إغلاق','Close'],
-  rec_enter:['הקלידו את קוד השחזור הקיים. הוא לא נשלח לשום מקום.','اكتبوا رمز الاستعادة الحالي. لا يُرسَل إلى أي مكان.','Type your existing recovery code. It is not sent anywhere.'], rec_make:['הפקת השורה','إنشاء السطر','Create the line'],
-  rec_len:['הקוד צריך 20 תווים','الرمز يحتاج 20 حرفًا','The code needs 20 characters']
-});
-const recB64 = u => btoa(String.fromCharCode(...new Uint8Array(u))), recUn64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
-const recHex = b => Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join('');
-async function recDerive(code){ const c = String(code || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); const k = await crypto.subtle.importKey('raw', new TextEncoder().encode('NSREC:' + c), 'PBKDF2', false, ['deriveBits']);
-  return new Uint8Array(await crypto.subtle.deriveBits({name: 'PBKDF2', hash: 'SHA-256', salt: new TextEncoder().encode('ns-recover-v1'), iterations: 200000}, k, 256)); }
-async function recCheckOf(bytes){ return recHex(await crypto.subtle.digest('SHA-256', new Uint8Array([...new TextEncoder().encode('chk:'), ...bytes]))); }
-const recAes = bytes => crypto.subtle.importKey('raw', bytes, 'AES-GCM', false, ['encrypt', 'decrypt']);
-function recNewCode(){ const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = crypto.getRandomValues(new Uint8Array(20)); let s = ''; for (let i = 0; i < 20; i++){ s += A[r[i] % A.length]; if (i % 4 === 3 && i < 19) s += '-'; } return s; }
-async function recLine(code){ let h = ''; try { h = RAWLS.getItem('fin-dev') || ''; } catch (e) {} if (!DEV_ON || !devOk(h)) return null;
-  const kb = await recDerive(code), chk = await recCheckOf(kb), iv = crypto.getRandomValues(new Uint8Array(12));
-  const ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, await recAes(kb), new TextEncoder().encode(h)); return 'NSREC1~' + chk + '~nsr1.' + recB64(iv) + '.' + recB64(ct); }
-function recModal(html){ let o = $('#rec_modal'); if (o) o.remove(); document.body.insertAdjacentHTML('beforeend', `<div id="rec_modal" class="rec-ov" role="dialog" aria-modal="true"><div class="rec-card">${html}<div class="btnrow"><button type="button" class="mv wide" data-rec="close">${asEsc(t('rec_close'))}</button></div></div></div>`); }
-function recShowLine(line, code){ recModal(`${code ? `<p>${asEsc(t('rec_show'))}</p><div class="rec-code" dir="ltr">${code}</div><button type="button" class="mv wide" data-rec="copy" data-v="${code}">${asEsc(t('rec_copyCode'))}</button><p class="rec-warn">${asEsc(t('rec_never'))}</p>` : ''}
-  <p>${asEsc(t('rec_send'))}</p><textarea class="rec-line" readonly rows="4" dir="ltr">${line}</textarea><button type="button" class="gold-btn" data-rec="copy" data-v="${line}">${asEsc(t('rec_copyLine'))}</button>`); }
-async function recCreate(){ const code = recNewCode(), line = await recLine(code); if (line) recShowLine(line, code); }
-function recExisting(){ recModal(`<p>${asEsc(t('rec_enter'))}</p><input id="rec_ex" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX"><button type="button" class="gold-btn" data-rec="make">${asEsc(t('rec_make'))}</button><small class="hint" id="rec_exm"></small>`); }
-function recForm(){ const b = $('#dev_box'); if (!b) return; b.innerHTML = REC_CHECK && REC_BUNDLE
-  ? `<div class="dev-f"><label for="rec_code">${asEsc(t('rec_code'))}</label><input id="rec_code" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX"></div><small class="hint">${asEsc(t('rec_hint'))}</small><div class="dev-row"><button type="button" class="gold-btn" data-rec="try">${asEsc(t('rec_go'))}</button></div><small class="hint" id="rec_msg"></small>`
-  : `<small class="hint">${asEsc(t('rec_none'))}</small>`; }
-async function recTry(){ const i = $('#rec_code'), m = $('#rec_msg'); let lock = 0; try { lock = +(RAWLS.getItem('fin-rec-lock') || 0); } catch (e) {} if (Date.now() < lock){ if (m) m.textContent = t('rec_lock'); return; }
-  if (m) m.textContent = '…'; let ok = false;
-  try { const kb = await recDerive(i && i.value); if (await recCheckOf(kb) === REC_CHECK){ const p = REC_BUNDLE.split('.'); const pt = await crypto.subtle.decrypt({name: 'AES-GCM', iv: recUn64(p[1])}, await recAes(kb), recUn64(p[2]));
-    const h = new TextDecoder().decode(pt); if (devOk(h)){ try { RAWLS.setItem('fin-dev', h); RAWLS.removeItem('fin-rec-fail'); } catch (e) {} DEV_ON = true; ok = true; } } } catch (e) {}
-  if (ok){ const b = $('#dev_box'); if (b) b.remove(); liveApply(); devPermSync(); toast(t('rec_ok')); return; }
-  let f = 0; try { f = +(RAWLS.getItem('fin-rec-fail') || 0) + 1; if (f >= 5){ RAWLS.setItem('fin-rec-lock', Date.now() + 60e3); f = 0; } RAWLS.setItem('fin-rec-fail', f); } catch (e) {}
-  if (m) m.textContent = t('rec_bad'); }
-document.addEventListener('click', async e => { const b = e.target.closest('[data-rec]'); if (!b) return; const a = b.dataset.rec;
-  if (a === 'forgot') recForm(); else if (a === 'try') recTry(); else if (a === 'new') recCreate(); else if (a === 'have') recExisting();
-  else if (a === 'close'){ const o = $('#rec_modal'); if (o) o.remove(); }
-  else if (a === 'copy'){ try { await navigator.clipboard.writeText(b.dataset.v); const o = b.textContent; b.textContent = t('rec_copied'); setTimeout(() => b.textContent = o, 1500); } catch (err) { const ta = $('#rec_modal .rec-line'); if (ta){ ta.focus(); ta.select(); } } }
-  else if (a === 'make'){ const v = String(($('#rec_ex') || {}).value || '').toUpperCase().replace(/[^A-Z0-9]/g, ''), m = $('#rec_exm'); if (v.length !== 20){ if (m) m.textContent = t('rec_len'); return; } if (m) m.textContent = '…'; const line = await recLine(v); if (line) recShowLine(line, ''); }
-});
-new MutationObserver(() => {
-  const box = $('#dev_box'); if (box && !box.querySelector('[data-rec]') && !box.dataset.recDone){ box.dataset.recDone = '1'; box.insertAdjacentHTML('beforeend', `<div class="dev-row"><button type="button" class="mv wide" data-rec="forgot">${asEsc(t('rec_forgot'))}</button></div>`); }
-  const off = $('#dev_off'); if (off && DEV_ON && !$('#rec_row')) off.closest('.btnrow').insertAdjacentHTML('afterend', `<div class="btnrow" id="rec_row"><button type="button" class="mv wide" data-rec="new">${asEsc(t('rec_new'))}</button><button type="button" class="mv wide" data-rec="have">${asEsc(t('rec_have'))}</button></div>`);
-}).observe(document.body, {childList: true, subtree: true});
 
 
 /* ================= 7.5 ================= */
@@ -29589,7 +29566,8 @@ moveTab = function(id, dir){
   const a = SET.order.indexOf(sorted[i]), b = SET.order.indexOf(sorted[j]);
   [SET.order[a], SET.order[b]] = [SET.order[b], SET.order[a]];
 };
-/* the sub-tab row */
+/* the sub-tab row; calculators that need an account show a lock, like the home tiles */
+const famLocked = id => { try { return typeof mbLocked === 'function' && mbLocked(id); } catch (e) { return false; } };
 function famRow(){
   let row = document.getElementById('famrow');
   if (!row){ panelsEl.insertAdjacentHTML('beforebegin', '<div id="famrow" class="fam-row" role="navigation" hidden></div>'); row = document.getElementById('famrow'); }
@@ -29597,7 +29575,7 @@ function famRow(){
   if (F.length < 2){ row.hidden = true; row.innerHTML = ''; return; }
   row.setAttribute('aria-label', famName(tab));
   row.innerHTML = `<span class="fam-t">${ICON[F[0]] || ''}<b>${famE(famName(tab))}</b></span><div class="fam-chips">` + F.map(id =>
-    `<button type="button" class="fam-c${id === tab ? ' on' : ''}" data-famgo="${id}"${id === tab ? ' aria-current="page"' : ''}>${famE(t('tab_' + id))}</button>`).join('') + '</div>';
+    `<button type="button" class="fam-c${id === tab ? ' on' : ''}${famLocked(id) ? ' locked' : ''}" data-famgo="${id}"${id === tab ? ' aria-current="page"' : ''}>${famLocked(id) ? '🔒 ' : ''}${famE(t('tab_' + id))}</button>`).join('') + '</div>';
   row.hidden = false;
   const on = row.querySelector('.fam-c.on'); if (on) try { on.scrollIntoView({block: 'nearest', inline: 'center'}); } catch (e) {}
 }
@@ -31398,6 +31376,13 @@ Object.assign(T, {
   ux_gt_hish:['קרן השתלמות','صندوق الاستكمال','study fund'], ux_gd_hish:['חיסכון לטווח בינוני עם הטבת מס. אפשר למשוך בלי מס אחרי 6 שנים.','ادخار متوسط المدى مع إعفاء ضريبي. يمكن السحب بلا ضريبة بعد 6 سنوات.','Medium-term savings with a tax benefit. Tax-free withdrawal after 6 years.'],
   ux_gt_equity:['הון עצמי','رأس المال الذاتي','down payment'], ux_gd_equity:['הכסף שלכם בקניית דירה, בלי המשכנתא. לדירה ראשונה צריך לפחות 25% ממחיר הדירה.','مالكم عند شراء شقة دون الرهن. للشقة الأولى يلزم 25% على الأقل من السعر.','Your own money in a home purchase, without the mortgage. A first home needs at least 25% of the price.'],
 });
+
+/* 13.25: speed – when fresh rates, indexes and figures arrive one after another, the market board on Home is drawn once for the batch instead of once per update.
+   Installed last, so every earlier layer of renderMarket still runs, together, a moment later. The first drawing at start-up has already happened by now. */
+{ const rmNow = renderMarket; let rmT = 0;
+  renderMarket = function(){ clearTimeout(rmT); rmT = setTimeout(() => { rmT = 0; try { rmNow(); } catch (e) {} }, 120); };
+  const actRm = activate; activate = function(id){ if (rmT && (id === 'home' || id === 'markets')){ clearTimeout(rmT); rmT = 0; try { rmNow(); } catch (e) {} } return actRm.apply(this, arguments); };
+}
 
 /* ---------- 13.7: the accessibility button – one tap from every screen ----------
    Uses the app's own settings where they exist (contrast, readable font, motion), so the menu and Settings always agree. */
