@@ -103,6 +103,17 @@
    ]
   },
   {
+   "name": "מחשבון",
+   "short_name": "מחשבון",
+   "url": "./?go=calcbasic",
+   "icons": [
+    {
+     "src": "icon-192.png",
+     "sizes": "192x192"
+    }
+   ]
+  },
+  {
    "name": "סורק מסמכים",
    "short_name": "סורק",
    "url": "./?go=docscan",

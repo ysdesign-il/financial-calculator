@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261021.064101'){ try { if (!sessionStorage.getItem('fin-hb-20261021.064101')){ sessionStorage.setItem('fin-hb-20261021.064101', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261021.073313'){ try { if (!sessionStorage.getItem('fin-hb-20261021.073313')){ sessionStorage.setItem('fin-hb-20261021.073313', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -5473,12 +5473,12 @@ META.unix = 1791894003; META.official = true;
 /* 13.23/13.24: fewer categories – related calculators live together in one screen with sub-tabs */
 const FAMS = [
   ['g_main',    [['home'], ['assist'], ['saved'], ['markets'], ['settings']]],
-  ['g_job',     [['salary', 'payslip', 'empcost', 'overtime', 'realwage', 'raise', 'workdays', 'carbenefit'], ['selfemp', 'freelance', 'clients', 'breakeven'], ['leave', 'notice', 'severance', 'benefits', 'reserve', 'workgrant'], ['joboffer', 'cv']]],
+  ['g_job',     [['salary', 'payslip', 'empcost', 'overtime', 'realwage', 'raise', 'workdays', 'carbenefit'], ['selfemp', 'dualinc', 'freelance', 'clients', 'breakeven'], ['leave', 'notice', 'severance', 'benefits', 'reserve', 'workgrant'], ['joboffer', 'cv']]],
   ['g_taxes',   [['tax', 'taxrefund', 'rights', 'taxpack', 'inherit'], ['capital', 'rental'], ['purchasetax', 'landtax'], ['vat', 'taxfree']]],
   ['g_credit',  [['mortgage', 'mortcmp', 'mortcap', 'refi', 'rentbuy', 'rentlaw', 'invapt', 'renov', 'vaad'], ['loan', 'loancmp', 'prepay', 'gooddebt', 'prime'], ['creditcard', 'debtplan']]],
   ['g_invest',  [['compound', 'emergency', 'savegoal', 'windfall', 'idlecash', 'latte', 'yield', 'mmf', 'dividends', 'avgcost'], ['portfolio', 'networth', 'invfees'], ['retire', 'lumpsum', 'gradual', 'pencmp', 'tracks', 'mgmtfees', 'consol', 'hishtalmut', 'pensfix', 'oldage'], ['lifeplan', 'fire', 'freedom'], ['kidsave', 'childallow', 'kidcost', 'daycare', 'kidevent', 'teen']]],
   ['g_budget',  [['expenses', 'afford', 'payday', 'insights', 'smartsplit', 'bankacc', 'reminders', 'fincal'], ['household', 'famgoal', 'split', 'divorce'], ['travel', 'wedding', 'eventgift'], ['fuelcalc', 'carcost', 'carvsbus', 'carsell', 'evfuel', 'carlease', 'deduct', 'cardocs'], ['elecsup', 'renewals', 'arnona', 'cellcmp', 'phonecmp', 'insurance', 'insoverlap', 'lifeins', 'appliance'], ['unitprice', 'discount', 'installments']]],
-  ['g_fxtools', [['convert', 'inflation', 'cpilink'], ['mathx', 'percent'], ['docscan', 'letter', 'vault'], ['glossary', 'sources']]]
+  ['g_fxtools', [['convert', 'inflation', 'cpilink'], ['calcbasic', 'scical', 'units', 'stats', 'practice', 'mathx', 'percent'], ['docscan', 'letter', 'vault'], ['glossary', 'sources']]]
 ];
 const GROUPS = FAMS.map(([g, fs]) => [g, fs.flat()]);
 const TABS = GROUPS.flatMap(g => g[1]);
@@ -7579,11 +7579,17 @@ const MINI_IDS = [
   'payslip', 'realwage', 'raise', 'taxpack', 'inherit',
   'rentlaw', 'renov', 'invapt', 'vaad',
   'emergency', 'idlecash', 'windfall', 'latte', 'lumpsum', 'gradual', 'consol', 'tracks', 'kidcost', 'daycare', 'kidevent', 'teen',
-  'afford', 'payday', 'fincal', 'famgoal', 'divorce', 'wedding', 'carvsbus', 'carsell', 'cardocs', 'deduct', 'renewals', 'insoverlap', 'lifeins', 'installments', 'letter', 'glossary', 'sources'
+  'afford', 'payday', 'fincal', 'famgoal', 'divorce', 'wedding', 'carvsbus', 'carsell', 'cardocs', 'deduct', 'renewals', 'insoverlap', 'lifeins', 'installments', 'letter', 'glossary', 'sources',
+  'calcbasic', 'scical', 'units', 'stats', 'practice', 'dualinc'
 ];
 HUB_IDS.push.apply(HUB_IDS, MINI_IDS);
 ICON.glossary = ic('<path d="M4 4h11a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M4 17a3 3 0 0 1 3-3h11"/><path d="M8 8h6"/>');
 ICON.sources = ic('<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>');
+ICON.calcbasic = ic('<rect x="5" y="2.5" width="14" height="19" rx="2.5"/><rect x="8" y="5.5" width="8" height="3.5" rx=".8"/><path d="M8.5 13h.01M12 13h.01M15.5 13h.01M8.5 16.5h.01M12 16.5h.01M15.5 16.5h.01"/>');
+ICON.scical = ic('<path d="M4 6h6M7 3v6"/><path d="M14 6h6"/><path d="M4.5 15.5l5 5M9.5 15.5l-5 5"/><path d="M14 16h6M14 20h6"/>');
+ICON.units = ic('<path d="M3 7h18M3 7l3-3M3 7l3 3M21 17H3M21 17l-3-3M21 17l-3 3"/>');
+ICON.stats = ic('<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>');
+ICON.practice = ic('<path d="M4 19.5V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="m9 10 2 2 4-4"/>');
 MINI_IDS.forEach(id => { if (!ICON[id]) ICON[id] = ICON[famLead(id)] || ''; });
 
 const navEl = $('#nav'), panelsEl = $('#panels');
@@ -12006,8 +12012,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.30", "date": "2026-10-21", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261021.064101';
+var CHANGELOG = [{"v": "13.31", "date": "2026-10-21", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261021.073313';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -31032,6 +31038,667 @@ Object.assign(T, {
   gl_t_nurs:['ביטוח סיעודי','التأمين التمريضي','Long-term care insurance'], gl_d_nurs:['ביטוח שמשלם כשמישהו צריך עזרה קבועה בפעולות יומיומיות, בדרך כלל בגיל מבוגר.','تأمين يدفع عندما يحتاج شخص مساعدة دائمة في الأنشطة اليومية، عادة في سن متقدمة.','Pays when someone needs ongoing help with daily activities, usually in old age.'],
   gl_t_exempt:['עוסק פטור','مشتغل معفى','Exempt dealer'], gl_d_exempt:['עצמאי עם מחזור נמוך שלא גובה מע״מ מהלקוחות. מעל תקרה שנתית צריך לעבור לעוסק מורשה.','مستقل بدخل منخفض لا يجبي ضريبة القيمة المضافة. فوق سقف سنوي يجب الانتقال لمشتغل مرخّص.','Self-employed with low turnover who doesn\'t charge VAT. Above a yearly cap you become licensed.'],
   gl_t_licensed:['עוסק מורשה','مشتغل مرخّص','Licensed dealer'], gl_d_licensed:['עצמאי שגובה מע״מ מהלקוחות, מעביר אותו לרשות ומקזז מע״מ על הוצאות.','مستقل يجبي ضريبة القيمة المضافة ويحوّلها للسلطة ويخصم ضريبة المصاريف.','Self-employed who charges VAT, pays it on, and deducts VAT on expenses.'],
+});
+
+/* 13.31: a regular calculator and a scientific calculator with the full way to the answer (engine: mx_engine.js, steps: mx_solve.js) */
+const csE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+/* typed symbols → what the engine reads */
+const csNorm = s => String(s || '').replace(/×/g, '*').replace(/÷/g, '/').replace(/[−–]/g, '-').replace(/π/g, 'pi').replace(/√\(/g, 'sqrt(').replace(/∛\(/g, 'cbrt(').replace(/\^\(-1\)/g, '^(-1)').replace(/,(?=\d{3}\b)/g, '');
+function csEval(src, deg){
+  const old = MXE.deg; MXE.deg = !!deg;
+  try { return mxEval(mxParse(csNorm(src)), mxBaseScope()); } finally { MXE.deg = old; }
+}
+const csFmt = v => typeof v === 'number' ? mxFmt(v) : mxFmt(v);
+let CS_KEYS = false;
+/* 7/4 → 1 3/4 */
+const csMixed = fr => { const m = /^(-?)(\d+)\/(\d+)$/.exec(fr); if (!m) return ''; const n = +m[2], dd = +m[3]; if (n < dd) return ''; const w = Math.floor(n / dd), r = n % dd; return r ? m[1] + w + ' ' + r + '/' + dd : ''; };
+/* 30.5° → 30° 30′ 0″ */
+const csDMS = v => { if (typeof v !== 'number' || !isFinite(v)) return ''; const sg = v < 0 ? '−' : ''; let a = Math.abs(v), dg = Math.floor(a), mn = Math.floor((a - dg) * 60), sc = Math.round(((a - dg) * 60 - mn) * 60 * 100) / 100; if (sc >= 60){ sc = 0; mn++; } if (mn >= 60){ mn = 0; dg++; } return sg + dg + '° ' + mn + '′ ' + sc + '″'; };
+
+/* ================= the regular calculator ================= */
+const CB_KEYS = [['MC', 'mc'], ['MR', 'mr'], ['M−', 'm-'], ['M+', 'm+'],
+  ['AC', 'ac'], ['±', 'neg'], ['%', 'pct'], ['÷', '÷'],
+  ['7', '7'], ['8', '8'], ['9', '9'], ['×', '×'],
+  ['4', '4'], ['5', '5'], ['6', '6'], ['−', '−'],
+  ['1', '1'], ['2', '2'], ['3', '3'], ['+', '+'],
+  ['⌫', 'back'], ['0', '0'], ['.', '.'], ['=', '=']];
+const cbOp = c => ['+', '−', '×', '÷'].includes(c);
+function cbD(){ const d = miD('calcbasic'); if (typeof d.e !== 'string') d.e = ''; if (!Array.isArray(d.h)) d.h = []; if (typeof d.m !== 'number') d.m = 0; return d; }
+function cbLast(e){ const m = /(-?\d*\.?\d*)$/.exec(e); return m ? m[1] : ''; }
+function cbValue(e){ let s = e; while (s && cbOp(s.slice(-1))) s = s.slice(0, -1); if (!s) return 0; return csEval(s); }
+function cbPress(k){
+  const d = cbD(); let e = d.e;
+  if (d.done && /^[0-9.]$/.test(k)){ e = ''; } d.done = false;
+  if (/^[0-9]$/.test(k)){ const last = cbLast(e); if (last === '0' && !e.endsWith('.0')) e = e.slice(0, -1); e += k; }
+  else if (k === '.'){ const last = cbLast(e); if (!last.includes('.')) e += (last === '' || last === '-' ? '0' : '') + '.'; }
+  else if (cbOp(k)){ if (!e) e = k === '−' ? '-' : '0'; if (e === '-') return cbShow(); if (cbOp(e.slice(-1))) e = e.slice(0, -1); if (k !== '−' || e !== '-') e += k; }
+  else if (k === 'ac'){ e = ''; }
+  else if (k === 'back'){ e = e.slice(0, -1); }
+  else if (k === 'neg'){ const last = cbLast(e); if (last && last !== '-'){ const base = e.slice(0, e.length - last.length); e = base + (last.startsWith('-') ? last.slice(1) : '-' + last); } else if (!e) e = '-'; }
+  else if (k === 'pct'){ const last = cbLast(e); if (last && last !== '-'){ const base = e.slice(0, e.length - last.length), op = base.slice(-1), n = parseFloat(last);
+      let v = n / 100; if (op === '+' || op === '−'){ try { v = cbValue(base.slice(0, -1)) * n / 100; } catch (er) {} }
+      e = base + String(+v.toPrecision(12)); } }
+  else if (k === '='){ if (!e) return cbShow(); try { const v = cbValue(e); if (typeof v === 'number' && isFinite(v)){ d.h.unshift({e: e.replace(/[+−×÷]$/, ''), v: +v.toPrecision(14)}); d.h = d.h.slice(0, 30); e = String(+v.toPrecision(14)); d.done = true; } else { toast(t(typeof v === 'number' && !isNaN(v) ? 'mx_eDiv0' : 'cs_err')); } } catch (er) { toast(er && er.mx ? mxErrTxt(er) : t('cs_err')); } }
+  else if (k === 'vat+' || k === 'vat-'){ try { const v0 = cbValue(e), r = IL26.vat || 0.18; if (typeof v0 === 'number' && isFinite(v0)){ const v = k === 'vat+' ? v0 * (1 + r) : v0 / (1 + r); d.h.unshift({e: (e || '0').replace(/[+−×÷]$/, '') + (k === 'vat+' ? ' + ' : ' − ') + t('cs_vatShort', {p: Math.round(r * 100)}), v: +v.toPrecision(14)}); d.h = d.h.slice(0, 30); e = String(+v.toFixed(2)); d.done = true; } } catch (er) { toast(t('cs_err')); } }
+  else if (k === 'mc') d.m = 0;
+  else if (k === 'mr'){ const v = String(+d.m.toPrecision(14)); if (d.done || !e || cbOp(e.slice(-1))){ if (d.done) e = ''; e += v; } }
+  else if (k === 'm+' || k === 'm-'){ try { const v = cbValue(e); if (typeof v === 'number' && isFinite(v)) d.m += k === 'm+' ? v : -v; } catch (er) {} }
+  d.e = e.slice(0, 120); clearTimeout(cbD.t); cbD.t = setTimeout(() => { try { saveSet(); } catch (er) {} }, 600);
+  cbShow();
+}
+function cbShow(){
+  const d = cbD(), ex = document.getElementById('cb_ex'), out = document.getElementById('cb_out'), mem = document.getElementById('cb_mem'); if (!ex) return;
+  ex.textContent = d.e.replace(/-/g, '−') || '0';
+  let live = '';
+  if (d.e && !d.done){ try { const v = cbValue(d.e); if (typeof v === 'number' && isFinite(v) && /[+−×÷]/.test(d.e.replace(/^-/, ''))) live = '= ' + csFmt(v); } catch (er) {} }
+  out.textContent = d.done ? '' : live;
+  mem.textContent = d.m ? 'M ' + csFmt(d.m) : '';
+  cbTape();
+  const h = document.getElementById('cb_hist'); if (h) h.innerHTML = d.h.length ? d.h.map((x, i) => `<li><button type="button" data-cbh="${i}" dir="ltr"><span>${csE(x.e.replace(/-/g, '−'))}</span><b>= ${csE(csFmt(x.v))}</b></button></li>`).join('') : `<li class="fine">${csE(t('cs_noHist'))}</li>`;
+}
+/* the tape: every number of the current calculation on its own line; tap a number to fix it and the result follows */
+function cbParts(e){ const out = []; let cur = ''; for (let i = 0; i < e.length; i++){ const c = e[i]; if (cbOp(c) && cur !== '' && cur !== '-'){ out.push(cur, c); cur = ''; } else cur += c; } if (cur !== '') out.push(cur); return out; }
+function cbTape(){
+  const box = document.getElementById('cb_tape'); if (!box) return; const d = cbD(), P = cbParts(d.done ? '' : d.e), nums = P.filter((x, i) => i % 2 === 0);
+  if (nums.length < 2){ box.hidden = true; box.innerHTML = ''; return; }
+  box.hidden = false;
+  box.innerHTML = `<div class="cs-tape-h">${csE(t('cs_tape'))}</div>` + P.map((x, i) => i % 2 ? '' : `<div class="cs-tl" dir="ltr"><span class="cs-top">${i ? csE(P[i - 1]) : ''}</span>${CB_EDIT === i ? `<input class="cs-tin" id="cb_tin" inputmode="decimal" dir="ltr" value="${csE(x)}" data-cbi="${i}">` : `<button type="button" class="cs-tn" data-cbt="${i}" aria-label="${csE(t('cs_tapeEdit', {n: x}))}">${csE(x.replace(/-/g, '−'))}</button>`}</div>`).join('');
+  const inp = document.getElementById('cb_tin'); if (inp){ inp.focus(); try { inp.select(); } catch (er) {} }
+}
+let CB_EDIT = -1;
+function cbTapeSet(i, val){ const d = cbD(), P = cbParts(d.e), v = String(val || '').replace(/[,\s]/g, '').replace(/[−–]/g, '-'); if (/^-?\d*\.?\d+$/.test(v)){ P[i] = v; d.e = P.join(''); } CB_EDIT = -1; cbShow(); try { saveSet(); } catch (er) {} }
+/* share the calculation as text or as a picture */
+function cbText(){ const d = cbD(); let v = ''; try { v = csFmt(cbValue(d.e)); } catch (er) {} const ex = (d.done && d.h[0] ? d.h[0].e : d.e).replace(/-/g, '−'); return ex + ' = ' + (d.done && d.h[0] ? csFmt(d.h[0].v) : v); }
+async function cbImage(){
+  const txt = cbText(), [ex, res] = txt.split(' = '), cv = document.createElement('canvas'), W = 900, H = 420; cv.width = W; cv.height = H; const g = cv.getContext('2d');
+  const dark = document.documentElement.dataset.theme === 'dark'; g.fillStyle = dark ? '#111827' : '#fbf8f1'; g.fillRect(0, 0, W, H);
+  g.fillStyle = '#9A6A06'; g.fillRect(0, 0, W, 10); g.textAlign = 'right'; g.direction = 'ltr';
+  g.fillStyle = dark ? '#cbd5e1' : '#57534e'; g.font = '600 34px system-ui, sans-serif'; g.fillText(ex.length > 40 ? '…' + ex.slice(-40) : ex, W - 50, 150);
+  g.fillStyle = dark ? '#ffffff' : '#111827'; g.font = '800 84px system-ui, sans-serif'; g.fillText('= ' + res, W - 50, 270);
+  g.textAlign = 'left'; g.direction = document.documentElement.dir || 'rtl'; g.fillStyle = dark ? '#94a3b8' : '#78716c'; g.font = '500 26px system-ui, sans-serif'; g.fillText(t('appTitle') || '', 50, 375);
+  const blob = await new Promise(r => cv.toBlob(r, 'image/png')); if (!blob) return;
+  const file = new File([blob], 'calculation.png', {type: 'image/png'});
+  try { if (navigator.canShare && navigator.canShare({files: [file]})){ await navigator.share({files: [file], text: txt}); return; } } catch (er) { if (er && er.name === 'AbortError') return; }
+  try { await fileSave(blob, 'calculation.png', 'image/png'); } catch (er) {}
+}
+miniDef('calcbasic', {
+  resettable: true,
+  render(box){
+    box.innerHTML = `<div class="cs-calc cb">
+      <div class="cs-disp" aria-live="polite"><div class="cs-mem" id="cb_mem"></div><div class="cs-ex" id="cb_ex" dir="ltr"></div><div class="cs-out" id="cb_out" dir="ltr"></div></div>
+      <div class="cs-pad cb-pad" dir="ltr">${CB_KEYS.map(([l, k]) => `<button type="button" class="cs-k${cbOp(k) ? ' op' : ''}${k === '=' ? ' eq' : ''}${/^m/.test(k) ? ' mem' : ''}${['ac', 'neg', 'pct', 'back'].includes(k) ? ' fn' : ''}" data-cb="${csE(k)}">${csE(l)}</button>`).join('')}</div>
+      <div class="cs-pad cb-vat" dir="ltr"><button type="button" class="cs-k mem" data-cb="vat+">${csE(t('cs_vatAdd', {p: Math.round((IL26.vat || 0.18) * 100)}))}</button><button type="button" class="cs-k mem" data-cb="vat-">${csE(t('cs_vatSub', {p: Math.round((IL26.vat || 0.18) * 100)}))}</button></div>
+      <div class="cs-tape" id="cb_tape" hidden></div>
+      <div class="btnrow cs-acts"><button type="button" class="mv" id="cb_copy">📋 ${csE(t('cs_copy'))}</button><button type="button" class="mv" id="cb_share">📤 ${csE(t('cs_share'))}</button><button type="button" class="mv" id="cb_img">🖼️ ${csE(t('cs_img'))}</button><button type="button" class="mv" data-go="scical">🔬 ${csE(t('tab_scical'))}</button></div>
+      <details class="adv cs-hist"><summary>🕘 ${csE(t('cs_hist'))}</summary><ul id="cb_hist" class="cs-hl"></ul><button type="button" class="mv" id="cb_hclr">${csE(t('cs_hClr'))}</button></details>
+      <p class="fine">${csE(t('cs_kbd'))}</p></div>`;
+    cbShow();
+  }
+});
+
+/* ================= the scientific calculator ================= */
+const SC_KEYS = [
+  [['2nd', '@2nd'], ['DEG', '@deg'], ['(', '('], [')', ')'], ['x', 'x'], ['AC', '@ac']],
+  [['x²', '^2', 'x³', '^3'], ['xʸ', '^', 'ʸ√x', 'root('], ['√', '√(', '∛', '∛('], ['1/x', '^(-1)', '|x|', 'abs('], ['n!', '!', 'mod', ' mod '], ['⌫', '@back']],
+  [['sin', 'sin(', 'sin⁻¹', 'asin('], ['cos', 'cos(', 'cos⁻¹', 'acos('], ['tan', 'tan(', 'tan⁻¹', 'atan('], ['ln', 'ln(', 'eˣ', 'exp('], ['log', 'log(', '10ˣ', '10^'], ['EE', '*10^']],
+  [['π', 'π'], ['e', 'e'], ['nCr', 'ncr(', 'nPr', 'npr('], ['|x|', 'abs('], ['mod', ' mod '], ['=', '=']],
+  [['7', '7'], ['8', '8'], ['9', '9'], ['÷', '÷'], [',', ','], ['ans', 'ans']],
+  [['4', '4'], ['5', '5'], ['6', '6'], ['×', '×'], ['%', '/100'], ['<', '<', '>', '>']],
+  [['1', '1'], ['2', '2'], ['3', '3'], ['−', '−'], ['sinh', 'sinh(', 'asinh', 'asinh('], ['cosh', 'cosh(', 'acosh', 'acosh(']],
+  [['0', '0'], ['.', '.'], ['±', '(-'], ['+', '+'], ['tanh', 'tanh(', 'atanh', 'atanh('], ['↵', '@go']]
+];
+function scD(){ const d = miD('scical'); if (typeof d.e !== 'string') d.e = ''; if (!Array.isArray(d.h)) d.h = []; if (d.deg == null) d.deg = true; return d; }
+const scHasX = s => /(^|[^a-z])x([^a-z]|$)/i.test(csNorm(s).replace(/\bexp\b|\bmax\b|\bmin\b/g, ''));
+function scInput(){ return document.getElementById('sc_in'); }
+function scInsert(txt){
+  const i = scInput(); if (!i) return; const d = scD();
+  if (d.done && /^[0-9.(πexsclatn√∛]/.test(txt)){ i.value = ''; } else if (d.done && /^[\^!×÷+−*%]/.test(txt)){ i.value = 'ans'; }
+  d.done = false;
+  const a = i.selectionStart == null ? i.value.length : i.selectionStart, b = i.selectionEnd == null ? a : i.selectionEnd;
+  i.value = i.value.slice(0, a) + txt + i.value.slice(b); const p = a + txt.length; try { i.setSelectionRange(p, p); } catch (e) {}
+  d.e = i.value; scLive();
+}
+function scLive(){
+  const i = scInput(), pv = document.getElementById('sc_pv'), lv = document.getElementById('sc_live'); if (!i || !pv) return;
+  const s = i.value.trim(); let html = '', live = '';
+  if (s){ try { html = mxHTML(mxParse(csNorm(s))); } catch (e) {} if (!/=|<|>/.test(s) && !scHasX(s)){ try { const v = csEval(s, scD().deg); if (typeof v === 'number' && isFinite(v)) live = '= ' + csFmt(v); } catch (e) {} } }
+  pv.innerHTML = html; lv.textContent = live;
+  clearTimeout(scLive.t); scLive.t = setTimeout(() => { try { saveSet(); } catch (e) {} }, 700);
+}
+async function scGo(){
+  const i = scInput(), out = document.getElementById('sc_out'); if (!i || !out) return; const d = scD(), s = i.value.trim(); if (!s) return;
+  out.innerHTML = `<div class="mx-card"><span class="mx-sub">⏳ ${csE(t('mx_comp'))}</span></div>`;
+  const isTask = /=|<|>/.test(s) || scHasX(s);
+  let num = null, numErr = '';
+  if (!isTask){ try { num = csEval(s, d.deg); } catch (e) { numErr = mxErrTxt(e); } }
+  let r = null; const old = MXE.deg; MXE.deg = !!d.deg;
+  try { r = await xsSolve(csNorm(s), mxBaseScope()); } catch (e) { r = null; } finally { MXE.deg = old; }
+  let html = '';
+  if (!isTask){
+    if (typeof num === 'number' || mxIsM(num)){
+      const fr = typeof num === 'number' ? mxFrac(num) : '';
+      const mixed = fr ? csMixed(fr) : '', dms = typeof num === 'number' && d.deg && /\ba(sin|cos|tan)\(|⁻¹/.test(csNorm(s)) ? csDMS(num) : '';
+      html += `<div class="cs-res"><div class="cs-big" dir="ltr">= ${csE(csFmt(num))}${dms ? '°' : ''}</div>${fr ? `<div class="mx-sub" dir="ltr">= ${csE(fr)}${mixed ? ' = ' + csE(mixed) : ''}</div>` : ''}${dms ? `<div class="mx-sub" dir="ltr">= ${csE(dms)}</div>` : ''}</div>`;
+      if (typeof num === 'number'){ d.h.unshift({e: s, v: csFmt(num)}); d.h = d.h.slice(0, 30); d.done = true; }
+    } else html += `<div class="mx-err">⚠️ ${csE(numErr || t('cs_err'))}</div>`;
+  }
+  if (r && r.kind !== 'fail' && r.steps && r.steps.length){
+    if (isTask){ html += `<div class="cs-res"><div class="mx-lab">${csE(t(XS_KIND[r.kind] || 'xs_kCalc'))}</div><div class="cs-big" dir="ltr">${r.answer}</div><div class="${r.ok ? 'mx-ok' : 'mx-err'} xs-ver">${r.ok ? '✓ ' + csE(t('xs_verOk')) : '⚠️ ' + csE(t('xs_verNo'))}</div></div>`; d.h.unshift({e: s, v: r.answerTxt || ''}); d.h = d.h.slice(0, 30); }
+    html += `<details class="mx-steps xs-steps cs-steps" ${isTask ? 'open' : ''}><summary>🪜 ${csE(t('cs_way'))} (${r.steps.length})</summary><ol class="xs-ol">${r.steps.map(st => `<li><div class="xs-k">${xsKtxt(t(st.k, st.p || {}))}</div>${st.h ? `<div class="xs-m" dir="ltr">${st.h}</div>` : ''}</li>`).join('')}</ol></details>`;
+  } else if (isTask){
+    html += `<div class="mx-err">⚠️ ${csE(t('cs_noSolve'))}</div>`;
+  }
+  html += `<div class="btnrow"><button type="button" class="mv" id="sc_toMx">📐 ${csE(t('cs_toMx'))}</button>${typeof cvAiOk === 'function' && cvAiOk() ? `<button type="button" class="mv" id="sc_ai">🤖 ${csE(t('cs_ai'))}</button>` : ''}</div><div id="sc_aiout" hidden></div>`;
+  const gx = scHasX(s); if (gx) html += `<div class="cs-graph"><canvas id="sc_cv" width="640" height="320" aria-label="${csE(t('cs_graph'))}"></canvas><p class="fine" id="sc_gnote"></p></div>`;
+  out.innerHTML = html; scHist(); try { saveSet(); } catch (e) {}
+  if (gx) try { scGraph(s, d.deg); } catch (e) {}
+}
+/* the graph next to the solution: f(x), or left side − right side for an equation; zeros marked */
+function scGraph(src, deg){
+  const cv = document.getElementById('sc_cv'), note = document.getElementById('sc_gnote'); if (!cv) return;
+  const n = csNorm(src), m = /^(.*?)(<=|>=|=|<|>)(.*)$/.exec(n), expr = m ? '(' + m[1] + ')-(' + m[3] + ')' : n;
+  let node; try { node = mxParse(expr); } catch (e) { cv.parentNode.hidden = true; return; }
+  const S = mxBaseScope(), old = MXE.deg; MXE.deg = !!deg;
+  const f = x => { S.v.x = x; try { const v = mxEval(node, S); return typeof v === 'number' && isFinite(v) ? v : NaN; } catch (e) { return NaN; } };
+  try {
+    /* find zeros on a wide range to choose the window */
+    const zs = [], trig = deg && /\b(a?sin|a?cos|a?tan)h?\(/.test(n), R = trig ? 400 : 50, st = trig ? 0.25 : 0.05; let px = -R, pv = f(px);
+    for (let x = -R + st; x <= R; x += st){ const v = f(x); if (isFinite(v) && isFinite(pv) && (v === 0 || (v > 0) !== (pv > 0)) && Math.abs(v - pv) < 1e3){ let a = x - st, b = x, fa = pv; for (let k = 0; k < 40; k++){ const mm = (a + b) / 2, fm = f(mm); if ((fm > 0) === (fa > 0)){ a = mm; fa = fm; } else b = mm; } const z = (a + b) / 2; if (!zs.some(q => Math.abs(q - z) < 1e-6)) zs.push(+z.toFixed(6)); } px = x; pv = v; }
+    let x0 = -10, x1 = 10; if (zs.length){ const lo = Math.min.apply(null, zs), hi = Math.max.apply(null, zs), pad = Math.max(2, (hi - lo) * 0.4); x0 = Math.floor(lo - pad); x1 = Math.ceil(hi + pad); }
+    const W = cv.width, H = cv.height, N = 400, pts = []; for (let i = 0; i <= N; i++){ const x = x0 + (x1 - x0) * i / N; pts.push([x, f(x)]); }
+    const ys = pts.map(p => p[1]).filter(isFinite).sort((a, b) => a - b); if (!ys.length){ cv.parentNode.hidden = true; return; }
+    let y0 = ys[Math.floor(ys.length * 0.03)], y1 = ys[Math.floor(ys.length * 0.97)]; if (y0 > 0) y0 = 0; if (y1 < 0) y1 = 0; if (y1 - y0 < 1e-9){ y0 -= 1; y1 += 1; } const yp = (y1 - y0) * 0.12; y0 -= yp; y1 += yp;
+    const X = x => (x - x0) / (x1 - x0) * W, Y = y => H - (y - y0) / (y1 - y0) * H, g = cv.getContext('2d'), cs = getComputedStyle(document.body);
+    const ink = cs.getPropertyValue('--ink').trim() || '#111', ink2 = cs.getPropertyValue('--ink-2').trim() || '#666', gold = cs.getPropertyValue('--gold').trim() || '#9A6A06';
+    g.clearRect(0, 0, W, H); g.lineWidth = 1; g.strokeStyle = ink2; g.globalAlpha = 0.25;
+    const step = Math.pow(10, Math.floor(Math.log10((x1 - x0) / 2))); for (let gx = Math.ceil(x0 / step) * step; gx <= x1; gx += step){ g.beginPath(); g.moveTo(X(gx), 0); g.lineTo(X(gx), H); g.stroke(); }
+    g.globalAlpha = 0.8; g.beginPath(); g.moveTo(0, Y(0)); g.lineTo(W, Y(0)); g.stroke(); if (x0 < 0 && x1 > 0){ g.beginPath(); g.moveTo(X(0), 0); g.lineTo(X(0), H); g.stroke(); }
+    g.globalAlpha = 1; g.fillStyle = ink2; g.font = '12px system-ui'; g.fillText(String(x0), 4, Y(0) - 4); g.textAlign = 'right'; g.fillText(String(x1), W - 4, Y(0) - 4); g.textAlign = 'left';
+    g.strokeStyle = gold; g.lineWidth = 2.5; g.beginPath(); let pen = false; pts.forEach(([x, y]) => { if (!isFinite(y) || y < y0 - (y1 - y0) || y > y1 + (y1 - y0)){ pen = false; return; } if (!pen){ g.moveTo(X(x), Y(y)); pen = true; } else g.lineTo(X(x), Y(y)); }); g.stroke();
+    g.fillStyle = ink; zs.filter(z => z >= x0 && z <= x1).forEach(z => { g.beginPath(); g.arc(X(z), Y(0), 5, 0, 7); g.fill(); g.fillText(mxFmt(+z.toFixed(4)), X(z) + 6, Y(0) + 16); });
+    if (note) note.textContent = (m ? t('cs_gEq') : t('cs_gFn')) + (zs.length ? ' ' + t('cs_gZeros', {z: zs.slice(0, 6).map(z => mxFmt(+z.toFixed(4))).join(', ')}) : '');
+  } finally { MXE.deg = old; }
+}
+/* a photo of an exercise: the AI reads it, the calculator solves it */
+async function scPhoto(file){
+  const out = document.getElementById('sc_out'), i = scInput(); if (!file || !out || !i) return;
+  if (typeof slEngine !== 'function' || !slEngine()){ toast(t('cs_noAi')); return; }
+  out.innerHTML = `<div class="mx-card"><span class="mx-sub">📷 ${csE(t('cs_reading'))}</span></div>`;
+  try {
+    const blob = typeof vtShrink === 'function' ? await vtShrink(file, 1800) : file;
+    const j = await dsAsk('This is a photo of a maths exercise (it may be handwritten, Hebrew or Arabic text around it). Return ONLY JSON: {"exercise": the exercise in one line of plain calculator syntax — use * / ^ ( ) sqrt() abs() sin() cos() tan() log() ln() pi, x for the unknown, = for equations, < > for inequalities; no words; "" if there is no exercise}', [blob]);
+    const ex = String(j && j.exercise || '').trim().slice(0, 200);
+    if (!ex){ out.innerHTML = `<div class="mx-err">⚠️ ${csE(t('cs_noEx'))}</div>`; return; }
+    i.value = ex; scD().e = ex; scD().done = false; scLive(); scGo();
+  } catch (e) { out.innerHTML = `<div class="mx-err">⚠️ ${csE(t('cs_photoFail'))}</div>`; }
+}
+document.addEventListener('change', e => { const el = e.target; if (!el) return;
+  if (el.id === 'sc_cam' || el.id === 'sc_gal'){ const f = el.files && el.files[0]; el.value = ''; scPhoto(f); }
+  if (el.id === 'cb_tin') cbTapeSet(+el.dataset.cbi, el.value); });
+document.addEventListener('keydown', e => { if (e.target && e.target.id === 'cb_tin'){ if (e.key === 'Enter'){ e.preventDefault(); cbTapeSet(+e.target.dataset.cbi, e.target.value); } else if (e.key === 'Escape'){ CB_EDIT = -1; cbTape(); } } });
+function scHist(){ const h = document.getElementById('sc_hist'); if (!h) return; const d = scD(); h.innerHTML = d.h.length ? d.h.map((x, i) => `<li><button type="button" data-sch="${i}" dir="ltr"><span>${csE(x.e)}</span><b>${x.v ? '= ' + csE(x.v) : ''}</b></button></li>`).join('') : `<li class="fine">${csE(t('cs_noHist'))}</li>`; }
+function scPad(){ const d = scD(), two = !!d.two; return SC_KEYS.map(row => row.map(k => {
+    const alt = k.length > 2 && two, l = alt ? k[2] : k[0], v = alt ? k[3] : k[1];
+    const cls = v === '@go' ? ' eq' : v === '@2nd' ? (two ? ' on fn' : ' fn') : v === '@deg' ? ' fn' : /^[0-9.]$/.test(v) ? '' : ['÷', '×', '−', '+'].includes(v) ? ' op' : ' sf';
+    const lab = v === '@deg' ? (d.deg ? 'DEG' : 'RAD') : l;
+    return `<button type="button" class="cs-k${cls}" data-sck="${csE(v)}">${csE(lab)}</button>`; }).join('')).join(''); }
+miniDef('scical', {
+  resettable: true,
+  render(box){
+    const d = scD();
+    box.innerHTML = `<div class="cs-calc sc">
+      <div class="cs-disp sc-disp"><input id="sc_in" class="sc-in" dir="ltr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text" enterkeyhint="go" value="${csE(d.e)}" placeholder="${csE(t('cs_scPh'))}" aria-label="${csE(t('cs_scLab'))}">
+        <div class="sc-pv" id="sc_pv" dir="ltr"></div><div class="cs-out" id="sc_live" dir="ltr"></div></div>
+      <div class="btnrow cs-photo"><label class="mv">📷 ${csE(t('cs_photo'))}<input type="file" accept="image/*" capture="environment" id="sc_cam" hidden></label><label class="mv">🖼️ ${csE(t('cs_gallery'))}<input type="file" accept="image/*" id="sc_gal" hidden></label></div>
+      <div class="cs-pad sc-pad" dir="ltr" id="sc_pad">${scPad()}</div>
+      <p class="fine">${csE(t('cs_scHow'))}</p>
+      <div id="sc_out" aria-live="polite"></div>
+      <details class="adv cs-hist"><summary>🕘 ${csE(t('cs_hist'))}</summary><ul id="sc_hist" class="cs-hl"></ul><button type="button" class="mv" id="sc_hclr">${csE(t('cs_hClr'))}</button></details>
+      <details class="adv"><summary>📚 ${csE(t('cs_exs'))}</summary><div class="mx-libl">${['2(3+4)^2 − √(16)/2', '3/4 + 5/6', 'sin(30) + cos(60)', 'x^2 − 5x + 6 = 0', '2x + 3 = 11', '(x+1)/(x−2) = 3', 'x^2 − 4 > 0', 'ncr(10, 3)', 'log(1000) + ln(e^2)'].map(x => `<button type="button" data-scex="${csE(x)}" dir="ltr">${csE(x)}</button>`).join('')}</div></details></div>`;
+    scLive(); scHist();
+  }
+});
+/* keys, history and buttons */
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest) return; let b;
+  if ((b = t0.closest('[data-cb]'))){ cbPress(b.dataset.cb); return; }
+  if ((b = t0.closest('[data-cbh]'))){ const d = cbD(), x = d.h[+b.dataset.cbh]; if (x){ d.e = String(x.v); d.done = true; cbShow(); } return; }
+  if ((b = t0.closest('[data-cbt]'))){ CB_EDIT = +b.dataset.cbt; cbTape(); return; }
+  if (t0.closest('#cb_share')){ const txt = cbText(); try { if (navigator.share){ navigator.share({text: txt}).catch(() => {}); return; } } catch (er) {} copyText(txt); toast(t('cs_copied')); return; }
+  if (t0.closest('#cb_img')){ cbImage(); return; }
+  if (t0.closest('#cb_hclr')){ cbD().h = []; saveSet(); cbShow(); return; }
+  if (t0.closest('#cb_copy')){ const d = cbD(); let v = d.e; try { v = String(+cbValue(d.e).toPrecision(14)); } catch (er) {} copyText(v); toast(t('cs_copied')); return; }
+  if ((b = t0.closest('[data-sck]'))){
+    const v = b.dataset.sck, d = scD(), i = scInput();
+    if (v === '@2nd'){ d.two = !d.two; const p = document.getElementById('sc_pad'); if (p) p.innerHTML = scPad(); return; }
+    if (v === '@deg'){ d.deg = !d.deg; saveSet(); const p = document.getElementById('sc_pad'); if (p) p.innerHTML = scPad(); scLive(); return; }
+    if (v === '@ac'){ if (i){ i.value = ''; d.e = ''; } const o = document.getElementById('sc_out'); if (o) o.innerHTML = ''; scLive(); return; }
+    if (v === '@back'){ if (i){ const a = i.selectionStart == null ? i.value.length : i.selectionStart, bb = i.selectionEnd == null ? a : i.selectionEnd; if (a !== bb){ i.value = i.value.slice(0, a) + i.value.slice(bb); i.setSelectionRange(a, a); } else if (a > 0){ i.value = i.value.slice(0, a - 1) + i.value.slice(a); i.setSelectionRange(a - 1, a - 1); } d.e = i.value; d.done = false; scLive(); } return; }
+    if (v === '@go'){ scGo(); return; }
+    scInsert(v); if (d.two && b.closest('#sc_pad')){ d.two = false; const p = document.getElementById('sc_pad'); if (p) p.innerHTML = scPad(); }
+    return;
+  }
+  if ((b = t0.closest('[data-scex]'))){ const i = scInput(); if (i){ i.value = b.dataset.scex; scD().e = i.value; scD().done = false; scLive(); scGo(); } return; }
+  if ((b = t0.closest('[data-sch]'))){ const i = scInput(), x = scD().h[+b.dataset.sch]; if (i && x){ i.value = x.e; scD().e = x.e; scD().done = false; scLive(); i.focus(); } return; }
+  if (t0.closest('#sc_hclr')){ scD().h = []; saveSet(); scHist(); return; }
+  if (t0.closest('#sc_toMx')){ const s = (scInput() || {}).value || ''; try { const d = xsD0(); d.solve.q = s; d.solve.mode = 'auto'; MX.tab = 'solve'; mxSave(); } catch (er) {} activate('mathx'); return; }
+  if (t0.closest('#sc_ai')){ const s = (scInput() || {}).value || '', o = document.getElementById('sc_aiout'), btn = t0.closest('#sc_ai'); if (!o) return;
+    const UL = {he: 'Hebrew', ar: 'Arabic', en: 'English'}[lang] || 'English'; btn.disabled = true;
+    o.hidden = false; o.innerHTML = `<p class="fine">⏳ ${csE(t('mx_aiWait'))}</p>`;
+    cvAsk(`You are a patient maths teacher. In ${UL}, solve and explain step by step, as for a student, the exercise: ${s}. Use short numbered steps, plain text maths, and end with the final answer.`).then(txt => { o.innerHTML = `<div dir="auto" class="xs-aitxt">${csE(txt || t('cv_aiErr'))}</div>`; }, () => { o.innerHTML = `<p class="mx-err">${csE(t('cv_aiErr'))}</p>`; }).finally(() => { btn.disabled = false; });
+    return; }
+});
+document.addEventListener('input', e => { if (e.target && e.target.id === 'sc_in'){ const d = scD(); d.e = e.target.value; d.done = false; scLive(); } });
+document.addEventListener('keydown', e => {
+  if (e.target && e.target.id === 'sc_in' && e.key === 'Enter'){ e.preventDefault(); scGo(); return; }
+  if (tab !== 'calcbasic' || e.ctrlKey || e.metaKey || e.altKey) return;
+  const tg = e.target; if (tg && (tg.tagName === 'INPUT' || tg.tagName === 'TEXTAREA' || tg.tagName === 'SELECT' || tg.isContentEditable)) return;
+  if (document.querySelector('.cp-ov:not([hidden])')) return;
+  const map = {'+': '+', '-': '−', '*': '×', 'x': '×', '/': '÷', 'Enter': '=', '=': '=', 'Backspace': 'back', 'Escape': 'ac', '%': 'pct', '.': '.', ',': '.'};
+  const k = /^[0-9]$/.test(e.key) ? e.key : map[e.key]; if (!k) return; e.preventDefault(); cbPress(k);
+});
+try { if (Array.isArray(FREE_TABS)) FREE_TABS.push('calcbasic', 'scical'); renderTiles(); } catch (e) {}
+try { Object.assign(GS_SYN, {calcbasic: 'מחשבון פשוט רגיל כיס חיבור חילוק calculator basic حاسبة آلة', scical: 'מחשבון מדעי סינוס לוגריתם משוואה פתרון שלבים scientific calculator sin log equation steps حاسبة علمية معادلة'}); } catch (e) {}
+Object.assign(T, {
+  tab_calcbasic:['מחשבון','الآلة الحاسبة','Calculator'], d_calcbasic:['מחשבון רגיל: חשבון, אחוזים, זיכרון והיסטוריה של החישובים.','آلة حاسبة عادية: حساب ونسب وذاكرة وسجل العمليات.','A regular calculator: arithmetic, percent, memory and a history of calculations.'],
+  tab_scical:['מחשבון מדעי','الآلة الحاسبة العلمية','Scientific calculator'], d_scical:['מחשבון מדעי מקצועי: טריגונומטריה, לוגריתמים, חזקות ושורשים, קומבינטוריקה – ומשוואות, אי־שוויונים ושברים עם כל הדרך לפתרון שלב אחרי שלב.','آلة حاسبة علمية احترافية: مثلثات ولوغاريتمات وقوى وجذور وتوافيق – ومعادلات ومتباينات وكسور مع كل خطوات الحل.','A professional scientific calculator: trigonometry, logarithms, powers and roots, combinatorics – plus equations, inequalities and fractions with the full way to the answer, step by step.'],
+  fam_calcbasic:['מחשבונים','الآلات الحاسبة','Calculators'],
+  cs_copy:['העתקת התוצאה','نسخ النتيجة','Copy the result'], cs_copied:['הועתק','تم النسخ','Copied'], cs_err:['התרגיל לא שלם או לא תקין','العملية غير مكتملة أو غير صحيحة','The expression is incomplete or invalid'],
+  cs_hist:['היסטוריה','السجل','History'], cs_noHist:['עוד אין חישובים.','لا عمليات بعد.','No calculations yet.'], cs_hClr:['ניקוי ההיסטוריה','مسح السجل','Clear history'],
+  cs_kbd:['אפשר להקליד גם מהמקלדת: ספרות, + − * /, Enter לתוצאה, Backspace למחיקה.','يمكن الكتابة من لوحة المفاتيح أيضًا: أرقام، + − * /، Enter للنتيجة، Backspace للحذف.','You can type on a keyboard too: digits, + − * /, Enter for the result, Backspace to delete.'],
+  cs_scPh:['תרגיל או משוואה, למשל 2x+3=11','عملية أو معادلة، مثلًا 2x+3=11','An expression or equation, e.g. 2x+3=11'], cs_scLab:['תרגיל','العملية','Expression'],
+  cs_scHow:['↵ מחשב. כשיש x או סימן = – המחשבון פותר את המשוואה ומראה את כל הדרך. 2nd מחליף לפונקציות ההפוכות.','↵ للحساب. عند وجود x أو علامة = تُحل المعادلة وتظهر كل الخطوات. 2nd للدوال العكسية.','↵ calculates. With x or an = sign it solves the equation and shows every step. 2nd switches to inverse functions.'],
+  cs_way:['הדרך לפתרון, שלב אחרי שלב','طريقة الحل خطوة بخطوة','The way to the answer, step by step'], cs_noSolve:['לא הצלחתי לפתור את זה כאן. אפשר לנסות במחשבון המתקדם או עם ה־AI.','لم أتمكن من حل هذا هنا. جرّبوا الحاسبة المتقدمة أو الذكاء الاصطناعي.','I couldn\'t solve this here. Try the advanced calculator or the AI.'],
+  cs_graph:['גרף','رسم بياني','Graph'], cs_gEq:['הגרף מראה את ההפרש בין שני האגפים – הפתרונות הם המקומות שבהם הוא חוצה את ציר ה־x.','يُظهر الرسم الفرق بين الطرفين – الحلول هي حيث يقطع محور x.','The graph shows left side minus right side – the solutions are where it crosses the x-axis.'], cs_gFn:['הגרף של הביטוי.','رسم العبارة.','The graph of the expression.'], cs_gZeros:['נקודות אפס: {z}','نقاط الصفر: {z}','Zeros: {z}'],
+  cs_photo:['צילום תרגיל','تصوير تمرين','Photograph an exercise'], cs_gallery:['מהגלריה','من المعرض','From gallery'], cs_reading:['קורא את התרגיל מהתמונה…','أقرأ التمرين من الصورة…','Reading the exercise from the photo…'], cs_noEx:['לא מצאתי תרגיל בתמונה. נסו צילום ברור יותר, תרגיל אחד בכל פעם.','لم أجد تمرينًا في الصورة. جرّبوا صورة أوضح، تمرينًا واحدًا كل مرة.','No exercise found in the photo. Try a clearer photo, one exercise at a time.'], cs_photoFail:['לא הצלחתי לקרוא את התמונה.','لم أتمكن من قراءة الصورة.','Couldn\'t read the photo.'], cs_noAi:['צילום תרגיל צריך את מנוע ה־AI (בהגדרות).','تصوير التمرين يحتاج محرك الذكاء الاصطناعي (في الإعدادات).','Photographing an exercise needs the AI engine (in Settings).'],
+  cs_vatAdd:['+ מע״מ {p}%','+ ض.ق.م {p}%','+ VAT {p}%'], cs_vatSub:['− מע״מ {p}%','− ض.ق.م {p}%','− VAT {p}%'], cs_vatShort:['מע״מ {p}%','ض.ق.م {p}%','VAT {p}%'],
+  cs_tape:['סרט החישוב – לחצו על מספר כדי לתקן אותו','شريط الحساب – اضغطوا على رقم لتصحيحه','Calculation tape – tap a number to fix it'], cs_tapeEdit:['תיקון {n}','تصحيح {n}','Fix {n}'],
+  cs_share:['שיתוף','مشاركة','Share'], cs_img:['כתמונה','كصورة','As an image'],
+  cs_toMx:['פתיחה במחשבון המתקדם','فتح في الحاسبة المتقدمة','Open in the advanced calculator'], cs_ai:['הסבר מפורט ב־AI','شرح مفصّل بالذكاء الاصطناعي','Detailed AI explanation'], cs_exs:['דוגמאות','أمثلة','Examples'],
+});
+
+/* 13.31: unit converter, statistics and practice mode – inside the "calculators" topic (engine: mx_engine.js, steps: mx_solve.js) */
+(function cs2Css(){ if (document.getElementById('cs2css')) return; const st = document.createElement('style'); st.id = 'cs2css';
+  st.textContent = `.un-row{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:end}.un-swap{min-height:40px;min-width:44px;font-size:1.1rem}
+.un-tbl,.st2-tbl{width:100%;border-collapse:collapse;font-size:.86rem;margin:6px 0}.un-tbl td,.st2-tbl td,.st2-tbl th{padding:5px 6px;border-bottom:1px solid var(--line);text-align:start}.un-tbl td:last-child{text-align:end;font-variant-numeric:tabular-nums}
+.st2-tbl th{color:var(--ink-2);font-weight:600}.st2-tbl td.n{text-align:end;font-variant-numeric:tabular-nums}.st2-ta{width:100%;min-height:96px;font:16px/1.4 ui-monospace,Menlo,monospace;border:1px solid var(--line);border-radius:12px;padding:8px;background:var(--surface,transparent);color:var(--ink)}
+.st2-plot{width:100%;height:auto;margin:6px 0}.pr-q{font-size:1.5rem;font-weight:600;margin:6px 0 10px;text-align:center}.pr-txt{font-size:1.05rem;margin:4px 0;text-align:center}
+.pr-ans{display:flex;gap:8px;align-items:center}.pr-ans button{flex:0 0 auto}.pr-ans input{flex:1 1 auto;min-width:0;width:100%;font:inherit;font-size:16px;min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface,transparent);color:var(--ink);padding:4px 10px}
+.pr-ok{color:#1b7f4b;font-weight:700}.pr-no{color:#b3261e;font-weight:700}.pr-score{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--ink-2);margin:6px 0}`;
+  document.head.appendChild(st); })();
+const cs2N = v => { if (typeof v !== 'number' || !isFinite(v)) return '—'; return mxFmt(+v.toPrecision(12)); };
+const cs2Num = s => { const x = parseFloat(String(s == null ? '' : s).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[−–]/g, '-').replace(/,/g, '.').replace(/[^0-9.eE+\-]/g, '')); return isFinite(x) ? x : NaN; };
+
+/* ================= unit converter ================= */
+/* each unit: [id, factor to the category's base unit, he, ar, en] */
+const UN_CATS = {
+  len: [['mm', 1e-3, 'מילימטר', 'مليمتر', 'millimetre'], ['cm', 1e-2, 'סנטימטר', 'سنتيمتر', 'centimetre'], ['m', 1, 'מטר', 'متر', 'metre'], ['km', 1e3, 'קילומטר', 'كيلومتر', 'kilometre'], ['in', 0.0254, 'אינץ׳', 'إنش', 'inch'], ['ft', 0.3048, 'רגל', 'قدم', 'foot'], ['yd', 0.9144, 'יארד', 'ياردة', 'yard'], ['mi', 1609.344, 'מייל', 'ميل', 'mile'], ['nmi', 1852, 'מייל ימי', 'ميل بحري', 'nautical mile']],
+  mass: [['mg', 1e-6, 'מיליגרם', 'مليغرام', 'milligram'], ['g', 1e-3, 'גרם', 'غرام', 'gram'], ['kg', 1, 'קילוגרם', 'كيلوغرام', 'kilogram'], ['t', 1e3, 'טון', 'طن', 'tonne'], ['oz', 0.028349523125, 'אונקיה', 'أونصة', 'ounce'], ['lb', 0.45359237, 'ליברה (פאונד)', 'رطل (باوند)', 'pound'], ['st', 6.35029318, 'סטון', 'ستون', 'stone']],
+  vol: [['ml', 1e-3, 'מיליליטר', 'مليلتر', 'millilitre'], ['l', 1, 'ליטר', 'لتر', 'litre'], ['m3', 1e3, 'מטר מעוקב', 'متر مكعب', 'cubic metre'], ['tsp', 0.00492892159375, 'כפית (US)', 'ملعقة صغيرة (US)', 'teaspoon (US)'], ['tbsp', 0.01478676478125, 'כף (US)', 'ملعقة كبيرة (US)', 'tablespoon (US)'], ['cup', 0.2365882365, 'כוס (US)', 'كوب (US)', 'cup (US)'], ['floz', 0.0295735295625, 'אונקיית נוזל (US)', 'أونصة سائلة (US)', 'fluid ounce (US)'], ['gal', 3.785411784, 'גלון (US)', 'غالون (US)', 'gallon (US)'], ['galuk', 4.54609, 'גלון בריטי', 'غالون بريطاني', 'gallon (UK)']],
+  temp: [['c', 0, 'צלזיוס (°C)', 'مئوية (°C)', 'Celsius (°C)'], ['f', 0, 'פרנהייט (°F)', 'فهرنهايت (°F)', 'Fahrenheit (°F)'], ['k', 0, 'קלווין (K)', 'كلفن (K)', 'Kelvin (K)']],
+  area: [['cm2', 1e-4, 'סמ״ר', 'سم²', 'cm²'], ['m2', 1, 'מ״ר', 'م²', 'm²'], ['dunam', 1e3, 'דונם', 'دونم', 'dunam'], ['ha', 1e4, 'הקטר', 'هكتار', 'hectare'], ['km2', 1e6, 'קמ״ר', 'كم²', 'km²'], ['ft2', 0.09290304, 'רגל רבועה', 'قدم مربع', 'square foot'], ['acre', 4046.8564224, 'אקר', 'فدان (أكر)', 'acre']],
+  speed: [['ms', 1, 'מטר לשנייה', 'متر/ثانية', 'metres per second'], ['kmh', 1 / 3.6, 'קמ״ש', 'كم/ساعة', 'km/h'], ['mph', 0.44704, 'מייל לשעה', 'ميل/ساعة', 'mph'], ['kn', 1852 / 3600, 'קשר', 'عقدة', 'knot'], ['fts', 0.3048, 'רגל לשנייה', 'قدم/ثانية', 'feet per second']],
+  time: [['ms', 1e-3, 'מילישנייה', 'ملي ثانية', 'millisecond'], ['s', 1, 'שנייה', 'ثانية', 'second'], ['min', 60, 'דקה', 'دقيقة', 'minute'], ['h', 3600, 'שעה', 'ساعة', 'hour'], ['d', 86400, 'יום', 'يوم', 'day'], ['wk', 604800, 'שבוע', 'أسبوع', 'week'], ['yr', 31536000, 'שנה (365 ימים)', 'سنة (365 يومًا)', 'year (365 days)']],
+  data: [['bit', 0.125, 'ביט', 'بت', 'bit'], ['b', 1, 'בייט', 'بايت', 'byte'], ['kb', 1e3, 'קילובייט (KB)', 'كيلوبايت (KB)', 'kilobyte (KB)'], ['mb', 1e6, 'מגהבייט (MB)', 'ميغابايت (MB)', 'megabyte (MB)'], ['gb', 1e9, 'ג׳יגהבייט (GB)', 'غيغابايت (GB)', 'gigabyte (GB)'], ['tb', 1e12, 'טרהבייט (TB)', 'تيرابايت (TB)', 'terabyte (TB)'], ['kib', 1024, 'KiB (1024 בייט)', 'KiB (1024 بايت)', 'KiB (1024 bytes)'], ['mib', 1048576, 'MiB', 'MiB', 'MiB'], ['gib', 1073741824, 'GiB', 'GiB', 'GiB']],
+  energy: [['j', 1, 'ג׳אול', 'جول', 'joule'], ['kj', 1e3, 'קילוג׳אול', 'كيلوجول', 'kilojoule'], ['cal', 4.184, 'קלוריה', 'سعرة', 'calorie'], ['kcal', 4184, 'קילוקלוריה', 'كيلو سعرة', 'kilocalorie'], ['wh', 3600, 'ואט־שעה', 'واط ساعة', 'watt-hour'], ['kwh', 3.6e6, 'קוט״ש', 'كيلوواط ساعة', 'kilowatt-hour'], ['btu', 1055.05585262, 'BTU', 'BTU', 'BTU']],
+  press: [['pa', 1, 'פסקל', 'باسكال', 'pascal'], ['kpa', 1e3, 'קילופסקל', 'كيلوباسكال', 'kilopascal'], ['bar', 1e5, 'בר', 'بار', 'bar'], ['atm', 101325, 'אטמוספרה', 'ضغط جوي', 'atmosphere'], ['psi', 6894.757293168, 'PSI', 'PSI', 'psi'], ['mmhg', 133.322387415, 'מ״מ כספית', 'ملم زئبق', 'mmHg']],
+  fuel: [['l100', 0, 'ליטר ל־100 ק״מ', 'لتر/100 كم', 'L/100 km'], ['kml', 0, 'ק״מ לליטר', 'كم/لتر', 'km/L'], ['mpg', 0, 'מייל לגלון (US)', 'ميل/غالون (US)', 'mpg (US)']]
+};
+const UN_ORDER = ['len', 'mass', 'vol', 'temp', 'area', 'speed', 'time', 'data', 'energy', 'press', 'fuel'];
+const UN_DEF = {len: ['km', 'mi'], mass: ['kg', 'lb'], vol: ['l', 'gal'], temp: ['c', 'f'], area: ['m2', 'dunam'], speed: ['kmh', 'mph'], time: ['h', 'min'], data: ['gb', 'mb'], energy: ['kwh', 'kj'], press: ['bar', 'psi'], fuel: ['l100', 'kml']};
+const unLangI = () => ({he: 0, ar: 1, en: 2})[lang] != null ? ({he: 0, ar: 1, en: 2})[lang] : 2;
+const unName = (cat, id) => { const u = UN_CATS[cat].find(x => x[0] === id); return u ? u[2 + unLangI()] : id; };
+const UN_MPG = 1.609344 / 3.785411784;   // 1 mpg (US) in km/L
+/* convert through a base: temperature → °C, fuel → km/L */
+function unToBase(cat, id, v){
+  if (cat === 'temp') return id === 'c' ? v : id === 'f' ? (v - 32) * 5 / 9 : v - 273.15;
+  if (cat === 'fuel') return id === 'kml' ? v : id === 'mpg' ? v * UN_MPG : (v ? 100 / v : NaN);
+  return v * UN_CATS[cat].find(x => x[0] === id)[1];
+}
+function unFromBase(cat, id, b){
+  if (cat === 'temp') return id === 'c' ? b : id === 'f' ? b * 9 / 5 + 32 : b + 273.15;
+  if (cat === 'fuel') return id === 'kml' ? b : id === 'mpg' ? b / UN_MPG : (b ? 100 / b : NaN);
+  return b / UN_CATS[cat].find(x => x[0] === id)[1];
+}
+const unConv = (cat, a, b, v) => unFromBase(cat, b, unToBase(cat, a, v));
+/* the way: one line, or two for temperature through Celsius */
+function unWay(cat, a, b, v, r){
+  const n = cs2N, A = unName(cat, a), B = unName(cat, b);
+  if (a === b) return [`${n(v)} = ${n(r)}`];
+  if (cat === 'temp'){
+    const toC = {f: x => `°C = (°F − 32) × 5/9 → (${n(x)} − 32) × 5/9 = ${n((x - 32) * 5 / 9)}`, k: x => `°C = K − 273.15 → ${n(x)} − 273.15 = ${n(x - 273.15)}`};
+    const fromC = {f: c => `°F = °C × 9/5 + 32 → ${n(c)} × 9/5 + 32 = ${n(c * 9 / 5 + 32)}`, k: c => `K = °C + 273.15 → ${n(c)} + 273.15 = ${n(c + 273.15)}`};
+    const L = [], c = unToBase('temp', a, v); if (a !== 'c') L.push(toC[a](v)); if (b !== 'c') L.push(fromC[b](c)); return L;
+  }
+  if (cat === 'fuel'){
+    const L = [];
+    if (a === 'l100') L.push(`km/L = 100 ÷ L/100km → 100 ÷ ${n(v)} = ${n(unToBase('fuel', a, v))}`);
+    if (a === 'mpg') L.push(`km/L = mpg × 1.609344 ÷ 3.785411784 → ${n(v)} × ${n(UN_MPG)} = ${n(unToBase('fuel', a, v))}`);
+    const k = unToBase('fuel', a, v);
+    if (b === 'l100') L.push(`L/100km = 100 ÷ km/L → 100 ÷ ${n(k)} = ${n(r)}`);
+    if (b === 'mpg') L.push(`mpg = km/L ÷ ${n(UN_MPG)} → ${n(k)} ÷ ${n(UN_MPG)} = ${n(r)}`);
+    if (!L.length) L.push(`${n(v)} = ${n(r)}`); return L;
+  }
+  const f = UN_CATS[cat].find(x => x[0] === a)[1] / UN_CATS[cat].find(x => x[0] === b)[1];
+  return [t('un_factor', {a: A, f: n(f), b: B}), `${n(v)} × ${n(f)} = ${n(r)}`];
+}
+function unD(){ const d = miD('units'); if (!UN_CATS[d.cat]) d.cat = 'len'; const ids = UN_CATS[d.cat].map(x => x[0]); if (!ids.includes(d.a)) d.a = UN_DEF[d.cat][0]; if (!ids.includes(d.b)) d.b = UN_DEF[d.cat][1]; if (d.v == null) d.v = '1'; return d; }
+function unOut(){
+  const box = document.getElementById('un_out'); if (!box) return; const d = unD(), E = csE, v = cs2Num(d.v);
+  if (!isFinite(v)){ box.innerHTML = `<p class="fine">${E(t('un_need'))}</p>`; return; }
+  const r = unConv(d.cat, d.a, d.b, v);
+  if (!isFinite(r)){ box.innerHTML = `<p class="mx-err">⚠️ ${E(t('un_bad'))}</p>`; return; }
+  const way = unWay(d.cat, d.a, d.b, v, r);
+  box.innerHTML = `<div class="cs-res"><div class="mx-lab">${E(cs2N(v))} ${E(unName(d.cat, d.a))} =</div><div class="cs-big" dir="ltr">${E(cs2N(r))}</div><div class="mx-sub">${E(unName(d.cat, d.b))}</div></div>
+    <details class="mx-steps xs-steps" open><summary>🪜 ${E(t('un_way'))}</summary><ol class="xs-ol">${way.map(w => /[\u0590-\u05FF\u0600-\u06FF]/.test(w) ? `<li><div class="xs-k">${xsKtxt(w)}</div></li>` : `<li><div class="xs-m" dir="ltr">${E(w)}</div></li>`).join('')}</ol></details>
+    <details class="adv"><summary>📋 ${E(t('un_all'))}</summary><table class="un-tbl">${UN_CATS[d.cat].map(u => { const x = unConv(d.cat, d.a, u[0], v); return `<tr><td>${E(u[2 + unLangI()])}</td><td dir="ltr">${E(cs2N(x))}</td></tr>`; }).join('')}</table></details>`;
+}
+miniDef('units', {
+  resettable: true,
+  render(box){
+    const d = unD(), E = csE, opts = sel => UN_CATS[d.cat].map(u => `<option value="${u[0]}"${u[0] === sel ? ' selected' : ''}>${E(u[2 + unLangI()])}</option>`).join('');
+    box.innerHTML = `<div class="ds-chips bk-tabs" role="tablist">${UN_ORDER.map(c => `<button type="button" role="tab" class="ds-chip${c === d.cat ? ' on' : ''}" aria-selected="${c === d.cat}" data-uncat="${c}">${E(t('un_c_' + c))}</button>`).join('')}</div>
+      <div class="mi-card"><label class="bk-f"><span>${E(t('un_value'))}</span><input type="text" inputmode="decimal" dir="ltr" id="un_v" value="${E(d.v)}"></label>
+      <div class="un-row"><label class="bk-f"><span>${E(t('un_from'))}</span><select id="un_a">${opts(d.a)}</select></label><button type="button" class="mv un-swap" id="un_swap" aria-label="${E(t('un_swap'))}">⇄</button><label class="bk-f"><span>${E(t('un_to'))}</span><select id="un_b">${opts(d.b)}</select></label></div></div>
+      <div id="un_out" aria-live="polite"></div>
+      ${d.cat === 'vol' || d.cat === 'fuel' ? `<p class="fine">${E(t('un_usNote'))}</p>` : ''}${d.cat === 'data' ? `<p class="fine">${E(t('un_dataNote'))}</p>` : ''}`;
+    unOut();
+  }
+});
+
+/* ================= statistics ================= */
+const st2Parse = s => String(s || '').replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[−–]/g, '-').split(/[\s,;|]+/).map(x => x.trim()).filter(Boolean).map(Number).filter(x => isFinite(x));
+const st2Med = a => { const n = a.length; if (!n) return NaN; const m = Math.floor(n / 2); return n % 2 ? a[m] : (a[m - 1] + a[m]) / 2; };
+function st2Calc(xs){
+  const a = xs.slice().sort((p, q) => p - q), n = a.length, sum = a.reduce((s, x) => s + x, 0), mean = sum / n;
+  const half = Math.floor(n / 2), lo = a.slice(0, half), hi = a.slice(n % 2 ? half + 1 : half);
+  const q1 = n >= 4 ? st2Med(lo) : NaN, q3 = n >= 4 ? st2Med(hi) : NaN;
+  const ss = a.reduce((s, x) => s + (x - mean) * (x - mean), 0), vp = ss / n, vs = n > 1 ? ss / (n - 1) : NaN;
+  const cnt = {}; a.forEach(x => { cnt[x] = (cnt[x] || 0) + 1; }); const mx = Math.max.apply(null, Object.values(cnt));
+  const modes = mx > 1 ? Object.keys(cnt).filter(k => cnt[k] === mx).map(Number) : [];
+  return {a, n, sum, mean, med: st2Med(a), q1, q3, iqr: q3 - q1, min: a[0], max: a[n - 1], vp, vs, sp: Math.sqrt(vp), ssd: Math.sqrt(vs), ss, modes, mx, cv: mean ? Math.sqrt(vp) / Math.abs(mean) * 100 : NaN};
+}
+function st2Plot(R){
+  if (R.n < 2 || R.max === R.min) return '';
+  const W = 320, H = 70, P = 14, X = v => P + (v - R.min) / (R.max - R.min) * (W - 2 * P), y = 30;
+  const dots = R.a.map(v => `<circle cx="${X(v).toFixed(1)}" cy="${y + 22}" r="3" fill="var(--gold,#9A6A06)" opacity=".7"/>`).join('');
+  const box = isFinite(R.q1) ? `<rect x="${X(R.q1).toFixed(1)}" y="${y - 10}" width="${Math.max(1, X(R.q3) - X(R.q1)).toFixed(1)}" height="20" fill="none" stroke="currentColor" stroke-width="1.5" rx="3"/>` : '';
+  return `<svg class="st2-plot" viewBox="0 0 ${W} ${H}" role="img" aria-label="${csE(t('st2_plot'))}" dir="ltr"><line x1="${X(R.min)}" x2="${X(R.max)}" y1="${y}" y2="${y}" stroke="currentColor" stroke-width="1.2"/>${box}<line x1="${X(R.med).toFixed(1)}" x2="${X(R.med).toFixed(1)}" y1="${y - 10}" y2="${y + 10}" stroke="var(--gold,#9A6A06)" stroke-width="2.5"/><line x1="${X(R.mean).toFixed(1)}" x2="${X(R.mean).toFixed(1)}" y1="${y - 14}" y2="${y + 14}" stroke="currentColor" stroke-dasharray="2 2"/>${dots}<text x="${P}" y="12" font-size="10" fill="currentColor">${csE(cs2N(R.min))}</text><text x="${W - P}" y="12" font-size="10" fill="currentColor" text-anchor="end">${csE(cs2N(R.max))}</text></svg><p class="fine">${csE(t('st2_plotKey'))}</p>`;
+}
+function st2Out(){
+  const box = document.getElementById('st2_out'); if (!box) return; const E = csE, xs = st2Parse(miD('stats').txt), n = cs2N;
+  if (!xs.length){ box.innerHTML = `<p class="fine">${E(t('st2_need'))}</p>`; return; }
+  if (xs.length > 5000){ box.innerHTML = `<p class="mx-err">⚠️ ${E(t('st2_many'))}</p>`; return; }
+  const R = st2Calc(xs), row = (k, v) => `<tr><td>${E(t(k))}</td><td class="n" dir="ltr">${E(v)}</td></tr>`;
+  const mid = R.n % 2 ? t('st2_midOdd', {p: (R.n + 1) / 2}) : t('st2_midEven', {p: R.n / 2, q: R.n / 2 + 1});
+  const sorted = R.a.length <= 60 ? R.a.map(n).join(', ') : R.a.slice(0, 30).map(n).join(', ') + ', …';
+  const devs = R.n <= 20 ? `<table class="st2-tbl" dir="ltr"><tr><th>x</th><th>x − x̄</th><th>(x − x̄)²</th></tr>${R.a.map(x => `<tr><td class="n">${E(n(x))}</td><td class="n">${E(n(x - R.mean))}</td><td class="n">${E(n((x - R.mean) * (x - R.mean)))}</td></tr>`).join('')}</table>` : `<p class="fine">${E(t('st2_devsBig'))}</p>`;
+  box.innerHTML = `<div class="cs-res"><div class="mx-lab">${E(t('st2_mean'))}</div><div class="cs-big" dir="ltr">${E(n(R.mean))}</div><div class="mx-sub">${E(t('st2_nOf', {n: R.n}))}</div></div>
+    ${st2Plot(R)}
+    <table class="st2-tbl">${row('st2_count', String(R.n))}${row('st2_sum', n(R.sum))}${row('st2_mean', n(R.mean))}${row('st2_median', n(R.med))}${row('st2_mode', R.modes.length ? R.modes.slice(0, 6).map(n).join(', ') + (R.modes.length > 6 ? '…' : '') + ' (×' + R.mx + ')' : t('st2_noMode'))}
+      ${row('st2_min', n(R.min))}${row('st2_max', n(R.max))}${row('st2_range', n(R.max - R.min))}${row('st2_q1', isFinite(R.q1) ? n(R.q1) : '—')}${row('st2_q3', isFinite(R.q3) ? n(R.q3) : '—')}${row('st2_iqr', isFinite(R.iqr) ? n(R.iqr) : '—')}
+      ${row('st2_vp', n(R.vp))}${row('st2_sp', n(R.sp))}${row('st2_vs', isFinite(R.vs) ? n(R.vs) : '—')}${row('st2_ssd', isFinite(R.ssd) ? n(R.ssd) : '—')}${row('st2_cv', isFinite(R.cv) ? n(R.cv) + '%' : '—')}</table>
+    <p class="fine">${E(t('st2_qNote'))}</p>
+    <details class="mx-steps xs-steps"><summary>🪜 ${E(t('st2_way'))}</summary><ol class="xs-ol">
+      <li><div class="xs-k">${xsKtxt(t('st2_wMean'))}</div><div class="xs-m" dir="ltr">x̄ = Σx ÷ n = ${E(n(R.sum))} ÷ ${R.n} = ${E(n(R.mean))}</div></li>
+      <li><div class="xs-k">${xsKtxt(t('st2_wSort'))}</div><div class="xs-m" dir="ltr">${E(sorted)}</div></li>
+      <li><div class="xs-k">${xsKtxt(t('st2_wMed') + ' ' + mid)}</div><div class="xs-m" dir="ltr">${R.n % 2 ? E(t('st2_medIs') + ' ' + n(R.med)) : E('(' + n(R.a[R.n / 2 - 1]) + ' + ' + n(R.a[R.n / 2]) + ') ÷ 2 = ' + n(R.med))}</div></li>
+      <li><div class="xs-k">${xsKtxt(t('st2_wDev'))}</div>${devs}<div class="xs-m" dir="ltr">Σ(x − x̄)² = ${E(n(R.ss))}</div></li>
+      <li><div class="xs-k">${xsKtxt(t('st2_wVar'))}</div><div class="xs-m" dir="ltr">σ² = ${E(n(R.ss))} ÷ ${R.n} = ${E(n(R.vp))} · σ = √${E(n(R.vp))} = ${E(n(R.sp))}${R.n > 1 ? `<br>s² = ${E(n(R.ss))} ÷ ${R.n - 1} = ${E(n(R.vs))} · s = √${E(n(R.vs))} = ${E(n(R.ssd))}` : ''}</div></li>
+    </ol></details>`;
+}
+miniDef('stats', {
+  resettable: true,
+  render(box){
+    const d = miD('stats'), E = csE; if (typeof d.txt !== 'string') d.txt = '4, 8, 15, 16, 23, 42';
+    box.innerHTML = `<div class="mi-card"><label class="bk-f" for="st2_ta"><span>${E(t('st2_in'))}</span></label><textarea id="st2_ta" class="st2-ta" dir="ltr" spellcheck="false" inputmode="decimal">${E(d.txt)}</textarea>
+      <div class="btnrow"><button type="button" class="mv" id="st2_ex">📚 ${E(t('st2_example'))}</button><button type="button" class="mv" id="st2_clr">${E(t('st2_clear'))}</button></div></div>
+      <div id="st2_out" aria-live="polite"></div>`;
+    st2Out();
+  }
+});
+
+/* ================= practice mode ================= */
+const PR_TOPICS = ['ops', 'frac', 'pct', 'lin', 'quad', 'pow'];
+const prR = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const prNZ = (a, b) => { let x = 0; while (!x) x = prR(a, b); return x; };
+const prG = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a || 1; };
+/* a polynomial-ish term list → "2x - 3" with clean signs */
+function prLin(terms){ let s = ''; terms.forEach(([c, v], i) => { if (!c) return; const neg = c < 0, ab = Math.abs(c), body = v ? (ab === 1 ? v : ab + v) : String(ab); s += (s ? (neg ? ' - ' : ' + ') : (neg ? '-' : '')) + body; }); return s || '0'; }
+function prMake(topic, lv){
+  const L = lv === 'hard' ? 3 : lv === 'medium' ? 2 : 1;
+  if (topic === 'ops'){
+    if (L === 1){ const a = prR(2, 20), b = prR(2, 9), c = prR(2, 9); return {expr: `${a} + ${b} * ${c}`, ans: [a + b * c]}; }
+    if (L === 2){ const a = prR(2, 12), b = prR(2, 12), c = prR(2, 6), e = prR(2, 6), dd = e * prR(1, 6); return {expr: `(${a} + ${b}) * ${c} - ${dd} / ${e}`, ans: [(a + b) * c - dd / e]}; }
+    const a = prR(2, 6), b = prR(2, 9), c = prR(6, 15), dd = prR(1, 5), e = prR(1, 20); return {expr: `${a}^2 - ${b} * (${c} - ${dd}) + ${e}`, ans: [a * a - b * (c - dd) + e]};
+  }
+  if (topic === 'frac'){
+    const den = L === 1 ? [2, 3, 4, 5, 6, 8] : [2, 3, 4, 5, 6, 7, 8, 9, 10, 12];
+    const b = den[prR(0, den.length - 1)], d = L === 1 ? b : den[prR(0, den.length - 1)], a = prR(1, b - 1 || 1), c = prR(1, d + 2);
+    const op = L === 3 ? ['*', '/'][prR(0, 1)] : L === 2 ? ['+', '-'][prR(0, 1)] : '+';
+    const v = op === '+' ? a / b + c / d : op === '-' ? a / b - c / d : op === '*' ? a / b * (c / d) : (a / b) / (c / d);
+    return {expr: op === '/' ? `(${a}/${b}) / (${c}/${d})` : `${a}/${b} ${op} ${c}/${d}`, ans: [v], frac: true};
+  }
+  if (topic === 'pct'){
+    if (L === 1){ const p = [10, 20, 25, 50, 5, 15][prR(0, 5)], y = prR(2, 40) * 20; return {expr: `${y} * ${p} / 100`, ans: [y * p / 100], q: t('pr_pctOf', {p, y})}; }
+    if (L === 2){ const p = [10, 15, 20, 25, 30, 40][prR(0, 5)], y = prR(2, 50) * 20; return {expr: `${y} * (1 - ${p} / 100)`, ans: [y * (1 - p / 100)], q: t('pr_pctOff', {p, y})}; }
+    const b = prR(2, 40) * 10, p = [5, 10, 12.5, 20, 25, 40, 60, 75][prR(0, 7)], a = b * p / 100; return {expr: `${a} / ${b} * 100`, ans: [p], q: t('pr_pctWhat', {a: cs2N(a), b})};
+  }
+  if (topic === 'lin'){
+    const x0 = L === 1 ? prR(-5, 12) : prR(-10, 10);
+    if (L === 1){ const a = prNZ(2, 9), b = prR(-15, 15), c = a * x0 + b; return {expr: `${prLin([[a, 'x'], [b, '']])} = ${c}`, ans: [x0], eq: true}; }
+    if (L === 2){ let a = prNZ(-9, 9), c = prNZ(-9, 9); if (a === c) c = a + 1 || 2; const b = prR(-12, 12), d = (a - c) * x0 + b; return {expr: `${prLin([[a, 'x'], [b, '']])} = ${prLin([[c, 'x'], [d, '']])}`, ans: [x0], eq: true}; }
+    let a = prNZ(2, 6), c = prNZ(-6, 6); if (a === c) c = a + 1; const b = prR(-6, 6), d = a * (x0 + b) - c * x0; return {expr: `${a}(x ${b < 0 ? '-' : '+'} ${Math.abs(b)}) = ${prLin([[c, 'x'], [d, '']])}`, ans: [x0], eq: true};
+  }
+  if (topic === 'quad'){
+    const r1 = prR(-7, 7), r2 = L === 3 && Math.random() < .25 ? r1 : prR(-7, 7), a = L === 1 ? 1 : L === 2 ? prR(1, 3) : prNZ(-3, 3);
+    return {expr: `${prLin([[a, 'x^2'], [-a * (r1 + r2), 'x'], [a * r1 * r2, '']])} = 0`, ans: r1 === r2 ? [r1] : [r1, r2], eq: true};
+  }
+  /* powers and roots */
+  if (L === 1){ if (Math.random() < .5){ const a = prR(2, 15); return {expr: `${a}^2`, ans: [a * a]}; } const a = prR(2, 15); return {expr: `sqrt(${a * a})`, ans: [a]}; }
+  if (L === 2){ const k = prR(0, 2); if (k === 0){ const a = prR(2, 6); return {expr: `${a}^3`, ans: [a ** 3]}; } if (k === 1){ const a = prR(2, 6); return {expr: `cbrt(${a ** 3})`, ans: [a]}; } const e = prR(3, 10); return {expr: `2^${e}`, ans: [2 ** e]}; }
+  const T3 = [[3, 4, 5], [5, 12, 13], [6, 8, 10], [8, 15, 17], [9, 12, 15]][prR(0, 4)], m = prR(2, 4), e = prR(2, 4);
+  return Math.random() < .5 ? {expr: `sqrt(${T3[0]}^2 + ${T3[1]}^2)`, ans: [T3[2]]} : {expr: `sqrt(${m * m}) * ${m}^${e}`, ans: [m * m ** e]};
+}
+/* the user's answer: numbers, fractions (3/4), mixed (1 3/4), roots separated by commas or "or" */
+function prParseAns(s){
+  const parts = String(s || '').replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[−–]/g, '-').replace(/x\s*\d?\s*=/gi, '').split(/[,;|]|\bor\b|או|أو/i).map(x => x.trim()).filter(Boolean);
+  return parts.map(p => { let m = /^(-?)(\d+)\s+(\d+)\/(\d+)$/.exec(p); if (m) return (m[1] ? -1 : 1) * (+m[2] + +m[3] / +m[4]);
+    m = /^(-?\d+(?:\.\d+)?)\s*\/\s*(-?\d+(?:\.\d+)?)$/.exec(p); if (m) return +m[2] ? +m[1] / +m[2] : NaN;
+    const x = Number(p.replace(/%$/, '')); return isFinite(x) ? x : NaN; });
+}
+const prClose = (a, b) => Math.abs(a - b) <= 1e-6 * Math.max(1, Math.abs(b)) || Math.abs(a - b) < 0.005 && Math.abs(b) > 1e-3 && !Number.isInteger(b) && Math.abs(a - b) / Math.abs(b) < 0.002;
+function prCheck(user, ans){ if (!user.length || user.some(x => !isFinite(x))) return false; const u = [...new Set(user.map(x => +x.toFixed(9)))]; if (u.length !== ans.length) return false; return ans.every(a => u.some(x => prClose(x, a))); }
+function prD(){ const d = miD('practice'); if (!PR_TOPICS.includes(d.topic)) d.topic = 'lin'; if (!['easy', 'medium', 'hard'].includes(d.lv)) d.lv = 'easy'; ['ok', 'n', 'streak', 'best'].forEach(k => { if (typeof d[k] !== 'number') d[k] = 0; }); return d; }
+function prNew(){ const d = prD(); d.cur = prMake(d.topic, d.lv); d.res = null; d.shown = false; saveSet(); }
+function prAnsTxt(c){ return c.ans.map(v => (c.frac && mxFrac(v)) || cs2N(v)).join(', '); }
+function prRender(){
+  const box = document.getElementById('pr_body'); if (!box) return; const d = prD(), E = csE; if (!d.cur) prNew(); const c = d.cur;
+  let q = ''; try { q = mxHTML(mxParse(c.expr)); } catch (e) { q = E(c.expr); }
+  box.innerHTML = `<div class="mi-card">${c.q ? `<p class="pr-txt">${E(c.q)}</p>` : `<p class="pr-txt">${E(t(c.eq ? (c.ans.length > 1 || d.topic === 'quad' ? 'pr_solveQ' : 'pr_solveL') : 'pr_calc'))}</p>`}
+      <div class="pr-q" dir="ltr">${q}</div>
+      <div class="pr-ans"><input id="pr_in" dir="ltr" autocomplete="off" inputmode="text" enterkeyhint="done" placeholder="${E(t(c.eq && d.topic === 'quad' ? 'pr_phRoots' : c.frac ? 'pr_phFrac' : 'pr_ph'))}" value="${E(d.last || '')}"><button type="button" class="gold-btn" id="pr_chk">${E(t('pr_check'))}</button></div>
+      <div id="pr_res" aria-live="polite">${d.res ? (d.res === 'ok' ? `<p class="pr-ok">✓ ${E(t('pr_right'))}</p>` : `<p class="pr-no">✗ ${E(t('pr_wrong'))}${d.shown ? ' ' + E(t('pr_answerIs', {a: prAnsTxt(c)})) : ''}</p>`) : ''}</div>
+      <div class="btnrow"><button type="button" class="mv" id="pr_sol">🪜 ${E(t('pr_show'))}</button><button type="button" class="mv" id="pr_next">➡️ ${E(t('pr_next'))}</button></div></div>
+    <div id="pr_steps"></div>
+    <div class="pr-score"><span>✓ ${E(t('pr_score', {ok: d.ok, n: d.n}))}</span><span>🔥 ${E(t('pr_streak', {s: d.streak}))}</span><span>🏆 ${E(t('pr_best', {b: d.best}))}</span></div>`;
+}
+async function prSolution(){
+  const d = prD(), c = d.cur, out = document.getElementById('pr_steps'); if (!c || !out) return; const E = csE;
+  if (d.res !== 'ok'){ d.shown = true; if (!d.res){ d.res = 'no'; d.n++; d.streak = 0; } saveSet(); prRender(); }
+  const o2 = document.getElementById('pr_steps'); if (!o2) return;
+  o2.innerHTML = `<div class="mx-card"><span class="mx-sub">⏳ ${E(t('mx_comp'))}</span></div>`;
+  let r = null; try { r = await xsSolve(c.expr, mxBaseScope()); } catch (e) { r = null; }
+  const o3 = document.getElementById('pr_steps'); if (!o3) return;
+  if (!r || r.kind === 'fail' || !r.steps || !r.steps.length){ o3.innerHTML = `<div class="mx-card"><div class="mx-lab">${E(t('pr_answer'))}</div><div class="cs-big" dir="ltr">${E(prAnsTxt(c))}</div></div>`; return; }
+  o3.innerHTML = `<div class="mx-card cs-res"><div class="mx-lab">${E(t(XS_KIND[r.kind] || 'xs_kCalc'))}</div><div class="cs-big" dir="ltr">${r.answer}</div></div>
+    <details class="mx-steps xs-steps" open><summary>🪜 ${E(t('pr_way'))} (${r.steps.length})</summary><ol class="xs-ol">${r.steps.map(st => `<li><div class="xs-k">${xsKtxt(t(st.k, st.p || {}))}</div>${st.h ? `<div class="xs-m" dir="ltr">${st.h}</div>` : ''}</li>`).join('')}</ol></details>`;
+}
+function prDoCheck(){
+  const d = prD(), i = document.getElementById('pr_in'); if (!i || !d.cur) return; const v = i.value.trim(); if (!v){ i.focus(); return; }
+  d.last = v; const ok = prCheck(prParseAns(v), d.cur.ans);
+  if (d.res !== 'ok'){ if (ok){ if (!d.res){ d.ok++; d.n++; d.streak++; d.best = Math.max(d.best, d.streak); } d.res = 'ok'; } else { if (!d.res){ d.n++; d.streak = 0; } d.res = 'no'; } }
+  saveSet(); prRender(); const j = document.getElementById('pr_in'); if (j && d.res !== 'ok') j.focus();
+}
+miniDef('practice', {
+  resettable: true,
+  render(box){
+    const d = prD(), E = csE;
+    box.innerHTML = `<div class="ds-chips bk-tabs" role="tablist">${PR_TOPICS.map(k => `<button type="button" role="tab" class="ds-chip${k === d.topic ? ' on' : ''}" aria-selected="${k === d.topic}" data-prtopic="${k}">${E(t('pr_t_' + k))}</button>`).join('')}</div>
+      <div class="ds-chips" role="radiogroup" aria-label="${E(t('pr_level'))}">${['easy', 'medium', 'hard'].map(k => `<button type="button" role="radio" class="ds-chip${k === d.lv ? ' on' : ''}" aria-checked="${k === d.lv}" data-prlv="${k}">${E(t('pr_l_' + k))}</button>`).join('')}</div>
+      <div id="pr_body"></div><p class="fine">${E(t('pr_how'))}</p>`;
+    prRender();
+  }
+});
+
+/* ================= events ================= */
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest) return; let b;
+  if ((b = t0.closest('[data-uncat]'))){ const d = miD('units'); d.cat = b.dataset.uncat; d.a = UN_DEF[d.cat][0]; d.b = UN_DEF[d.cat][1]; saveSet(); miRender('units'); return; }
+  if (t0.closest('#un_swap')){ const d = unD(); [d.a, d.b] = [d.b, d.a]; saveSet(); miRender('units'); return; }
+  if (t0.closest('#st2_ex')){ const d = miD('stats'); d.txt = '72, 85, 90, 66, 85, 78, 93, 85, 70, 88'; saveSet(); miRender('stats'); return; }
+  if (t0.closest('#st2_clr')){ const d = miD('stats'); d.txt = ''; saveSet(); miRender('stats'); const ta = document.getElementById('st2_ta'); if (ta) ta.focus(); return; }
+  if ((b = t0.closest('[data-prtopic]'))){ const d = prD(); d.topic = b.dataset.prtopic; d.last = ''; prNew(); miRender('practice'); return; }
+  if ((b = t0.closest('[data-prlv]'))){ const d = prD(); d.lv = b.dataset.prlv; d.last = ''; prNew(); miRender('practice'); return; }
+  if (t0.closest('#pr_chk')){ prDoCheck(); return; }
+  if (t0.closest('#pr_next')){ const d = prD(); d.last = ''; prNew(); prRender(); const i = document.getElementById('pr_in'); if (i) i.focus(); return; }
+  if (t0.closest('#pr_sol')){ prSolution(); return; }
+});
+document.addEventListener('input', e => {
+  const el = e.target; if (!el) return;
+  if (el.id === 'un_v'){ unD().v = el.value; unOut(); clearTimeout(unOut.t); unOut.t = setTimeout(() => { try { saveSet(); } catch (er) {} }, 600); }
+  else if (el.id === 'st2_ta'){ miD('stats').txt = el.value; clearTimeout(st2Out.t); st2Out.t = setTimeout(() => { st2Out(); try { saveSet(); } catch (er) {} }, 250); }
+});
+document.addEventListener('change', e => { const el = e.target; if (!el) return; if (el.id === 'un_a' || el.id === 'un_b'){ unD()[el.id === 'un_a' ? 'a' : 'b'] = el.value; saveSet(); unOut(); } });
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target && e.target.id === 'pr_in'){ e.preventDefault(); prDoCheck(); } });
+try { if (Array.isArray(FREE_TABS)) FREE_TABS.push('units', 'stats', 'practice'); renderTiles(); } catch (e) {}
+try { Object.assign(GS_SYN, {
+  units: 'המרה המרת יחידות מטר קילומטר מייל אינץ׳ קילו פאונד ליטר גלון צלזיוס פרנהייט דונם קמ״ש בייט קלוריות unit converter convert mile inch pound gallon celsius fahrenheit تحويل وحدات ميل رطل غالون',
+  stats: 'סטטיסטיקה ממוצע חציון שכיח סטיית תקן שונות רבעון statistics mean median mode standard deviation variance quartile إحصاء متوسط وسيط انحراف معياري',
+  practice: 'תרגול תרגילים מבחן בגרות שיעורי בית משוואות שברים practice exercises quiz homework equations fractions تمرين تمارين معادلات كسور'}); } catch (e) {}
+Object.assign(T, {
+  tab_units:['המרת יחידות','تحويل الوحدات','Unit converter'], d_units:['אורך, משקל, נפח, טמפרטורה, שטח, מהירות, זמן, נתונים, אנרגיה, לחץ וצריכת דלק – עם הנוסחה והחישוב.','الطول والوزن والحجم والحرارة والمساحة والسرعة والوقت والبيانات والطاقة والضغط واستهلاك الوقود – مع المعادلة والحساب.','Length, mass, volume, temperature, area, speed, time, data, energy, pressure and fuel use – with the formula and the working.'],
+  tab_stats:['סטטיסטיקה','الإحصاء','Statistics'], d_stats:['ממוצע, חציון, שכיח, רבעונים וסטיית תקן לרשימת מספרים – עם הדרך המלאה.','المتوسط والوسيط والمنوال والربيعيات والانحراف المعياري لقائمة أرقام – مع الطريقة كاملة.','Mean, median, mode, quartiles and standard deviation for a list of numbers – with the full working.'],
+  tab_practice:['תרגול','تمرين','Practice'], d_practice:['תרגילים אקראיים לפי נושא ורמה – פותרים, בודקים, ורואים את הפתרון המלא שלב אחרי שלב.','تمارين عشوائية حسب الموضوع والمستوى – تحلّون وتتحققون وترون الحل الكامل خطوة بخطوة.','Random exercises by topic and level – solve, check, and see the full solution step by step.'],
+  un_c_len:['אורך','الطول','Length'], un_c_mass:['משקל','الوزن','Mass'], un_c_vol:['נפח','الحجم','Volume'], un_c_temp:['טמפרטורה','الحرارة','Temperature'], un_c_area:['שטח','المساحة','Area'], un_c_speed:['מהירות','السرعة','Speed'], un_c_time:['זמן','الوقت','Time'], un_c_data:['נתונים','البيانات','Data'], un_c_energy:['אנרגיה','الطاقة','Energy'], un_c_press:['לחץ','الضغط','Pressure'], un_c_fuel:['צריכת דלק','استهلاك الوقود','Fuel use'],
+  un_value:['ערך','القيمة','Value'], un_from:['מ־','من','From'], un_to:['אל','إلى','To'], un_swap:['החלפת כיוון','تبديل الاتجاه','Swap'], un_need:['הקלידו מספר.','اكتبوا رقمًا.','Type a number.'], un_bad:['אי אפשר להמיר את הערך הזה (למשל אפס בצריכת דלק).','لا يمكن تحويل هذه القيمة (مثل صفر في استهلاك الوقود).','This value can\'t be converted (e.g. zero fuel use).'],
+  un_way:['הדרך','الطريقة','The working'], un_factor:['1 {a} = {f} {b}','1 {a} = {f} {b}','1 {a} = {f} {b}'], un_all:['הערך בכל היחידות','القيمة بكل الوحدات','The value in every unit'],
+  un_usNote:['כוס, כפית, אונקיית נוזל, גלון ו־mpg הם לפי ההגדרה האמריקאית, אלא אם כתוב בריטי.','الكوب والملعقة والأونصة السائلة والغالون و mpg حسب التعريف الأمريكي ما لم يُذكر بريطاني.','Cup, teaspoon, fluid ounce, gallon and mpg are US measures unless marked UK.'],
+  un_dataNote:['KB/MB/GB הם לפי 1000; KiB/MiB/GiB לפי 1024.','KB/MB/GB بأساس 1000؛ KiB/MiB/GiB بأساس 1024.','KB/MB/GB use 1000; KiB/MiB/GiB use 1024.'],
+  st2_in:['מספרים (מופרדים בפסיק, ברווח או בשורה חדשה)','أرقام (مفصولة بفاصلة أو مسافة أو سطر جديد)','Numbers (separated by commas, spaces or new lines)'], st2_example:['דוגמה','مثال','Example'], st2_clear:['ניקוי','مسح','Clear'],
+  st2_need:['הקלידו לפחות מספר אחד.','اكتبوا رقمًا واحدًا على الأقل.','Type at least one number.'], st2_many:['יותר מדי מספרים (עד 5,000).','أرقام كثيرة جدًا (حتى 5,000).','Too many numbers (up to 5,000).'], st2_nOf:['מתוך {n} מספרים','من {n} أرقام','from {n} numbers'],
+  st2_count:['כמות (n)','العدد (n)','Count (n)'], st2_sum:['סכום','المجموع','Sum'], st2_mean:['ממוצע','المتوسط','Mean'], st2_median:['חציון','الوسيط','Median'], st2_mode:['שכיח','المنوال','Mode'], st2_noMode:['אין (כל ערך מופיע פעם אחת)','لا يوجد (كل قيمة مرة واحدة)','None (each value appears once)'],
+  st2_min:['מינימום','الأدنى','Minimum'], st2_max:['מקסימום','الأقصى','Maximum'], st2_range:['טווח','المدى','Range'], st2_q1:['רבעון ראשון (Q1)','الربيع الأول (Q1)','First quartile (Q1)'], st2_q3:['רבעון שלישי (Q3)','الربيع الثالث (Q3)','Third quartile (Q3)'], st2_iqr:['טווח בין־רבעוני (IQR)','المدى الربيعي (IQR)','Interquartile range (IQR)'],
+  st2_vp:['שונות (אוכלוסייה) σ²','التباين (مجتمع) σ²','Variance (population) σ²'], st2_sp:['סטיית תקן (אוכלוסייה) σ','الانحراف المعياري (مجتمع) σ','Standard deviation (population) σ'], st2_vs:['שונות (מדגם) s²','التباين (عينة) s²','Variance (sample) s²'], st2_ssd:['סטיית תקן (מדגם) s','الانحراف المعياري (عينة) s','Standard deviation (sample) s'], st2_cv:['מקדם השתנות','معامل الاختلاف','Coefficient of variation'],
+  st2_qNote:['הרבעונים מחושבים בשיטת "חציון של כל חצי" (בלי החציון כשמספר הערכים אי־זוגי). מחשבונים אחרים עשויים להשתמש בשיטה מעט שונה.','الربيعيات محسوبة بطريقة "وسيط كل نصف" (دون الوسيط عند عدد فردي). قد تستخدم حاسبات أخرى طريقة مختلفة قليلًا.','Quartiles use the "median of each half" method (excluding the median when the count is odd). Other calculators may use a slightly different method.'],
+  st2_plot:['תרשים קופסה ונקודות','مخطط الصندوق والنقاط','Box and dot plot'], st2_plotKey:['קו זהב: חציון · קו מקווקו: ממוצע · קופסה: Q1 עד Q3','الخط الذهبي: الوسيط · المتقطع: المتوسط · الصندوق: من Q1 إلى Q3','Gold line: median · dashed: mean · box: Q1 to Q3'],
+  st2_way:['הדרך המלאה','الطريقة الكاملة','The full working'], st2_wMean:['ממוצע: מחברים את כל המספרים ומחלקים בכמות','المتوسط: نجمع كل الأرقام ونقسم على عددها','Mean: add all the numbers and divide by how many there are'], st2_wSort:['מסדרים את המספרים מהקטן לגדול','نرتّب الأرقام من الأصغر إلى الأكبر','Sort the numbers from smallest to largest'],
+  st2_wMed:['חציון:','الوسيط:','Median:'], st2_midOdd:['כמות אי־זוגית – האיבר האמצעי הוא במקום {p}','عدد فردي – العنصر الأوسط في الموضع {p}','odd count – the middle value is at position {p}'], st2_midEven:['כמות זוגית – ממוצע האיברים במקומות {p} ו־{q}','عدد زوجي – متوسط العنصرين في الموضعين {p} و{q}','even count – the average of positions {p} and {q}'], st2_medIs:['החציון =','الوسيط =','Median ='],
+  st2_wDev:['סטיות מהממוצע: מכל מספר מחסירים את הממוצע ומעלים בריבוע','الانحرافات عن المتوسط: نطرح المتوسط من كل رقم ونربّع','Deviations from the mean: subtract the mean from each number and square it'], st2_devsBig:['(טבלת הסטיות מוצגת עד 20 מספרים)','(جدول الانحرافات يظهر حتى 20 رقمًا)','(the deviations table is shown for up to 20 numbers)'],
+  st2_wVar:['שונות וסטיית תקן: באוכלוסייה מחלקים ב־n, במדגם ב־n − 1, ואז שורש','التباين والانحراف المعياري: للمجتمع نقسم على n وللعينة على n − 1 ثم الجذر','Variance and standard deviation: divide by n for a population, by n − 1 for a sample, then take the root'],
+  pr_t_ops:['סדר פעולות','ترتيب العمليات','Order of operations'], pr_t_frac:['שברים','الكسور','Fractions'], pr_t_pct:['אחוזים','النسب المئوية','Percent'], pr_t_lin:['משוואות ממעלה ראשונה','معادلات من الدرجة الأولى','Linear equations'], pr_t_quad:['משוואות ריבועיות','معادلات تربيعية','Quadratic equations'], pr_t_pow:['חזקות ושורשים','القوى والجذور','Powers and roots'],
+  pr_level:['רמה','المستوى','Level'], pr_l_easy:['קל','سهل','Easy'], pr_l_medium:['בינוני','متوسط','Medium'], pr_l_hard:['קשה','صعب','Hard'],
+  pr_calc:['חשבו:','احسبوا:','Calculate:'], pr_solveL:['פתרו את המשוואה (מה x?):','حلّوا المعادلة (ما قيمة x؟):','Solve the equation (what is x?):'], pr_solveQ:['פתרו את המשוואה (מצאו את כל הפתרונות):','حلّوا المعادلة (جدوا كل الحلول):','Solve the equation (find all solutions):'],
+  pr_pctOf:['כמה זה {p}% מתוך {y}?','كم يساوي {p}% من {y}؟','What is {p}% of {y}?'], pr_pctOff:['מוצר עולה {y} ₪ ויש עליו הנחה של {p}%. כמה משלמים?','منتج سعره {y} ₪ وعليه خصم {p}%. كم ندفع؟','An item costs ₪{y} with a {p}% discount. How much do you pay?'], pr_pctWhat:['{a} הם כמה אחוזים מתוך {b}?','{a} تساوي كم بالمئة من {b}؟','{a} is what percent of {b}?'],
+  pr_ph:['התשובה שלכם','إجابتكم','Your answer'], pr_phFrac:['למשל 7/12 או 0.58','مثلًا 7/12 أو 0.58','e.g. 7/12 or 0.58'], pr_phRoots:['למשל 2, 3','مثلًا 2, 3','e.g. 2, 3'],
+  pr_check:['בדיקה','تحقق','Check'], pr_right:['נכון! כל הכבוד','صحيح! أحسنتم','Correct! Well done'], pr_wrong:['לא בדיוק – נסו שוב או הציגו את הפתרון.','ليس تمامًا – حاولوا مجددًا أو اعرضوا الحل.','Not quite – try again or show the solution.'], pr_answerIs:['התשובה: {a}','الإجابة: {a}','The answer: {a}'],
+  pr_show:['הצגת הפתרון','عرض الحل','Show the solution'], pr_next:['תרגיל הבא','التمرين التالي','Next exercise'], pr_answer:['התשובה','الإجابة','The answer'], pr_way:['הפתרון שלב אחרי שלב','الحل خطوة بخطوة','The solution step by step'],
+  pr_score:['{ok} נכונות מתוך {n}','{ok} صحيحة من {n}','{ok} right out of {n}'], pr_streak:['רצף: {s}','سلسلة: {s}','Streak: {s}'], pr_best:['שיא: {b}','الأفضل: {b}','Best: {b}'],
+  pr_how:['אפשר לענות בשבר (3/4), במספר עשרוני, או בכמה פתרונות מופרדים בפסיק.','يمكن الإجابة بكسر (3/4) أو برقم عشري أو بعدة حلول مفصولة بفاصلة.','You can answer with a fraction (3/4), a decimal, or several solutions separated by commas.'],
+});
+
+/* 13.31: employee and self-employed at the same time – one income tax on both, National Insurance split between the two, and the tax advances the business part needs */
+function diNI(S, I){
+  /* monthly: S = salary, I = business profit after the deductible pension. The reduced rate and the ceiling are shared, the salary uses them first */
+  const cut = TAX.niCut, mx = TAX.niMax;
+  const empLo = Math.min(S, cut), empHi = Math.max(0, Math.min(S, mx) - cut);
+  const emp = {ni: empLo * TAX.niLow + empHi * TAX.niHigh, h: empLo * TAX.hLow + empHi * TAX.hHigh};
+  const cut2 = Math.max(0, cut - S), mx2 = Math.max(0, mx - S);
+  const part = (B, lo, hi) => { const b = Math.min(B, mx2), l = Math.min(b, cut2), h = Math.max(0, b - cut2); return l * lo + h * hi; };
+  let self = {ni: 0, h: 0, base: 0};
+  if (I > 0 && mx2 > 0){ let a = 0, z = I; for (let i = 0; i < 70; i++){ const m = (a + z) / 2; if (m + 0.52 * part(m, TAX.sNiLow, TAX.sNiHigh) < I) a = m; else z = m; }
+    const B = S > 0 ? (a + z) / 2 : Math.max((a + z) / 2, TAX.sMinBase || 0); self = {ni: part(B, TAX.sNiLow, TAX.sNiHigh), h: part(B, TAX.sHLow, TAX.sHHigh), base: B}; }
+  return {emp, self};
+}
+function diCalc(v){
+  const S = Math.max(0, v.sal), months = Math.min(12, Math.max(0, v.months)), salY = S * months;
+  const profit = Math.max(0, v.rev - v.exp), pts = Math.max(0, +v.pts) + Math.max(0, v.extra);
+  /* employee pension: credit on up to 7% of the salary up to the cap */
+  const empPens = S * Math.max(0, v.salPens) / 100, empCred = TAX.pensCreditRate * Math.min(empPens, TAX.pensDepRate * Math.min(S, TAX.pensSalaryCap)) * months;
+  /* self-employed pension: part is a credit (5.5%), part a deduction (11%), on the business income up to the cap */
+  const qual = Math.min(profit, 232800), selfIn = Math.max(0, v.selfPens);
+  const credPart = Math.min(selfIn, 0.055 * qual), dedPart = Math.min(Math.max(0, selfIn - credPart), 0.11 * qual);
+  const I = Math.max(0, (profit - dedPart) / 12), ni = diNI(S, I), ni0 = diNI(0, I);      // months with a salary, and months without one
+  const niEmpY = (ni.emp.ni + ni.emp.h) * months, selfNiY = ni.self.ni * months + ni0.self.ni * (12 - months);
+  const niSelfY = selfNiY + ni.self.h * months + ni0.self.h * (12 - months), niDed = selfNiY * 0.52;
+  const busTaxable = Math.max(0, profit - niDed - dedPart), taxable = salY + busTaxable;
+  const credits = pts * TAX.point;
+  const all = taxByBrackets(taxable), totalTax = Math.max(0, all.tax - credits - empCred - TAX.pensCreditRate * credPart) + all.sur;
+  /* what the employer already takes, as if the salary were the only income */
+  const sb = taxByBrackets(salY), withheld = Math.max(0, sb.tax - credits - empCred) + sb.sur;
+  const due = Math.max(0, totalTax - withheld);
+  const netSal = salY - niEmpY - withheld - empPens * months, netBus = profit - niSelfY - due - selfIn;
+  const gross = salY + profit, net = netSal + netBus;
+  return {S, salY, profit, ni, niEmpY, niSelfY, niDed, dedPart, credPart, busTaxable, taxable, totalTax, withheld, due, netSal, netBus, gross, net, pts, months,
+    marg: marginalRate(taxable) * 100, eff: gross ? (niEmpY + niSelfY + totalTax) / gross * 100 : 0, busShare: profit ? (niSelfY + due) / profit * 100 : 0};
+}
+miniDef('dualinc', {
+  intro: 'di_intro',
+  fields: [
+    {k: 'sal', t: 'di_sal', type: 'num', u: '₪', def: 12000, h: 'di_salH'},
+    {k: 'months', t: 'di_months', type: 'num', u: 'u_mo', def: 12},
+    {k: 'salPens', t: 'di_salPens', type: 'num', u: '%', def: 6},
+    {k: 'rev', t: 'di_rev', type: 'num', u: '₪', def: 120000, h: 'di_revH'},
+    {k: 'exp', t: 'di_exp', type: 'num', u: '₪', def: 20000},
+    {k: 'selfPens', t: 'di_selfPens', type: 'num', u: '₪', def: 6000, h: 'di_selfPensH'},
+    {k: 'pts', t: 'di_pts', type: 'sel', def: '2.25', opts: [['2.25', 'di_man'], ['2.75', 'di_woman']]},
+    {k: 'extra', t: 'di_extra', type: 'num', def: 0, h: 'di_extraH'}
+  ],
+  calc(v){
+    const r = diCalc(v), M0 = MI0, P = x => MIP(x, 1);
+    const adv = r.due / 12;
+    return {
+      hero: {l: t('di_netM'), v: M0(r.net / 12), sub: t('di_netSub', {s: M0(r.netSal / 12), b: M0(r.netBus / 12)})},
+      warn: r.due > 0 ? t('di_advWarn', {a: M0(adv)}) : '',
+      rows: [
+        [t('di_r_salY'), M0(r.salY)], [t('di_r_profit'), M0(r.profit)], [t('di_r_gross'), M0(r.gross), 'key'],
+        [t('di_r_niEmp'), M0(-r.niEmpY)], [t('di_r_niSelf'), M0(-r.niSelfY)], [t('di_r_niDed'), M0(r.niDed)],
+        r.dedPart > 0 ? [t('di_r_pensDed'), M0(r.dedPart)] : null,
+        [t('di_r_taxable'), M0(r.taxable)],
+        [t('di_r_taxAll'), M0(-r.totalTax)], [t('di_r_withheld'), M0(-r.withheld)], [t('di_r_due'), M0(-r.due), 'key'],
+        [t('di_r_adv'), M0(adv)],
+        [t('di_r_netY'), M0(r.net), 'key'],
+        [t('di_r_eff'), P(r.eff)], [t('di_r_marg'), P(r.marg)], [t('di_r_busShare'), P(r.busShare)]
+      ].filter(Boolean),
+      bars: [{l: t('di_b_netSal'), v: Math.max(0, r.netSal)}, {l: t('di_b_netBus'), v: Math.max(0, r.netBus)}, {l: t('di_b_ni'), v: r.niEmpY + r.niSelfY, dn: true}, {l: t('di_b_tax'), v: r.totalTax, dn: true}],
+      tips: [t('di_t1'), t('di_t2'), t('di_t3'), t('di_t4')],
+      note: t('di_note'),
+      acts: [{t: '↗ ' + t('tab_salary'), fn: () => activate('salary')}, {t: '↗ ' + t('tab_selfemp'), fn: () => activate('selfemp')}, {t: '🔔 ' + t('di_remAdv'), fn: () => { const d = new Date(); d.setMonth(d.getMonth() + 1, 15); miRemind(t('di_remT'), d.toISOString().slice(0, 10), t('di_remN', {a: MI0(adv)}), Math.round(adv)); }}]
+    };
+  },
+  disc: 'mi_notAdvice'
+});
+try { Object.assign(GS_SYN, {dualinc: 'שכיר ועצמאי שכיר+עצמאי גם וגם הכנסה משולבת מקדמות עוסק employee self-employed both side business advances موظف ومستقل'}); } catch (e) {}
+Object.assign(T, {
+  tab_dualinc:['שכיר + עצמאי','موظف + مستقل','Employee + self-employed'], d_dualinc:['גם שכיר וגם עצמאי? מס הכנסה אחד על שתי ההכנסות, ביטוח לאומי משותף, וכמה מקדמות צריך לשלם על העסק.','موظف ومستقل معًا؟ ضريبة دخل واحدة على الدخلين، تأمين وطني مشترك، وكم دفعات مقدّمة تلزم عن العمل الحر.','Both an employee and self-employed? One income tax on both incomes, shared National Insurance, and the tax advances the business needs.'],
+  di_intro:['המעסיק מנכה מס כאילו המשכורת היא ההכנסה היחידה. ההכנסה מהעסק נוספת מעליה ומחויבת במדרגות הגבוהות – לכן צריך לשלם עליה מקדמות.','صاحب العمل يقتطع الضريبة كأن الراتب هو الدخل الوحيد. دخل العمل الحر يُضاف فوقه ويُفرض عليه في الشرائح الأعلى – لذا تلزم دفعات مقدّمة.','The employer withholds tax as if the salary were your only income. Business income comes on top, in the higher brackets – so it needs tax advances.'],
+  di_sal:['משכורת ברוטו חודשית','الراتب الإجمالي الشهري','Monthly gross salary'], di_salH:['מהתלוש, לפני ניכויים','من القسيمة، قبل الاستقطاعات','From the payslip, before deductions'], di_months:['חודשי עבודה כשכיר בשנה','أشهر العمل كموظف في السنة','Months as an employee this year'], di_salPens:['הפרשת עובד לפנסיה','اقتطاع الموظف للتقاعد','Employee pension deduction'],
+  di_rev:['הכנסות העסק בשנה','دخل العمل الحر السنوي','Business revenue per year'], di_revH:['בלי מע״מ','بدون ضريبة القيمة المضافة','Without VAT'], di_exp:['הוצאות מוכרות בשנה','المصاريف المعترف بها سنويًا','Deductible expenses per year'], di_selfPens:['הפקדה לפנסיה כעצמאי בשנה','إيداع تقاعد كمستقل سنويًا','Self-employed pension deposit per year'], di_selfPensH:['חלק מקבל זיכוי וחלק ניכוי','جزء يحصل على خصم ضريبي وجزء تنزيل','Part gets a credit, part a deduction'],
+  di_pts:['נקודות זיכוי בסיס','نقاط الخصم الأساسية','Base credit points'], di_man:['גבר – 2.25','رجل – 2.25','Man – 2.25'], di_woman:['אישה – 2.75','امرأة – 2.75','Woman – 2.75'], di_extra:['נקודות נוספות','نقاط إضافية','Extra points'], di_extraH:['ילדים, תואר, שירות צבאי – אפשר לבדוק במסך הזכויות','أطفال، شهادة، خدمة عسكرية – يمكن الفحص في شاشة الحقوق','Children, degree, army service – check them on the rights screen'],
+  di_netM:['נטו בחודש משתי ההכנסות','الصافي الشهري من الدخلين','Net per month from both incomes'], di_netSub:['מהמשכורת {s} · מהעסק {b}','من الراتب {s} · من العمل الحر {b}','Salary {s} · business {b}'],
+  di_advWarn:['על העסק כדאי לשלם מקדמות מס של כ־{a} בחודש, אחרת יהיה חוב בסוף השנה.','يُستحسن دفع دفعات ضريبية مقدّمة عن العمل الحر بنحو {a} شهريًا، وإلا سيكون دين في نهاية السنة.','Pay tax advances of about {a} a month on the business, or there will be a debt at year end.'],
+  di_r_salY:['משכורת שנתית','الراتب السنوي','Annual salary'], di_r_profit:['רווח העסק','ربح العمل الحر','Business profit'], di_r_gross:['סך ההכנסה','إجمالي الدخل','Total income'],
+  di_r_niEmp:['ביטוח לאומי ובריאות – שכיר','تأمين وطني وصحة – موظف','NI and health – employee'], di_r_niSelf:['ביטוח לאומי ובריאות – עצמאי','تأمين وطني وصحة – مستقل','NI and health – self-employed'], di_r_niDed:['ניכוי 52% מדמי הביטוח הלאומי','تنزيل 52% من رسوم التأمين الوطني','52% of NI deducted'],
+  di_r_pensDed:['ניכוי פנסיה כעצמאי','تنزيل التقاعد كمستقل','Self-employed pension deduction'], di_r_taxable:['הכנסה חייבת במס (משותפת)','الدخل الخاضع للضريبة (مشترك)','Taxable income (combined)'],
+  di_r_taxAll:['מס הכנסה על שתי ההכנסות','ضريبة الدخل على الدخلين','Income tax on both incomes'], di_r_withheld:['מתוכו נוכה במשכורת','منها اقتُطع من الراتب','Of which withheld from salary'], di_r_due:['נשאר לשלם על העסק','المتبقي للدفع عن العمل الحر','Left to pay on the business'], di_r_adv:['מקדמה חודשית מומלצת','دفعة مقدّمة شهرية موصى بها','Suggested monthly advance'],
+  di_r_netY:['נטו לשנה','الصافي السنوي','Net per year'], di_r_eff:['שיעור מס ממוצע (כולל ביטוח לאומי)','معدل الضريبة المتوسط (مع التأمين الوطني)','Average rate (incl. NI)'], di_r_marg:['מדרגת מס שולית','شريحة الضريبة الحدّية','Marginal tax bracket'], di_r_busShare:['מכל שקל רווח בעסק הולך למס ולביטוח לאומי','من كل شيكل ربح يذهب للضريبة والتأمين','Of each shekel of business profit, tax and NI take'],
+  di_b_netSal:['נטו מהמשכורת','صافي الراتب','Net from salary'], di_b_netBus:['נטו מהעסק','صافي العمل الحر','Net from business'], di_b_ni:['ביטוח לאומי ובריאות','تأمين وطني وصحة','NI and health'], di_b_tax:['מס הכנסה','ضريبة الدخل','Income tax'],
+  di_t1:['פותחים תיק במס הכנסה ובביטוח לאומי כעצמאי, ומדווחים בביטוח לאומי שיש לכם גם משכורת – כך לא משלמים כפל מעל התקרה.','افتحوا ملفًا لدى ضريبة الدخل والتأمين الوطني كمستقل، وأبلغوا التأمين الوطني أن لديكم راتبًا – حتى لا تدفعوا مضاعفًا فوق السقف.','Open a self-employed file with the tax office and National Insurance, and tell NI you also have a salary – so you don\'t pay twice above the ceiling.'],
+  di_t2:['מקדמות המס נקבעות באחוז מהמחזור. אם השנה שונה מהקודמת – אפשר לבקש לעדכן אותן.','الدفعات المقدّمة تُحدَّد كنسبة من المبيعات. إذا تغيّرت السنة يمكن طلب تحديثها.','Tax advances are set as a percent of turnover. If this year differs, you can ask to update them.'],
+  di_t3:['בסוף השנה מגישים דוח שנתי (טופס 1301) עם טופס 106 מהמעסיק – ושם מתקזז הכול.','في نهاية السنة يُقدَّم تقرير سنوي (نموذج 1301) مع نموذج 106 من صاحب العمل – وهناك تتم التسوية.','At year end you file an annual return (form 1301) with form 106 from the employer – everything is settled there.'],
+  di_t4:['הפקדה לפנסיה ולקרן השתלמות כעצמאי מקטינה את המס בדיוק בחלק שמחויב במדרגה הגבוהה.','الإيداع للتقاعد وصندوق الاستكمال كمستقل يقلّل الضريبة تحديدًا في الجزء الخاضع للشريحة العليا.','Pension and study-fund deposits as self-employed cut tax exactly on the part in the high bracket.'],
+  di_note:['הערכה לשנת 2026: מדרגות מס, נקודות זיכוי וביטוח לאומי לפי הכללים הכלליים. לא כולל מע״מ, הוצאות מיוחדות או הכנסות נוספות.','تقدير لسنة 2026: شرائح الضريبة ونقاط الخصم والتأمين الوطني حسب القواعد العامة. لا يشمل ض.ق.م أو مصاريف خاصة أو دخلًا إضافيًا.','A 2026 estimate: tax brackets, credit points and NI by the general rules. Excludes VAT, special expenses or other income.'],
+  di_remAdv:['תזכורת למקדמה','تذكير بالدفعة المقدّمة','Advance reminder'], di_remT:['מקדמת מס – עסק','دفعة ضريبة مقدّمة – عمل حر','Tax advance – business'], di_remN:['כ־{a} לפי המחשבון שכיר + עצמאי','نحو {a} حسب حاسبة موظف + مستقل','About {a} by the employee + self-employed calculator'],
 });
 
 /* 13.24: across the app – simple mode, first-visit questions, senior mode, sanity checks, "since last time",
