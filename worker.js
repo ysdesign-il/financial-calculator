@@ -1,4 +1,4 @@
-// The site is static files. This small Worker locks the admin version (/admin/), keeps the admin panel's settings (KV),
+// The site is static files (admin panel v2). This small Worker locks the admin version (/admin/), keeps the admin panel's settings (KV),
 // and adds the public part of the panel (message, what's new, parts switched off, forced update) to the main page.
 import {adminGate,publicConfig,pubScript,injectPub,errReport} from './_gate.js';
 const OPT={app:'calc',title:'מחשבון פיננסי',accent:'#8CC8FF',priv:'fin-priv',store:{key:'fin-dev',name:'fin-dev-n'},
