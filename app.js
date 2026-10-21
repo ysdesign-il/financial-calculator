@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261021.154925'){ try { if (!sessionStorage.getItem('fin-hb-20261021.154925')){ sessionStorage.setItem('fin-hb-20261021.154925', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261021.154927'){ try { if (!sessionStorage.getItem('fin-hb-20261021.154927')){ sessionStorage.setItem('fin-hb-20261021.154927', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -12102,7 +12102,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "13.33", "date": "2026-10-21", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261021.154925';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261021.154927';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -31925,7 +31925,7 @@ const BZ_FONTS = {modern: '-apple-system,"Segoe UI","Heebo","Assistant",Arial,sa
 const BZ_PAL = [['#0f766e', '#f0fdfa'], ['#9a3412', '#fff7ed'], ['#1d4ed8', '#eff6ff'], ['#7e22ce', '#faf5ff'], ['#be123c', '#fff1f2'], ['#14532d', '#f0fdf4'], ['#111827', '#f9fafb'], ['#b45309', '#fffbeb']];
 function bzD(){
   if (!SET.sign || typeof SET.sign !== 'object') SET.sign = {};
-  const d = SET.sign; const def = {name: '', tag: '', url: '', cta: '', sub: '', tpl: 'clean', size: 'a6', font: 'modern', c1: '#0f766e', c2: '#f0fdfa', qr: true, nfc: true, dots: false};
+  const d = SET.sign; const def = {name: '', tag: '', url: '', cta: '', sub: '', tpl: 'clean', size: 'a6', font: 'modern', c1: '#0f766e', c2: '#f0fdfa', qr: true, nfc: true, dots: false, shape: 'rect'};
   Object.keys(def).forEach(k => { if (d[k] == null) d[k] = def[k]; }); return d;
 }
 /* the contactless symbol and a phone, drawn */
@@ -31944,21 +31944,23 @@ function bzText(x, text, cx, y, maxW, size, weight, col, font, maxLines){
   const L = bzWrap(x, text, maxW).slice(0, maxLines || 2); L.forEach((l, i) => x.fillText(l, cx, y + i * s * 1.18)); return y + L.length * s * 1.18;
 }
 function bzCover(x, img, W, H){ const k = Math.max(W / img.width, H / img.height), w = img.width * k, h = img.height * k; x.drawImage(img, (W - w) / 2, (H - h) / 2, w, h); }
-function bzDraw(px){
-  const d = bzD(), [mw, mh] = BZ_SIZES[d.size] || BZ_SIZES.a6, W = Math.round(mw / 25.4 * (px || 300)), H = Math.round(mh / 25.4 * (px || 300));
+function bzDraw(px, opt){
+  opt = opt || {};
+  const d = bzD(), [mw, mh] = opt.dims || BZ_SIZES[d.size] || BZ_SIZES.a6, W = Math.round(mw / 25.4 * (px || 300)), H = Math.round(mh / 25.4 * (px || 300));
   const c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d'), F = BZ_FONTS[d.font] || BZ_FONTS.modern;
-  const u = Math.min(W, H) / 100, wide = W > H * 1.2, tpl = d.tpl === 'photo' && !BZX.photo ? 'gradient' : d.tpl, c1 = d.c1, dk = bzShade(c1, -0.42), lt = bzShade(c1, 0.9);
+  const u = Math.min(W, H) / 100, wide = W > H * 1.2, tpl0 = d.tpl === 'photo' && !BZX.photo ? 'gradient' : d.tpl, tpl = opt.noBg && (tpl0 === 'wave' || tpl0 === 'photo') ? 'clean' : tpl0, c1 = d.c1, dk = bzShade(c1, -0.42), lt = bzShade(c1, 0.9);
   /* colours of each design: text, soft text, accent, does the content sit on a light card */
   const S = {clean: ['#111827', '#6b7280', c1, false], bold: ['#ffffff', 'rgba(255,255,255,.86)', '#ffffff', false], elegant: [dk, '#78716c', c1, false], photo: ['#111827', '#6b7280', c1, false],
     gradient: ['#ffffff', 'rgba(255,255,255,.88)', '#ffffff', false], night: ['#ffffff', '#cbd5e1', bzShade(c1, 0.35), false], wave: ['#111827', '#6b7280', c1, false]}[tpl] || ['#111827', '#6b7280', c1, false];
   let [fg, sub, accent] = S;
   /* ---- backgrounds ---- */
-  const blob = (cx, cy, r, col) => { const g = x.createRadialGradient(cx, cy, 0, cx, cy, r); g.addColorStop(0, col); g.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = g; x.fillRect(cx - r, cy - r, r * 2, r * 2); };
   let top = 0;                                   /* where the content area starts (below a picture band) */
+  if (!opt.noBg){
+  const blob = (cx, cy, r, col) => { const g = x.createRadialGradient(cx, cy, 0, cx, cy, r); g.addColorStop(0, col); g.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = g; x.fillRect(cx - r, cy - r, r * 2, r * 2); };
   if (tpl === 'clean'){ x.fillStyle = '#ffffff'; x.fillRect(0, 0, W, H); blob(0, 0, W * 0.75, bzAlpha(c1, 0.16)); blob(W, H, W * 0.8, bzAlpha(c1, 0.12)); x.fillStyle = c1; x.fillRect(0, H - u * 2.2, W, u * 2.2); }
   else if (tpl === 'bold'){ x.fillStyle = c1; x.fillRect(0, 0, W, H); x.save(); x.globalAlpha = 0.08; x.strokeStyle = '#fff'; x.lineWidth = u * 1.6; for (let k = -H; k < W; k += u * 7){ x.beginPath(); x.moveTo(k, 0); x.lineTo(k + H, H); x.stroke(); } x.restore(); blob(W * 0.85, H * 0.12, W * 0.55, 'rgba(255,255,255,.18)'); }
-  else if (tpl === 'elegant'){ x.fillStyle = d.c2 || lt; x.fillRect(0, 0, W, H); blob(W / 2, H * 0.35, W * 0.7, 'rgba(255,255,255,.7)'); x.strokeStyle = c1; x.lineWidth = u * 0.7; x.strokeRect(u * 4, u * 4, W - u * 8, H - u * 8); x.lineWidth = u * 0.25; x.strokeRect(u * 5.5, u * 5.5, W - u * 11, H - u * 11);
-    x.fillStyle = c1; [[u * 4, u * 4], [W - u * 4, u * 4], [u * 4, H - u * 4], [W - u * 4, H - u * 4]].forEach(([a, b]) => { x.save(); x.translate(a, b); x.rotate(Math.PI / 4); x.fillRect(-u * 1.3, -u * 1.3, u * 2.6, u * 2.6); x.restore(); }); }
+  else if (tpl === 'elegant'){ x.fillStyle = d.c2 || lt; x.fillRect(0, 0, W, H); blob(W / 2, H * 0.35, W * 0.7, 'rgba(255,255,255,.7)'); if (!opt.shape){ x.strokeStyle = c1; x.lineWidth = u * 0.7; x.strokeRect(u * 4, u * 4, W - u * 8, H - u * 8); x.lineWidth = u * 0.25; x.strokeRect(u * 5.5, u * 5.5, W - u * 11, H - u * 11);
+    x.fillStyle = c1; [[u * 4, u * 4], [W - u * 4, u * 4], [u * 4, H - u * 4], [W - u * 4, H - u * 4]].forEach(([a, b]) => { x.save(); x.translate(a, b); x.rotate(Math.PI / 4); x.fillRect(-u * 1.3, -u * 1.3, u * 2.6, u * 2.6); x.restore(); }); } }
   else if (tpl === 'photo' && wide){ bzCover(x, BZX.photo, W, H); x.fillStyle = 'rgba(255,255,255,.84)'; x.fillRect(0, 0, W, H); x.fillStyle = c1; x.fillRect(0, H - u * 2.2, W, u * 2.2); }
   else if (tpl === 'photo'){ const band = H * (BZX.logo ? 0.28 : 0.36) * (H > W * 1.15 ? 1 : 0.8); x.fillStyle = '#ffffff'; x.fillRect(0, 0, W, H); x.save(); x.beginPath(); x.rect(0, 0, W, band); x.clip(); bzCover(x, BZX.photo, W, band); const g = x.createLinearGradient(0, band * 0.4, 0, band); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.35)'); x.fillStyle = g; x.fillRect(0, 0, W, band); x.restore();
     x.fillStyle = '#ffffff'; x.beginPath(); x.moveTo(0, band - u * 6); x.quadraticCurveTo(W / 2, band + u * 5, W, band - u * 6); x.lineTo(W, H); x.lineTo(0, H); x.closePath(); x.fill(); x.fillStyle = c1; x.fillRect(0, H - u * 2.2, W, u * 2.2); top = band - u * 2; }
@@ -31968,6 +31970,8 @@ function bzDraw(px){
   else if (tpl === 'wave' && !wide){ x.fillStyle = '#ffffff'; x.fillRect(0, 0, W, H); }
   else if (tpl === 'wave' && false){ const band = 0, g = x.createLinearGradient(0, 0, W, 1); g.addColorStop(0, c1); g.addColorStop(1, dk); x.fillStyle = g; x.beginPath(); x.moveTo(0, 0); x.lineTo(W, 0); x.lineTo(W, band * 0.85); x.bezierCurveTo(W * 0.7, band * 1.25, W * 0.3, band * 0.55, 0, band); x.closePath(); x.fill();
     x.fillStyle = bzAlpha(c1, 0.12); x.beginPath(); x.moveTo(0, H); x.lineTo(W, H); x.lineTo(W, H - u * 10); x.bezierCurveTo(W * 0.6, H - u * 2, W * 0.35, H - u * 16, 0, H - u * 7); x.closePath(); x.fill(); }
+  }
+  if (opt.bgOnly) return c;
   const cta = d.cta || t('bz_ctaDef'), subTxt = d.sub || t('bz_subDef'), qText = String(d.url || '').trim(), q = d.qr && qText ? qrEncode(qText, 1, true) : null;
   let host = ''; try { host = qText ? new URL(/^[a-z]+:/i.test(qText) ? qText : 'https://' + qText).hostname.replace(/^www\./, '') : ''; } catch (e) {}
   const qrCard = (qx, qy, s) => { const qc = qrCanvas(q, {scale: 10, margin: 1, fg: '#111111', bg: '#ffffff', dots: d.dots}), p2 = u * 2.4; x.save(); x.shadowColor = 'rgba(0,0,0,.18)'; x.shadowBlur = u * 3; x.shadowOffsetY = u * 0.8; x.fillStyle = '#ffffff'; bzRound(x, qx - p2, qy - p2, s + p2 * 2, s + p2 * 2, u * 3); x.fill(); x.restore(); x.imageSmoothingEnabled = false; x.drawImage(qc, qx, qy, s, s); x.imageSmoothingEnabled = true; };
@@ -32002,7 +32006,7 @@ function bzDraw(px){
       return y; };
     const used = lay(false), room = H - top - u * 12, k = used > room ? room / used : 1;
     let y0 = top + Math.max(u * 6, (H - top - used * k) / 2);
-    if (tpl === 'wave'){ y0 = u * 7; const band = y0 + headEnd * k + u * 5, g = x.createLinearGradient(0, 0, W, band); g.addColorStop(0, c1); g.addColorStop(1, dk); x.fillStyle = '#ffffff'; x.fillRect(0, 0, W, H); x.fillStyle = g;
+    if (tpl === 'wave' && !opt.noBg){ y0 = u * 7; const band = y0 + headEnd * k + u * 5, g = x.createLinearGradient(0, 0, W, band); g.addColorStop(0, c1); g.addColorStop(1, dk); x.fillStyle = '#ffffff'; x.fillRect(0, 0, W, H); x.fillStyle = g;
       x.beginPath(); x.moveTo(0, 0); x.lineTo(W, 0); x.lineTo(W, band); x.bezierCurveTo(W * 0.7, band + u * 9, W * 0.3, band - u * 5, 0, band + u * 4); x.closePath(); x.fill();
       x.fillStyle = bzAlpha(c1, 0.12); x.beginPath(); x.moveTo(0, H); x.lineTo(W, H); x.lineTo(W, H - u * 10); x.bezierCurveTo(W * 0.6, H - u * 2, W * 0.35, H - u * 16, 0, H - u * 7); x.closePath(); x.fill();
       y0 = Math.max(y0, (H - used * k) / 2 > y0 ? y0 : y0); }
@@ -32020,6 +32024,25 @@ function bzDraw(px){
   }
   return c;
 }
+/* the sign in the chosen shape: rectangle (by size), square, circle or triangle – the content is fitted inside the shape */
+function bzShapePath(x, sh, S){ x.beginPath(); if (sh === 'circle'){ x.arc(S / 2, S / 2, S / 2 - S * 0.006, 0, 7); } else if (sh === 'triangle'){ const r = S * 0.06, P = [[S / 2, S * 0.035], [S * 0.975, S * 0.93], [S * 0.025, S * 0.93]];
+  x.moveTo((P[0][0] + P[2][0]) / 2, (P[0][1] + P[2][1]) / 2); for (let i = 0; i < 3; i++){ const a = P[i], b = P[(i + 1) % 3]; x.arcTo(a[0], a[1], (a[0] + b[0]) / 2, (a[1] + b[1]) / 2, r); } } else x.rect(0, 0, S, S); x.closePath(); }
+function bzFinal(px){
+  const d = bzD(), sh = d.shape || 'rect'; if (sh === 'rect') return bzDraw(px);
+  const [mw, mh] = BZ_SIZES[d.size] || BZ_SIZES.a6, side = Math.min(mw, mh);
+  if (sh === 'square') return bzDraw(px, {dims: [side, side]});
+  const P = px || 300, S = Math.round(side / 25.4 * P), c = document.createElement('canvas'); c.width = S; c.height = S; const x = c.getContext('2d');
+  x.fillStyle = '#ffffff'; x.fillRect(0, 0, S, S);
+  const box = sh === 'circle' ? [0.2, 0.08, 0.6, 0.84] : [0.3, 0.34, 0.4, 0.56];
+  x.save(); bzShapePath(x, sh, S); x.clip();
+  x.drawImage(bzDraw(P, {dims: [side, side], bgOnly: true, shape: sh}), 0, 0, S, S);
+  const inner = bzDraw(P, {dims: [side * box[2], side * box[3]], noBg: true, shape: sh}); x.drawImage(inner, S * box[0], S * box[1], S * box[2], S * box[3]);
+  x.restore();
+  if (d.tpl === 'elegant'){ x.save(); x.strokeStyle = d.c1; x.lineWidth = S * 0.008; x.translate(S * 0.04, S * 0.04); x.scale(0.92, 0.92); bzShapePath(x, sh, S); x.stroke(); x.restore(); }
+  x.strokeStyle = 'rgba(0,0,0,.25)'; x.lineWidth = Math.max(1, S * 0.002); x.setLineDash([S * 0.01, S * 0.008]); bzShapePath(x, sh, S); x.stroke();
+  return c;
+}
+const bzMM = () => { const d = bzD(), [mw, mh] = BZ_SIZES[d.size] || BZ_SIZES.a6; return (d.shape || 'rect') === 'rect' ? [mw, mh] : [Math.min(mw, mh), Math.min(mw, mh)]; };
 /* measure text without drawing it */
 function bzGhost(x){ return {set fillStyle(v){}, get font(){ return x.font; }, set font(v){ x.font = v; }, set textAlign(v){}, set textBaseline(v){}, set direction(v){}, measureText: s => x.measureText(s), fillText(){}}; }
 function bzRound(x, X, Y, w, h, r){ x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + w, Y, X + w, Y + h, r); x.arcTo(X + w, Y + h, X, Y + h, r); x.arcTo(X, Y + h, X, Y, r); x.arcTo(X, Y, X + w, Y, r); x.closePath(); }
@@ -32045,6 +32068,7 @@ function bzRender(root){
         <div class="btnrow bz-imgs"><label class="mv">🏷️ ${E(t(BZX.logo ? 'bz_logoCh' : 'bz_logo'))}<input type="file" accept="image/*" id="bz_logoF" hidden></label>${BZX.logo ? `<button type="button" class="mv" id="bz_logoX">✕</button>` : ''}
           <label class="mv">🖼️ ${E(t(BZX.photo ? 'bz_photoCh' : 'bz_photo'))}<input type="file" accept="image/*" id="bz_photoF" hidden></label>${BZX.photo ? `<button type="button" class="mv" id="bz_photoX">✕</button>` : ''}</div>
         <div class="bz-sec"><b>${E(t('bz_design'))}</b><div class="ds-chips">${BZ_TPL.map(k => `<button type="button" class="ds-chip${d.tpl === k ? ' on' : ''}" data-bztpl="${k}">${E(t('bz_t_' + k))}</button>`).join('')}</div></div>
+        <div class="bz-sec"><b>${E(t('bz_shape'))}</b><div class="ds-chips">${[['rect', '▭'], ['square', '◻'], ['circle', '◯'], ['triangle', '△']].map(([k, ic]) => `<button type="button" class="ds-chip${d.shape === k ? ' on' : ''}" data-bzshape="${k}" aria-pressed="${d.shape === k}">${ic} ${E(t('bz_sh_' + k))}</button>`).join('')}</div></div>
         <div class="bz-sec"><b>${E(t('bz_colors'))}</b><div class="bz-pal">${BZ_PAL.map(([a, b], i) => `<button type="button" class="bz-sw${d.c1 === a ? ' on' : ''}" data-bzpal="${i}" style="background:${a}" aria-label="${E(t('bz_color', {n: i + 1}))}"></button>`).join('')}<label class="bz-own">🎨<input type="color" id="bz_c1" value="${E(d.c1)}" aria-label="${E(t('bz_own'))}"></label><button type="button" class="mv" id="bz_rand">🎲 ${E(t('bz_rand'))}</button></div></div>
         <div class="bz-row"><div class="field cv-f"><label for="bz_size">${E(t('bz_size'))}</label><select id="bz_size" data-bz="size">${Object.keys(BZ_SIZES).map(k => `<option value="${k}"${d.size === k ? ' selected' : ''}>${E(t('bz_s_' + k))}</option>`).join('')}</select></div>
           <div class="field cv-f"><label for="bz_font">${E(t('bz_font'))}</label><select id="bz_font" data-bz="font">${Object.keys(BZ_FONTS).map(k => `<option value="${k}"${d.font === k ? ' selected' : ''}>${E(t('bz_f_' + k))}</option>`).join('')}</select></div></div>
@@ -32060,13 +32084,13 @@ function bzRender(root){
   bzPreview();
 }
 let BZ_T = 0;
-function bzPreview(){ const pv = document.getElementById('bz_pv'); if (!pv) return; clearTimeout(BZ_T); BZ_T = setTimeout(() => { try { const c = bzDraw(110); c.className = 'bz-cv'; pv.replaceChildren(c); } catch (e) { pv.textContent = '⚠️'; } }, 60); }
+function bzPreview(){ const pv = document.getElementById('bz_pv'); if (!pv) return; clearTimeout(BZ_T); BZ_T = setTimeout(() => { try { const c = bzFinal(110); c.className = 'bz-cv'; pv.replaceChildren(c); } catch (e) { pv.textContent = '⚠️'; } }, 60); }
 async function bzOut(how){
   const d = bzD(); if (d.qr && !String(d.url || '').trim()){ toast(t('bz_needUrl')); const i = document.getElementById('bz_url'); if (i) i.focus(); return; }
-  const c = bzDraw(300), name = ((d.name || t('bz_title')) + '').replace(/[\\/:*?"<>|]+/g, ' ').trim() || 'sign';
-  if (how === 'print'){ const [mw] = BZ_SIZES[d.size]; try { prnClean(); } catch (e) {} document.body.insertAdjacentHTML('beforeend', `<div id="prn_area" class="prn-qr"><img src="${c.toDataURL('image/png')}" alt="" style="width:${mw}mm;display:block;margin:10mm auto"></div>`); try { prnStyle('qr'); } catch (e) {} document.body.classList.add('prn-on'); PRN.live = true; PRN_FIRED = false; setTimeout(() => { try { window.print(); } catch (e) {} setTimeout(() => { if (!PRN_FIRED){ prnClean(); toast(t('prn_blocked')); } }, 700); }, 120); return; }
-  if (how === 'pdf'){ const [mw, mh] = BZ_SIZES[d.size], k = 72 / 25.4, w = mw * k, h = mh * k, items = [];
-    const cols = Math.max(1, Math.floor((595.28 - 40) / (w + 14))), rows = Math.max(1, Math.floor((841.89 - 40) / (h + 14))), tile = d.size === 'card' || d.size === 'square';
+  const c = bzFinal(300), name = ((d.name || t('bz_title')) + '').replace(/[\\/:*?"<>|]+/g, ' ').trim() || 'sign';
+  if (how === 'print'){ const [mw] = bzMM(); try { prnClean(); } catch (e) {} document.body.insertAdjacentHTML('beforeend', `<div id="prn_area" class="prn-qr"><img src="${c.toDataURL('image/png')}" alt="" style="width:${mw}mm;display:block;margin:10mm auto"></div>`); try { prnStyle('qr'); } catch (e) {} document.body.classList.add('prn-on'); PRN.live = true; PRN_FIRED = false; setTimeout(() => { try { window.print(); } catch (e) {} setTimeout(() => { if (!PRN_FIRED){ prnClean(); toast(t('prn_blocked')); } }, 700); }, 120); return; }
+  if (how === 'pdf'){ const [mw, mh] = bzMM(), k = 72 / 25.4, w = mw * k, h = mh * k, items = [];
+    const cols = Math.max(1, Math.floor((595.28 - 40) / (w + 14))), rows = Math.max(1, Math.floor((841.89 - 40) / (h + 14))), tile = d.size === 'card' || d.size === 'square' || (d.shape || 'rect') !== 'rect' && mw < 110;
     if (tile){ const gx = (595.28 - cols * w - (cols - 1) * 14) / 2, gy = (841.89 - rows * h - (rows - 1) * 14) / 2; for (let r = 0; r < rows; r++) for (let cc = 0; cc < cols; cc++) items.push({c, x: gx + cc * (w + 14), y: gy + r * (h + 14), w, h, frame: true}); }
     else items.push({c, x: (595.28 - w) / 2, y: (841.89 - h) / 2, w, h, frame: d.size !== 'a4'});
     try { const blob = await dsPdf([{items}], 0.95), r = await fileSave(blob, name + '.pdf', 'application/pdf'); toast(t(r === 'saved' ? 'ds_fileOk' : 'pdf_fail')); } catch (e) { toast(t('pdf_fail')); } return; }
@@ -32092,6 +32116,7 @@ document.addEventListener('click', e => {
   const t0 = e.target; if (!t0.closest) return; let b;
   if (t0.closest('[data-dstool="sign"]')){ DSX.view = 'sign'; dscRender(); return; }
   if (!t0.closest('#ds_root') || DSX.view !== 'sign') return; const d = bzD();
+  if ((b = t0.closest('[data-bzshape]'))){ d.shape = b.dataset.bzshape; saveSet(); bzRender(document.getElementById('ds_root')); return; }
   if ((b = t0.closest('[data-bztpl]'))){ d.tpl = b.dataset.bztpl; saveSet(); dscRender(); return; }
   if ((b = t0.closest('[data-bzpal]'))){ const [a, c2] = BZ_PAL[+b.dataset.bzpal]; d.c1 = a; d.c2 = c2; saveSet(); dscRender(); return; }
   if (t0.closest('#bz_rand')){ const h = Math.floor(Math.random() * 360), s = 55 + Math.random() * 25, l = 28 + Math.random() * 14; const f = n => { const k = (n + h / 30) % 12, a = s / 100 * Math.min(l / 100, 1 - l / 100); return l / 100 - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)); }; d.c1 = bzHex(f(0) * 255, f(8) * 255, f(4) * 255); d.c2 = bzShade(d.c1, 0.92); d.tpl = BZ_TPL[Math.floor(Math.random() * BZ_TPL.length)]; if (d.tpl === 'photo' && !BZX.photo) d.tpl = 'gradient'; d.font = Object.keys(BZ_FONTS)[Math.floor(Math.random() * 3)]; saveSet(); dscRender(); return; }
@@ -32117,6 +32142,7 @@ Object.assign(T, {
   bz_logo:['הוספת לוגו','إضافة شعار','Add a logo'], bz_logoCh:['החלפת לוגו','تغيير الشعار','Change logo'], bz_photo:['תמונת רקע','صورة خلفية','Background photo'], bz_photoCh:['החלפת תמונה','تغيير الصورة','Change photo'], bz_imgFail:['לא הצלחתי לטעון את התמונה','لم أتمكن من تحميل الصورة','Couldn\'t load the image'],
   bz_design:['עיצוב','التصميم','Design'], bz_t_clean:['נקי','بسيط','Clean'], bz_t_bold:['צבעוני','ملوّن','Bold'], bz_t_elegant:['אלגנטי','أنيق','Elegant'], bz_t_photo:['תמונה','صورة','Photo'], bz_t_gradient:['מעבר צבע','تدرّج','Gradient'], bz_t_night:['כהה','داكن','Dark'], bz_t_wave:['גל','موجة','Wave'],
   bz_colors:['צבעים','الألوان','Colours'], bz_color:['צבע {n}','لون {n}','Colour {n}'], bz_own:['צבע משלכם','لونكم الخاص','Your own colour'], bz_rand:['הפתעה','مفاجأة','Surprise me'],
+  bz_shape:['צורה','الشكل','Shape'], bz_sh_rect:['מלבן','مستطيل','Rectangle'], bz_sh_square:['ריבוע','مربع','Square'], bz_sh_circle:['עיגול','دائرة','Circle'], bz_sh_triangle:['משולש','مثلث','Triangle'],
   bz_size:['גודל','الحجم','Size'], bz_s_a6:['A6 – שלט שולחן','A6 – لافتة طاولة','A6 – table sign'], bz_s_a5:['A5 – שלט בינוני','A5 – لافتة متوسطة','A5 – medium sign'], bz_s_square:['מדבקה 8×8 ס״מ','ملصق 8×8 سم','Sticker 8×8 cm'], bz_s_card:['כרטיס ביקור','بطاقة عمل','Business card'], bz_s_a4:['A4 – שלט גדול','A4 – لافتة كبيرة','A4 – large sign'],
   bz_font:['גופן','الخط','Font'], bz_f_modern:['מודרני','حديث','Modern'], bz_f_classic:['קלאסי','كلاسيكي','Classic'], bz_f_round:['מעוגל','دائري','Rounded'],
   bz_nfcOn:['סמל NFC וכיתוב "קרבו את הטלפון"','رمز NFC ونص "قرّبوا الهاتف"','NFC symbol and "tap your phone" text'], bz_qrOn:['קוד QR לגיבוי','رمز QR احتياطي','Backup QR code'], bz_dots:['קוד QR בנקודות','رمز QR بالنقاط','Dotted QR code'],
