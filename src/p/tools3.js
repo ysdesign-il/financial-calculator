@@ -1,4 +1,4 @@
-/* 13.38: three tools – receipts (photo → expense by category), "who brings what" (a shared list through a link) and reservists (grants, credit points, reminders) */
+/* 13.38: two tools – receipts (photo → expense by category) and reservists (grants, credit points, reminders) */
 /* ================= receipts ================= */
 const RC_CATS = () => EXP_CATS.map(c => c[0]);
 var RCX = {busy: false, form: null, ym: '', img: null, msg: ''};
@@ -136,143 +136,7 @@ miniDef('rcpt', {
 /* a receipt deleted from "Monthly expenses" leaves the receipts list too */
 try { const rcExpDel = typeof expDel === 'function' ? expDel : null; if (rcExpDel){ expDel = function(id){ const it = expData().items.find(x => x.id === id); const r = rcExpDel.apply(this, arguments); try { if (it && it.rc){ const d = rcD(), i = d.items.findIndex(x => x.id === it.rc); if (i >= 0){ if (d.items[i].img) vtDel('rc_' + it.rc); d.items.splice(i, 1); saveSet(); } } } catch (e) {} return r; }; } } catch (e) {}
 
-/* ================= who brings what ================= */
-const BR_API = () => (typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE ? SITE_BASE : (location.origin + '/')) + 'api/bring';
-const BR_LINK = id => (typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE ? SITE_BASE : location.origin + location.pathname) + '#bring=' + id;
-const BR_TPL = {
-  shabbat: ['br_i_challah', 'br_i_wine', 'br_i_salads', 'br_i_main', 'br_i_side', 'br_i_dessert', 'br_i_drinks', 'br_i_fruit'],
-  bbq: ['br_i_meat', 'br_i_coal', 'br_i_pitas', 'br_i_salads', 'br_i_sauces', 'br_i_drinks', 'br_i_ice', 'br_i_dispos', 'br_i_water'],
-  trip: ['br_i_water', 'br_i_sandw', 'br_i_snacks', 'br_i_fruit', 'br_i_firstaid', 'br_i_sun', 'br_i_mat', 'br_i_trash'],
-  party: ['br_i_cake', 'br_i_drinks', 'br_i_snacks', 'br_i_dispos', 'br_i_decor', 'br_i_candles', 'br_i_music'],
-  picnic: ['br_i_mat', 'br_i_sandw', 'br_i_fruit', 'br_i_drinks', 'br_i_snacks', 'br_i_dispos', 'br_i_ball'],
-  empty: []
-};
-const BR_IC = {shabbat: '🍽️', bbq: '🔥', trip: '🏕️', party: '🎂', picnic: '🧺', empty: '✍️'};
-var BRX = {open: '', data: null, v: 0, busy: false, err: '', tpl: '', poll: 0, at: 0};
-function brD(){ const d = miD('bring'); if (!Array.isArray(d.lists)) d.lists = []; if (typeof d.name !== 'string') d.name = ''; return d; }
-const brKey = () => { const a = crypto.getRandomValues(new Uint8Array(18)); return [...a].map(x => x.toString(16).padStart(2, '0')).join(''); };
-async function brCall(path, body){
-  const ctl = new AbortController(), tm = setTimeout(() => ctl.abort(), 12000);
-  try {
-    const r = await fetch(BR_API() + path, body ? {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body), signal: ctl.signal, credentials: 'omit'} : {signal: ctl.signal, cache: 'no-store', credentials: 'omit'});
-    const j = await r.json().catch(() => ({err: 'server'})); if (!r.ok && !j.err) j.err = 'server'; return j;
-  } catch (e) { return {err: 'net'}; } finally { clearTimeout(tm); }
-}
-const brMine = id => brD().lists.find(x => x.id === id);
-function brTake(j){
-  if (j && j.data){ BRX.data = j.data; BRX.v = j.v; BRX.at = Date.now(); const m = brMine(BRX.open); if (m && (m.t !== j.data.t || m.d !== j.data.d)){ m.t = j.data.t; m.d = j.data.d; saveSet(); } }
-  if (j && j.err){ BRX.err = j.err; if (j.err === 'gone'){ BRX.data = null; } } else BRX.err = '';
-}
-async function brLoad(id, quiet){
-  if (!id) return; if (!quiet){ BRX.busy = true; BRX.err = ''; if (BRX.open !== id) BRX.data = null; BRX.open = id; miRender('bring'); }
-  const j = await brCall('/' + id); if (BRX.open !== id) return;
-  const before = JSON.stringify(BRX.data); brTake(j); BRX.busy = false;
-  if (!quiet || JSON.stringify(BRX.data) !== before || j.err){ if (!brTyping()) miRender('bring'); }
-}
-const brTyping = () => { const a = document.activeElement; return !!(a && a.closest && a.closest('#hr_bring') && /^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName) && a.value); };
-async function brOp(body){
-  const m = brMine(BRX.open); if (m && m.key) body.key = m.key;
-  BRX.busy = true; const j = await brCall('/' + BRX.open, body); BRX.busy = false; brTake(j);
-  if (j.err && j.err !== 'gone') toast(t('br_e_' + (['owner', 'full', 'net', 'name'].includes(j.err) ? j.err : 'server')));
-  miRender('bring'); return !j.err;
-}
-function brPoll(){
-  clearInterval(BRX.poll);
-  BRX.poll = setInterval(() => { if (document.hidden || tab !== 'bring' || !BRX.open || BRX.busy) return; brLoad(BRX.open, true); }, 7000);
-}
-function brShareText(){
-  const d = BRX.data || {}; return t('br_shareTxt', {t: d.t || t('tab_bring'), d: d.d ? ' (' + dLabel(d.d) + ')' : ''}) + '\n' + BR_LINK(BRX.open);
-}
-function brSummary(){
-  const d = BRX.data || {items: []}, lines = d.items.map(x => { const got = x.c.reduce((s, c) => s + c.q, 0); return (got >= x.q ? '✅ ' : '⬜ ') + x.x + (x.q > 1 ? ' ×' + x.q : '') + (x.c.length ? ' – ' + x.c.map(c => c.n + (c.q > 1 ? ' ×' + c.q : '')).join(', ') : ''); });
-  return (d.t || t('tab_bring')) + (d.d ? ' · ' + dLabel(d.d) : '') + '\n' + lines.join('\n') + '\n' + BR_LINK(BRX.open);
-}
-function brHomeHTML(E){
-  const d = brD(), tp = BRX.tpl;
-  return `<div class="mi-card br-new"><h4 class="rc-h">＋ ${E(t('br_new'))}</h4>
-      <div class="ds-chips br-tpls">${Object.keys(BR_TPL).map(k => `<button type="button" class="ds-chip${tp === k ? ' on' : ''}" data-brtpl="${k}" aria-pressed="${tp === k}">${BR_IC[k]} ${E(t('br_t_' + k))}</button>`).join('')}</div>
-      ${tp ? `<div class="bk-grid"><label class="bk-f"><span>${E(t('br_title'))}</span><input type="text" id="br_t" maxlength="60" dir="auto" value="${E(tp === 'empty' ? '' : t('br_t_' + tp))}"></label>
-        <label class="bk-f"><span>${E(t('br_date'))}</span><input type="date" id="br_d"></label>
-        <label class="bk-f rc-wide"><span>${E(t('br_note'))}</span><input type="text" id="br_n" maxlength="200" dir="auto" placeholder="${E(t('br_notePh'))}"></label></div>
-        ${BR_TPL[tp].length ? `<p class="fine">${E(t('br_willAdd'))}: ${BR_TPL[tp].map(k => E(t(k))).join(' · ')}</p>` : ''}
-        <div class="btnrow"><button type="button" class="gold-btn" id="br_create"${BRX.busy ? ' disabled' : ''}>✓ ${E(t('br_create'))}</button></div>` : ''}
-    </div>
-    <h4 class="sec-t">${E(t('br_mine'))}</h4>
-    <ul class="mi-list">${d.lists.map(x => `<li class="mi-item br-li"><button type="button" class="br-open" data-bropen="${E(x.id)}"><b dir="auto">${E(x.t || t('tab_bring'))}</b><small>${x.d ? E(dLabel(x.d)) + ' · ' : ''}${E(t(x.key ? 'br_owner' : 'br_guest'))}</small></button><button type="button" class="px-tb s" data-brforget="${E(x.id)}" aria-label="${E(t('br_forget'))}">✕</button></li>`).join('') || `<li class="fine bk-empty">${E(t('br_none'))}</li>`}</ul>
-    ${BRX.err === 'net' ? `<p class="rm-w">⚠️ ${E(t('br_e_net'))}</p>` : ''}
-    <p class="fine">${E(t('br_how'))}</p>`;
-}
-function brListHTML(E){
-  const D = brD(), L = BRX.data, m = brMine(BRX.open), own = !!(m && m.key), me = D.name;
-  if (!L) return `<div class="btnrow"><button type="button" class="btn" id="br_back">‹ ${E(t('br_back'))}</button></div>` + (BRX.busy ? `<p class="rc-busy" role="status">⏳ ${E(t('br_loading'))}</p>` : `<p class="rm-w">⚠️ ${E(t(BRX.err === 'gone' ? 'br_e_gone' : BRX.err === 'net' ? 'br_e_net' : 'br_e_server'))}</p><div class="btnrow"><button type="button" class="btn" id="br_retry">↻ ${E(t('br_retry'))}</button></div>`);
-  const done = L.items.filter(x => x.c.reduce((s, c) => s + c.q, 0) >= x.q).length;
-  return `<div class="btnrow br-bar"><button type="button" class="btn" id="br_back">‹ ${E(t('br_back'))}</button><button type="button" class="gold-btn" id="br_share">📤 ${E(t('br_share'))}</button><button type="button" class="btn" id="br_copy">📋 ${E(t('br_copySum'))}</button></div>
-    <div class="hero mi-hero br-hero"><span class="hero-label" dir="auto">${E(L.t || t('tab_bring'))}${L.d ? ' · ' + E(dLabel(L.d)) : ''}</span><span class="hero-value num">${done}/${L.items.length}</span><div class="hero-sub">${E(t('br_covered'))}</div>${L.n ? `<p class="br-note" dir="auto">${E(L.n)}</p>` : ''}</div>
-    ${BRX.err === 'net' ? `<p class="rm-w">⚠️ ${E(t('br_e_net'))}</p>` : ''}
-    <label class="bk-f br-me"><span>${E(t('br_me'))}</span><input type="text" id="br_me" maxlength="24" dir="auto" value="${E(me)}" placeholder="${E(t('br_mePh'))}"></label>
-    <ul class="mi-list br-items">${L.items.map(x => { const got = x.c.reduce((s, c) => s + c.q, 0), mine = me && x.c.find(c => c.n === me), full = got >= x.q;
-      return `<li class="mi-item br-it${full ? ' full' : ''}"><div class="br-row"><b dir="auto">${full ? '✅ ' : ''}${E(x.x)}${x.q > 1 ? ` <small>×${x.q}</small>` : ''}</b>
-        ${mine ? `<button type="button" class="btn br-un" data-brun="${E(x.i)}">✓ ${E(t('br_mine1'))} · ${E(t('br_cancel'))}</button>` : `<span class="br-take">${x.q > 1 ? `<select data-brq="${E(x.i)}" aria-label="${E(t('br_qty'))}">${Array.from({length: Math.min(20, x.q)}, (_, k) => `<option value="${k + 1}"${k + 1 === Math.max(1, Math.min(x.q, x.q - got)) ? ' selected' : ''}>${k + 1}</option>`).join('')}</select>` : ''}<button type="button" class="gold-btn br-claim" data-brclaim="${E(x.i)}">🙋 ${E(t('br_bring'))}</button></span>`}
-        ${own ? `<button type="button" class="px-tb s" data-brdel="${E(x.i)}" aria-label="${E(t('rc_del'))}">🗑️</button>` : ''}</div>
-        ${x.c.length ? `<div class="br-who">${x.c.map(c => `<span class="br-chip${c.n === me ? ' me' : ''}" dir="auto">${E(c.n)}${c.q > 1 ? ' ×' + c.q : ''}</span>`).join('')}</div>` : `<div class="br-who fine">${E(t('br_nobody'))}</div>`}</li>`; }).join('') || `<li class="fine bk-empty">${E(t('br_empty'))}</li>`}</ul>
-    <div class="mi-card br-add"><div class="bk-grid"><label class="bk-f rc-wide"><span>${E(t('br_addItem'))}</span><input type="text" id="br_x" maxlength="60" dir="auto" placeholder="${E(t('br_addPh'))}"></label>
-      <label class="bk-f"><span>${E(t('br_qty'))}</span><input type="text" inputmode="numeric" dir="ltr" id="br_q" value="1"></label></div>
-      <div class="btnrow"><button type="button" class="btn" id="br_addgo">＋ ${E(t('br_add'))}</button></div></div>
-    ${own ? `<details class="br-own"><summary>⚙️ ${E(t('br_manage'))}</summary><div class="bk-grid"><label class="bk-f"><span>${E(t('br_title'))}</span><input type="text" id="br_mt" maxlength="60" dir="auto" value="${E(L.t)}"></label><label class="bk-f"><span>${E(t('br_date'))}</span><input type="date" id="br_md" value="${E(L.d)}"></label><label class="bk-f rc-wide"><span>${E(t('br_note'))}</span><input type="text" id="br_mn" maxlength="200" dir="auto" value="${E(L.n)}"></label></div>
-      <div class="btnrow"><button type="button" class="btn" id="br_msave">✓ ${E(t('br_msave'))}</button><button type="button" class="btn br-drop" id="br_drop">🗑️ ${E(t('br_drop'))}</button></div></details>` : ''}
-    <p class="fine">${E(t('br_live'))}</p>`;
-}
-miniDef('bring', {
-  intro: 'br_intro',
-  render(box, api){
-    const E = api.E, D = brD();
-    box.innerHTML = BRX.open ? brListHTML(E) : brHomeHTML(E);
-    if (BRX.open) brPoll(); else clearInterval(BRX.poll);
-    const needName = () => { const n = (box.querySelector('#br_me') || {}).value; const v = String(n || '').trim().slice(0, 24); if (v !== D.name){ D.name = v; api.save(); } if (!v){ toast(t('br_e_name')); const el = box.querySelector('#br_me'); if (el) el.focus(); } return v; };
-    box.onchange = e => { if (e.target.id === 'br_me'){ D.name = e.target.value.trim().slice(0, 24); api.save(); } };
-    box.onkeydown = e => { if (e.key === 'Enter' && e.target.id === 'br_x'){ e.preventDefault(); const b = box.querySelector('#br_addgo'); if (b) b.click(); } };
-    box.onclick = async e => { const T0 = e.target; let b;
-      if ((b = T0.closest('[data-brtpl]'))){ BRX.tpl = BRX.tpl === b.dataset.brtpl ? '' : b.dataset.brtpl; api.redraw(); const n = box.querySelector('#br_t'); if (n) n.focus(); return; }
-      if (T0.closest('#br_create')){
-        const g = id => ((box.querySelector('#' + id) || {}).value || '').trim(), key = brKey(), tp = BRX.tpl;
-        const data = {t: g('br_t') || t('br_t_' + (tp || 'empty')), d: g('br_d'), n: g('br_n'), items: (BR_TPL[tp] || []).map(k => ({x: t(k), q: 1, c: []}))};
-        BRX.busy = true; api.redraw(); const j = await brCall('', {key, data}); BRX.busy = false;
-        if (j.err || !j.id){ BRX.err = j.err || 'server'; toast(t('br_e_' + (j.err === 'net' ? 'net' : 'server'))); api.redraw(); return; }
-        D.lists.unshift({id: j.id, t: j.data.t, d: j.data.d, key, at: Date.now()}); D.lists = D.lists.slice(0, 40); api.save();
-        BRX.tpl = ''; BRX.open = j.id; brTake(j); api.redraw(); toast(t('br_created')); return;
-      }
-      if ((b = T0.closest('[data-bropen]'))){ brLoad(b.dataset.bropen); return; }
-      if ((b = T0.closest('[data-brforget]'))){ const x = brMine(b.dataset.brforget); if (x && x.key && !b.dataset.sure){ b.dataset.sure = '1'; b.textContent = t('br_forgetSure'); setTimeout(() => { if (b.isConnected){ delete b.dataset.sure; b.textContent = '✕'; } }, 4000); return; }
-        D.lists = D.lists.filter(y => y.id !== b.dataset.brforget); api.save(); api.redraw(); return; }
-      if (T0.closest('#br_back')){ BRX.open = ''; BRX.data = null; BRX.err = ''; clearInterval(BRX.poll); api.redraw(); return; }
-      if (T0.closest('#br_retry')){ brLoad(BRX.open); return; }
-      if (T0.closest('#br_share')){ const txt = brShareText(); if (typeof shrOpen === 'function') shrOpen('', txt, BRX.data && BRX.data.t || t('tab_bring')); else { copyText(txt); toast(t('st_copied')); } return; }
-      if (T0.closest('#br_copy')){ copyText(brSummary()); toast(t('st_copied')); return; }
-      if ((b = T0.closest('[data-brclaim]'))){ const n = needName(); if (!n) return; const q = box.querySelector(`[data-brq="${b.dataset.brclaim}"]`); brOp({op: 'claim', item: b.dataset.brclaim, name: n, q: q ? +q.value : 1}); return; }
-      if ((b = T0.closest('[data-brun]'))){ brOp({op: 'unclaim', item: b.dataset.brun, name: D.name}); return; }
-      if ((b = T0.closest('[data-brdel]'))){ if (!b.dataset.sure){ b.dataset.sure = '1'; b.textContent = t('rc_sure'); setTimeout(() => { if (b.isConnected){ delete b.dataset.sure; b.textContent = '🗑️'; } }, 3500); return; } brOp({op: 'del', item: b.dataset.brdel}); return; }
-      if (T0.closest('#br_addgo')){ const x = ((box.querySelector('#br_x') || {}).value || '').trim(); if (!x){ const el = box.querySelector('#br_x'); if (el) el.focus(); return; }
-        const q = Math.max(1, Math.min(99, parseInt((box.querySelector('#br_q') || {}).value, 10) || 1)); const nm = ((box.querySelector('#br_me') || {}).value || '').trim();
-        if (await brOp({op: 'add', text: x, q, name: nm})) { const el = box.querySelector('#br_x'); if (el) el.focus(); } return; }
-      if (T0.closest('#br_msave')){ const g = id => ((box.querySelector('#' + id) || {}).value || '').trim(); if (await brOp({op: 'meta', t: g('br_mt'), d: g('br_md'), n: g('br_mn')})) toast(t('br_saved')); return; }
-      if ((b = T0.closest('#br_drop'))){ if (!b.dataset.sure){ b.dataset.sure = '1'; b.textContent = t('br_dropSure'); return; }
-        const m = brMine(BRX.open); const j = await brCall('/' + BRX.open, {op: 'drop', key: m && m.key}); if (j.err){ toast(t('br_e_' + (j.err === 'net' ? 'net' : 'server'))); return; }
-        D.lists = D.lists.filter(y => y.id !== BRX.open); api.save(); BRX.open = ''; BRX.data = null; toast(t('br_dropped')); api.redraw(); return; }
-    };
-  },
-  disc: ''
-});
-/* a link "…#bring=ID" opens the list, without signing up */
-function brFromHash(){
-  const m = /[#&]bring=([A-Za-z0-9]{12,24})/.exec(location.hash || ''); if (!m) return;
-  try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
-  const id = m[1], D = brD(); if (!brMine(id)){ D.lists.unshift({id, t: '', d: '', at: Date.now()}); D.lists = D.lists.slice(0, 40); try { saveSet(); } catch (e) {} }
-  BRX.open = id; BRX.data = null; activate('bring'); brLoad(id);
-}
-window.addEventListener('hashchange', brFromHash);
-setTimeout(() => { try { brFromHash(); } catch (e) {} }, 0);
-try { FREE_TABS.push('bring', 'miluim'); } catch (e) {}
-document.addEventListener('visibilitychange', () => { if (!document.hidden && tab === 'bring' && BRX.open && Date.now() - BRX.at > 5000) brLoad(BRX.open, true); });
+try { FREE_TABS.push('miluim'); } catch (e) {}
 
 /* ================= reservists: grants, credit points and reminders ================= */
 const ML_PT = 2904;                     // value of one credit point in 2026 (₪ a year)
@@ -342,7 +206,6 @@ miniDef('miluim', {
 });
 try { Object.assign(GS_SYN, {
   rcpt: 'קבלה קבלות סריקת קבלה צילום קבלה הוצאות עסק מע״מ תשומות חשבונית receipt receipts scan invoice expenses vat إيصال إيصالات فاتورة مصاريف',
-  bring: 'מי מביא מה רשימה משותפת ארוחת שישי על האש טיול מסיבה פיקניק potluck who brings what shared list من يحضر ماذا قائمة مشتركة',
   miluim: 'מילואים זכויות מילואים מענק מילואים נקודות זיכוי לוחם תגמול נוסף בני זוג reservist reserve duty grants credit points الاحتياط حقوق جنود الاحتياط منحة'
 }); } catch (e) {}
 Object.assign(T, {
@@ -370,30 +233,6 @@ Object.assign(T, {
   rc_priv:['הקבלות והתמונות נשמרות רק בטלפון שלך. הקובץ לרואה החשבון נוצר כאן.','تُحفظ الإيصالات والصور على هاتفك فقط. يُنشأ ملف المحاسب هنا.','Receipts and photos stay on your phone only. The accountant file is made here.'],
   rc_privNoPics:['במצב פרטי או בחשבון מוצפן התמונות לא נשמרות – רק פרטי הקבלה.','في الوضع الخاص أو الحساب المشفّر لا تُحفظ الصور – فقط تفاصيل الإيصال.','In private mode or an encrypted account photos aren’t kept – only the receipt details.'],
   rc_disc:['לצורכי מס כדאי לשמור גם את הקבלה המקורית או סריקה שלה לפי הוראות רשות המסים.','لأغراض الضريبة يُستحسن الاحتفاظ بالإيصال الأصلي أو مسحه حسب تعليمات سلطة الضرائب.','For tax purposes, keep the original receipt or a scan of it as the Tax Authority requires.'],
-  tab_bring:['מי מביא מה','من يحضر ماذا','Who brings what'], d_bring:['רשימה משותפת לארוחת שישי, על האש, טיול או מסיבה – כל אחד מסמן מה הוא מביא דרך קישור, בלי הרשמה.','قائمة مشتركة لعشاء الجمعة أو الشواء أو رحلة أو حفلة – كل واحد يحدد ما يحضره عبر رابط، بدون تسجيل.','A shared list for Friday dinner, a BBQ, a trip or a party – everyone marks what they bring through a link, no sign-up.'],
-  br_intro:['פותחים רשימה, שולחים את הקישור לקבוצה – וכל אחד מסמן מה הוא מביא. כולם רואים את אותה רשימה, מתעדכנת מעצמה.','افتحوا قائمة، أرسلوا الرابط للمجموعة – وكل واحد يحدد ما يحضره. الجميع يرى القائمة نفسها، وتتحدث تلقائيًا.','Open a list, send the link to the group – everyone marks what they bring. Everyone sees the same list, updated by itself.'],
-  br_new:['רשימה חדשה','قائمة جديدة','New list'], br_t_shabbat:['ארוחת שישי','عشاء الجمعة','Friday dinner'], br_t_bbq:['על האש','شواء','BBQ'], br_t_trip:['טיול','رحلة','Trip'], br_t_party:['מסיבה','حفلة','Party'], br_t_picnic:['פיקניק','نزهة','Picnic'], br_t_empty:['רשימה ריקה','قائمة فارغة','Empty list'],
-  br_title:['שם האירוע','اسم المناسبة','Event name'], br_date:['תאריך','التاريخ','Date'], br_note:['הערה לכולם','ملاحظة للجميع','Note for everyone'], br_notePh:['למשל: מתחילים ב־19:30, אצל סבתא','مثلًا: نبدأ الساعة 19:30، عند الجدة','e.g. Starting 7:30pm, at Grandma’s'],
-  br_willAdd:['פריטים שיתווספו (אפשר לשנות אחר כך)','عناصر ستُضاف (يمكن التغيير لاحقًا)','Items to add (you can change them later)'], br_create:['יצירת הרשימה','إنشاء القائمة','Create the list'], br_created:['הרשימה מוכנה – שלחו את הקישור','القائمة جاهزة – أرسلوا الرابط','The list is ready – send the link'],
-  br_mine:['הרשימות שלי','قوائمي','My lists'], br_none:['עוד אין רשימות. פתחו רשימה חדשה או פתחו קישור שקיבלתם.','لا توجد قوائم بعد. افتحوا قائمة جديدة أو رابطًا وصلكم.','No lists yet. Start one, or open a link you received.'],
-  br_owner:['פתחת אותה','أنشأتَها','You started it'], br_guest:['הוזמנת','مدعوّ','Invited'], br_forget:['הסרה מהרשימות שלי','إزالة من قوائمي','Remove from my lists'], br_forgetSure:['להסיר?','إزالة؟','Remove?'],
-  br_how:['הרשימה נשמרת בשרת של האפליקציה רק כדי שכולם יראו אותה – בלי הרשמה ובלי פרטים אישיים, רק השמות שכל אחד בוחר. רשימה שלא נגעו בה 5 חודשים נמחקת.','تُحفظ القائمة على خادم التطبيق فقط ليراها الجميع – بلا تسجيل ولا بيانات شخصية، فقط الأسماء التي يختارها كل واحد. القائمة التي لم تُستخدم 5 أشهر تُحذف.','The list is kept on the app’s server only so everyone sees it – no sign-up, no personal details, just the names people choose. A list untouched for 5 months is deleted.'],
-  br_back:['הרשימות שלי','قوائمي','My lists'], br_share:['שליחת קישור','إرسال الرابط','Send link'], br_copySum:['העתקת סיכום','نسخ الملخص','Copy summary'],
-  br_covered:['פריטים מכוסים','عناصر مغطاة','items covered'], br_me:['השם שלי','اسمي','My name'], br_mePh:['איך יראו אותך ברשימה','كيف سيظهر اسمك في القائمة','How you’ll appear on the list'],
-  br_bring:['אני מביא/ה','أنا أحضر','I’ll bring it'], br_mine1:['אני מביא/ה','أنا أحضر','I’m bringing it'], br_cancel:['ביטול','إلغاء','cancel'], br_qty:['כמות','الكمية','Qty'], br_nobody:['עוד אף אחד','لا أحد بعد','Nobody yet'],
-  br_empty:['הרשימה ריקה – הוסיפו פריט.','القائمة فارغة – أضيفوا عنصرًا.','The list is empty – add an item.'], br_addItem:['פריט חדש','عنصر جديد','New item'], br_addPh:['למשל: עוגה','مثلًا: كعكة','e.g. Cake'], br_add:['הוספה','إضافة','Add'],
-  br_manage:['ניהול הרשימה','إدارة القائمة','Manage the list'], br_msave:['שמירה','حفظ','Save'], br_saved:['נשמר','تم الحفظ','Saved'], br_drop:['מחיקת הרשימה לכולם','حذف القائمة للجميع','Delete the list for everyone'], br_dropSure:['בטוח? לחצו שוב','متأكد؟ اضغطوا مجددًا','Sure? Tap again'], br_dropped:['הרשימה נמחקה','حُذفت القائمة','The list was deleted'],
-  br_live:['הרשימה מתעדכנת כל כמה שניות. רק מי שפתח אותה יכול למחוק פריטים או לשנות את הפרטים.','تتحدث القائمة كل بضع ثوانٍ. فقط من أنشأها يمكنه حذف العناصر أو تغيير التفاصيل.','The list refreshes every few seconds. Only whoever started it can delete items or change details.'],
-  br_loading:['טוען את הרשימה…','جارٍ تحميل القائمة…','Loading the list…'], br_retry:['לנסות שוב','المحاولة مجددًا','Try again'],
-  br_shareTxt:['מי מביא מה ל{t}{d}? מסמנים כאן, בלי הרשמה:','من يحضر ماذا لـ{t}{d}؟ حدّدوا هنا، بدون تسجيل:','Who brings what for {t}{d}? Mark it here, no sign-up:'],
-  br_e_net:['אין חיבור כרגע – הרשימה תתעדכן כשהחיבור יחזור.','لا يوجد اتصال حاليًا – ستتحدث القائمة عند عودة الاتصال.','No connection right now – the list will update when it’s back.'], br_e_server:['משהו השתבש – נסו שוב.','حدث خطأ – حاولوا مجددًا.','Something went wrong – try again.'],
-  br_e_gone:['הרשימה הזו נמחקה או שהקישור שגוי.','هذه القائمة حُذفت أو الرابط خاطئ.','This list was deleted or the link is wrong.'], br_e_owner:['רק מי שפתח את הרשימה יכול לעשות זאת.','فقط من أنشأ القائمة يمكنه ذلك.','Only whoever started the list can do that.'],
-  br_e_full:['הרשימה מלאה (80 פריטים).','القائمة ممتلئة (80 عنصرًا).','The list is full (80 items).'], br_e_name:['כתבו קודם את השם שלכם','اكتبوا اسمكم أولًا','Write your name first'],
-  br_i_challah:['חלות','خبز الحلة','Challah'], br_i_wine:['יין','نبيذ','Wine'], br_i_salads:['סלטים','سلطات','Salads'], br_i_main:['מנה עיקרית','طبق رئيسي','Main course'], br_i_side:['תוספת','طبق جانبي','Side dish'], br_i_dessert:['קינוח','حلوى','Dessert'],
-  br_i_drinks:['שתייה','مشروبات','Drinks'], br_i_fruit:['פירות','فواكه','Fruit'], br_i_meat:['בשר','لحم','Meat'], br_i_coal:['פחמים ומנגל','فحم ومنقل','Charcoal & grill'], br_i_pitas:['פיתות','خبز','Pitas'], br_i_sauces:['רטבים','صلصات','Sauces'],
-  br_i_ice:['קרח','ثلج','Ice'], br_i_dispos:['כלים חד־פעמיים','أدوات للاستعمال مرة واحدة','Disposable plates & cups'], br_i_water:['מים','ماء','Water'], br_i_sandw:['כריכים','سندويشات','Sandwiches'], br_i_snacks:['חטיפים','وجبات خفيفة','Snacks'],
-  br_i_firstaid:['ערכת עזרה ראשונה','حقيبة إسعافات أولية','First-aid kit'], br_i_sun:['קרם הגנה','واقي شمس','Sunscreen'], br_i_mat:['מחצלת','حصيرة','Picnic mat'], br_i_trash:['שקיות זבל','أكياس قمامة','Trash bags'],
-  br_i_cake:['עוגה','كعكة','Cake'], br_i_decor:['קישוטים','زينة','Decorations'], br_i_candles:['נרות','شموع','Candles'], br_i_music:['רמקול ומוזיקה','سماعة وموسيقى','Speaker & music'], br_i_ball:['כדור','كرة','Ball'],
   tab_miluim:['מילואים – זכויות ומענקים','الاحتياط – حقوق ومنح','Reservists – rights & grants'], d_miluim:['כמה מגיע על ימי המילואים: מענק שנתי, תגמול מיוחד, מענקי 2026, נקודות זיכוי ללוחמים – ותזכורות.','كم يستحق عن أيام الاحتياط: منحة سنوية، تعويض خاص، منح 2026، نقاط خصم للمقاتلين – وتذكيرات.','What your reserve days earn: annual grant, special pay, 2026 grants, credit points for fighters – and reminders.'],
   ml_intro:['מכניסים כמה ימי מילואים עשיתם בשנה – ומקבלים את המענקים שמגיעים, מתי הם נכנסים, ונקודות הזיכוי ללוחמים. את התגמול היומי מביטוח לאומי מחשבים ב„פיצוי מילואים”.','أدخلوا عدد أيام الاحتياط في السنة – واحصلوا على المنح المستحقة، ومتى تُدفع، ونقاط الخصم للمقاتلين. التعويض اليومي من التأمين الوطني يُحسب في „تعويض الاحتياط”.','Enter how many reserve days you served in the year – see the grants you’re owed, when they’re paid, and fighters’ credit points. The daily pay from Bituach Leumi is in "Reservist pay".'],
   ml_year:['שנת השירות','سنة الخدمة','Service year'], ml_y2026:['2026','2026','2026'], ml_y2025:['2025','2025','2025'], ml_days:['ימי מילואים בשנה','أيام الاحتياط في السنة','Reserve days in the year'], ml_u_days:['ימים','أيام','days'],
