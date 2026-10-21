@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261021.052129'){ try { if (!sessionStorage.getItem('fin-hb-20261021.052129')){ sessionStorage.setItem('fin-hb-20261021.052129', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261021.060141'){ try { if (!sessionStorage.getItem('fin-hb-20261021.060141')){ sessionStorage.setItem('fin-hb-20261021.060141', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -10496,6 +10496,33 @@ async function tryLive(manual){
   if (typeof stampUpdate === 'function') stampUpdate(ok);
 }
 
+/* 13.25: speed – work that only fills hidden screens waits until that screen opens */
+let PF_FORCE = false;
+const PF_DIRTY = new Set();
+const pfHidden = id => { const p = document.getElementById('panel-' + id); return !!p && p.hidden; };
+function pfLazy(name, panel, fn, keep){
+  return function(){
+    if (!PF_FORCE && pfHidden(panel)){ PF_DIRTY.add(name); if (keep) try { keep(); } catch (e) {} return; }
+    return fn.apply(this, arguments);
+  };
+}
+/* settings: the form, the country list, the sections and the skins are drawn when Settings opens; the home tiles and the bottom bar still update right away */
+syncSettingsUI = pfLazy('sync', 'settings', syncSettingsUI, () => { renderTiles(); renderBottom(); if (typeof renderStamp === 'function') renderStamp(); });
+ctyUi = pfLazy('cty', 'settings', ctyUi);
+accBuild = pfLazy('acc', 'settings', accBuild);
+skRender = pfLazy('sk', 'settings', skRender);
+function pfFlush(id){
+  if (id !== 'settings' || !PF_DIRTY.size) return;
+  const run = [...PF_DIRTY]; PF_DIRTY.clear(); PF_FORCE = true;
+  try {
+    if (run.includes('sync')) syncSettingsUI();
+    if (run.includes('cty')) ctyUi();
+    if (run.includes('sk')) skRender();
+    if (run.includes('acc')) accBuild();
+  } catch (e) {} finally { PF_FORCE = false; }
+}
+{ const actPf = activate; activate = function(id){ const r = actPf.apply(this, arguments); try { pfFlush(id); if (typeof svUi === 'function') svUi(); } catch (e) {} return r; }; }
+
 var TX = null, TXL = '';
 txBoot();
 /* ================= init extras ================= */
@@ -11973,8 +12000,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.24", "date": "2026-10-21", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261021.052129';
+var CHANGELOG = [{"v": "13.25", "date": "2026-10-21", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261021.060141';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -14942,7 +14969,7 @@ function svInject(){
 function svUi(){
   try { svInject(); } catch (e) {}
   const h = svBarHtml();
-  [...document.getElementsByClassName('svbar')].forEach(b => { if (b.dataset.h !== h){ b.innerHTML = h; b.dataset.h = h; } });
+  [...document.getElementsByClassName('svbar')].forEach(b => { if (b.dataset.h !== h && !(b.parentNode && b.parentNode.hidden)){ b.innerHTML = h; b.dataset.h = h; } });   // hidden screens get their bar when they open (13.25: faster start)
   const s = $('#set_saveMode'); if (s && s.value !== SV.mode) s.value = SV.mode;
 }
 function svMode(m, quiet){
