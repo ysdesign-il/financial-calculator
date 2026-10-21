@@ -5243,7 +5243,8 @@ Object.assign(T, {
   rec_send:['כדי להפעיל אותו, שלחו לפיתוח רק את השורה הזו. היא לא חושפת את הקוד:','لتفعيله، أرسلوا إلى التطوير هذا السطر فقط. لا يكشف الرمز:','To activate it, send only this line to development. It does not reveal the code:'],
   rec_copyCode:['העתקת הקוד','نسخ الرمز','Copy the code'], rec_copyLine:['העתקת השורה','نسخ السطر','Copy the line'], rec_copied:['הועתק','تم النسخ','Copied'], rec_close:['סגירה','إغلاق','Close'],
   rec_enter:['הקלידו את קוד השחזור הקיים. הוא לא נשלח לשום מקום.','اكتبوا رمز الاستعادة الحالي. لا يُرسَل إلى أي مكان.','Type your existing recovery code. It is not sent anywhere.'], rec_make:['הפקת השורה','إنشاء السطر','Create the line'],
-  rec_len:['הקוד צריך 20 תווים','الرمز يحتاج 20 حرفًا','The code needs 20 characters']
+  rec_len:['הקוד צריך 20 תווים','الرمز يحتاج 20 حرفًا','The code needs 20 characters'],
+  rec_alsoShared:['אפשר להקליד כאן גם את קוד השחזור המשותף לכל האפליקציות (XXXX-XXXX-XXXX-XXXX-XXXX).','يمكن أيضًا كتابة رمز الاستعادة المشترك لكل التطبيقات هنا (XXXX-XXXX-XXXX-XXXX-XXXX).','You can also type the recovery code shared by all your apps here (XXXX-XXXX-XXXX-XXXX-XXXX).']
 });
 const recB64 = u => btoa(String.fromCharCode(...new Uint8Array(u))), recUn64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 const recHex = b => Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join('');
@@ -5277,6 +5278,18 @@ document.addEventListener('click', async e => { const b = e.target.closest('[dat
   else if (a === 'make'){ const v = String(($('#rec_ex') || {}).value || '').toUpperCase().replace(/[^A-Z0-9]/g, ''), m = $('#rec_exm'); if (v.length !== 20){ if (m) m.textContent = t('rec_len'); return; } if (m) m.textContent = '…'; const line = await recLine(v); if (line) recShowLine(line, ''); }
 });
 new MutationObserver(() => {
-  const box = $('#dev_box'); if (box && !box.querySelector('[data-rec]') && !box.dataset.recDone){ box.dataset.recDone = '1'; box.insertAdjacentHTML('beforeend', `<div class="dev-row"><button type="button" class="mv wide" data-rec="forgot">${asEsc(t('rec_forgot'))}</button></div>`); }
+  const box = $('#dev_box'); if (box && !box.dataset.recDone){ box.dataset.recDone = '1'; const rh = $('#dev_rec .fine');
+    if (rh) rh.insertAdjacentHTML('afterend', `<p class="fine">${asEsc(t('rec_alsoShared'))}</p>`);
+    else if (!box.querySelector('[data-rec]')) box.insertAdjacentHTML('beforeend', `<div class="dev-row"><button type="button" class="mv wide" data-rec="forgot">${asEsc(t('rec_forgot'))}</button></div>`); }
   const off = $('#dev_off'); if (off && DEV_ON && !$('#rec_row')) off.closest('.btnrow').insertAdjacentHTML('afterend', `<div class="btnrow" id="rec_row"><button type="button" class="mv wide" data-rec="new">${asEsc(t('rec_new'))}</button><button type="button" class="mv wide" data-rec="have">${asEsc(t('rec_have'))}</button></div>`);
 }).observe(document.body, {childList: true, subtree: true});
+
+/* the shared code typed into the existing backup-code field (#dev_rcode) is checked here first */
+async function recFromField(){ const i = $('#dev_rcode'), m = $('#dev_rmsg'); const v = String(i && i.value || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); if (v.length !== 20) return false;
+  if (m) m.textContent = '…'; let ok = false;
+  try { const kb = await recDerive(v); if (REC_CHECK && await recCheckOf(kb) === REC_CHECK){ const p = REC_BUNDLE.split('.'); const pt = await crypto.subtle.decrypt({name: 'AES-GCM', iv: recUn64(p[1])}, await recAes(kb), recUn64(p[2]));
+    const h = new TextDecoder().decode(pt); if (devOk(h)){ try { RAWLS.setItem('fin-dev', h); } catch (e) {} DEV_ON = true; ok = true; } } } catch (e) {}
+  if (ok){ const b = $('#dev_box'); if (b) b.remove(); liveApply(); devPermSync(); toast(t('rec_ok')); }
+  return ok; }
+document.addEventListener('click', async e => { if (!e.target.closest('#dev_rgo')) return; const v = String(($('#dev_rcode') || {}).value || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); if (v.length === 20){ e.stopImmediatePropagation(); if (!(await recFromField())){ const m = $('#dev_rmsg'); if (m) m.textContent = t('rec_bad'); } } }, true);
+document.addEventListener('keydown', async e => { if (e.key !== 'Enter' || !e.target || e.target.id !== 'dev_rcode') return; const v = String(e.target.value || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); if (v.length === 20){ e.preventDefault(); e.stopImmediatePropagation(); if (!(await recFromField())){ const m = $('#dev_rmsg'); if (m) m.textContent = t('rec_bad'); } } }, true);
