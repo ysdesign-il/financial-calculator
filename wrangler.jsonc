@@ -1,4 +1,4 @@
-// Cloudflare Workers – the site is served as static files straight from this repository. worker.js only locks /admin/ and serves /cfg.json.
+// Cloudflare Workers – the site is served as static files straight from this repository. worker.js locks /admin/, keeps the admin panel settings (KV) and adds its public part.
 // Cloudflare builds it on every push to main (Workers Builds); the Worker in the dashboard must be named exactly like "name".
 {
   "name": "financial-calculator",
@@ -9,6 +9,7 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "none",
     "binding": "ASSETS",
-    "run_worker_first": ["/admin", "/admin/*", "/cfg.json"]
-  }
+    "run_worker_first": ["/", "/index.html", "/admin", "/admin/*", "/cfg.json", "/__pub.js"]
+  },
+  "kv_namespaces": [{ "binding": "CFG", "id": "a44762eefe234d5ebaf128cc9aba83ec" }]
 }

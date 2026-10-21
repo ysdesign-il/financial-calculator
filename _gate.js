@@ -1,10 +1,11 @@
 // Server-side lock for the admin version (/admin/). The admin files are served only to a browser that proved it holds
 // the developer key (the same name + code as developer mode). Nothing secret is stored here: only a fingerprint of the key.
-// Used by a Cloudflare Pages Function or a Worker. Also serves the public settings the admin panel publishes (/cfg.json).
+// Used by a Cloudflare Pages Function or a Worker. Also serves the public settings the admin panel publishes (/cfg.json),
+// kept in Cloudflare KV (binding CFG). A site without the binding (Pages) forwards to its own Worker copy (o.upstream).
+import {KIT} from './_kit.js';
+import {PUB} from './_pub.js';
 const DEV_CHECK='2ff82c4945c39ddf16442f25fdc6b3ee96b832d2ea9b26448813ba9087d1c285';
 const REC_BUNDLE='nsr1.iWUL8ojgMNK6qJIp.JxT7Dcnxml12WgcvhJdS7RFevhkpINNl462Eybdg5Swvm2Xlp0fOCA1Vn7FTTFJovZJXcZ/oBUHOA2qJA4K7sRMCFKCY6IYbvJll4kaeWHU=';
-const SB='https://cylzdgpubxzjyveeauqw.supabase.co';
-const SBK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5bHpkZ3B1Ynh6anl2ZWVhdXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzNTk2MzIsImV4cCI6MjEwNzkzNTYzMn0.kZ4Xmiva3bxWczXfo9098IZeAsQryL9aH_emF_6NP-o';
 const enc=new TextEncoder();
 const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
 async function keyOk(h){return typeof h==='string'&&/^[0-9a-f]{64}$/.test(h)&&hex(await crypto.subtle.digest('SHA-256',enc.encode(h)))===DEV_CHECK}
@@ -14,11 +15,14 @@ function tooMany(ip){const now=Date.now(),a=(FAILS.get(ip)||[]).filter(t=>now-t<
 function fail(ip){const a=FAILS.get(ip)||[];a.push(Date.now());FAILS.set(ip,a)}
 const J=(o,st,extra)=>new Response(JSON.stringify(o),{status:st||200,headers:Object.assign({'content-type':'application/json','cache-control':'no-store'},extra||{})});
 const SEC={'x-robots-tag':'noindex, nofollow','referrer-policy':'no-referrer','x-frame-options':'DENY','cache-control':'no-store, private'};
-export async function publicConfig(app){
-  try{const r=await fetch(SB+'/rest/v1/adm_config?select=data,updated_at&app=eq.'+encodeURIComponent(app),{headers:{apikey:SBK,Authorization:'Bearer '+SBK},cf:{cacheTtl:30}});
-    if(r.ok){const a=await r.json();if(a&&a[0])return J(Object.assign({},a[0].data,{at:a[0].updated_at}),200,{'cache-control':'public, max-age=30'})}}catch(e){}
-  return J({},200,{'cache-control':'public, max-age=30'})}
-export async function adminGate(req,serve,o){
+async function kvGet(env,k,d){try{const v=await env.CFG.get(k,'json');return v==null?d:v}catch(e){return d}}
+export async function publicConfig(app,env,o){
+  if(env&&env.CFG){const c=await kvGet(env,'cfg:'+app,{});return J(c,200,{'cache-control':'public, max-age=20'})}
+  if(o&&o.upstream){try{const r=await fetch(o.upstream+'/cfg.json',{cf:{cacheTtl:20}});if(r.ok)return J(await r.json(),200,{'cache-control':'public, max-age=20'})}catch(e){}}
+  return J({},200,{'cache-control':'public, max-age=20'})}
+export function pubScript(o){return new Response('window.__ADMPUBCFG='+JSON.stringify({parts:o.parts||[],accent:o.accent})+';\n'+PUB,{headers:{'content-type':'text/javascript; charset=utf-8','cache-control':'public, max-age=300'}})}
+export async function injectPub(r){const ct=r.headers.get('content-type')||'';if(!ct.includes('text/html'))return r;const h=(await r.text()).replace('</body>','<script src="/__pub.js" defer></script></body>');const hd=new Headers(r.headers);hd.delete('content-length');return new Response(h,{status:r.status,headers:hd})}
+export async function adminGate(req,serve,o,env){
   const u=new URL(req.url),p=u.pathname,ip=req.headers.get('cf-connecting-ip')||'?';
   if(p==='/admin')return Response.redirect(u.origin+'/admin/',302);
   if(p==='/admin/__login'&&req.method==='POST'){
@@ -30,11 +34,20 @@ export async function adminGate(req,serve,o){
   const h=cookieKey(req);
   if(!(await keyOk(h))){if(req.method!=='GET'&&req.method!=='HEAD')return J({ok:false},401);
     return new Response(loginPage(o),{status:200,headers:Object.assign({'content-type':'text/html; charset=utf-8'},SEC)})}
-  if(p==='/admin/__cfg'&&req.method==='POST'){let d=null;try{d=await req.json()}catch(e){}
-    if(!d||typeof d!=='object')return J({ok:false,e:'bad'},400);
-    try{const r=await fetch(SB+'/rest/v1/rpc/adm_set_config',{method:'POST',headers:{apikey:SBK,Authorization:'Bearer '+SBK,'content-type':'application/json'},body:JSON.stringify({p_app:o.app,p_key:h,p_data:d})});
-      if(r.ok)return J({ok:true,saved:await r.json()});return J({ok:false,e:'store',st:r.status},502)}catch(e){return J({ok:false,e:'store'},502)}}
-  const r=await serve(req);const hd=new Headers(r.headers);for(const k in SEC)hd.set(k,SEC[k]);return new Response(r.body,{status:r.status,headers:hd})}
+  if(p==='/admin/__kit.js')return new Response('window.__ADMKIT='+JSON.stringify(Object.assign({app:o.app,title:o.title,accent:o.accent,parts:o.parts||[]},o.kit||{}))+';\n'+KIT,{headers:Object.assign({'content-type':'text/javascript; charset=utf-8'},SEC)});
+  if(p==='/admin/__cfg'||p==='/admin/__state'){
+    if(!(env&&env.CFG)){if(!o.upstream)return J({ok:false,e:'store'},503);
+      const fr=await fetch(o.upstream+p,{method:req.method,headers:{cookie:'adm='+h,'content-type':'application/json'},body:req.method==='POST'?await req.text():undefined});return new Response(fr.body,{status:fr.status,headers:{'content-type':'application/json','cache-control':'no-store'}})}
+    const sk='st:'+o.app;let st=await kvGet(env,sk,{done:[],log:[]});
+    if(p==='/admin/__state'){if(req.method==='POST'){let d=null;try{d=await req.json()}catch(e){}if(d&&d.state&&Array.isArray(d.state.done)){st.done=d.state.done.filter(x=>typeof x==='string').slice(-3000);await env.CFG.put(sk,JSON.stringify(st))}}return J({ok:true,state:st})}
+    if(req.method!=='POST')return J({ok:false},405);
+    let d=null;try{d=await req.json()}catch(e){}if(!d||typeof d.cfg!=='object'||!d.cfg)return J({ok:false,e:'bad'},400);
+    const txt=JSON.stringify(d.cfg);if(txt.length>20000)return J({ok:false,e:'big'},413);
+    await env.CFG.put('cfg:'+o.app,txt);if(d.log&&d.log.t){st.log=(st.log||[]).concat({at:Date.now(),t:String(d.log.t).slice(0,200)}).slice(-300);await env.CFG.put(sk,JSON.stringify(st))}
+    return J({ok:true,state:st})}
+  const r=await serve(req);const hd=new Headers(r.headers);for(const k in SEC)hd.set(k,SEC[k]);
+  if((hd.get('content-type')||'').includes('text/html')){hd.delete('content-length');const t=(await r.text()).replace('</body>','<script src="/admin/__kit.js" defer></script></body>');return new Response(t,{status:r.status,headers:hd})}
+  return new Response(r.body,{status:r.status,headers:hd})}
 function loginPage(o){const t=o.title||'כניסת מנהל',acc=o.accent||'#F2C49B';
 return `<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>כניסת מנהל · ${t}</title>
 <style>:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#16181D;color:#F4F5F7;font:16px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;display:flex;justify-content:center;padding:48px 18px}
