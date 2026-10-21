@@ -2,7 +2,7 @@
 var BZX = {logo: null, photo: null, busy: false};
 const bzE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const BZ_SIZES = {a6: [105, 148], a5: [148, 210], square: [80, 80], card: [85, 55], a4: [210, 297]};
-const BZ_TPL = ['clean', 'bold', 'elegant', 'photo', 'gradient', 'night'];
+const BZ_TPL = ['clean', 'wave', 'bold', 'elegant', 'photo', 'gradient', 'night'];
 const BZ_FONTS = {modern: '-apple-system,"Segoe UI","Heebo","Assistant",Arial,sans-serif', classic: 'Georgia,"Frank Ruhl Libre","David","Times New Roman",serif', round: '"Varela Round","Arial Rounded MT Bold","Rubik",Arial,sans-serif'};
 const BZ_PAL = [['#0f766e', '#f0fdfa'], ['#9a3412', '#fff7ed'], ['#1d4ed8', '#eff6ff'], ['#7e22ce', '#faf5ff'], ['#be123c', '#fff1f2'], ['#14532d', '#f0fdf4'], ['#111827', '#f9fafb'], ['#b45309', '#fffbeb']];
 function bzD(){
@@ -29,41 +29,81 @@ function bzCover(x, img, W, H){ const k = Math.max(W / img.width, H / img.height
 function bzDraw(px){
   const d = bzD(), [mw, mh] = BZ_SIZES[d.size] || BZ_SIZES.a6, W = Math.round(mw / 25.4 * (px || 300)), H = Math.round(mh / 25.4 * (px || 300));
   const c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d'), F = BZ_FONTS[d.font] || BZ_FONTS.modern;
-  const u = Math.min(W, H) / 100, wide = W > H * 1.2, tpl = d.tpl === 'photo' && !BZX.photo ? 'bold' : d.tpl;
-  let fg = '#111827', sub = '#4b5563', accent = d.c1, qrFg = '#111111', qrBg = '#ffffff', card = false;
-  /* background */
-  if (tpl === 'clean'){ x.fillStyle = '#ffffff'; x.fillRect(0, 0, W, H); x.fillStyle = d.c1; x.fillRect(0, 0, W, u * 3); x.fillRect(0, H - u * 3, W, u * 3); }
-  else if (tpl === 'bold'){ x.fillStyle = d.c1; x.fillRect(0, 0, W, H); fg = '#ffffff'; sub = 'rgba(255,255,255,.85)'; accent = '#ffffff'; card = true; }
-  else if (tpl === 'elegant'){ x.fillStyle = d.c2; x.fillRect(0, 0, W, H); x.strokeStyle = d.c1; x.lineWidth = u * 0.8; x.strokeRect(u * 4, u * 4, W - u * 8, H - u * 8); x.lineWidth = u * 0.3; x.strokeRect(u * 5.6, u * 5.6, W - u * 11.2, H - u * 11.2); fg = d.c1; sub = '#57534e'; }
-  else if (tpl === 'photo'){ bzCover(x, BZX.photo, W, H); const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, 'rgba(0,0,0,.25)'); g.addColorStop(1, 'rgba(0,0,0,.72)'); x.fillStyle = g; x.fillRect(0, 0, W, H); fg = '#ffffff'; sub = 'rgba(255,255,255,.9)'; accent = '#ffffff'; card = true; }
-  else if (tpl === 'gradient'){ const g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, d.c1); g.addColorStop(1, bzShade(d.c1, -0.45)); x.fillStyle = g; x.fillRect(0, 0, W, H); fg = '#ffffff'; sub = 'rgba(255,255,255,.88)'; accent = '#ffffff'; card = true; }
-  else { x.fillStyle = '#0b0f19'; x.fillRect(0, 0, W, H); fg = '#ffffff'; sub = '#cbd5e1'; accent = d.c1; qrFg = '#0b0f19'; card = true; }
-  const cta = d.cta || t('bz_ctaDef'), subTxt = d.sub || t('bz_subDef');
-  const qText = String(d.url || '').trim(), q = d.qr && qText ? qrEncode(qText, 1, true) : null;
+  const u = Math.min(W, H) / 100, wide = W > H * 1.2, tpl = d.tpl === 'photo' && !BZX.photo ? 'gradient' : d.tpl, c1 = d.c1, dk = bzShade(c1, -0.42), lt = bzShade(c1, 0.9);
+  /* colours of each design: text, soft text, accent, does the content sit on a light card */
+  const S = {clean: ['#111827', '#6b7280', c1, false], bold: ['#ffffff', 'rgba(255,255,255,.86)', '#ffffff', false], elegant: [dk, '#78716c', c1, false], photo: ['#111827', '#6b7280', c1, false],
+    gradient: ['#ffffff', 'rgba(255,255,255,.88)', '#ffffff', false], night: ['#ffffff', '#cbd5e1', bzShade(c1, 0.35), false], wave: ['#111827', '#6b7280', c1, false]}[tpl] || ['#111827', '#6b7280', c1, false];
+  let [fg, sub, accent] = S;
+  /* ---- backgrounds ---- */
+  const blob = (cx, cy, r, col) => { const g = x.createRadialGradient(cx, cy, 0, cx, cy, r); g.addColorStop(0, col); g.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = g; x.fillRect(cx - r, cy - r, r * 2, r * 2); };
+  let top = 0;                                   /* where the content area starts (below a picture band) */
+  if (tpl === 'clean'){ x.fillStyle = '#ffffff'; x.fillRect(0, 0, W, H); blob(0, 0, W * 0.75, bzAlpha(c1, 0.16)); blob(W, H, W * 0.8, bzAlpha(c1, 0.12)); x.fillStyle = c1; x.fillRect(0, H - u * 2.2, W, u * 2.2); }
+  else if (tpl === 'bold'){ x.fillStyle = c1; x.fillRect(0, 0, W, H); x.save(); x.globalAlpha = 0.08; x.strokeStyle = '#fff'; x.lineWidth = u * 1.6; for (let k = -H; k < W; k += u * 7){ x.beginPath(); x.moveTo(k, 0); x.lineTo(k + H, H); x.stroke(); } x.restore(); blob(W * 0.85, H * 0.12, W * 0.55, 'rgba(255,255,255,.18)'); }
+  else if (tpl === 'elegant'){ x.fillStyle = d.c2 || lt; x.fillRect(0, 0, W, H); blob(W / 2, H * 0.35, W * 0.7, 'rgba(255,255,255,.7)'); x.strokeStyle = c1; x.lineWidth = u * 0.7; x.strokeRect(u * 4, u * 4, W - u * 8, H - u * 8); x.lineWidth = u * 0.25; x.strokeRect(u * 5.5, u * 5.5, W - u * 11, H - u * 11);
+    x.fillStyle = c1; [[u * 4, u * 4], [W - u * 4, u * 4], [u * 4, H - u * 4], [W - u * 4, H - u * 4]].forEach(([a, b]) => { x.save(); x.translate(a, b); x.rotate(Math.PI / 4); x.fillRect(-u * 1.3, -u * 1.3, u * 2.6, u * 2.6); x.restore(); }); }
+  else if (tpl === 'photo' && wide){ bzCover(x, BZX.photo, W, H); x.fillStyle = 'rgba(255,255,255,.84)'; x.fillRect(0, 0, W, H); x.fillStyle = c1; x.fillRect(0, H - u * 2.2, W, u * 2.2); }
+  else if (tpl === 'photo'){ const band = H * (BZX.logo ? 0.28 : 0.36) * (H > W * 1.15 ? 1 : 0.8); x.fillStyle = '#ffffff'; x.fillRect(0, 0, W, H); x.save(); x.beginPath(); x.rect(0, 0, W, band); x.clip(); bzCover(x, BZX.photo, W, band); const g = x.createLinearGradient(0, band * 0.4, 0, band); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.35)'); x.fillStyle = g; x.fillRect(0, 0, W, band); x.restore();
+    x.fillStyle = '#ffffff'; x.beginPath(); x.moveTo(0, band - u * 6); x.quadraticCurveTo(W / 2, band + u * 5, W, band - u * 6); x.lineTo(W, H); x.lineTo(0, H); x.closePath(); x.fill(); x.fillStyle = c1; x.fillRect(0, H - u * 2.2, W, u * 2.2); top = band - u * 2; }
+  else if (tpl === 'gradient'){ const g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, bzShade(c1, 0.12)); g.addColorStop(1, dk); x.fillStyle = g; x.fillRect(0, 0, W, H); blob(W * 0.15, H * 0.1, W * 0.7, 'rgba(255,255,255,.22)'); blob(W * 0.95, H * 0.75, W * 0.6, bzAlpha(bzShade(c1, 0.5), 0.35)); }
+  else if (tpl === 'night'){ x.fillStyle = '#0a0e17'; x.fillRect(0, 0, W, H); blob(W / 2, H * 0.42, W * 0.7, bzAlpha(c1, 0.35)); x.save(); x.globalAlpha = 0.06; x.fillStyle = '#fff'; for (let yy = u * 3; yy < H; yy += u * 4) for (let xx = u * 3; xx < W; xx += u * 4){ x.beginPath(); x.arc(xx, yy, u * 0.35, 0, 7); x.fill(); } x.restore(); }
+  else if (tpl === 'wave' && wide){ x.fillStyle = '#ffffff'; x.fillRect(0, 0, W, H); const g = x.createLinearGradient(0, H * 0.7, W, H); g.addColorStop(0, c1); g.addColorStop(1, dk); x.fillStyle = g; x.beginPath(); x.moveTo(0, H); x.lineTo(W, H); x.lineTo(W, H * 0.8); x.bezierCurveTo(W * 0.65, H * 0.95, W * 0.35, H * 0.7, 0, H * 0.86); x.closePath(); x.fill(); }
+  else if (tpl === 'wave' && !wide){ x.fillStyle = '#ffffff'; x.fillRect(0, 0, W, H); }
+  else if (tpl === 'wave' && false){ const band = 0, g = x.createLinearGradient(0, 0, W, 1); g.addColorStop(0, c1); g.addColorStop(1, dk); x.fillStyle = g; x.beginPath(); x.moveTo(0, 0); x.lineTo(W, 0); x.lineTo(W, band * 0.85); x.bezierCurveTo(W * 0.7, band * 1.25, W * 0.3, band * 0.55, 0, band); x.closePath(); x.fill();
+    x.fillStyle = bzAlpha(c1, 0.12); x.beginPath(); x.moveTo(0, H); x.lineTo(W, H); x.lineTo(W, H - u * 10); x.bezierCurveTo(W * 0.6, H - u * 2, W * 0.35, H - u * 16, 0, H - u * 7); x.closePath(); x.fill(); }
+  const cta = d.cta || t('bz_ctaDef'), subTxt = d.sub || t('bz_subDef'), qText = String(d.url || '').trim(), q = d.qr && qText ? qrEncode(qText, 1, true) : null;
+  let host = ''; try { host = qText ? new URL(/^[a-z]+:/i.test(qText) ? qText : 'https://' + qText).hostname.replace(/^www\./, '') : ''; } catch (e) {}
+  const qrCard = (qx, qy, s) => { const qc = qrCanvas(q, {scale: 10, margin: 1, fg: '#111111', bg: '#ffffff', dots: d.dots}), p2 = u * 2.4; x.save(); x.shadowColor = 'rgba(0,0,0,.18)'; x.shadowBlur = u * 3; x.shadowOffsetY = u * 0.8; x.fillStyle = '#ffffff'; bzRound(x, qx - p2, qy - p2, s + p2 * 2, s + p2 * 2, u * 3); x.fill(); x.restore(); x.imageSmoothingEnabled = false; x.drawImage(qc, qx, qy, s, s); x.imageSmoothingEnabled = true; };
+  const badge = (cx, cy, r) => { x.save(); const ring = x.createLinearGradient(cx - r, cy - r, cx + r, cy + r); const onDark = fg === '#ffffff';
+      x.fillStyle = onDark ? 'rgba(255,255,255,.14)' : bzAlpha(c1, 0.1); x.beginPath(); x.arc(cx, cy, r * 1.32, 0, 7); x.fill();
+      ring.addColorStop(0, onDark ? 'rgba(255,255,255,.95)' : bzShade(c1, 0.15)); ring.addColorStop(1, onDark ? 'rgba(255,255,255,.55)' : dk); x.strokeStyle = ring; x.lineWidth = r * 0.07; x.beginPath(); x.arc(cx, cy, r * 1.12, 0, 7); x.stroke();
+      if (tpl === 'night'){ x.shadowColor = accent; x.shadowBlur = r * 0.5; }
+      x.fillStyle = onDark ? 'rgba(255,255,255,.08)' : '#ffffff'; x.beginPath(); x.arc(cx, cy, r * 0.98, 0, 7); x.fill(); x.restore();
+      bzNfcIcon(x, cx + r * 0.32, cy - r * 0.05, r * 0.72, accent);
+      const pill = 'NFC'; x.font = '800 ' + Math.round(r * 0.28) + 'px ' + F; const pw = x.measureText(pill).width + r * 0.36, ph = r * 0.42; x.fillStyle = onDark ? '#ffffff' : c1; bzRound(x, cx - pw / 2, cy + r * 0.98, pw, ph, ph / 2); x.fill(); x.fillStyle = onDark ? (tpl === 'night' ? '#0a0e17' : c1) : '#ffffff'; x.textAlign = 'center'; x.textBaseline = 'middle'; try { x.direction = 'ltr'; } catch (e) {} x.fillText(pill, cx, cy + r * 0.98 + ph / 2 + r * 0.01); };
+  const ctaPill = (cx, y, maxW, text) => { const fs = u * 4.6; x.font = '700 ' + fs + 'px ' + F; let tw = x.measureText(text).width; const k = tw > maxW * 0.86 ? maxW * 0.86 / tw : 1; const f2 = fs * k; x.font = '700 ' + f2 + 'px ' + F; tw = x.measureText(text).width;
+      const ph = f2 * 2.1, pw = tw + f2 * 2.2, onDark = fg === '#ffffff'; x.fillStyle = onDark ? '#ffffff' : c1; bzRound(x, cx - pw / 2, y, pw, ph, ph / 2); x.fill();
+      x.fillStyle = onDark ? (tpl === 'night' ? '#0a0e17' : c1) : '#ffffff'; x.textAlign = 'center'; x.textBaseline = 'middle'; try { x.direction = /[֐-ۿ]/.test(text) ? 'rtl' : 'ltr'; } catch (e) {} x.fillText(text, cx, y + ph / 2 + f2 * 0.04); return y + ph; };
+  const divider = (cx, y, w) => { x.save(); x.strokeStyle = tpl === 'elegant' ? c1 : (fg === '#ffffff' ? 'rgba(255,255,255,.5)' : bzAlpha(c1, 0.5)); x.lineWidth = u * 0.35; x.beginPath(); x.moveTo(cx - w / 2, y); x.lineTo(cx - u * 2, y); x.moveTo(cx + u * 2, y); x.lineTo(cx + w / 2, y); x.stroke(); x.fillStyle = x.strokeStyle; x.translate(cx, y); x.rotate(Math.PI / 4); x.fillRect(-u * 0.9, -u * 0.9, u * 1.8, u * 1.8); x.restore(); };
   if (!wide){
-    let y = u * 9;
-    if (BZX.logo){ const lh = u * 16, lw = Math.min(W * 0.55, lh * BZX.logo.width / BZX.logo.height); x.drawImage(BZX.logo, (W - lw) / 2, y, lw, lw * BZX.logo.height / BZX.logo.width); y += lw * BZX.logo.height / BZX.logo.width + u * 4; }
-    y = bzText(x, d.name || t('bz_nameDef'), W / 2, y, W * 0.84, u * 8.5, '800', fg, F, 2) + u * 1;
-    y = bzText(x, d.tag, W / 2, y, W * 0.8, u * 4.2, '500', sub, F, 2) + u * 4;
-    if (d.nfc){ const r = u * (q ? 9 : 14); x.fillStyle = card ? 'rgba(255,255,255,.14)' : bzAlpha(d.c1, 0.1); x.beginPath(); x.arc(W / 2, y + r * 1.25, r * 1.25, 0, 7); x.fill(); bzNfcIcon(x, W / 2 + r * 0.4, y + r * 1.25, r, accent); y += r * 2.5 + u * 3; }
-    y = bzText(x, d.nfc ? cta : subTxt, W / 2, y, W * 0.84, u * 5.6, '700', fg, F, 2) + u * 2.5;
-    if (q){ const room = H - y - u * 12, s = Math.max(u * 18, Math.min(room, W * 0.5)), qc = qrCanvas(q, {scale: 10, margin: 2, fg: qrFg, bg: qrBg, dots: d.dots}), qx = (W - s) / 2;
-      if (card){ x.fillStyle = '#ffffff'; bzRound(x, qx - u * 2, y - u * 2, s + u * 4, s + u * 4, u * 3); x.fill(); }
-      x.imageSmoothingEnabled = false; x.drawImage(qc, qx, y, s, s); x.imageSmoothingEnabled = true; y += s + u * 3.5;
-      if (d.nfc) bzText(x, subTxt, W / 2, y, W * 0.8, u * 3.6, '500', sub, F, 1); }
+    const nameCol = tpl === 'photo' ? '#111827' : tpl === 'wave' ? '#ffffff' : fg, tagCol = tpl === 'photo' ? '#6b7280' : tpl === 'wave' ? 'rgba(255,255,255,.88)' : sub;
+    let headEnd = 0;
+    const lay = draw => {
+      const X = draw ? x : null; let y = 0; const meas = (fn) => { if (!draw){ const sv = x.save.bind(x); x.save(); const r = fn(); x.restore(); return r; } return fn(); };
+      if (BZX.logo){ const lw = Math.min(W * 0.42, u * 22 * BZX.logo.width / BZX.logo.height), lh = lw * BZX.logo.height / BZX.logo.width;
+        if (draw){ const b = u * 2; x.save(); x.shadowColor = 'rgba(0,0,0,.15)'; x.shadowBlur = u * 2; x.fillStyle = '#ffffff'; bzRound(x, (W - lw) / 2 - b, y - b, lw + b * 2, lh + b * 2, u * 3); x.fill(); x.restore(); x.drawImage(BZX.logo, (W - lw) / 2, y, lw, lh); }
+        y += lh + u * 6; }
+      y = meas(() => bzText(draw ? x : bzGhost(x), d.name || t('bz_nameDef'), W / 2, y, W * 0.82, u * 9, '800', nameCol, F, 2)) + u * 0.6;
+      if (d.tag){ y = meas(() => bzText(draw ? x : bzGhost(x), d.tag, W / 2, y, W * 0.78, u * 4.2, '500', tagCol, F, 2)) + u * 2; }
+      if (!draw) headEnd = y;
+      if (draw && tpl !== 'wave') divider(W / 2, y + u * 1.5, W * 0.32); y += u * (tpl === 'wave' ? 8 : 5);
+      if (d.nfc){ const r = u * (q ? 9.5 : 15); if (draw) badge(W / 2, y + r * 1.32, r); y += r * 2.64 + r * 0.55 + u * 2; }
+      if (draw) ctaPill(W / 2, y, W * 0.84, d.nfc ? cta : subTxt); y += u * 4.6 * 2.1 + u * 4;
+      if (q){ const s = Math.min(W * 0.42, Math.max(u * 22, H - y - u * 20 - top)); if (draw) qrCard((W - s) / 2, y + u * 2.4, s); y += s + u * 4.8 + u * 2.4;
+        if (draw){ const t2 = d.nfc ? subTxt : ''; let yy = y; if (t2) yy = bzText(x, t2, W / 2, yy, W * 0.8, u * 3.5, '600', (tpl === 'wave' || tpl === 'photo' || tpl === 'clean' || tpl === 'elegant') ? '#4b5563' : sub, F, 1); if (host) bzText(x, host, W / 2, yy + u * 0.6, W * 0.8, u * 3.1, '700', (tpl === 'wave' || tpl === 'photo' || tpl === 'clean' || tpl === 'elegant') ? c1 : fg, F, 1); }
+        y += u * 8; }
+      return y; };
+    const used = lay(false), room = H - top - u * 12, k = used > room ? room / used : 1;
+    let y0 = top + Math.max(u * 6, (H - top - used * k) / 2);
+    if (tpl === 'wave'){ y0 = u * 7; const band = y0 + headEnd * k + u * 5, g = x.createLinearGradient(0, 0, W, band); g.addColorStop(0, c1); g.addColorStop(1, dk); x.fillStyle = '#ffffff'; x.fillRect(0, 0, W, H); x.fillStyle = g;
+      x.beginPath(); x.moveTo(0, 0); x.lineTo(W, 0); x.lineTo(W, band); x.bezierCurveTo(W * 0.7, band + u * 9, W * 0.3, band - u * 5, 0, band + u * 4); x.closePath(); x.fill();
+      x.fillStyle = bzAlpha(c1, 0.12); x.beginPath(); x.moveTo(0, H); x.lineTo(W, H); x.lineTo(W, H - u * 10); x.bezierCurveTo(W * 0.6, H - u * 2, W * 0.35, H - u * 16, 0, H - u * 7); x.closePath(); x.fill();
+      y0 = Math.max(y0, (H - used * k) / 2 > y0 ? y0 : y0); }
+    x.save(); x.translate(W * (1 - k) / 2, y0); x.scale(k, k); lay(true); x.restore();
   } else {
-    /* business card / landscape: text on one side, QR on the other */
-    const qs = q ? H * 0.62 : 0, gap = u * 6, rtl = document.documentElement.dir === 'rtl', textW = W - qs - gap * 3, tx = rtl ? W - gap - textW / 2 : gap + textW / 2, qx = rtl ? gap : W - gap - qs;
-    let y = u * 9;
-    if (BZX.logo){ const lh = u * 14, lw = Math.min(textW * 0.6, lh * BZX.logo.width / BZX.logo.height), h2 = lw * BZX.logo.height / BZX.logo.width; x.drawImage(BZX.logo, tx - lw / 2, y, lw, h2); y += h2 + u * 3; }
-    y = bzText(x, d.name || t('bz_nameDef'), tx, y, textW, u * 9, '800', fg, F, 2) + u;
-    y = bzText(x, d.tag, tx, y, textW, u * 4.6, '500', sub, F, 1) + u * 3;
-    if (d.nfc){ const r = u * 7; bzNfcIcon(x, tx + r * 0.4, y + r, r, accent); y += r * 2 + u * 2; }
-    bzText(x, d.nfc ? cta : subTxt, tx, y, textW, u * 5, '700', fg, F, 2);
-    if (q){ const qc = qrCanvas(q, {scale: 10, margin: 2, fg: qrFg, bg: qrBg, dots: d.dots}), qy = (H - qs) / 2; if (card){ x.fillStyle = '#ffffff'; bzRound(x, qx - u * 2, qy - u * 2, qs + u * 4, qs + u * 4, u * 3); x.fill(); } x.imageSmoothingEnabled = false; x.drawImage(qc, qx, qy, qs, qs); x.imageSmoothingEnabled = true; }
+    const qs = q ? H * 0.6 : 0, gap = u * 6, rtl = document.documentElement.dir === 'rtl', textW = W - qs - gap * 3, tx = rtl ? W - gap - textW / 2 : gap + textW / 2, qx = rtl ? gap * 1.2 : W - gap * 1.2 - qs;
+    const nameCol = tpl === 'wave' || tpl === 'photo' ? '#111827' : fg;
+    let y = u * 10;
+    if (BZX.logo){ const lw = Math.min(textW * 0.5, u * 13 * BZX.logo.width / BZX.logo.height), h2 = lw * BZX.logo.height / BZX.logo.width; x.drawImage(BZX.logo, tx - lw / 2, y, lw, h2); y += h2 + u * 3; }
+    y = bzText(x, d.name || t('bz_nameDef'), tx, y, textW, u * 9.5, '800', nameCol, F, 2) + u;
+    if (d.tag) y = bzText(x, d.tag, tx, y, textW, u * 4.6, '500', tpl === 'wave' || tpl === 'photo' ? '#6b7280' : sub, F, 1) + u * 3;
+    if (d.nfc){ const r = u * 7.5; badge(tx, y + r * 1.32, r); y += r * 3.3; }
+    ctaPill(tx, y, textW, d.nfc ? cta : subTxt);
+    if (q) qrCard(qx, (H - qs) / 2, qs);
   }
   return c;
 }
+/* measure text without drawing it */
+function bzGhost(x){ return {set fillStyle(v){}, get font(){ return x.font; }, set font(v){ x.font = v; }, set textAlign(v){}, set textBaseline(v){}, set direction(v){}, measureText: s => x.measureText(s), fillText(){}}; }
 function bzRound(x, X, Y, w, h, r){ x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + w, Y, X + w, Y + h, r); x.arcTo(X + w, Y + h, X, Y + h, r); x.arcTo(X, Y + h, X, Y, r); x.arcTo(X, Y, X + w, Y, r); x.closePath(); }
 function bzRgb(h){ const m = /^#?([0-9a-f]{6})$/i.exec(h || ''); const n = m ? parseInt(m[1], 16) : 0; return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
 function bzHex(r, g, b){ return '#' + [r, g, b].map(v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0')).join(''); }
@@ -157,7 +197,7 @@ Object.assign(T, {
   bz_url:['הקישור שהלקוח יגיע אליו','الرابط الذي يصل إليه الزبون','The link customers reach'], bz_urlH:['אותו קישור נכתב למדבקת ה־NFC ונכנס לקוד ה־QR','نفس الرابط يُكتب على ملصق NFC ويدخل في رمز QR','The same link goes on the NFC sticker and into the QR code'],
   bz_cta:['הכיתוב הראשי','النص الرئيسي','Main text'], bz_ctaDef:['קרבו את הטלפון כאן','قرّبوا الهاتف هنا','Tap your phone here'], bz_subDef:['או סרקו את הקוד במצלמה','أو امسحوا الرمز بالكاميرا','or scan the code with your camera'],
   bz_logo:['הוספת לוגו','إضافة شعار','Add a logo'], bz_logoCh:['החלפת לוגו','تغيير الشعار','Change logo'], bz_photo:['תמונת רקע','صورة خلفية','Background photo'], bz_photoCh:['החלפת תמונה','تغيير الصورة','Change photo'], bz_imgFail:['לא הצלחתי לטעון את התמונה','لم أتمكن من تحميل الصورة','Couldn\'t load the image'],
-  bz_design:['עיצוב','التصميم','Design'], bz_t_clean:['נקי','بسيط','Clean'], bz_t_bold:['צבעוני','ملوّن','Bold'], bz_t_elegant:['אלגנטי','أنيق','Elegant'], bz_t_photo:['תמונה','صورة','Photo'], bz_t_gradient:['מעבר צבע','تدرّج','Gradient'], bz_t_night:['כהה','داكن','Dark'],
+  bz_design:['עיצוב','التصميم','Design'], bz_t_clean:['נקי','بسيط','Clean'], bz_t_bold:['צבעוני','ملوّن','Bold'], bz_t_elegant:['אלגנטי','أنيق','Elegant'], bz_t_photo:['תמונה','صورة','Photo'], bz_t_gradient:['מעבר צבע','تدرّج','Gradient'], bz_t_night:['כהה','داكن','Dark'], bz_t_wave:['גל','موجة','Wave'],
   bz_colors:['צבעים','الألوان','Colours'], bz_color:['צבע {n}','لون {n}','Colour {n}'], bz_own:['צבע משלכם','لونكم الخاص','Your own colour'], bz_rand:['הפתעה','مفاجأة','Surprise me'],
   bz_size:['גודל','الحجم','Size'], bz_s_a6:['A6 – שלט שולחן','A6 – لافتة طاولة','A6 – table sign'], bz_s_a5:['A5 – שלט בינוני','A5 – لافتة متوسطة','A5 – medium sign'], bz_s_square:['מדבקה 8×8 ס״מ','ملصق 8×8 سم','Sticker 8×8 cm'], bz_s_card:['כרטיס ביקור','بطاقة عمل','Business card'], bz_s_a4:['A4 – שלט גדול','A4 – لافتة كبيرة','A4 – large sign'],
   bz_font:['גופן','الخط','Font'], bz_f_modern:['מודרני','حديث','Modern'], bz_f_classic:['קלאסי','كلاسيكي','Classic'], bz_f_round:['מעוגל','دائري','Rounded'],
