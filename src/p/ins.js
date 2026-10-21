@@ -1,7 +1,7 @@
 /* ---------- 13.22: insights – what changed for you, trends, subscriptions, your cost of living, a monthly report, challenges ----------
    Everything is worked out on the phone from your own expenses, accounts and the official figures. */
 const inE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
-const IN_TABS = [['chg', '🔔'], ['trend', '📈'], ['subs', '🔁'], ['infl', '🛒'], ['bench', '👥'], ['report', '🧾'], ['chal', '🏅']];
+const IN_TABS = [['opp', '💡'], ['chg', '🔔'], ['trend', '📈'], ['subs', '🔁'], ['infl', '🛒'], ['bench', '👥'], ['report', '🧾'], ['chal', '🏅']];
 var INT = 'chg';
 function inD(){ const d = SET.ins && typeof SET.ins === 'object' ? SET.ins : (SET.ins = {}); if (!Array.isArray(d.ev)) d.ev = []; if (!d.keep || typeof d.keep !== 'object') d.keep = {}; if (!Array.isArray(d.ch)) d.ch = []; return d; }
 const inM0 = x => M(Math.round(isFinite(x) ? x : 0), 0, 'ILS');
@@ -115,8 +115,9 @@ function inBench(v){
   const E = inE, now = new Date(), L = [1, 2, 3].map(i => expTotals(inYm(now, -i))).filter(x => x.sum > 0), cur = expTotals(inYm(now));
   const use = L.length ? L : (cur.sum ? [cur] : []); if (!use.length){ v.innerHTML = `<p class="fine bk-empty">${E(t('in_noExp'))}</p>`; return; }
   const avg = k => use.reduce((s, x) => s + (k ? (Array.isArray(k) ? k.reduce((q, kk) => q + (x.by[kk] || 0), 0) : (x.by[k] || 0)) : x.sum), 0) / use.length;
-  const R = [['in_bTot', avg(), IN_AVG.tot], ['in_bHome', avg('home'), IN_AVG.tot * IN_AVG.home], ['in_bMove', avg(['car', 'comm']), IN_AVG.tot * IN_AVG.move], ['in_bFood', avg('food'), IN_AVG.tot * IN_AVG.food]];
-  v.innerHTML = `<p class="fine">${E(t('in_benchIntro'))}</p><ul class="in-bars">${R.map(([k, me, av]) => { const mx = Math.max(me, av, 1); return `<li><b>${E(t(k))}</b><div class="in-bar"><span>${E(t('in_me'))}</span><i style="width:${(me / mx * 100).toFixed(1)}%"></i><em dir="ltr">${E(inM0(me))}</em></div><div class="in-bar avg"><span>${E(t('in_avg'))}</span><i style="width:${(av / mx * 100).toFixed(1)}%"></i><em dir="ltr">${E(inM0(av))}</em></div></li>`; }).join('')}</ul>
+  const dd = inD(), ad = Math.max(1, Math.min(8, +dd.bAd || 2)), kd = Math.max(0, Math.min(10, dd.bKid == null || dd.bKid === '' ? 1 : +dd.bKid)), sc = (1 + 0.5 * (ad - 1) + 0.3 * kd) / 1.83, base = IN_AVG.tot * sc;
+  const R = [['in_bTot', avg(), base], ['in_bHome', avg('home'), base * IN_AVG.home], ['in_bMove', avg(['car', 'comm']), base * IN_AVG.move], ['in_bFood', avg('food'), base * IN_AVG.food]];
+  v.innerHTML = `<p class="fine">${E(t('in_benchIntro'))}</p><div class="bk-grid"><label class="bk-f"><span>${E(t('ux_bAd'))}</span><input type="number" inputmode="numeric" min="1" max="8" data-inb="bAd" value="${ad}"></label><label class="bk-f"><span>${E(t('ux_bKid'))}</span><input type="number" inputmode="numeric" min="0" max="10" data-inb="bKid" value="${kd}"></label></div><p class="fine">${E(t('ux_bScaled'))}</p><ul class="in-bars">${R.map(([k, me, av]) => { const mx = Math.max(me, av, 1); return `<li><b>${E(t(k))}</b><div class="in-bar"><span>${E(t('in_me'))}</span><i style="width:${(me / mx * 100).toFixed(1)}%"></i><em dir="ltr">${E(inM0(me))}</em></div><div class="in-bar avg"><span>${E(t('in_avg'))}</span><i style="width:${(av / mx * 100).toFixed(1)}%"></i><em dir="ltr">${E(inM0(av))}</em></div></li>`; }).join('')}</ul>
     <p class="fine">${E(t('in_benchNote'))}</p>`;
 }
 
@@ -168,19 +169,33 @@ function inChal(v){
     <p class="fine">${E(t('in_badges', {n: (d.badges || []).length}))}</p>`;
 }
 
+/* ---- 0) worth checking: opportunities found in your own data (rules in ux2.js) ---- */
+function inOpp(v){
+  const E = inE, L = typeof uxOpps === 'function' ? uxOpps() : [];
+  v.innerHTML = `<p class="fine">${E(t('ux_oppIntro'))}</p>` + (L.length ? `<ol class="bk-adv">${L.map(o => `<li class="bk-a"><span class="bk-ic" aria-hidden="true">${o.ic}</span><div><b>${E(o.h)}</b><p>${E(o.p)}</p><p><button type="button" class="lg-a" data-go="${o.go}">${E(t('ux_oppGo'))} – ${E(t('tab_' + o.go))}</button></p></div></li>`).join('')}</ol>` : `<p class="fine bk-empty">${E(t('ux_oppNone'))}</p>`);
+}
 /* ---- the screen ---- */
 function inRender(){
   const root = $('#hr_insights'); if (!root) return; inSnap(); const E = inE, d = inD(), unseen = d.ev.length && d.seen !== d.ev[0].day + d.ev[0].k;
   root.innerHTML = `<div class="ds-chips bk-tabs" role="tablist" aria-label="${E(t('tab_insights'))}">${IN_TABS.map(([k, ic]) => `<button type="button" role="tab" class="ds-chip${INT === k ? ' on' : ''}" aria-selected="${INT === k}" data-intab="${k}">${ic} ${E(t('in_t_' + k))}${k === 'chg' && unseen ? ' •' : ''}</button>`).join('')}</div><div id="in_view"></div><p class="fine sl-priv">🔒 ${E(t('pic_priv'))}</p>`;
-  const v = $('#in_view'); ({chg: inChg, trend: inTrend, subs: inSubs, infl: inInfl, bench: inBench, report: inReport, chal: inChal})[INT](v);
+  const v = $('#in_view'); ({opp: inOpp, chg: inChg, trend: inTrend, subs: inSubs, infl: inInfl, bench: inBench, report: inReport, chal: inChal})[INT](v);
 }
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-inopp]'); if (!b) return; const d = inD(); d.oppSeen = d.oppSeen || {}; d.oppSeen[b.dataset.inopp] = inYm(new Date()); try { saveSet(); } catch (er) {} });
+let IN_BT = 0;
+document.addEventListener('input', e => { const el = e.target; if (!el || !el.dataset || !el.dataset.inb) return; inD()[el.dataset.inb] = el.value; clearTimeout(IN_BT); IN_BT = setTimeout(() => { saveSet(); const k = el.dataset.inb; if (INT === 'bench'){ inRender(); const n = document.querySelector(`[data-inb="${k}"]`); if (n){ n.focus(); try { n.select(); } catch (er) {} } } }, 700); });
 /* a badge when a challenge is met (kept, never shown twice) */
 function inBadges(){ try { const d = inD(); d.badges = d.badges || []; IN_CH.forEach(([k]) => { const S = inChalState(k, d.ch.find(x => x.k === k)), id = k + ':' + inYm(new Date()); if ((S.ok || S.got >= S.goal) && !d.badges.includes(id)){ d.badges.push(id); if (d.badges.length > 120) d.badges.shift(); setTimeout(() => toast(t('in_badge', {n: t('in_c_' + k)})), 2500); } }); saveSet(); } catch (e) {} }
 /* on Home: a line when something changed since the last look */
 function inHome(){
   const hh = $('#hh'); if (!hh) return; const d = inD(); let box = $('#hin');
   const fresh = d.ev.length && d.seen !== d.ev[0].day + d.ev[0].k ? d.ev[0] : null;
-  if (!fresh){ if (box) box.remove(); return; }
+  if (!fresh){
+    let o = null; try { const L = typeof uxOpps === 'function' ? uxOpps() : []; o = L.find(x => (d.oppSeen || {})[x.k] !== inYm(new Date())) || null; } catch (e) {}
+    if (!o){ if (box) box.remove(); return; }
+    if (!box){ (($('#hpic') || $('#hrm') || hh)).insertAdjacentHTML('beforebegin', '<div id="hin" class="hrm hin"></div>'); box = $('#hin'); }
+    box.innerHTML = `<button type="button" class="hrm-in" data-go="${o.go}" data-inopp="${o.k}"><span class="hrm-h">${o.ic} ${inE(o.h)}</span><span class="hrm-r">${inE(o.p)}</span></button>`;
+    return;
+  }
   if (!box){ (($('#hpic') || $('#hrm') || hh)).insertAdjacentHTML('beforebegin', '<div id="hin" class="hrm hin"></div>'); box = $('#hin'); }
   box.innerHTML = `<button type="button" class="hrm-in" data-go="insights"><span class="hrm-h">🔔 ${inE(t('in_e_' + fresh.k, {a: N(fresh.a, 2), b: N(fresh.b, 2)}))}</span><span class="hrm-r">${inE(inImpact(fresh))}</span></button>`;
 }
