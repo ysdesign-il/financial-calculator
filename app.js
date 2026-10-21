@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261021.063756'){ try { if (!sessionStorage.getItem('fin-hb-20261021.063756')){ sessionStorage.setItem('fin-hb-20261021.063756', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261021.064101'){ try { if (!sessionStorage.getItem('fin-hb-20261021.064101')){ sessionStorage.setItem('fin-hb-20261021.064101', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -12006,8 +12006,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.29", "date": "2026-10-21", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261021.063756';
+var CHANGELOG = [{"v": "13.30", "date": "2026-10-21", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261021.064101';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -15860,6 +15860,14 @@ Object.assign(T, {
   rec_copyCode:['העתקת הקוד','نسخ الرمز','Copy the code'], rec_copyLine:['העתקת השורה','نسخ السطر','Copy the line'], rec_copied:['הועתק','تم النسخ','Copied'], rec_close:['סגירה','إغلاق','Close'],
   rec_enter:['הקלידו את קוד השחזור הקיים. הוא לא נשלח לשום מקום.','اكتبوا رمز الاستعادة الحالي. لا يُرسَل إلى أي مكان.','Type your existing recovery code. It is not sent anywhere.'], rec_make:['הפקת השורה','إنشاء السطر','Create the line'],
   rec_len:['הקוד צריך 20 תווים','الرمز يحتاج 20 حرفًا','The code needs 20 characters'],
+  rec_chg:['שינוי קוד מפתח','تغيير رمز المطوّر','Change the developer code'],
+  rec_chgName:['שם הבעלים','اسم المالك','Owner name'],
+  rec_chgNeed:['כדי שהשחזור ימשיך לעבוד, צריך גם את קוד השחזור. הוא לא נשלח לשום מקום.','لكي تستمر الاستعادة بالعمل، يلزم رمز الاستعادة أيضًا. لا يُرسَل إلى أي مكان.','So that recovery keeps working, the recovery code is needed too. It is not sent anywhere.'],
+  rec_chgGo:['יצירת קוד חדש','إنشاء رمز جديد','Create a new code'],
+  rec_chgNoName:['צריך שם בעלים','يلزم اسم المالك','An owner name is needed'],
+  rec_chgShow:['זה קוד המפתח החדש שלכם. שמרו אותו. הוא מוצג רק עכשיו ויעבוד בכל האפליקציות שמשתמשות בקוד הזה.','هذا رمز المطوّر الجديد. احفظوه. يظهر الآن فقط ويعمل في كل التطبيقات التي تستخدم هذا الرمز.','This is your new developer code. Save it. It is shown only now and works in all the apps that use this code.'],
+  rec_chgSend:['כדי להפעיל אותו, שלחו לפיתוח את השורה הזו. היא לא חושפת את הקוד. עד שהיא תוכנס, הקוד הישן ממשיך לעבוד.','لتفعيله، أرسلوا إلى التطوير هذا السطر. لا يكشف الرمز. وحتى يُطبَّق، يبقى الرمز القديم فعّالًا.','To activate it, send this line to development. It does not reveal the code. Until it is applied, the old code keeps working.'],
+  rec_chgNever:['אל תשלחו את קוד המפתח לאף אחד.','لا ترسلوا رمز المطوّر لأي أحد.','Never send the developer code to anyone.'],
   rec_alsoShared:['אפשר להקליד כאן גם את קוד השחזור המשותף לכל האפליקציות (XXXX-XXXX-XXXX-XXXX-XXXX).','يمكن أيضًا كتابة رمز الاستعادة المشترك لكل التطبيقات هنا (XXXX-XXXX-XXXX-XXXX-XXXX).','You can also type the recovery code shared by all your apps here (XXXX-XXXX-XXXX-XXXX-XXXX).']
 });
 const recB64 = u => btoa(String.fromCharCode(...new Uint8Array(u))), recUn64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
@@ -15909,6 +15917,23 @@ async function recFromField(){ const i = $('#dev_rcode'), m = $('#dev_rmsg'); co
   return ok; }
 document.addEventListener('click', async e => { if (!e.target.closest('#dev_rgo')) return; const v = String(($('#dev_rcode') || {}).value || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); if (v.length === 20){ e.stopImmediatePropagation(); if (!(await recFromField())){ const m = $('#dev_rmsg'); if (m) m.textContent = t('rec_bad'); } } }, true);
 document.addEventListener('keydown', async e => { if (e.key !== 'Enter' || !e.target || e.target.id !== 'dev_rcode') return; const v = String(e.target.value || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); if (v.length === 20){ e.preventDefault(); e.stopImmediatePropagation(); if (!(await recFromField())){ const m = $('#dev_rmsg'); if (m) m.textContent = t('rec_bad'); } } }, true);
+
+/* change the developer code (shared with Quiet Breath): makes a new code + a line to apply; nothing changes until it is applied */
+function devNewCode(){ const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = crypto.getRandomValues(new Uint8Array(12)); let s = 'FC'; for (let i = 0; i < 12; i++){ if (i % 4 === 0) s += '-'; s += A[r[i] % A.length]; } return s; }
+function recChange(){ let n = ''; try { n = RAWLS.getItem('fin-dev-n') || ''; } catch (e) {}
+  recModal(`<b>${asEsc(t('rec_chg'))}</b><label for="dc_name">${asEsc(t('rec_chgName'))}</label><input id="dc_name" type="text" autocomplete="off" autocapitalize="characters" dir="ltr" value="${asEsc(n)}"><p>${asEsc(t('rec_chgNeed'))}</p><input id="dc_rec" type="text" autocomplete="off" autocapitalize="characters" dir="ltr" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX"><button type="button" class="gold-btn" data-rec="chgGo">${asEsc(t('rec_chgGo'))}</button><small class="hint" id="dc_msg"></small><div id="dc_out"></div>`); }
+async function recChangeGo(){ const m = $('#dc_msg'), name = devNameNorm(($('#dc_name') || {}).value), rc = ($('#dc_rec') || {}).value; if (!name){ if (m) m.textContent = t('rec_chgNoName'); return; }
+  if (m) m.textContent = '…';
+  try { const kb = await recDerive(rc); if (!REC_CHECK || await recCheckOf(kb) !== REC_CHECK){ if (m) m.textContent = t('rec_bad'); return; }
+    const code = devNewCode(); const hb = await pbk(name + ':' + devNorm(code), new TextEncoder().encode('fincalc-dev-v2'), 150000, 256); const h2 = recHex(hb);
+    const chk = recHex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(h2))), iv = crypto.getRandomValues(new Uint8Array(12));
+    const bundle = 'nsr1.' + recB64(iv) + '.' + recB64(await crypto.subtle.encrypt({name: 'AES-GCM', iv}, await recAes(kb), new TextEncoder().encode(h2)));
+    let wrap = ''; try { if (await ibKey()){ wrap = await ibWrapKey(h2); RAWLS.setItem('fin-ibkey-next', wrap); } } catch (e) {}
+    const line = 'NSDEV1~' + chk + '~' + bundle + (wrap ? '~' + wrap : ''); if (m) m.textContent = ''; const r = $('#dc_rec'); if (r) r.value = '';
+    $('#dc_out').innerHTML = `<p>${asEsc(t('rec_chgShow'))}</p><div class="rec-code" dir="ltr">${asEsc(name)} · ${code}</div><button type="button" class="mv wide" data-rec="copy" data-v="${code}">${asEsc(t('rec_copyCode'))}</button><p class="rec-warn">${asEsc(t('rec_chgNever'))}</p><p>${asEsc(t('rec_chgSend'))}</p><textarea class="rec-line" readonly rows="5" dir="ltr">${line}</textarea><button type="button" class="gold-btn" data-rec="copy" data-v="${line}">${asEsc(t('rec_copyLine'))}</button>`;
+  } catch (e) { if (m) m.textContent = '⚠️'; } }
+document.addEventListener('click', e => { const b = e.target.closest('[data-rec="chg"],[data-rec="chgGo"]'); if (!b) return; if (b.dataset.rec === 'chg') recChange(); else recChangeGo(); });
+new MutationObserver(() => { const r = $('#rec_row'); if (r && !r.querySelector('[data-rec="chg"]')) r.insertAdjacentHTML('beforeend', `<button type="button" class="mv wide" data-rec="chg">${asEsc(t('rec_chg'))}</button>`); }).observe(document.body, {childList: true, subtree: true});
 
 
 /* ================= 7.5 ================= */
@@ -19314,6 +19339,7 @@ async function ibKey(){
   const sec = (() => { try { return RAWLS.getItem('fin-dev') || ''; } catch (e) { return ''; } })(); if (!sec) return null;
   const tries = [];
   try { const w = RAWLS.getItem('fin-ibkey'); if (w) tries.push(w); } catch (e) {}
+  try { const w = RAWLS.getItem('fin-ibkey-next'); if (w) tries.push(w); } catch (e) {}
   try { const r = await fetch('inboxkey.json?v=' + Date.now(), {cache: 'no-store'}); if (r.ok){ const j = await r.json(); if (j && j.w) tries.push(j.w); } } catch (e) {}
   for (const w of tries){ try { IB.key = await ibUnwrap(w, sec); if (IB.key) return IB.key; } catch (e) {} }
   return null;
