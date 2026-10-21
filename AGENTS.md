@@ -28,3 +28,12 @@ with the generic notes `שיפורים ותיקונים.` / `تحسينات وإ
 - The owner name must never appear in the source; developer access is checked only by a hash.
 - Keep all three languages for every new text.
 - Pushing to `main` runs the "Build and publish" workflow, which rebuilds and publishes the site.
+
+## Admin version (/admin/)
+
+- The regular site never opens developer mode or management. Everything for the owner lives in the admin version at `/admin/`.
+- `/admin/*` is served only after the server-side lock in `_gate.js` (a Worker, or a Pages Function in `functions/`): the owner types the name + developer code (or the shared recovery code) on a login page; the browser derives the key (PBKDF2, same as developer mode) and the server compares its SHA-256 with `DEV_CHECK`, then sets an HttpOnly cookie for 30 days.
+- The admin panel (`_kit.js`, served at `/admin/__kit.js`) is injected into the admin page: message to all users, "what's new", parts on/off, forced update, feedback, on-device screen test, maintenance, log, security.
+- Its settings are kept in Cloudflare KV (namespace `admin-config`, binding `CFG`, keys `cfg:<app>` public and `st:<app>` private) and read by the public site from `/cfg.json`. The public part for the calculator and VELVITE is `_pub.js`, served at `/__pub.js` and added to the main page by the Worker.
+- **Changing the developer code:** update `DEV_CHECK` in `_gate.js` in all three repos (neshima-shketa: `functions/_gate.js`; financial-calculator and evently: `_gate.js`), and in each app's own developer-mode check, in the same change.
+- Never put the code, the recovery code or any personal name in the source.
