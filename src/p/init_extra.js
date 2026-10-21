@@ -4359,7 +4359,7 @@ function svInject(){
 function svUi(){
   try { svInject(); } catch (e) {}
   const h = svBarHtml();
-  [...document.getElementsByClassName('svbar')].forEach(b => { if (b.dataset.h !== h){ b.innerHTML = h; b.dataset.h = h; } });
+  [...document.getElementsByClassName('svbar')].forEach(b => { if (b.dataset.h !== h && !(b.parentNode && b.parentNode.hidden)){ b.innerHTML = h; b.dataset.h = h; } });   // hidden screens get their bar when they open (13.25: faster start)
   const s = $('#set_saveMode'); if (s && s.value !== SV.mode) s.value = SV.mode;
 }
 function svMode(m, quiet){
