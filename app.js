@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261022.024841'){ try { if (!sessionStorage.getItem('fin-hb-20261022.024841')){ sessionStorage.setItem('fin-hb-20261022.024841', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261022.030639'){ try { if (!sessionStorage.getItem('fin-hb-20261022.030639')){ sessionStorage.setItem('fin-hb-20261022.030639', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -12104,8 +12104,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.39", "date": "2026-10-22", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261022.024841';
+var CHANGELOG = [{"v": "13.40", "date": "2026-10-22", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261022.030639';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -14538,7 +14538,15 @@ var DEV_REC_CHECK = '';   // the RC- backup code is retired: the shared recovery
 /* the regular site never opens developer mode: only the admin version (/admin/, locked on the server) or the Claude app can */
 var ADMIN_V = (!!window.__FIN_ADMIN__ && /(^|\.)workers\.dev$|^localhost$/.test(location.hostname) && location.pathname.indexOf('/admin/') === 0) || (typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE);
 const devOk = v => ADMIN_V && typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) && (devSha(v) === DEV_CHECK || (!!DEV_REC_CHECK && devSha(v) === DEV_REC_CHECK));
-try { DEV_ON = devOk(RAWLS.getItem('fin-dev')); } catch (e) {}
+/* 13.40: the developer key is never kept in the browser's long-term storage on the website (the regular site and /admin/ share it).
+   On the website it lives only in this tab (sessionStorage); the admin version is opened by the server's lock, which marks the page (__FIN_ADMSES__). */
+var DEVST = RAWLS;
+try { if (!(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE)){ DEVST = SS;
+  const o1 = RAWLS.getItem('fin-dev'), o2 = RAWLS.getItem('fin-dev-n');
+  if (o1 && ADMIN_V && !SS.getItem('fin-dev')){ SS.setItem('fin-dev', o1); if (o2) SS.setItem('fin-dev-n', o2); }
+  ['fin-dev', 'fin-dev-n', 'fin-gh-tok'].forEach(k => RAWLS.removeItem(k)); } } catch (e) {}
+const devSrv = () => ADMIN_V && !(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) && window.__FIN_ADMSES__ === 1;
+try { DEV_ON = devOk(DEVST.getItem('fin-dev')) || devSrv(); } catch (e) {}
 var OFFI = {ils: NaN, eur: NaN, at: 0};
 const applyDbRatesSrc = applyDbRates;
 applyDbRates = function(d){ try { if (d && d.usd && +d.usd.ILS > 0 && +d.asOf >= (OFFI.at || 0)){ OFFI = {ils: +d.usd.ILS, eur: +d.usd.EUR > 0 ? +d.usd.ILS / +d.usd.EUR : NaN, at: +d.asOf}; } } catch (e) {} const r = applyDbRatesSrc.apply(this, arguments); try { if (d && META.official && META.unix === +d.asOf) Object.keys(d.usd || {}).forEach(k => { FXSRC[k] = {s: 'boi', at: +d.asOf * 1000}; }); } catch (e) {} return r; };
@@ -14631,7 +14639,7 @@ function srcRender(force){
 }
 document.addEventListener('click', e => {
   if (e.target.closest('#src_test')) srcTest();
-  else if (e.target.closest('#dev_off')){ try { RAWLS.removeItem('fin-dev'); RAWLS.removeItem('fin-dev-n'); } catch (err) {} DEV_ON = false; DEV_NAME = ''; liveApply(); devPermSync(); try { activate('settings'); } catch (err) {} toast(t('dev_offDone')); }
+  else if (e.target.closest('#dev_off')){ try { DEVST.removeItem('fin-dev'); DEVST.removeItem('fin-dev-n'); } catch (err) {} DEV_ON = false; DEV_NAME = ''; liveApply(); devPermSync(); try { activate('settings'); } catch (err) {} toast(t('dev_offDone')); }
   else if (e.target.closest('#src_open')){ activate('settings'); setTimeout(() => { const r = $('.sh-row[data-scat="conn"]'); if (r) r.click(); setTimeout(() => { srcRender(true); const s = $('.set-sec[data-sk="set_src"]'); if (s) s.scrollIntoView({block: 'start'}); }, 200); }, 120); }
 });
 setInterval(() => { if (!document.hidden && tab === 'settings' && SCAT === 'conn') srcRender(); }, 5000);
@@ -14662,7 +14670,7 @@ async function devTry(rawName, rawCode, quiet){
   let h = '';
   try { const b = await pbk(name + ':' + code, new TextEncoder().encode('fincalc-dev-v2'), 150000, 256); h = Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join(''); } catch (e) {}
   if (h && devOk(h)){
-    try { RAWLS.setItem('fin-dev', h); RAWLS.setItem('fin-dev-n', name); } catch (e) {}
+    try { DEVST.setItem('fin-dev', h); DEVST.setItem('fin-dev-n', name); } catch (e) {}
     DEV_ON = true; DEV_NAME = name; const b = $('#dev_box'); if (b) b.remove(); liveApply(); devPermSync(); toast(t('dev_onDone')); return true;
   }
   if (m) m.textContent = t('dev_bad2');
@@ -14677,7 +14685,7 @@ async function devRecTry(){
   let h = '';
   try { const b = await pbk('REC:' + n, new TextEncoder().encode('fincalc-dev-rec-v1'), 150000, 256); h = Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join(''); } catch (e) {}
   if (h && DEV_REC_CHECK && devSha(h) === DEV_REC_CHECK){
-    try { RAWLS.setItem('fin-dev', h); RAWLS.removeItem('fin-dev-n'); } catch (e) {}
+    try { DEVST.setItem('fin-dev', h); DEVST.removeItem('fin-dev-n'); } catch (e) {}
     DEV_ON = true; DEV_NAME = ''; const bx = $('#dev_box'); if (bx) bx.remove(); liveApply(); devPermSync(); toast(t('dev_rOk')); return true;
   }
   if (m) m.textContent = t('dev_rBad');
@@ -14747,7 +14755,7 @@ function ownPill(){
   const hh = $('.home-hello'); if (hh){ let p = $('.own-pill', hh.parentNode); if (own && !p){ p = document.createElement('span'); p.className = 'own-pill own-pill-h'; hh.insertAdjacentElement('afterend', p); } if (p){ if (own) p.textContent = DEV_NAME ? t('own_pillN', {n: DEV_NAME}) : t('own_pillDev'); else p.remove(); } }
 }
 var DEV_NAME = '';
-try { if (DEV_ON) DEV_NAME = RAWLS.getItem('fin-dev-n') || ''; } catch (e) {}
+try { if (DEV_ON) DEV_NAME = DEVST.getItem('fin-dev-n') || ''; } catch (e) {}
 function devPermSync(){ try { permRender(); } catch (e) {} try { shRender(); } catch (e) {} ownPill(); }
 Promise.resolve(PERM_P).then(devPermSync, devPermSync);
 document.addEventListener('click', e => { if (e.target.closest('#dev_go, #dev_paste, #dev_off')) setTimeout(devPermSync, 900); });
@@ -15978,7 +15986,7 @@ async function recDerive(code){ const c = String(code || '').toUpperCase().repla
 async function recCheckOf(bytes){ return recHex(await crypto.subtle.digest('SHA-256', new Uint8Array([...new TextEncoder().encode('chk:'), ...bytes]))); }
 const recAes = bytes => crypto.subtle.importKey('raw', bytes, 'AES-GCM', false, ['encrypt', 'decrypt']);
 function recNewCode(){ const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = crypto.getRandomValues(new Uint8Array(20)); let s = ''; for (let i = 0; i < 20; i++){ s += A[r[i] % A.length]; if (i % 4 === 3 && i < 19) s += '-'; } return s; }
-async function recLine(code){ let h = ''; try { h = RAWLS.getItem('fin-dev') || ''; } catch (e) {} if (!DEV_ON || !devOk(h)) return null;
+async function recLine(code){ let h = ''; try { h = DEVST.getItem('fin-dev') || ''; } catch (e) {} if (!DEV_ON || !devOk(h)) return null;
   const kb = await recDerive(code), chk = await recCheckOf(kb), iv = crypto.getRandomValues(new Uint8Array(12));
   const ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, await recAes(kb), new TextEncoder().encode(h)); return 'NSREC1~' + chk + '~nsr1.' + recB64(iv) + '.' + recB64(ct); }
 function recModal(html){ let o = $('#rec_modal'); if (o) o.remove(); document.body.insertAdjacentHTML('beforeend', `<div id="rec_modal" class="rec-ov" role="dialog" aria-modal="true"><div class="rec-card">${html}<div class="btnrow"><button type="button" class="mv wide" data-rec="close">${asEsc(t('rec_close'))}</button></div></div></div>`); }
@@ -15992,7 +16000,7 @@ function recForm(){ const b = $('#dev_box'); if (!b) return; b.innerHTML = REC_C
 async function recTry(){ const i = $('#rec_code'), m = $('#rec_msg'); let lock = 0; try { lock = +(RAWLS.getItem('fin-rec-lock') || 0); } catch (e) {} if (Date.now() < lock){ if (m) m.textContent = t('rec_lock'); return; }
   if (m) m.textContent = '…'; let ok = false;
   try { const kb = await recDerive(i && i.value); if (await recCheckOf(kb) === REC_CHECK){ const p = REC_BUNDLE.split('.'); const pt = await crypto.subtle.decrypt({name: 'AES-GCM', iv: recUn64(p[1])}, await recAes(kb), recUn64(p[2]));
-    const h = new TextDecoder().decode(pt); if (devOk(h)){ try { RAWLS.setItem('fin-dev', h); RAWLS.removeItem('fin-rec-fail'); } catch (e) {} DEV_ON = true; ok = true; } } } catch (e) {}
+    const h = new TextDecoder().decode(pt); if (devOk(h)){ try { DEVST.setItem('fin-dev', h); RAWLS.removeItem('fin-rec-fail'); } catch (e) {} DEV_ON = true; ok = true; } } } catch (e) {}
   if (ok){ const b = $('#dev_box'); if (b) b.remove(); liveApply(); devPermSync(); toast(t('rec_ok')); return; }
   let f = 0; try { f = +(RAWLS.getItem('fin-rec-fail') || 0) + 1; if (f >= 5){ RAWLS.setItem('fin-rec-lock', Date.now() + 60e3); f = 0; } RAWLS.setItem('fin-rec-fail', f); } catch (e) {}
   if (m) m.textContent = t('rec_bad'); }
@@ -16013,7 +16021,7 @@ new MutationObserver(() => {
 async function recFromField(){ const i = $('#dev_rcode'), m = $('#dev_rmsg'); const v = String(i && i.value || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); if (v.length !== 20) return false;
   if (m) m.textContent = '…'; let ok = false;
   try { const kb = await recDerive(v); if (REC_CHECK && await recCheckOf(kb) === REC_CHECK){ const p = REC_BUNDLE.split('.'); const pt = await crypto.subtle.decrypt({name: 'AES-GCM', iv: recUn64(p[1])}, await recAes(kb), recUn64(p[2]));
-    const h = new TextDecoder().decode(pt); if (devOk(h)){ try { RAWLS.setItem('fin-dev', h); } catch (e) {} DEV_ON = true; ok = true; } } } catch (e) {}
+    const h = new TextDecoder().decode(pt); if (devOk(h)){ try { DEVST.setItem('fin-dev', h); } catch (e) {} DEV_ON = true; ok = true; } } } catch (e) {}
   if (ok){ const b = $('#dev_box'); if (b) b.remove(); liveApply(); devPermSync(); toast(t('rec_ok')); }
   return ok; }
 document.addEventListener('click', async e => { if (!e.target.closest('#dev_rgo')) return; const v = String(($('#dev_rcode') || {}).value || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); if (v.length === 20){ e.stopImmediatePropagation(); if (!(await recFromField())){ const m = $('#dev_rmsg'); if (m) m.textContent = t('rec_bad'); } } }, true);
@@ -16021,7 +16029,7 @@ document.addEventListener('keydown', async e => { if (e.key !== 'Enter' || !e.ta
 
 /* change the developer code (shared with Quiet Breath): makes a new code + a line to apply; nothing changes until it is applied */
 function devNewCode(){ const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = crypto.getRandomValues(new Uint8Array(12)); let s = 'FC'; for (let i = 0; i < 12; i++){ if (i % 4 === 0) s += '-'; s += A[r[i] % A.length]; } return s; }
-function recChange(){ let n = ''; try { n = RAWLS.getItem('fin-dev-n') || ''; } catch (e) {}
+function recChange(){ let n = ''; try { n = DEVST.getItem('fin-dev-n') || ''; } catch (e) {}
   recModal(`<b>${asEsc(t('rec_chg'))}</b><label for="dc_name">${asEsc(t('rec_chgName'))}</label><input id="dc_name" type="text" autocomplete="off" autocapitalize="characters" dir="ltr" value="${asEsc(n)}"><p>${asEsc(t('rec_chgNeed'))}</p><input id="dc_rec" type="text" autocomplete="off" autocapitalize="characters" dir="ltr" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX"><button type="button" class="gold-btn" data-rec="chgGo">${asEsc(t('rec_chgGo'))}</button><small class="hint" id="dc_msg"></small><div id="dc_out"></div>`); }
 async function recChangeGo(){ const m = $('#dc_msg'), name = devNameNorm(($('#dc_name') || {}).value), rc = ($('#dc_rec') || {}).value; if (!name){ if (m) m.textContent = t('rec_chgNoName'); return; }
   if (m) m.textContent = '…';
@@ -16719,19 +16727,17 @@ async function dcLoad(){
 setTimeout(dcLoad, 300);
 
 /* ---------- developer only: write code here, try it on your device, publish to everyone through GitHub ---------- */
-function ghTok(){ try { return RAWLS.getItem('fin-gh-tok') || ''; } catch (e) { return ''; } }
-const b64u = s => btoa(unescape(encodeURIComponent(s)));
-async function ghPut(path, text, msg){
-  const tok = ghTok(); if (!tok) throw new Error('notoken');
-  const H = {Authorization: 'Bearer ' + tok, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'};
-  const base = 'https://api.github.com/repos/' + DC_REPO + '/contents/' + path;
-  let sha;
-  const g = await fetch(base + '?ref=main', {headers: H, cache: 'no-store'});
-  if (g.ok){ sha = (await g.json()).sha; } else if (g.status !== 404) throw new Error('gh' + g.status);
-  const p = await fetch(base, {method: 'PUT', headers: Object.assign({'Content-Type': 'application/json'}, H), body: JSON.stringify({message: msg, content: b64u(text), branch: 'main', sha})});
-  if (!p.ok) throw new Error('gh' + p.status);
-  return true;
+/* 13.40: anything written to GitHub goes through the server of the admin version – the GitHub key is kept there as a secret (GH_TOKEN), never in the browser */
+const dcSrvOk = () => typeof ADMIN_V !== 'undefined' && ADMIN_V && !(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE);
+function ghTok(){ return dcSrvOk() ? 'srv' : ''; }
+async function ghSrv(body){
+  if (!dcSrvOk()) throw new Error('admin');
+  const r = await fetch('/admin/__gh', {method: 'POST', headers: {'Content-Type': 'application/json'}, credentials: 'same-origin', body: JSON.stringify(body)});
+  let j = {}; try { j = await r.json(); } catch (e) {}
+  if (!r.ok || !j.ok) throw new Error(j.e || ('gh' + r.status));
+  return j;
 }
+async function ghPut(path, text, msg){ await ghSrv({op: 'put', path, text, msg}); return true; }
 function dcRender(){
   const box = $('#dc_box'); if (!box || !liveOwner()) return;
   if (box.contains(document.activeElement) && /TEXTAREA|INPUT/.test(document.activeElement.tagName)) return;
@@ -16748,27 +16754,25 @@ FinApp.addText('key', 'עברית', 'عربي', 'English')
 FinApp.recalc(); FinApp.open('salary'); FinApp.toast('…')</pre></details>
     <div class="btnrow"><button type="button" class="mv" data-dc="draft">${E(t('dc_saveDraft'))}</button><button type="button" class="gold-btn" data-dc="try">${E(t(prev ? 'dc_tryAgain' : 'dc_try'))}</button>${prev ? `<button type="button" class="mv" data-dc="stop">${E(t('dc_stop'))}</button>` : ''}</div>
     <h4 class="sec-h">${E(t('dc_pubT'))}</h4><p class="fine">${E(t('dc_pubS'))}</p>
-    <div class="field wide"><label for="gh_tok">${E(t('dc_tok'))}</label><input id="gh_tok" type="password" autocomplete="off" dir="ltr" class="lookup" placeholder="github_pat_…" value="${ghTok() ? '••••••••' : ''}"><small class="hint">${E(t('dc_tokH'))}</small></div>
-    <div class="btnrow"><button type="button" class="gold-btn" data-dc="pub">${E(t('dc_pub'))}</button><button type="button" class="mv" data-dc="unpub">${E(t('dc_unpub'))}</button>${ghTok() ? `<button type="button" class="mv" data-dc="forget">${E(t('dc_forget'))}</button>` : ''}</div>
+    <div class="btnrow"><button type="button" class="gold-btn" data-dc="pub"${dcSrvOk() ? '' : ' disabled'}>${E(t('dc_pub'))}</button><button type="button" class="mv" data-dc="unpub"${dcSrvOk() ? '' : ' disabled'}>${E(t('dc_unpub'))}</button></div>
+    ${dcSrvOk() ? '' : `<p class="fine">${E(t('dc_onlyAdmin'))}</p>`}
     <p class="fine" id="dc_msg" role="status"></p>
     <p class="fine">${E(t('dc_safe'))}</p>`;
 }
 function dcMsg(k, p){ const m = $('#dc_msg'); if (m) m.textContent = k ? t(k, p) : ''; }
 function dcGet(){ return {js: ($('#dc_js') || {}).value || '', css: ($('#dc_css') || {}).value || '', at: Date.now()}; }
-document.addEventListener('change', e => { if (e.target && e.target.id === 'gh_tok'){ const v = e.target.value.trim(); if (v && !/^•+$/.test(v)){ try { RAWLS.setItem('fin-gh-tok', v); } catch (er) {} e.target.value = '••••••••'; dcMsg('dc_tokSaved'); } } });
 document.addEventListener('click', async e => {
   const b = e.target.closest && e.target.closest('[data-dc]'); if (!b || !liveOwner()) return;
   const k = b.dataset.dc;
   if (k === 'draft'){ try { RAWLS.setItem('fin-devcode-draft', JSON.stringify(dcGet())); } catch (er) {} dcMsg('dc_draftSaved'); return; }
   if (k === 'try'){ try { RAWLS.setItem('fin-devcode-draft', JSON.stringify(dcGet())); RAWLS.setItem('fin-devcode-preview', '1'); } catch (er) {} location.reload(); return; }
   if (k === 'stop'){ try { RAWLS.removeItem('fin-devcode-preview'); } catch (er) {} location.reload(); return; }
-  if (k === 'forget'){ try { RAWLS.removeItem('fin-gh-tok'); } catch (er) {} dcRender(); return; }
   if (k === 'pub' || k === 'unpub'){
     if (k === 'unpub' && b.dataset.sure !== '1'){ b.dataset.sure = '1'; b.textContent = t('b_sure'); return; }
     const body = k === 'pub' ? dcGet() : {js: '', css: '', at: Date.now()};
     dcMsg('m_wait');
     try { await ghPut('devcode.json', JSON.stringify(Object.assign({v: 1}, body), null, 1), k === 'pub' ? 'Developer code update' : 'Developer code removed'); dcMsg('dc_pubOk'); toast(t('dc_pubOk')); }
-    catch (er) { const m = String(er && er.message || ''); dcMsg(m === 'notoken' ? 'dc_needTok' : /gh40[13]/.test(m) ? 'dc_badTok' : /gh/.test(m) ? 'dc_ghErr' : 'dc_blocked', {e: m}); }
+    catch (er) { const m = String(er && er.message || ''); dcMsg(m === 'admin' ? 'dc_onlyAdmin' : m === 'notoken' ? 'dc_needSecret' : /gh40[13]/.test(m) ? 'dc_badTok' : /gh/.test(m) ? 'dc_ghErr' : 'dc_blocked', {e: m}); }
   }
 });
 /* ChatGPT and other AI tools can develop the app through GitHub: only people with access to the repository can change it */
@@ -16956,6 +16960,10 @@ show = function(id, res){
   }
   return showSrc75.call(this, id, res);
 };
+Object.assign(T, {
+  dc_onlyAdmin:['פרסום ושמירה ב־GitHub עובדים רק מתוך גרסת המנהל (/admin/). מפתח GitHub לא נשמר יותר בטלפון.','النشر والحفظ في GitHub يعملان فقط من نسخة المدير (/admin/). لم يعد مفتاح GitHub يُحفظ في الهاتف.','Publishing and saving to GitHub work only from the admin version (/admin/). The GitHub key is no longer kept on the phone.'],
+  dc_needSecret:['חסר מפתח GitHub בשרת: צריך להוסיף סוד בשם GH_TOKEN ב־Cloudflare (Worker ‏financial-calculator ← Settings ← Variables and Secrets).','مفتاح GitHub غير موجود في الخادم: يجب إضافة سرّ باسم GH_TOKEN في Cloudflare (Worker financial-calculator ← Settings ← Variables and Secrets).','The server has no GitHub key: add a secret named GH_TOKEN in Cloudflare (Worker financial-calculator → Settings → Variables and Secrets).'],
+});
 
 
 /* ================= 7.6: digit grouping while you type, your own separators, yesterday's close when live data is off,
@@ -19094,7 +19102,7 @@ try { lzCollapse(); } catch (e) {}
 const CI_API = 'https://api.github.com/repos/' + DC_REPO + '/actions/workflows/test.yml';
 async function ciLoad(){
   const box = $('#ci_box'); if (!box || !liveOwner()) return;
-  const H = {Accept: 'application/vnd.github+json'}; const tok = ghTok(); if (tok) H.Authorization = 'Bearer ' + tok;
+  const H = {Accept: 'application/vnd.github+json'};
   let html = '';
   try {
     const r = await fetch(CI_API + '/runs?per_page=3', {headers: H, cache: 'no-store'});
@@ -19117,10 +19125,9 @@ document.addEventListener('click', async e => {
   if (!e.target.closest) return;
   if (e.target.closest('#ci_ref')) return ciLoad();
   if (!e.target.closest('#ci_go') || !liveOwner()) return;
-  const tok = ghTok(); if (!tok) return toast(t('ci_tok'));
+  if (!ghTok()) return toast(t('dc_onlyAdmin'));
   try {
-    const r = await fetch(CI_API + '/dispatches', {method: 'POST', headers: {Authorization: 'Bearer ' + tok, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json'}, body: JSON.stringify({ref: 'main'})});
-    if (!r.ok) throw new Error('gh' + r.status);
+    await ghSrv({op: 'dispatch', wf: 'test.yml'});
     toast(t('ci_started')); setTimeout(ciLoad, 4000);
   } catch (er) { toast(t('ci_err')); }
 });
@@ -19437,7 +19444,7 @@ async function ibKey(){
   if (IB.key) return IB.key;
   if (FB.db){ try { const d = await FB.db.doc('devkeys/inbox').get(); if (d && d.exists) IB.key = (d.data() || {}).jwk || null; } catch (e) {} return IB.key; }
   /* on the website: the key, locked with this device's developer secret — from the site's file, or pasted once from the app */
-  const sec = (() => { try { return RAWLS.getItem('fin-dev') || ''; } catch (e) { return ''; } })(); if (!sec) return null;
+  const sec = (() => { try { return DEVST.getItem('fin-dev') || ''; } catch (e) { return ''; } })(); if (!sec) return null;
   const tries = [];
   try { const w = RAWLS.getItem('fin-ibkey'); if (w) tries.push(w); } catch (e) {}
   try { const w = RAWLS.getItem('fin-ibkey-next'); if (w) tries.push(w); } catch (e) {}
@@ -19568,7 +19575,7 @@ document.addEventListener('click', e => { const b = e.target.closest && e.target
 document.addEventListener('click', async e => {
   if (!e.target.closest) return;
   if (e.target.closest('#ib_link')){
-    const sec = (() => { try { return RAWLS.getItem('fin-dev') || ''; } catch (er) { return ''; } })();
+    const sec = (() => { try { return DEVST.getItem('fin-dev') || ''; } catch (er) { return ''; } })();
     if (!sec || !(await ibKey())) return toast(t('ib_nokey'));
     try {
       const w = await ibWrapKey(sec);
@@ -19578,7 +19585,7 @@ document.addEventListener('click', async e => {
     return;
   }
   if (e.target.closest('#ib_keyset')){
-    const w = String(($('#ib_keyin') || {}).value || '').trim(), sec = (() => { try { return RAWLS.getItem('fin-dev') || ''; } catch (er) { return ''; } })();
+    const w = String(($('#ib_keyin') || {}).value || '').trim(), sec = (() => { try { return DEVST.getItem('fin-dev') || ''; } catch (er) { return ''; } })();
     try { IB.key = await ibUnwrap(w, sec); try { RAWLS.setItem('fin-ibkey', w); } catch (er) {} toast(t('ib_keyOk')); await ibLoad(); ibDraw(); } catch (er) { toast(t('ib_keyBad')); }
   }
 });
@@ -20698,7 +20705,7 @@ function famDevRender(){
   const tok = typeof ghTok === 'function' && ghTok(), open = !!FAM.formOpen;
   s.innerHTML = `<div class="sec-h fam-h"><h3 class="sec-t">👨‍👩‍👧 ${E108(t('fam_title'))}</h3><button type="button" class="gold-btn fam-plus${open ? ' on' : ''}" id="fam_plus" aria-expanded="${open}" aria-label="${E108(t('fam_plusA'))}" title="${E108(t('fam_plusA'))}">+</button></div><p class="fine">${E108(t('fam_help'))}</p>
     ${IN_CLAUDE ? `<div class="gk-st new">${E108(t('fam_relayNote'))}</div>` : ''}
-    ${typeof ghTok === 'function' && ghTok() ? `<button type="button" class="mv wide" id="fam_tokDel">🗑️ ${E108(t('fam_tokDelete'))}</button>` : `<div class="gk-st bad">${E108(t('fam_needTok'))}</div><label class="scn-l" for="fam_tok">${E108(t('dc_tok'))}</label><div class="as-box"><input id="fam_tok" type="password" autocomplete="off" dir="ltr" placeholder="github_pat_…"><button type="button" class="btn" id="fam_tokSave">${E108(t('fam_tokSave'))}</button></div><p class="fine">${E108(t('dc_tokH'))} <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">${E108(t('fam_tokNew'))}</a></p>`}
+    ${typeof ghTok === 'function' && ghTok() ? '' : `<div class="gk-st bad">${E108(t('dc_onlyAdmin'))}</div>`}
     <div class="fam-form" id="fam_form"${open ? '' : ' hidden'}><div class="as-box"><input id="fam_new" type="text" maxlength="30" dir="auto" placeholder="${E108(t('fam_namePh'))}" autocomplete="off"><button type="button" class="gold-btn" id="fam_add"${tok ? '' : ' disabled'}>${E108(t('fam_add'))}</button></div></div>
     <div id="fam_out"></div>
     ${famPwBox(L, tok)}
@@ -20751,11 +20758,6 @@ document.addEventListener('click', async e => {
     FAM.formOpen = !FAM.formOpen; famDevRender();
     if (FAM.formOpen) setTimeout(() => { const i = $('#fam_new'); if (i) i.focus(); }, 60);
     return;
-  }
-  if (e.target.closest('#fam_tokDel')){ try { RAWLS.removeItem('fin-gh-tok'); } catch (er) {} toast(t('fam_tokDelete') + ' ✓'); famDevRender(); return; }
-  if (e.target.closest('#fam_tokSave')){
-    const v = String(($('#fam_tok') || {}).value || '').trim(); if (!v) return;
-    try { RAWLS.setItem('fin-gh-tok', v); } catch (er) {} toast(t('dc_tokSaved')); famDevRender(); return;
   }
   const add = e.target.closest('#fam_add');
   if (add){

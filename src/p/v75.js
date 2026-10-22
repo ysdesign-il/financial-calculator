@@ -681,19 +681,17 @@ async function dcLoad(){
 setTimeout(dcLoad, 300);
 
 /* ---------- developer only: write code here, try it on your device, publish to everyone through GitHub ---------- */
-function ghTok(){ try { return RAWLS.getItem('fin-gh-tok') || ''; } catch (e) { return ''; } }
-const b64u = s => btoa(unescape(encodeURIComponent(s)));
-async function ghPut(path, text, msg){
-  const tok = ghTok(); if (!tok) throw new Error('notoken');
-  const H = {Authorization: 'Bearer ' + tok, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'};
-  const base = 'https://api.github.com/repos/' + DC_REPO + '/contents/' + path;
-  let sha;
-  const g = await fetch(base + '?ref=main', {headers: H, cache: 'no-store'});
-  if (g.ok){ sha = (await g.json()).sha; } else if (g.status !== 404) throw new Error('gh' + g.status);
-  const p = await fetch(base, {method: 'PUT', headers: Object.assign({'Content-Type': 'application/json'}, H), body: JSON.stringify({message: msg, content: b64u(text), branch: 'main', sha})});
-  if (!p.ok) throw new Error('gh' + p.status);
-  return true;
+/* 13.40: anything written to GitHub goes through the server of the admin version – the GitHub key is kept there as a secret (GH_TOKEN), never in the browser */
+const dcSrvOk = () => typeof ADMIN_V !== 'undefined' && ADMIN_V && !(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE);
+function ghTok(){ return dcSrvOk() ? 'srv' : ''; }
+async function ghSrv(body){
+  if (!dcSrvOk()) throw new Error('admin');
+  const r = await fetch('/admin/__gh', {method: 'POST', headers: {'Content-Type': 'application/json'}, credentials: 'same-origin', body: JSON.stringify(body)});
+  let j = {}; try { j = await r.json(); } catch (e) {}
+  if (!r.ok || !j.ok) throw new Error(j.e || ('gh' + r.status));
+  return j;
 }
+async function ghPut(path, text, msg){ await ghSrv({op: 'put', path, text, msg}); return true; }
 function dcRender(){
   const box = $('#dc_box'); if (!box || !liveOwner()) return;
   if (box.contains(document.activeElement) && /TEXTAREA|INPUT/.test(document.activeElement.tagName)) return;
@@ -710,27 +708,25 @@ FinApp.addText('key', 'עברית', 'عربي', 'English')
 FinApp.recalc(); FinApp.open('salary'); FinApp.toast('…')</pre></details>
     <div class="btnrow"><button type="button" class="mv" data-dc="draft">${E(t('dc_saveDraft'))}</button><button type="button" class="gold-btn" data-dc="try">${E(t(prev ? 'dc_tryAgain' : 'dc_try'))}</button>${prev ? `<button type="button" class="mv" data-dc="stop">${E(t('dc_stop'))}</button>` : ''}</div>
     <h4 class="sec-h">${E(t('dc_pubT'))}</h4><p class="fine">${E(t('dc_pubS'))}</p>
-    <div class="field wide"><label for="gh_tok">${E(t('dc_tok'))}</label><input id="gh_tok" type="password" autocomplete="off" dir="ltr" class="lookup" placeholder="github_pat_…" value="${ghTok() ? '••••••••' : ''}"><small class="hint">${E(t('dc_tokH'))}</small></div>
-    <div class="btnrow"><button type="button" class="gold-btn" data-dc="pub">${E(t('dc_pub'))}</button><button type="button" class="mv" data-dc="unpub">${E(t('dc_unpub'))}</button>${ghTok() ? `<button type="button" class="mv" data-dc="forget">${E(t('dc_forget'))}</button>` : ''}</div>
+    <div class="btnrow"><button type="button" class="gold-btn" data-dc="pub"${dcSrvOk() ? '' : ' disabled'}>${E(t('dc_pub'))}</button><button type="button" class="mv" data-dc="unpub"${dcSrvOk() ? '' : ' disabled'}>${E(t('dc_unpub'))}</button></div>
+    ${dcSrvOk() ? '' : `<p class="fine">${E(t('dc_onlyAdmin'))}</p>`}
     <p class="fine" id="dc_msg" role="status"></p>
     <p class="fine">${E(t('dc_safe'))}</p>`;
 }
 function dcMsg(k, p){ const m = $('#dc_msg'); if (m) m.textContent = k ? t(k, p) : ''; }
 function dcGet(){ return {js: ($('#dc_js') || {}).value || '', css: ($('#dc_css') || {}).value || '', at: Date.now()}; }
-document.addEventListener('change', e => { if (e.target && e.target.id === 'gh_tok'){ const v = e.target.value.trim(); if (v && !/^•+$/.test(v)){ try { RAWLS.setItem('fin-gh-tok', v); } catch (er) {} e.target.value = '••••••••'; dcMsg('dc_tokSaved'); } } });
 document.addEventListener('click', async e => {
   const b = e.target.closest && e.target.closest('[data-dc]'); if (!b || !liveOwner()) return;
   const k = b.dataset.dc;
   if (k === 'draft'){ try { RAWLS.setItem('fin-devcode-draft', JSON.stringify(dcGet())); } catch (er) {} dcMsg('dc_draftSaved'); return; }
   if (k === 'try'){ try { RAWLS.setItem('fin-devcode-draft', JSON.stringify(dcGet())); RAWLS.setItem('fin-devcode-preview', '1'); } catch (er) {} location.reload(); return; }
   if (k === 'stop'){ try { RAWLS.removeItem('fin-devcode-preview'); } catch (er) {} location.reload(); return; }
-  if (k === 'forget'){ try { RAWLS.removeItem('fin-gh-tok'); } catch (er) {} dcRender(); return; }
   if (k === 'pub' || k === 'unpub'){
     if (k === 'unpub' && b.dataset.sure !== '1'){ b.dataset.sure = '1'; b.textContent = t('b_sure'); return; }
     const body = k === 'pub' ? dcGet() : {js: '', css: '', at: Date.now()};
     dcMsg('m_wait');
     try { await ghPut('devcode.json', JSON.stringify(Object.assign({v: 1}, body), null, 1), k === 'pub' ? 'Developer code update' : 'Developer code removed'); dcMsg('dc_pubOk'); toast(t('dc_pubOk')); }
-    catch (er) { const m = String(er && er.message || ''); dcMsg(m === 'notoken' ? 'dc_needTok' : /gh40[13]/.test(m) ? 'dc_badTok' : /gh/.test(m) ? 'dc_ghErr' : 'dc_blocked', {e: m}); }
+    catch (er) { const m = String(er && er.message || ''); dcMsg(m === 'admin' ? 'dc_onlyAdmin' : m === 'notoken' ? 'dc_needSecret' : /gh40[13]/.test(m) ? 'dc_badTok' : /gh/.test(m) ? 'dc_ghErr' : 'dc_blocked', {e: m}); }
   }
 });
 /* ChatGPT and other AI tools can develop the app through GitHub: only people with access to the repository can change it */
@@ -918,3 +914,7 @@ show = function(id, res){
   }
   return showSrc75.call(this, id, res);
 };
+Object.assign(T, {
+  dc_onlyAdmin:['פרסום ושמירה ב־GitHub עובדים רק מתוך גרסת המנהל (/admin/). מפתח GitHub לא נשמר יותר בטלפון.','النشر والحفظ في GitHub يعملان فقط من نسخة المدير (/admin/). لم يعد مفتاح GitHub يُحفظ في الهاتف.','Publishing and saving to GitHub work only from the admin version (/admin/). The GitHub key is no longer kept on the phone.'],
+  dc_needSecret:['חסר מפתח GitHub בשרת: צריך להוסיף סוד בשם GH_TOKEN ב־Cloudflare (Worker ‏financial-calculator ← Settings ← Variables and Secrets).','مفتاح GitHub غير موجود في الخادم: يجب إضافة سرّ باسم GH_TOKEN في Cloudflare (Worker financial-calculator ← Settings ← Variables and Secrets).','The server has no GitHub key: add a secret named GH_TOKEN in Cloudflare (Worker financial-calculator → Settings → Variables and Secrets).'],
+});

@@ -406,7 +406,7 @@ try { lzCollapse(); } catch (e) {}
 const CI_API = 'https://api.github.com/repos/' + DC_REPO + '/actions/workflows/test.yml';
 async function ciLoad(){
   const box = $('#ci_box'); if (!box || !liveOwner()) return;
-  const H = {Accept: 'application/vnd.github+json'}; const tok = ghTok(); if (tok) H.Authorization = 'Bearer ' + tok;
+  const H = {Accept: 'application/vnd.github+json'};
   let html = '';
   try {
     const r = await fetch(CI_API + '/runs?per_page=3', {headers: H, cache: 'no-store'});
@@ -429,10 +429,9 @@ document.addEventListener('click', async e => {
   if (!e.target.closest) return;
   if (e.target.closest('#ci_ref')) return ciLoad();
   if (!e.target.closest('#ci_go') || !liveOwner()) return;
-  const tok = ghTok(); if (!tok) return toast(t('ci_tok'));
+  if (!ghTok()) return toast(t('dc_onlyAdmin'));
   try {
-    const r = await fetch(CI_API + '/dispatches', {method: 'POST', headers: {Authorization: 'Bearer ' + tok, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json'}, body: JSON.stringify({ref: 'main'})});
-    if (!r.ok) throw new Error('gh' + r.status);
+    await ghSrv({op: 'dispatch', wf: 'test.yml'});
     toast(t('ci_started')); setTimeout(ciLoad, 4000);
   } catch (er) { toast(t('ci_err')); }
 });

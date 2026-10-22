@@ -29,7 +29,7 @@ async function ibKey(){
   if (IB.key) return IB.key;
   if (FB.db){ try { const d = await FB.db.doc('devkeys/inbox').get(); if (d && d.exists) IB.key = (d.data() || {}).jwk || null; } catch (e) {} return IB.key; }
   /* on the website: the key, locked with this device's developer secret — from the site's file, or pasted once from the app */
-  const sec = (() => { try { return RAWLS.getItem('fin-dev') || ''; } catch (e) { return ''; } })(); if (!sec) return null;
+  const sec = (() => { try { return DEVST.getItem('fin-dev') || ''; } catch (e) { return ''; } })(); if (!sec) return null;
   const tries = [];
   try { const w = RAWLS.getItem('fin-ibkey'); if (w) tries.push(w); } catch (e) {}
   try { const w = RAWLS.getItem('fin-ibkey-next'); if (w) tries.push(w); } catch (e) {}
@@ -160,7 +160,7 @@ document.addEventListener('click', e => { const b = e.target.closest && e.target
 document.addEventListener('click', async e => {
   if (!e.target.closest) return;
   if (e.target.closest('#ib_link')){
-    const sec = (() => { try { return RAWLS.getItem('fin-dev') || ''; } catch (er) { return ''; } })();
+    const sec = (() => { try { return DEVST.getItem('fin-dev') || ''; } catch (er) { return ''; } })();
     if (!sec || !(await ibKey())) return toast(t('ib_nokey'));
     try {
       const w = await ibWrapKey(sec);
@@ -170,7 +170,7 @@ document.addEventListener('click', async e => {
     return;
   }
   if (e.target.closest('#ib_keyset')){
-    const w = String(($('#ib_keyin') || {}).value || '').trim(), sec = (() => { try { return RAWLS.getItem('fin-dev') || ''; } catch (er) { return ''; } })();
+    const w = String(($('#ib_keyin') || {}).value || '').trim(), sec = (() => { try { return DEVST.getItem('fin-dev') || ''; } catch (er) { return ''; } })();
     try { IB.key = await ibUnwrap(w, sec); try { RAWLS.setItem('fin-ibkey', w); } catch (er) {} toast(t('ib_keyOk')); await ibLoad(); ibDraw(); } catch (er) { toast(t('ib_keyBad')); }
   }
 });
