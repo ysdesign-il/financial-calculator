@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261022.041511'){ try { if (!sessionStorage.getItem('fin-hb-20261022.041511')){ sessionStorage.setItem('fin-hb-20261022.041511', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261022.042459'){ try { if (!sessionStorage.getItem('fin-hb-20261022.042459')){ sessionStorage.setItem('fin-hb-20261022.042459', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -4240,7 +4240,7 @@ Object.assign(T, {
   lg_p_us5:['דיווח תקלות אוטומטי: אם משהו קורס באתר, נשלח אלינו דיווח טכני אנונימי כדי שנוכל לתקן – טקסט השגיאה, המסך, הגרסה, השפה וסוג המערכת והדפדפן (למשל Android · Chrome). בלי שם, מייל, כתובת IP, נתונים שהקלדת או חישובים. במצב פרטי מלא לא נשלח דבר.','تقارير الأعطال التلقائية: إذا تعطّل شيء في الموقع، يُرسَل إلينا تقرير تقني مجهول لكي نصلحه – نص الخطأ والشاشة والإصدار واللغة ونوع النظام والمتصفح (مثل Android · Chrome). دون اسم أو بريد إلكتروني أو عنوان IP أو بيانات أدخلتها أو حسابات. في الوضع الخاص الكامل لا يُرسَل شيء.','Automatic crash reports: if something crashes on the site, an anonymous technical report is sent to us so we can fix it – the error text, the screen, the version, the language and the system and browser type (for example Android · Chrome). No name, email, IP address, data you typed or calculations. In full private mode nothing is sent.'],
   lg_p_us4:['מעבר לזה לא נאסף שום מידע: לא מיקום, לא דגם המכשיר ולא היסטוריית שימוש.','لا تُجمع أي معلومات أخرى: لا موقع ولا طراز الجهاز ولا سجل استخدام.','Nothing else is collected: no location, no device model and no usage history.'],
   lg_p_extH:['אתרים חיצוניים שהאפליקציה פונה אליהם','مواقع خارجية يتصل بها التطبيق','Outside sites the app contacts'],
-  lg_p_ext0:['פניות לקבלת מחירים, שערים וגופנים יוצאות ישירות מהמכשיר שלך, בלי עוגיות ובלי פרטים עליך. האתר שמקבל פנייה רואה את כתובת ה־IP שלך, כמו בכל גלישה.','طلبات الأسعار وأسعار الصرف والخطوط تخرج مباشرة من جهازك، دون ملفات تعريف ارتباط ودون معلومات عنك. يرى الموقع المستقبِل عنوان IP الخاص بك، كما في أي تصفح.','Requests for prices, rates and fonts go straight from your device, with no cookies and no details about you. A site receiving a request sees your IP address, as with any browsing.'],
+  lg_p_ext0:['פניות לקבלת מחירים ושערים יוצאות ישירות מהמכשיר שלך, בלי עוגיות ובלי פרטים עליך. האתר שמקבל פנייה רואה את כתובת ה־IP שלך, כמו בכל גלישה. הגופנים נטענים דרך השרת של האפליקציה עצמה.','طلبات الأسعار وأسعار الصرف تخرج مباشرة من جهازك، دون ملفات تعريف ارتباط ودون معلومات عنك. يرى الموقع المستقبِل عنوان IP الخاص بك، كما في أي تصفح. تُحمَّل الخطوط عبر خادم التطبيق نفسه.','Requests for prices and rates go straight from your device, with no cookies and no details about you. A site receiving a request sees your IP address, as with any browsing. Fonts load through the app\'s own server.'],
   lg_p_ext1:['שערים ומחירים: בנק ישראל, הלמ"ס, CNBC, Coinbase, Binance, Frankfurter ומקורות דומים.','الأسعار: بنك إسرائيل، دائرة الإحصاء، CNBC، Coinbase، Binance، Frankfurter ومصادر مشابهة.','Rates and prices: Bank of Israel, the CBS, CNBC, Coinbase, Binance, Frankfurter and similar sources.'],
   lg_p_ext2:['גופנים: Google Fonts.','الخطوط: Google Fonts.','Fonts: Google Fonts.'],
   lg_p_ext3:['AI, רק כשמשתמשים בו: הטקסט שכתבת, ובסריקה – התמונה (תלוש, הצעה, תרגיל, מכתב לתרגום, או כל מסמך בזיהוי אוטומטי), נשלח ל־Claude באפליקציית Claude, או ל־Gemini של Google עם מפתח משלך (במצב מפתח ובמצב משפחה). האפליקציה לא שומרת את התמונה, את המכתב או את התרגום; בתלוש נשמרים במכשיר רק המספרים. כדאי לכסות פרטים מזהים לפני הצילום.','الذكاء الاصطناعي، عند استخدامه فقط: يُرسل النص الذي كتبته، وفي المسح الصورة (قسيمة راتب، عرض، تمرين، رسالة للترجمة، أو أي مستند في التعرّف التلقائي)، إلى Claude في تطبيق Claude، أو إلى Gemini من Google بمفتاحك (في وضع المطوّر ووضع العائلة). لا يحفظ التطبيق الصورة أو الرسالة أو الترجمة؛ في القسيمة تُحفظ الأرقام فقط على الجهاز. يُستحسن تغطية التفاصيل المعرّفة قبل التصوير.','AI, only when you use it: the text you wrote and, when scanning, the photo (a payslip, an offer, an exercise, a letter to translate, or any document with auto-detect) is sent to Claude in the Claude app, or to Google\'s Gemini with your own key (in developer and family mode). The app does not keep the photo, the letter or the translation; for a payslip only the numbers are kept, on the device. Cover identifying details before taking the photo.'],
@@ -5637,7 +5637,7 @@ var HOL_ACTIVE = '';
 function skinFont(){
   const eff = HOL_ACTIVE || SET.theme; if (SKINS[eff] && SKINS[eff].mono && !document.getElementById('font-mono')){
     const l = document.createElement('link'); l.id = 'font-mono'; l.rel = 'stylesheet';
-    l.href = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap'; document.head.appendChild(l);
+    l.href = GF_CSS + '?family=IBM+Plex+Mono:wght@400;500;600&display=swap'; document.head.appendChild(l);
   }
 }
 function applyTheme(){
@@ -12104,8 +12104,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.41", "date": "2026-10-22", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261022.041511';
+var CHANGELOG = [{"v": "13.42", "date": "2026-10-22", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261022.042459';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -12761,7 +12761,7 @@ var CK_WEIGHTS = ['auto', '200', '300', '500', '700', '900'], CK_SIZES = {s: .82
 function ckFontLoad(k){
   const f = CK_FONTS[k]; if (!f || !f[1] || document.getElementById('ckf-' + k)) return;
   const l = document.createElement('link'); l.id = 'ckf-' + k; l.rel = 'stylesheet';
-  l.href = 'https://fonts.googleapis.com/css2?family=' + f[1] + '&display=swap&text=' + encodeURIComponent('0123456789:.٠١٢٣٤٥٦٧٨٩AMPamp ');
+  l.href = GF_CSS + '?family=' + f[1] + '&display=swap&text=' + encodeURIComponent('0123456789:.٠١٢٣٤٥٦٧٨٩AMPamp ');
   document.head.appendChild(l);
 }
 function ckLook(el){
@@ -17440,7 +17440,7 @@ const DZ_FONT = {aurum: 'Cormorant+Garamond:wght@500;600;700'};
 function dzFont(){
   const d = dzOn(), f = DZ_FONT[d]; if (!f || document.getElementById('font-dz-' + d)) return;
   const l = document.createElement('link'); l.id = 'font-dz-' + d; l.rel = 'stylesheet';
-  l.href = 'https://fonts.googleapis.com/css2?family=' + f + '&display=swap'; document.head.appendChild(l);
+  l.href = GF_CSS + '?family=' + f + '&display=swap'; document.head.appendChild(l);
 }
 const _atDz = applyTheme;
 applyTheme = function(){

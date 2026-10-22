@@ -5,6 +5,8 @@
   Permissions-Policy: camera=(self), microphone=(), geolocation=(self), payment=(), usb=(), interest-cohort=()
   Strict-Transport-Security: max-age=31536000
   Access-Control-Allow-Origin: *
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: frame-ancestors 'self'; object-src 'none'; base-uri 'self'
 /sw.js
   Cache-Control: no-cache
 /version.json

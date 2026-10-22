@@ -12,8 +12,10 @@ var PRIV = false; try { PRIV = window['local' + 'Storage'].getItem('fin-priv') =
 var FIN_K0 = []; try { var _ls = window['local' + 'Storage']; for (var _i = 0; _i < _ls.length; _i++){ var _k = _ls.key(_i); if (_k && _k.indexOf('fin-') === 0) FIN_K0.push(_k); } } catch (e) {}
 /* 13.12: the site's own address – the Claude app reads the shared data files (rates, version…) from here */
 var SITE_BASE = 'https://financial-calculator.design-il.workers.dev/';
+/* 13.41: fonts come through this site's own server (the browser never contacts Google); outside the site (the Claude app, the old address) they still come from Google */
+var GF_CSS = /(^|\.)design-il\.workers\.dev$|^localhost$/.test(location.hostname) ? '/gf/css2' : 'https://fonts.googleapis.com/css2';
 (function(){
-  if (!PRIV){ document.write('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&family=Heebo:wght@400;700&family=Rubik:wght@400;700&display=swap" rel="stylesheet">'); return; }
+  if (!PRIV){ document.write((GF_CSS.charAt(0) === '/' ? '' : '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>') + '<link href="' + GF_CSS + '?family=Frank+Ruhl+Libre:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&family=Heebo:wght@400;700&family=Rubik:wght@400;700&display=swap" rel="stylesheet">'); return; }
   var own = function(x){ return x.origin === location.origin || x.origin === 'https://ysdesign-il.github.io' || x.origin === SITE_BASE.replace(/^(https?:\/\/[^\/]+).*$/, '$1') || /(^|\.)(claude\.ai|claudeusercontent\.com|anthropic\.com)$/.test(x.hostname); };
   var ext = function(u){ try { var x = new URL(u, location.href); return /^(https?|wss?):$/.test(x.protocol) && !own(x); } catch (e) { return false; } };
   var f = window.fetch; if (f) window.fetch = function(i){ var u = typeof i === 'string' ? i : (i && i.url) || ''; if (ext(u)) return Promise.reject(new Error('private')); return f.apply(this, arguments); };
@@ -2555,7 +2557,7 @@ body:has(#panel-mathx:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 <div class="toast" id="toast" role="status" hidden></div>
 
 
-<script>var HTML_BUILD = '20261022.041511';</script>
-<script src="app.js?v=20261022.041511"></script>
+<script>var HTML_BUILD = '20261022.042459';</script>
+<script src="app.js?v=20261022.042459"></script>
 </body>
 </html>

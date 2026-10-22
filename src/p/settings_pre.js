@@ -149,7 +149,7 @@ var HOL_ACTIVE = '';
 function skinFont(){
   const eff = HOL_ACTIVE || SET.theme; if (SKINS[eff] && SKINS[eff].mono && !document.getElementById('font-mono')){
     const l = document.createElement('link'); l.id = 'font-mono'; l.rel = 'stylesheet';
-    l.href = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap'; document.head.appendChild(l);
+    l.href = GF_CSS + '?family=IBM+Plex+Mono:wght@400;500;600&display=swap'; document.head.appendChild(l);
   }
 }
 function applyTheme(){
