@@ -5,6 +5,7 @@
 import {KIT} from './_kit.js';
 import {PUB} from './_pub.js';
 import {QR} from './_qr.js';
+import {pushApi,pushSoft,pushAll,PUSH_SW} from './_push.js';
 const DEV_CHECK='2ff82c4945c39ddf16442f25fdc6b3ee96b832d2ea9b26448813ba9087d1c285';
 const REC_BUNDLE='nsr1.iWUL8ojgMNK6qJIp.JxT7Dcnxml12WgcvhJdS7RFevhkpINNl462Eybdg5Swvm2Xlp0fOCA1Vn7FTTFJovZJXcZ/oBUHOA2qJA4K7sRMCFKCY6IYbvJll4kaeWHU=';
 const enc=new TextEncoder();
@@ -38,7 +39,9 @@ async function dkWrap(h,id){const iv=crypto.getRandomValues(new Uint8Array(12));
 async function dkOpen(w,id){try{const p=String(w||'').split('.');return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:u8(p[0])},await aesK(id),u8(p[1])))}catch(e){return''}}
 async function sesNew(env,o,req,via,h){const id=rid(),cc=via&&via.cc||(req.cf&&req.cf.country)||'',dev=via&&via.dev||devOf(req),at=Date.now();
   await env.CFG.put(SKEY(o,id),JSON.stringify({at,dev,cc,dk:h?await dkWrap(await ibSecOf(h),id):''}),{expirationTtl:TTL,metadata:{at,dev,cc}});
-  const lk='lg:'+o.app,G=await kvGet(env,lk,[]);G.push({at,dev,cc,h:await sh(id)});await env.CFG.put(lk,JSON.stringify(G.slice(-100)));return id}
+  const lk='lg:'+o.app,G=await kvGet(env,lk,[]);G.push({at,dev,cc,h:await sh(id)});await env.CFG.put(lk,JSON.stringify(G.slice(-100)));
+  try{await Promise.race([pushAll(env,'login',{t:'🔐 כניסה לניהול · '+(o.title||''),b:[dev,cc].filter(Boolean).join(' · ')+'. אם זה לא את/ה – אפשר לנתק את המכשיר בלוח הניהול.',u:new URL(req.url).origin+'/admin/#admk-s-ses',tag:'login'}),new Promise(r=>setTimeout(r,4000))])}catch(e){}
+  return id}
 async function sesGet(env,o,id){if(!id)return null;let v=null;try{v=await env.CFG.get(SKEY(o,id),{type:'json',cacheTtl:30})}catch(e){}return v&&v.at&&Date.now()-v.at<TTL*1000?v:null}
 async function sesList(env,o){const out=[];let cur;do{const r=await env.CFG.list({prefix:'sx:'+o.app+':',cursor:cur});for(const k of r.keys){const m=k.metadata||{};if(m.at&&Date.now()-m.at<TTL*1000)out.push({id:k.name.split(':')[2],at:m.at,dev:m.dev,cc:m.cc})}cur=r.list_complete?null:r.cursor}while(cur);return out}
 async function sesOk(env,o,id,req){if(!id)return false;
@@ -73,7 +76,9 @@ export async function errReport(req,app,env,o){
   const ip=await ipKey(req),now=Date.now(),a=(ERRRATE.get(ip)||[]).filter(t=>now-t<10*60e3);if(a.length>=5)return J({ok:true});a.push(now);ERRRATE.set(ip,a);if(ERRRATE.size>5000)ERRRATE.clear();
   let d={};try{d=await req.json()}catch(e){}const k='er:'+app,day=new Date().toISOString().slice(0,10);const L=await kvGet(env,k,{day,n:0,items:[]});if(L.day!==day){L.day=day;L.n=0}delete L.ip;if(L.n>=60)return J({ok:true});L.n++;
   const it={at:now,m:clean(d.m),src:clean(d.src),v:String(d.v||'').slice(0,40),s:String(d.s||'').slice(0,40),l:String(d.l||'').slice(0,5),dev:devOf(req)};
-  const same=L.items.find(x=>x.m===it.m&&x.src===it.src);if(same){same.n=(same.n||1)+1;same.at=now;same.v=it.v}else L.items.push(it);L.items=L.items.slice(-200);await env.CFG.put(k,JSON.stringify(L));return J({ok:true})}
+  const same=L.items.find(x=>x.m===it.m&&x.src===it.src);if(same){same.n=(same.n||1)+1;same.at=now;same.v=it.v}else L.items.push(it);L.items=L.items.slice(-200);await env.CFG.put(k,JSON.stringify(L));
+  if(!same)await pushSoft(env,'err',app,60,{t:'🐞 תקלה חדשה · '+((o&&o.title)||app),b:String(it.m||'').slice(0,120)+(it.s?' · מסך: '+it.s:''),u:new URL(req.url).origin+'/admin/#admk-s-err',tag:'err-'+app});
+  return J({ok:true})}
 
 /* ---------- fonts through this site: the browser never contacts Google (Cloudflare fetches and caches them) ---------- */
 export async function fontProxy(req){const u=new URL(req.url),p=u.pathname;
@@ -96,7 +101,9 @@ export async function fbReport(req,app,env,o){
   const fwd=req.headers.get('x-fb-ip'),ip=fwd&&o&&o.fbTrust?hex(await crypto.subtle.digest('SHA-256',enc.encode('rl:'+fwd))).slice(0,16):await ipKey(req),now=Date.now(),day=new Date().toISOString().slice(0,10);
   const k='fb:'+app,B=await kvGet(env,k,{day,n:0,m:[]});if(B.day!==day){B.day=day;B.n=0}delete B.ip;
   const fa=(FBRATE.get(ip)||[]).filter(t=>now-t<864e5);if(fa.length>=5||B.n>=200)return J({ok:false,e:'limit'},429,C);fa.push(now);FBRATE.set(ip,fa);if(FBRATE.size>5000)FBRATE.clear();
-  B.n++;B.m=(B.m||[]).concat({id:'k'+rid().slice(0,16),t:Math.floor(now/1000),c:txt}).slice(-500);await env.CFG.put(k,JSON.stringify(B));return J({ok:true},200,C)}
+  B.n++;B.m=(B.m||[]).concat({id:'k'+rid().slice(0,16),t:Math.floor(now/1000),c:txt}).slice(-500);await env.CFG.put(k,JSON.stringify(B));
+  await pushSoft(env,'fb',app,10,{t:'📥 משוב חדש · '+((o&&o.title)||app),b:'הגיע משוב חדש. הוא מוצפן ונפתח רק בלוח הניהול.',u:new URL(req.url).origin+'/admin/#admk-s-fb',tag:'fb-'+app});
+  return J({ok:true},200,C)}
 /* ---------- the lock ---------- */
 export async function adminGate(req,serve,o,env){
   const u=new URL(req.url),p=u.pathname,ip=await ipKey(req),KV=!!(env&&env.CFG);
@@ -115,6 +122,7 @@ export async function adminGate(req,serve,o,env){
     if(!id)return J({ok:false,e:'store'},503);
     return J({ok:true},200,{'set-cookie':COOK(id,2592000)})}
   if(p==='/admin/__newses'&&req.method==='POST'&&KV){if(!(await keyOk(req.headers.get('x-adm-key')||'',env)))return J({ok:false},401);let v={};try{v=await req.json()}catch(e){}return J({ok:true,id:await sesNew(env,o,req,v,req.headers.get('x-adm-key'))})}
+  if(p==='/admin/__sw.js')return new Response(PUSH_SW,{headers:{'content-type':'text/javascript; charset=utf-8','cache-control':'no-cache','x-robots-tag':'noindex'}});
   const id=cookieSes(req);
   if(p==='/admin/__logout'){if(req.method!=='POST')return new Response(logoutPage(o),{status:200,headers:Object.assign({'content-type':'text/html; charset=utf-8'},SEC)});
     if(id){if(KV)await env.CFG.delete(SKEY(o,id));else if(o.upstream){try{await fetch(o.upstream+'/admin/__logout',{method:'POST',headers:{cookie:'adm='+id,'x-adm-up':'1'},redirect:'manual'})}catch(e){}}OKSES.delete(id)}
@@ -128,6 +136,7 @@ export async function adminGate(req,serve,o,env){
   if(p.startsWith('/admin/__')){
     if(!KV){if(!o.upstream)return J({ok:false,e:'store'},503);
       const fr=await fetch(o.upstream+p,{method:req.method,headers:{cookie:'adm='+id,'content-type':'application/json'},body:req.method==='POST'?await req.text():undefined});return new Response(fr.body,{status:fr.status,headers:{'content-type':'application/json','cache-control':'no-store'}})}
+    if(p==='/admin/__push')return J(await pushApi(req,env,o));
     const sk='st:'+o.app;let st=await kvGet(env,sk,{done:[],log:[],tpl:[]});
     if(p==='/admin/__sessions'){const L=await sesList(env,o);if(!L.some(x=>x.id===id)){const v=await sesGet(env,o,id);if(v)L.push({id,at:v.at,dev:v.dev,cc:v.cc})}const out=[];for(const x of L)out.push({at:x.at,dev:x.dev,cc:x.cc,me:x.id===id,h:await sh(x.id)});return J({ok:true,list:out})}
     if(p==='/admin/__revoke'&&req.method==='POST'){let d={};try{d=await req.json()}catch(e){}const L=await sesList(env,o);let drop,msg;

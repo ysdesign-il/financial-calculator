@@ -1,6 +1,9 @@
 // The site is static files (admin panel v2). This small Worker locks the admin version (/admin/), keeps the admin panel's settings (KV),
 // and adds the public part of the panel (message, what's new, parts switched off, forced update) to the main page.
 import {adminGate,publicConfig,pubScript,injectPub,errReport,ping,fontProxy} from './_gate.js';
+import {healthCron} from './_push.js';
+/* every half hour: are the sites up? (phone alert to the owner when one goes down or comes back) */
+const HEALTH=[['calc','מחשבון פיננסי','https://financial-calculator.design-il.workers.dev'],['neshima','נשימה שקטה','https://neshima-shketa.pages.dev']];
 const OPT={app:'calc',title:'מחשבון פיננסי',accent:'#8CC8FF',priv:'fin-priv',langLS:'fin-lang',store:{key:'fin-dev',name:'fin-dev-n'},
   gh:{repo:'ysdesign-il/financial-calculator',files:['devcode.json','srcpref.json','family.json','inboxkey.json'],wf:['test.yml']},
   parts:[['assist','לשונית העוזר','.nav [data-tab="assist"]'],['clients','לשונית הלקוחות','.nav [data-tab="clients"]'],['expenses','לשונית ההוצאות','.nav [data-tab="expenses"]']],
@@ -9,7 +12,8 @@ const OPT={app:'calc',title:'מחשבון פיננסי',accent:'#8CC8FF',priv:'f
     links:[['דף הבית','/'],['משכנתא','/?go=mortgage'],['הלוואה','/?go=loan'],['ריבית דריבית','/?go=compound'],['מע״מ','/?go=vat'],['הוצאות','/?go=expenses']],
     
     data:[['ריביות, מטבעות ומדדים','/rates.json','updated|asOf',30],['מחירון רכב','/cars.json','asOf',240],['היסטוריית מדדים','/history.json','at',30]]}};
-export default{async fetch(req,env){const p=new URL(req.url).pathname;
+export default{async scheduled(ev,env,ctx){ctx.waitUntil(healthCron(env,HEALTH))},
+  async fetch(req,env){const p=new URL(req.url).pathname;
   if(p==='/cfg.json')return publicConfig('calc',env,OPT);
   if(p==='/__pub.js')return pubScript(OPT);
   if(p==='/__err')return errReport(req,'calc',env,OPT);
