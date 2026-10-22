@@ -1,9 +1,10 @@
 {
- "started": "2026-10-21 22:45:38 UTC",
+ "started": "2026-10-22 01:15:26 UTC",
  "events": [
-  "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
+  "  gemini gemini-flash-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
   "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
   "published es",
+  "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
   "published fr",
   "published ru",
   "published pt-BR",
@@ -12,23 +13,23 @@
   "published hi"
  ],
  "langs": {
-  "es": 9368,
-  "fr": 9367,
-  "ru": 9366,
-  "pt-BR": 9208,
-  "it": 9368,
-  "zh-CN": 9359,
-  "hi": 9361
+  "es": 9369,
+  "fr": 9368,
+  "ru": 9368,
+  "pt-BR": 9369,
+  "it": 9369,
+  "zh-CN": 9361,
+  "hi": 9362
  },
- "finished": "2026-10-21 22:48:23 UTC",
+ "finished": "2026-10-22 01:16:06 UTC",
  "coverage": {
-  "zh-CN": 9359,
-  "fr": 9367,
-  "hi": 9361,
-  "pt-BR": 9208,
-  "ru": 9366,
-  "es": 9368,
-  "it": 9368
+  "zh-CN": 9361,
+  "fr": 9368,
+  "hi": 9362,
+  "pt-BR": 9369,
+  "ru": 9368,
+  "es": 9369,
+  "it": 9369
  },
- "total": 9369
+ "total": 9370
 }
