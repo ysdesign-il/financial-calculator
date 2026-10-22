@@ -14,5 +14,8 @@ export default{async fetch(req,env){const p=new URL(req.url).pathname;
   if(p==='/__pub.js')return pubScript(OPT);
   if(p==='/__err')return errReport(req,'calc',env,OPT);
   if(p==='/__ping')return ping('calc',env,OPT,q=>env.ASSETS.fetch(new Request(new URL(q,req.url))));
-  if(p==='/admin'||p.startsWith('/admin/'))return adminGate(req,r=>env.ASSETS.fetch(r),OPT,env);
+  if(p==='/admin'||p.startsWith('/admin/'))return adminGate(req,async r=>{const q=new URL(r.url).pathname;
+    if(q==='/admin/'||q==='/admin/index.html'){const a=await env.ASSETS.fetch(new Request(new URL('/',r.url),{headers:r.headers}));const h=(await a.text()).replace('<head>','<head><base href="/"><meta name="robots" content="noindex,nofollow"><script>window.__FIN_ADMIN__=1</script>');
+      return new Response(h,{status:a.status,headers:{'content-type':'text/html; charset=utf-8'}})}
+    return env.ASSETS.fetch(new Request(new URL(q.slice(6)||'/',r.url),{headers:r.headers}))},OPT,env);
   const r=await env.ASSETS.fetch(req);if(p==='/'||p==='/index.html')return injectPub(r,OPT);return r}};
