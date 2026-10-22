@@ -54,7 +54,7 @@ function mxParse(src){
     return e;
   }
   function unary(){ if (isOp('-')){ p++; return {t: 'neg', a: unary()}; } if (isOp('+')){ p++; return unary(); } return power(); }
-  function arith(){ let e = term(); while (isOp('+') || isOp('-')){ const o = T[p].v; p++; e = {t: 'op', o, a: e, b: term()}; } return e; }
+  function arith(){ let e = term(); while (isOp('+') || isOp('-')){ const o = T[p].v; p++; let b = term(); if (b && b.t === 'pct') b = {t: 'op', o: '*', a: e, b}; e = {t: 'op', o, a: e, b}; } return e; }
   function cmp(){ let e = arith(); while (T[p] && T[p].t === 'op' && ['<', '>', '<=', '>=', '==', '!='].includes(T[p].v)){ const o = T[p].v; p++; e = {t: 'op', o, a: e, b: arith()}; } return e; }
   function expr(){ return cmp(); }
   function top(){
@@ -93,7 +93,7 @@ function mxScalar(o, x, y){
   switch (o){
     case '+': return x + y; case '-': return x - y; case '*': return x * y;
     case '/': if (y === 0) throw MX_ERR('mx_eDiv0'); return x / y;
-    case '^': return Math.pow(x, y); case 'mod': return ((x % y) + y) % y;
+    case '^': { if (x < 0 && !Number.isInteger(y)){ for (let q = 1; q < 100; q += 2){ const pq = y * q; if (Math.abs(pq - Math.round(pq)) < 1e-9){ const v = Math.pow(-x, y); return Math.round(pq) % 2 ? -v : v; } } throw MX_ERR('mx_eDomain'); } const v = Math.pow(x, y); if (isNaN(v)) throw MX_ERR('mx_eDomain'); return v; } case 'mod': return ((x % y) + y) % y;
     case '<': return +(x < y); case '>': return +(x > y); case '<=': return +(x <= y); case '>=': return +(x >= y); case '==': return +(Math.abs(x - y) < 1e-12); case '!=': return +(Math.abs(x - y) >= 1e-12);
   }
   throw MX_ERR('mx_eTok', {c: o});
@@ -101,10 +101,14 @@ function mxScalar(o, x, y){
 function mxBin(o, a, b){ return mxIsM(a) || mxIsM(b) ? mxMatOp(o, a, b) : mxScalar(o, a, b); }
 /* ---------- built-in functions ---------- */
 const mxT = x => MXE.deg ? x * Math.PI / 180 : x, mxTi = x => MXE.deg ? x * 180 / Math.PI : x;
+/* an angle where tan/cot/sec/csc has no value: 90°+k·180° (or k·180° from 0°); in radians π/2+kπ within rounding */
+const mxPole = (x, at) => { const d = MXE.deg ? x : x * 180 / Math.PI, k = (d - at) / 180; return Math.abs(k - Math.round(k)) < (MXE.deg ? 1e-12 : 1e-10); };
+/* tiny rounding leftovers (cos 90° = 6e-17) shown as the exact value */
+const mxSnap = v => Math.abs(v) < 1e-15 ? 0 : Math.abs(v - Math.round(v)) < 1e-15 ? Math.round(v) : v;
 const MX_MATH = {
   sqrt: x => { if (x < 0) throw MX_ERR('mx_eDomain'); return Math.sqrt(x); }, cbrt: Math.cbrt, root: (x, n) => x < 0 && n % 2 ? -Math.pow(-x, 1 / n) : Math.pow(x, 1 / n), abs: x => mxIsM(x) ? mxDet(x) : Math.abs(x),
   exp: Math.exp, ln: x => { if (x <= 0) throw MX_ERR('mx_eDomain'); return Math.log(x); }, log: (x, b) => { if (x <= 0) throw MX_ERR('mx_eDomain'); return b == null ? Math.log10(x) : Math.log(x) / Math.log(b); }, log2: Math.log2, log10: Math.log10,
-  sin: x => Math.sin(mxT(x)), cos: x => Math.cos(mxT(x)), tan: x => Math.tan(mxT(x)), cot: x => 1 / Math.tan(mxT(x)), sec: x => 1 / Math.cos(mxT(x)), csc: x => 1 / Math.sin(mxT(x)),
+  sin: x => mxSnap(Math.sin(mxT(x))), cos: x => mxSnap(Math.cos(mxT(x))), tan: x => { if (mxPole(x, 90)) throw MX_ERR('mx_eDomain'); return mxSnap(Math.tan(mxT(x))); }, cot: x => { if (mxPole(x, 0)) throw MX_ERR('mx_eDomain'); return mxSnap(1 / Math.tan(mxT(x))); }, sec: x => { if (mxPole(x, 90)) throw MX_ERR('mx_eDomain'); return 1 / Math.cos(mxT(x)); }, csc: x => { if (mxPole(x, 0)) throw MX_ERR('mx_eDomain'); return 1 / Math.sin(mxT(x)); },
   asin: x => mxTi(Math.asin(x)), acos: x => mxTi(Math.acos(x)), atan: x => mxTi(Math.atan(x)), atan2: (y, x) => mxTi(Math.atan2(y, x)),
   sinh: Math.sinh, cosh: Math.cosh, tanh: Math.tanh, asinh: Math.asinh, acosh: Math.acosh, atanh: Math.atanh,
   floor: Math.floor, ceil: Math.ceil, round: (x, d) => { const k = Math.pow(10, d || 0); return Math.round(x * k) / k; }, trunc: Math.trunc, sign: Math.sign,
