@@ -248,7 +248,7 @@ function salTime(amt, mode){
   const sen = vv('s_senior'), yi = Math.max(1, Math.ceil(sen || 0)), tbl = week === 6 ? VAC6 : VAC5;
   T.sen = sen; T.vacYear = tbl[Math.min(yi, tbl.length) - 1]; T.vacM = T.vacYear / 12;
   T.vacBal = vv('s_vacBal') + T.vacM - vacD - vv('s_vacRed'); T.sickBal = Math.min(90, vv('s_sickBal') + 1.5) - sickD;
-  T.havD = HAV_DAYS(sen); T.havDay = vv('s_havDay') || 418; T.havYear = T.havD * T.havDay;
+  T.havD = HAV_DAYS(sen); T.havDay = vv('s_havDay') || 451.5; T.havYear = T.havD * T.havDay;
   T.any = hourly || T.extra > 0 || T.after > 0 || sickD || absD || vacD || holD || resD || mournD;
   return T;
 }
