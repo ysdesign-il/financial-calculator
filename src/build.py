@@ -81,8 +81,5 @@ _guard = "if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '%s'){ try { i
 open(os.path.join(ROOT, 'app.js'), 'w', encoding='utf-8').write(_guard + _m.group(1) + '\n')
 s = s[:_m.start()] + "\n<script>var HTML_BUILD = '%s';</script>\n<script src=\"app.js?v=%s\"></script>" % (_build, _build) + s[_m.end():]
 open(os.path.join(ROOT, 'index.html'),'w',encoding='utf-8').write(s)
-# the admin version: the same app at /admin/, served by the Worker only after the developer code (see worker.js)
-_adm = s.replace('<head>', '<head><base href="/"><meta name="robots" content="noindex,nofollow"><script>window.__FIN_ADMIN__=1</script>', 1)
-os.makedirs(os.path.join(ROOT, 'admin'), exist_ok=True)
-open(os.path.join(ROOT, 'admin', 'index.html'), 'w', encoding='utf-8').write(_adm)
+# the admin version (/admin/) is this same page: the Worker adds the admin flag only after the developer code (see worker.js), so no admin file is published
 print(len(s.split('\n')), 'lines')
