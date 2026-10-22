@@ -16,7 +16,7 @@ function tooMany(ip){const now=Date.now(),a=(FAILS.get(ip)||[]).filter(t=>now-t<
 function fail(ip){const a=FAILS.get(ip)||[];a.push(Date.now());FAILS.set(ip,a)}
 const J=(o,st,extra)=>new Response(JSON.stringify(o),{status:st||200,headers:Object.assign({'content-type':'application/json','cache-control':'no-store'},extra||{})});
 const SEC={'x-robots-tag':'noindex, nofollow','referrer-policy':'no-referrer','x-frame-options':'DENY','cache-control':'no-store, private'};
-async function kvGet(env,k,d){try{const v=await env.CFG.get(k,'json');return v==null?d:v}catch(e){return d}}
+async function kvGet(env,k,d){try{const v=await env.CFG.get(k,k.indexOf('ses:')===0?{type:'json',cacheTtl:30}:'json');return v==null?d:v}catch(e){return d}}   // sessions: re-read every 30 s (the shortest KV allows), so a disconnected device is out within half a minute
 const sh=async id=>hex(await crypto.subtle.digest('SHA-256',enc.encode('h:'+id))).slice(0,16);
 const rid=()=>hex(crypto.getRandomValues(new Uint8Array(20)));
 function devOf(req){const ua=req.headers.get('user-agent')||'';const os=/iPhone|iPad/.test(ua)?'iPhone/iPad':/Android/.test(ua)?'Android':/Windows/.test(ua)?'Windows':/Mac OS/.test(ua)?'Mac':'אחר';const br=/Edg\//.test(ua)?'Edge':/Chrome\//.test(ua)?'Chrome':/Firefox\//.test(ua)?'Firefox':/Safari\//.test(ua)?'Safari':'';return os+(br?' · '+br:'')}
@@ -47,7 +47,9 @@ export async function errReport(req,app,env,o){
   if(req.method!=='POST')return J({ok:false},405);
   if(!(env&&env.CFG)){if(!o||!o.upstream)return J({ok:true});try{await fetch(o.upstream+'/__err',{method:'POST',headers:{'content-type':'application/json'},body:await req.text()})}catch(e){}return J({ok:true})}
   const ip=req.headers.get('cf-connecting-ip')||'?',now=Date.now(),a=(ERRRATE.get(ip)||[]).filter(t=>now-t<10*60e3);if(a.length>=5)return J({ok:true});a.push(now);ERRRATE.set(ip,a);
-  let d={};try{d=await req.json()}catch(e){}const k='er:'+app,day=new Date().toISOString().slice(0,10);const L=await kvGet(env,k,{day,n:0,items:[]});if(L.day!==day){L.day=day;L.n=0}if(L.n>=60)return J({ok:true});L.n++;
+  let d={};try{d=await req.json()}catch(e){}const k='er:'+app,day=new Date().toISOString().slice(0,10);const L=await kvGet(env,k,{day,n:0,items:[]});if(L.day!==day){L.day=day;L.n=0;L.ip={}}if(L.n>=60)return J({ok:true});
+  /* at most 5 reports a day from one connection (a short fingerprint, not the address), so one sender cannot fill the day's 60 */
+  const ih=(await sh('ip:'+ip)).slice(0,6);L.ip=L.ip&&typeof L.ip==='object'?L.ip:{};if((L.ip[ih]||0)>=5)return J({ok:true});L.ip[ih]=(L.ip[ih]||0)+1;L.n++;
   const it={at:now,m:clean(d.m),src:clean(d.src),v:String(d.v||'').slice(0,40),s:String(d.s||'').slice(0,40),l:String(d.l||'').slice(0,5),dev:devOf(req)};
   const same=L.items.find(x=>x.m===it.m&&x.src===it.src);if(same){same.n=(same.n||1)+1;same.at=now;same.v=it.v}else L.items.push(it);L.items=L.items.slice(-200);await env.CFG.put(k,JSON.stringify(L));return J({ok:true})}
 /* ---------- the lock ---------- */
@@ -65,7 +67,8 @@ export async function adminGate(req,serve,o,env){
     return J({ok:true},200,{'set-cookie':COOK(id,2592000)})}
   if(p==='/admin/__newses'&&req.method==='POST'&&KV){if(!(await keyOk(req.headers.get('x-adm-key')||'')))return J({ok:false},401);let v={};try{v=await req.json()}catch(e){}return J({ok:true,id:await sesNew(env,o,req,v)})}
   const id=cookieSes(req);
-  if(p==='/admin/__logout'){if(id){if(KV){const L=await kvGet(env,'ses:'+o.app,[]);await env.CFG.put('ses:'+o.app,JSON.stringify(L.filter(s=>s.id!==id)))}else if(o.upstream){try{await fetch(o.upstream+'/admin/__logout',{headers:{cookie:'adm='+id},redirect:'manual'})}catch(e){}}OKSES.delete(id)}
+  /* logging out only from the admin pages themselves (or a typed address): another site cannot sign the owner out with a link */
+  if(p==='/admin/__logout'){const sf=req.headers.get('sec-fetch-site');if(sf&&sf!=='same-origin'&&sf!=='none')return new Response(null,{status:302,headers:{location:u.origin+'/admin/','cache-control':'no-store'}});if(id){if(KV){const L=await kvGet(env,'ses:'+o.app,[]);await env.CFG.put('ses:'+o.app,JSON.stringify(L.filter(s=>s.id!==id)))}else if(o.upstream){try{await fetch(o.upstream+'/admin/__logout',{headers:{cookie:'adm='+id},redirect:'manual'})}catch(e){}}OKSES.delete(id)}
     return new Response(null,{status:302,headers:{location:u.origin+'/admin/','set-cookie':COOK('',0),'cache-control':'no-store'}})}
   if(!(await sesOk(env,o,id,req))){if(req.method!=='GET'&&req.method!=='HEAD'||p.startsWith('/admin/__'))return J({ok:false},401);
     return new Response(loginPage(o),{status:200,headers:Object.assign({'content-type':'text/html; charset=utf-8'},SEC)})}
