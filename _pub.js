@@ -1,5 +1,6 @@
 // Public side of the admin panel for the calculator: shows the message to everyone, the "what's new" window,
-// hides parts switched off, and runs a forced update. Reads only /cfg.json from the same site; sends nothing about the person.
+// hides parts switched off, and runs a forced update. Hands the settings to the app (window.__ADMCFG + 'admp-cfg' event)
+// for calculators switched off one by one and the owner's published values. Reads only /cfg.json from the same site; sends nothing about the person.
 export const PUB = String.raw`(function(){'use strict';if(location.pathname.indexOf('/admin')===0||window.__ADMPUB)return;window.__ADMPUB=1;
 var P=window.__ADMPUBCFG||{},L=(document.documentElement.lang||'he').slice(0,2);
 var E=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
@@ -9,7 +10,7 @@ var css='#admp-msg{position:fixed;bottom:calc(84px + env(safe-area-inset-bottom,
 +'#admp-wn{position:fixed;inset:0;z-index:2147482001;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center}#admp-wn .bx{background:#1E2128;color:#F1F2F5;width:100%;max-width:520px;border-radius:20px 20px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0px));font:15px/1.55 system-ui,-apple-system,Arial,sans-serif;max-height:80vh;overflow:auto}'
 +'#admp-mt{position:fixed;inset:0;z-index:2147482500;background:#121419;color:#F1F2F5;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;font:16px/1.6 system-ui,-apple-system,Arial,sans-serif}#admp-mt h2{margin:10px 0 6px;font-size:22px}#admp-mt p{margin:0;color:#B8BCC8}'
 +'#admp-wn h3{margin:0 0 8px;font-size:19px}#admp-wn ul{margin:0 0 14px;padding-inline-start:20px}#admp-wn button{width:100%;min-height:46px;border:none;border-radius:999px;background:'+(P.accent||'#D4AF6A')+';color:#16181D;font:700 16px system-ui,Arial,sans-serif;cursor:pointer}';
-function apply(c){var st=document.getElementById('admp-st');if(!st){st=document.createElement('style');st.id='admp-st';document.head.appendChild(st)}
+function apply(c){window.__ADMCFG=c;try{window.dispatchEvent(new Event('admp-cfg'))}catch(e){}var st=document.getElementById('admp-st');if(!st){st=document.createElement('style');st.id='admp-st';document.head.appendChild(st)}
   var off=(c.off||[]),sel=(P.parts||[]).filter(function(p){return off.indexOf(p[0])>=0}).map(function(p){return p[2]}).filter(Boolean);st.textContent=css+(sel.length?sel.join(',')+'{display:none!important}':'');
   var m=c.msg,old=document.getElementById('admp-msg');if(old)old.remove();
   var now=Date.now();if(m&&m.on&&ls('admp-msg')!==m.id&&!(m.from&&m.from>now)&&!(m.to&&m.to<=now)&&!(m.only&&m.only!==L)){var t=m[L]||m.he||m.en;if(t){var d=document.createElement('div');d.id='admp-msg';d.setAttribute('role','status');d.dir='auto';d.innerHTML='<p>'+E(t)+'</p><button aria-label="סגירה">✕</button>';d.querySelector('button').onclick=function(){ls('admp-msg',m.id);d.remove()};document.body.appendChild(d)}}
