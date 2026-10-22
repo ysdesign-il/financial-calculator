@@ -3824,7 +3824,15 @@ var DEV_REC_CHECK = '';   // the RC- backup code is retired: the shared recovery
 /* the regular site never opens developer mode: only the admin version (/admin/, locked on the server) or the Claude app can */
 var ADMIN_V = (!!window.__FIN_ADMIN__ && /(^|\.)workers\.dev$|^localhost$/.test(location.hostname) && location.pathname.indexOf('/admin/') === 0) || (typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE);
 const devOk = v => ADMIN_V && typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) && (devSha(v) === DEV_CHECK || (!!DEV_REC_CHECK && devSha(v) === DEV_REC_CHECK));
-try { DEV_ON = devOk(RAWLS.getItem('fin-dev')); } catch (e) {}
+/* 13.40: the developer key is never kept in the browser's long-term storage on the website (the regular site and /admin/ share it).
+   On the website it lives only in this tab (sessionStorage); the admin version is opened by the server's lock, which marks the page (__FIN_ADMSES__). */
+var DEVST = RAWLS;
+try { if (!(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE)){ DEVST = SS;
+  const o1 = RAWLS.getItem('fin-dev'), o2 = RAWLS.getItem('fin-dev-n');
+  if (o1 && ADMIN_V && !SS.getItem('fin-dev')){ SS.setItem('fin-dev', o1); if (o2) SS.setItem('fin-dev-n', o2); }
+  ['fin-dev', 'fin-dev-n', 'fin-gh-tok'].forEach(k => RAWLS.removeItem(k)); } } catch (e) {}
+const devSrv = () => ADMIN_V && !(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) && window.__FIN_ADMSES__ === 1;
+try { DEV_ON = devOk(DEVST.getItem('fin-dev')) || devSrv(); } catch (e) {}
 var OFFI = {ils: NaN, eur: NaN, at: 0};
 const applyDbRatesSrc = applyDbRates;
 applyDbRates = function(d){ try { if (d && d.usd && +d.usd.ILS > 0 && +d.asOf >= (OFFI.at || 0)){ OFFI = {ils: +d.usd.ILS, eur: +d.usd.EUR > 0 ? +d.usd.ILS / +d.usd.EUR : NaN, at: +d.asOf}; } } catch (e) {} const r = applyDbRatesSrc.apply(this, arguments); try { if (d && META.official && META.unix === +d.asOf) Object.keys(d.usd || {}).forEach(k => { FXSRC[k] = {s: 'boi', at: +d.asOf * 1000}; }); } catch (e) {} return r; };
@@ -3917,7 +3925,7 @@ function srcRender(force){
 }
 document.addEventListener('click', e => {
   if (e.target.closest('#src_test')) srcTest();
-  else if (e.target.closest('#dev_off')){ try { RAWLS.removeItem('fin-dev'); RAWLS.removeItem('fin-dev-n'); } catch (err) {} DEV_ON = false; DEV_NAME = ''; liveApply(); devPermSync(); try { activate('settings'); } catch (err) {} toast(t('dev_offDone')); }
+  else if (e.target.closest('#dev_off')){ try { DEVST.removeItem('fin-dev'); DEVST.removeItem('fin-dev-n'); } catch (err) {} DEV_ON = false; DEV_NAME = ''; liveApply(); devPermSync(); try { activate('settings'); } catch (err) {} toast(t('dev_offDone')); }
   else if (e.target.closest('#src_open')){ activate('settings'); setTimeout(() => { const r = $('.sh-row[data-scat="conn"]'); if (r) r.click(); setTimeout(() => { srcRender(true); const s = $('.set-sec[data-sk="set_src"]'); if (s) s.scrollIntoView({block: 'start'}); }, 200); }, 120); }
 });
 setInterval(() => { if (!document.hidden && tab === 'settings' && SCAT === 'conn') srcRender(); }, 5000);
@@ -3948,7 +3956,7 @@ async function devTry(rawName, rawCode, quiet){
   let h = '';
   try { const b = await pbk(name + ':' + code, new TextEncoder().encode('fincalc-dev-v2'), 150000, 256); h = Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join(''); } catch (e) {}
   if (h && devOk(h)){
-    try { RAWLS.setItem('fin-dev', h); RAWLS.setItem('fin-dev-n', name); } catch (e) {}
+    try { DEVST.setItem('fin-dev', h); DEVST.setItem('fin-dev-n', name); } catch (e) {}
     DEV_ON = true; DEV_NAME = name; const b = $('#dev_box'); if (b) b.remove(); liveApply(); devPermSync(); toast(t('dev_onDone')); return true;
   }
   if (m) m.textContent = t('dev_bad2');
@@ -3963,7 +3971,7 @@ async function devRecTry(){
   let h = '';
   try { const b = await pbk('REC:' + n, new TextEncoder().encode('fincalc-dev-rec-v1'), 150000, 256); h = Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join(''); } catch (e) {}
   if (h && DEV_REC_CHECK && devSha(h) === DEV_REC_CHECK){
-    try { RAWLS.setItem('fin-dev', h); RAWLS.removeItem('fin-dev-n'); } catch (e) {}
+    try { DEVST.setItem('fin-dev', h); DEVST.removeItem('fin-dev-n'); } catch (e) {}
     DEV_ON = true; DEV_NAME = ''; const bx = $('#dev_box'); if (bx) bx.remove(); liveApply(); devPermSync(); toast(t('dev_rOk')); return true;
   }
   if (m) m.textContent = t('dev_rBad');
@@ -4033,7 +4041,7 @@ function ownPill(){
   const hh = $('.home-hello'); if (hh){ let p = $('.own-pill', hh.parentNode); if (own && !p){ p = document.createElement('span'); p.className = 'own-pill own-pill-h'; hh.insertAdjacentElement('afterend', p); } if (p){ if (own) p.textContent = DEV_NAME ? t('own_pillN', {n: DEV_NAME}) : t('own_pillDev'); else p.remove(); } }
 }
 var DEV_NAME = '';
-try { if (DEV_ON) DEV_NAME = RAWLS.getItem('fin-dev-n') || ''; } catch (e) {}
+try { if (DEV_ON) DEV_NAME = DEVST.getItem('fin-dev-n') || ''; } catch (e) {}
 function devPermSync(){ try { permRender(); } catch (e) {} try { shRender(); } catch (e) {} ownPill(); }
 Promise.resolve(PERM_P).then(devPermSync, devPermSync);
 document.addEventListener('click', e => { if (e.target.closest('#dev_go, #dev_paste, #dev_off')) setTimeout(devPermSync, 900); });
@@ -5264,7 +5272,7 @@ async function recDerive(code){ const c = String(code || '').toUpperCase().repla
 async function recCheckOf(bytes){ return recHex(await crypto.subtle.digest('SHA-256', new Uint8Array([...new TextEncoder().encode('chk:'), ...bytes]))); }
 const recAes = bytes => crypto.subtle.importKey('raw', bytes, 'AES-GCM', false, ['encrypt', 'decrypt']);
 function recNewCode(){ const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = crypto.getRandomValues(new Uint8Array(20)); let s = ''; for (let i = 0; i < 20; i++){ s += A[r[i] % A.length]; if (i % 4 === 3 && i < 19) s += '-'; } return s; }
-async function recLine(code){ let h = ''; try { h = RAWLS.getItem('fin-dev') || ''; } catch (e) {} if (!DEV_ON || !devOk(h)) return null;
+async function recLine(code){ let h = ''; try { h = DEVST.getItem('fin-dev') || ''; } catch (e) {} if (!DEV_ON || !devOk(h)) return null;
   const kb = await recDerive(code), chk = await recCheckOf(kb), iv = crypto.getRandomValues(new Uint8Array(12));
   const ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, await recAes(kb), new TextEncoder().encode(h)); return 'NSREC1~' + chk + '~nsr1.' + recB64(iv) + '.' + recB64(ct); }
 function recModal(html){ let o = $('#rec_modal'); if (o) o.remove(); document.body.insertAdjacentHTML('beforeend', `<div id="rec_modal" class="rec-ov" role="dialog" aria-modal="true"><div class="rec-card">${html}<div class="btnrow"><button type="button" class="mv wide" data-rec="close">${asEsc(t('rec_close'))}</button></div></div></div>`); }
@@ -5278,7 +5286,7 @@ function recForm(){ const b = $('#dev_box'); if (!b) return; b.innerHTML = REC_C
 async function recTry(){ const i = $('#rec_code'), m = $('#rec_msg'); let lock = 0; try { lock = +(RAWLS.getItem('fin-rec-lock') || 0); } catch (e) {} if (Date.now() < lock){ if (m) m.textContent = t('rec_lock'); return; }
   if (m) m.textContent = '…'; let ok = false;
   try { const kb = await recDerive(i && i.value); if (await recCheckOf(kb) === REC_CHECK){ const p = REC_BUNDLE.split('.'); const pt = await crypto.subtle.decrypt({name: 'AES-GCM', iv: recUn64(p[1])}, await recAes(kb), recUn64(p[2]));
-    const h = new TextDecoder().decode(pt); if (devOk(h)){ try { RAWLS.setItem('fin-dev', h); RAWLS.removeItem('fin-rec-fail'); } catch (e) {} DEV_ON = true; ok = true; } } } catch (e) {}
+    const h = new TextDecoder().decode(pt); if (devOk(h)){ try { DEVST.setItem('fin-dev', h); RAWLS.removeItem('fin-rec-fail'); } catch (e) {} DEV_ON = true; ok = true; } } } catch (e) {}
   if (ok){ const b = $('#dev_box'); if (b) b.remove(); liveApply(); devPermSync(); toast(t('rec_ok')); return; }
   let f = 0; try { f = +(RAWLS.getItem('fin-rec-fail') || 0) + 1; if (f >= 5){ RAWLS.setItem('fin-rec-lock', Date.now() + 60e3); f = 0; } RAWLS.setItem('fin-rec-fail', f); } catch (e) {}
   if (m) m.textContent = t('rec_bad'); }
@@ -5299,7 +5307,7 @@ new MutationObserver(() => {
 async function recFromField(){ const i = $('#dev_rcode'), m = $('#dev_rmsg'); const v = String(i && i.value || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); if (v.length !== 20) return false;
   if (m) m.textContent = '…'; let ok = false;
   try { const kb = await recDerive(v); if (REC_CHECK && await recCheckOf(kb) === REC_CHECK){ const p = REC_BUNDLE.split('.'); const pt = await crypto.subtle.decrypt({name: 'AES-GCM', iv: recUn64(p[1])}, await recAes(kb), recUn64(p[2]));
-    const h = new TextDecoder().decode(pt); if (devOk(h)){ try { RAWLS.setItem('fin-dev', h); } catch (e) {} DEV_ON = true; ok = true; } } } catch (e) {}
+    const h = new TextDecoder().decode(pt); if (devOk(h)){ try { DEVST.setItem('fin-dev', h); } catch (e) {} DEV_ON = true; ok = true; } } } catch (e) {}
   if (ok){ const b = $('#dev_box'); if (b) b.remove(); liveApply(); devPermSync(); toast(t('rec_ok')); }
   return ok; }
 document.addEventListener('click', async e => { if (!e.target.closest('#dev_rgo')) return; const v = String(($('#dev_rcode') || {}).value || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); if (v.length === 20){ e.stopImmediatePropagation(); if (!(await recFromField())){ const m = $('#dev_rmsg'); if (m) m.textContent = t('rec_bad'); } } }, true);
@@ -5307,7 +5315,7 @@ document.addEventListener('keydown', async e => { if (e.key !== 'Enter' || !e.ta
 
 /* change the developer code (shared with Quiet Breath): makes a new code + a line to apply; nothing changes until it is applied */
 function devNewCode(){ const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = crypto.getRandomValues(new Uint8Array(12)); let s = 'FC'; for (let i = 0; i < 12; i++){ if (i % 4 === 0) s += '-'; s += A[r[i] % A.length]; } return s; }
-function recChange(){ let n = ''; try { n = RAWLS.getItem('fin-dev-n') || ''; } catch (e) {}
+function recChange(){ let n = ''; try { n = DEVST.getItem('fin-dev-n') || ''; } catch (e) {}
   recModal(`<b>${asEsc(t('rec_chg'))}</b><label for="dc_name">${asEsc(t('rec_chgName'))}</label><input id="dc_name" type="text" autocomplete="off" autocapitalize="characters" dir="ltr" value="${asEsc(n)}"><p>${asEsc(t('rec_chgNeed'))}</p><input id="dc_rec" type="text" autocomplete="off" autocapitalize="characters" dir="ltr" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX"><button type="button" class="gold-btn" data-rec="chgGo">${asEsc(t('rec_chgGo'))}</button><small class="hint" id="dc_msg"></small><div id="dc_out"></div>`); }
 async function recChangeGo(){ const m = $('#dc_msg'), name = devNameNorm(($('#dc_name') || {}).value), rc = ($('#dc_rec') || {}).value; if (!name){ if (m) m.textContent = t('rec_chgNoName'); return; }
   if (m) m.textContent = '…';

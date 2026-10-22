@@ -309,7 +309,7 @@ function famDevRender(){
   const tok = typeof ghTok === 'function' && ghTok(), open = !!FAM.formOpen;
   s.innerHTML = `<div class="sec-h fam-h"><h3 class="sec-t">👨‍👩‍👧 ${E108(t('fam_title'))}</h3><button type="button" class="gold-btn fam-plus${open ? ' on' : ''}" id="fam_plus" aria-expanded="${open}" aria-label="${E108(t('fam_plusA'))}" title="${E108(t('fam_plusA'))}">+</button></div><p class="fine">${E108(t('fam_help'))}</p>
     ${IN_CLAUDE ? `<div class="gk-st new">${E108(t('fam_relayNote'))}</div>` : ''}
-    ${typeof ghTok === 'function' && ghTok() ? `<button type="button" class="mv wide" id="fam_tokDel">🗑️ ${E108(t('fam_tokDelete'))}</button>` : `<div class="gk-st bad">${E108(t('fam_needTok'))}</div><label class="scn-l" for="fam_tok">${E108(t('dc_tok'))}</label><div class="as-box"><input id="fam_tok" type="password" autocomplete="off" dir="ltr" placeholder="github_pat_…"><button type="button" class="btn" id="fam_tokSave">${E108(t('fam_tokSave'))}</button></div><p class="fine">${E108(t('dc_tokH'))} <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">${E108(t('fam_tokNew'))}</a></p>`}
+    ${typeof ghTok === 'function' && ghTok() ? '' : `<div class="gk-st bad">${E108(t('dc_onlyAdmin'))}</div>`}
     <div class="fam-form" id="fam_form"${open ? '' : ' hidden'}><div class="as-box"><input id="fam_new" type="text" maxlength="30" dir="auto" placeholder="${E108(t('fam_namePh'))}" autocomplete="off"><button type="button" class="gold-btn" id="fam_add"${tok ? '' : ' disabled'}>${E108(t('fam_add'))}</button></div></div>
     <div id="fam_out"></div>
     ${famPwBox(L, tok)}
@@ -362,11 +362,6 @@ document.addEventListener('click', async e => {
     FAM.formOpen = !FAM.formOpen; famDevRender();
     if (FAM.formOpen) setTimeout(() => { const i = $('#fam_new'); if (i) i.focus(); }, 60);
     return;
-  }
-  if (e.target.closest('#fam_tokDel')){ try { RAWLS.removeItem('fin-gh-tok'); } catch (er) {} toast(t('fam_tokDelete') + ' ✓'); famDevRender(); return; }
-  if (e.target.closest('#fam_tokSave')){
-    const v = String(($('#fam_tok') || {}).value || '').trim(); if (!v) return;
-    try { RAWLS.setItem('fin-gh-tok', v); } catch (er) {} toast(t('dc_tokSaved')); famDevRender(); return;
   }
   const add = e.target.closest('#fam_add');
   if (add){
