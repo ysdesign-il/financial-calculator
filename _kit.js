@@ -35,7 +35,8 @@ function unwrap(w,sec){var p=String(w||'').trim().split('.');if(p[0]!=='fck1'||p
 function unlock(txt,jwk){var p=String(txt||'').split('.');if(p[0]!=='fc1'||p.length!==4)return Promise.reject();var S=crypto.subtle;return S.importKey('jwk',jwk,{name:'RSA-OAEP',hash:'SHA-256'},false,['decrypt']).then(function(sk){return S.decrypt({name:'RSA-OAEP'},sk,u64(p[1]))}).then(function(raw){return S.importKey('raw',raw,'AES-GCM',false,['decrypt'])}).then(function(ak){return S.decrypt({name:'AES-GCM',iv:u64(p[2])},ak,u64(p[3]))}).then(function(pt){return JSON.parse(new TextDecoder().decode(pt))})}
 function ibKey(){var I=K.inbox,sec='';try{sec=sessionStorage.getItem(I.sec)||localStorage.getItem(I.sec)||''}catch(e){}if(!sec)return Promise.resolve(null);var tries=[];(I.keyLS||[]).forEach(function(k){try{var w=localStorage.getItem(k);if(w)tries.push(w)}catch(e){}});
   return fetch(I.keyFile+'?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}).then(function(j){if(j&&j.w)tries.push(j.w);var i=0;function next(){if(i>=tries.length)return null;return unwrap(tries[i++],sec).catch(function(){return null}).then(function(k){return k||next()})}return next()})}
-function ibLoad(){if(!K.inbox)return Promise.resolve([]);return Promise.all([fetch(K.inbox.data+'?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():{}}).catch(function(){return{}}),ibKey()]).then(function(a){var j=a[0],key=a[1],out=[];var m=(j.m||[]).slice(-500);
+function fbAll(){return Promise.all([fetch(K.inbox.data+'?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():{}}).catch(function(){return{}}),api('/admin/__fb').catch(function(){return{}})]).then(function(a){var seen={},m=[];(a[0].m||[]).concat(a[1].m||[]).forEach(function(x){if(x&&x.id&&!seen[x.id]){seen[x.id]=1;m.push(x)}});return{m:m}})}
+function ibLoad(){if(!K.inbox)return Promise.resolve([]);return Promise.all([fbAll(),ibKey()]).then(function(a){var j=a[0],key=a[1],out=[];var m=(j.m||[]).slice(-1000);
   return m.reduce(function(pr,x){return pr.then(function(){if(!key){out.push({id:x.id,at:(x.t||0)*1000,locked:1});return}return unlock(x.c,key).then(function(o){out.push(Object.assign({},o,{id:x.id,at:o.at||(x.t||0)*1000}))}).catch(function(){})})},Promise.resolve()).then(function(){IBL=out.sort(function(a,b){return(b.at||0)-(a.at||0)});return IBL})})}
 function ibDraw(){var b=$('#admk-ib');if(!b)return;if(!IBL){b.innerHTML='<p class="ak-n">טוען…</p>';return}
   var open=IBL.filter(function(i){return ST.done.indexOf(i.id)<0}).length;var KN={idea:'💡 רעיון',bug:'🐞 תקלה',q:'❓ שאלה',other:'✍️ אחר'};
@@ -62,7 +63,7 @@ function resetDevice(){if(!confirm('לאפס את כל הנתונים של הא�
 function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,String(v))}catch(e){return null}}
 var SEEN=+(ls('admk-seen')||0),PREV=SEEN,NEW={e:0,l:0,f:0},SUM=null,FBT=[];
 function since(){return PREV||Date.now()-7*864e5}
-function sumLoad(){return Promise.all([api('/admin/__sum').catch(function(){return null}),K.inbox?fetch(K.inbox.data+'?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():{}}).catch(function(){return{}}):Promise.resolve(null)]).then(function(a){
+function sumLoad(){return Promise.all([api('/admin/__sum').catch(function(){return null}),K.inbox?fbAll():Promise.resolve(null)]).then(function(a){
   SUM=a[0]||{};FBT=a[1]?(a[1].m||[]).map(function(x){return(x.t||0)*1000}):[];var s=OPEN?since():(SEEN||Date.now()-7*864e5);
   NEW={e:(SUM.errs||[]).filter(function(t){return t>s}).length,l:(SUM.logins||[]).filter(function(x){return x.at>s&&x.h!==SUM.me}).length,f:FBT.filter(function(t){return t>s}).length};
   if(!OPEN)setBadge(NEW.e+NEW.l+NEW.f);return NEW})}

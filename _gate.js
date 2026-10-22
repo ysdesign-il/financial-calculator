@@ -25,17 +25,15 @@ const rid=()=>hex(crypto.getRandomValues(new Uint8Array(20)));
 function devOf(req){const ua=req.headers.get('user-agent')||'';const os=/iPhone|iPad/.test(ua)?'iPhone/iPad':/Android/.test(ua)?'Android':/Windows/.test(ua)?'Windows':/Mac OS/.test(ua)?'Mac':'אחר';const br=/Edg\//.test(ua)?'Edge':/Chrome\//.test(ua)?'Chrome':/Firefox\//.test(ua)?'Firefox':/Safari\//.test(ua)?'Safari':'';return os+(br?' · '+br:'')}
 const COOK=(id,age)=>`adm=${id}; Path=/admin; Max-Age=${age}; HttpOnly; Secure; SameSite=Lax`;
 /* ---------- sessions: one KV key per device (sx:<app>:<id>), 30 days, checked on the server every time ----------
-   The developer key itself is never kept and never handed out after login: the session holds only the inbox secret
-   (a one-way fingerprint of the key, "ib-v1:"), which opens the feedback inbox but cannot sign in. Stealing a session
-   therefore gives at most 30 days that can be cut off at once – never the permanent key. The Pages site asks its Worker copy. */
-const ibSecOf=async h=>hex(await crypto.subtle.digest('SHA-256',enc.encode('ib-v1:'+h)));
+   The developer key is never stored on the phone: it is kept here encrypted with the session id (which only the
+   HttpOnly cookie holds) and handed to the admin page in memory. The Pages site asks its Worker copy. */
 const TTL=2592000,SKEY=(o,id)=>'sx:'+o.app+':'+id;
 async function aesK(id){return crypto.subtle.importKey('raw',await crypto.subtle.digest('SHA-256',enc.encode('dk:'+id)),'AES-GCM',false,['encrypt','decrypt'])}
 const b64=u=>btoa(String.fromCharCode(...new Uint8Array(u))),u8=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
 async function dkWrap(h,id){const iv=crypto.getRandomValues(new Uint8Array(12));return b64(iv)+'.'+b64(await crypto.subtle.encrypt({name:'AES-GCM',iv},await aesK(id),enc.encode(h)))}
 async function dkOpen(w,id){try{const p=String(w||'').split('.');return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:u8(p[0])},await aesK(id),u8(p[1])))}catch(e){return''}}
 async function sesNew(env,o,req,via,h){const id=rid(),cc=via&&via.cc||(req.cf&&req.cf.country)||'',dev=via&&via.dev||devOf(req),at=Date.now();
-  await env.CFG.put(SKEY(o,id),JSON.stringify({at,dev,cc,dk:h?await dkWrap(await ibSecOf(h),id):''}),{expirationTtl:TTL,metadata:{at,dev,cc}});
+  await env.CFG.put(SKEY(o,id),JSON.stringify({at,dev,cc,dk:h?await dkWrap(h,id):''}),{expirationTtl:TTL,metadata:{at,dev,cc}});
   const lk='lg:'+o.app,G=await kvGet(env,lk,[]);G.push({at,dev,cc,h:await sh(id)});await env.CFG.put(lk,JSON.stringify(G.slice(-100)));return id}
 async function sesGet(env,o,id){if(!id)return null;let v=null;try{v=await env.CFG.get(SKEY(o,id),{type:'json',cacheTtl:30})}catch(e){}return v&&v.at&&Date.now()-v.at<TTL*1000?v:null}
 async function sesList(env,o){const out=[];let cur;do{const r=await env.CFG.list({prefix:'sx:'+o.app+':',cursor:cur});for(const k of r.keys){const m=k.metadata||{};if(m.at&&Date.now()-m.at<TTL*1000)out.push({id:k.name.split(':')[2],at:m.at,dev:m.dev,cc:m.cc})}cur=r.list_complete?null:r.cursor}while(cur);return out}
@@ -43,9 +41,7 @@ async function sesOk(env,o,id,req){if(!id)return false;
   if(env&&env.CFG)return!!(await sesGet(env,o,id));
   if(!o.upstream)return false;const c=OKSES.get(id);if(c&&Date.now()-c<5e3)return true;
   try{const r=await fetch(o.upstream+'/admin/__who',{headers:{cookie:'adm='+id}});if(r.ok){OKSES.set(id,Date.now());return true}OKSES.delete(id);return false}catch(e){return false}}
-/* sessions made before this change still hold the key: it is turned into the inbox secret on the way out */
-async function dkSec(env,v,id){const x=v?await dkOpen(v.dk,id):'';return x&&(await keyOk(x,env))?await ibSecOf(x):x}
-async function devKey(env,o,id){if(env&&env.CFG){const v=await sesGet(env,o,id);return dkSec(env,v,id)}
+async function devKey(env,o,id){if(env&&env.CFG){const v=await sesGet(env,o,id);return v?await dkOpen(v.dk,id):''}
   if(!o.upstream)return'';try{const r=await fetch(o.upstream+'/admin/__dk',{headers:{cookie:'adm='+id}});if(r.ok){const j=await r.json();return String(j.k||'')}}catch(e){}return''}
 /* in the admin page the developer key lives only in memory: reads and writes of that one storage key never reach the disk */
 function keyShim(o,h){const k=o.store&&o.store.key;if(!k)return'';const v=/^[0-9a-f]{64}$/.test(h||'')?h:'';
@@ -74,6 +70,29 @@ export async function errReport(req,app,env,o){
   const ih=(await sh('ip:'+ip)).slice(0,6);L.ip=L.ip&&typeof L.ip==='object'?L.ip:{};if((L.ip[ih]||0)>=5)return J({ok:true});L.ip[ih]=(L.ip[ih]||0)+1;L.n++;
   const it={at:now,m:clean(d.m),src:clean(d.src),v:String(d.v||'').slice(0,40),s:String(d.s||'').slice(0,40),l:String(d.l||'').slice(0,5),dev:devOf(req)};
   const same=L.items.find(x=>x.m===it.m&&x.src===it.src);if(same){same.n=(same.n||1)+1;same.at=now;same.v=it.v}else L.items.push(it);L.items=L.items.slice(-200);await env.CFG.put(k,JSON.stringify(L));return J({ok:true})}
+
+/* ---------- fonts through this site: the browser never contacts Google (Cloudflare fetches and caches them) ---------- */
+export async function fontProxy(req){const u=new URL(req.url),p=u.pathname;
+  if(req.method!=='GET'&&req.method!=='HEAD')return new Response(null,{status:405});
+  const ua=req.headers.get('user-agent')||'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1';
+  if(p==='/gf/css2'){if(u.search.length>1500||!/^\?family=/.test(u.search))return new Response('',{status:400});
+    const r=await fetch('https://fonts.googleapis.com/css2'+u.search,{headers:{'user-agent':ua},cf:{cacheTtl:86400,cacheEverything:true}});if(!r.ok)return new Response('',{status:r.status});
+    const css=(await r.text()).replace(/https:\/\/fonts\.gstatic\.com\/s\//g,u.origin+'/gf/s/');
+    return new Response(css,{headers:{'content-type':'text/css; charset=utf-8','cache-control':'public, max-age=86400','access-control-allow-origin':'*','vary':'user-agent'}})}
+  const m=/^\/gf\/s\/([A-Za-z0-9_\/.-]{3,300}\.(?:woff2|woff|ttf))$/.exec(p);if(!m||m[1].indexOf('..')>=0)return new Response('',{status:404});
+  const r=await fetch('https://fonts.gstatic.com/s/'+m[1],{cf:{cacheTtl:31536000,cacheEverything:true}});if(!r.ok)return new Response('',{status:r.status});
+  return new Response(r.body,{headers:{'content-type':r.headers.get('content-type')||'font/woff2','cache-control':'public, max-age=31536000, immutable','access-control-allow-origin':'*'}})}
+/* ---------- feedback sent to this site (already locked on the phone; only the developer can open it), rate-limited ---------- */
+export async function fbReport(req,app,env,o){
+  if(req.method==='OPTIONS')return new Response(null,{status:204,headers:{'access-control-allow-origin':'*','access-control-allow-methods':'POST','access-control-allow-headers':'content-type'}});
+  if(req.method!=='POST')return J({ok:false},405);
+  const C={'access-control-allow-origin':'*'};
+  if(!(env&&env.CFG)){if(!o||!o.upstream)return J({ok:false},503,C);try{const r=await fetch(o.upstream+'/__fb',{method:'POST',headers:{'content-type':'text/plain','x-fb-ip':req.headers.get('cf-connecting-ip')||''},body:await req.text()});return new Response(r.body,{status:r.status,headers:Object.assign({'content-type':'application/json'},C)})}catch(e){return J({ok:false},502,C)}}
+  const txt=(await req.text()).trim();if(txt.length>8000||!/^fc1\.[A-Za-z0-9+\/=]+\.[A-Za-z0-9+\/=]+\.[A-Za-z0-9+\/=]+$/.test(txt))return J({ok:false,e:'bad'},400,C);
+  const fwd=req.headers.get('x-fb-ip'),ip=(fwd&&o&&o.fbTrust?fwd:'')||req.headers.get('cf-connecting-ip')||'?',now=Date.now(),day=new Date().toISOString().slice(0,10);
+  const k='fb:'+app,B=await kvGet(env,k,{day,n:0,ip:{},m:[]});if(B.day!==day){B.day=day;B.n=0;B.ip={}}
+  const ih=(await sh('fbip:'+ip)).slice(0,8);if((B.ip[ih]||0)>=5||B.n>=200)return J({ok:false,e:'limit'},429,C);
+  B.ip[ih]=(B.ip[ih]||0)+1;B.n++;B.m=(B.m||[]).concat({id:'k'+rid().slice(0,16),t:Math.floor(now/1000),c:txt}).slice(-500);await env.CFG.put(k,JSON.stringify(B));return J({ok:true},200,C)}
 /* ---------- the lock ---------- */
 export async function adminGate(req,serve,o,env){
   const u=new URL(req.url),p=u.pathname,ip=req.headers.get('cf-connecting-ip')||'?',KV=!!(env&&env.CFG);
@@ -101,7 +120,7 @@ export async function adminGate(req,serve,o,env){
   if(p==='/admin/__kit.js')return new Response('window.__ADMKIT='+JSON.stringify(Object.assign({app:o.app,title:o.title,accent:o.accent,parts:o.parts||[]},o.kit||{}))+';\n'+KIT,{headers:Object.assign({'content-type':'text/javascript; charset=utf-8'},SEC)});
   if(p==='/admin/__qr.js')return new Response(QR,{headers:Object.assign({'content-type':'text/javascript; charset=utf-8'},SEC)});
   if(p==='/admin/__who')return J({ok:true});
-  if(p==='/admin/__dk'&&KV){const v=await sesGet(env,o,id);return J({ok:true,k:await dkSec(env,v,id)})}
+  if(p==='/admin/__dk'&&KV){const v=await sesGet(env,o,id);return J({ok:true,k:v?await dkOpen(v.dk,id):''})}
   if(p.startsWith('/admin/__')){
     if(!KV){if(!o.upstream)return J({ok:false,e:'store'},503);
       const fr=await fetch(o.upstream+p,{method:req.method,headers:{cookie:'adm='+id,'content-type':'application/json'},body:req.method==='POST'?await req.text():undefined});return new Response(fr.body,{status:fr.status,headers:{'content-type':'application/json','cache-control':'no-store'}})}
@@ -117,6 +136,7 @@ export async function adminGate(req,serve,o,env){
       const cur=await kvGet(env,'cfg:'+o.app,{});H.push({at:Date.now(),t:'לפני שחזור',c:cur});await env.CFG.put(hk,JSON.stringify(H.slice(-25)));
       await env.CFG.put('cfg:'+o.app,JSON.stringify(it.c||{}));st.log=(st.log||[]).concat({at:Date.now(),t:'שוחזרו ההגדרות כפי שהיו ב־'+new Date(it.at).toLocaleString('he-IL',{timeZone:'Asia/Jerusalem'})}).slice(-300);await env.CFG.put(sk,JSON.stringify(st));return J({ok:true,cfg:it.c||{},state:st})}
     if(p==='/admin/__gh'&&req.method==='POST')return ghOp(req,env,o,st,sk);
+    if(p==='/admin/__fb'){const B=await kvGet(env,'fb:'+o.app,{m:[]});return J({ok:true,m:B.m||[]})}
     if(p==='/admin/__logins')return J({ok:true,list:await kvGet(env,'lg:'+o.app,[])});
     if(p==='/admin/__errs'){if(req.method==='POST'){await env.CFG.put('er:'+o.app,JSON.stringify({day:'',n:0,items:[]}));return J({ok:true,items:[]})}const L=await kvGet(env,'er:'+o.app,{items:[]});return J({ok:true,items:L.items||[]})}
     if(p==='/admin/__state'){if(req.method==='POST'){let d=null;try{d=await req.json()}catch(e){}const s2=d&&d.state||{};
@@ -168,17 +188,10 @@ svg{display:block;margin:0 auto}</style></head><body><main>
 <p class="foot">מי שאין לו את הקוד לא יכול להיכנס לכאן. האתר הרגיל לא מכיל את כלי הניהול.</p></main>
 <script>
 const $=i=>document.getElementById(i),E=new TextEncoder(),H=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
-const U=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0)),ST=${JSON.stringify(o.store||{})},RB=${JSON.stringify(REC_BUNDLE)},IB=${JSON.stringify((o.kit&&o.kit.inbox)||{})};
-const B=u=>btoa(String.fromCharCode(...new Uint8Array(u)));
-async function ak(sec,salt,use){const b=await crypto.subtle.importKey('raw',E.encode(sec),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',hash:'SHA-256',salt,iterations:200000},b,{name:'AES-GCM',length:256},false,[use])}
-async function unw(w,sec){try{const p=String(w||'').trim().split('.');if(p[0]!=='fck1'||p.length!==4)return null;return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:U(p[2])},await ak(sec,U(p[1]),'decrypt'),U(p[3]))))}catch(e){return null}}
-async function wr(o2,sec){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));return 'fck1.'+B(salt)+'.'+B(iv)+'.'+B(await crypto.subtle.encrypt({name:'AES-GCM',iv},await ak(sec,salt,'encrypt'),E.encode(JSON.stringify(o2))))}
-/* the inbox key on this phone was locked with the developer key; it is re-locked with the inbox secret, the only thing the admin page receives */
-async function ibMove(h){try{const s=H(await crypto.subtle.digest('SHA-256',E.encode('ib-v1:'+h))),K=IB.keyLS||[];for(const k of K){const w=localStorage.getItem(k);if(!w)continue;const j=await unw(w,h);if(j)localStorage.setItem(k,await wr(j,s))}
- if(IB.keyFile&&K[0]&&!localStorage.getItem(K[0])){const r=await fetch(IB.keyFile+'?v='+Date.now(),{cache:'no-store'});if(r.ok){const x=await r.json();const j=x&&x.w?await unw(x.w,h):null;if(j)localStorage.setItem(K[0],await wr(j,s))}}}catch(e){}}try{if(ST.key)localStorage.removeItem(ST.key)}catch(e){}
+const U=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0)),ST=${JSON.stringify(o.store||{})},RB=${JSON.stringify(REC_BUNDLE)};try{if(ST.key)localStorage.removeItem(ST.key)}catch(e){}
 async function pb(t,salt,it){const k=await crypto.subtle.importKey('raw',E.encode(t),'PBKDF2',false,['deriveBits']);return new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:E.encode(salt),iterations:it},k,256))}
 async function login(h,name,msg){const r=await fetch('/admin/__login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({h}),credentials:'same-origin'});
- if(r.ok){try{if(ST.key)localStorage.removeItem(ST.key);if(ST.name&&name)localStorage.setItem(ST.name,name)}catch(e){}msg.textContent='נכנסים…';await ibMove(h);location.replace('/admin/');return}
+ if(r.ok){try{if(ST.key)localStorage.removeItem(ST.key);if(ST.name&&name)localStorage.setItem(ST.name,name)}catch(e){}location.replace('/admin/');return}
  msg.textContent=r.status===429?'יותר מדי ניסיונות. נסו שוב בעוד רבע שעה.':'השם או הקוד לא נכונים'}
 $('f1').onsubmit=async e=>{e.preventDefault();const m=$('m'),g=$('go');const name=$('n').value.replace(/\\s+/g,'').toUpperCase();
  const code=String($('c').value||'').replace(/^.*?(FC[-\\s]?)/i,'FC').replace(/[^0-9a-z]/gi,'').toUpperCase();

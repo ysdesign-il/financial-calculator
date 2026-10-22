@@ -26,7 +26,7 @@ const DZ_FONT = {aurum: 'Cormorant+Garamond:wght@500;600;700'};
 function dzFont(){
   const d = dzOn(), f = DZ_FONT[d]; if (!f || document.getElementById('font-dz-' + d)) return;
   const l = document.createElement('link'); l.id = 'font-dz-' + d; l.rel = 'stylesheet';
-  l.href = 'https://fonts.googleapis.com/css2?family=' + f + '&display=swap'; document.head.appendChild(l);
+  l.href = GF_CSS + '?family=' + f + '&display=swap'; document.head.appendChild(l);
 }
 const _atDz = applyTheme;
 applyTheme = function(){

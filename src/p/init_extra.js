@@ -2047,7 +2047,7 @@ var CK_WEIGHTS = ['auto', '200', '300', '500', '700', '900'], CK_SIZES = {s: .82
 function ckFontLoad(k){
   const f = CK_FONTS[k]; if (!f || !f[1] || document.getElementById('ckf-' + k)) return;
   const l = document.createElement('link'); l.id = 'ckf-' + k; l.rel = 'stylesheet';
-  l.href = 'https://fonts.googleapis.com/css2?family=' + f[1] + '&display=swap&text=' + encodeURIComponent('0123456789:.٠١٢٣٤٥٦٧٨٩AMPamp ');
+  l.href = GF_CSS + '?family=' + f[1] + '&display=swap&text=' + encodeURIComponent('0123456789:.٠١٢٣٤٥٦٧٨٩AMPamp ');
   document.head.appendChild(l);
 }
 function ckLook(el){
