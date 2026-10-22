@@ -1669,7 +1669,7 @@
   "h_ksRet": "Bank deposit: low fixed return; provident fund: depends on the track",
   "h_lBoi": "Updates automatically from the Bank of Israel. Change it to try a scenario.",
   "h_lMargin": "What the bank offered: e.g. prime minus 0.5 → -0.5, prime plus 1 → 1.",
-  "h_lMode": "Start from the amount, or from the monthly payment that suits you.",
+  "h_lMode": "Start from the amount or the payment that suits you – or check what interest an existing loan carries.",
   "h_lPay": "How much you want or can repay each month.",
   "h_lRateType": "Most bank loans: prime plus or minus a margin the bank gives you.",
   "h_lSpread": "Prime in Israel = the Bank of Israel rate + 1.5%. Almost always 1.5.",
@@ -9406,6 +9406,22 @@
   "ml_rem_slipN": "If the points aren’t there – ask your employer or claim a refund.",
   "ml_rem_arnona": "Arnona discount for reservists",
   "ml_rem_arnonaN": "Apply to the city with your service confirmation.",
-  "rec_needKey": "To make a recovery line, type the name and developer code once. They are not saved."
+  "rec_needKey": "To make a recovery line, type the name and developer code once. They are not saved.",
+  "o_lmRate": "What interest I pay – from amount, years and payment",
+  "r_lRate": "The loan’s yearly interest",
+  "r_lRateSub": "Effective {e} · total interest {i}",
+  "r_lNominal": "Yearly rate (nominal)",
+  "r_lMonthlyRate": "Monthly rate",
+  "r_lEffective": "Effective rate (with compounding)",
+  "r_lIntTot": "Total interest over the loan",
+  "r_lAvgInt": "Average interest per month",
+  "r_lFirstInt": "First payment – interest",
+  "r_lFirstPr": "First payment – principal",
+  "r_lVsPrime": "Compared with prime",
+  "r_lPrimeX": "Prime {s} (prime today {p})",
+  "w_lPayTooLow": "The monthly payment is too low: even with no interest you’d need at least {m} a month. Check the amount, years and payment.",
+  "w_lFairCap": "The effective rate is above the Fair Credit Law cap (about {c}). Worth checking the contract or getting advice.",
+  "w_lBulletRate": "In a balloon loan the monthly payment is interest only – the amount itself ({a}) is repaid at the end.",
+  "n_lRate": "The rate is worked out from the amount, years and monthly payment, by the repayment method you chose. Fees and CPI linkage aren’t included."
  }
 }

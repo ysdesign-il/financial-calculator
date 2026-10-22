@@ -68,6 +68,74 @@ CALC.loan = function(){
   return res;
 };
 document.addEventListener('input', e => { if (e.target && e.target.id === 'l_boi') e.target.dataset.user = '1'; }, true);
+/* 13.44: the interest a loan really carries – from the amount, the years and the monthly payment */
+function loanRateOf(type, A, n, P){              // monthly rate (NaN: the payment can't repay the loan)
+  if (!(A > 0) || !(P > 0) || !(n > 0)) return NaN;
+  if (type === 'bullet') return P / A;
+  if (type === 'equal'){ const r = (P - A / n) / A; return r >= -1e-9 ? Math.max(0, r) : NaN; }
+  if (P * n < A - 0.5) return NaN;
+  if (Math.abs(P * n - A) <= 0.5) return 0;
+  const pmt = r => r > 0 ? A * r / (1 - Math.pow(1 + r, -n)) : A / n;
+  let lo = 0, hi = 0.01; while (pmt(hi) < P && hi < 2) hi *= 2;
+  for (let i = 0; i < 200; i++){ const m = (lo + hi) / 2; if (pmt(m) < P) lo = m; else hi = m; }
+  return (lo + hi) / 2;
+}
+const calcLoan86 = CALC.loan;
+CALC.loan = function(){
+  if ((($('#l_mode') || {}).value || 'pay') !== 'rate') return calcLoan86.apply(this, arguments);
+  const type = ($('#l_type') || {}).value || 'annuity', A = Math.max(0, v('l_amount')), P = Math.max(0, v('l_pay'));
+  const n = Math.max(1, Math.round(clamp(v('l_years'), 0.25, 50) * 12)), r = loanRateOf(type, A, n, P);
+  if (!isFinite(r)){
+    const min = A / n;
+    return {hero: {label: t('r_lRate'), value: '—', sub: t('w_lPayTooLow', {m: M(min, 2)})}, rows: [], warn: [t('w_lPayTooLow', {m: M(min, 2)})], note: t('n_lRate')};
+  }
+  const nom = r * 1200, eff = (Math.pow(1 + r, 12) - 1) * 100;
+  loanSet('l_rate', nom);
+  const keep = [['l_mode', 'pay'], ['l_rateType', 'fixed']]; keep.forEach(([id, val]) => { const e = document.getElementById(id); if (e){ if (!LOAN_KEEP.some(x => x[0] === id)) LOAN_KEEP.push([id, e.value]); e.value = val; } });
+  const res = calcLoan86.apply(this, arguments);
+  if (!res || !res.rows) return res;
+  const sim = loanSim({amt: A, rate: nom, n, type, grace: 0, ci: 0, extra: 0, pre: 0, preM: 1});
+  const totInt = sim.reduce((s, x) => s + x.int, 0), f0 = sim[0] || {int: 0, pr: 0};
+  const top = [[t('r_lNominal'), PC(nom), 'key'], [t('r_lMonthlyRate'), N(r * 100, 3) + '%'], [t('r_lEffective'), PC(eff)],
+    [t('r_lIntTot'), M(totInt)], [t('r_lAvgInt'), M(totInt / n, 2)],
+    [t('r_lFirstInt'), M(f0.int, 2)], [t('r_lFirstPr'), M(f0.pr, 2)]];
+  const boi = typeof MKT === 'object' && MKT.boi > 0 ? MKT.boi : NaN, warn = [];
+  if (isFinite(boi)){
+    const d = nom - (boi + 1.5); top.push([t('r_lVsPrime'), t('r_lPrimeX', {s: (d >= 0 ? '+' : '−') + N(Math.abs(d), 2) + '%', p: PC(boi + 1.5)})]);
+    if (eff > boi + 15) warn.push(t('w_lFairCap', {c: PC(boi + 15)}));
+  }
+  if (type === 'bullet') warn.push(t('w_lBulletRate', {a: M(A)}));
+  res.rows = top.concat(res.rows.filter(x => x[0] !== t('r_totInt')));
+  res.hero = {label: t('r_lRate'), value: PC(nom), sub: t('r_lRateSub', {e: PC(eff), i: M(totInt)})};
+  res.warn = (res.warn || []).concat(warn);
+  res.note = t('n_lRate');
+  return res;
+};
+/* in that mode the rate is the answer, so its fields step aside */
+{ const awLoan = applyWhen; applyWhen = function(id){ const r = awLoan.apply(this, arguments);
+  if (id === 'loan'){ const rm = (($('#l_mode') || {}).value) === 'rate';
+    ['l_rateType', 'l_rate', 'l_boi', 'l_spread', 'l_margin'].forEach(k => { const f = $('#' + k), b = f && f.closest('.field'); if (b && rm) b.hidden = true; }); }
+  return r; }; }
+Object.assign(T, {
+  o_lmRate:['כמה ריבית אני משלם/ת – לפי סכום, שנים והחזר','كم فائدة أدفع – حسب المبلغ والسنوات والقسط','What interest I pay – from amount, years and payment'],
+  r_lRate:['הריבית השנתית על ההלוואה','الفائدة السنوية على القرض','The loan’s yearly interest'],
+  r_lRateSub:['ריבית אפקטיבית {e} · סה״כ ריבית {i}','فائدة فعلية {e} · مجموع الفائدة {i}','Effective {e} · total interest {i}'],
+  r_lNominal:['ריבית שנתית (נקובה)','الفائدة السنوية (الاسمية)','Yearly rate (nominal)'],
+  r_lMonthlyRate:['ריבית חודשית','الفائدة الشهرية','Monthly rate'],
+  r_lEffective:['ריבית אפקטיבית (כולל ריבית דריבית)','الفائدة الفعلية (مع الفائدة المركبة)','Effective rate (with compounding)'],
+  r_lIntTot:['סה״כ ריבית לאורך ההלוואה','مجموع الفائدة طوال القرض','Total interest over the loan'],
+  r_lAvgInt:['ריבית ממוצעת לחודש','متوسط الفائدة الشهري','Average interest per month'],
+  r_lFirstInt:['בהחזר הראשון – ריבית','في القسط الأول – فائدة','First payment – interest'],
+  r_lFirstPr:['בהחזר הראשון – קרן','في القسط الأول – أصل','First payment – principal'],
+  r_lVsPrime:['לעומת הפריים','مقارنة بالبرايم','Compared with prime'],
+  r_lPrimeX:['פריים {s} (פריים היום {p})','برايم {s} (البرايم اليوم {p})','Prime {s} (prime today {p})'],
+  w_lPayTooLow:['ההחזר החודשי נמוך מדי: גם בלי ריבית בכלל צריך להחזיר לפחות {m} בחודש. בדקו את הסכום, השנים וההחזר.','القسط الشهري منخفض جدًا: حتى بدون فائدة يجب سداد {m} شهريًا على الأقل. تحققوا من المبلغ والسنوات والقسط.','The monthly payment is too low: even with no interest you’d need at least {m} a month. Check the amount, years and payment.'],
+  w_lFairCap:['הריבית האפקטיבית גבוהה מהתקרה בחוק אשראי הוגן (בערך {c}). כדאי לבדוק את ההסכם או להתייעץ.','الفائدة الفعلية أعلى من السقف في قانون الائتمان العادل (نحو {c}). يُستحسن فحص الاتفاق أو الاستشارة.','The effective rate is above the Fair Credit Law cap (about {c}). Worth checking the contract or getting advice.'],
+  w_lBulletRate:['בהלוואת בלון ההחזר החודשי הוא רק ריבית – את הסכום עצמו ({a}) מחזירים בסוף.','في قرض البالون القسط الشهري فائدة فقط – يُسدَّد المبلغ نفسه ({a}) في النهاية.','In a balloon loan the monthly payment is interest only – the amount itself ({a}) is repaid at the end.'],
+  n_lRate:['הריבית חושבה מהסכום, מספר השנים וההחזר החודשי, לפי שיטת ההחזר שבחרתם. עמלות והצמדה למדד לא נכללות בחישוב הריבית.','حُسبت الفائدة من المبلغ وعدد السنوات والقسط الشهري حسب طريقة السداد المختارة. العمولات والربط بالمؤشر غير مشمولة.','The rate is worked out from the amount, years and monthly payment, by the repayment method you chose. Fees and CPI linkage aren’t included.'],
+  h_lMode:['אפשר להתחיל מהסכום, מההחזר החודשי שנוח לכם – או לבדוק כמה ריבית אתם משלמים על הלוואה קיימת.','يمكن البدء من المبلغ أو من القسط المريح – أو فحص كم فائدة تدفعون على قرض قائم.','Start from the amount or the payment that suits you – or check what interest an existing loan carries.'],
+});
+
 
 /* ================= 8.5: comparing insurance offers, for every kind of insurance ================= */
 const INS_KINDS = ['life', 'mortlife', 'mortprop', 'health', 'critical', 'disability', 'ltc', 'accident', 'carcomp', 'car3rd', 'carmand', 'homestruct', 'homecontent', 'travel', 'dental', 'pet', 'business'];
