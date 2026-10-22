@@ -9405,6 +9405,7 @@
   "ml_rem_slip": "Check the payslip: reserve points {y}",
   "ml_rem_slipN": "If the points aren’t there – ask your employer or claim a refund.",
   "ml_rem_arnona": "Arnona discount for reservists",
-  "ml_rem_arnonaN": "Apply to the city with your service confirmation."
+  "ml_rem_arnonaN": "Apply to the city with your service confirmation.",
+  "rec_needKey": "To make a recovery line, type the name and developer code once. They are not saved."
  }
 }

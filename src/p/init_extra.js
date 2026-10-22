@@ -3948,6 +3948,8 @@ document.addEventListener('click', e => {
 });
 /* both the owner's name and the developer code are needed; only a fingerprint of the pair is kept in the app */
 const devNorm = s => String(s || '').replace(/^.*?(FC[-\s]?)/i, 'FC').replace(/[^0-9a-z]/gi, '').toUpperCase();
+/* 13.41: the feedback inbox is locked with the inbox secret – a one-way fingerprint of the developer key that cannot sign in. The admin version only ever receives this secret; the app (with the key) derives it */
+const ibSec = s => (typeof s === 'string' && /^[0-9a-f]{64}$/.test(s) && devSha(s) === DEV_CHECK) ? devSha('ib-v1:' + s) : s;
 const devNameNorm = s => String(s || '').replace(/\s+/g, '').toUpperCase();
 async function devTry(rawName, rawCode, quiet){
   const ni = $('#dev_name'), ci = $('#dev_code'), m = $('#dev_msg');
@@ -5272,7 +5274,16 @@ async function recDerive(code){ const c = String(code || '').toUpperCase().repla
 async function recCheckOf(bytes){ return recHex(await crypto.subtle.digest('SHA-256', new Uint8Array([...new TextEncoder().encode('chk:'), ...bytes]))); }
 const recAes = bytes => crypto.subtle.importKey('raw', bytes, 'AES-GCM', false, ['encrypt', 'decrypt']);
 function recNewCode(){ const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = crypto.getRandomValues(new Uint8Array(20)); let s = ''; for (let i = 0; i < 20; i++){ s += A[r[i] % A.length]; if (i % 4 === 3 && i < 19) s += '-'; } return s; }
-async function recLine(code){ let h = ''; try { h = DEVST.getItem('fin-dev') || ''; } catch (e) {} if (!DEV_ON || !devOk(h)) return null;
+/* making a recovery line needs the developer key itself; the admin version doesn't keep it, so the owner types the name + code once, here */
+var RECH = null;
+async function recNeedH(){ let h = ''; try { h = DEVST.getItem('fin-dev') || ''; } catch (e) {} if (devOk(h)) return h;
+  return new Promise(res => { RECH = res; recModal(`<p>${asEsc(t('rec_needKey'))}</p><label for="rk_n">${asEsc(t('dev_name'))}</label><input id="rk_n" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" value="${asEsc(DEV_NAME || '')}"><label for="rk_c">${asEsc(t('dev_code'))}</label><input id="rk_c" type="password" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" placeholder="FC-XXXX-XXXX-XXXX"><button type="button" class="gold-btn" data-rec="hgo">${asEsc(t('dev_go'))}</button><small class="hint" id="rk_m"></small>`); setTimeout(() => { const i = $('#rk_c'); if (i) i.focus(); }, 50); }); }
+async function recHGo(){ const m = $('#rk_m'), name = devNameNorm(($('#rk_n') || {}).value), code = devNorm(($('#rk_c') || {}).value);
+  if (!name || code.length < 14){ if (m) m.textContent = t(!name ? 'dev_needName' : 'dev_needCode'); return; } if (m) m.textContent = '…';
+  let h = ''; try { h = recHex(await pbk(name + ':' + code, new TextEncoder().encode('fincalc-dev-v2'), 150000, 256)); } catch (e) {}
+  if (!devOk(h)){ if (m) m.textContent = t('dev_bad2'); return; } const r = RECH; RECH = null; const c = $('#rk_c'); if (c) c.value = ''; if (r) r(h); }
+Object.assign(T, {rec_needKey:['כדי ליצור שורת שחזור צריך להקליד פעם אחת את השם וקוד המפתח. הם לא נשמרים.','لإنشاء سطر الاسترداد يجب كتابة الاسم ورمز المطوّر مرة واحدة. لا يتم حفظهما.','To make a recovery line, type the name and developer code once. They are not saved.']});
+async function recLine(code, h0){ const h = h0 || await recNeedH(); if (!DEV_ON || !devOk(h)) return null;
   const kb = await recDerive(code), chk = await recCheckOf(kb), iv = crypto.getRandomValues(new Uint8Array(12));
   const ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, await recAes(kb), new TextEncoder().encode(h)); return 'NSREC1~' + chk + '~nsr1.' + recB64(iv) + '.' + recB64(ct); }
 function recModal(html){ let o = $('#rec_modal'); if (o) o.remove(); document.body.insertAdjacentHTML('beforeend', `<div id="rec_modal" class="rec-ov" role="dialog" aria-modal="true"><div class="rec-card">${html}<div class="btnrow"><button type="button" class="mv wide" data-rec="close">${asEsc(t('rec_close'))}</button></div></div></div>`); }
@@ -5292,7 +5303,8 @@ async function recTry(){ const i = $('#rec_code'), m = $('#rec_msg'); let lock =
   if (m) m.textContent = t('rec_bad'); }
 document.addEventListener('click', async e => { const b = e.target.closest('[data-rec]'); if (!b) return; const a = b.dataset.rec;
   if (a === 'forgot') recForm(); else if (a === 'try') recTry(); else if (a === 'new') recCreate(); else if (a === 'have') recExisting();
-  else if (a === 'close'){ const o = $('#rec_modal'); if (o) o.remove(); }
+  else if (a === 'close'){ const o = $('#rec_modal'); if (o) o.remove(); if (RECH){ const r = RECH; RECH = null; r(''); } }
+  else if (a === 'hgo') recHGo();
   else if (a === 'copy'){ try { await navigator.clipboard.writeText(b.dataset.v); const o = b.textContent; b.textContent = t('rec_copied'); setTimeout(() => b.textContent = o, 1500); } catch (err) { const ta = $('#rec_modal .rec-line'); if (ta){ ta.focus(); ta.select(); } } }
   else if (a === 'make'){ const v = String(($('#rec_ex') || {}).value || '').toUpperCase().replace(/[^A-Z0-9]/g, ''), m = $('#rec_exm'); if (v.length !== 20){ if (m) m.textContent = t('rec_len'); return; } if (m) m.textContent = '…'; const line = await recLine(v); if (line) recShowLine(line, ''); }
 });
@@ -5323,7 +5335,7 @@ async function recChangeGo(){ const m = $('#dc_msg'), name = devNameNorm(($('#dc
     const code = devNewCode(); const hb = await pbk(name + ':' + devNorm(code), new TextEncoder().encode('fincalc-dev-v2'), 150000, 256); const h2 = recHex(hb);
     const chk = recHex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(h2))), iv = crypto.getRandomValues(new Uint8Array(12));
     const bundle = 'nsr1.' + recB64(iv) + '.' + recB64(await crypto.subtle.encrypt({name: 'AES-GCM', iv}, await recAes(kb), new TextEncoder().encode(h2)));
-    let wrap = ''; try { if (await ibKey()){ wrap = await ibWrapKey(h2); RAWLS.setItem('fin-ibkey-next', wrap); } } catch (e) {}
+    let wrap = ''; try { if (await ibKey()){ wrap = await ibWrapKey(devSha('ib-v1:' + h2)); RAWLS.setItem('fin-ibkey-next', wrap); } } catch (e) {}
     const line = 'NSDEV1~' + chk + '~' + bundle + (wrap ? '~' + wrap : ''); if (m) m.textContent = ''; const r = $('#dc_rec'); if (r) r.value = '';
     $('#dc_out').innerHTML = `<p>${asEsc(t('rec_chgShow'))}</p><div class="rec-code" dir="ltr">${asEsc(name)} · ${code}</div><button type="button" class="mv wide" data-rec="copy" data-v="${code}">${asEsc(t('rec_copyCode'))}</button><p class="rec-warn">${asEsc(t('rec_chgNever'))}</p><p>${asEsc(t('rec_chgSend'))}</p><textarea class="rec-line" readonly rows="5" dir="ltr">${line}</textarea><button type="button" class="gold-btn" data-rec="copy" data-v="${line}">${asEsc(t('rec_copyLine'))}</button>`;
   } catch (e) { if (m) m.textContent = '⚠️'; } }
