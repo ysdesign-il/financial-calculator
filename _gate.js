@@ -13,7 +13,9 @@ const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(
 const devCheckOf=env=>(env&&typeof env.DEV_CHECK==='string'&&/^[0-9a-f]{64}$/.test(env.DEV_CHECK.trim()))?env.DEV_CHECK.trim():DEV_CHECK;
 async function keyOk(h,env){return typeof h==='string'&&/^[0-9a-f]{64}$/.test(h)&&hex(await crypto.subtle.digest('SHA-256',enc.encode(h)))===devCheckOf(env)}
 function cookieSes(req){const m=/(?:^|;\s*)adm=([0-9a-f]{40})(?:;|$)/.exec(req.headers.get('cookie')||'');return m?m[1]:''}
-const FAILS=new Map(),ERRRATE=new Map(),OKSES=new Map();
+const FAILS=new Map(),ERRRATE=new Map(),FBRATE=new Map(),OKSES=new Map();
+/* no IP address is ever stored: the limits below live only in this server's memory for minutes, keyed by a one-way fingerprint */
+const ipKey=async req=>hex(await crypto.subtle.digest('SHA-256',enc.encode('rl:'+(req.headers.get('cf-connecting-ip')||'?')))).slice(0,16);
 function tooMany(ip){const now=Date.now(),a=(FAILS.get(ip)||[]).filter(t=>now-t<15*60e3);FAILS.set(ip,a);return a.length>=8}
 function fail(ip){const a=FAILS.get(ip)||[];a.push(Date.now());FAILS.set(ip,a)}
 const J=(o,st,extra)=>new Response(JSON.stringify(o),{status:st||200,headers:Object.assign({'content-type':'application/json','cache-control':'no-store'},extra||{})});
@@ -64,10 +66,8 @@ const clean=s=>String(s==null?'':s).replace(/[^\s@]+@[^\s@]+\.[^\s@]+/g,'[…]')
 export async function errReport(req,app,env,o){
   if(req.method!=='POST')return J({ok:false},405);
   if(!(env&&env.CFG)){if(!o||!o.upstream)return J({ok:true});try{await fetch(o.upstream+'/__err',{method:'POST',headers:{'content-type':'application/json'},body:await req.text()})}catch(e){}return J({ok:true})}
-  const ip=req.headers.get('cf-connecting-ip')||'?',now=Date.now(),a=(ERRRATE.get(ip)||[]).filter(t=>now-t<10*60e3);if(a.length>=5)return J({ok:true});a.push(now);ERRRATE.set(ip,a);
-  let d={};try{d=await req.json()}catch(e){}const k='er:'+app,day=new Date().toISOString().slice(0,10);const L=await kvGet(env,k,{day,n:0,items:[]});if(L.day!==day){L.day=day;L.n=0;L.ip={}}if(L.n>=60)return J({ok:true});
-  /* at most 5 reports a day from one connection (a short fingerprint, not the address), so one sender cannot fill the day's 60 */
-  const ih=(await sh('ip:'+ip)).slice(0,6);L.ip=L.ip&&typeof L.ip==='object'?L.ip:{};if((L.ip[ih]||0)>=5)return J({ok:true});L.ip[ih]=(L.ip[ih]||0)+1;L.n++;
+  const ip=await ipKey(req),now=Date.now(),a=(ERRRATE.get(ip)||[]).filter(t=>now-t<10*60e3);if(a.length>=5)return J({ok:true});a.push(now);ERRRATE.set(ip,a);if(ERRRATE.size>5000)ERRRATE.clear();
+  let d={};try{d=await req.json()}catch(e){}const k='er:'+app,day=new Date().toISOString().slice(0,10);const L=await kvGet(env,k,{day,n:0,items:[]});if(L.day!==day){L.day=day;L.n=0}delete L.ip;if(L.n>=60)return J({ok:true});L.n++;
   const it={at:now,m:clean(d.m),src:clean(d.src),v:String(d.v||'').slice(0,40),s:String(d.s||'').slice(0,40),l:String(d.l||'').slice(0,5),dev:devOf(req)};
   const same=L.items.find(x=>x.m===it.m&&x.src===it.src);if(same){same.n=(same.n||1)+1;same.at=now;same.v=it.v}else L.items.push(it);L.items=L.items.slice(-200);await env.CFG.put(k,JSON.stringify(L));return J({ok:true})}
 
@@ -89,13 +89,13 @@ export async function fbReport(req,app,env,o){
   const C={'access-control-allow-origin':'*'};
   if(!(env&&env.CFG)){if(!o||!o.upstream)return J({ok:false},503,C);try{const r=await fetch(o.upstream+'/__fb',{method:'POST',headers:{'content-type':'text/plain','x-fb-ip':req.headers.get('cf-connecting-ip')||''},body:await req.text()});return new Response(r.body,{status:r.status,headers:Object.assign({'content-type':'application/json'},C)})}catch(e){return J({ok:false},502,C)}}
   const txt=(await req.text()).trim();if(txt.length>8000||!/^fc1\.[A-Za-z0-9+\/=]+\.[A-Za-z0-9+\/=]+\.[A-Za-z0-9+\/=]+$/.test(txt))return J({ok:false,e:'bad'},400,C);
-  const fwd=req.headers.get('x-fb-ip'),ip=(fwd&&o&&o.fbTrust?fwd:'')||req.headers.get('cf-connecting-ip')||'?',now=Date.now(),day=new Date().toISOString().slice(0,10);
-  const k='fb:'+app,B=await kvGet(env,k,{day,n:0,ip:{},m:[]});if(B.day!==day){B.day=day;B.n=0;B.ip={}}
-  const ih=(await sh('fbip:'+ip)).slice(0,8);if((B.ip[ih]||0)>=5||B.n>=200)return J({ok:false,e:'limit'},429,C);
-  B.ip[ih]=(B.ip[ih]||0)+1;B.n++;B.m=(B.m||[]).concat({id:'k'+rid().slice(0,16),t:Math.floor(now/1000),c:txt}).slice(-500);await env.CFG.put(k,JSON.stringify(B));return J({ok:true},200,C)}
+  const fwd=req.headers.get('x-fb-ip'),ip=fwd&&o&&o.fbTrust?hex(await crypto.subtle.digest('SHA-256',enc.encode('rl:'+fwd))).slice(0,16):await ipKey(req),now=Date.now(),day=new Date().toISOString().slice(0,10);
+  const k='fb:'+app,B=await kvGet(env,k,{day,n:0,m:[]});if(B.day!==day){B.day=day;B.n=0}delete B.ip;
+  const fa=(FBRATE.get(ip)||[]).filter(t=>now-t<864e5);if(fa.length>=5||B.n>=200)return J({ok:false,e:'limit'},429,C);fa.push(now);FBRATE.set(ip,fa);if(FBRATE.size>5000)FBRATE.clear();
+  B.n++;B.m=(B.m||[]).concat({id:'k'+rid().slice(0,16),t:Math.floor(now/1000),c:txt}).slice(-500);await env.CFG.put(k,JSON.stringify(B));return J({ok:true},200,C)}
 /* ---------- the lock ---------- */
 export async function adminGate(req,serve,o,env){
-  const u=new URL(req.url),p=u.pathname,ip=req.headers.get('cf-connecting-ip')||'?',KV=!!(env&&env.CFG);
+  const u=new URL(req.url),p=u.pathname,ip=await ipKey(req),KV=!!(env&&env.CFG);
   if(p==='/admin')return Response.redirect(u.origin+'/admin/',302);
   /* requests that change something must come from this very site and be JSON (the logout button is a same-site form): blocks forged forms */
   if(req.method!=='GET'&&req.method!=='HEAD'){const og=req.headers.get('origin'),ct=req.headers.get('content-type')||'',srv=p==='/admin/__newses'&&req.headers.get('x-adm-key');
