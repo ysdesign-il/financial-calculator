@@ -1,4 +1,4 @@
-// Public side of the admin panel for the calculator and VELVITE: shows the message to everyone, the "what's new" window,
+// Public side of the admin panel for the calculator: shows the message to everyone, the "what's new" window,
 // hides parts switched off, and runs a forced update. Reads only /cfg.json from the same site; sends nothing about the person.
 export const PUB = String.raw`(function(){'use strict';if(location.pathname.indexOf('/admin')===0||window.__ADMPUB)return;window.__ADMPUB=1;
 var P=window.__ADMPUBCFG||{},L=(document.documentElement.lang||'he').slice(0,2);
