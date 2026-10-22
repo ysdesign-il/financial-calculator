@@ -18,7 +18,7 @@ const ntTip = (ic, h, p, k) => `<li class="bk-a${k ? ' bk-' + k : ''}"><span cla
    windows: all = all hours; day = 07–17; fam = 14–20; night = 23–07 */
 const ES_PLANS = [['cellcom', 'fix', 7.5, 'all', true, false], ['electra', 'fix', 6.5, 'all', false, false], ['bezeq', 'fix', 6, 'all', false, false], ['amisragaz', 'fix', 6, 'all', false, false, 'es_nGas'],
   ['partner', 'fix', 5, 'all', false, false, 'es_nYears'], ['hot', 'fix', 5, 'all', false, false, 'es_nHot'], ['pazgaz', 'fix', 5, 'all', false, false],
-  ['cellcom', 'day', 20, 'day', true, true], ['cellcom', 'fam', 18, 'fam', true, true], ['cellcom', 'night', 15, 'night', false, true],
+  ['cellcom', 'day', 20, 'day', true, true], ['cellcom', 'fam', 18, 'fam', true, true], ['cellcom', 'night', 15, 'night', false, true], ['electra', 'day', 21, 'day', true, true], ['electra', 'night', 21, 'night', true, true],
   ['bezeq', 'day', 15, 'day', true, true], ['bezeq', 'night', 20, 'night', true, true], ['partner', 'day', 15, 'day', true, true], ['partner', 'night', 20, 'night', true, true],
   ['hot', 'day', 15, 'day', true, true], ['hot', 'night', 20, 'night', true, true]];
 /* how a home uses electricity over the day: shares of night 23–07, 07–14, 14–17, 17–20, 20–23, and of weekends */
@@ -96,9 +96,12 @@ function ccOut(){
 
 /* ======== 4) an arnona discount ======== */
 /* by the national arnona-discount regulations, as municipalities publish them: [key, discount %, area limit m² (0 = all)] – only the single highest discount applies */
-const AR_CATS = [['oldInc', 100, 100], ['senior', 25, 100], ['disab75', 80, 150], ['disab90', 40, 150], ['blind', 80, 0], ['care', 70, 0], ['childDis', 33, 100], ['single', 20, 0], ['soldier', 100, 70], ['oleh', 90, 100], ['resCmd', 25, 100], ['reserve', 5, 0]];
-/* income test – monthly household income ceilings published for 2025 (by household size): 80% / 60% / 40% (7+ persons: 90% / 70% / 50%) */
-const AR_INC = {1: [3218, 3701, 4184], 2: [4826, 5550, 6274], 3: [5599, 6439, 7279], 4: [6371, 7327, 8282], 5: [8155, 9378, 10601], 6: [9939, 11429, 12920], 7: [11722, 13481, 15239], 8: [13506, 15532, 17558], 9: [15290, 17583, 19877]};
+const AR_CATS = [['oldInc', 100, 100], ['senior', 25, 100], ['disab75', 80, 150], ['disab90', 40, 150], ['blind', 90, 0], ['care', 70, 0], ['childDis', 33, 100], ['single', 20, 0], ['soldier', 100, 70], ['oleh', 90, 100], ['resCmd', 25, 100], ['reserve', 5, 0]];
+/* income test – 2026 table of the Interior Ministry (published April 2026): a ceiling per "standard person" scaled by household size
+   (1: 1.25, 2: 2, 3: 2.65, 4: 3.2, 5: 3.75, 6: 4.25, 7: 4.75, 8: 5.2, 9: 5.6, +0.4 each one more), four tiers 90% / 70% / 50% / 30%.
+   Income = the monthly average of the last 12 months; child, old-age, survivors' and disabled-child allowances are not counted. */
+const AR_SCALE = [0, 1.25, 2, 2.65, 3.2, 3.75, 4.25, 4.75, 5.2, 5.6], AR_BASE = [2810.93, 3436.27, 4061.07, 4685.87], AR_PCT = [90, 70, 50, 30];
+const arScale = n => n <= 9 ? AR_SCALE[n] : 5.6 + (n - 9) * 0.4;
 function arRender(v){
   v.innerHTML = `<p class="fine">${ntE(t('ar_intro'))}</p><div class="bk-grid">${ntIn('arnona', 'amt', t('ar_amt'), '6000', '₪')}${ntIn('arnona', 'area', t('ar_area'), '90', 'm²')}${ntIn('arnona', 'ppl', t('ar_ppl'), '3')}${ntIn('arnona', 'inc', t('ar_inc'), '9000', '₪')}</div>
     <fieldset class="bk-flags"><legend>${ntE(t('ar_who'))}</legend>${AR_CATS.map(c => ntCk('arnona', 'c_' + c[0], t('ar_c_' + c[0]))).join('')}</fieldset>
@@ -106,8 +109,8 @@ function arRender(v){
   arOut();
 }
 function arIncPct(ppl, inc){
-  if (!(inc >= 0) || !(ppl >= 1)) return 0; const n = Math.min(9, Math.round(ppl)), L = AR_INC[n], big = n >= 7, P = big ? [90, 70, 50] : [80, 60, 40];
-  for (let i = 0; i < 3; i++) if (inc <= L[i]) return P[i]; return 0;
+  if (!(inc >= 0) || !(ppl >= 1)) return 0; const sc = arScale(Math.round(ppl));
+  for (let i = 0; i < 4; i++) if (inc <= Math.round(AR_BASE[i] * sc)) return AR_PCT[i]; return 0;
 }
 function arOut(){
   const box = $('#nt_out_arnona'); if (!box) return; const d = ntD('arnona'), amt = ntV('arnona', 'amt', 0), area = ntV('arnona', 'area', 0), ppl = ntV('arnona', 'ppl', NaN), inc = ntV('arnona', 'inc', NaN);

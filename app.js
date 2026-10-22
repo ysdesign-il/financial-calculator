@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261022.132904'){ try { if (!sessionStorage.getItem('fin-hb-20261022.132904')){ sessionStorage.setItem('fin-hb-20261022.132904', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261022.145555'){ try { if (!sessionStorage.getItem('fin-hb-20261022.145555')){ sessionStorage.setItem('fin-hb-20261022.145555', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -5065,14 +5065,14 @@ Object.assign(T, {
   cc_note:['הערכה כללית. ירידת הערך בפועל תלויה בדגם, בגיל ובק״מ; אגרת הרישוי תלויה בקבוצת המחיר של הרכב.','تقدير عام. الاهتلاك الفعلي يعتمد على الطراز والعمر والكيلومترات؛ رسوم الترخيص تعتمد على فئة سعر السيارة.','A general estimate. Actual depreciation depends on model, age and mileage; the licence fee depends on the car\'s price group.'],
   tab_arnona:['הנחה בארנונה','خصم الأرنونا','Arnona discount'], d_arnona:['האם מגיעה לכם הנחה בארנונה, כמה היא שווה ואיך מבקשים.','هل يحق لكم خصم في الأرنونا، كم يساوي وكيف تطلبونه.','Whether you qualify for an arnona discount, what it\'s worth and how to ask for it.'],
   ar_intro:['ההנחות נקבעות בתקנות ארציות, והרשות המקומית נותנת אותן לפי בקשה. אפשר לקבל רק הנחה אחת – הגבוהה מביניהן.','الخصومات محددة بأنظمة قطرية، والسلطة المحلية تمنحها حسب الطلب. يمكن الحصول على خصم واحد فقط – الأعلى بينها.','Discounts are set by national regulations and the local authority gives them on request. You can get only one – the highest.'],
-  ar_amt:['ארנונה לשנה','الأرنونا سنويًا','Arnona a year'], ar_area:['שטח הדירה','مساحة الشقة','Home area'], ar_ppl:['נפשות בבית','عدد الأفراد في البيت','People in the home'], ar_inc:['הכנסה חודשית של כל הבית (ברוטו)','الدخل الشهري لكل البيت (إجمالي)','Monthly household income (gross)'], ar_who:['מה נכון לגביכם?','ما الذي ينطبق عليكم؟','What applies to you?'],
+  ar_amt:['ארנונה לשנה','الأرنونا سنويًا','Arnona a year'], ar_area:['שטח הדירה','مساحة الشقة','Home area'], ar_ppl:['נפשות בבית','عدد الأفراد في البيت','People in the home'], ar_inc:['הכנסה חודשית של כל הבית (ברוטו, ממוצע 12 חודשים)','الدخل الشهري لكل البيت (إجمالي، معدل 12 شهرًا)','Monthly household income (gross, 12-month average)'], ar_who:['מה נכון לגביכם?','ما الذي ينطبق عليكم؟','What applies to you?'],
   ar_c_oldInc:['אזרח ותיק עם השלמת הכנסה','مسنّ مع ضمان دخل','Senior with income support'], ar_c_senior:['אזרח ותיק (גיל פרישה, מקבל קצבת זקנה)','مسنّ (سن التقاعد، يتلقى مخصّص شيخوخة)','Senior (retirement age, receiving old-age pension)'], ar_c_disab75:['נכות – אי־כושר השתכרות 75% ומעלה','إعاقة – عدم قدرة على الكسب 75% فأكثر','Disability – 75%+ incapacity to work'], ar_c_disab90:['נכות רפואית 90% ומעלה','إعاقة طبية 90% فأكثر','Medical disability 90%+'], ar_c_blind:['עיוור / תעודת עיוור','كفيف / شهادة كفيف','Blind (certificate)'], ar_c_care:['מקבל גמלת סיעוד','يتلقى مخصّص تمريض','Receiving long-term care benefit'],
   ar_c_childDis:['הורה לילד נכה','والد لطفل ذي إعاقة','Parent of a disabled child'], ar_c_single:['הורה יחיד','والد وحيد','Single parent'], ar_c_soldier:['חייל בשירות סדיר / שירות לאומי','جندي في الخدمة النظامية / خدمة وطنية','Soldier in regular service / national service'], ar_c_oleh:['עולה חדש (שנה ראשונה)','قادم جديد (السنة الأولى)','New immigrant (first year)'], ar_c_resCmd:['מפקד במילואים פעיל','قائد احتياط فعّال','Active reserve commander'], ar_c_reserve:['משרת מילואים פעיל','جندي احتياط فعّال','Active reservist'],
   ar_incT:['מבחן הכנסה','فحص الدخل','Income test'], ar_best:['ההנחה הגבוהה שמגיעה לכם','أعلى خصم يحق لكم','Your highest discount'], ar_bestSub:['{n} · {p}% · כ־{m} בחודש','{n} · {p}% · نحو {m} شهريًا','{n} · {p}% · about {m} a month'], ar_kind:['סוג ההנחה','نوع الخصم','Discount'], ar_pct:['עד','حتى','Up to'], ar_upTo:['על עד {n} מ״ר','على حتى {n} م²','on up to {n} m²'],
   ar_none:['לפי מה שסימנתם – כנראה לא מגיעה הנחה ארצית','حسب ما حددتم – على الأرجح لا يحق خصم قطري','From what you ticked, you probably don\'t qualify for a national discount'], ar_noneP:['יש רשויות שנותנות הנחות נוספות (למשל לסטודנטים או במצוקה). שווה לשאול במחלקת הגבייה.','بعض السلطات تمنح خصومات إضافية (للطلاب أو في الضائقة). يستحق السؤال في قسم الجباية.','Some authorities give extra discounts (e.g. students or hardship). Worth asking the collection department.'],
   ar_one:['רק הנחה אחת','خصم واحد فقط','Only one discount'], ar_oneP:['מי שזכאי לכמה הנחות מקבל את הגבוהה ביותר בלבד.','من يستحق عدة خصومات يحصل على الأعلى فقط.','If you qualify for several, you get only the highest.'],
-  ar_how:['איך מבקשים','كيف تطلبون','How to apply'], ar_howP:['מגישים בקשה לרשות המקומית (באתר או במוקד) עם אישורים: מביטוח לאומי, תלושי שכר של 3 החודשים האחרונים או תעודה מתאימה. בקשה במבחן הכנסה מוגשת בכל שנה.','تُقدَّم الطلبات للسلطة المحلية (في الموقع أو المركز) مع الإثباتات: من التأمين الوطني، قسائم رواتب آخر 3 أشهر أو شهادة مناسبة. طلب فحص الدخل يُقدَّم كل سنة.','Apply to your local authority (online or at the office) with proof: National Insurance approval, the last 3 payslips or a suitable certificate. An income-test request is made every year.'],
-  ar_note:['האחוזים והשטחים לפי תקנות ההסדרים (הנחה מארנונה) כפי שהרשויות מפרסמות; ספי מבחן ההכנסה לפי הפרסום ל־2025 ומתעדכנים כל שנה. הערכה בלבד – הרשות קובעת.','النسب والمساحات حسب أنظمة التسويات (خصم الأرنونا) كما تنشرها السلطات؛ عتبات فحص الدخل حسب منشور 2025 وتُحدَّث سنويًا. تقدير فقط – السلطة تقرر.','Percentages and areas per the arnona-discount regulations as authorities publish them; income-test ceilings from the 2025 publication, updated yearly. An estimate only – the authority decides.'],
+  ar_how:['איך מבקשים','كيف تطلبون','How to apply'], ar_howP:['מגישים בקשה לרשות המקומית (באתר או במוקד) עם אישורים: מביטוח לאומי, תלושי שכר של 12 החודשים האחרונים או תעודה מתאימה. בקשה במבחן הכנסה מוגשת בכל שנה.','تُقدَّم الطلبات للسلطة المحلية (في الموقع أو المركز) مع الإثباتات: من التأمين الوطني، قسائم رواتب آخر 12 شهرًا أو شهادة مناسبة. طلب فحص الدخل يُقدَّم كل سنة.','Apply to your local authority (online or at the office) with proof: National Insurance approval, payslips for the last 12 months or a suitable certificate. An income-test request is made every year.'],
+  ar_note:['האחוזים והשטחים לפי תקנות ההסדרים (הנחה מארנונה) כפי שהרשויות מפרסמות. מבחן ההכנסה לפי טבלת משרד הפנים ל־2026: ממוצע 12 חודשים, בלי קצבת ילדים, זקנה, שארים וילד נכה. הערכה בלבד – הרשות קובעת.','النسب والمساحات حسب أنظمة التسويات (خصم الأرنونا) كما تنشرها السلطات. فحص الدخل حسب جدول وزارة الداخلية لعام 2026: معدل 12 شهرًا، دون مخصصات الأولاد والشيخوخة والورثة والولد ذي الإعاقة. تقدير فقط – السلطة تقرر.','Percentages and areas per the arnona-discount regulations as authorities publish them. Income test per the Interior Ministry 2026 table: 12-month average, not counting child, old-age, survivors\' and disabled-child allowances. An estimate only – the authority decides.'],
   lg_h_p1910k:['19.10.2026 – נוסף הסבר על התזכורות.','19.10.2026 – أُضيف شرح عن التذكيرات.','19.10.2026 – added an explanation of reminders.'],
   sc2_now:['עכשיו','الآن','Now'], sc2_diff:['הפרש','الفرق','Difference'], sc2_hint:['העמודה "עכשיו" מתעדכנת בזמן שמשנים ערכים; ההפרש לעומת "{n}".','عمود "الآن" يتحدث أثناء تغيير القيم؛ الفرق مقارنة بـ"{n}".','The "Now" column updates as you change values; the difference is against "{n}".'],
 });
@@ -12172,8 +12172,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.45", "date": "2026-10-22", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261022.132904';
+var CHANGELOG = [{"v": "13.46", "date": "2026-10-22", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261022.145555';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -28582,7 +28582,7 @@ const ntTip = (ic, h, p, k) => `<li class="bk-a${k ? ' bk-' + k : ''}"><span cla
    windows: all = all hours; day = 07–17; fam = 14–20; night = 23–07 */
 const ES_PLANS = [['cellcom', 'fix', 7.5, 'all', true, false], ['electra', 'fix', 6.5, 'all', false, false], ['bezeq', 'fix', 6, 'all', false, false], ['amisragaz', 'fix', 6, 'all', false, false, 'es_nGas'],
   ['partner', 'fix', 5, 'all', false, false, 'es_nYears'], ['hot', 'fix', 5, 'all', false, false, 'es_nHot'], ['pazgaz', 'fix', 5, 'all', false, false],
-  ['cellcom', 'day', 20, 'day', true, true], ['cellcom', 'fam', 18, 'fam', true, true], ['cellcom', 'night', 15, 'night', false, true],
+  ['cellcom', 'day', 20, 'day', true, true], ['cellcom', 'fam', 18, 'fam', true, true], ['cellcom', 'night', 15, 'night', false, true], ['electra', 'day', 21, 'day', true, true], ['electra', 'night', 21, 'night', true, true],
   ['bezeq', 'day', 15, 'day', true, true], ['bezeq', 'night', 20, 'night', true, true], ['partner', 'day', 15, 'day', true, true], ['partner', 'night', 20, 'night', true, true],
   ['hot', 'day', 15, 'day', true, true], ['hot', 'night', 20, 'night', true, true]];
 /* how a home uses electricity over the day: shares of night 23–07, 07–14, 14–17, 17–20, 20–23, and of weekends */
@@ -28660,9 +28660,12 @@ function ccOut(){
 
 /* ======== 4) an arnona discount ======== */
 /* by the national arnona-discount regulations, as municipalities publish them: [key, discount %, area limit m² (0 = all)] – only the single highest discount applies */
-const AR_CATS = [['oldInc', 100, 100], ['senior', 25, 100], ['disab75', 80, 150], ['disab90', 40, 150], ['blind', 80, 0], ['care', 70, 0], ['childDis', 33, 100], ['single', 20, 0], ['soldier', 100, 70], ['oleh', 90, 100], ['resCmd', 25, 100], ['reserve', 5, 0]];
-/* income test – monthly household income ceilings published for 2025 (by household size): 80% / 60% / 40% (7+ persons: 90% / 70% / 50%) */
-const AR_INC = {1: [3218, 3701, 4184], 2: [4826, 5550, 6274], 3: [5599, 6439, 7279], 4: [6371, 7327, 8282], 5: [8155, 9378, 10601], 6: [9939, 11429, 12920], 7: [11722, 13481, 15239], 8: [13506, 15532, 17558], 9: [15290, 17583, 19877]};
+const AR_CATS = [['oldInc', 100, 100], ['senior', 25, 100], ['disab75', 80, 150], ['disab90', 40, 150], ['blind', 90, 0], ['care', 70, 0], ['childDis', 33, 100], ['single', 20, 0], ['soldier', 100, 70], ['oleh', 90, 100], ['resCmd', 25, 100], ['reserve', 5, 0]];
+/* income test – 2026 table of the Interior Ministry (published April 2026): a ceiling per "standard person" scaled by household size
+   (1: 1.25, 2: 2, 3: 2.65, 4: 3.2, 5: 3.75, 6: 4.25, 7: 4.75, 8: 5.2, 9: 5.6, +0.4 each one more), four tiers 90% / 70% / 50% / 30%.
+   Income = the monthly average of the last 12 months; child, old-age, survivors' and disabled-child allowances are not counted. */
+const AR_SCALE = [0, 1.25, 2, 2.65, 3.2, 3.75, 4.25, 4.75, 5.2, 5.6], AR_BASE = [2810.93, 3436.27, 4061.07, 4685.87], AR_PCT = [90, 70, 50, 30];
+const arScale = n => n <= 9 ? AR_SCALE[n] : 5.6 + (n - 9) * 0.4;
 function arRender(v){
   v.innerHTML = `<p class="fine">${ntE(t('ar_intro'))}</p><div class="bk-grid">${ntIn('arnona', 'amt', t('ar_amt'), '6000', '₪')}${ntIn('arnona', 'area', t('ar_area'), '90', 'm²')}${ntIn('arnona', 'ppl', t('ar_ppl'), '3')}${ntIn('arnona', 'inc', t('ar_inc'), '9000', '₪')}</div>
     <fieldset class="bk-flags"><legend>${ntE(t('ar_who'))}</legend>${AR_CATS.map(c => ntCk('arnona', 'c_' + c[0], t('ar_c_' + c[0]))).join('')}</fieldset>
@@ -28670,8 +28673,8 @@ function arRender(v){
   arOut();
 }
 function arIncPct(ppl, inc){
-  if (!(inc >= 0) || !(ppl >= 1)) return 0; const n = Math.min(9, Math.round(ppl)), L = AR_INC[n], big = n >= 7, P = big ? [90, 70, 50] : [80, 60, 40];
-  for (let i = 0; i < 3; i++) if (inc <= L[i]) return P[i]; return 0;
+  if (!(inc >= 0) || !(ppl >= 1)) return 0; const sc = arScale(Math.round(ppl));
+  for (let i = 0; i < 4; i++) if (inc <= Math.round(AR_BASE[i] * sc)) return AR_PCT[i]; return 0;
 }
 function arOut(){
   const box = $('#nt_out_arnona'); if (!box) return; const d = ntD('arnona'), amt = ntV('arnona', 'amt', 0), area = ntV('arnona', 'area', 0), ppl = ntV('arnona', 'ppl', NaN), inc = ntV('arnona', 'inc', NaN);
