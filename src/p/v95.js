@@ -34,7 +34,7 @@ async function ibKey(){
   try { const w = RAWLS.getItem('fin-ibkey'); if (w) tries.push(w); } catch (e) {}
   try { const w = RAWLS.getItem('fin-ibkey-next'); if (w) tries.push(w); } catch (e) {}
   try { const r = await fetch('inboxkey.json?v=' + Date.now(), {cache: 'no-store'}); if (r.ok){ const j = await r.json(); if (j && j.w) tries.push(j.w); } } catch (e) {}
-  for (const w of tries){ try { IB.key = await ibUnwrap(w, sec); if (IB.key) return IB.key; } catch (e) {} }
+  for (const w of tries) for (const s of [ibSec(sec), sec].filter((x, i, a) => a.indexOf(x) === i)){ try { IB.key = await ibUnwrap(w, s); if (IB.key) return IB.key; } catch (e) {} }
   return null;
 }
 /* the private key travels only locked with the developer secret (PBKDF2 → AES-GCM): useless to anyone without developer mode */
@@ -163,7 +163,7 @@ document.addEventListener('click', async e => {
     const sec = (() => { try { return DEVST.getItem('fin-dev') || ''; } catch (er) { return ''; } })();
     if (!sec || !(await ibKey())) return toast(t('ib_nokey'));
     try {
-      const w = await ibWrapKey(sec);
+      const w = await ibWrapKey(ibSec(sec));
       if (typeof ghTok === 'function' && ghTok()){ await ghPut('inboxkey.json', JSON.stringify({v: 1, w}), 'Inbox key (locked)'); toast(t('ib_linkedGh')); }
       else { copyText(w); toast(t('ib_linkedCopy')); }
     } catch (er) { toast(t('fb_fail')); }
@@ -171,7 +171,7 @@ document.addEventListener('click', async e => {
   }
   if (e.target.closest('#ib_keyset')){
     const w = String(($('#ib_keyin') || {}).value || '').trim(), sec = (() => { try { return DEVST.getItem('fin-dev') || ''; } catch (er) { return ''; } })();
-    try { IB.key = await ibUnwrap(w, sec); try { RAWLS.setItem('fin-ibkey', w); } catch (er) {} toast(t('ib_keyOk')); await ibLoad(); ibDraw(); } catch (er) { toast(t('ib_keyBad')); }
+    try { IB.key = await ibUnwrap(w, ibSec(sec)).catch(() => ibUnwrap(w, sec)); try { RAWLS.setItem('fin-ibkey', w); } catch (er) {} toast(t('ib_keyOk')); await ibLoad(); ibDraw(); } catch (er) { toast(t('ib_keyBad')); }
   }
 });
 if (location.hostname === 'localhost') window.__fin95b = {ibUnwrap};

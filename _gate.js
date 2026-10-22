@@ -25,15 +25,17 @@ const rid=()=>hex(crypto.getRandomValues(new Uint8Array(20)));
 function devOf(req){const ua=req.headers.get('user-agent')||'';const os=/iPhone|iPad/.test(ua)?'iPhone/iPad':/Android/.test(ua)?'Android':/Windows/.test(ua)?'Windows':/Mac OS/.test(ua)?'Mac':'אחר';const br=/Edg\//.test(ua)?'Edge':/Chrome\//.test(ua)?'Chrome':/Firefox\//.test(ua)?'Firefox':/Safari\//.test(ua)?'Safari':'';return os+(br?' · '+br:'')}
 const COOK=(id,age)=>`adm=${id}; Path=/admin; Max-Age=${age}; HttpOnly; Secure; SameSite=Lax`;
 /* ---------- sessions: one KV key per device (sx:<app>:<id>), 30 days, checked on the server every time ----------
-   The developer key is never stored on the phone: it is kept here encrypted with the session id (which only the
-   HttpOnly cookie holds) and handed to the admin page in memory. The Pages site asks its Worker copy. */
+   The developer key itself is never kept and never handed out after login: the session holds only the inbox secret
+   (a one-way fingerprint of the key, "ib-v1:"), which opens the feedback inbox but cannot sign in. Stealing a session
+   therefore gives at most 30 days that can be cut off at once – never the permanent key. The Pages site asks its Worker copy. */
+const ibSecOf=async h=>hex(await crypto.subtle.digest('SHA-256',enc.encode('ib-v1:'+h)));
 const TTL=2592000,SKEY=(o,id)=>'sx:'+o.app+':'+id;
 async function aesK(id){return crypto.subtle.importKey('raw',await crypto.subtle.digest('SHA-256',enc.encode('dk:'+id)),'AES-GCM',false,['encrypt','decrypt'])}
 const b64=u=>btoa(String.fromCharCode(...new Uint8Array(u))),u8=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
 async function dkWrap(h,id){const iv=crypto.getRandomValues(new Uint8Array(12));return b64(iv)+'.'+b64(await crypto.subtle.encrypt({name:'AES-GCM',iv},await aesK(id),enc.encode(h)))}
 async function dkOpen(w,id){try{const p=String(w||'').split('.');return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:u8(p[0])},await aesK(id),u8(p[1])))}catch(e){return''}}
 async function sesNew(env,o,req,via,h){const id=rid(),cc=via&&via.cc||(req.cf&&req.cf.country)||'',dev=via&&via.dev||devOf(req),at=Date.now();
-  await env.CFG.put(SKEY(o,id),JSON.stringify({at,dev,cc,dk:h?await dkWrap(h,id):''}),{expirationTtl:TTL,metadata:{at,dev,cc}});
+  await env.CFG.put(SKEY(o,id),JSON.stringify({at,dev,cc,dk:h?await dkWrap(await ibSecOf(h),id):''}),{expirationTtl:TTL,metadata:{at,dev,cc}});
   const lk='lg:'+o.app,G=await kvGet(env,lk,[]);G.push({at,dev,cc,h:await sh(id)});await env.CFG.put(lk,JSON.stringify(G.slice(-100)));return id}
 async function sesGet(env,o,id){if(!id)return null;let v=null;try{v=await env.CFG.get(SKEY(o,id),{type:'json',cacheTtl:30})}catch(e){}return v&&v.at&&Date.now()-v.at<TTL*1000?v:null}
 async function sesList(env,o){const out=[];let cur;do{const r=await env.CFG.list({prefix:'sx:'+o.app+':',cursor:cur});for(const k of r.keys){const m=k.metadata||{};if(m.at&&Date.now()-m.at<TTL*1000)out.push({id:k.name.split(':')[2],at:m.at,dev:m.dev,cc:m.cc})}cur=r.list_complete?null:r.cursor}while(cur);return out}
@@ -41,7 +43,9 @@ async function sesOk(env,o,id,req){if(!id)return false;
   if(env&&env.CFG)return!!(await sesGet(env,o,id));
   if(!o.upstream)return false;const c=OKSES.get(id);if(c&&Date.now()-c<5e3)return true;
   try{const r=await fetch(o.upstream+'/admin/__who',{headers:{cookie:'adm='+id}});if(r.ok){OKSES.set(id,Date.now());return true}OKSES.delete(id);return false}catch(e){return false}}
-async function devKey(env,o,id){if(env&&env.CFG){const v=await sesGet(env,o,id);return v?await dkOpen(v.dk,id):''}
+/* sessions made before this change still hold the key: it is turned into the inbox secret on the way out */
+async function dkSec(env,v,id){const x=v?await dkOpen(v.dk,id):'';return x&&(await keyOk(x,env))?await ibSecOf(x):x}
+async function devKey(env,o,id){if(env&&env.CFG){const v=await sesGet(env,o,id);return dkSec(env,v,id)}
   if(!o.upstream)return'';try{const r=await fetch(o.upstream+'/admin/__dk',{headers:{cookie:'adm='+id}});if(r.ok){const j=await r.json();return String(j.k||'')}}catch(e){}return''}
 /* in the admin page the developer key lives only in memory: reads and writes of that one storage key never reach the disk */
 function keyShim(o,h){const k=o.store&&o.store.key;if(!k)return'';const v=/^[0-9a-f]{64}$/.test(h||'')?h:'';
@@ -97,7 +101,7 @@ export async function adminGate(req,serve,o,env){
   if(p==='/admin/__kit.js')return new Response('window.__ADMKIT='+JSON.stringify(Object.assign({app:o.app,title:o.title,accent:o.accent,parts:o.parts||[]},o.kit||{}))+';\n'+KIT,{headers:Object.assign({'content-type':'text/javascript; charset=utf-8'},SEC)});
   if(p==='/admin/__qr.js')return new Response(QR,{headers:Object.assign({'content-type':'text/javascript; charset=utf-8'},SEC)});
   if(p==='/admin/__who')return J({ok:true});
-  if(p==='/admin/__dk'&&KV){const v=await sesGet(env,o,id);return J({ok:true,k:v?await dkOpen(v.dk,id):''})}
+  if(p==='/admin/__dk'&&KV){const v=await sesGet(env,o,id);return J({ok:true,k:await dkSec(env,v,id)})}
   if(p.startsWith('/admin/__')){
     if(!KV){if(!o.upstream)return J({ok:false,e:'store'},503);
       const fr=await fetch(o.upstream+p,{method:req.method,headers:{cookie:'adm='+id,'content-type':'application/json'},body:req.method==='POST'?await req.text():undefined});return new Response(fr.body,{status:fr.status,headers:{'content-type':'application/json','cache-control':'no-store'}})}
@@ -164,10 +168,17 @@ svg{display:block;margin:0 auto}</style></head><body><main>
 <p class="foot">מי שאין לו את הקוד לא יכול להיכנס לכאן. האתר הרגיל לא מכיל את כלי הניהול.</p></main>
 <script>
 const $=i=>document.getElementById(i),E=new TextEncoder(),H=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
-const U=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0)),ST=${JSON.stringify(o.store||{})},RB=${JSON.stringify(REC_BUNDLE)};try{if(ST.key)localStorage.removeItem(ST.key)}catch(e){}
+const U=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0)),ST=${JSON.stringify(o.store||{})},RB=${JSON.stringify(REC_BUNDLE)},IB=${JSON.stringify((o.kit&&o.kit.inbox)||{})};
+const B=u=>btoa(String.fromCharCode(...new Uint8Array(u)));
+async function ak(sec,salt,use){const b=await crypto.subtle.importKey('raw',E.encode(sec),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',hash:'SHA-256',salt,iterations:200000},b,{name:'AES-GCM',length:256},false,[use])}
+async function unw(w,sec){try{const p=String(w||'').trim().split('.');if(p[0]!=='fck1'||p.length!==4)return null;return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:U(p[2])},await ak(sec,U(p[1]),'decrypt'),U(p[3]))))}catch(e){return null}}
+async function wr(o2,sec){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));return 'fck1.'+B(salt)+'.'+B(iv)+'.'+B(await crypto.subtle.encrypt({name:'AES-GCM',iv},await ak(sec,salt,'encrypt'),E.encode(JSON.stringify(o2))))}
+/* the inbox key on this phone was locked with the developer key; it is re-locked with the inbox secret, the only thing the admin page receives */
+async function ibMove(h){try{const s=H(await crypto.subtle.digest('SHA-256',E.encode('ib-v1:'+h))),K=IB.keyLS||[];for(const k of K){const w=localStorage.getItem(k);if(!w)continue;const j=await unw(w,h);if(j)localStorage.setItem(k,await wr(j,s))}
+ if(IB.keyFile&&K[0]&&!localStorage.getItem(K[0])){const r=await fetch(IB.keyFile+'?v='+Date.now(),{cache:'no-store'});if(r.ok){const x=await r.json();const j=x&&x.w?await unw(x.w,h):null;if(j)localStorage.setItem(K[0],await wr(j,s))}}}catch(e){}}try{if(ST.key)localStorage.removeItem(ST.key)}catch(e){}
 async function pb(t,salt,it){const k=await crypto.subtle.importKey('raw',E.encode(t),'PBKDF2',false,['deriveBits']);return new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:E.encode(salt),iterations:it},k,256))}
 async function login(h,name,msg){const r=await fetch('/admin/__login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({h}),credentials:'same-origin'});
- if(r.ok){try{if(ST.key)localStorage.removeItem(ST.key);if(ST.name&&name)localStorage.setItem(ST.name,name)}catch(e){}location.replace('/admin/');return}
+ if(r.ok){try{if(ST.key)localStorage.removeItem(ST.key);if(ST.name&&name)localStorage.setItem(ST.name,name)}catch(e){}msg.textContent='נכנסים…';await ibMove(h);location.replace('/admin/');return}
  msg.textContent=r.status===429?'יותר מדי ניסיונות. נסו שוב בעוד רבע שעה.':'השם או הקוד לא נכונים'}
 $('f1').onsubmit=async e=>{e.preventDefault();const m=$('m'),g=$('go');const name=$('n').value.replace(/\\s+/g,'').toUpperCase();
  const code=String($('c').value||'').replace(/^.*?(FC[-\\s]?)/i,'FC').replace(/[^0-9a-z]/gi,'').toUpperCase();
