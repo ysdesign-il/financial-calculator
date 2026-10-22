@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261022.124629'){ try { if (!sessionStorage.getItem('fin-hb-20261022.124629')){ sessionStorage.setItem('fin-hb-20261022.124629', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261022.125329'){ try { if (!sessionStorage.getItem('fin-hb-20261022.125329')){ sessionStorage.setItem('fin-hb-20261022.125329', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -3177,7 +3177,7 @@ Object.assign(T, {
   f_sSenior:['ותק במקום העבודה','الأقدمية في مكان العمل','Years at this workplace'], h_sSenior:['קובע כמה ימי חופשה והבראה מגיעים לכם.','تحدد عدد أيام الإجازة والنقاهة المستحقة.','Sets how many vacation and recuperation days you get.'],
   f_sVacBal:['יתרת חופשה מהתלוש הקודם','رصيد الإجازة من القسيمة السابقة','Vacation balance from last payslip'], h_sVacBal:['כפי שמופיע בתלוש של החודש הקודם.','كما يظهر في قسيمة الشهر السابق.','As shown on last month\'s payslip.'],
   f_sSickBal:['יתרת מחלה מהתלוש הקודם','رصيد المرض من القسيمة السابقة','Sick-day balance from last payslip'], h_sSickBal:['נצברים 1.5 ימים בחודש, עד 90 ימים.','تتراكم 1.5 يوم في الشهر حتى 90 يومًا.','You build up 1.5 days a month, up to 90.'],
-  f_sHavDay:['ערך יום הבראה','قيمة يوم النقاهة','Recuperation day value'], h_sHavDay:['במגזר הפרטי 418 ₪ ליום (מ-2023). במגזר הציבורי הסכום שונה.','في القطاع الخاص 418 ₪ لليوم (منذ 2023). في القطاع العام المبلغ مختلف.','₪418 a day in the private sector (since 2023). The public sector differs.'],
+  f_sHavDay:['ערך יום הבראה','قيمة يوم النقاهة','Recuperation day value'], h_sHavDay:['במגזר הפרטי 451.50 ₪ ליום (2026). במגזר הציבורי הסכום שונה.','في القطاع الخاص 451.50 ₪ لليوم (2026). في القطاع العام المبلغ مختلف.','₪451.50 a day in the private sector (2026). The public sector differs.'],
   r_sBase:['שכר בסיס','الراتب الأساسي','Base salary'],
   r_sHourBase:['{h} שעות × {r}','{h} ساعة × {r}','{h} hours × {r}'],
   r_sAbs:['היעדרות ללא תשלום ({d} ימים)','غياب بلا أجر ({d} أيام)','Unpaid absence ({d} days)'],
@@ -6083,7 +6083,7 @@ const DEFS = {
     {id:'s_senior', label:'f_sSenior', unit:'yrs', val:1, adv:'g_salBal', hint:'h_sSenior'},
     {id:'s_vacBal', label:'f_sVacBal', val:0, adv:'g_salBal', hint:'h_sVacBal'},
     {id:'s_sickBal', label:'f_sSickBal', val:0, adv:'g_salBal', hint:'h_sSickBal'},
-    {id:'s_havDay', label:'f_sHavDay', unit:'ils', val:418, adv:'g_salBal', hint:'h_sHavDay'},
+    {id:'s_havDay', label:'f_sHavDay', unit:'ils', val:451.5, adv:'g_salBal', hint:'h_sHavDay'},
     {type:'html', id:'se_box', cls:'se-box', adv:'g_salExp'}
   ].concat(creditDefs('s')).concat([
     SEL('s_age','f_sAge','reg',[['reg','o_age_reg'],['u18','o_age_u18'],['retW','o_age_retW'],['ret67','o_age_ret67'],['pens','o_age_pens']],{wide:true, adv:'g_credits', hint:'h_sAge'}),
@@ -7986,7 +7986,7 @@ function salTime(amt, mode){
   const sen = vv('s_senior'), yi = Math.max(1, Math.ceil(sen || 0)), tbl = week === 6 ? VAC6 : VAC5;
   T.sen = sen; T.vacYear = tbl[Math.min(yi, tbl.length) - 1]; T.vacM = T.vacYear / 12;
   T.vacBal = vv('s_vacBal') + T.vacM - vacD - vv('s_vacRed'); T.sickBal = Math.min(90, vv('s_sickBal') + 1.5) - sickD;
-  T.havD = HAV_DAYS(sen); T.havDay = vv('s_havDay') || 418; T.havYear = T.havD * T.havDay;
+  T.havD = HAV_DAYS(sen); T.havDay = vv('s_havDay') || 451.5; T.havYear = T.havD * T.havDay;
   T.any = hourly || T.extra > 0 || T.after > 0 || sickD || absD || vacD || holD || resD || mournD;
   return T;
 }
@@ -12172,8 +12172,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.44", "date": "2026-10-22", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261022.124629';
+var CHANGELOG = [{"v": "13.45", "date": "2026-10-22", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261022.125329';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }

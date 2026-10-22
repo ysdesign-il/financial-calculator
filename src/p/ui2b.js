@@ -87,7 +87,7 @@ const DEFS = {
     {id:'s_senior', label:'f_sSenior', unit:'yrs', val:1, adv:'g_salBal', hint:'h_sSenior'},
     {id:'s_vacBal', label:'f_sVacBal', val:0, adv:'g_salBal', hint:'h_sVacBal'},
     {id:'s_sickBal', label:'f_sSickBal', val:0, adv:'g_salBal', hint:'h_sSickBal'},
-    {id:'s_havDay', label:'f_sHavDay', unit:'ils', val:418, adv:'g_salBal', hint:'h_sHavDay'},
+    {id:'s_havDay', label:'f_sHavDay', unit:'ils', val:451.5, adv:'g_salBal', hint:'h_sHavDay'},
     {type:'html', id:'se_box', cls:'se-box', adv:'g_salExp'}
   ].concat(creditDefs('s')).concat([
     SEL('s_age','f_sAge','reg',[['reg','o_age_reg'],['u18','o_age_u18'],['retW','o_age_retW'],['ret67','o_age_ret67'],['pens','o_age_pens']],{wide:true, adv:'g_credits', hint:'h_sAge'}),

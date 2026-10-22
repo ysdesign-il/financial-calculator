@@ -53,7 +53,7 @@ Object.assign(T, {
   f_sSenior:['ותק במקום העבודה','الأقدمية في مكان العمل','Years at this workplace'], h_sSenior:['קובע כמה ימי חופשה והבראה מגיעים לכם.','تحدد عدد أيام الإجازة والنقاهة المستحقة.','Sets how many vacation and recuperation days you get.'],
   f_sVacBal:['יתרת חופשה מהתלוש הקודם','رصيد الإجازة من القسيمة السابقة','Vacation balance from last payslip'], h_sVacBal:['כפי שמופיע בתלוש של החודש הקודם.','كما يظهر في قسيمة الشهر السابق.','As shown on last month\'s payslip.'],
   f_sSickBal:['יתרת מחלה מהתלוש הקודם','رصيد المرض من القسيمة السابقة','Sick-day balance from last payslip'], h_sSickBal:['נצברים 1.5 ימים בחודש, עד 90 ימים.','تتراكم 1.5 يوم في الشهر حتى 90 يومًا.','You build up 1.5 days a month, up to 90.'],
-  f_sHavDay:['ערך יום הבראה','قيمة يوم النقاهة','Recuperation day value'], h_sHavDay:['במגזר הפרטי 418 ₪ ליום (מ-2023). במגזר הציבורי הסכום שונה.','في القطاع الخاص 418 ₪ لليوم (منذ 2023). في القطاع العام المبلغ مختلف.','₪418 a day in the private sector (since 2023). The public sector differs.'],
+  f_sHavDay:['ערך יום הבראה','قيمة يوم النقاهة','Recuperation day value'], h_sHavDay:['במגזר הפרטי 451.50 ₪ ליום (2026). במגזר הציבורי הסכום שונה.','في القطاع الخاص 451.50 ₪ لليوم (2026). في القطاع العام المبلغ مختلف.','₪451.50 a day in the private sector (2026). The public sector differs.'],
   r_sBase:['שכר בסיס','الراتب الأساسي','Base salary'],
   r_sHourBase:['{h} שעות × {r}','{h} ساعة × {r}','{h} hours × {r}'],
   r_sAbs:['היעדרות ללא תשלום ({d} ימים)','غياب بلا أجر ({d} أيام)','Unpaid absence ({d} days)'],
