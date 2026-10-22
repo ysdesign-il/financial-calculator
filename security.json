@@ -1,6 +1,14 @@
 {
  "alerts": [
   {
+   "at": 1792634186,
+   "level": "medium",
+   "kind": "family",
+   "actor": "ysdesign-il",
+   "msg": "The family-mode member list changed",
+   "p": {}
+  },
+  {
    "at": 1792628834,
    "level": "medium",
    "kind": "workflow",
@@ -93,5 +101,5 @@
    }
   }
  ],
- "updated": 1792628834
+ "updated": 1792634186
 }
