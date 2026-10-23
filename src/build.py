@@ -80,6 +80,14 @@ _m = max(_re.finditer(r'\n<script>\n(.*?)\n</script>', s, _re.S), key=lambda m: 
 _guard = "if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '%s'){ try { if (!sessionStorage.getItem('fin-hb-%s')){ sessionStorage.setItem('fin-hb-%s', '1'); location.reload(); } } catch (e) {} }\n" % (_build, _build, _build)
 open(os.path.join(ROOT, 'app.js'), 'w', encoding='utf-8').write(_guard + _m.group(1) + '\n')
 s = s[:_m.start()] + "\n<script>var HTML_BUILD = '%s';</script>\n<script src=\"app.js?v=%s\"></script>" % (_build, _build) + s[_m.end():]
+# the admin panel's public part as a static file (message, what's new, maintenance, forced update, settings for the app):
+# no Worker request for the page or the script, only /cfg.json – see worker.js
+_pubsrc = open(os.path.join(ROOT, '_pub.js'), encoding='utf-8').read()
+_pm = _re.search(r'String\.raw`(.*)`;\s*$', _pubsrc, _re.S); assert _pm and '`' not in _pm.group(1)
+_pc = open(os.path.join(ROOT, 'pubcfg.js'), encoding='utf-8').read(); _pc = _j.loads(_pc[_pc.index('export const PUBCFG =') + 21:].strip().rstrip(';'))
+open(os.path.join(ROOT, '__pub.js'), 'w', encoding='utf-8').write('window.__ADMPUBCFG=' + _j.dumps({'parts': _pc.get('parts', []), 'accent': _pc.get('accent'), 'priv': _pc.get('priv', '')}, ensure_ascii=False) + ';\n' + _pm.group(1) + '\n')
+assert s.count('</body>') == 1
+s = s.replace('</body>', '<script src="/__pub.js" defer></script>\n</body>')
 open(os.path.join(ROOT, 'index.html'),'w',encoding='utf-8').write(s)
 # the admin version (/admin/) is this same page: the Worker adds the admin flag only after the developer code (see worker.js), so no admin file is published
 print(len(s.split('\n')), 'lines')

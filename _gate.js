@@ -57,9 +57,13 @@ function keyShim(o,h){const k=o.store&&o.store.key;if(!k)return'';const v=/^[0-9
   return '<script>(function(){var K='+JSON.stringify(k)+',V='+JSON.stringify(v||null)+';try{localStorage.removeItem(K)}catch(e){}var P=Storage.prototype,g=P.getItem,s=P.setItem,r=P.removeItem,L=function(t){try{return t===window.localStorage||t===window.sessionStorage}catch(e){return false}};try{sessionStorage.removeItem(K)}catch(e){}'
    +'P.getItem=function(k){return L(this)&&k===K?V:g.apply(this,arguments)};P.setItem=function(k,x){if(L(this)&&k===K){V=String(x);return}return s.apply(this,arguments)};P.removeItem=function(k){if(L(this)&&k===K){try{if(this===window.sessionStorage)V=null}catch(e){}return}return r.apply(this,arguments)}})();</script>'}
 /* ---------- public: settings, the public script, anonymous crash reports ---------- */
-async function cfgOf(app,env,o){if(env&&env.CFG)return kvGet(env,'cfg:'+app,{});
-  if(o&&o.upstream){try{const r=await fetch(o.upstream+'/cfg.json',{cf:{cacheTtl:20}});if(r.ok)return await r.json()}catch(e){}}return{}}
-export async function publicConfig(app,env,o){return J(await cfgOf(app,env,o),200,{'cache-control':'public, max-age=20','access-control-allow-origin':'*'})}
+/* kept in this server's memory for 15 seconds: thousands of visits cost one read of the store (the admin panel asks for a fresh copy) */
+const CFGMEM=new Map();
+async function cfgOf(app,env,o,fresh){const c=CFGMEM.get(app);if(!fresh&&c&&Date.now()-c.at<15e3)return c.v;let v=null;
+  if(env&&env.CFG)v=await kvGet(env,'cfg:'+app,{});
+  else if(o&&o.upstream){try{const r=await fetch(o.upstream+'/cfg.json'+(fresh?'?nc=1':''),{cf:{cacheTtl:fresh?0:15}});if(r.ok)v=await r.json()}catch(e){}}
+  if(v==null)return c?c.v:{};CFGMEM.set(app,{at:Date.now(),v});if(CFGMEM.size>20)CFGMEM.clear();return v}
+export async function publicConfig(app,env,o,req){let fresh=false;try{fresh=!!req&&new URL(req.url).searchParams.get('nc')==='1'}catch(e){}return J(await cfgOf(app,env,o,fresh),200,{'cache-control':'public, max-age=20','access-control-allow-origin':'*'})}
 /* health check read by the admin panels of the three apps: is the site up, which version is live, what is switched on */
 export async function ping(app,env,o,asset){let v='',b='';
   try{const r=await asset('/version.json');if(r&&r.ok){const j=await r.json();v=String(j.v||'');b=String(j.build||'')}}catch(e){}
@@ -160,7 +164,7 @@ export async function adminGate(req,serve,o,env){
       let d=null;try{d=await req.json()}catch(e){}if(!d||typeof d.cfg!=='object'||!d.cfg)return J({ok:false,e:'bad'},400);
       const txt=JSON.stringify(d.cfg);if(txt.length>60000)return J({ok:false,e:'big'},413);
       {const prev=await env.CFG.get('cfg:'+o.app);if(prev&&prev!==txt){const hk='hi:'+o.app,H=await kvGet(env,hk,[]);let c={};try{c=JSON.parse(prev)}catch(e){}H.push({at:Date.now(),t:String(d.log&&d.log.t||'שינוי הגדרות').slice(0,200),c});await env.CFG.put(hk,JSON.stringify(H.slice(-25)))}}
-      await env.CFG.put('cfg:'+o.app,txt);if(d.log&&d.log.t){st.log=(st.log||[]).concat({at:Date.now(),t:String(d.log.t).slice(0,200)}).slice(-300);await env.CFG.put(sk,JSON.stringify(st))}
+      await env.CFG.put('cfg:'+o.app,txt);CFGMEM.set(o.app,{at:Date.now(),v:d.cfg});if(d.log&&d.log.t){st.log=(st.log||[]).concat({at:Date.now(),t:String(d.log.t).slice(0,200)}).slice(-300);await env.CFG.put(sk,JSON.stringify(st))}
       return J({ok:true,state:st})}
     return J({ok:false},404)}
   const r=await serve(req);const hd=new Headers(r.headers);for(const k in SEC)hd.set(k,SEC[k]);
