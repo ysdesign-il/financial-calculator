@@ -23,5 +23,5 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 var errN=0;function rep(m,src){if(errN>=3||!m||(P.priv&&ls(P.priv)==='1'))return;errN++;try{var b=JSON.stringify({m:String(m).slice(0,300),src:String(src||'').replace(location.origin,'').slice(0,200),v:(window.HTML_BUILD||''),s:(location.hash||'').split('?')[0].slice(0,40),l:L});if(navigator.sendBeacon)navigator.sendBeacon('/__err',new Blob([b],{type:'application/json'}));else fetch('/__err',{method:'POST',headers:{'content-type':'application/json'},body:b,keepalive:true})}catch(e){}}
 window.addEventListener('error',function(e){if(e&&e.message&&!/Script error/i.test(e.message))rep(e.message,(e.filename||'')+':'+(e.lineno||''))});
 window.addEventListener('unhandledrejection',function(e){var r=e&&e.reason;rep(r&&(r.message||String(r)),r&&r.stack&&String(r.stack).split('\n')[1])});
-document.addEventListener('visibilitychange',function(){if(!document.hidden)load()});setInterval(function(){if(!document.hidden)load()},300000);
+var lastLoad=Date.now();document.addEventListener('visibilitychange',function(){if(!document.hidden&&Date.now()-lastLoad>600000){lastLoad=Date.now();load()}});
 })();`;
