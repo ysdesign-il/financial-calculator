@@ -1,6 +1,16 @@
 {
  "alerts": [
   {
+   "at": 1792939237,
+   "level": "high",
+   "kind": "force",
+   "actor": "ysdesign-il",
+   "msg": "Force push to refs/heads/main — history was rewritten",
+   "p": {
+    "r": "refs/heads/main"
+   }
+  },
+  {
    "at": 1792634995,
    "level": "medium",
    "kind": "family",
@@ -109,5 +119,5 @@
    }
   }
  ],
- "updated": 1792634996
+ "updated": 1792939238
 }
