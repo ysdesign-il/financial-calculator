@@ -3920,7 +3920,7 @@ function srcRender(force){
       <div class="src-meta">${asEsc(i.atTxt || t('src_upd', {t: srcWhen(i.at), a: srcAge(i.at)}))} · ${asEsc(i.src)}</div>${srlHtml(i.id, i.links, lk)}</div>`; });
     h += '</div>';
   });
-  h += `<div class="src-foot" data-srcid="pipe"><p class="fine">${asEsc(t('src_pipe'))}</p>${srlHtml('pipe', [['rates.json', SRC_L.gh], ['GitHub Actions', SRC_L.ghAct]], lk)}</div>`;
+  h += `<div class="src-foot" data-srcid="pipe"><p class="fine">${asEsc(t('src_pipe'))}</p>${srlHtml('pipe', [['rates.json', SRC_L.gh]].concat(typeof liveOwner === 'function' && liveOwner() ? [['GitHub Actions', SRC_L.ghAct]] : []), lk)}</div>`;
   box.innerHTML = h;
 }
 document.addEventListener('click', e => {
