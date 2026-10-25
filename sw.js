@@ -32,6 +32,19 @@ self.addEventListener('fetch', e => {
   }
   /* one kept copy per file: data files are asked for with a changing ?t=… so they are never stale – keep them without it, or the store grows forever */
   const key = u.origin + u.pathname;
+  /* 13.51: opening the app on a slow or patchy mobile network: if the page has not arrived within 3 seconds, open the kept copy at once
+     (the new version still arrives in the background and is used next time) instead of waiting on the network */
+  if (r.mode === 'navigate'){
+    const net = fetch(r).then(res => { if (res && res.ok && res.type === 'basic'){ const cp = res.clone(); caches.open(CACHE).then(c => c.put(key, cp)).catch(() => {}); } return res; });
+    const kept = () => caches.match(key).then(m => m || caches.match(r, {ignoreSearch: true})).then(m => m || caches.match('index.html'));
+    e.respondWith(new Promise(ok => {
+      let done = false; const fin = x => { if (!done && x){ done = true; ok(x); } };
+      const t = setTimeout(() => kept().then(fin).catch(() => {}), 3000);
+      net.then(res => { clearTimeout(t); fin(res); }, () => { clearTimeout(t); kept().then(m => { fin(m || Response.error()); }).catch(() => fin(Response.error())); });
+    }));
+    e.waitUntil(net.catch(() => {}));
+    return;
+  }
   e.respondWith(fetch(r).then(res => {
     if (res && res.ok && res.type === 'basic'){ const cp = res.clone(); caches.open(CACHE).then(c => c.put(key, cp)).catch(() => {}); }
     return res;

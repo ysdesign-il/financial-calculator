@@ -15,9 +15,11 @@
 /* the rest are built quietly, one at a time, when the phone is idle */
 (function pzIdle(){
   const ric = window.requestIdleCallback || (cb => setTimeout(() => cb({timeRemaining: () => 12, didTimeout: false}), 60));
+  /* 13.51: gentler – start later, one screen per truly idle moment, never forced while the phone is busy, and paused while the app is in the background,
+     so opening the app and the first taps stay smooth on slower phones */
+  let last = Date.now(); ['pointerdown', 'keydown', 'scroll', 'input'].forEach(ev => addEventListener(ev, () => { last = Date.now(); }, {passive: true, capture: true}));
   const step = dl => { const left = [...PZ.ids].filter(id => !PZ.built.has(id)); if (!left.length) return;
-    let n = 0; while (left.length && (dl.timeRemaining() > 6 || dl.didTimeout) && n < 4){ pzBuild(left.shift(), true); n++; }
-    if (n) pzGlobal();
-    if (left.length) ric(step, {timeout: 2000}); };
-  setTimeout(() => ric(step, {timeout: 3000}), 2500);
+    if (!document.hidden && Date.now() - last > 1500 && dl.timeRemaining() >= 10){ pzBuild(left.shift(), true); pzGlobal(); }
+    setTimeout(() => ric(step), 400); };
+  setTimeout(() => ric(step), 8000);
 })();

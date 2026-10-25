@@ -20,4 +20,30 @@ var GF_CSS = /(^|\.)design-il\.workers\.dev$|^localhost$/.test(location.hostname
   Node.prototype.appendChild = function(n){ return blocked(n) ? n : ap.call(this, n); };
   Node.prototype.insertBefore = function(n, r){ return blocked(n) ? n : ib.call(this, n, r); };
 })();
+/* 13.51: the same live quote asked for by several parts of the app at once is fetched once and shared for a few seconds
+   (while opening, the app was asking the same quote service up to five times, which slowed the first screen on mobile networks) */
+(function(){
+  var f = window.fetch; if (!f || !window.Promise || !window.Map) return;
+  var M = new Map(), TTL = 10000;
+  var abortErr = function(){ try { return new DOMException('Aborted', 'AbortError'); } catch (e) { var x = new Error('Aborted'); x.name = 'AbortError'; return x; } };
+  window.fetch = function(i, o){
+    try {
+      var u = typeof i === 'string' ? i : (i && i.url) || '';
+      var m = String((o && o.method) || (i && typeof i !== 'string' && i.method) || 'GET').toUpperCase();
+      if (m !== 'GET' || (o && (o.body || o.credentials === 'include')) || typeof i !== 'string' || !/^https:\/\//.test(u) || u.indexOf(location.origin + '/') === 0) return f.apply(this, arguments);
+      var now = Date.now(), e = M.get(u);
+      if (!e || now - e.t > TTL || e.bad){
+        var o2 = {}; if (o) for (var k in o) if (k !== 'signal') o2[k] = o[k];
+        var ent = {t: now, bad: false, p: null};
+        ent.p = f.call(window, u, o2).then(function(r){ if (!r.ok) ent.bad = true; return r; }, function(err){ ent.bad = true; throw err; });
+        M.set(u, ent); e = ent;
+        if (M.size > 60) M.forEach(function(v, k){ if (now - v.t > TTL) M.delete(k); });
+      }
+      var res = e.p.then(function(r){ return r.clone(); });
+      var sig = o && o.signal; if (!sig) return res;
+      if (sig.aborted) return Promise.reject(abortErr());
+      return new Promise(function(ok, no){ var on = function(){ no(abortErr()); }; sig.addEventListener('abort', on); res.then(function(v){ sig.removeEventListener('abort', on); ok(v); }, function(x){ sig.removeEventListener('abort', on); no(x); }); });
+    } catch (x) { return f.apply(this, arguments); }
+  };
+})();
 </script>
