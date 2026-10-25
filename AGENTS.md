@@ -9,7 +9,7 @@ The website is served from GitHub Pages; the same build runs in the Claude app.
   - `src/p/*.js` — calculators (`c1.js`…`c8.js`), field definitions (`ui2*.js`), settings, tools, and the app modules (`init_extra.js`, `v75.js`).
   - `src/p/i*.js` — interface texts in Hebrew, Arabic and English: `key: ['עברית', 'عربي', 'English']`. Later files override earlier ones.
   - `src/p/*.css` — styles. `src/orig.html` — the page skeleton. `src/build.py` + `src/post.py` — the build.
-- `index.html`, `app.js`, `version.json` — build output (do not edit by hand). `index.html` loads the app's script from `app.js?v=<build>`; `python3 scripts/single.py <file>` writes the whole app as one self-contained HTML file.
+- `index.html`, `app.js`, `version.json`, `tp/*.js` — build output (do not edit by hand). Since 13.53 the build (`src/split_langs.py`, needs node) moves most interface texts out of `app.js` into one file per language (`tp/he.js`, `tp/ar.js`, `tp/en.js`); keys read in more than one language (screen, topic and field names, descriptions, glossary, CV texts) stay in `app.js`. Keep editing texts in `src/p/i*.js` as before. `index.html` loads the app's script from `app.js?v=<build>`; `python3 scripts/single.py <file>` writes the whole app as one self-contained HTML file.
 - `devcode.json` — optional developer code (`{"js": "...", "css": "..."}`) that runs in the app and on the site.
 
 ## Build

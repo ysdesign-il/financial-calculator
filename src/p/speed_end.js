@@ -23,3 +23,28 @@
     setTimeout(() => ric(step), 400); };
   setTimeout(() => ric(step), 8000);
 })();
+
+/* ---------- 13.53: the interface texts come in one file per language (tp/he.js, tp/ar.js, tp/en.js – see src/split_langs.py) ----------
+   index.html loads the pack of the phone's language before this script. When the language changes to one whose pack is not here yet
+   (picked in Settings, a synced account, or a phone language the page guessed differently), the pack is loaded and the screen redrawn. */
+(function(){
+  const want = () => lang === 'he' ? 'he' : lang === 'ar' ? 'ar' : 'en';
+  let busy = null;
+  const load = l => busy || (busy = new Promise(res => {
+    if ((window.__FIN_TP || {})[l]) return res(true);
+    const s = document.createElement('script');
+    s.src = 'tp/' + l + '.js?v=' + (typeof HTML_BUILD !== 'undefined' ? HTML_BUILD : Date.now());
+    s.onload = () => res(true); s.onerror = () => { s.remove(); res(false); };
+    document.head.appendChild(s);
+  }).then(ok => { busy = null; return ok; }));
+  const apply = l => { const P = (window.__FIN_TP || {})[l]; if (!P) return false; for (const k in P){ const v = P[k]; T[k] = [v, v, v]; } window.__FIN_TPL = l; return true; };
+  const check = () => {
+    const l = want(); if (l === window.__FIN_TPL) return false;
+    if (apply(l)) return true;
+    load(l).then(ok => { if (ok && apply(l)) try { applyLang(); } catch (e) {} });
+    return false;
+  };
+  const alTp = applyLang;
+  applyLang = function(){ check(); return alTp.apply(this, arguments); };
+  if (check()) try { applyLang(); } catch (e) {}
+})();

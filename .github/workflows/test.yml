@@ -4,7 +4,7 @@ on:
   workflow_dispatch:      # from developer mode in the app, or from GitHub
   push:                   # and after every change to the app: every screen is opened in 3 languages
     branches: [main]
-    paths: ['index.html', 'app.js', 'sw.js']
+    paths: ['index.html', 'app.js', 'sw.js', 'tp/**']
 
 permissions:
   contents: read

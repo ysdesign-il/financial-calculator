@@ -78,8 +78,19 @@ print('version', _ver['v'], _build)
 import re as _re
 _m = max(_re.finditer(r'\n<script>\n(.*?)\n</script>', s, _re.S), key=lambda m: len(m.group(1)))
 _guard = "if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '%s'){ try { if (!sessionStorage.getItem('fin-hb-%s')){ sessionStorage.setItem('fin-hb-%s', '1'); location.reload(); } } catch (e) {} }\n" % (_build, _build, _build)
-open(os.path.join(ROOT, 'app.js'), 'w', encoding='utf-8').write(_guard + _m.group(1) + '\n')
-s = s[:_m.start()] + "\n<script>var HTML_BUILD = '%s';</script>\n<script src=\"app.js?v=%s\"></script>" % (_build, _build) + s[_m.end():]
+# 13.53: the interface texts go to one file per language (tp/he.js, tp/ar.js, tp/en.js); see split_langs.py
+import split_langs as _sl
+_app, _packs = _sl.split(_m.group(1))
+os.makedirs(os.path.join(ROOT, 'tp'), exist_ok=True)
+for _l, _d in _packs.items():
+    open(os.path.join(ROOT, 'tp', _l + '.js'), 'w', encoding='utf-8').write(_sl.pack_js(_l, _d))
+print('texts moved to language packs:', len(_packs['en']))
+open(os.path.join(ROOT, 'app.js'), 'w', encoding='utf-8').write(_guard + _app + '\n')
+_tpl = ("<script>(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}"
+        "if(!l){try{l=(navigator.languages&&navigator.languages[0])||navigator.language||''}catch(e){}}"
+        "l=String(l).toLowerCase();var p=/^(he|iw)/.test(l)?'he':/^ar/.test(l)?'ar':'en';window.__FIN_TPL=p;"
+        "if(!(window.__FIN_TP&&window.__FIN_TP[p]))document.write('<script src=\"tp/'+p+'.js?v=%s\"><\\/script>');})();</script>" % _build)
+s = s[:_m.start()] + "\n<script>var HTML_BUILD = '%s';</script>\n%s\n<script src=\"app.js?v=%s\"></script>" % (_build, _tpl, _build) + s[_m.end():]
 # the admin panel's public part as a static file (message, what's new, maintenance, forced update, settings for the app):
 # no Worker request for the page or the script, only /cfg.json – see worker.js
 _pubsrc = open(os.path.join(ROOT, '_pub.js'), encoding='utf-8').read()

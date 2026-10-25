@@ -19,6 +19,18 @@ if "app.js?v=" in h and not app: fail("index.html loads app.js but app.js is mis
 n = 0
 for m in re.finditer(r"\b([a-zA-Z_][\w]*):\s*\[('(?:[^'\\]|\\.)*'),\s*('(?:[^'\\]|\\.)*'),\s*('(?:[^'\\]|\\.)*')\]", h + app):
     n += 1
+# 13.53: keys kept in app.js are written as "key":["he","ar","en"], the rest are in the language packs (tp/*.js)
+for m in re.finditer(r'"[A-Za-z_][\w$]*":\["(?:[^"\\]|\\.)*", ?"(?:[^"\\]|\\.)*", ?"(?:[^"\\]|\\.)*"\]', app):
+    n += 1
+packs = {}
+for l in ("he", "ar", "en"):
+    f = os.path.join("tp", l + ".js")
+    if os.path.exists(f):
+        mm = re.search(r"=(\{.*\});\s*$", open(f, encoding="utf-8").read(), re.S)
+        packs[l] = json.loads(mm.group(1)) if mm else {}
+if packs:
+    if set(packs.get("he", {})) != set(packs.get("ar", {})) or set(packs.get("he", {})) != set(packs.get("en", {})): fail("the language packs do not have the same texts")
+    n += len(packs.get("en", {}))
 print("texts with 3 languages:", n)
 if n < 1000: fail("too few translated texts (%d)" % n)
 print("OK" if ok else "FAILED")
