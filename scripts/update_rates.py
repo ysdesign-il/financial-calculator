@@ -6,7 +6,9 @@ Sources (all public, no keys):
   - Crypto prices via api.coinbase.com
   - Consumer price index via api.cbs.gov.il (kept unchanged if it cannot be read)
   - More official indices via api.cbs.gov.il: residential construction inputs and dwelling prices, with monthly history for linkage
-  - Market indices (TA-35, TA-125, S&P 500, Nasdaq 100, Dow Jones, gold, Brent) via the public CNBC quote feed, with 1/5/10-year anchors
+  - Metals (gold, silver, platinum, palladium, copper) via api.gold-api.com (commercial use permitted), with 1/5/10-year anchors from the app's own daily history
+  - Live market exchange rates via the European Central Bank (api.frankfurter.dev; free reuse with the ECB cited as the source)
+  Stock indices, energy and farm commodities have no free source licensed for this use, so they are no longer updated (13.52).
 Every value is sanity-checked against the previous file; anything implausible is skipped.
 """
 import json, time, datetime, urllib.request, os, csv, io, math, base64, hashlib, hmac
@@ -149,19 +151,10 @@ def official_indices(prev, log):
     return idx
 
 
-# ---------- market indices: public quote feed (the same one the website reads live) ----------
-MARKETS = [("ta35", ".TA35", "TA-35"), ("ta125", ".TA125", "TA-125"), ("spx", ".SPX", "S&P 500"), ("ndx", ".NDX", "Nasdaq 100"),
-           ("dji", ".DJI", "Dow Jones"), ("ixic", ".IXIC", "Nasdaq Composite"), ("rut", ".RUT", "Russell 2000"), ("vix", ".VIX", "VIX"),
-           ("ftse", ".FTSE", "FTSE 100"), ("dax", ".GDAXI", "DAX"), ("stoxx", ".STOXX50E", "Euro Stoxx 50"), ("nikkei", ".N225", "Nikkei 225"),
-           ("gold", "@GC.1", "Gold"), ("silver", "@SI.1", "Silver"), ("platinum", "@PL.1", "Platinum"), ("copper", "@HG.1", "Copper"),
-           ("brent", "@LCO.1", "Brent"), ("wti", "@CL.1", "WTI crude"), ("natgas", "@NG.1", "Natural gas"),
-           ("dxy", ".DXY", "US Dollar Index"), ("tsx", ".GSPTSE", "S&P/TSX"), ("ipc", ".MXX", "IPC Mexico"), ("bovespa", ".BVSP", "Bovespa"),
-           ("cac", ".FCHI", "CAC 40"), ("ibex", ".IBEX", "IBEX 35"), ("ftmib", ".FTMIB", "FTSE MIB"), ("aex", ".AEX", "AEX"), ("smi", ".SSMI", "SMI"),
-           ("hsi", ".HSI", "Hang Seng"), ("ssec", ".SSEC", "Shanghai Composite"), ("kospi", ".KS11", "KOSPI"), ("nifty", ".NSEI", "Nifty 50"), ("asx", ".AXJO", "S&P/ASX 200"),
-           ("palladium", "@PA.1", "Palladium"), ("gasoline", "@RB.1", "Gasoline"), ("heatoil", "@HO.1", "Heating oil"), ("wheat", "@W.1", "Wheat"), ("corn", "@C.1", "Corn"),
-           ("soy", "@S.1", "Soybeans"), ("coffee", "@KC.1", "Coffee"), ("sugar", "@SB.1", "Sugar"), ("cocoa", "@CC.1", "Cocoa"), ("cotton", "@CT.1", "Cotton")]
-QUOTE_URL = "https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=%s&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1"
-CHART_URL = "https://ts-api.cnbc.com/harmony/app/charts/10Y.json?symbol=%s"
+# ---------- metals: gold-api.com (commercial use permitted by its terms) ----------
+# Stock indices, energy and farm commodities used to come from a market quote feed that is not licensed for this use (13.52).
+METALS = [("gold", "XAU", "Gold"), ("silver", "XAG", "Silver"), ("platinum", "XPT", "Platinum"), ("palladium", "XPD", "Palladium"), ("copper", "HG", "Copper")]
+GOLD_API = "https://api.gold-api.com/price/%s"
 
 
 def fnum(x):
@@ -294,11 +287,6 @@ HIST = {"v": 1, "s": {}}
 HIST_DIRTY = [False]
 
 
-def chart_bars(sym, rng):
-    j = json.loads(get_raw(CHART_URL.replace("10Y", rng) % urllib.request.quote(sym), BROWSER, 25))
-    return [(int(b["tradeTimeinMills"]) // 1000, fnum(b["close"])) for b in j["barData"]["priceBars"] if fnum(b.get("close"))]
-
-
 def hist_add(key, bars):
     """daily closes for the charts in the app: [day number since 1970, close], the last 5 years"""
     old = {d: c for d, c in HIST["s"].get(key, [])}
@@ -309,24 +297,16 @@ def hist_add(key, bars):
     HIST_DIRTY[0] = True
 
 
-def anchors(sym, key=None):
-    j = json.loads(get_raw(CHART_URL % urllib.request.quote(sym), BROWSER, 25))
-    bars = [(int(b["tradeTimeinMills"]) // 1000, fnum(b["close"])) for b in j["barData"]["priceBars"] if fnum(b.get("close"))]
-    bars.sort()
-    if key:
-        try:
-            hist_add(key, [b for b in bars if b[0] >= time.time() - 5 * 366 * 86400])
-            hist_add(key, chart_bars(sym, "1Y"))          # daily detail for the last year
-        except Exception:
-            pass
+def hist_anchors(key, t):
+    """1, 5 and ~10-year-ago closes and the last close of last year, from the app's own daily history"""
+    bars = [(d * 86400, c) for d, c in HIST["s"].get(key) or []]
     if len(bars) < 30:
-        raise ValueError("short history")
-    now = bars[-1][0]
+        return None
 
     def before(sec):
-        c = [b for b in bars if b[0] <= now - sec]
+        c = [b for b in bars if b[0] <= t - sec]
         return list(c[-1]) if c else None
-    year = datetime.datetime.utcfromtimestamp(now).year
+    year = datetime.datetime.utcfromtimestamp(t).year
     ye = [b for b in bars if datetime.datetime.utcfromtimestamp(b[0]).year < year]
     yr = 365.25 * 86400
     return {"y1": before(yr), "y5": before(5 * yr), "y10": before(9.9 * yr), "ye": list(ye[-1]) if ye else None}
@@ -347,62 +327,64 @@ def returns(p, t, a):
 
 def markets(prev, log):
     old_all = dict((prev.get("mkt") or {}).get("items", {}))
-    mk = dict(old_all)
-    q = json.loads(get_raw(QUOTE_URL % "%7C".join(urllib.request.quote(m[1]) for m in MARKETS), BROWSER, 25))
-    rows = {r.get("symbol"): r for r in q["FormattedQuoteResult"]["FormattedQuote"]}
+    metal_keys = [m[0] for m in METALS]
+    mk = {}
+    # no licensed source any more: keep only the long-run returns (used as presets in the calculators), never a price
+    for k, o in old_all.items():
+        if k not in metal_keys:
+            mk[k] = dict({x: o[x] for x in ("n", "y1", "r5", "r10", "ytd") if x in o}, off=1)
     n = 0
-    for key, sym, name in MARKETS:
-        r = rows.get(sym) or {}
-        p, pc = fnum(r.get("last")), fnum(r.get("previous_day_closing"))
+    for key, sym, name in METALS:
         old = old_all.get(key) or {}
+        try:
+            j = get(GOLD_API % sym)
+            p = float(j.get("price") or 0)
+        except Exception as e:
+            log.append("%s failed: %s" % (key, str(e)[:60]))
+            p = 0
         if not p or not plausible(p, old.get("p"), 0.6, 1.6):
+            if old.get("p"):
+                mk[key] = old
             continue
-        it = {"n": name, "sym": sym, "p": p, "pc": pc, "chp": fnum(r.get("change_pct")), "t": iso_ts(r.get("last_time")), "cur": r.get("currencyCode") or "",
-              "rt": str(r.get("realTime")) == "true", "a": old.get("a"), "hAt": old.get("hAt", 0)}
-        if not it["a"] or time.time() - (it["hAt"] or 0) > 20 * 3600 or key not in HIST["s"]:     # long-run anchors (and the chart history) once a day
-            try:
-                it["a"], it["hAt"] = anchors(sym, key), int(time.time())
-            except Exception as e:
-                log.append("%s history failed" % key)
-        it.update(returns(p, it["t"], it["a"]))
+        t = iso_ts(j.get("updatedAt")) or int(time.time())
+        day = int(t // 86400)
+        prevc = next((c for d, c in reversed(HIST["s"].get(key) or []) if d < day), None)
+        hist_add(key, [(t, p)])
+        a = hist_anchors(key, t) or old.get("a")
+        if a and not a.get("y10") and (old.get("a") or {}).get("y10"):
+            a["y10"] = old["a"]["y10"]          # the 10-year anchor is older than the 5 years of kept history
+        it = {"n": name, "sym": sym, "p": p, "pc": prevc, "chp": round((p / prevc - 1) * 100, 2) if prevc else None, "t": t, "cur": "USD",
+              "rt": True, "a": a, "hAt": int(time.time())}
+        it.update(returns(p, t, a))
         mk[key] = it
         n += 1
-    log.append("markets %d" % n)
+    log.append("metals %d" % n)
     ts = [v.get("t") or 0 for v in mk.values()]
-    return {"asOf": max(ts) if ts else 0, "src": "cnbc", "items": mk} if mk else prev.get("mkt")
+    return {"asOf": max(ts) if ts else 0, "src": "gold-api", "items": mk} if mk else prev.get("mkt")
 
 
-# ---------- live market exchange rates (interbank quotes; the official rate stays in "usd") ----------
-FX_SYMS = {"ILS": ("ILS=", False), "EUR": ("EUR=", True), "GBP": ("GBP=", True), "JPY": ("JPY=", False), "CHF": ("CHF=", False), "CAD": ("CAD=", False),
-           "AUD": ("AUD=", True), "JOD": ("JOD=", False), "AED": ("AED=", False), "SAR": ("SAR=", False), "EGP": ("EGP=", False), "TRY": ("TRY=", False),
-           "CNY": ("CNY=", False), "INR": ("INR=", False)}
+# ---------- market exchange rates: European Central Bank reference rates (free reuse, ECB cited as the source) ----------
+# The Gulf and Jordanian currencies are pegged to the dollar. The official shekel rate stays in "usd".
+FX_KEEP = ["ILS", "EUR", "GBP", "JPY", "CHF", "CAD", "AUD", "TRY", "CNY", "INR"]
+FX_PEG = {"JOD": 0.709, "AED": 3.6725, "SAR": 3.75}
 
 
 def live_fx(prev, log):
-    q = json.loads(get_raw(QUOTE_URL % "%7C".join(urllib.request.quote(v[0]) for v in FX_SYMS.values()), BROWSER, 25))
-    rows = {r.get("symbol"): r for r in q["FormattedQuoteResult"]["FormattedQuote"]}
+    j = get("https://api.frankfurter.dev/v1/latest?base=USD")
+    R = j.get("rates") or {}
     base = prev.get("usd") or {}
-    usd, close, ts = {}, {}, 0
-    for k, (sym, inv) in FX_SYMS.items():
-        r = rows.get(sym) or {}
-        pc = fnum(r.get("previous_day_closing"))
-        if pc and pc > 0:
-            c = 1 / pc if inv else pc
-            if not base.get(k) or plausible(c, base[k], 0.8, 1.25):
-                close[k] = round(c, 6)
-        p = fnum(r.get("last"))
-        if not p or p <= 0:
-            continue
-        v = 1 / p if inv else p
-        if base.get(k) and not plausible(v, base[k], 0.8, 1.25):
-            continue
-        usd[k] = round(v, 6)
-        ts = max(ts, iso_ts(r.get("last_time")))
-    log.append("live fx %d" % len(usd))
-    res = {"asOf": ts or int(time.time()), "src": "cnbc", "usd": usd} if len(usd) >= 3 else prev.get("live")
-    if res is not None and len(close) >= 3:            # the previous trading day's closing rates, used when live data is switched off
-        res = dict(res, close=close)
-    return res
+    usd = {}
+    for k in FX_KEEP:
+        v = float(R.get(k) or 0)
+        if v > 0 and (not base.get(k) or plausible(v, base[k], 0.8, 1.25)):
+            usd[k] = round(v, 6)
+    usd.update(FX_PEG)
+    try:
+        ts = int(datetime.datetime.strptime(j.get("date"), "%Y-%m-%d").replace(hour=14, minute=15, tzinfo=datetime.timezone.utc).timestamp())
+    except Exception:
+        ts = int(time.time())
+    log.append("live fx (ecb) %d" % len(usd))
+    return {"asOf": ts, "src": "ecb", "usd": usd, "close": dict(usd)} if len(usd) >= 6 else prev.get("live")
 
 
 

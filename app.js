@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261025.215658'){ try { if (!sessionStorage.getItem('fin-hb-20261025.215658')){ sessionStorage.setItem('fin-hb-20261025.215658', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261025.222508'){ try { if (!sessionStorage.getItem('fin-hb-20261025.222508')){ sessionStorage.setItem('fin-hb-20261025.222508', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -3279,7 +3279,7 @@ Object.assign(T, {
   src_p_cr_coingecko:['CoinGecko (כל דקה, 29 מטבעות)','CoinGecko (كل دقيقة، 29 عملة)','CoinGecko (every minute, 29 coins)'],
   src_p_cr_kraken:['Kraken – בורסה (כל 30 שניות)','Kraken – بورصة (كل 30 ثانية)','Kraken – exchange (every 30 seconds)'],
   src_p_cr_bitstamp:['Bitstamp – בורסה (כל 30 שניות)','Bitstamp – بورصة (كل 30 ثانية)','Bitstamp – exchange (every 30 seconds)'],
-  src_p_mkt_goldapi:['חי (CNBC) + מתכות מ-Gold API','مباشر (CNBC) + معادن من Gold API','Live (CNBC) + metals from Gold API'],
+  src_p_mkt_goldapi:['מתכות חיות מ־gold-api','معادن مباشرة من gold-api','Live metals from gold-api'],
   ix_gMkt:['בורסות ומדדים','البورصات والمؤشرات','Stock markets and indices'],
   ix_gCom:['סחורות ומתכות','السلع والمعادن','Commodities and metals'],
   ix_ixic:['נאסד״ק קומפוזיט','ناسداك المركّب','Nasdaq Composite'], ix_rut:['ראסל 2000','راسل 2000','Russell 2000'], ix_vix:['VIX – מדד הפחד','VIX – مؤشر الخوف','VIX – fear index'],
@@ -4183,7 +4183,7 @@ Object.assign(T, {
   tv_noCookie:['בלי עוגיות','بلا ملفات تعريف الارتباط','no cookies'],
   tv_priv:['הלוח החי כבוי כי מצב פרטי מלא פועל (הגדרות ← אבטחה).','اللوحة المباشرة متوقفة لأن الوضع الخاص الكامل مفعّل (الإعدادات ← الأمان).','The live board is off because full private mode is on (Settings → Security).'],
   pv_t:['מצב פרטי מלא','الوضع الخاص الكامل','Full private mode'],
-  pv_h:['כשהמצב פועל, האפליקציה לא פונה לשום אתר חיצוני: בלי מחירים חיים, בלי הלוח של TradingView, בלי AI ובלי גופנים מבחוץ – ולכן אף אתר חיצוני לא רואה את הכתובת שלך (רק האתר עצמו, שממנו האפליקציה נטענת). המחירים מגיעים מהעדכון האוטומטי של האתר (כמה פעמים ביום).','عند تفعيله لا يتصل التطبيق بأي موقع خارجي: لا أسعار مباشرة، ولا لوحة TradingView، ولا ذكاء اصطناعي، ولا خطوط خارجية – لذا لا يرى أي موقع خارجي عنوانك (فقط الموقع نفسه الذي يُحمَّل منه التطبيق). الأسعار تأتي من التحديث التلقائي للموقع (عدة مرات يوميًا).','When on, the app contacts no outside site: no live prices, no TradingView board, no AI and no outside fonts – so no outside site sees your address (only the site itself, which the app loads from). Prices come from the site\'s automatic update (a few times a day).'],
+  pv_h:['כשהמצב פועל, האפליקציה לא פונה לשום אתר חיצוני: בלי מחירים חיים, בלי AI ובלי גופנים מבחוץ – ולכן אף אתר חיצוני לא רואה את הכתובת שלך (רק האתר עצמו, שממנו האפליקציה נטענת). המחירים מגיעים מהעדכון האוטומטי של האתר (כמה פעמים ביום).','عند تفعيله لا يتصل التطبيق بأي موقع خارجي: لا أسعار مباشرة، ولا ذكاء اصطناعي، ولا خطوط خارجية – لذا لا يرى أي موقع خارجي عنوانك (فقط الموقع نفسه الذي يُحمَّل منه التطبيق). الأسعار تأتي من التحديث التلقائي للموقع (عدة مرات يوميًا).','When on, the app contacts no outside site: no live prices, no AI and no outside fonts – so no outside site sees your address (only the site itself, which the app loads from). Prices come from the site\'s automatic update (a few times a day).'],
   pv_on:['פועל','مفعّل','On'], pv_off:['כבוי','متوقف','Off'],
   pv_note:['ההחלפה טוענת את האפליקציה מחדש. הגדרה זו נשמרת במכשיר הזה בלבד.','التبديل يعيد تحميل التطبيق. يُحفظ هذا الإعداد على هذا الجهاز فقط.','Switching reloads the app. This setting is kept on this device only.'],
   pv_reloadOn:['מצב פרטי מלא פועל – טוען מחדש…','تم تفعيل الوضع الخاص الكامل – إعادة التحميل…','Full private mode on – reloading…'], pv_reloadOff:['מצב פרטי כבוי – טוען מחדש…','تم إيقاف الوضع الخاص – إعادة التحميل…','Private mode off – reloading…'],
@@ -4222,7 +4222,7 @@ Object.assign(T, {
   lg_a_how:['כל ההתאמות נמצאות בהגדרות ← תצוגה ושפה ובהגדרות ← צלילים. הן נשמרות במכשיר ופועלות בכל המסכים.','جميع الملاءمات في الإعدادات ← العرض واللغة والإعدادات ← الأصوات. تُحفظ على الجهاز وتعمل في كل الشاشات.','All adjustments are in Settings → Display & language and Settings → Sounds. They are saved on the device and work on every screen.'],
   lg_a_limH:['מגבלות ידועות','قيود معروفة','Known limitations'],
   lg_a_l1:['בגרפים, חלק מהמידע מוצג חזותית. הערכים העיקריים מופיעים גם בטקסט או בטבלה.','في الرسوم البيانية يُعرض جزء من المعلومات بصريًا. القيم الأساسية تظهر أيضًا كنص أو جدول.','In charts some information is visual. The main values also appear as text or in a table.'],
-  lg_a_l2:['תכנים מאתרים חיצוניים, כמו הלוח החי של TradingView, אינם בשליטתנו ועשויים שלא להיות נגישים במלואם.','المحتوى من مواقع خارجية، مثل لوحة TradingView المباشرة، ليس تحت سيطرتنا وقد لا يكون متاحًا بالكامل.','Content from outside sites, such as the live TradingView board, is not under our control and may not be fully accessible.'],
+  lg_a_l2:['תכנים מאתרים חיצוניים אינם בשליטתנו ועשויים שלא להיות נגישים במלואם.','المحتوى من مواقع خارجية ليس تحت سيطرتنا وقد لا يكون متاحًا بالكامل.','Content from outside sites is not under our control and may not be fully accessible.'],
   lg_a_l3:['קובצי PDF שהאפליקציה יוצרת (למשל קורות חיים) עשויים שלא להיות נגישים במלואם לקוראי מסך.','ملفات PDF التي ينشئها التطبيق (مثل السيرة الذاتية) قد لا تكون متاحة بالكامل لقارئات الشاشة.','PDF files the app creates (such as a CV) may not be fully accessible to screen readers.'],
   lg_a_contact:['נתקלתם בבעיית נגישות או שיש לכם הצעה? כתבו לנו דרך "משוב למפתח" בהגדרות ← מערכת, וציינו באיזה מסך ומה הבעיה. נבדוק ונשתדל לתקן בהקדם.','واجهت مشكلة وصول أو لديك اقتراح؟ اكتب لنا عبر "ملاحظات للمطوّر" في الإعدادات ← النظام، واذكر الشاشة والمشكلة. سنفحص ونحاول الإصلاح سريعًا.','Found an accessibility problem or have a suggestion? Write to us through "Feedback to the developer" in Settings → System, saying which screen and what the problem is. We will look into it and try to fix it soon.'],
   /* privacy */
@@ -4241,11 +4241,11 @@ Object.assign(T, {
   lg_p_us4:['מעבר לזה לא נאסף שום מידע: לא מיקום, לא דגם המכשיר ולא היסטוריית שימוש.','لا تُجمع أي معلومات أخرى: لا موقع ولا طراز الجهاز ولا سجل استخدام.','Nothing else is collected: no location, no device model and no usage history.'],
   lg_p_extH:['אתרים חיצוניים שהאפליקציה פונה אליהם','مواقع خارجية يتصل بها التطبيق','Outside sites the app contacts'],
   lg_p_ext0:['פניות לקבלת מחירים ושערים יוצאות ישירות מהמכשיר שלך, בלי עוגיות ובלי פרטים עליך. האתר שמקבל פנייה רואה את כתובת ה־IP שלך, כמו בכל גלישה. הגופנים נטענים דרך השרת של האפליקציה עצמה.','طلبات الأسعار وأسعار الصرف تخرج مباشرة من جهازك، دون ملفات تعريف ارتباط ودون معلومات عنك. يرى الموقع المستقبِل عنوان IP الخاص بك، كما في أي تصفح. تُحمَّل الخطوط عبر خادم التطبيق نفسه.','Requests for prices and rates go straight from your device, with no cookies and no details about you. A site receiving a request sees your IP address, as with any browsing. Fonts load through the app\'s own server.'],
-  lg_p_ext1:['שערים ומחירים: בנק ישראל, הלמ"ס, CNBC, Coinbase, Binance, Frankfurter ומקורות דומים.','الأسعار: بنك إسرائيل، دائرة الإحصاء، CNBC، Coinbase، Binance، Frankfurter ومصادر مشابهة.','Rates and prices: Bank of Israel, the CBS, CNBC, Coinbase, Binance, Frankfurter and similar sources.'],
+  lg_p_ext1:['שערים ומחירים: בנק ישראל, הלמ"ס, הבנק המרכזי האירופי (דרך Frankfurter), ExchangeRate-API, gold-api, Coinbase, Binance ומקורות דומים.','الأسعار: بنك إسرائيل، دائرة الإحصاء، البنك المركزي الأوروبي (عبر Frankfurter)، ExchangeRate-API، gold-api، Coinbase، Binance ومصادر مشابهة.','Rates and prices: Bank of Israel, the CBS, the European Central Bank (via Frankfurter), ExchangeRate-API, gold-api, Coinbase, Binance and similar sources.'],
   lg_p_ext2:['גופנים: Google Fonts.','الخطوط: Google Fonts.','Fonts: Google Fonts.'],
   lg_p_ext3:['AI, רק כשמשתמשים בו: הטקסט שכתבת, ובסריקה – התמונה (תלוש, הצעה, תרגיל, מכתב לתרגום, או כל מסמך בזיהוי אוטומטי), נשלח ל־Claude באפליקציית Claude, או ל־Gemini של Google עם מפתח משלך (במצב מפתח ובמצב משפחה). האפליקציה לא שומרת את התמונה, את המכתב או את התרגום; בתלוש נשמרים במכשיר רק המספרים. כדאי לכסות פרטים מזהים לפני הצילום.','الذكاء الاصطناعي، عند استخدامه فقط: يُرسل النص الذي كتبته، وفي المسح الصورة (قسيمة راتب، عرض، تمرين، رسالة للترجمة، أو أي مستند في التعرّف التلقائي)، إلى Claude في تطبيق Claude، أو إلى Gemini من Google بمفتاحك (في وضع المطوّر ووضع العائلة). لا يحفظ التطبيق الصورة أو الرسالة أو الترجمة؛ في القسيمة تُحفظ الأرقام فقط على الجهاز. يُستحسن تغطية التفاصيل المعرّفة قبل التصوير.','AI, only when you use it: the text you wrote and, when scanning, the photo (a payslip, an offer, an exercise, a letter to translate, or any document with auto-detect) is sent to Claude in the Claude app, or to Google\'s Gemini with your own key (in developer and family mode). The app does not keep the photo, the letter or the translation; for a payslip only the numbers are kept, on the device. Cover identifying details before taking the photo.'],
   lg_p_ext4:['שאלה ל"עוזר" בשירות חיצוני (ChatGPT, Perplexity ודומיהם) נפתחת אצלם רק כשבוחרים בזה.','السؤال للمساعد في خدمة خارجية (ChatGPT وPerplexity وغيرها) يُفتح لديهم فقط عند اختيار ذلك.','A question to the assistant in an outside service (ChatGPT, Perplexity and the like) opens there only when you choose it.'],
-  lg_p_ext5:['הלוח החי של TradingView נטען רק כשלוחצים "הצגה", בלי לספר לו מאיזה אתר ובלי לשמור עוגיות בדפדפנים שתומכים בזה (כמו כרום).','لوحة TradingView المباشرة تُحمَّل فقط عند الضغط على "عرض"، دون إخباره بالموقع ودون حفظ ملفات تعريف ارتباط في المتصفحات الداعمة (مثل كروم).','The live TradingView board loads only when you tap "Show", without telling it which site it is on and without keeping cookies in browsers that support this (such as Chrome).'],
+  lg_p_ext5:['הבקשות לשירותים החיצוניים נשלחות בלי עוגיות ובלי לספר להם מאיזה אתר הן מגיעות.','تُرسَل الطلبات إلى الخدمات الخارجية دون ملفات تعريف ارتباط ودون إخبارها بالموقع الذي جاءت منه.','Requests to outside services are sent without cookies and without telling them which site they come from.'],
   lg_p_ext6:['האתר מתארח ב־GitHub Pages, שרואה את כתובת ה־IP בכל טעינה של האתר, לפי מדיניות הפרטיות של GitHub.','الموقع مستضاف على GitHub Pages، الذي يرى عنوان IP عند كل تحميل للموقع، وفق سياسة خصوصية GitHub.','The website is hosted on GitHub Pages, which sees your IP address each time the site loads, under GitHub\'s privacy policy.'],
   lg_p_noH:['מה אנחנו לא עושים','ما لا نفعله','What we do not do'],
   lg_p_no:['אין פרסומות, אין כלי מעקב או סטטיסטיקה, אין מכירת מידע ואין יצירת פרופיל עליך.','لا إعلانات، ولا أدوات تتبّع أو إحصاء، ولا بيع معلومات، ولا إنشاء ملف تعريف عنك.','No ads, no tracking or analytics tools, no selling information and no profiling.'],
@@ -4287,8 +4287,8 @@ Object.assign(T, {
   lg_c_lib2:['הגופנים Frank Ruhl Libre, IBM Plex Sans Hebrew ו־Arabic, Heebo ו־Rubik – ברישיון SIL Open Font License, דרך Google Fonts.','الخطوط Frank Ruhl Libre وIBM Plex Sans Hebrew وArabic وHeebo وRubik – بترخيص SIL Open Font License عبر Google Fonts.','Fonts Frank Ruhl Libre, IBM Plex Sans Hebrew and Arabic, Heebo and Rubik – SIL Open Font License, via Google Fonts.'],
   lg_c_dataH:['מקורות מידע','مصادر المعلومات','Data sources'],
   lg_c_data1:['בנק ישראל – שערים יציגים וריבית; הלשכה המרכזית לסטטיסטיקה – מדדים.','بنك إسرائيل – أسعار الصرف التمثيلية والفائدة؛ دائرة الإحصاء المركزية – المؤشرات.','Bank of Israel – representative rates and interest; Central Bureau of Statistics – indices.'],
-  lg_c_data2:['CNBC – מדדים, סחורות ומניות; Coinbase ו־Binance – קריפטו; Frankfurter (הבנק המרכזי האירופי) ו־gold-api – שערים ומתכות.','CNBC – مؤشرات وسلع وأسهم؛ Coinbase وBinance – عملات مشفّرة؛ Frankfurter (البنك المركزي الأوروبي) وgold-api – أسعار ومعادن.','CNBC – indices, commodities and stocks; Coinbase and Binance – crypto; Frankfurter (European Central Bank) and gold-api – rates and metals.'],
-  lg_c_data3:['TradingView – הלוח החי, כשבוחרים להציג אותו.','TradingView – اللوحة المباشرة عند اختيار عرضها.','TradingView – the live board, when you choose to show it.'],
+  lg_c_data2:['הבנק המרכזי האירופי (דרך Frankfurter) – שערי מטבע; Rates By Exchange Rate API (exchangerate-api.com) – שערי מטבע; gold-api – מתכות; Coinbase ו־Binance – קריפטו.','البنك المركزي الأوروبي (عبر Frankfurter) – أسعار العملات؛ Rates By Exchange Rate API (exchangerate-api.com) – أسعار العملات؛ gold-api – المعادن؛ Coinbase وBinance – العملات المشفّرة.','European Central Bank (via Frankfurter) – exchange rates; Rates By Exchange Rate API (exchangerate-api.com) – exchange rates; gold-api – metals; Coinbase and Binance – crypto.'],
+  lg_c_data3:['מדדי בורסה, נפט וסחורות חקלאיות אינם מוצגים כרגע, כי אין להם מקור חינמי שמותר להשתמש בו כאן.','لا تُعرض مؤشرات البورصة والنفط والسلع الزراعية حاليًا، لعدم وجود مصدر مجاني مسموح باستخدامه هنا.','Stock indices, oil and farm commodities are not shown for now, because there is no free source that may be used here.'],
   lg_c_data4:['שמות המקורות וסימני המסחר שייכים לבעליהם, ואין באזכורם קשר או המלצה מצדם.','أسماء المصادر والعلامات التجارية مملوكة لأصحابها، وذكرها لا يعني ارتباطًا أو توصية منهم.','Source names and trademarks belong to their owners; mentioning them implies no connection or endorsement.'],
   lg_c_licLink:['נוסח רישיון MIT של nerdamer','نص ترخيص MIT لمكتبة nerdamer','The nerdamer MIT licence text'],
   lg_histH:['היסטוריית עדכונים','سجل التحديثات','Update history'],
@@ -4297,6 +4297,7 @@ Object.assign(T, {
   lg_h_t1910:['19.10.2026 – נוספו תנאים לתרגום מכתבים, לסריקת כרטיסים אישיים ולחישובי Tax Free.','19.10.2026 – أُضيفت شروط لترجمة الرسائل ومسح البطاقات الشخصية وحسابات Tax Free.','19.10.2026 – added terms for letter translation, scanning personal cards and Tax Free calculations.'],
   lg_h_a1910:['19.10.2026 – נוספו סורק המסמכים ו־Tax Free ונבדקה הנגישות שלהם.','19.10.2026 – أُضيف ماسح المستندات وTax Free وفُحصت إتاحتهما.','19.10.2026 – added the document scanner and Tax Free and checked their accessibility.'],
   lg_h_a1910b:['19.10.2026 – נוסף כפתור נגישות בכל המסכים.','19.10.2026 – أُضيف زر إتاحة في كل الشاشات.','19.10.2026 – added an accessibility button on every screen.'],
+  ix_uOff:['הוספת מניות ומטבעות משלך אינה זמינה כרגע: אין לה מקור נתונים חינמי שמותר להשתמש בו כאן.','إضافة أسهم وعملات خاصة بك غير متاحة حاليًا: لا يوجد لها مصدر بيانات مجاني مسموح باستخدامه هنا.','Adding your own stocks and currencies is not available for now: there is no free data source that may be used here.']
 });
 Object.assign(T, {
   sl_t:['בדיקת תלוש','فحص قسيمة الراتب','Payslip check'],
@@ -12172,8 +12173,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.51", "date": "2026-10-25", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261025.215658';
+var CHANGELOG = [{"v": "13.52", "date": "2026-10-25", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261025.222508';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -14224,7 +14225,14 @@ var IX_SYM = {ta35: '.TA35', ta125: '.TA125', spx: '.SPX', ndx: '.NDX', dji: '.D
 function ixFmtV(k, x){ if (!isFinite(x)) return '—'; const n = N(x, null, x >= 1000 ? 0 : 2); return IX_CENT.includes(k) ? n + '¢' : (IX_COM.includes(k) ? '$' + n : n); }
 /* 12.9: your own stocks, currencies and crypto, added by symbol; they live in IX_MK / IX_SYM like the built-in ones */
 var IX_USER = [];
-function ixUserList(){ return Array.isArray(SET.ixCustom) ? SET.ixCustom.filter(c => c && c.k && c.sym) : []; }
+/* 13.52: only the metals have a licensed live source (gold-api). The other indices and commodities keep only their long-run returns
+   (used as presets in the calculators) and are no longer shown as prices */
+var IX_OK = ['gold', 'silver', 'platinum', 'palladium', 'copper'];
+IX_MK.splice(0, IX_MK.length, ...IX_MK.filter(k => IX_OK.includes(k)));
+Object.keys(IX_SYM).forEach(k => { if (!IX_OK.includes(k)) delete IX_SYM[k]; });
+IX_DEF.splice(0, IX_DEF.length, ...IX_OK);
+Object.keys(IX.mkt).forEach(k => { if (!IX_OK.includes(k)){ const o = IX.mkt[k] || {}; IX.mkt[k] = {n: o.n, y1: o.y1, r5: o.r5, r10: o.r10, ytd: o.ytd, off: 1}; } });
+function ixUserList(){ return []; }      // 13.52: own symbols needed the unlicensed quote feed (the saved list is kept, in case a licensed source is added)
 function ixUserSync(){
   const L = ixUserList(), keys = L.map(c => c.k);
   IX_USER.filter(k => !keys.includes(k)).forEach(k => { const i = IX_MK.indexOf(k); if (i >= 0) IX_MK.splice(i, 1); delete IX_SYM[k]; try { delete IX.mkt[k]; } catch (e) {} });
@@ -14317,6 +14325,7 @@ var IX_QURL = ixQurl();
 const ixNum = x => { const n = parseFloat(String(x == null ? '' : x).replace(/[,%+\s]/g, '')); return isFinite(n) ? n : NaN; };
 var IX_TABS = ['home', 'markets', 'convert', 'compound', 'yield', 'retire', 'cpilink', 'expenses'];
 async function ixLiveTick(force){
+  return false;      // 13.52: the market quote feed this used is not licensed for this app – metals come from gold-api, the rest from the site's copy
   clearTimeout(IXL.timer); IXL.timer = null;
   if (!force && (SET.liveFx === '0' || IXL.ok === false)) return;
   if (!srcOk('fx', 'cnbc') && !srcOk('mkt', 'live')) return false;        // nothing to take from this feed with the sources picked now
@@ -14370,7 +14379,8 @@ function ixBoard(){
   if (SHOWU.length){ h += `</div><h4 class="ix-g">⭐ ${asEsc(t('ix_gMine'))}</h4><div class="mkt">`;
     SHOWU.forEach(k => { const d = IX.mkt[k]; if (!d || !(d.p > 0)){ h += card(k, '…', '', asEsc(t('ix_uWait')), 'none'); return; }
       h += card(k, ixFmtV(k, d.p), ixCh(+d.chp), asEsc(ixDay(d.t)) + ' · ' + asEsc(t(d.rt ? 'ix_rt' : 'ix_delay')), 'none'); }); }
-  h += `</div><h4 class="ix-g">${asEsc(t('ix_gMkt'))}${IXL.ok && srcOk('mkt', 'live') ? ` <span class="lv-pill on"><i></i>${asEsc(t('lv_live'))}</span>` : ''}</h4><div class="mkt">`;
+  if (ixShown().some(k => IX_MK.includes(k) && !IX_COM.includes(k) && !IX_USER.includes(k))) h += `</div><h4 class="ix-g">${asEsc(t('ix_gMkt'))}${IXL.ok && srcOk('mkt', 'live') ? ` <span class="lv-pill on"><i></i>${asEsc(t('lv_live'))}</span>` : ''}</h4><div class="mkt">`;
+  else h += `</div><div class="mkt">`;      // 13.52: no indices any more – go straight to the metals
   const SHOW = ixShown(); let comH = false;
   IX_MK.forEach((k, i) => {
     if (!SHOW.includes(k) || IX_USER.includes(k)) return;
@@ -14396,6 +14406,7 @@ function ixPickHTML(SHOW){
 }
 /* find a symbol the live feed knows: a stock ticker as typed, a currency against the shekel (then the dollar), or a crypto coin */
 async function ixUserFind(raw){
+  return {err: 'ix_uOff'};      // 13.52: looking up symbols needed the unlicensed quote feed
   const q = String(raw || '').trim().toUpperCase().replace(/\s+/g, '').replace(/^\$/, '');
   if (!q || !/^[A-Z0-9.\-=^:]{1,15}$/.test(q)) return {err: 'ix_uBad'};
   const C = [], cur = /^[A-Z]{3}$/.test(q) && (typeof RATES === 'object' && (RATES[q] || q === 'USD'));
@@ -14671,7 +14682,6 @@ async function srcTest(){
   if (SRC.testing) return; SRC.testing = true; srcRender(true);
   const probe = async (k, url, ok) => { const t0 = performance.now(); try { const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 6000); const r = await fetch(url, {signal: ctl.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); clearTimeout(to); const good = r.ok && (!ok || ok(await r.json())); SRC.test[k] = {ok: good, ms: Math.round(performance.now() - t0), at: Date.now()}; } catch (e) { SRC.test[k] = {ok: false, ms: Math.round(performance.now() - t0), at: Date.now(), blocked: true}; } };
   await Promise.all([
-    probe('cnbc', ixQurl(), j => !!(j && j.FormattedQuoteResult)),
     probe('coinbase', SRC_L.cb, j => !!(j && j.data && j.data.rates)),
     probe('gh', IN_CLAUDE ? SRC_L.gh : 'rates.json?v=' + Date.now(), j => !!(j && j.usd))
   ]);
@@ -14693,7 +14703,7 @@ function srcRender(force){
   const T = SRC.test;
   if (Object.keys(T).length){
     const row = (k, name) => T[k] ? `<li class="${T[k].ok ? 's-ok' : 's-bad'}"><b>${T[k].ok ? '✓' : '✗'}</b><span>${asEsc(name)}</span><small>${T[k].ok ? asEsc(t('src_ms', {n: T[k].ms})) : asEsc(t(T[k].blocked ? 'src_blocked' : 'src_failed'))}${k === 'db' && T.db.asOf ? ' · ' + asEsc(t('src_dbAt', {t: srcWhen(T.db.asOf * 1000)})) : ''}</small></li>` : '';
-    h += `<ul class="src-tests">${row('cnbc', t('src_t_cnbc'))}${row('coinbase', t('src_t_cb'))}${row('gh', t('src_t_gh'))}${row('db', t('src_t_db'))}</ul>`;
+    h += `<ul class="src-tests">${row('coinbase', t('src_t_cb'))}${row('gh', t('src_t_gh'))}${row('db', t('src_t_db'))}</ul>`;
   }
   ['fx', 'cr', 'rate', 'idx', 'mkt'].forEach(g => {
     const rows = items.filter(i => i.g === g); if (!rows.length) return;
@@ -14976,8 +14986,8 @@ async function lnAuto(){
 setInterval(() => { if (!document.hidden) lnAuto(); }, 10 * 60000);
 
 /* ================= the developer picks where each kind of data comes from, and edits every source link (Connections, developer only) ================= */
-var SRCP_OPT = {fx: ['auto', 'cnbc', 'coinbase', 'boi'], cr: ['auto', 'coinbase', 'binance'], mkt: ['live', 'snap']};
-var SRCP = {fx: 'auto', cr: 'auto', mkt: 'live'}, SRCP_REMOTE = null;
+var SRCP_OPT = {fx: ['auto', 'coinbase', 'boi'], cr: ['auto', 'coinbase', 'binance'], mkt: ['live', 'snap']};
+var SRCP = {fx: 'auto', cr: 'auto', mkt: 'goldapi'}, SRCP_REMOTE = null;
 function srcpClean(d){ const o = {}; Object.keys(SRCP_OPT).forEach(g => { const v = d && d[g]; o[g] = SRCP_OPT[g].includes(v) ? v : SRCP_OPT[g][0]; }); return o; }
 function srcOk(g, s){
   const P = (typeof SRCP === 'object' && SRCP) || {}, p = P[g];
@@ -18398,7 +18408,7 @@ const SRC_NEW = {
       pick(j){ const o = {}; (Array.isArray(j) ? j : []).forEach(x => { const m = /^([A-Z]+)\/USD$/.exec(x && x.pair || ''); const p = x && +x.last; if (m && p > 0 && typeof CRYPTO === 'object' && CRYPTO[m[1]]) o[m[1]] = p; }); return o; }}
   },
   mkt: {
-    goldapi: {multi: [['gold', 'https://api.gold-api.com/price/XAU'], ['silver', 'https://api.gold-api.com/price/XAG'], ['platinum', 'https://api.gold-api.com/price/XPT'], ['copper', 'https://api.gold-api.com/price/HG']], ms: 60e3, pick: j => j && +j.price}
+    goldapi: {multi: [['gold', 'https://api.gold-api.com/price/XAU'], ['silver', 'https://api.gold-api.com/price/XAG'], ['platinum', 'https://api.gold-api.com/price/XPT'], ['palladium', 'https://api.gold-api.com/price/XPD'], ['copper', 'https://api.gold-api.com/price/HG']], ms: 60e3, pick: j => j && +j.price}
   }
 };
 Object.keys(SRC_NEW).forEach(g => Object.keys(SRC_NEW[g]).forEach(s => { if (!SRCP_OPT[g].includes(s)) SRCP_OPT[g].splice(SRCP_OPT[g].length - 1, 0, s); }));   // before "manual"
@@ -24159,6 +24169,7 @@ function tvBoxHTML(){
 function tvMissNote(){ const S = typeof ixShown === 'function' ? ixShown() : IX_DEF, miss = S.filter(k => !TV_SYM[k] && !(typeof IX_USER !== 'undefined' && IX_USER.includes(k))); return miss.length ? `<p class="fine">${tvE(t('tv_miss', {n: miss.map(ixName).join(', ')}))}</p>` : ''; }
 var TVX = {sig: ''};
 function tvMount(){
+  { const b = document.getElementById('tvx'); if (b) b.remove(); return; }      // 13.52: the TradingView board is switched off (not licensed for this app)
   const hm = $('#hmx'); if (!hm) return;
   let box = $('#tvx'); if (!box){ box = document.createElement('div'); box.id = 'tvx'; box.className = 'tvx'; hm.parentNode.insertBefore(box, hm.nextSibling); TVX.sig = ''; }
   /* rebuild only when something it depends on changed — the price board above refreshes every 15 seconds, the widget must not */

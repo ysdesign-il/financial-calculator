@@ -3442,7 +3442,14 @@ var IX_SYM = {ta35: '.TA35', ta125: '.TA125', spx: '.SPX', ndx: '.NDX', dji: '.D
 function ixFmtV(k, x){ if (!isFinite(x)) return '—'; const n = N(x, null, x >= 1000 ? 0 : 2); return IX_CENT.includes(k) ? n + '¢' : (IX_COM.includes(k) ? '$' + n : n); }
 /* 12.9: your own stocks, currencies and crypto, added by symbol; they live in IX_MK / IX_SYM like the built-in ones */
 var IX_USER = [];
-function ixUserList(){ return Array.isArray(SET.ixCustom) ? SET.ixCustom.filter(c => c && c.k && c.sym) : []; }
+/* 13.52: only the metals have a licensed live source (gold-api). The other indices and commodities keep only their long-run returns
+   (used as presets in the calculators) and are no longer shown as prices */
+var IX_OK = ['gold', 'silver', 'platinum', 'palladium', 'copper'];
+IX_MK.splice(0, IX_MK.length, ...IX_MK.filter(k => IX_OK.includes(k)));
+Object.keys(IX_SYM).forEach(k => { if (!IX_OK.includes(k)) delete IX_SYM[k]; });
+IX_DEF.splice(0, IX_DEF.length, ...IX_OK);
+Object.keys(IX.mkt).forEach(k => { if (!IX_OK.includes(k)){ const o = IX.mkt[k] || {}; IX.mkt[k] = {n: o.n, y1: o.y1, r5: o.r5, r10: o.r10, ytd: o.ytd, off: 1}; } });
+function ixUserList(){ return []; }      // 13.52: own symbols needed the unlicensed quote feed (the saved list is kept, in case a licensed source is added)
 function ixUserSync(){
   const L = ixUserList(), keys = L.map(c => c.k);
   IX_USER.filter(k => !keys.includes(k)).forEach(k => { const i = IX_MK.indexOf(k); if (i >= 0) IX_MK.splice(i, 1); delete IX_SYM[k]; try { delete IX.mkt[k]; } catch (e) {} });
@@ -3535,6 +3542,7 @@ var IX_QURL = ixQurl();
 const ixNum = x => { const n = parseFloat(String(x == null ? '' : x).replace(/[,%+\s]/g, '')); return isFinite(n) ? n : NaN; };
 var IX_TABS = ['home', 'markets', 'convert', 'compound', 'yield', 'retire', 'cpilink', 'expenses'];
 async function ixLiveTick(force){
+  return false;      // 13.52: the market quote feed this used is not licensed for this app – metals come from gold-api, the rest from the site's copy
   clearTimeout(IXL.timer); IXL.timer = null;
   if (!force && (SET.liveFx === '0' || IXL.ok === false)) return;
   if (!srcOk('fx', 'cnbc') && !srcOk('mkt', 'live')) return false;        // nothing to take from this feed with the sources picked now
@@ -3588,7 +3596,8 @@ function ixBoard(){
   if (SHOWU.length){ h += `</div><h4 class="ix-g">⭐ ${asEsc(t('ix_gMine'))}</h4><div class="mkt">`;
     SHOWU.forEach(k => { const d = IX.mkt[k]; if (!d || !(d.p > 0)){ h += card(k, '…', '', asEsc(t('ix_uWait')), 'none'); return; }
       h += card(k, ixFmtV(k, d.p), ixCh(+d.chp), asEsc(ixDay(d.t)) + ' · ' + asEsc(t(d.rt ? 'ix_rt' : 'ix_delay')), 'none'); }); }
-  h += `</div><h4 class="ix-g">${asEsc(t('ix_gMkt'))}${IXL.ok && srcOk('mkt', 'live') ? ` <span class="lv-pill on"><i></i>${asEsc(t('lv_live'))}</span>` : ''}</h4><div class="mkt">`;
+  if (ixShown().some(k => IX_MK.includes(k) && !IX_COM.includes(k) && !IX_USER.includes(k))) h += `</div><h4 class="ix-g">${asEsc(t('ix_gMkt'))}${IXL.ok && srcOk('mkt', 'live') ? ` <span class="lv-pill on"><i></i>${asEsc(t('lv_live'))}</span>` : ''}</h4><div class="mkt">`;
+  else h += `</div><div class="mkt">`;      // 13.52: no indices any more – go straight to the metals
   const SHOW = ixShown(); let comH = false;
   IX_MK.forEach((k, i) => {
     if (!SHOW.includes(k) || IX_USER.includes(k)) return;
@@ -3614,6 +3623,7 @@ function ixPickHTML(SHOW){
 }
 /* find a symbol the live feed knows: a stock ticker as typed, a currency against the shekel (then the dollar), or a crypto coin */
 async function ixUserFind(raw){
+  return {err: 'ix_uOff'};      // 13.52: looking up symbols needed the unlicensed quote feed
   const q = String(raw || '').trim().toUpperCase().replace(/\s+/g, '').replace(/^\$/, '');
   if (!q || !/^[A-Z0-9.\-=^:]{1,15}$/.test(q)) return {err: 'ix_uBad'};
   const C = [], cur = /^[A-Z]{3}$/.test(q) && (typeof RATES === 'object' && (RATES[q] || q === 'USD'));
@@ -3889,7 +3899,6 @@ async function srcTest(){
   if (SRC.testing) return; SRC.testing = true; srcRender(true);
   const probe = async (k, url, ok) => { const t0 = performance.now(); try { const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 6000); const r = await fetch(url, {signal: ctl.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer'}); clearTimeout(to); const good = r.ok && (!ok || ok(await r.json())); SRC.test[k] = {ok: good, ms: Math.round(performance.now() - t0), at: Date.now()}; } catch (e) { SRC.test[k] = {ok: false, ms: Math.round(performance.now() - t0), at: Date.now(), blocked: true}; } };
   await Promise.all([
-    probe('cnbc', ixQurl(), j => !!(j && j.FormattedQuoteResult)),
     probe('coinbase', SRC_L.cb, j => !!(j && j.data && j.data.rates)),
     probe('gh', IN_CLAUDE ? SRC_L.gh : 'rates.json?v=' + Date.now(), j => !!(j && j.usd))
   ]);
@@ -3911,7 +3920,7 @@ function srcRender(force){
   const T = SRC.test;
   if (Object.keys(T).length){
     const row = (k, name) => T[k] ? `<li class="${T[k].ok ? 's-ok' : 's-bad'}"><b>${T[k].ok ? '✓' : '✗'}</b><span>${asEsc(name)}</span><small>${T[k].ok ? asEsc(t('src_ms', {n: T[k].ms})) : asEsc(t(T[k].blocked ? 'src_blocked' : 'src_failed'))}${k === 'db' && T.db.asOf ? ' · ' + asEsc(t('src_dbAt', {t: srcWhen(T.db.asOf * 1000)})) : ''}</small></li>` : '';
-    h += `<ul class="src-tests">${row('cnbc', t('src_t_cnbc'))}${row('coinbase', t('src_t_cb'))}${row('gh', t('src_t_gh'))}${row('db', t('src_t_db'))}</ul>`;
+    h += `<ul class="src-tests">${row('coinbase', t('src_t_cb'))}${row('gh', t('src_t_gh'))}${row('db', t('src_t_db'))}</ul>`;
   }
   ['fx', 'cr', 'rate', 'idx', 'mkt'].forEach(g => {
     const rows = items.filter(i => i.g === g); if (!rows.length) return;
@@ -4194,8 +4203,8 @@ async function lnAuto(){
 setInterval(() => { if (!document.hidden) lnAuto(); }, 10 * 60000);
 
 /* ================= the developer picks where each kind of data comes from, and edits every source link (Connections, developer only) ================= */
-var SRCP_OPT = {fx: ['auto', 'cnbc', 'coinbase', 'boi'], cr: ['auto', 'coinbase', 'binance'], mkt: ['live', 'snap']};
-var SRCP = {fx: 'auto', cr: 'auto', mkt: 'live'}, SRCP_REMOTE = null;
+var SRCP_OPT = {fx: ['auto', 'coinbase', 'boi'], cr: ['auto', 'coinbase', 'binance'], mkt: ['live', 'snap']};
+var SRCP = {fx: 'auto', cr: 'auto', mkt: 'goldapi'}, SRCP_REMOTE = null;
 function srcpClean(d){ const o = {}; Object.keys(SRCP_OPT).forEach(g => { const v = d && d[g]; o[g] = SRCP_OPT[g].includes(v) ? v : SRCP_OPT[g][0]; }); return o; }
 function srcOk(g, s){
   const P = (typeof SRCP === 'object' && SRCP) || {}, p = P[g];

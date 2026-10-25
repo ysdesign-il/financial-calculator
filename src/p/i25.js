@@ -41,7 +41,7 @@ Object.assign(T, {
   src_p_cr_coingecko:['CoinGecko (כל דקה, 29 מטבעות)','CoinGecko (كل دقيقة، 29 عملة)','CoinGecko (every minute, 29 coins)'],
   src_p_cr_kraken:['Kraken – בורסה (כל 30 שניות)','Kraken – بورصة (كل 30 ثانية)','Kraken – exchange (every 30 seconds)'],
   src_p_cr_bitstamp:['Bitstamp – בורסה (כל 30 שניות)','Bitstamp – بورصة (كل 30 ثانية)','Bitstamp – exchange (every 30 seconds)'],
-  src_p_mkt_goldapi:['חי (CNBC) + מתכות מ-Gold API','مباشر (CNBC) + معادن من Gold API','Live (CNBC) + metals from Gold API'],
+  src_p_mkt_goldapi:['מתכות חיות מ־gold-api','معادن مباشرة من gold-api','Live metals from gold-api'],
   ix_gMkt:['בורסות ומדדים','البورصات والمؤشرات','Stock markets and indices'],
   ix_gCom:['סחורות ומתכות','السلع والمعادن','Commodities and metals'],
   ix_ixic:['נאסד״ק קומפוזיט','ناسداك المركّب','Nasdaq Composite'], ix_rut:['ראסל 2000','راسل 2000','Russell 2000'], ix_vix:['VIX – מדד הפחד','VIX – مؤشر الخوف','VIX – fear index'],

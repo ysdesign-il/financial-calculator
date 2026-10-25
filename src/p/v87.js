@@ -20,7 +20,7 @@ const SRC_NEW = {
       pick(j){ const o = {}; (Array.isArray(j) ? j : []).forEach(x => { const m = /^([A-Z]+)\/USD$/.exec(x && x.pair || ''); const p = x && +x.last; if (m && p > 0 && typeof CRYPTO === 'object' && CRYPTO[m[1]]) o[m[1]] = p; }); return o; }}
   },
   mkt: {
-    goldapi: {multi: [['gold', 'https://api.gold-api.com/price/XAU'], ['silver', 'https://api.gold-api.com/price/XAG'], ['platinum', 'https://api.gold-api.com/price/XPT'], ['copper', 'https://api.gold-api.com/price/HG']], ms: 60e3, pick: j => j && +j.price}
+    goldapi: {multi: [['gold', 'https://api.gold-api.com/price/XAU'], ['silver', 'https://api.gold-api.com/price/XAG'], ['platinum', 'https://api.gold-api.com/price/XPT'], ['palladium', 'https://api.gold-api.com/price/XPD'], ['copper', 'https://api.gold-api.com/price/HG']], ms: 60e3, pick: j => j && +j.price}
   }
 };
 Object.keys(SRC_NEW).forEach(g => Object.keys(SRC_NEW[g]).forEach(s => { if (!SRCP_OPT[g].includes(s)) SRCP_OPT[g].splice(SRCP_OPT[g].length - 1, 0, s); }));   // before "manual"

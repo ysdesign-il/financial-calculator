@@ -50,6 +50,7 @@ function tvBoxHTML(){
 function tvMissNote(){ const S = typeof ixShown === 'function' ? ixShown() : IX_DEF, miss = S.filter(k => !TV_SYM[k] && !(typeof IX_USER !== 'undefined' && IX_USER.includes(k))); return miss.length ? `<p class="fine">${tvE(t('tv_miss', {n: miss.map(ixName).join(', ')}))}</p>` : ''; }
 var TVX = {sig: ''};
 function tvMount(){
+  { const b = document.getElementById('tvx'); if (b) b.remove(); return; }      // 13.52: the TradingView board is switched off (not licensed for this app)
   const hm = $('#hmx'); if (!hm) return;
   let box = $('#tvx'); if (!box){ box = document.createElement('div'); box.id = 'tvx'; box.className = 'tvx'; hm.parentNode.insertBefore(box, hm.nextSibling); TVX.sig = ''; }
   /* rebuild only when something it depends on changed — the price board above refreshes every 15 seconds, the widget must not */

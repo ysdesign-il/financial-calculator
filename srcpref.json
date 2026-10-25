@@ -1,1 +1,1 @@
-{"note":"Where each kind of data is pulled from on the website. fx: auto | cnbc | coinbase | boi. cr: auto | coinbase | binance. mkt: live | snap.","fx":"auto","cr":"auto","mkt":"live"}
+{"note":"Where each kind of data is pulled from on the website. fx: auto | coinbase | boi (and the extra sources listed in Connections). cr: auto | coinbase | binance. mkt: goldapi | snap.","fx":"auto","cr":"auto","mkt":"goldapi"}

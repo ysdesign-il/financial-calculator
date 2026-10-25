@@ -15,7 +15,7 @@ This package contains a drop-in JavaScript enhancement module for the existing f
 ## Important limitations
 1. This is an integration module, not a verified modification of the live GitHub repository. The GitHub connector currently rejects write operations with HTTP 403.
 2. Saved data is stored in `localStorage` on the current browser/device only. It does not sync across users/devices and is not a secure cloud vault.
-3. Source selection stores user preferences and emits `fcx:source-preferences-changed`. It does not create market-data provider integrations by itself. To replace CNBC, connect a licensed/reliable data provider adapter and display provider + timestamp + delay for each quote. Do not describe delayed data as real-time.
+3. Source selection stores user preferences and emits `fcx:source-preferences-changed`. It does not create market-data provider integrations by itself. Since 13.52 the unlicensed market quote feed and the TradingView board are removed: metals come from gold-api.com (commercial use permitted) and market exchange rates from the European Central Bank. Stock indices, energy and farm commodities need a licensed data provider before they can return; show provider + timestamp + delay for each quote. Do not describe delayed data as real-time.
 4. PDF export opens the native print dialog; the user chooses “Save as PDF”.
 5. The module uses DOM heuristics to find the active form and result region. Integrate against the app's actual calculator components and IDs before deploying to production.
 6. Financial formulas are illustrative. Validate edge cases, fees, payment timing, taxes, compounding conventions, and currency assumptions with tests before using for decisions.
