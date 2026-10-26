@@ -1,5 +1,5 @@
 /* ---------- 13.1: accessibility statement and privacy policy — in the app, in three languages, linked from every screen ---------- */
-const LG_DATE = '21.10.2026';
+const LG_DATE = '26.10.2026';
 const LG_DOCS = {
   a11y: {t: 'lg_a11yT', ic: '♿', parts: [
     ['', ['lg_a_intro']],
@@ -11,7 +11,8 @@ const LG_DOCS = {
   ]},
   terms: {t: 'lg_termsT', ic: '📜', parts: [
     ['', ['lg_t_intro']],
-    ['lg_t_calcH', ['lg_t_calc1', 'lg_t_calc2']],
+    ['lg_t_calcH', ['lg_t_calc1', 'lg_t_calc2', 'lg_t_lic']],
+    ['lg_t_betaH', ['lg_t_beta']],
     ['lg_t_dataH', ['lg_t_data']],
     ['lg_t_aiH', ['lg_t_ai', 'lg_t_tf']],
     ['lg_t_liabH', ['lg_t_liab']],
@@ -21,7 +22,7 @@ const LG_DOCS = {
     ['lg_t_chgH', ['lg_t_chg']],
     ['lg_t_lawH', ['lg_t_law']],
     ['lg_contactH', ['lg_t_contact']],
-    ['lg_histH', ['lg_h_t1910f', 'lg_h_t1910e', 'lg_h_t1910d', 'lg_h_t1910c', 'lg_h_t1910b', 'lg_h_t1910', 'lg_h_1810'], true]
+    ['lg_histH', ['lg_h_t2610', 'lg_h_t1910f', 'lg_h_t1910e', 'lg_h_t1910d', 'lg_h_t1910c', 'lg_h_t1910b', 'lg_h_t1910', 'lg_h_1810'], true]
   ]},
   cred: {t: 'lg_credT', ic: '🧾', parts: [
     ['', ['lg_c_intro']],
@@ -45,15 +46,74 @@ const LG_DOCS = {
   ]}
 };
 const lgE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+/* 13.55: every page is plain text with three simple marks – a blank line starts a new paragraph, a line that starts with "## " is a heading,
+   a line that starts with "- " is a bullet. The owner may replace a page from the admin version (lgedit.js); it is kept on the server per
+   language and read from legal.json. The text is always built with textContent – never as HTML. */
+const lgLine = s => String(s == null ? '' : s).replace(/\s*\n\s*/g, ' ').trim();
+function lgDefault(k){
+  const D = LG_DOCS[k]; if (!D) return '';
+  return D.parts.map(([h, L, list]) => (h ? '## ' + lgLine(t(h)) + '\n\n' : '') + (list ? L.map(x => '- ' + lgLine(t(x))).join('\n') : L.map(x => lgLine(t(x))).join('\n\n'))).join('\n\n');
+}
+function lgRender(box, txt){
+  box.textContent = '';
+  let ul = null, p = null;
+  String(txt == null ? '' : txt).replace(/\r\n?/g, '\n').split('\n').forEach(line => {
+    const s = line.trim();
+    if (!s){ ul = null; p = null; return; }
+    if (/^##\s/.test(s)){ ul = null; p = null; const h = document.createElement('h4'); h.textContent = s.replace(/^##\s+/, ''); box.appendChild(h); return; }
+    if (/^-\s/.test(s)){ p = null; if (!ul){ ul = document.createElement('ul'); box.appendChild(ul); } const li = document.createElement('li'); li.textContent = s.replace(/^-\s+/, ''); ul.appendChild(li); return; }
+    ul = null;
+    if (p){ p.appendChild(document.createElement('br')); p.appendChild(document.createTextNode(s)); }
+    else { p = document.createElement('p'); p.textContent = s; box.appendChild(p); }
+  });
+}
+/* the owner's texts: {terms: {he: {x, at}}, …}. The last copy is kept on the phone so the page opens at once (and offline) */
+var LGX = null, LGX_AT = 0, LGX_P = null;
+try { const c0 = JSON.parse(RAWLS.getItem('fin-lgx') || 'null'); if (c0 && c0.d && typeof c0.d === 'object') LGX = c0.d; } catch (e) {}
+function lgxSet(d){
+  const v = d && typeof d === 'object' ? d : {}, was = JSON.stringify(LGX || {}), now = JSON.stringify(v);
+  LGX = v; LGX_AT = Date.now();
+  try { if (Object.keys(v).length) RAWLS.setItem('fin-lgx', JSON.stringify({d: v})); else RAWLS.removeItem('fin-lgx'); } catch (e) {}
+  return was !== now;
+}
+function lgxLoad(){
+  if (LGX_P) return LGX_P;
+  if (LGX_AT && Date.now() - LGX_AT < 300000) return Promise.resolve(false);
+  const url = ((typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? SITE_BASE : '') + 'legal.json?t=' + Math.floor(Date.now() / 60000);
+  LGX_P = fetch(url, {cache: 'no-store', credentials: 'omit'}).then(r => r.ok ? r.json() : null).then(j => {
+    LGX_P = null; if (!j || typeof j !== 'object' || !j.d || typeof j.d !== 'object'){ LGX_AT = Date.now(); return false; } return lgxSet(j.d);
+  }, () => { LGX_P = null; LGX_AT = Date.now(); return false; });
+  return LGX_P;
+}
+/* the owner's text for this page in this language, if there is one */
+function lgEdited(k){ const d = LGX && LGX[k] && LGX[k][lang]; return d && typeof d.x === 'string' && d.x.trim() ? d : null; }
+const lgDay = ms => { const d = new Date(+ms); return isNaN(d) ? LG_DATE : String(d.getDate()).padStart(2, '0') + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + d.getFullYear(); };
+var LG_CUR = '';
+function lgPaint(k){
+  const D = LG_DOCS[k], box = $('#lgx_b'); if (!D || !box) return;
+  const ed = lgEdited(k);
+  box.innerHTML = `<div class="lg-doc"></div>`
+    + (D.extra ? D.extra() : '')
+    + `<div class="btnrow"><button type="button" class="btn" data-lgfb="1">💬 ${lgE(t('lg_write'))}</button></div><div class="btnrow lg-other">${Object.keys(LG_DOCS).filter(x => x !== k).map(x => `<button type="button" class="mv wide" data-lgo="${x}">${LG_DOCS[x].ic} ${lgE(t(LG_DOCS[x].t))}</button>`).join('')}</div>`
+    + `<p class="fine">${lgE(t('lg_updated', {d: ed ? lgDay(ed.at) : LG_DATE}))} · ${lgE(t('lg_notLegal'))}</p>`;
+  lgRender(box.querySelector('.lg-doc'), ed ? ed.x : lgDefault(k));
+}
 function lgOpen(k){
   const D = LG_DOCS[k]; if (!D) return;
   if (!$('#lgx')) document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="lgx" hidden><div class="cp-box lg-box" role="dialog" aria-modal="true" aria-labelledby="lgx_t"><div class="cp-top"><h3 id="lgx_t"></h3><button type="button" class="cp-x" id="lgx_x">×</button></div><div class="lg-body" id="lgx_b" tabindex="0"></div></div></div>`);
   $('#lgx_x').setAttribute('aria-label', t('cp_close'));
   $('#lgx_t').textContent = D.ic + ' ' + t(D.t);
-  $('#lgx_b').innerHTML = D.parts.map(([h, L, list]) => (h ? `<h4>${lgE(t(h))}</h4>` : '') + (list ? `<ul>${L.map(x => `<li>${lgE(t(x))}</li>`).join('')}</ul>` : L.map(x => `<p>${lgE(t(x))}</p>`).join(''))).join('')
-    + (D.extra ? D.extra() : '')
-    + `<div class="btnrow"><button type="button" class="btn" data-lgfb="1">💬 ${lgE(t('lg_write'))}</button></div><div class="btnrow lg-other">${Object.keys(LG_DOCS).filter(x => x !== k).map(x => `<button type="button" class="mv wide" data-lgo="${x}">${LG_DOCS[x].ic} ${lgE(t(LG_DOCS[x].t))}</button>`).join('')}</div>`
-    + `<p class="fine">${lgE(t('lg_updated', {d: LG_DATE}))} · ${lgE(t('lg_notLegal'))}</p>`;
+  LG_CUR = k;
+  const fresh = LGX_AT && Date.now() - LGX_AT < 300000;
+  if (LGX || fresh || k === 'cred') lgPaint(k);
+  else { const b = $('#lgx_b'); b.textContent = ''; const w = document.createElement('p'); w.className = 'fine'; w.textContent = t('lg_loading'); b.appendChild(w); }
+  if (!fresh && k !== 'cred'){
+    const my = k, first = !LGX;
+    Promise.race([lgxLoad(), new Promise(r => setTimeout(() => r(null), 2500))]).then(ch => {
+      const o = $('#lgx'); if (!o || o.hidden || LG_CUR !== my || $('#lge_ta')) return;
+      if (ch || first || !$('#lgx_b .lg-doc')){ const sc = $('#lgx_b').scrollTop; lgPaint(my); $('#lgx_b').scrollTop = sc; }
+    });
+  }
   $('#lgx').hidden = false; document.body.classList.add('cp-lock'); $('#lgx_b').scrollTop = 0; setTimeout(() => { try { $('#lgx_x').focus(); } catch (e) {} }, 30);
 }
 function lgClose(){ const o = $('#lgx'); if (o){ o.hidden = true; document.body.classList.remove('cp-lock'); } }
@@ -73,7 +133,7 @@ document.addEventListener('click', e => {
   if (t0.closest('#lgx_x') || t0.id === 'lgx'){ lgClose(); return; }
   if (t0.closest('[data-lgfb]')){ lgClose(); try { activate('settings'); } catch (er) {} setTimeout(() => { try { if (typeof setCat === 'function') setCat('system'); } catch (er) {} setTimeout(() => { const f = $('#fb_box'); if (f){ f.scrollIntoView({block: 'start', behavior: 'smooth'}); const ta = f.querySelector('textarea'); if (ta) ta.focus({preventScroll: true}); } }, 250); }, 120); return; }
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#lgx') && !$('#lgx').hidden) lgClose(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#lgx') && !$('#lgx').hidden && !(e.target && e.target.id === 'lge_ta')) lgClose(); });   // 13.55: Escape in the owner's editor box does not throw the text away
 try { lgMount(); } catch (e) {}
 setTimeout(() => { try { lgMount(); } catch (e) {} }, 1200);
 {

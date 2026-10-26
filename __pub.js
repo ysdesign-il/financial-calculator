@@ -1,4 +1,4 @@
-window.__ADMPUBCFG={"parts": [["assist", "לשונית העוזר", ".nav [data-tab=\"assist\"]"], ["clients", "לשונית הלקוחות", ".nav [data-tab=\"clients\"]"], ["expenses", "לשונית ההוצאות", ".nav [data-tab=\"expenses\"]"]], "accent": "#8CC8FF", "priv": "fin-priv"};
+window.__ADMPUBCFG={"parts": [["assist", "לשונית העוזר", ".nav [data-tab=\"assist\"]"], ["clients", "לשונית הלקוחות", ".nav [data-tab=\"clients\"]"], ["expenses", "לשונית ההוצאות", ".nav [data-tab=\"expenses\"]"], ["beta", "תג ״גרסת ניסיון״ ליד שם האפליקציה", ".beta-pill,.beta-note"]], "accent": "#8CC8FF", "priv": "fin-priv"};
 (function(){'use strict';if(location.pathname.indexOf('/admin')===0||window.__ADMPUB)return;window.__ADMPUB=1;
 var P=window.__ADMPUBCFG||{},L=(document.documentElement.lang||'he').slice(0,2);
 var E=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};

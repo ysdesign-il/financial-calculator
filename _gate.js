@@ -64,6 +64,17 @@ async function cfgOf(app,env,o,fresh){const c=CFGMEM.get(app);if(!fresh&&c&&Date
   else if(o&&o.upstream){try{const r=await fetch(o.upstream+'/cfg.json'+(fresh?'?nc=1':''),{cf:{cacheTtl:fresh?0:15}});if(r.ok)v=await r.json()}catch(e){}}
   if(v==null)return c?c.v:{};CFGMEM.set(app,{at:Date.now(),v});if(CFGMEM.size>20)CFGMEM.clear();return v}
 export async function publicConfig(app,env,o,req){let fresh=false;try{fresh=!!req&&new URL(req.url).searchParams.get('nc')==='1'}catch(e){}return J(await cfgOf(app,env,o,fresh),200,{'cache-control':'public, max-age=20','access-control-allow-origin':'*'})}
+/* ---------- texts the owner edits in the app (13.55: the legal pages), one KV key doc:<app> = {d:{<doc>:{<lang>:{x,at}}}} ----------
+   Anyone may read them (/legal.json, asked for only when a page is opened); only the admin version writes (/admin/__docs, below).
+   Plain text only – the app builds the page with textContent, never as HTML. Each text is capped at DOC_MAX characters. */
+const DOCMEM=new Map(),DOC_MAX=30000,DOC_LANG=/^[a-z]{2}(-[A-Z]{2})?$/;
+async function docsOf(app,env,o,fresh){const c=DOCMEM.get(app);if(!fresh&&c&&Date.now()-c.at<15e3)return c.v;let v=null;
+  if(env&&env.CFG)v=await kvGet(env,'doc:'+app,{d:{}});
+  else if(o&&o.upstream){try{const r=await fetch(o.upstream+'/legal.json'+(fresh?'?nc=1':''),{cf:{cacheTtl:fresh?0:15}});if(r.ok)v=await r.json()}catch(e){}}
+  if(v==null||typeof v!=='object')return c?c.v:{d:{}};if(!v.d||typeof v.d!=='object')v.d={};DOCMEM.set(app,{at:Date.now(),v});if(DOCMEM.size>20)DOCMEM.clear();return v}
+export async function publicDocs(app,env,o,req){if(req&&req.method!=='GET'&&req.method!=='HEAD')return J({ok:false},405);let fresh=false;try{fresh=!!req&&new URL(req.url).searchParams.get('nc')==='1'}catch(e){}
+  return J(await docsOf(app,env,o,fresh),200,{'cache-control':'public, max-age=20','access-control-allow-origin':'*'})}
+const docClean=x=>String(x==null?'':x).replace(/\r\n?/g,'\n').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g,'');
 /* health check read by the admin panels of the three apps: is the site up, which version is live, what is switched on */
 export async function ping(app,env,o,asset){let v='',b='';
   try{const r=await asset('/version.json');if(r&&r.ok){const j=await r.json();v=String(j.v||'');b=String(j.build||'')}}catch(e){}
@@ -166,6 +177,16 @@ export async function adminGate(req,serve,o,env){
       {const prev=await env.CFG.get('cfg:'+o.app);if(prev&&prev!==txt){const hk='hi:'+o.app,H=await kvGet(env,hk,[]);let c={};try{c=JSON.parse(prev)}catch(e){}H.push({at:Date.now(),t:String(d.log&&d.log.t||'שינוי הגדרות').slice(0,200),c});await env.CFG.put(hk,JSON.stringify(H.slice(-25)))}}
       await env.CFG.put('cfg:'+o.app,txt);CFGMEM.set(o.app,{at:Date.now(),v:d.cfg});if(d.log&&d.log.t){st.log=(st.log||[]).concat({at:Date.now(),t:String(d.log.t).slice(0,200)}).slice(-300);await env.CFG.put(sk,JSON.stringify(st))}
       return J({ok:true,state:st})}
+    if(p==='/admin/__docs'&&(o.docs||[]).length){if(req.method!=='POST')return J({ok:true,docs:await docsOf(o.app,env,o,true)});
+      let d=null;try{d=await req.json()}catch(e){}if(!d||(o.docs||[]).indexOf(d.doc)<0||typeof d.l!=='string'||!DOC_LANG.test(d.l))return J({ok:false,e:'bad'},400);
+      const D=await kvGet(env,'doc:'+o.app,{d:{}});if(!D.d||typeof D.d!=='object')D.d={};const cur=D.d[d.doc]||{};let t;
+      if(d.reset){delete cur[d.l];t='מסמך חזר לנוסח המקורי: '+d.doc+' ('+d.l+')'}
+      else{const x=docClean(d.x);if(typeof d.x!=='string'||!x.trim())return J({ok:false,e:'empty'},400);if(x.length>DOC_MAX)return J({ok:false,e:'big',max:DOC_MAX},413);
+        cur[d.l]={x,at:Date.now()};t='מסמך נשמר לכולם: '+d.doc+' ('+d.l+')'}
+      if(Object.keys(cur).length)D.d[d.doc]=cur;else delete D.d[d.doc];
+      await env.CFG.put('doc:'+o.app,JSON.stringify(D));DOCMEM.set(o.app,{at:Date.now(),v:D});
+      st.log=(st.log||[]).concat({at:Date.now(),t}).slice(-300);await env.CFG.put(sk,JSON.stringify(st));
+      return J({ok:true,docs:D})}
     return J({ok:false},404)}
   const r=await serve(req);const hd=new Headers(r.headers);for(const k in SEC)hd.set(k,SEC[k]);
   if((hd.get('content-type')||'').includes('text/html')){hd.delete('content-length');const shim=keyShim(o,await devKey(env,o,id));let t=(await r.text()).replace('</body>','<script src="/admin/__kit.js" defer></script>'+(o.bridge?'<script>'+o.bridge+'</script>':'')+'</body>');t=t.replace(/<head[^>]*>/i,m=>m+'<script>window.__FIN_ADMSES__=1</script>');t=/<head[^>]*>/i.test(t)?t.replace(/<head[^>]*>/i,m=>m+shim):shim+t;return new Response(t,{status:r.status,headers:hd})}

@@ -9,7 +9,7 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "none",
     "binding": "ASSETS",
-    "run_worker_first": ["/admin", "/admin/*", "/cfg.json", "/__err", "/__ping", "/gf/*"]
+    "run_worker_first": ["/admin", "/admin/*", "/cfg.json", "/legal.json", "/__err", "/__ping", "/gf/*"]
   },
   "kv_namespaces": [{ "binding": "CFG", "id": "a44762eefe234d5ebaf128cc9aba83ec" }],
   // preview versions (made by the automatic updates) need their own KV entry; they use the same settings
