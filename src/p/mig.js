@@ -61,10 +61,12 @@ window.addEventListener('message', e => {
 /* ---------- the new address ---------- */
 function migApply(items){
   if (!items || typeof items !== 'object') return false;
-  const keys = Object.keys(items).filter(k => /^fin-[\w:.\-+=/]*$/.test(k) && k !== 'fin-migrated' && typeof items[k] === 'string');
+  // never on the owner pages, and never the owner's keys or code drafts (a crafted link must not be able to plant them)
+  if (/^\/admin(\/|$)/.test(location.pathname)) return false;
+  const keys = Object.keys(items).filter(k => /^fin-[\w:.\-+=/]*$/.test(k) && k !== 'fin-migrated' && !/^fin-(dev|ibkey|fam$|fam-)/.test(k) && typeof items[k] === 'string');
   if (!keys.length) return false;
   let mine = 0; try { mine = migKeys().filter(k => !['fin-lang', 'fin-ver', 'fin-tab', 'fin-upd-ntf'].includes(k)).length; } catch (e) {}
-  if (mine > 2 && !confirm(t('mig_over'))) return false;
+  if (!confirm(t('mig_over'))) return false;
   keys.forEach(k => { try { RAWLS.setItem(k, items[k]); } catch (e) {} });
   return true;
 }

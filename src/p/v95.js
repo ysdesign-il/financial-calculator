@@ -85,7 +85,7 @@ function ibDraw(){
     ${IB.list.some(i => i.locked) ? (IN_CLAUDE ? `<p class="fine bad">${E95(t('ib_nokey'))}</p>` : `<div class="bk-box ib-keybox"><p class="fine">🔑 ${E95(t('ib_needKey'))}</p><input id="ib_keyin" dir="ltr" autocomplete="off" spellcheck="false" data-pii-ok placeholder="fck1.…"><button type="button" class="lc-add" id="ib_keyset">${E95(t('ib_keySet'))}</button></div>`) : ''}
     ${IN_CLAUDE ? `<div class="bk-acts"><button type="button" class="lc-add" id="ib_link">🔗 ${E95(t('ib_link'))}</button></div>` : `<p class="fine">${E95(t('ib_siteNote'))}</p>`}
     <div class="fb-list ib-list">${L.length ? L.map(i => `<div class="fb-it${(i.at || 0) > seen ? ' ib-new' : ''}">
-      <div class="ib-h"><b>${i.locked ? '🔒' : E95(t('fb_k_' + i.k) || i.k || '')}</b>${i.r ? ` <span class="fb-r">${'★'.repeat(i.r)}</span>` : ''}<span class="ib-src">${E95(t('ib_s_' + i.src))}</span>
+      <div class="ib-h"><b>${i.locked ? '🔒' : E95(t('fb_k_' + i.k) || i.k || '')}</b>${i.r ? ` <span class="fb-r">${'★'.repeat(Math.max(0, Math.min(5, i.r | 0)))}</span>` : ''}<span class="ib-src">${E95(t('ib_s_' + i.src))}</span>
       <button type="button" class="lc-del" data-ibdel="${E95(i.id)}" aria-label="${E95(t('ins_del'))}">✕</button></div>
       <small>${E95(svdDate(i.at))}${i.v ? ' · ' + E95(i.v) : ''}${i.s ? ' · ' + E95(t('tab_' + i.s)) : ''}</small>
       ${i.e ? `<a class="fb-mail" dir="ltr" href="mailto:${E95(i.e)}">✉️ ${E95(i.e)}</a>` : ''}${i.m ? `<p dir="auto">${E95(i.m)}</p>` : ''}

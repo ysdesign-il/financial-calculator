@@ -258,7 +258,11 @@ def inbox_pull(log):
         msg = str(e.get("message") or "")
         if e.get("event") != "message" or e.get("id") in have or len(msg) > 6000:
             continue
+        if n >= 40 and nr >= 40:                       # a flood of messages: take at most 40 of each kind per run
+            break
         if msg.startswith("fr1."):                     # a developer reply, locked for one sender
+            if nr >= 40:
+                continue
             p = msg.split(".")
             if len(p) == 4:
                 reps.setdefault("r", []).append({"id": p[1][:24], "c": p[2] + "." + p[3], "t": int(e.get("time") or 0), "e": e["id"]})
@@ -267,7 +271,7 @@ def inbox_pull(log):
         if msg.startswith("fcs1."):                    # a signed family sign-in change
             family_cmd(msg, log)
             continue
-        if not msg.startswith("fc1."):
+        if not msg.startswith("fc1.") or n >= 40:
             continue
         box["m"].append({"id": e["id"], "t": int(e.get("time") or 0), "c": msg})
         have.add(e["id"]); n += 1
