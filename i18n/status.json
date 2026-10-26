@@ -1,10 +1,9 @@
 {
- "started": "2026-10-25 19:09:08 UTC",
+ "started": "2026-10-26 01:26:25 UTC",
  "events": [
-  "  gemini gemini-flash-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
-  "  gemini gemini-3.8-flash: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
-  "  gemini gemini-3.8-flash: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
   "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
+  "  gemini gemini-3.8-flash: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
+  "  gemini gemini-3.8-flash: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
   "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex"
  ],
  "langs": {
@@ -16,7 +15,7 @@
   "zh-CN": 9377,
   "hi": 9379
  },
- "finished": "2026-10-25 19:12:51 UTC",
+ "finished": "2026-10-26 01:28:00 UTC",
  "coverage": {
   "zh-CN": 9377,
   "fr": 9385,
