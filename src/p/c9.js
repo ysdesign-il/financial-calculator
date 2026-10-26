@@ -67,7 +67,47 @@ CALC.loan = function(){
   res.note = (res.note ? res.note + ' ' : '') + t(parts ? 'n_lPrime' : 'n_lMode');
   return res;
 };
-document.addEventListener('input', e => { if (e.target && e.target.id === 'l_boi') e.target.dataset.user = '1'; }, true);
+document.addEventListener('input', e => { if (e.target && (e.target.id === 'l_boi' || e.target.id === 'l_cpi')) e.target.dataset.user = '1'; }, true);
+/* 13.6x: fixed or variable, linked to the CPI or not, and prime that follows the Bank of Israel – each shown plainly */
+const calcLoan87 = CALC.loan;
+CALC.loan = function(){
+  const mode = ($('#l_mode') || {}).value || 'pay';
+  if (mode === 'rate') return calcLoan87.apply(this, arguments);
+  /* the expected CPI follows the live 12-month figure until you type your own */
+  const ce = $('#l_cpi');
+  if (ce && !ce.dataset.user && typeof MKT === 'object' && isFinite(+MKT.cpi) && Math.abs(v('l_cpi') - (+MKT.cpi)) > 1e-9){ ce.value = String(Math.round(+MKT.cpi * 100) / 100); }
+  const res = calcLoan87.apply(this, arguments);
+  if (!res || !res.rows) return res;
+  const rt = ($('#l_rateType') || {}).value || 'fixed', linked = rt !== 'prime' && (($('#l_link') || {}).value || 'none') === 'cpi';
+  const type = ($('#l_type') || {}).value || 'annuity', amt = Math.max(0, v('l_amount')), n = Math.max(1, Math.round(clamp(v('l_years'), 0.25, 50) * 12));
+  const rate = Math.max(0, rt === 'prime' ? v('l_boi') + v('l_spread') + v('l_margin') : v('l_rate')), cpi = linked ? v('l_cpi') : 0;
+  const kind = t(rt === 'prime' ? 'r_lkPrime' : rt === 'var' ? 'r_lkVar' : 'r_lkFix') + ' · ' + t(linked ? 'r_lkCpi' : 'r_lkNoCpi');
+  const top = [[t('r_lKind'), kind, 'key']];
+  const cur = rt === 'prime' && typeof MKT === 'object' && MKT.boi > 0 ? MKT.boi : NaN;
+  if (rt === 'prime' && isFinite(cur)) top.push([t('r_lBoiNow'), PC(cur) + (MKT.boiDate ? ' · ' + MKT.boiDate : '')], [t('r_lPrimeNow'), PC(cur + 1.5)]);
+  if (rt === 'fixed' && !linked) top.push([t('r_lFixNote'), t('r_lFixNoteV')]);
+  if (rt === 'var'){
+    const every = clamp(v('l_varEvery'), 1, 30), chg = v('l_varChg') || 0;
+    top.push([t('r_lVarEvery'), t('r_lEveryY', {y: N(every, 0)})]);
+    if (chg){ const last = rate + chg * Math.floor((n - 1) / Math.round(every * 12)); top.push([t('r_lLastRate'), PC(Math.max(0, last))]); }
+  }
+  if (rt === 'prime'){ const chg = v('l_boiChg') || 0; if (chg) top.push([t('r_lLastRate'), PC(Math.max(0, rate + chg * Math.floor((n - 1) / 12)))]); }
+  if (linked) top.push([t('r_lCpiExp'), PC(cpi) + ' ' + t('r_lPerYear')]);
+  /* what one more percent would do, for a rate that can move */
+  if (rt !== 'fixed' && amt > 0){
+    const base = loanSim({amt, rate, n, type, grace: 0, ci: cpi, extra: 0, pre: 0, preM: 1});
+    const up = loanSim({amt, rate: rate + 1, n, type, grace: 0, ci: cpi, extra: 0, pre: 0, preM: 1});
+    if (base[0] && up[0]) top.push([t('r_lUp1'), M(up[0].pay, 2) + ' (+' + M(up[0].pay - base[0].pay, 2) + ')']);
+  }
+  if (linked && amt > 0){
+    const flat = loanSim({amt, rate, n, type, grace: 0, ci: 0, extra: 0, pre: 0, preM: 1}), lk = loanSim({amt, rate, n, type, grace: 0, ci: cpi, extra: 0, pre: 0, preM: 1});
+    const s = a => a.reduce((x, y) => x + y.pay, 0);
+    top.push([t('r_lCpiCost'), M(s(lk) - s(flat))]);
+  }
+  res.rows = top.concat(res.rows);
+  res.note = (res.note ? res.note + ' ' : '') + t(rt === 'prime' ? 'n_lkPrime' : rt === 'var' ? 'n_lkVar' : 'n_lkFix') + (linked ? ' ' + t('n_lkCpi') : '');
+  return res;
+};
 /* 13.44: the interest a loan really carries – from the amount, the years and the monthly payment */
 function loanRateOf(type, A, n, P){              // monthly rate (NaN: the payment can't repay the loan)
   if (!(A > 0) || !(P > 0) || !(n > 0)) return NaN;
@@ -91,7 +131,7 @@ CALC.loan = function(){
   }
   const nom = r * 1200, eff = (Math.pow(1 + r, 12) - 1) * 100;
   loanSet('l_rate', nom);
-  const keep = [['l_mode', 'pay'], ['l_rateType', 'fixed']]; keep.forEach(([id, val]) => { const e = document.getElementById(id); if (e){ if (!LOAN_KEEP.some(x => x[0] === id)) LOAN_KEEP.push([id, e.value]); e.value = val; } });
+  const keep = [['l_mode', 'pay'], ['l_rateType', 'fixed'], ['l_link', 'none']]; keep.forEach(([id, val]) => { const e = document.getElementById(id); if (e){ if (!LOAN_KEEP.some(x => x[0] === id)) LOAN_KEEP.push([id, e.value]); e.value = val; } });
   const res = calcLoan86.apply(this, arguments);
   if (!res || !res.rows) return res;
   const sim = loanSim({amt: A, rate: nom, n, type, grace: 0, ci: 0, extra: 0, pre: 0, preM: 1});
@@ -114,9 +154,40 @@ CALC.loan = function(){
 /* in that mode the rate is the answer, so its fields step aside */
 { const awLoan = applyWhen; applyWhen = function(id){ const r = awLoan.apply(this, arguments);
   if (id === 'loan'){ const rm = (($('#l_mode') || {}).value) === 'rate';
-    ['l_rateType', 'l_rate', 'l_boi', 'l_spread', 'l_margin'].forEach(k => { const f = $('#' + k), b = f && f.closest('.field'); if (b && rm) b.hidden = true; }); }
+    ['l_rateType', 'l_rate', 'l_boi', 'l_spread', 'l_margin', 'l_boiChg', 'l_varEvery', 'l_varChg', 'l_link', 'l_cpi'].forEach(k => { const f = $('#' + k), b = f && f.closest('.field'); if (b && rm) b.hidden = true; });
+    /* a prime loan is never linked to the CPI, so the CPI field goes with the linkage choice */
+    const pr = (($('#l_rateType') || {}).value) === 'prime', c = $('#l_cpi'), cb = c && c.closest('.field'); if (cb && pr) cb.hidden = true; }
   return r; }; }
 Object.assign(T, {
+  o_lrVar:['ריבית משתנה (מתעדכנת כל כמה שנים)','فائدة متغيرة (تتحدث كل بضع سنوات)','Variable rate (resets every few years)'],
+  h_lRateBank:['הריבית שהבנק נותן לכם, כמו שכתוב בהצעה או בהסכם.','الفائدة التي يمنحها لكم البنك كما في العرض أو الاتفاق.','The rate the bank gives you, as written in the offer or contract.'],
+  f_lVarEvery:['הריבית מתעדכנת כל','تتحدث الفائدة كل','The rate resets every'],
+  h_lVarEvery:['בדרך כלל כל 5 שנים. בתחנת העדכון הריבית נקבעת מחדש לפי השוק.','عادة كل 5 سنوات. عند موعد التحديث تُحدَّد الفائدة من جديد حسب السوق.','Usually every 5 years. At each reset the rate is set again by the market.'],
+  f_lVarChg:['שינוי צפוי בכל עדכון','تغيير متوقع عند كل تحديث','Expected change at each reset'],
+  h_lVarChg:['למשל 0.5 אם אתם מעריכים שהריבית תעלה בחצי אחוז בכל עדכון, או מינוס אם תרד. 0 = נשארת כמו היום.','مثلًا 0.5 إذا توقعتم ارتفاع الفائدة نصف بالمئة عند كل تحديث، أو بالسالب إذا انخفضت. 0 = تبقى كما اليوم.','E.g. 0.5 if you expect the rate to rise half a percent at each reset, or negative if it falls. 0 = stays as today.'],
+  f_lBoiChg:['שינוי צפוי בריבית בנק ישראל בכל שנה','تغيير متوقع في فائدة بنك إسرائيل كل سنة','Expected change in the Bank of Israel rate each year'],
+  h_lBoiChg:['ריבית הפריים זזה עם ריבית בנק ישראל. 0 = נשארת כמו היום. למשל −0.25 אם אתם מעריכים ירידה של רבע אחוז בשנה.','فائدة البرايم تتحرك مع فائدة بنك إسرائيل. 0 = تبقى كما اليوم. مثلًا −0.25 إذا توقعتم انخفاض ربع بالمئة سنويًا.','Prime moves with the Bank of Israel rate. 0 = stays as today. E.g. −0.25 if you expect a quarter-percent drop a year.'],
+  f_lLink:['הצמדה למדד','الربط بالمؤشر','CPI linkage'],
+  o_llNone:['לא צמודה למדד','غير مربوط بالمؤشر','Not linked to the CPI'],
+  o_llCpi:['צמודה למדד המחירים לצרכן','مربوط بمؤشر أسعار المستهلك','Linked to the consumer price index'],
+  h_lLink:['בהלוואה צמודה, יתרת החוב עולה יחד עם המדד. הריבית בדרך כלל נמוכה יותר, אבל ההחזר והחוב גדלים עם האינפלציה.','في القرض المربوط يرتفع رصيد الدين مع المؤشر. الفائدة عادة أقل، لكن القسط والدين يكبران مع التضخم.','In a linked loan the balance rises with the CPI. The rate is usually lower, but the payment and the debt grow with inflation.'],
+  h_lCpi:['מתעדכן אוטומטית לפי המדד ב-12 החודשים האחרונים. אפשר לשנות כדי לבדוק תרחיש.','يتحدث تلقائيًا حسب المؤشر في آخر 12 شهرًا. يمكن تغييره لفحص سيناريو.','Updates automatically from the CPI over the last 12 months. Change it to test a scenario.'],
+  r_lKind:['סוג ההלוואה','نوع القرض','Loan type'],
+  r_lkFix:['ריבית קבועה','فائدة ثابتة','Fixed rate'], r_lkVar:['ריבית משתנה','فائدة متغيرة','Variable rate'], r_lkPrime:['פריים','برايم','Prime'],
+  r_lkCpi:['צמודה למדד','مربوط بالمؤشر','CPI-linked'], r_lkNoCpi:['לא צמודה','غير مربوط','Not linked'],
+  r_lBoiNow:['ריבית בנק ישראל היום','فائدة بنك إسرائيل اليوم','Bank of Israel rate today'],
+  r_lPrimeNow:['ריבית הפריים היום','فائدة البرايم اليوم','Prime rate today'],
+  r_lFixNote:['ההחזר','القسط','The payment'], r_lFixNoteV:['ידוע מראש ולא משתנה','معروف مسبقًا ولا يتغير','Known in advance and doesn’t change'],
+  r_lVarEvery:['עדכון ריבית','تحديث الفائدة','Rate reset'], r_lEveryY:['כל {y} שנים','كل {y} سنوات','Every {y} years'],
+  r_lLastRate:['הריבית בתקופה האחרונה (לפי ההערכה)','الفائدة في الفترة الأخيرة (حسب التقدير)','Rate in the last period (by your estimate)'],
+  r_lCpiExp:['מדד צפוי','مؤشر متوقع','Expected CPI'], r_lPerYear:['בשנה','سنويًا','a year'],
+  r_lUp1:['אם הריבית תעלה ב-1% – החזר ראשון','إذا ارتفعت الفائدة 1% – القسط الأول','If the rate rises 1% – first payment'],
+  r_lCpiCost:['כמה יותר תשלמו בגלל ההצמדה (כולל הריבית עליה)','كم ستدفعون أكثر بسبب الربط (مع الفائدة عليه)','How much more you pay because of the linkage (with its interest)'],
+  r_idxLess:['ההצמדה הקטינה את החוב ב','الربط خفّض الدين بـ','Linkage lowered the debt by'],
+  n_lkFix:['ריבית קבועה לא משתנה לאורך כל ההלוואה.','الفائدة الثابتة لا تتغير طوال القرض.','A fixed rate stays the same for the whole loan.'],
+  n_lkVar:['בריבית משתנה הריבית נקבעת מחדש בכל תחנת עדכון. החישוב מניח את השינוי שכתבתם – בפועל הוא לא ידוע מראש.','في الفائدة المتغيرة تُحدَّد الفائدة من جديد عند كل تحديث. يفترض الحساب التغيير الذي كتبتم – فعليًا هو غير معروف مسبقًا.','A variable rate is set again at each reset. The calculation assumes the change you entered – in reality it isn’t known in advance.'],
+  n_lkPrime:['פריים = ריבית בנק ישראל + 1.5%. כשבנק ישראל משנה ריבית, ההחזר משתנה כבר מהחודש הבא. ריבית בנק ישראל מתעדכנת כאן אוטומטית.','البرايم = فائدة بنك إسرائيل + 1.5%. عندما يغيّر بنك إسرائيل الفائدة يتغير القسط من الشهر التالي. تتحدث فائدة بنك إسرائيل هنا تلقائيًا.','Prime = Bank of Israel rate + 1.5%. When the Bank of Israel changes its rate, the payment changes from the next month. The Bank of Israel rate updates here automatically.'],
+  n_lkCpi:['בהלוואה צמודה הקרן מתעדכנת כל חודש לפי המדד, ולכן גם ההחזר. החישוב לפי המדד הצפוי שכתבתם.','في القرض المربوط يُحدَّث الأصل شهريًا حسب المؤشر، ولذلك القسط أيضًا. الحساب حسب المؤشر المتوقع الذي كتبتم.','In a linked loan the principal is updated monthly by the CPI, and so is the payment. Calculated with the expected CPI you entered.'],
   o_lmRate:['כמה ריבית אני משלם/ת – לפי סכום, שנים והחזר','كم فائدة أدفع – حسب المبلغ والسنوات والقسط','What interest I pay – from amount, years and payment'],
   r_lRate:['הריבית השנתית על ההלוואה','الفائدة السنوية على القرض','The loan’s yearly interest'],
   r_lRateSub:['ריבית אפקטיבית {e} · סה״כ ריבית {i}','فائدة فعلية {e} · مجموع الفائدة {i}','Effective {e} · total interest {i}'],

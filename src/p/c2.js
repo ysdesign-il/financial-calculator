@@ -85,12 +85,13 @@ function calcCapital(){
 
 /* --- loan engine --- */
 function loanSim(o){
-  const r = o.rate / 1200, ci = Math.pow(1 + o.ci / 100, 1 / 12) - 1;
+  const r0 = o.rate / 1200, ci = Math.pow(1 + o.ci / 100, 1 / 12) - 1;
   let bal = o.amt, m = 0;
   const out = [];
   while (bal > 0.005 && m < o.n){
     m++;
     const idx = bal * ci; bal += idx;
+    const r = o.rateAt ? Math.max(0, o.rateAt(m)) / 1200 : r0;          // a variable or prime rate can change along the way
     const int = bal * r, rem = o.n - m + 1;
     let pr;
     if (m <= o.grace) pr = 0;
@@ -121,14 +122,29 @@ function yearsOf(sim){
 function fmtDur(months){
   return t('w_yrsMonths', {y: Math.floor(months / 12), m: months % 12});
 }
+/* the rate month by month: fixed stays; variable changes at each reset; prime moves with the expected change in the Bank of Israel rate */
+function loanRatePath(rt, rate){
+  if (rt === 'var'){
+    const every = Math.max(1, Math.round(clamp(v('l_varEvery'), 1, 30) * 12)), chg = v('l_varChg') || 0;
+    if (!chg) return null;
+    return m => rate + chg * Math.floor((m - 1) / every);
+  }
+  if (rt === 'prime'){
+    const chg = v('l_boiChg') || 0;                       // percentage points per year
+    if (!chg) return null;
+    return m => rate + chg * Math.floor((m - 1) / 12);
+  }
+  return null;
+}
 function calcLoan(){
   const amt = Math.max(0, v('l_amount')), rate = Math.max(0, v('l_rate'));
   const yrs = clamp(v('l_years'), 0.25, 50), type = $('#l_type').value;
   const n = Math.max(1, Math.round(yrs * 12));
   const grace = clamp(Math.round(v('l_grace')), 0, n - 1);
   const extra = Math.max(0, v('l_extra')), pre = Math.max(0, v('l_pre')), preM = clamp(Math.round(v('l_preM')), 1, n);
-  const cpi = Math.max(0, v('l_cpi')), feePct = Math.max(0, v('l_feePct')), feeFix = Math.max(0, v('l_feeFix'));
-  const cfg = {amt, rate, n, type, grace, ci: cpi, extra: 0, pre: 0, preM};
+  const rt = ($('#l_rateType') || {}).value || 'fixed', linked = rt !== 'prime' && (($('#l_link') || {}).value || 'none') === 'cpi';
+  const cpi = linked ? v('l_cpi') : 0, feePct = Math.max(0, v('l_feePct')), feeFix = Math.max(0, v('l_feeFix'));
+  const cfg = {amt, rate, n, type, grace, ci: cpi, extra: 0, pre: 0, preM, rateAt: loanRatePath(rt, rate)};
   const base = loanSim(cfg);
   const has = extra > 0 || pre > 0;
   const sim = has ? loanSim(Object.assign({}, cfg, {extra, pre, mode: $('#l_after').value, base: base.map(x => x.pay)})) : base;
@@ -143,18 +159,18 @@ function calcLoan(){
   const apr = (Math.pow(1 + (lo + hi) / 2, 12) - 1) * 100;
   const first = sim[0] ? sim[0].pay : 0, last = sim.length ? sim[sim.length - 1].pay : 0;
   const peak = sim.reduce((a, c) => Math.max(a, c.pay), 0);
-  const grp0 = type === 'annuity' && !has && cpi === 0 && grace === 0;
+  const grp0 = type === 'annuity' && !has && cpi === 0 && grace === 0 && !cfg.rateAt;
   const rows = [[t(grp0 ? 'r_monthly' : 'r_firstPay'), M(first, 2)]];
   if (Math.abs(last - first) > 0.01) rows.push([t('r_lastPay'), M(last, 2)]);
   if (peak - first > 0.01 && peak - last > 0.01) rows.push([t('r_peakPay'), M(peak, 2)]);
   rows.push([t('r_loanAmt'), M(amt)], [t('r_totInt'), M(totalInt)]);
-  if (idxTot > 0) rows.push([t('r_idxAdd'), M(idxTot)]);
+  if (Math.abs(idxTot) > 0.005) rows.push([t(idxTot >= 0 ? 'r_idxAdd' : 'r_idxLess'), M(Math.abs(idxTot))]);
   if (fee > 0) rows.push([t('r_feeTotal'), M(fee)]);
   rows.push([t('r_totPaid'), M(paid + fee), 'key'],
     [t('r_intPct'), PC(amt > 0 ? totalInt / amt * 100 : NaN)],
     [t('r_numPay'), N(sim.length, 0)],
     [t('r_payoff'), fmtDur(sim.length)]);
-  if (fee > 0 || cpi > 0) rows.push([t('r_apr'), PC(apr)]);
+  if (fee > 0 || cpi !== 0) rows.push([t('r_apr'), PC(apr)]);
   if (has){
     rows.push([t('r_intSaved'), M(sum(base, 'int') - totalInt)], [t('r_monthsSaved'), fmtDur(Math.max(0, base.length - sim.length))]);
   }
@@ -164,7 +180,7 @@ function calcLoan(){
     {name: t('l_interest'), cls:'c-warm', values: Y.map(y => y.int)}
   ];
   if (idxTot > 0) layers.push({name: t('r_idxAdd'), cls:'c-soft', values: Y.map(y => y.idx)});
-  const grp = type === 'annuity' && !has && cpi === 0 && grace === 0;
+  const grp = grp0;
   return {
     hero: {label: t(grp ? 'r_monthly' : 'r_firstPay'), value: M(first, 2), sub: t('r_totInt') + ': ' + M(totalInt)},
     rows,
