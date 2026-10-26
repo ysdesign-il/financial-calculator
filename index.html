@@ -2543,6 +2543,29 @@ body:has(#panel-mathx:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 .sp-row:has(.sp-cur){grid-template-columns:28px minmax(0,.85fr) minmax(0,1.6fr) 34px}.sp-row .sp-v:has(.sp-cur){display:grid;grid-template-columns:minmax(0,1fr) 74px;gap:6px}.sp-v .sp-cur{max-width:none;width:74px;padding:6px 4px}
 .sp-modes{display:flex;gap:6px;padding:4px;border-radius:14px;background:rgba(127,127,127,.15)}.sp-modes button{flex:1;border:0;border-radius:10px;padding:10px 6px;font:inherit;font-weight:700;background:transparent;color:inherit;cursor:pointer}.sp-modes button.on{background:#e2b33c;color:#1b1400;box-shadow:0 1px 6px rgba(0,0,0,.15)}.sp-fxhint{margin:6px 2px 0}
 
+/* 13.55: the "Beta" badge next to the app's name (the header is always dark, in every theme and skin – it follows the title's colour) */
+.rail .brand{position:relative;flex-wrap:wrap;row-gap:4px}
+.beta-pill{display:inline-flex;align-items:center;min-height:24px;padding:2px 10px;border-radius:999px;border:1px solid currentColor;background:rgba(127,127,127,.22);color:inherit;font:inherit;font-size:.72rem;font-weight:700;line-height:1.3;letter-spacing:.01em;white-space:nowrap;cursor:pointer;vertical-align:middle;-webkit-tap-highlight-color:transparent}
+.beta-pill:hover{background:rgba(127,127,127,.34)}
+.beta-pill:focus-visible{outline:3px solid #F2C45A;outline-offset:2px}
+.beta-pill[aria-expanded="true"]{background:rgba(242,196,90,.24)}
+.beta-note{position:absolute;top:calc(100% + 8px);inset-inline-start:0;z-index:80;width:min(300px,calc(100vw - 32px));padding:10px 12px;border-radius:12px;background:#1E2128;color:#F1F2F5;border:1px solid rgba(255,255,255,.22);box-shadow:0 6px 20px rgba(0,0,0,.35);font-size:.86rem;font-weight:400;line-height:1.5;white-space:normal}
+.beta-note[hidden]{display:none}
+@media (forced-colors:active){.beta-pill,.beta-note{border:1px solid CanvasText;background:Canvas;color:CanvasText}}
+/* 13.55: the owner's editor for the legal pages (admin version only) */
+.lge-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 12px;padding:8px 10px;border:1px dashed var(--line);border-radius:12px}
+.lge-bar .mv{min-height:40px}
+.lge-l{display:block;font-weight:700;margin:6px 0 4px}
+.lge-ta{display:block;width:100%;box-sizing:border-box;min-height:220px;font:inherit;font-size:16px;line-height:1.55;color:var(--ink);background:var(--field,transparent);border:1px solid var(--line);border-radius:12px;padding:10px 12px;resize:vertical;unicode-bidi:plaintext}
+.lge-ta:focus-visible{outline:3px solid var(--gold-ui,#F2C45A);outline-offset:1px}
+.lge-cnt{margin:4px 0 0}.lge-cnt.bad{color:#E5484D;font-weight:700}
+.lge-pvh{margin:14px 0 6px}
+.lge-pv{border:1px solid var(--line);border-radius:12px;padding:10px 12px;max-height:45vh;overflow-y:auto;overflow-wrap:anywhere}
+.lg-doc{overflow-wrap:anywhere}
+.lge-acts{flex-wrap:wrap;margin-top:12px}.lge-acts>*{flex:1 1 140px}
+.lge-help{margin:0 0 8px;padding-inline-start:18px}.lge-help li{margin:0 0 2px}
+.lge-code{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700;padding:0 5px;border-radius:6px;border:1px solid var(--line);white-space:pre}
+
 </style>
 </head>
 <body>
@@ -2586,9 +2609,9 @@ body:has(#panel-mathx:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 <div class="toast" id="toast" role="status" hidden></div>
 
 
-<script>var HTML_BUILD = '20261026.123750';</script>
-<script>(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}if(!l){try{l=(navigator.languages&&navigator.languages[0])||navigator.language||''}catch(e){}}l=String(l).toLowerCase();var p=/^(he|iw)/.test(l)?'he':/^ar/.test(l)?'ar':'en';window.__FIN_TPL=p;if(!(window.__FIN_TP&&window.__FIN_TP[p]))document.write('<script src="tp/'+p+'.js?v=20261026.123750"><\/script>');})();</script>
-<script src="app.js?v=20261026.123750"></script>
+<script>var HTML_BUILD = '20261026.204357';</script>
+<script>(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}if(!l){try{l=(navigator.languages&&navigator.languages[0])||navigator.language||''}catch(e){}}l=String(l).toLowerCase();var p=/^(he|iw)/.test(l)?'he':/^ar/.test(l)?'ar':'en';window.__FIN_TPL=p;if(!(window.__FIN_TP&&window.__FIN_TP[p]))document.write('<script src="tp/'+p+'.js?v=20261026.204357"><\/script>');})();</script>
+<script src="app.js?v=20261026.204357"></script>
 <script src="/__pub.js" defer></script>
 </body>
 </html>
