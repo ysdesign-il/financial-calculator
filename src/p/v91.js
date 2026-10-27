@@ -323,7 +323,7 @@ function insCan(){ return !IN_CLAUDE && !isStandalone() && (PWA.ev || isIOS()); 
   if (IN_CLAUDE || !/^https?:$/.test(location.protocol)) return;
   const head = document.head;
   if (!head.querySelector('link[rel=manifest]')) head.insertAdjacentHTML('beforeend', '<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">');
-  if ('serviceWorker' in navigator && location.protocol === 'https:') window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
+  if ('serviceWorker' in navigator && location.protocol === 'https:') window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js', {updateViaCache: 'none'}).then(r => { try { r.update(); } catch (e) {} }).catch(() => {}); });
   window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); PWA.ev = e; try { instSync(); } catch (er) {} });
   window.addEventListener('appinstalled', () => { PWA.ev = null; toast(t('pwa_done')); try { instSync(); } catch (er) {} });
 })();
