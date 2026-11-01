@@ -32,6 +32,12 @@ self.addEventListener('fetch', e => {
   }
   /* one kept copy per file: data files are asked for with a changing ?t=… so they are never stale – keep them without it, or the store grows forever */
   const key = u.origin + u.pathname;
+  /* the on-device text reader (lib/ocr7/: the engine and the language files, several MB, never change – a new version gets a new folder):
+     kept after the first download and opened from the kept copy, so it is downloaded only once */
+  if (u.pathname.indexOf('/lib/ocr') !== -1){
+    e.respondWith(caches.open(CACHE).then(c => c.match(key).then(m => m || fetch(r).then(res => { if (res && res.ok && res.type === 'basic'){ const cp = res.clone(); c.put(key, cp).catch(() => {}); } return res; }))).catch(() => fetch(r)));
+    return;
+  }
   /* 13.51: opening the app on a slow or patchy mobile network: if the page has not arrived within 3 seconds, open the kept copy at once
      (the new version still arrives in the background and is used next time) instead of waiting on the network */
   if (r.mode === 'navigate'){

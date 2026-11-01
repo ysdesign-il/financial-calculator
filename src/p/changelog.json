@@ -1,5 +1,6 @@
 [
- {"v": "13.56", "date": "2026-10-27", "notes": {"he": "רענון הדף טוען תמיד את הגרסה העדכנית.", "ar": "تحديث الصفحة يحمّل دائمًا أحدث نسخة.", "en": "Reloading the page always loads the latest version."}},
+ {"v": "13.57", "date": "2026-11-01", "notes": {"he": "הסורק קורא טקסט בטלפון עצמו, בלי AI ובלי לשלוח כלום: עברית, ערבית ואנגלית.", "ar": "الماسح يقرأ النص على الهاتف نفسه، بدون ذكاء اصطناعي ودون إرسال أي شيء: العبرية والعربية والإنجليزية.", "en": "The scanner reads text on the phone itself, with no AI and nothing sent: Hebrew, Arabic and English."}},
+{"v": "13.56", "date": "2026-10-27", "notes": {"he": "רענון הדף טוען תמיד את הגרסה העדכנית.", "ar": "تحديث الصفحة يحمّل دائمًا أحدث نسخة.", "en": "Reloading the page always loads the latest version."}},
  {"v": "13.55", "date": "2026-10-26", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}},
  {"v": "13.54", "date": "2026-10-26", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}},
  {"v": "13.53", "date": "2026-10-25", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}},

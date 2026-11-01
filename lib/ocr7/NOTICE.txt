@@ -1,0 +1,17 @@
+On-device text recognition (lib/ocr7/)
+
+tesseract-core-*.js / tesseract-core-*.wasm.gz
+  tesseract.js-core 7.0.0 - https://github.com/naptha/tesseract.js-core
+  Apache License 2.0 (LICENSE.txt). The WebAssembly build of the Tesseract OCR engine
+  (https://github.com/tesseract-ocr/tesseract, Apache License 2.0), compiled together with:
+  Leptonica (BSD 2-Clause), libjpeg (IJG licence), libpng (libpng licence), zlib (zlib licence),
+  libtiff (libtiff licence), libwebp (BSD 3-Clause), giflib (MIT), openlibm (MIT/BSD-style).
+  The .wasm files are stored gzip-compressed; the content is unchanged.
+
+heb.traineddata.gz, ara.traineddata.gz, eng.traineddata.gz
+  tessdata_fast - https://github.com/tesseract-ocr/tessdata_fast (commit 87416418657359cb625c412a48b6e1d6d41c29bd)
+  Apache License 2.0 (LICENSE.txt). Stored gzip-compressed; the content is unchanged.
+
+ocr-worker.js
+  Written for this app, modelled on the tesseract.js worker script
+  (https://github.com/naptha/tesseract.js, Apache License 2.0).
