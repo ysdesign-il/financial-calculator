@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261101.155521'){ try { if (!sessionStorage.getItem('fin-hb-20261101.155521')){ sessionStorage.setItem('fin-hb-20261101.155521', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261101.160006'){ try { if (!sessionStorage.getItem('fin-hb-20261101.160006')){ sessionStorage.setItem('fin-hb-20261101.160006', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -1454,7 +1454,18 @@ Object.assign(T, {
 });
 /* 13.55: the "Beta" badge, the owner's editor for the legal pages, and new clauses in the terms of use */
 
+/* 13.56: the scanner keeps track of dates – warranties, expiry dates, bills, contracts and "waiting for you" (p/dsx.js) */
+
+/* the message to the store is offered in Hebrew, Arabic and English whatever the screen's language, so this block keeps all three */
+Object.assign(T, (() => ({
+  dx_mTo:['לכבוד {s},','إلى {s}،','To {s},'],
+  dx_mBody:['{to}שלום רב,\n\nב־{d} רכשתי אצלכם {p}. המוצר עדיין באחריות (עד {e}), והוא הפסיק לעבוד כראוי: [תארו בקצרה את התקלה].\n\nאבקש לתאם תיקון, החלפה או החזר לפי תנאי האחריות ולפי הדין. מצורף צילום של הקבלה / תעודת האחריות.\n\nאשמח לתשובה בהקדם, ולכל המאוחר בתוך 14 ימים.\n\nתודה,\n[השם שלכם]\n[טלפון ליצירת קשר]',
+    '{to}تحية طيبة،\n\nفي {d} اشتريت منكم {p}. المنتج ما زال ضمن الكفالة (حتى {e})، وقد توقف عن العمل بشكل سليم: [صِفوا العطل باختصار].\n\nأرجو ترتيب تصليح أو استبدال أو استرداد وفق شروط الكفالة والقانون. مرفقة صورة الإيصال / بطاقة الكفالة.\n\nأرجو الرد في أقرب وقت، وخلال 14 يومًا على الأكثر.\n\nشكرًا،\n[اسمكم]\n[هاتف للتواصل]',
+    '{to}Hello,\n\nOn {d} I bought {p} from you. The product is still under warranty (until {e}), and it has stopped working properly: [describe the fault briefly].\n\nPlease arrange a repair, a replacement or a refund under the warranty terms and the law. A photo of the receipt / warranty card is attached.\n\nI would appreciate a reply soon, and within 14 days at the latest.\n\nThank you,\n[your name]\n[contact phone]']
+}))());
 /* reading text on the phone, without AI (p/ocr.js) */
+
+/* 13.57: the scanner – a yearly tax folder, and sending a document to a family member */
 
 
 const t = (k, p) => {
@@ -8355,8 +8366,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.57", "date": "2026-11-01", "notes": {"he": "הסורק קורא טקסט בטלפון עצמו, בלי AI ובלי לשלוח כלום: עברית, ערבית ואנגלית.", "ar": "الماسح يقرأ النص على الهاتف نفسه، بدون ذكاء اصطناعي ودون إرسال أي شيء: العبرية والعربية والإنجليزية.", "en": "The scanner reads text on the phone itself, with no AI and nothing sent: Hebrew, Arabic and English."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261101.155521';
+var CHANGELOG = [{"v": "13.58", "date": "2026-11-01", "notes": {"he": "סורק חכם: מעקב אחריות, תזכורות לתוקף תעודות, מעקב חשבונות עם התראה על קפיצה, תאריכים מחוזים, מסך \"מחכים לך\", תיק מס שנתי ושליחה מאובטחת לבן משפחה.", "ar": "ماسح ذكي: متابعة الضمانات، تذكير بانتهاء الوثائق، متابعة الفواتير مع تنبيه عند الارتفاع، تواريخ العقود، شاشة \"بانتظارك\"، ملف ضريبي سنوي وإرسال آمن لفرد من العائلة.", "en": "Smart scanner: warranty tracking, document expiry reminders, bill tracking with spike alerts, contract dates, a \"Waiting for you\" screen, a yearly tax folder and secure sending to a family member."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261101.160006';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -24059,8 +24070,1135 @@ document.addEventListener('change', e => {
 try { GS_SYN.docscan += ' זיהוי טקסט בלי AI זיהוי תווים OCR העתקת טקסט טקסט של העמוד text recognition without AI copy text on device OCR التعرف على النص بدون ذكاء اصطناعي نسخ النص'; } catch (e) {}
 
 /* scanner: warranties, ID expiry, bills, contract dates, documents waiting for you */
+/* ---------- 13.56: the scanner keeps track of dates ----------
+   🧾 warranties · 🪪 expiry dates of personal cards · 📈 bills · 🏠 contract dates · ⏰ "waiting for you" – one list of what needs doing.
+   Everything is kept on this phone in 'fin-dsitems' (a list of document items, also in the backup and the encrypted account).
+   Never an ID, card or account number, a birth date or an address – only the type, the dates and a label the user chose.
+   Photos of receipts, bills and contracts go to the documents vault's on-phone store, and only when this device keeps photos.
+   AI is used only when the user taps a button that says so and only when AI is available; personal cards are never sent.
+   Other parts may add items with dsiAdd({kind, title, date, …}) and open their own items through DSI_OPEN[kind] = item => {…}. */
+const DSI_KEY = 'fin-dsitems';
+try { if (Array.isArray(DATA_KEYS) && !DATA_KEYS.includes(DSI_KEY)) DATA_KEYS.push(DSI_KEY); } catch (e) {}
+var DSI_OPEN = {};
+var DXX = {v: 'wait', ed: null, pre: null, img: null, f: 'all', wf: 'act', broke: null, bl: '', snz: null, cls: '', busy: false};
+const dxE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+const dsiNewId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+/* ---- dates (own helpers: this file loads before the reminders module) ---- */
+const dxP2 = n => String(n).padStart(2, '0');
+const dxIso = d => d.getFullYear() + '-' + dxP2(d.getMonth() + 1) + '-' + dxP2(d.getDate());
+const dxParse = s => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || '')); if (!m) return null; const d = new Date(+m[1], +m[2] - 1, +m[3]); return d.getMonth() === +m[2] - 1 ? d : null; };
+const dxToday = () => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); };
+const dxNow = () => dxIso(dxToday());
+const dxDays = s => { const d = dxParse(s); return d ? Math.round((d - dxToday()) / 864e5) : NaN; };
+const dxAdd = (s, n) => { const d = dxParse(s); if (!d) return ''; d.setDate(d.getDate() + n); return dxIso(d); };
+const dxAddM = (s, n) => { const d = dxParse(s); if (!d || !(n > 0)) return ''; const day = d.getDate(); d.setDate(1); d.setMonth(d.getMonth() + Math.round(n)); d.setDate(Math.min(day, new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate())); return dxIso(d); };
+const dxFmt = (s, loc) => { const d = dxParse(s); if (!d) return ''; try { return new Intl.DateTimeFormat(loc || locOf(), {day: 'numeric', month: 'short', year: 'numeric'}).format(d); } catch (e) { return s; } };
+const dxFmtM = s => { const m = /^(\d{4})-(\d{2})$/.exec(String(s || '')); if (!m) return ''; try { return new Intl.DateTimeFormat(locOf(), {month: 'short', year: 'numeric'}).format(new Date(+m[1], +m[2] - 1, 1)); } catch (e) { return s; } };
+const dxRel = s => { const n = dxDays(s); return !isFinite(n) ? '' : n === 0 ? t('rm_today') : n === 1 ? t('rm_tomorrow') : n > 1 ? t('rm_inDays', {n}) : t('rm_late', {n: -n}); };
+const dxNum = v => { const x = parseFloat(String(v == null ? '' : v).replace(/[,\s₪]/g, '')); return isFinite(x) ? x : NaN; };
+const dxM = x => +x ? M(+x, Math.abs(+x - Math.round(+x)) < 0.005 ? 0 : 2, 'ILS') : '';
+function dxCfg(){ const c = SET.dsx && typeof SET.dsx === 'object' ? SET.dsx : (SET.dsx = {}); if (!(+c.pct > 0)) c.pct = 25; if (c.warr == null || !(+c.warr >= 0)) c.warr = 30; return c; }
+const dxTab = id => { try { return TABS.includes(id); } catch (e) { return false; } };
+const dxPics = () => { try { return typeof vtNoPics === 'function' && !vtNoPics(); } catch (e) { return false; } };
+
+/* ================= the shared list of document items ================= */
+const DSI_FIELDS = ['id', 'kind', 'title', 'date', 'amount', 'vendor', 'fileId', 'year', 'done', 'created'];
+const DSI_BAD = /(^|_)(idno|idnum|tz|teudat|passno|passportno|cardno|cardnum|account|acct|iban|birth|dob|address|addr)/i;
+/* long runs of digits (ID, card or account numbers) never get into a label */
+const dsiScrub = (s, max) => String(s == null ? '' : s).replace(/\d[\d\s-]{6,}\d/g, '…').replace(/\s+/g, ' ').trim().slice(0, max || 80);
+function dsiClean(x){
+  const o = {}; x = x || {};
+  DSI_FIELDS.forEach(k => { if (x[k] !== undefined) o[k] = x[k]; });
+  if (o.title != null) o.title = dsiScrub(o.title, 80);
+  if (o.vendor != null) o.vendor = dsiScrub(o.vendor, 60);
+  if (o.date != null && !dxParse(o.date)) o.date = '';
+  if (o.amount != null && o.amount !== ''){ const n = dxNum(o.amount); o.amount = isFinite(n) && n ? Math.round(n * 100) / 100 : ''; }
+  if (o.done != null) o.done = !!o.done;
+  if (x.meta && typeof x.meta === 'object'){ o.meta = {}; Object.keys(x.meta).forEach(k => { if (!DSI_BAD.test(k)) o.meta[k] = x.meta[k]; }); }
+  return o;
+}
+function dsiAll(){ try { const a = JSON.parse(LS.getItem(DSI_KEY) || '[]'); return Array.isArray(a) ? a.filter(x => x && typeof x === 'object' && x.id && x.kind) : []; } catch (e) { return []; } }
+function dsiPut(a){ try { LS.setItem(DSI_KEY, JSON.stringify(a.slice(-1500))); } catch (e) { try { toast(t('dx_saveFail')); } catch (er) {} } try { dxHome(); } catch (e) {} }
+function dsiAdd(item){
+  if (!item || !item.kind) return null;
+  const a = dsiAll(); if (item.id && a.some(x => x.id === item.id)) return dsiUpdate(item.id, item);
+  const it = Object.assign({id: dsiNewId(), created: Date.now(), done: false}, dsiClean(item)); if (!it.id) it.id = dsiNewId();
+  a.push(it); dsiPut(a); dxRemSync(it); return it;
+}
+function dsiUpdate(id, patch){
+  const a = dsiAll(), it = a.find(x => x.id === id); if (!it) return null;
+  const c = dsiClean(patch); delete c.id; const m = c.meta; delete c.meta; Object.assign(it, c); if (m) it.meta = Object.assign({}, it.meta || {}, m);
+  dsiPut(a); dxRemSync(it); return it;
+}
+function dsiRemove(id){
+  const a = dsiAll(), it = a.find(x => x.id === id); if (!it) return false;
+  dsiPut(a.filter(x => x !== it)); dxRemSync(it, true); dxFileDrop(it); return true;
+}
+/* the photo goes with the item: a warranty's receipt is a vault entry, other photos are kept under 'dsx-<id>' */
+function dxFileDrop(it){
+  if (!it.fileId) return;
+  try {
+    if (it.kind === 'warranty' && typeof vtD === 'function'){ const v = vtD(); if (v.items.some(x => x.id === it.fileId)){ v.items = v.items.filter(x => x.id !== it.fileId); saveSet(); } vtDel(it.fileId); }
+    else if (String(it.fileId).startsWith('dsx-') && typeof vtDel === 'function') vtDel(it.fileId);
+  } catch (e) {}
+}
+const dxHasPic = it => { if (!it || !it.fileId) return false; if (it.kind === 'warranty'){ try { const v = vtD().items.find(x => x.id === it.fileId); return !!(v && v.img); } catch (e) { return false; } } return !!(it.meta && it.meta.pic); };
+
+/* the name shown: a bill or a contract without its own name, and a card type, follow the screen's language */
+function dxTitle(it){ const m = it.meta || {}; if (it.kind === 'bill' && !it.vendor) return t('dx_b_' + (m.type || 'other')); if (it.kind === 'contract' && m.autoT) return t('dx_ct_' + (m.ctype || 'other')); if (it.kind === 'idexp' && m.ctype) return t('ds_c_' + m.ctype) + (m.nick ? ' – ' + m.nick : ''); return it.title || ''; }
+/* ---- the dates of an item that need something done ---- */
+function dxNotice(it){ const m = it.meta || {}, end = m.end || it.date; return +m.notice > 0 && dxParse(end) ? dxAdd(end, -(+m.notice)) : ''; }
+function dxRows(it){
+  const m = it.meta || {}, dd = Array.isArray(m.dd) ? m.dd : [], R = [], n = dxTitle(it) || '';
+  const add = (k, d, w, leads) => { if (d && dxParse(d) && !dd.includes(k)) R.push({it, k, key: it.id + ':' + k, d, w, leads: leads.map(x => Math.max(0, +x || 0))}); };
+  if (it.kind === 'warranty') add('end', it.date, t('dx_rWarr', {n}), [m.remind != null ? m.remind : dxCfg().warr]);
+  else if (it.kind === 'bill'){ if (!it.done) add('due', it.date, t('dx_rBill', {n}), [3]); }
+  else if (it.kind === 'contract'){ const nd = dxNotice(it); if (nd) add('notice', nd, t('dx_rNotice', {n}), [14, 0]); add('upd', m.upd, t('dx_rUpd', {n}), [14]); add('end', m.end || it.date, t('dx_rEnd', {n}), [30]); }
+  else if (it.kind === 'idexp') add('exp', it.date, t('dx_rExp', {n}), Array.isArray(m.leads) && m.leads.length ? m.leads : [90, 30]);
+  else add('d', it.date, n, [m.lead != null ? m.lead : 3]);
+  return R;
+}
+/* a passed warranty end or contract date needs nothing any more; a late bill, an expired card or a missed letter date does */
+const dxKeepLate = r => !['warranty', 'contract'].includes(r.it.kind);
+const dxSnoozed = it => !!(it.meta && it.meta.snooze && dxDays(it.meta.snooze) > 0);
+const dxIsDue = r => dxDays(r.d) <= Math.max(0, ...r.leads);
+function dxOpenRows(items){ return (items || dsiAll()).filter(it => !it.done).flatMap(dxRows).filter(r => dxDays(r.d) >= 0 || dxKeepLate(r)).sort((a, b) => a.d.localeCompare(b.d)); }
+const dxDueRows = () => dxOpenRows().filter(r => !dxSnoozed(r.it) && dxIsDue(r));
+const DX_IC = {warranty: '🧾', bill: '📈', contract: '🏠', idexp: '🪪', letter: '✉️', tax: '📂'};
+const dxIc = it => it.kind === 'bill' ? (DX_BILLS.find(b => b[0] === (it.meta || {}).type) || ['', '📈'])[1] : it.kind === 'contract' ? (DX_CT.find(b => b[0] === (it.meta || {}).ctype) || ['', '🏠'])[1] : it.kind === 'idexp' ? ((typeof DS_CARDS !== 'undefined' && DS_CARDS.find(c => c[0] === (it.meta || {}).ctype)) || ['', '🪪'])[1] : DX_IC[it.kind] || '📌';
+
+/* ---- the reminders module: each item's dates become reminders (tagged, so editing or deleting the item updates them) ---- */
+const dxCat = it => { const m = it.meta || {}; return it.kind === 'warranty' ? 'home' : it.kind === 'bill' ? 'bills' : it.kind === 'tax' ? 'tax' : it.kind === 'contract' ? (m.ctype === 'insur' ? 'insur' : m.ctype === 'rent' ? 'home' : m.ctype === 'lease' ? 'car' : 'money') : it.kind === 'idexp' ? (['license', 'vehicle'].includes(m.ctype) ? 'car' : 'docs') : 'docs'; };
+function dxRemSync(it, gone){
+  if (typeof rmD !== 'function') return; let d; try { d = rmD(); } catch (e) { return; }
+  const n0 = d.items.length; d.items = d.items.filter(x => x.dsi !== it.id); let changed = d.items.length !== n0;
+  if (!gone && !it.done && it.meta && it.meta.rem){
+    const RB = [0, 1, 3, 7, 14, 30], seen = new Set();
+    dxRows(it).forEach(r => {
+      if (dxDays(r.d) < 0) return; let any = false;
+      const put = (date, before, title) => { const k = date + '|' + before; if (seen.has(k)) return; seen.add(k); any = true;
+        d.items.push({id: dsiNewId(), title: dsiScrub(title, 80), date, time: '', rep: 'none', before, cat: dxCat(it), note: t('dx_remNote'), amt: +it.amount && it.kind === 'bill' ? it.amount : '', done: false, at: Date.now(), dsi: it.id}); };
+      r.leads.slice().sort((a, b) => b - a).forEach(L => { if (RB.includes(L)) put(r.d, L, r.w); else { const a = dxAdd(r.d, -L); if (dxDays(a) >= 0) put(a, 0, r.w + ' · ' + dxFmt(r.d)); } });
+      if (!any) put(r.d, 0, r.w);
+    });
+    changed = true;
+  }
+  if (changed){ saveSet(); try { rmHome(); } catch (e) {} }
+}
+
+/* ================= types ================= */
+const DX_BILLS = [['elec', '💡'], ['water', '🚰'], ['arnona', '🏛️'], ['gas', '🔥'], ['phone', '📶'], ['other', '🧾']];
+const DX_CMP = {elec: ['elecsup'], phone: ['cellcmp', 'renewals'], arnona: ['arnona']};
+const DX_CT = [['rent', '🏠'], ['lease', '🚗'], ['sub', '🔁'], ['gym', '🏋️'], ['insur', '🛡️'], ['other', '📄']];
+const DX_IDT = ['id', 'passport', 'license', 'vehicle', 'health', 'credit', 'student', 'army', 'oleh', 'disab', 'ravkav', 'idold', 'other'];
+const DX_VIEWS = [['wait', '⏰'], ['warranty', '🧾'], ['bill', '📈'], ['contract', '🏠'], ['idexp', '🪪']];
+
+/* ---- reading a photo: AI (only when available and asked), or the phone's own text recognition, or by hand ---- */
+const dxLangName = () => ({he: 'Hebrew', ar: 'Arabic', en: 'English'})[lang] || 'English';
+const DX_NO = ' Never return a private person\'s name, an ID, card or account number, a date of birth or an address. Use "" or null when something is not written.';
+const DX_ASK = {
+  warranty: () => `This photo is a shop receipt, an invoice or a warranty card. Return ONLY JSON: {"product": what was bought, short, in ${dxLangName()}, "store": the shop or company, "date": the purchase date as YYYY-MM-DD, "price": the total paid as a number, "months": the warranty length in months as a number if it is written}.` + DX_NO,
+  bill: () => `This photo is a bill. Return ONLY JSON: {"type": one of "elec" (electricity), "water", "arnona" (municipal tax), "gas", "phone" (phone, mobile, internet or TV), "other", "provider": the company or authority, "period": the month the bill is for as YYYY-MM (the last month if it covers several), "amount": the total to pay as a number, "due": the date to pay by as YYYY-MM-DD}.` + DX_NO,
+  contract: () => `This photo is a contract or policy (rental, lease, subscription, gym, insurance or other). Return ONLY JSON: {"ctype": one of "rent","lease","sub","gym","insur","other", "title": a short title in ${dxLangName()}, "party": the company or business on the other side (never a private person), "start": YYYY-MM-DD, "end": YYYY-MM-DD, "noticeDays": how many days before the end notice must be given, as a number, "price": the monthly price or rent as a number, "update": the date the price or rent is updated, YYYY-MM-DD, "auto": true if it renews automatically, false if it does not, null if not written}.` + DX_NO
+};
+const dxD = v => dxParse(v) ? v : '';
+function dxFromAi(k, j){
+  j = j && typeof j === 'object' ? j : {}; const n = x => { const v = dxNum(x); return isFinite(v) && v > 0 ? v : ''; };
+  if (k === 'warranty'){ const mo = n(j.months); return {title: j.product || '', vendor: j.store || '', purchase: dxD(j.date), amount: n(j.price), len: mo ? (mo % 12 === 0 && mo >= 12 ? mo / 12 : mo) : '', unit: mo && mo % 12 === 0 && mo >= 12 ? 'y' : 'm', _ai: 1}; }
+  if (k === 'bill') return {type: DX_BILLS.some(b => b[0] === j.type) ? j.type : 'other', vendor: j.provider || '', period: /^\d{4}-\d{2}$/.test(j.period || '') ? j.period : '', amount: n(j.amount), date: dxD(j.due), _ai: 1};
+  if (k === 'contract') return {ctype: DX_CT.some(c => c[0] === j.ctype) ? j.ctype : 'other', title: j.title || '', vendor: j.party || '', start: dxD(j.start), end: dxD(j.end), notice: n(j.noticeDays), amount: n(j.price), upd: dxD(j.update), auto: j.auto === true ? 'y' : j.auto === false ? 'n' : '', _ai: 1};
+  return {};
+}
+/* the on-device text (from the scanner's own recognition, or the phone's text-recognition part when it is there) */
+async function dxOcr(canvas){
+  if (DSC && String(DSC.ocr || '').trim()) return String(DSC.ocr);
+  if (typeof ocrText !== 'function') return '';
+  try { const r = await ocrText(canvas, undefined, {label: t('dx_reading')}); return String(typeof r === 'string' ? r : (r && r.text) || ''); } catch (e) { return ''; }
+}
+const DX_RX = {elec: /חשמל|קוט["״]?ש|kwh|electric|كهرباء/i, water: /מים|תאגיד|water|مياه|ماء/i, arnona: /ארנונה|עירייה|מועצה|arnona|municipal|أرنونا|بلدية/i, gas: /\bגז\b|gas\b|غاز/i, phone: /סלולר|טלפון|אינטרנט|סיבים|cellcom|partner|pelephone|bezeq|\bhot\b|golan|mobile|internet|هاتف|خلوي|إنترنت/i};
+function dxGuess(k, s){
+  s = String(s || ''); const dates = [], sums = [];
+  (s.match(/\b(\d{1,2})[./-](\d{1,2})[./-](\d{4}|\d{2})\b/g) || []).forEach(m => { const [d, mo, y0] = m.split(/[./-]/).map(Number), y = y0 < 100 ? 2000 + y0 : y0; const iso = y + '-' + dxP2(mo) + '-' + dxP2(d); if (y >= 2000 && y <= 2100 && dxParse(iso)) dates.push(iso); });
+  dates.sort();
+  const tot = /(סה["״]?כ|לתשלום|total|amount due|المجموع|للدفع)[^\d\n]{0,20}(\d[\d,]*(?:\.\d{1,2})?)/i.exec(s);
+  (s.match(/(?:₪\s?\d[\d,]*(?:\.\d{1,2})?|\d[\d,]*(?:\.\d{1,2})?\s?(?:₪|ש["״]ח|NIS|ILS))/g) || []).forEach(m => { const v = dxNum(m.replace(/[^\d.,]/g, '')); if (v > 0) sums.push(v); });
+  const amount = tot ? dxNum(tot[2]) : sums.length ? Math.max(...sums) : '';
+  const out = {_ocr: 1};
+  if (k === 'warranty'){ const past = dates.filter(d => d <= dxNow()); out.purchase = past[past.length - 1] || ''; out.amount = amount || '';
+    const mo = /(\d{1,2})\s*(חודשים|חודש|months?|شهرا?|أشهر)/i.exec(s), yr = /(\d)\s*(שנים|שנה|שנות|years?|سنة|سنوات)/i.exec(s); if (mo){ out.len = +mo[1]; out.unit = 'm'; } else if (yr){ out.len = +yr[1]; out.unit = 'y'; } }
+  else if (k === 'bill'){ out.type = (Object.keys(DX_RX).find(x => DX_RX[x].test(s))) || 'other'; out.amount = amount || ''; const fut = dates.filter(d => d >= dxNow()); out.date = fut[0] || dates[dates.length - 1] || ''; out.period = dates.length ? dates[0].slice(0, 7) : ''; }
+  else if (k === 'contract'){ out.start = dates[0] || ''; out.end = dates.length > 1 ? dates[dates.length - 1] : ''; out.amount = amount || ''; const nd = /(\d{2,3})\s*(ימים|יום|days|يوما|أيام)/i.exec(s); if (nd) out.notice = +nd[1]; out.ctype = /שכירות|שוכר|משכיר|rent|إيجار/i.test(s) ? 'rent' : /ביטוח|פוליסה|insurance|policy|تأمين/i.test(s) ? 'insur' : /חדר כושר|gym|نادي/i.test(s) ? 'gym' : /ליסינג|lease|تأجير/i.test(s) ? 'lease' : /מנוי|subscription|اشتراك/i.test(s) ? 'sub' : 'other'; }
+  return out;
+}
+/* open a list, optionally with its form ready ('new' or an item id) and filled in */
+function dxOpen(v, ed, pre){
+  DXX.v = v || 'wait'; DXX.ed = ed || null; DXX.pre = pre || null; DXX.broke = null; DXX.snz = null; if (!ed) DXX.img = null;
+  try { if (typeof d3BatchStop === 'function') d3BatchStop(); } catch (e) {}
+  DSX.view = 'dx'; DSX.det = null;
+  if (tab !== 'docscan') activate('docscan'); else dscRender();
+  setTimeout(() => { const r = $('#ds_root'); if (r && tab === 'docscan') r.scrollIntoView({block: 'start', behavior: 'smooth'}); const f = $('#dx_form input:not([type=hidden]):not([type=file]), #dx_form select'); if (f) f.focus({preventScroll: true}); }, 80);
+}
+/* the AI path: read the photo, then the form opens filled in */
+async function dxScanAi(k, src, btn){
+  if (DXX.busy || !slEngine()) return; DXX.busy = true; const st = $('#dx_st'); if (st){ st.textContent = t('dx_reading'); st.className = 'sl-st'; } if (btn) btn.disabled = true;
+  try {
+    const blob = src instanceof File ? await phShrink(src) : src;
+    const j = await dsAsk(DX_ASK[k](), [blob]);
+    DXX.busy = false; DXX.img = blob; dxOpen(k, 'new', dxFromAi(k, j));
+  } catch (er){ DXX.busy = false; if (btn && btn.isConnected) btn.disabled = false; const s2 = $('#dx_st'); if (s2){ s2.textContent = t(er && er.code === 'not_granted' ? 'ph_denied' : 'dx_aiFail'); s2.className = 'sl-st bad'; } }
+}
+
+/* ================= the screens (inside the scanner) ================= */
+const dxBar = title => `<div class="ds-bar"><button type="button" class="mv ds-backb" id="dx_back">${document.documentElement.dir === 'rtl' ? '›' : '‹'} ${dxE(t('ds_back'))}</button><b>${dxE(title)}</b></div>
+  <nav class="ds-chips bk-tabs dx-nav" aria-label="${dxE(t('dx_hubH'))}">${DX_VIEWS.map(([k, ic]) => `<button type="button" class="ds-chip${DXX.v === k ? ' on' : ''}"${DXX.v === k ? ' aria-current="page"' : ''} data-dxgo="${k}">${ic} ${dxE(t('dx_v_' + k))}${k === 'wait' ? dxBadgeHTML() : ''}</button>`).join('')}</nav>`;
+function dxBadgeHTML(){ const n = dxDueRows().length; return n ? ` <span class="dx-n" aria-label="${dxE(t('dx_nDue', {n}))}">${n}</span>` : ''; }
+function dxRender(root){
+  if (DXX.v === 'warranty') dxAdopt();
+  const V = {wait: dxWaitHTML, warranty: dxWarrHTML, bill: dxBillHTML, contract: dxContrHTML, idexp: dxIdHTML};
+  const v = V[DXX.v] ? DXX.v : 'wait'; DXX.v = v;
+  root.innerHTML = dxBar(t('dx_v_' + v)) + `<div class="sl-st" id="dx_st" aria-live="polite"></div>` + V[v]();
+  dxLenSync();
+}
+const dxEmpty = key => `<li class="fine bk-empty">${dxE(t(key))}</li>`;
+const dxBtn = (attr, id, ic, lab) => `<button type="button" class="px-tb s" ${attr}="${dxE(id)}" aria-label="${dxE(lab)}" title="${dxE(lab)}">${ic}</button>`;
+const dxCommon = it => `${dxHasPic(it) ? dxBtn('data-dxpic', it.id, '👁️', t('dx_pic', {n: dxTitle(it)})) : ''}${dxBtn('data-dxed', it.id, '✏️', t('rm_edit', {t: dxTitle(it)}))}${dxBtn('data-dxdel', it.id, '🗑️', t('rm_del', {t: dxTitle(it)}))}`;
+const dxAddBtn = (k) => DXX.ed ? '' : `<div class="btnrow"><button type="button" class="gold-btn" id="dx_add" data-k="${k}">＋ ${dxE(t('dx_add_' + k))}</button></div>`;
+const dxOf = k => dsiAll().filter(x => x.kind === k);
+
+/* ---- ⏰ waiting for you ---- */
+function dxWaitHTML(){
+  const all = dsiAll(), open = dxOpenRows(all), f = DXX.f, kinds = [...new Set(open.map(r => r.it.kind))];
+  let rows = f === 'done' ? [] : open.filter(r => f === 'snz' ? dxSnoozed(r.it) : !dxSnoozed(r.it));
+  if (f === 'due') rows = rows.filter(dxIsDue); else if (f === 'late') rows = rows.filter(r => dxDays(r.d) < 0); else if (f.startsWith('k:')) rows = rows.filter(r => r.it.kind === f.slice(2));
+  const due = open.filter(r => !dxSnoozed(r.it) && dxIsDue(r)).length, late = open.filter(r => !dxSnoozed(r.it) && dxDays(r.d) < 0).length, done = all.filter(x => x.done);
+  const chips = [['all', t('rm_fAll')], ['due', t('dx_fDue') + (due ? ' (' + due + ')' : '')], ['late', t('rm_fLate') + (late ? ' (' + late + ')' : '')], ['snz', t('dx_fSnz')], ['done', t('rm_fDone')]].concat(kinds.map(k => ['k:' + k, DX_IC[k] + ' ' + t('dx_k_' + k)]));
+  const c = dxCfg();
+  return `<p class="fine">${dxE(t('dx_waitIntro'))}</p>
+    ${due ? `<div class="ds-warn rm-ban" role="status"><span aria-hidden="true">⏰</span><p>${dxE(t('dx_nDue', {n: due}))}${late ? ' ' + dxE(t('rm_lateN', {n: late})) : ''}</p></div>` : ''}
+    ${all.length ? `<div class="ds-chips" role="radiogroup" aria-label="${dxE(t('rm_filter'))}">${chips.map(([k, l]) => `<button type="button" role="radio" class="ds-chip${f === k ? ' on' : ''}" aria-checked="${f === k}" data-dxf="${dxE(k)}">${dxE(l)}</button>`).join('')}</div>` : ''}
+    <ul class="rm-list">${f === 'done' ? done.map(dxDoneRow).join('') || dxEmpty('dx_noneDone') : rows.map(dxRowHTML).join('') || dxEmpty(all.length ? 'dx_noneF' : 'dx_noneAll')}</ul>
+    ${!all.length ? `<div class="btnrow">${DX_VIEWS.slice(1).map(([k, ic]) => `<button type="button" class="btn" data-dxgo="${k}" data-dxnew="1">${ic} ${dxE(t('dx_add_' + k))}</button>`).join('')}</div>` : ''}
+    ${open.length ? `<div class="btnrow"><button type="button" class="btn" id="dx_ics">📅 ${dxE(t('dx_icsAll'))}</button>${typeof rmD === 'function' ? `<button type="button" class="btn" id="dx_remAll">⏰ ${dxE(t('dx_remAll'))}</button>` : ''}</div>` : ''}
+    <details class="ds-det"><summary>⚙️ ${dxE(t('dx_set'))}</summary><div class="bk-grid">
+      <label class="bk-f"><span>${dxE(t('dx_setPct'))}</span><input type="number" inputmode="numeric" min="5" max="300" step="5" id="dxc_pct" value="${dxE(c.pct)}" dir="ltr"></label>
+      <label class="bk-f"><span>${dxE(t('dx_setWarr'))}</span><select id="dxc_warr">${[7, 14, 30, 60, 90].map(n => `<option value="${n}"${+c.warr === n ? ' selected' : ''}>${dxE(t('rm_b_n', {n}))}</option>`).join('')}</select></label></div></details>
+    <p class="fine sl-priv">🔒 ${dxE(t('dx_priv'))}</p>`;
+}
+const dxCanOpen = it => ['warranty', 'bill', 'contract', 'idexp'].includes(it.kind) || typeof DSI_OPEN[it.kind] === 'function' || !!(it.meta && it.meta.go && dxTab(it.meta.go));
+function dxRowHTML(r){
+  const it = r.it, n = dxDays(r.d), cls = n < 0 ? 'late' : dxIsDue(r) ? 'due' : '', sub = [it.vendor, it.kind === 'letter' && it.meta && it.meta.lt ? it.meta.lt : ''].filter(Boolean).join(' · ');
+  return `<li class="rm-it ${cls}"><div class="rm-ic" aria-hidden="true">${dxIc(it)}</div><div class="rm-b"><b dir="auto">${dxE(r.w)}</b>
+    <span class="rm-w">${dxE(dxFmt(r.d))} · <span class="rm-rel">${dxE(dxRel(r.d))}</span>${+it.amount ? ' · <bdi dir="ltr">' + dxE(dxM(it.amount)) + '</bdi>' : ''}${dxSnoozed(it) ? ' · 💤 ' + dxE(t('dx_snzTo', {d: dxFmt(it.meta.snooze)})) : ''}</span>${sub ? `<small dir="auto">${dxE(sub)}</small>` : ''}
+    <div class="rm-acts"><button type="button" class="mv" data-dxdone="${dxE(r.key)}">✓ ${dxE(t(it.kind === 'bill' ? 'dx_paid' : 'dx_done'))}</button><button type="button" class="mv" data-dxsnz="${dxE(it.id)}" aria-expanded="${DXX.snz === it.id}">💤 ${dxE(t(dxSnoozed(it) ? 'dx_unsnz' : 'dx_snz'))}</button>${dxCanOpen(it) ? `<button type="button" class="mv" data-dxopen="${dxE(it.id)}">↗ ${dxE(t('dx_open'))}</button>` : ''}${dxBtn('data-dxdel', it.id, '🗑️', t('rm_del', {t: dxTitle(it)}))}</div>
+    ${DXX.snz === it.id && !dxSnoozed(it) ? `<div class="ds-chips" role="group" aria-label="${dxE(t('dx_snz'))}">${[1, 3, 7, 30].map(d => `<button type="button" class="ds-chip" data-dxsz="${dxE(it.id)}" data-n="${d}">${dxE(d === 1 ? t('rm_tomorrow') : t('rm_inDays', {n: d}))}</button>`).join('')}</div>` : ''}</div></li>`;
+}
+const dxDoneRow = it => `<li class="rm-it done"><div class="rm-ic" aria-hidden="true">${dxIc(it)}</div><div class="rm-b"><b dir="auto">${dxE(dxTitle(it))}</b><span class="rm-w">${dxE(t('dx_k_' + it.kind))}${it.date ? ' · ' + dxE(dxFmt(it.date)) : ''}</span>
+  <div class="rm-acts"><button type="button" class="mv" data-dxundo="${dxE(it.id)}">↩️ ${dxE(t('dx_undo'))}</button>${dxBtn('data-dxdel', it.id, '🗑️', t('rm_del', {t: dxTitle(it)}))}</div></div></li>`;
+/* a row is done: a bill is paid; a contract has several dates, each is done on its own */
+function dxRowDone(key){
+  const [id, k] = String(key).split(':'), it = dsiAll().find(x => x.id === id); if (!it) return;
+  const rows = dxRows(it), m = it.meta || {};
+  if (rows.length > 1){ const dd = (Array.isArray(m.dd) ? m.dd : []).concat(k); dsiUpdate(id, {done: rows.every(r => dd.includes(r.k)), meta: {dd}}); }
+  else dsiUpdate(id, it.kind === 'bill' ? {done: true, meta: {paid: dxNow()}} : {done: true});
+  toast(t(it.kind === 'bill' ? 'dx_paidOk' : 'dx_doneOk'));
+}
+
+/* ---- 🧾 warranties ---- */
+const dxWEnd = it => it.date;
+function dxWStat(it){ const n = dxDays(it.date); return !isFinite(n) ? 'act' : n < 0 ? 'exp' : n <= Math.max(30, +((it.meta || {}).remind) || 0) ? 'soon' : 'act'; }
+/* warranties already kept in the documents vault join the list */
+function dxAdopt(){
+  if (typeof vtD !== 'function') return; let v; try { v = vtD(); } catch (e) { return; }
+  const a = dsiAll(), by = new Map(a.filter(x => x.kind === 'warranty' && x.fileId).map(x => [x.fileId, x])); let ch = false;
+  v.items.forEach(vi => {
+    const end = +vi.months > 0 ? dxAddM(vi.date, +vi.months) : ''; if (!end) return; const it = by.get(vi.id);
+    if (!it){ a.push(Object.assign({id: dsiNewId(), created: Date.now(), done: false}, dsiClean({kind: 'warranty', title: vi.name, vendor: vi.store, date: end, amount: vi.price, fileId: vi.id, meta: {purchase: vi.date, months: +vi.months, rem: false}}))); ch = true; return; }
+    const m = it.meta || {}; if (dxTitle(it) !== dsiScrub(vi.name, 80) || it.date !== end || m.purchase !== vi.date || (it.vendor || '') !== dsiScrub(vi.store || '', 60)){ Object.assign(it, dsiClean({title: vi.name, vendor: vi.store, date: end, amount: vi.price})); it.meta = Object.assign({}, m, {purchase: vi.date, months: +vi.months}); ch = true; }
+  });
+  if (ch) dsiPut(a);
+}
+function dxWarrHTML(){
+  const L = dxOf('warranty').sort((a, b) => String(a.date).localeCompare(String(b.date))), cnt = {act: 0, soon: 0, exp: 0}; L.forEach(x => cnt[dxWStat(x)]++);
+  const f = DXX.wf, show = L.filter(x => f === 'all' || dxWStat(x) === f || (f === 'act' && dxWStat(x) === 'soon'));
+  return `<p class="fine">${dxE(t('dx_wIntro'))}</p>${dxAddBtn('warranty')}${DXX.ed ? dxFormWarr() : ''}
+    ${L.length ? `<div class="ds-chips" role="radiogroup" aria-label="${dxE(t('rm_filter'))}">${[['act', t('dx_wAct')], ['soon', t('dx_wSoon')], ['exp', t('dx_wExp')], ['all', t('rm_fAll')]].map(([k, l]) => `<button type="button" role="radio" class="ds-chip${f === k ? ' on' : ''}" aria-checked="${f === k}" data-dxwf="${k}">${dxE(l)}${k !== 'all' ? ' (' + (k === 'act' ? cnt.act + cnt.soon : cnt[k]) + ')' : ''}</button>`).join('')}</div>` : ''}
+    <ul class="rm-list">${show.map(dxWarrRow).join('') || dxEmpty(L.length ? 'dx_noneF' : 'dx_wNone')}</ul>
+    <p class="fine sl-priv">🔒 ${dxE(t('dx_wPriv'))}</p>`;
+}
+function dxWarrRow(it){
+  const m = it.meta || {}, s = dxWStat(it), n = dxDays(it.date);
+  return `<li class="rm-it ${s === 'exp' ? 'done' : s === 'soon' ? 'due' : ''}"><div class="rm-ic" aria-hidden="true">🧾</div><div class="rm-b"><b dir="auto">${dxE(dxTitle(it))}</b>
+    <span class="rm-w">${dxE([it.vendor, m.purchase ? t('dx_wBought', {d: dxFmt(m.purchase)}) : '', dxM(it.amount)].filter(Boolean).join(' · '))}</span>
+    <span class="rm-w">${dxE(s === 'exp' ? t('vt_expired', {d: dxFmt(it.date)}) : t('dx_wUntil', {d: dxFmt(it.date), r: dxRel(it.date)}))}</span>
+    <div class="rm-acts">${s !== 'exp' ? `<button type="button" class="mv" data-dxbrk="${dxE(it.id)}" aria-expanded="${DXX.broke === it.id}">🛠️ ${dxE(t('dx_brk'))}</button>` : ''}${dxCommon(it)}</div>
+    ${DXX.broke === it.id ? dxBrokeHTML(it) : ''}</div></li>`;
+}
+/* "my product broke – what now": a ready message to the store (in Hebrew, Arabic or English) and general information */
+const DX_BL = [['he', 'עברית', 'he-IL'], ['ar', 'العربية', 'ar'], ['en', 'English', 'en-GB']];
+function dxBrokeMsg(it, L){
+  const i = Math.max(0, ['he', 'ar', 'en'].indexOf(L)), loc = DX_BL[i][2], m = it.meta || {}, g = k => { const v = T[k]; return Array.isArray(v) ? (v[i] || v[2] || '') : t(k); };
+  return g('dx_mBody').split('{to}').join(it.vendor ? g('dx_mTo').split('{s}').join(it.vendor) + '\n\n' : '').split('{p}').join(dxTitle(it)).split('{d}').join(m.purchase ? dxFmt(m.purchase, loc) : '[…]').split('{e}').join(dxFmt(it.date, loc));
+}
+function dxBrokeHTML(it){
+  const L = DXX.bl || (['he', 'ar', 'en'].includes(lang) ? lang : 'en'), msg = dxBrokeMsg(it, L);
+  return `<div class="mx-card dx-brk"><h4 class="ds-q">🛠️ ${dxE(t('dx_brkH'))}</h4>
+    <div class="field cv-f"><label for="dx_bl">${dxE(t('dx_brkLang'))}</label><select id="dx_bl" data-id="${dxE(it.id)}">${DX_BL.map(([c, nm]) => `<option value="${c}"${c === L ? ' selected' : ''}>${dxE(nm)}</option>`).join('')}</select></div>
+    <label class="bk-f rm-form"><span>${dxE(t('dx_brkMsg'))}</span><textarea id="dx_bmsg" rows="9" lang="${L}" dir="${L === 'en' ? 'ltr' : 'rtl'}">${dxE(msg)}</textarea></label>
+    <div class="btnrow"><button type="button" class="btn" id="dx_bcopy">📋 ${dxE(t('ds_copy'))}</button>${navigator.share ? `<button type="button" class="btn" id="dx_bshare">📤 ${dxE(t('ds_share'))}</button>` : ''}${dxHasPic(it) ? `<button type="button" class="btn" data-dxpic="${dxE(it.id)}">👁️ ${dxE(t('dx_rcpt'))}</button>` : ''}</div>
+    <h4 class="ds-q">ℹ️ ${dxE(t('dx_infoH'))}</h4><ul class="mi-tips">${[1, 2, 3, 4, 5].map(i => `<li>${dxE(t('dx_info' + i))}</li>`).join('')}</ul><p class="fine">${dxE(t('dx_infoDisc'))}</p></div>`;
+}
+
+/* ---- 📈 bills ---- */
+const dxBKey = it => ((it.meta || {}).period || String(it.date || '').slice(0, 7) || '') + '|' + (it.date || '') + '|' + (it.created || 0);
+const dxBType = it => (it.meta || {}).type || 'other';
+/* this bill against the average of the 3 bills of the same kind before it */
+function dxBillAlert(it, all){
+  const L = (all || dxOf('bill')).filter(x => dxBType(x) === dxBType(it) && x.id !== it.id && +x.amount > 0 && dxBKey(x) < dxBKey(it)).sort((a, b) => dxBKey(b).localeCompare(dxBKey(a))).slice(0, 3);
+  if (L.length < 2 || !(+it.amount > 0)) return null; const avg = L.reduce((s, x) => s + +x.amount, 0) / L.length, pct = (+it.amount / avg - 1) * 100;
+  return pct >= dxCfg().pct ? {avg, pct: Math.round(pct), n: L.length} : null;
+}
+function dxBillHTML(){
+  const all = dxOf('bill'), types = DX_BILLS.filter(([k]) => all.some(x => dxBType(x) === k));
+  return `<p class="fine">${dxE(t('dx_bIntro'))}</p>${dxAddBtn('bill')}${DXX.ed ? dxFormBill() : ''}
+    ${types.map(([k, ic]) => { const L = all.filter(x => dxBType(x) === k).sort((a, b) => dxBKey(b).localeCompare(dxBKey(a))), last = L[0], al = last ? dxBillAlert(last, all) : null, H = L.slice(0, 6).reverse(), mx = Math.max(1, ...H.map(x => +x.amount || 0));
+      const avg3 = L.slice(0, 3).filter(x => +x.amount > 0), av = avg3.length ? avg3.reduce((s, x) => s + +x.amount, 0) / avg3.length : 0;
+      return `<section class="dx-sec" aria-labelledby="dxb_${k}"><h3 class="ds-q" id="dxb_${k}">${ic} ${dxE(t('dx_b_' + k))}</h3>
+        ${al ? `<div class="ds-warn" role="status"><span aria-hidden="true">📈</span><div><p>${dxE(t('dx_bHigh', {p: al.pct, a: dxM(al.avg), n: al.n}))}</p>${(DX_CMP[k] || []).filter(dxTab).map(id => `<button type="button" class="btn" data-dxtab="${id}">↗ ${dxE(t('tab_' + id))}</button>`).join(' ')}</div></div>` : ''}
+        ${H.length > 1 ? `<ul class="cx-sens mi-bars" aria-label="${dxE(t('dx_bHist', {n: t('dx_b_' + k)}))}">${H.map(x => `<li><span class="cx-l">${dxE(dxFmtM((x.meta || {}).period) || dxFmt(x.date))}</span><span class="cx-bar"><i class="${x === last && al ? 'dn' : 'up'}" style="width:${Math.max(3, Math.round((+x.amount || 0) / mx * 100))}%"></i></span><bdi dir="ltr" class="num cx-v">${dxE(dxM(x.amount) || '–')}</bdi></li>`).join('')}</ul>` : ''}
+        ${av ? `<p class="fine">${dxE(t('dx_bAvg', {a: dxM(av), n: avg3.length}))}</p>` : ''}
+        <ul class="rm-list">${L.slice(0, 12).map(dxBillRow).join('')}</ul></section>`; }).join('') || `<ul class="rm-list">${dxEmpty('dx_bNone')}</ul>`}
+    <p class="fine sl-priv">🔒 ${dxE(t('dx_priv'))}</p>`;
+}
+function dxBillRow(it){
+  const m = it.meta || {}, n = dxDays(it.date), cls = it.done ? 'done' : n < 0 ? 'late' : n <= 3 ? 'due' : '';
+  return `<li class="rm-it ${cls}"><div class="rm-ic" aria-hidden="true">${dxIc(it)}</div><div class="rm-b"><b dir="auto">${dxE(dxTitle(it))}${m.period ? ' · ' + dxE(dxFmtM(m.period)) : ''}</b>
+    <span class="rm-w"><bdi dir="ltr">${dxE(dxM(it.amount))}</bdi>${it.date ? ' · ' + dxE(t('dx_bDue', {d: dxFmt(it.date)})) : ''} · <span class="rm-rel">${dxE(it.done ? t('dx_bPaid') + (m.paid ? ' ' + dxFmt(m.paid) : '') : it.date ? dxRel(it.date) : t('dx_bUnpaid'))}</span></span>
+    <div class="rm-acts"><button type="button" class="mv" data-dxpay="${dxE(it.id)}">${it.done ? '↩️ ' + dxE(t('dx_bUnpay')) : '✓ ' + dxE(t('dx_paid'))}</button>${typeof expSheet === 'function' && +it.amount ? dxBtn('data-dxexp', it.id, '🧾', t('dx_toExp', {n: dxTitle(it)})) : ''}${dxCommon(it)}</div></div></li>`;
+}
+
+/* ---- 🏠 contracts ---- */
+function dxContrHTML(){
+  const L = dxOf('contract').sort((a, b) => String(a.date).localeCompare(String(b.date)));
+  return `<p class="fine">${dxE(t('dx_cIntro'))}</p>${dxAddBtn('contract')}${DXX.ed ? dxFormContr() : ''}
+    <ul class="rm-list">${L.map(dxContrRow).join('') || dxEmpty('dx_cNone')}</ul><p class="fine">${dxE(t('dx_cNote'))}</p><p class="fine sl-priv">🔒 ${dxE(t('dx_priv'))}</p>`;
+}
+function dxContrRow(it){
+  const m = it.meta || {}, end = m.end || it.date, nd = dxNotice(it), nn = nd ? dxDays(nd) : NaN, ne = dxDays(end), cls = ne < 0 ? 'done' : isFinite(nn) && nn >= 0 && nn <= 14 ? 'due' : '';
+  return `<li class="rm-it ${cls}"><div class="rm-ic" aria-hidden="true">${dxIc(it)}</div><div class="rm-b"><b dir="auto">${dxE(dxTitle(it))}</b>
+    <span class="rm-w">${dxE([it.vendor, m.autoT ? '' : t('dx_ct_' + (m.ctype || 'other')), dxM(it.amount) ? dxM(it.amount) + ' ' + t('rn2_perMo') : ''].filter(Boolean).join(' · '))}</span>
+    <span class="rm-w">${dxE([m.start ? dxFmt(m.start) : '', dxFmt(end)].filter(Boolean).join(' – '))} · <span class="rm-rel">${dxE(ne < 0 ? t('dx_cEnded') : dxRel(end))}</span>${m.auto === 'y' ? ' · 🔁 ' + dxE(t('dx_cAutoY')) : m.auto === 'n' ? ' · ' + dxE(t('dx_cAutoN')) : ''}</span>
+    ${nd ? `<span class="rm-w">📣 ${dxE(t('dx_cNoticeBy', {d: dxFmt(nd), r: dxRel(nd)}))}</span>` : ''}${m.upd ? `<span class="rm-w">💱 ${dxE(t('dx_cUpdOn', {d: dxFmt(m.upd)}))}</span>` : ''}
+    <div class="rm-acts">${m.ctype === 'rent' && dxTab('rentlaw') ? `<button type="button" class="mv" data-dxtab="rentlaw">↗ ${dxE(t('tab_rentlaw'))}</button>` : ''}${['insur', 'sub', 'gym'].includes(m.ctype) && m.start && dxTab('renewals') ? `<button type="button" class="mv" data-dxrn="${dxE(it.id)}">➕ ${dxE(t('dx_toRn'))}</button>` : ''}${dxCommon(it)}</div></div></li>`;
+}
+
+/* ---- 🪪 expiry dates ---- */
+function dxIdHTML(){
+  const L = dxOf('idexp').sort((a, b) => String(a.date).localeCompare(String(b.date)));
+  return `<p class="fine">${dxE(t('dx_iIntro'))}</p>${dxAddBtn('idexp')}${DXX.ed ? dxFormId() : ''}
+    <ul class="rm-list">${L.map(it => { const n = dxDays(it.date), m = it.meta || {}, lead = Math.max(0, ...(m.leads || [90])), cls = n < 0 ? 'late' : n <= lead ? 'due' : '';
+      return `<li class="rm-it ${cls}"><div class="rm-ic" aria-hidden="true">${dxIc(it)}</div><div class="rm-b"><b dir="auto">${dxE(dxTitle(it))}</b>
+        <span class="rm-w">${dxE(n < 0 ? t('dx_iExpd', {d: dxFmt(it.date)}) : t('dx_iUntil', {d: dxFmt(it.date)}))} · <span class="rm-rel">${dxE(dxRel(it.date))}</span></span>
+        ${(m.leads || []).length ? `<small>⏰ ${dxE((m.leads || []).map(dxLeadName).join(' · '))}</small>` : ''}<div class="rm-acts">${dxCommon(it)}</div></div></li>`; }).join('') || dxEmpty('dx_iNone')}</ul>
+    <p class="fine">${dxE(t('dx_iPass'))}</p><p class="fine sl-priv">🔒 ${dxE(t('dx_iPriv'))}</p>`;
+}
+const dxLeadName = n => n === 90 ? t('dx_l90') : n === 30 ? t('dx_l30') : n === 7 ? t('dx_l7') : n === 180 ? t('dx_l180') : t('rm_b_n', {n});
+
+/* ================= the forms ================= */
+const dxF = (id, lab, inner, req) => `<label class="bk-f"><span>${dxE(lab)}${req ? ' *' : ''}</span>${inner}</label>`;
+const dxIn = (id, v, o) => `<input id="${id}" type="${(o && o.type) || 'text'}"${o && o.num ? ' inputmode="decimal" dir="ltr"' : ' dir="auto"'}${o && o.max ? ` maxlength="${o.max}"` : ''}${o && o.req ? ' required aria-required="true"' : ''}${o && o.ph ? ` placeholder="${dxE(o.ph)}"` : ''}${o && o.attr ? ' ' + o.attr : ''} value="${dxE(v == null ? '' : v)}">`;
+const dxSel = (id, v, opts) => `<select id="${id}">${opts.map(([k, l]) => `<option value="${dxE(k)}"${String(v) === String(k) ? ' selected' : ''}>${dxE(l)}</option>`).join('')}</select>`;
+const dxCk = (id, on, lab) => `<label class="prn-ck"><input type="checkbox" id="${id}"${on ? ' checked' : ''}> ${dxE(lab)}</label>`;
+function dxPhotoRow(it){
+  if (!dxPics()) return `<p class="fine">🔒 ${dxE(t('vt_noPics'))}</p>`;
+  const has = DXX.img || dxHasPic(it);
+  return `<div class="btnrow dx-ph"><button type="button" class="btn" data-dxphb="cam">📷 ${dxE(t(has ? 'dx_phRe' : 'dx_phCam'))}</button><button type="button" class="btn" data-dxphb="pick">🖼️ ${dxE(t('vt_gallery'))}</button>
+    <input type="file" accept="image/*" capture="environment" data-dxph="cam" hidden><input type="file" accept="image/*" data-dxph="pick" hidden><span class="fine" id="dxf_ph" aria-live="polite">${has ? '✓ ' + dxE(t(DXX.img ? 'dx_phNew' : 'vt_hasPhoto')) : ''}</span></div>`;
+}
+const dxFillNote = p => p && p._ai ? `<p class="fine gk-st new">✦ ${dxE(t('dx_fillAi'))}</p>` : p && p._ocr ? `<p class="fine gk-st new">🔤 ${dxE(t('dx_fillOcr'))}</p>` : '';
+const dxFormEnd = it => `<p class="fine" id="dxf_msg" role="status" aria-live="polite"></p>
+  <div class="btnrow"><button type="submit" class="gold-btn">✓ ${dxE(t('rm_save'))}</button><button type="button" class="btn" id="dxf_cancel">${dxE(t('rm_cancel'))}</button>${it ? `<button type="button" class="btn danger" data-dxdel="${dxE(it.id)}">🗑️ ${dxE(t('rm_delB'))}</button>` : ''}</div></fieldset></form>`;
+const dxFormStart = (k, it) => `<form class="bk-acc rm-form" id="dx_form" data-k="${k}" novalidate><fieldset><legend>${it ? '✏️ ' + dxE(t('dx_edit_' + k)) : '＋ ' + dxE(t('dx_add_' + k))}</legend>${dxFillNote(DXX.pre)}`;
+const dxEdItem = () => DXX.ed && DXX.ed !== 'new' ? dsiAll().find(x => x.id === DXX.ed) : null;
+function dxFormWarr(){
+  const it = dxEdItem(), m = (it && it.meta) || {}, p = DXX.pre || {}, mo = +m.months || 0, unit = p.unit || m.unit || (mo && mo % 12 === 0 ? 'y' : 'm');
+  const v = {title: p.title != null ? p.title : it ? dxTitle(it) : '', vendor: p.vendor != null ? p.vendor : it ? it.vendor || '' : '', purchase: p.purchase || m.purchase || dxNow(), len: p.len || (mo ? (unit === 'y' ? mo / 12 : mo) : 12), amount: p.amount || (it ? it.amount || '' : ''), remind: m.remind != null ? m.remind : dxCfg().warr, rem: it ? !!m.rem : true};
+  return dxFormStart('warranty', it) + dxF('dxf_title', t('dx_wProd'), dxIn('dxf_title', v.title, {max: 60, req: 1, ph: t('vt_namePh')}), 1)
+    + `<div class="bk-grid">${dxF('dxf_vendor', t('vt_store'), dxIn('dxf_vendor', v.vendor, {max: 40}))}${dxF('dxf_purchase', t('vt_date'), dxIn('dxf_purchase', v.purchase, {type: 'date', req: 1}), 1)}</div>
+    <div class="bk-f" role="group" aria-labelledby="dxf_lenL"><span id="dxf_lenL">${dxE(t('vt_months'))} *</span><div class="dx-len"><input id="dxf_len" type="number" inputmode="numeric" min="1" max="600" dir="ltr" value="${dxE(v.len)}" aria-label="${dxE(t('dx_wLen'))}" required>${dxSel('dxf_unit', unit, [['m', t('dx_months')], ['y', t('dx_years')]]).replace('<select', `<select aria-label="${dxE(t('dx_unit'))}"`)}</div>
+      <div class="ds-chips">${[12, 24, 36].map(n => `<button type="button" class="ds-chip" data-dxlen="${n}">${dxE(t('dx_nMonths', {n}))}</button>`).join('')}</div></div>
+    <p class="fine" id="dxf_endv" aria-live="polite"></p>
+    <div class="bk-grid">${dxF('dxf_amount', t('vt_price') + ' (₪)', dxIn('dxf_amount', v.amount, {num: 1, max: 12}))}${dxF('dxf_remind', t('dx_remBefore'), dxSel('dxf_remind', v.remind, [7, 14, 30, 60, 90].map(n => [n, t('rm_b_n', {n})])))}</div>
+    ${dxCk('dxf_rem', v.rem, t('dx_toRem'))}${dxPhotoRow(it)}` + dxFormEnd(it);
+}
+function dxFormBill(){
+  const it = dxEdItem(), m = (it && it.meta) || {}, p = DXX.pre || {};
+  const v = {type: p.type || m.type || 'elec', vendor: p.vendor != null ? p.vendor : it ? it.vendor || '' : '', period: p.period || m.period || dxNow().slice(0, 7), amount: p.amount || (it ? it.amount || '' : ''), date: p.date || (it ? it.date || '' : ''), paid: it ? !!it.done : false, rem: it ? !!m.rem : true};
+  return dxFormStart('bill', it) + `<div class="bk-grid">${dxF('dxf_type', t('dx_bType'), dxSel('dxf_type', v.type, DX_BILLS.map(([k, ic]) => [k, ic + ' ' + t('dx_b_' + k)])))}${dxF('dxf_vendor', t('dx_bProv'), dxIn('dxf_vendor', v.vendor, {max: 40}))}
+    ${dxF('dxf_period', t('dx_bPeriod'), dxIn('dxf_period', v.period, {type: 'month', attr: 'dir="ltr"'}))}${dxF('dxf_amount', t('dx_bAmt') + ' (₪)', dxIn('dxf_amount', v.amount, {num: 1, max: 12, req: 1}), 1)}
+    ${dxF('dxf_date', t('dx_bDueL'), dxIn('dxf_date', v.date, {type: 'date'}))}</div>${dxCk('dxf_paid', v.paid, t('dx_bPaidQ'))}${dxCk('dxf_rem', v.rem, t('dx_toRem'))}${dxPhotoRow(it)}` + dxFormEnd(it);
+}
+function dxFormContr(){
+  const it = dxEdItem(), m = (it && it.meta) || {}, p = DXX.pre || {};
+  const v = {ctype: p.ctype || m.ctype || 'rent', title: p.title != null ? p.title : it && !m.autoT ? it.title : '', vendor: p.vendor != null ? p.vendor : it ? it.vendor || '' : '', start: p.start || m.start || '', end: p.end || m.end || '', notice: p.notice || m.notice || '', amount: p.amount || (it ? it.amount || '' : ''), upd: p.upd || m.upd || '', auto: p.auto != null && p.auto !== '' ? p.auto : m.auto || '', rem: it ? !!m.rem : true};
+  return dxFormStart('contract', it) + `<div class="bk-grid">${dxF('dxf_ctype', t('dx_cType'), dxSel('dxf_ctype', v.ctype, DX_CT.map(([k, ic]) => [k, ic + ' ' + t('dx_ct_' + k)])))}${dxF('dxf_title', t('dx_cTitle'), dxIn('dxf_title', v.title, {max: 60, ph: t('dx_ct_' + v.ctype)}))}
+    ${dxF('dxf_vendor', t('dx_cParty'), dxIn('dxf_vendor', v.vendor, {max: 40}))}${dxF('dxf_amount', t('dx_cPrice') + ' (₪)', dxIn('dxf_amount', v.amount, {num: 1, max: 12}))}
+    ${dxF('dxf_start', t('dx_cStart'), dxIn('dxf_start', v.start, {type: 'date'}))}${dxF('dxf_end', t('dx_cEnd'), dxIn('dxf_end', v.end, {type: 'date', req: 1}), 1)}
+    ${dxF('dxf_notice', t('dx_cNotice'), dxIn('dxf_notice', v.notice, {type: 'number', attr: 'inputmode="numeric" min="0" max="365" dir="ltr"'}))}${dxF('dxf_upd', t('dx_cUpd'), dxIn('dxf_upd', v.upd, {type: 'date'}))}
+    ${dxF('dxf_auto', t('dx_cAuto'), dxSel('dxf_auto', v.auto, [['', t('dx_cAuto0')], ['y', t('dx_yes')], ['n', t('dx_no')]]))}</div>
+    <p class="fine" id="dxf_endv" aria-live="polite"></p>${dxCk('dxf_rem', v.rem, t('dx_toRem'))}${dxPhotoRow(it)}` + dxFormEnd(it);
+}
+function dxFormId(){
+  const it = dxEdItem(), m = (it && it.meta) || {}, p = DXX.pre || {}, ct = p.ctype || m.ctype || 'passport', leads = Array.isArray(m.leads) ? m.leads : [90, 30];
+  return dxFormStart('idexp', it) + `<p class="fine">🔒 ${dxE(t('dx_iForm'))}</p><div class="bk-grid">${dxF('dxf_ctype', t('ds_cardType'), dxSel('dxf_ctype', ct, DX_IDT.map(k => [k, ((typeof DS_CARDS !== 'undefined' && DS_CARDS.find(c => c[0] === k)) || ['', ''])[1] + ' ' + t('ds_c_' + k)])))}
+    ${dxF('dxf_nick', t('dx_iNick'), dxIn('dxf_nick', m.nick || '', {max: 30, ph: t('dx_iNickPh')}))}${dxF('dxf_date', t('dx_iDate'), dxIn('dxf_date', it ? it.date : '', {type: 'date', req: 1}), 1)}</div>
+    <fieldset class="prn-cks"><legend class="fine">${dxE(t('dx_iWhen'))}</legend>${[180, 90, 30, 7].map(n => `<label class="prn-ck"><input type="checkbox" data-dxlead="${n}"${leads.includes(n) ? ' checked' : ''}> ${dxE(dxLeadName(n))}</label>`).join('')}</fieldset>
+    ${dxCk('dxf_rem', it ? !!m.rem : true, t('dx_toRem'))}` + dxFormEnd(it);
+}
+/* the warranty's end date / the contract's notice date, shown while typing */
+function dxLenSync(){
+  const o = $('#dxf_endv'), f = $('#dx_form'); if (!o || !f) return;
+  if (f.dataset.k === 'warranty'){ const n = +($('#dxf_len') || {}).value || 0, mo = ($('#dxf_unit') || {}).value === 'y' ? n * 12 : n, e = dxAddM(($('#dxf_purchase') || {}).value, mo); o.textContent = e ? '📅 ' + t('dx_wEnds', {d: dxFmt(e), r: dxRel(e)}) : ''; }
+  else if (f.dataset.k === 'contract'){ const end = ($('#dxf_end') || {}).value, n = +($('#dxf_notice') || {}).value || 0, nd = n > 0 && dxParse(end) ? dxAdd(end, -n) : ''; o.textContent = nd ? '📣 ' + t('dx_cNoticeBy', {d: dxFmt(nd), r: dxRel(nd)}) : ''; }
+}
+const dxV = id => { const e = $('#' + id); return e ? String(e.value || '').trim() : ''; };
+const dxCkV = id => { const e = $('#' + id); return !!(e && e.checked); };
+function dxBad(id, key){ const m = $('#dxf_msg'); if (m) m.textContent = t(key); const e = $('#' + id); if (e){ e.setAttribute('aria-invalid', 'true'); e.focus(); } return false; }
+async function dxSave(form){
+  const k = form.dataset.k, old = dxEdItem(), img = DXX.img, rec = {kind: k};
+  if (k === 'warranty'){
+    const title = dxV('dxf_title'), purchase = dxV('dxf_purchase'), n = +dxV('dxf_len') || 0, months = dxV('dxf_unit') === 'y' ? n * 12 : n;
+    if (!title) return dxBad('dxf_title', 'vt_needName'); if (!dxParse(purchase)) return dxBad('dxf_purchase', 'rm_needDate'); if (!(months > 0 && months <= 600)) return dxBad('dxf_len', 'dx_needLen');
+    const amount = dxNum(dxV('dxf_amount')), vendor = dxV('dxf_vendor');
+    let vid = old && old.fileId;
+    if (typeof vtD === 'function'){ const v = vtD(); let vi = vid && v.items.find(x => x.id === vid); const vr = {name: dsiScrub(title, 60), store: dsiScrub(vendor, 40), date: purchase, price: amount > 0 ? String(amount) : '', months};
+      if (vi) Object.assign(vi, vr); else { vid = dsiNewId(); vi = Object.assign({id: vid, note: ''}, vr); v.items.push(vi); }
+      if (img && dxPics()){ try { await vtPut(vid, img); vi.img = 1; } catch (e) { toast(t('vt_picFail')); } } saveSet(); }
+    Object.assign(rec, {title, vendor, date: dxAddM(purchase, months), amount: amount > 0 ? amount : '', fileId: vid || '', meta: {purchase, months, unit: dxV('dxf_unit'), remind: +dxV('dxf_remind') || 0, rem: dxCkV('dxf_rem')}});
+  } else if (k === 'bill'){
+    const amount = dxNum(dxV('dxf_amount')), type = dxV('dxf_type') || 'other', vendor = dxV('dxf_vendor'), date = dxV('dxf_date'), period = /^\d{4}-\d{2}$/.test(dxV('dxf_period')) ? dxV('dxf_period') : '';
+    if (!(amount > 0)) return dxBad('dxf_amount', 'dx_needAmt'); if (date && !dxParse(date)) return dxBad('dxf_date', 'rm_needDate');
+    const paid = dxCkV('dxf_paid');
+    Object.assign(rec, {title: vendor || t('dx_b_' + type), vendor, date, amount, done: paid, meta: {type, period, rem: dxCkV('dxf_rem'), paid: paid ? ((old && old.meta && old.meta.paid) || dxNow()) : ''}});
+  } else if (k === 'contract'){
+    const ctype = dxV('dxf_ctype') || 'other', end = dxV('dxf_end'), start = dxV('dxf_start'), upd = dxV('dxf_upd'), notice = Math.max(0, Math.min(365, Math.round(+dxV('dxf_notice') || 0)));
+    if (!dxParse(end)) return dxBad('dxf_end', 'dx_needEnd'); if (start && (!dxParse(start) || start > end)) return dxBad('dxf_start', 'dx_badStart');
+    const amount = dxNum(dxV('dxf_amount')), nd = notice ? dxAdd(end, -notice) : '';
+    Object.assign(rec, {title: dxV('dxf_title') || t('dx_ct_' + ctype), vendor: dxV('dxf_vendor'), date: nd && dxDays(nd) >= 0 ? nd : end, amount: amount > 0 ? amount : '', meta: {autoT: !dxV('dxf_title'), ctype, start: dxParse(start) ? start : '', end, notice, upd: dxParse(upd) ? upd : '', auto: dxV('dxf_auto'), rem: dxCkV('dxf_rem'), dd: []}});
+    if (old) rec.done = false;
+  } else if (k === 'idexp'){
+    const ctype = dxV('dxf_ctype') || 'other', date = dxV('dxf_date'), nick = dsiScrub(dxV('dxf_nick').replace(/\d{4,}/g, ''), 30), leads = $$('#dx_form [data-dxlead]').filter(x => x.checked).map(x => +x.dataset.dxlead);
+    if (!dxParse(date)) return dxBad('dxf_date', 'dx_needExp');
+    Object.assign(rec, {title: t('ds_c_' + ctype) + (nick ? ' – ' + nick : ''), date, done: false, meta: {ctype, nick, leads, rem: dxCkV('dxf_rem')}});
+  }
+  let it = old ? dsiUpdate(old.id, rec) : dsiAdd(rec);
+  /* the photo of a bill or a contract: kept under its own name in the vault's store */
+  if (it && img && k !== 'warranty' && dxPics()){ try { const fid = it.fileId && String(it.fileId).startsWith('dsx-') ? it.fileId : 'dsx-' + it.id; await vtPut(fid, img); it = dsiUpdate(it.id, {fileId: fid, meta: {pic: 1}}); } catch (e) { toast(t('vt_picFail')); } }
+  DXX.ed = null; DXX.pre = null; DXX.img = null; dscRender();
+  const al = it && k === 'bill' ? dxBillAlert(it) : null;
+  toast(al ? t('dx_bHighT', {p: al.pct}) : t(old ? 'dx_saved' : 'dx_added'));
+  setTimeout(() => { const a = $('#dx_add'); if (a) a.focus({preventScroll: true}); if (al){ const w = $('#ds_root .dx-sec .ds-warn'); if (w) w.scrollIntoView({block: 'center', behavior: 'smooth'}); } }, 40);
+  return true;
+}
+
+/* ================= hooks into the scanner ================= */
+/* the AI's first look also says whether it is a receipt, a bill or a contract */
+const DX_CLS_Q = 'Look at this photo and say what kind of document it is.';
+const DX_CLS_ADD = ' Also add to the JSON "doc": "receipt" (a shop receipt or invoice for something bought), "warranty" (a warranty card), "bill" (an electricity, water, gas, arnona, phone or internet bill), "contract" (a rental, lease, subscription, gym or insurance contract or policy) or "" for anything else.';
+{
+  const askX = dsAsk;
+  dsAsk = async function(prompt){
+    const a = Array.from(arguments), cls = typeof prompt === 'string' && prompt.startsWith(DX_CLS_Q); if (cls) a[0] = prompt + DX_CLS_ADD;
+    const r = await askX.apply(this, a); if (cls) DXX.cls = r && typeof r === 'object' ? String(r.doc || '') : ''; return r;
+  };
+}
+const DX_DOC = {receipt: 'warranty', warranty: 'warranty', bill: 'bill', contract: 'contract'};
+function dxOfferHTML(main, how, attr){
+  return `<div class="mx-card dx-offer"><h4 class="ds-q">📂 ${dxE(t(main ? 'dx_off_' + main : 'dx_offQ'))}</h4><p class="fine">${dxE(t(how))}</p>
+    <div class="btnrow">${['warranty', 'bill', 'contract'].map(k => `<button type="button" class="${k === main ? 'gold-btn' : 'btn'}" ${attr}="${k}">${DX_IC[k]} ${dxE(t('dx_track_' + k))}</button>`).join('')}</div></div>`;
+}
+function dxKindsAdd(root){
+  if (DSX.det){
+    const D = DSX.det; if (D.dx == null){ D.dx = DXX.cls || ''; DXX.cls = ''; }
+    if (D.k === 'card' || !slEngine() || root.querySelector('.dx-offer')) return; const row = root.querySelector('#ds_detok'); if (!row) return;
+    row.closest('.btnrow').insertAdjacentHTML('afterend', dxOfferHTML(DX_DOC[D.dx] || '', 'dx_offAi', 'data-dxdet'));
+    return;
+  }
+  if (root.querySelector('.dx-hub')) return; const ks = root.querySelector('.ds-kinds'); if (!ks) return;
+  ks.insertAdjacentHTML('afterend', `<section class="dx-hub" aria-labelledby="dx_hubh"><h3 class="ds-q" id="dx_hubh">📂 ${dxE(t('dx_hubH'))}</h3><div class="ds-chips">${DX_VIEWS.map(([k, ic]) => `<button type="button" class="ds-chip" data-dxgo="${k}">${ic} ${dxE(t('dx_v_' + k))}${k === 'wait' ? dxBadgeHTML() : ''}</button>`).join('')}</div></section>`);
+}
+{
+  const dsrX = dscRender;
+  dscRender = function(){
+    const root = $('#ds_root');
+    if (root && DSX.view === 'dx') return dxRender(root);
+    const r = dsrX.apply(this, arguments);
+    try { if (root && DSX.view === 'kinds') dxKindsAdd(root); } catch (e) {}
+    return r;
+  };
+  /* after a card or a page is scanned: an expiry reminder for a personal card (the date is typed, nothing is read), or tracking for a receipt, bill or contract (read on the phone) */
+  const dcrX = dsCardRender;
+  dsCardRender = function(root){
+    const r = dcrX.apply(this, arguments);
+    try {
+      if (DSC && !DSC.cur && DSC.pages.length && !root.querySelector('.dx-offer')){ const pg = root.querySelector('.ds-pages');
+        if (pg){ const idc = DX_IDT.includes(DSC.type) && DSC.type !== 'other';
+          pg.insertAdjacentHTML('afterend', idc ? `<div class="mx-card dx-offer"><h4 class="ds-q">⏰ ${dxE(t('dx_off_idexp'))}</h4><p class="fine">${dxE(t('dx_offId'))}</p><div class="btnrow"><button type="button" class="gold-btn" data-dxcard="idexp">🪪 ${dxE(t('dx_add_idexp'))}</button></div></div>`
+            : dxOfferHTML(DSC.type === 'receipt' ? 'warranty' : '', typeof ocrText === 'function' || String(DSC.ocr || '').trim() ? 'dx_offOcr' : 'dx_offHand', 'data-dxcard').replace('</div></div>', DSC.type === 'other' ? `<button type="button" class="btn" data-dxcard="idexp">🪪 ${dxE(t('dx_add_idexp'))}</button></div></div>` : '</div></div>')); } }
+    } catch (e) {}
+    return r;
+  };
+  /* letters: every "do this by" date goes into "waiting for you" (with an undo), and a bill or contract can be tracked */
+  const dlrX = dsLetterRender;
+  dsLetterRender = function(root){
+    const r = dlrX.apply(this, arguments);
+    try { dxLetterHook(root); } catch (e) {}
+    return r;
+  };
+  const icsX = dsIcs;
+  dsIcs = async function(i){ const r = await icsX.apply(this, arguments); try { const a = dsArr(DSL.j.actions)[i], d = a && dsIcsDate(a.deadline); if (d){ const x = dxLetterAdd(a, d.slice(0, 4) + '-' + d.slice(4, 6) + '-' + d.slice(6)); if (x && x.isNew && DSL._dx) DSL._dx.ids.push(x.it.id); } } catch (e) {} return r; };
+}
+function dxLetterAdd(a, iso){
+  const j = DSL.j, title = dsiScrub(a.what || j.title || t('ds_k_letter'), 80), ex = dsiAll().find(x => x.kind === 'letter' && x.title === title && x.date === iso);
+  if (ex) return {it: ex, isNew: false};
+  return {it: dsiAdd({kind: 'letter', title, date: iso, vendor: j.from || '', meta: {lt: dsiScrub(j.title || '', 80), lead: 3}}), isNew: true};
+}
+function dxLetterHook(root){
+  if (!DSL || !DSL.j) return;
+  if (!DSL._dx){ DSL._dx = {ids: [], n: 0}; dsArr(DSL.j.actions).forEach(a => { const d = dsIcsDate(a.deadline); if (!d) return; const x = dxLetterAdd(a, d.slice(0, 4) + '-' + d.slice(4, 6) + '-' + d.slice(6)); if (x && x.it){ DSL._dx.n++; if (x.isNew) DSL._dx.ids.push(x.it.id); } }); }
+  const n = DSL._dx.undone ? 0 : DSL._dx.n, out = root.querySelector('.ds-out'); if (!out || root.querySelector('.dx-offer')) return;
+  out.insertAdjacentHTML('afterend', (n ? `<div class="ds-found ds-found-s dx-ladd" role="status">⏰ <span>${dxE(t('dx_lAdded', {n}))}</span> <button type="button" class="lg-a" data-dxgo="wait">${dxE(t('dx_open'))}</button>${DSL._dx.ids.length ? ` <button type="button" class="lg-a" id="dx_lundo">${dxE(t('dx_undo'))}</button>` : ''}</div>` : '')
+    + (slEngine() && DSL.blobs && DSL.blobs.length ? dxOfferHTML('', 'dx_offLet', 'data-dxlet') : ''));
+}
+
+/* ================= on Home ================= */
+function dxHome(){
+  const hh = $('#hh'); let box = $('#hdsx'), rows = [];
+  try { if (isMember()) rows = dxDueRows(); } catch (e) {}
+  if (!hh || !rows.length){ if (box) box.remove(); return; }
+  if (!box){ ($('#hrm') || hh).insertAdjacentHTML('afterend', '<div id="hdsx" class="hrm"></div>'); box = $('#hdsx'); }
+  box.innerHTML = `<button type="button" class="hrm-in" id="hdsx_go"><span class="hrm-h">📂 ${dxE(t('dx_homeH', {n: rows.length}))}</span>${rows.slice(0, 3).map(r => `<span class="hrm-r${dxDays(r.d) < 0 ? ' late' : ''}">${dxIc(r.it)} <b dir="auto">${dxE(r.w)}</b> · ${dxE(dxRel(r.d))}</span>`).join('')}${rows.length > 3 ? `<span class="hrm-m">${dxE(t('rm_more', {n: rows.length - 3}))}</span>` : ''}</button>`;
+}
+
+/* ================= events ================= */
+function dxIcsAll(){
+  const rows = dxOpenRows().filter(r => !dxSnoozed(r.it) && dxDays(r.d) >= 0); if (!rows.length){ toast(t('dx_noneAll')); return; }
+  const L = rows.map(r => ({id: r.key.replace(/[^\w-]/g, '-'), date: r.d, time: '', title: r.w, note: [r.it.vendor, dxM(r.it.amount)].filter(Boolean).join(' · '), rep: 'none', before: Math.max(0, ...r.leads)}));
+  if (typeof rmIcs === 'function') rmIcs(L, t('dx_v_wait'));
+}
+async function dxCardGo(k){
+  if (k === 'idexp'){ dxOpen('idexp', 'new', {ctype: DX_IDT.includes(DSC.type) ? DSC.type : 'other'}); return; }
+  const st = $('#ds_root .dx-offer .fine'); if (st) st.textContent = '⏳ ' + t('dx_reading');
+  let c = null, blob = null, txt = '';
+  try { c = dsCompose(DSC.pages[0], 1600); blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.85)); } catch (e) {}
+  try { if (c) txt = await dxOcr(c); } catch (e) {}
+  DXX.img = blob; dxOpen(k, 'new', txt ? dxGuess(k, txt) : {});
+}
+document.addEventListener('click', e => {
+  const t0 = e.target; if (!t0.closest) return; let b;
+  if (t0.closest('#hdsx_go')){ dxOpen('wait'); return; }
+  if (!t0.closest('#ds_root')) return;
+  if ((b = t0.closest('[data-dxgo]'))){ const k = b.dataset.dxgo; DXX.f = DXX.v === k ? DXX.f : DXX.f; dxOpen(k, b.dataset.dxnew ? 'new' : null); return; }
+  if ((b = t0.closest('[data-dxdet]'))){ const D = DSX.det; if (D && D.files && D.files[0]) dxScanAi(b.dataset.dxdet, D.files[0], b); return; }
+  if ((b = t0.closest('[data-dxlet]'))){ if (DSL && DSL.blobs && DSL.blobs[0]){ DSL._dx = DSL._dx || {ids: [], n: 0}; dxScanAi(b.dataset.dxlet, DSL.blobs[0], b); } return; }
+  if ((b = t0.closest('[data-dxcard]'))){ if (DSC) dxCardGo(b.dataset.dxcard); return; }
+  if (t0.closest('#dx_lundo')){ (DSL._dx.ids || []).forEach(dsiRemove); DSL._dx.ids = []; DSL._dx.undone = true; toast(t('dx_undone')); dscRender(); return; }
+  if (DSX.view !== 'dx') return;
+  if (t0.closest('#dx_back')){ if (DXX.ed){ DXX.ed = null; DXX.pre = null; DXX.img = null; dscRender(); return; } DSX.view = 'kinds'; dscRender(); const r = $('#ds_root'); if (r) r.scrollIntoView({block: 'start', behavior: 'smooth'}); return; }
+  if ((b = t0.closest('#dx_add'))){ DXX.ed = 'new'; DXX.pre = null; DXX.img = null; dscRender(); const f = $('#dx_form input, #dx_form select'); if (f) f.focus(); return; }
+  if (t0.closest('#dxf_cancel')){ DXX.ed = null; DXX.pre = null; DXX.img = null; dscRender(); const a = $('#dx_add'); if (a) a.focus(); return; }
+  if ((b = t0.closest('[data-dxphb]'))){ const i = $(`#dx_form input[data-dxph="${b.dataset.dxphb}"]`); if (i) i.click(); return; }
+  if ((b = t0.closest('[data-dxlen]'))){ const l = $('#dxf_len'), u = $('#dxf_unit'); if (l){ l.value = b.dataset.dxlen; if (u) u.value = 'm'; dxLenSync(); } return; }
+  if ((b = t0.closest('[data-dxf]'))){ DXX.f = b.dataset.dxf; DXX.snz = null; dscRender(); const n = $(`[data-dxf="${CSS.escape(DXX.f)}"]`); if (n) n.focus(); return; }
+  if ((b = t0.closest('[data-dxwf]'))){ DXX.wf = b.dataset.dxwf; dscRender(); const n = $(`[data-dxwf="${DXX.wf}"]`); if (n) n.focus(); return; }
+  if ((b = t0.closest('[data-dxed]'))){ const it = dsiAll().find(x => x.id === b.dataset.dxed); if (!it) return; DXX.v = ['warranty', 'bill', 'contract', 'idexp'].includes(it.kind) ? it.kind : DXX.v; DXX.ed = it.id; DXX.pre = null; DXX.img = null; dscRender(); const f = $('#dx_form input, #dx_form select'); if (f){ f.focus(); f.scrollIntoView({block: 'center', behavior: 'smooth'}); } return; }
+  if ((b = t0.closest('[data-dxdel]'))){ const it = dsiAll().find(x => x.id === b.dataset.dxdel); if (!it || !confirm(t(it.kind === 'warranty' && it.fileId ? 'dx_delQW' : 'rm_delQ', {t: dxTitle(it)}))) return; dsiRemove(it.id); if (DXX.ed === it.id){ DXX.ed = null; DXX.img = null; } dscRender(); toast(t('dx_deleted')); const a = $('#dx_add') || $('#dx_back'); if (a) a.focus(); return; }
+  if ((b = t0.closest('[data-dxpic]'))){ const it = dsiAll().find(x => x.id === b.dataset.dxpic); if (it && it.fileId && typeof vtShow === 'function') vtShow(it.fileId).then(() => { const h = $('#vtx h3'), im = $('#vtx_img'); if (h) h.textContent = dxTitle(it); if (im) im.alt = dxTitle(it); const x = $('#vtx_x'); if (x) x.focus(); }); return; }
+  if ((b = t0.closest('[data-dxdone]'))){ const k = b.dataset.dxdone; dxRowDone(k); dscRender(); const n = $('#ds_root [data-dxdone]') || $('#dx_back'); if (n) n.focus(); return; }
+  if ((b = t0.closest('[data-dxundo]'))){ dsiUpdate(b.dataset.dxundo, {done: false, meta: {dd: [], paid: ''}}); dscRender(); toast(t('dx_undone')); return; }
+  if ((b = t0.closest('[data-dxsnz]'))){ const it = dsiAll().find(x => x.id === b.dataset.dxsnz); if (!it) return; if (dxSnoozed(it)){ dsiUpdate(it.id, {meta: {snooze: ''}}); DXX.snz = null; } else DXX.snz = DXX.snz === it.id ? null : it.id; dscRender(); const n = $(`[data-dxsnz="${it.id}"]`); if (n) n.focus(); return; }
+  if ((b = t0.closest('[data-dxsz]'))){ const d = dxAdd(dxNow(), +b.dataset.n || 1); dsiUpdate(b.dataset.dxsz, {meta: {snooze: d}}); DXX.snz = null; dscRender(); toast(t('dx_snzOk', {d: dxFmt(d)})); return; }
+  if ((b = t0.closest('[data-dxopen]'))){ const it = dsiAll().find(x => x.id === b.dataset.dxopen); if (!it) return;
+    if (typeof DSI_OPEN[it.kind] === 'function'){ try { DSI_OPEN[it.kind](it); } catch (er) {} return; }
+    if (it.meta && it.meta.go && dxTab(it.meta.go)){ activate(it.meta.go); return; }
+    DXX.v = it.kind; DXX.ed = null; DXX.wf = 'all'; dscRender(); return; }
+  if ((b = t0.closest('[data-dxpay]'))){ const it = dsiAll().find(x => x.id === b.dataset.dxpay); if (!it) return; dsiUpdate(it.id, it.done ? {done: false, meta: {paid: ''}} : {done: true, meta: {paid: dxNow()}}); dscRender(); toast(t(it.done ? 'dx_undone' : 'dx_paidOk')); const n = $(`[data-dxpay="${it.id}"]`); if (n) n.focus(); return; }
+  if ((b = t0.closest('[data-dxexp]'))){ const it = dsiAll().find(x => x.id === b.dataset.dxexp); if (!it) return; activate('expenses'); try { EXP_CAT = 'bills'; expSheet(null); } catch (er) { return; }
+    setTimeout(() => { const a = $('#exp_amt'), dt = $('#exp_date'), n = $('#exp_note'); if (a){ a.value = it.amount; a.dispatchEvent(new Event('input', {bubbles: true})); } const d0 = (it.meta && it.meta.paid) || it.date; if (dt && d0 && d0 <= dxNow()) dt.value = d0; if (n) n.value = dxTitle(it) + ((it.meta || {}).period ? ' ' + it.meta.period : ''); }, 60); return; }
+  if ((b = t0.closest('[data-dxtab]'))){ activate(b.dataset.dxtab); return; }
+  if ((b = t0.closest('[data-dxrn]'))){ const it = dsiAll().find(x => x.id === b.dataset.dxrn); if (!it || typeof miD !== 'function') return; const d = miD('renewals'), m = it.meta || {}; if (!Array.isArray(d.items)) d.items = [];
+    if (d.items.some(x => x.name === dxTitle(it).slice(0, 40) && x.start === m.start)){ toast(t('dx_rnExists')); return; }
+    d.items.push({name: dxTitle(it).slice(0, 40), type: m.ctype === 'insur' ? 'insur' : 'other', price: it.amount ? String(it.amount) : '', start: m.start}); saveSet(); toast(t('dx_rnOk')); return; }
+  if ((b = t0.closest('[data-dxbrk]'))){ DXX.broke = DXX.broke === b.dataset.dxbrk ? null : b.dataset.dxbrk; dscRender(); const n = DXX.broke ? $('#dx_bmsg') : $(`[data-dxbrk="${b.dataset.dxbrk}"]`); if (n){ n.focus({preventScroll: true}); n.scrollIntoView({block: 'center', behavior: 'smooth'}); } return; }
+  if (t0.closest('#dx_bcopy')){ copyText(($('#dx_bmsg') || {}).value || ''); toast(t('st_copied')); return; }
+  if (t0.closest('#dx_bshare')){ try { navigator.share({text: ($('#dx_bmsg') || {}).value || ''}).catch(() => {}); } catch (er) {} return; }
+  if (t0.closest('#dx_ics')){ dxIcsAll(); return; }
+  if (t0.closest('#dx_remAll')){ const L = dsiAll().filter(x => !x.done && !(x.meta && x.meta.rem) && dxRows(x).some(r => dxDays(r.d) >= 0)); L.forEach(x => dsiUpdate(x.id, {meta: {rem: true}})); toast(t(L.length ? 'fc_addedN' : 'dx_remNone', {n: L.length})); return; }
+});
+document.addEventListener('submit', e => { if (e.target && e.target.id === 'dx_form'){ e.preventDefault(); dxSave(e.target).catch(() => toast(t('dx_saveFail'))); } });
+document.addEventListener('input', e => { const el = e.target; if (!el || !el.closest || !el.closest('#dx_form')) return; el.removeAttribute('aria-invalid'); if (['dxf_len', 'dxf_purchase', 'dxf_end', 'dxf_notice'].includes(el.id)) dxLenSync(); });
+document.addEventListener('change', async e => {
+  const el = e.target; if (!el || !el.closest || !el.closest('#ds_root') || DSX.view !== 'dx') return;
+  if (['dxf_unit', 'dxf_purchase', 'dxf_end'].includes(el.id)){ dxLenSync(); return; }
+  if (el.id === 'dxf_ctype' && $('#dxf_title')){ $('#dxf_title').placeholder = t('dx_ct_' + el.value); return; }
+  if (el.id === 'dx_bl'){ DXX.bl = el.value; const it = dsiAll().find(x => x.id === el.dataset.id), ta = $('#dx_bmsg'); if (it && ta){ ta.value = dxBrokeMsg(it, el.value); ta.lang = el.value; ta.dir = el.value === 'en' ? 'ltr' : 'rtl'; } return; }
+  if (el.id === 'dxc_pct'){ const v = Math.round(+el.value); if (v >= 5 && v <= 300){ dxCfg().pct = v; saveSet(); toast(t('dx_saved')); } return; }
+  if (el.id === 'dxc_warr'){ dxCfg().warr = +el.value; saveSet(); dsiAll().filter(x => x.kind === 'warranty' && x.meta && x.meta.rem && x.meta.remind == null).forEach(dxRemSync); toast(t('dx_saved')); return; }
+  if (el.hasAttribute('data-dxph') && el.files && el.files[0]){
+    if ((SET.photoAccess || 'ask') === 'never'){ toast(t('pha_blocked')); el.value = ''; return; }
+    try { DXX.img = await vtShrink(el.files[0], 1600); const s = $('#dxf_ph'); if (s) s.textContent = '✓ ' + t('dx_phNew'); } catch (er) { toast(t('ph_fail')); } el.value = '';
+  }
+});
+
+/* ================= wiring ================= */
+(function(){
+  const st = document.createElement('style');
+  st.textContent = '.dx-hub{margin:14px 0 4px}.dx-hub .ds-chips,.dx-offer .btnrow{flex-wrap:wrap}.dx-nav{margin:6px 0 4px}.dx-n{display:inline-block;min-width:1.35em;padding:0 5px;margin-inline-start:4px;border-radius:999px;background:#b42318;color:#fff;font-size:.76rem;font-weight:700;line-height:1.5;text-align:center}'
+    + '.dx-offer{margin:12px 0}.dx-sec{margin:12px 0 4px}.dx-len{display:flex;gap:6px}.dx-len input{flex:1 1 40%;min-width:0}.dx-len select{flex:1 1 60%}.dx-brk{margin-top:8px}.dx-brk textarea{min-height:12em}.dx-ladd{flex-wrap:wrap;gap:6px}#dx_form .ds-chips{margin-top:4px}#dx_form [aria-invalid=true]{border-color:#b42318}';
+  document.head.appendChild(st);
+})();
+try { GS_SYN.docscan += ' אחריות קבלה תעודת אחריות חשבון חשבונות חשמל מים ארנונה גז חוזה שכירות מנוי ביטוח הודעה מוקדמת תוקף דרכון תעודה פג תוקף מחכה לך warranty receipt bill bills electricity water arnona contract lease subscription notice expiry passport waiting كفالة إيصال فاتورة كهرباء مياه أرنونا عقد إيجار اشتراك إشعار انتهاء جواز بانتظارك'; } catch (e) {}
+{
+  const actDx = activate; activate = function(id){ const r = actDx.apply(this, arguments); try { if (id === 'home') dxHome(); } catch (e) {} return r; };
+  const alDx = applyLang; applyLang = function(){ const r = alDx.apply(this, arguments); try { dxHome(); } catch (e) {} return r; };
+  if (typeof calcHome === 'function'){ const chDx = calcHome; calcHome = function(){ const r = chDx.apply(this, arguments); try { dxHome(); } catch (e) {} return r; }; }
+  setTimeout(() => { try { dxHome(); } catch (e) {} }, 300);
+}
 
 /* scanner: yearly tax folder and sending a document to a family member */
+/* ---------- 13.57: 📁 a yearly tax folder, and 👨‍👩‍👧 sending a document to a family member ----------
+   📁 Scans and files tagged by tax year and kind, kept only in this browser's own storage (the same store as the documents archive), never
+      uploaded. A checklist of the documents often needed for a tax refund, notes for the year, and the whole year as one PDF or a ZIP for the
+      accountant. Parts blacked out in the scanner are kept as boxes and stay hidden in anything shared while "hide personal details" is on.
+   👨‍👩‍👧 The app has no server storage for passing files between people (family mode is only a way to sign in), so nothing new is built on a
+      server: the document is masked, then locked on the phone with a one-time password (PBKDF2 + AES-GCM) into one file that opens in any
+      browser or in this app, and shared through the phone's share sheet. The password is said aloud, never sent with the file, and the file
+      stops opening after 1, 3 or 7 days (the date is sealed into the encryption). No ID, card or account number is ever stored as text. */
+const txE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+/* long runs of digits (ID, card, account or phone numbers) never stay in names or notes; dates and amounts are left alone */
+const txSafe = s => String(s == null ? '' : s).replace(/\d(?:[ \-]?\d){6,}/g, m => /^\d{4}-\d{2}-\d{2}$/.test(m) ? m : '•'.repeat(Math.min(12, m.replace(/\D/g, '').length)));
+const TX_CATS = [['f106', '💼'], ['f867', '🏦'], ['donate', '💝'], ['pens', '🌱'], ['insur', '🛡️'], ['btl', '🏛️'], ['credit', '🧾'], ['kids', '🧒'], ['degree', '🎓'], ['soldier', '🎖️'], ['move', '🏘️'], ['rent', '🏠'], ['other', '📎']];
+/* the checklist: the kinds that are commonly asked for (the wording of some rows is shared with the yearly pack) */
+const TX_CK = ['f106', 'f867', 'donate', 'pens', 'insur', 'btl', 'credit', 'kids', 'degree', 'soldier', 'move', 'rent'];
+const TX_TP = ['f106', 'f867', 'donate', 'degree', 'soldier', 'move', 'rent'];
+const txCkL = k => TX_TP.includes(k) && T['tp_i_' + k] ? 'tp_i_' + k : 'tx_i_' + k;
+const txCkH = k => TX_TP.includes(k) && T['tp_h_' + k] ? 'tp_h_' + k : 'tx_h_' + k;
+const txIc = c => (TX_CATS.find(x => x[0] === c) || TX_CATS[TX_CATS.length - 1])[1];
+const TX_MAX = 2000;          // the longest side of a stored page (about 170 DPI for an A4 page – sharp enough to read and print)
+const TX_TAXSITE = 'https://www.gov.il/he/departments/israel_tax_authority';
+const txY0 = () => new Date().getFullYear() - 1;       // a refund is asked for a year that has ended
+var TXV = {y: 0, tab: 'docs', ed: null, cat: '', pend: null, mask: true, busy: false, back: '', st: ''};
+function txD(){
+  const d = SET.taxf && typeof SET.taxf === 'object' ? SET.taxf : (SET.taxf = {});
+  if (!Array.isArray(d.items)) d.items = []; if (!d.notes || typeof d.notes !== 'object') d.notes = {}; if (!d.na || typeof d.na !== 'object') d.na = {};
+  return d;
+}
+const txYear = () => +TXV.y || txY0();
+const txOf = y => txD().items.filter(x => +x.year === +y).sort((a, b) => TX_CATS.findIndex(c => c[0] === a.cat) - TX_CATS.findIndex(c => c[0] === b.cat) || (a.created || 0) - (b.created || 0));
+const txKey = (id, i) => 'tx:' + id + ':' + i;
+const txNoFiles = () => typeof vtNoPics === 'function' && vtNoPics();
+const txId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const txYears = () => { const Y = new Date().getFullYear(), s = new Set([Y, Y - 1, Y - 2, Y - 3, Y - 4, Y - 5, Y - 6]); txD().items.forEach(x => { if (+x.year > 1990) s.add(+x.year); }); return [...s].sort((a, b) => b - a); };
+const txCatName = c => t('tx_c_' + (TX_CATS.some(x => x[0] === c) ? c : 'other'));
+const txFileName = s => String(s).replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 80);
+
+/* ---- pages: stored as JPEG in the browser's own storage; the hidden parts are kept as boxes ---- */
+function txJpeg(c, q){ return new Promise((ok, no) => { try { c.toBlob(b => b ? ok(b) : no(new Error('blob')), 'image/jpeg', q || 0.86); } catch (e) { no(e); } }); }
+function txFit(src, max){
+  const k = Math.min(1, max / Math.max(src.width, src.height)), c = document.createElement('canvas');
+  c.width = Math.max(1, Math.round(src.width * k)); c.height = Math.max(1, Math.round(src.height * k));
+  const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.imageSmoothingQuality = 'high'; x.drawImage(src, 0, 0, c.width, c.height); return c;
+}
+const txBoxes = (x, W, H, red) => { x.fillStyle = '#000'; (red || []).forEach(r => x.fillRect(r[0] * W, r[1] * H, r[2] * W, r[3] * H)); };
+/* the scan on screen, as it looks but without the black boxes and the watermark (the boxes are kept apart and put back when sharing) */
+function txFromScan(){
+  if (!DSC || !DSC.pages.length) return [];
+  const wm = DSC.wm; DSC.wm = '';
+  try { return DSC.pages.slice(0, 30).map(p => ({c: txFit(dsCompose(Object.assign({}, p, {red: []})), TX_MAX), red: (p.red || []).map(r => r.slice(0, 4))})); }
+  finally { DSC.wm = wm; }
+}
+async function txFromFiles(files){
+  const out = [];
+  for (const f of [...files].slice(0, 10)){
+    if (/pdf$/i.test(f.type) || /\.pdf$/i.test(f.name || '')){
+      const doc = await pxOpenPdf(new Uint8Array(await f.arrayBuffer()), f.name);
+      for (let i = 1; i <= Math.min(doc.numPages, 20); i++){
+        const pg = await doc.getPage(i), v0 = pg.getViewport({scale: 1}), v = pg.getViewport({scale: Math.min(3, TX_MAX / Math.max(v0.width, v0.height))});
+        const c = document.createElement('canvas'); c.width = Math.round(v.width); c.height = Math.round(v.height); const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height);
+        await pg.render({canvasContext: x, viewport: v}).promise; out.push({c, red: []});
+      }
+      try { doc.destroy(); } catch (e) {}
+    } else if (/^image\//i.test(f.type)) out.push({c: txFit(await dsLoad(f), TX_MAX), red: []});
+  }
+  return out;
+}
+async function txPages(it){
+  const out = []; if (!it || !(it.n > 0)) return out;
+  for (let i = 0; i < it.n; i++){ const b = await vtGet(txKey(it.id, i)); if (b) out.push({b, i, red: (it.red || [])[i] || [], w: ((it.dims || [])[i] || [])[0] || 0, h: ((it.dims || [])[i] || [])[1] || 0}); }
+  return out;
+}
+async function txCanvas(pg, mask){ const c = await dsLoad(pg.b); if (mask) txBoxes(c.getContext('2d'), c.width, c.height, pg.red); return c; }
+/* a page that is only read from storage when the PDF writer asks for it – a whole year never sits in memory at once */
+function txLazy(pg, mask){
+  return {width: pg.w, height: pg.h, toBlob(cb){ (async () => (mask && pg.red.length) ? txJpeg(await txCanvas(pg, true), 0.88) : pg.b)().then(cb, () => cb(null)); }};
+}
+async function txDelFiles(it){ for (let i = 0; i < (it.n || 0) + 2; i++) await vtDel(txKey(it.id, i)); }
+/* a first guess of the kind and year from the recognised text (only on the phone) */
+function txGuess(s){
+  s = String(s || '');
+  if (/(^|\D)106(\D|$)/.test(s)) return 'f106'; if (/(^|\D)867(\D|$)/.test(s)) return 'f867';
+  if (/תרומ|סעיף\s*46|donat|تبرع/i.test(s)) return 'donate';
+  if (/פנסי|גמל|השתלמות|pension|provident|study fund|تقاعد|صندوق/i.test(s)) return 'pens';
+  if (/ביטוח חיים|אובדן כושר|life insur|disabilit(y|ies) insur|تأمين حياة/i.test(s)) return 'insur';
+  if (/ביטוח לאומי|national insurance|التأمين الوطني/i.test(s)) return 'btl';
+  if (/מעון|צהרון|daycare|childcare|حضانة/i.test(s)) return 'kids';
+  if (/זכאות לתואר|degree|لقب/i.test(s)) return 'degree'; if (/תעודת שחרור|discharge|تسريح/i.test(s)) return 'soldier';
+  if (/שכירות|rental|إيجار/i.test(s)) return 'rent';
+  return '';
+}
+function txGuessYear(s){ const m = /(?:לשנת(?: המס)?|שנת המס|tax year|for the year|لسنة)\s*(20\d\d)/i.exec(String(s || '')); const y = m ? +m[1] : 0; return y && y <= new Date().getFullYear() ? y : 0; }
+
+/* ---- the "waiting for you" list and reminders ---- */
+function txLinkTodo(it){
+  try {
+    if (!it.todo){ if (it.dsi && typeof dsiRemove === 'function') dsiRemove(it.dsi); it.dsi = ''; return; }
+    if (typeof dsiAdd !== 'function') return;
+    const date = it.todoDate || rmIso(new Date(Date.now() + 30 * 864e5)), title = it.todo + ' – ' + it.title;
+    if (it.dsi && typeof dsiUpdate === 'function'){ dsiUpdate(it.dsi, {title, date, year: +it.year}); return; }
+    const r = dsiAdd({kind: 'tax', title, date, year: +it.year, meta: {tx: it.id}, created: Date.now()});
+    it.dsi = typeof r === 'string' ? r : (r && r.id) || '';
+  } catch (e) {}
+}
+
+/* ================= the tax folder screen ================= */
+function txItemHTML(it){
+  const E = txE, sub = [txCatName(it.cat), it.n ? t('tx_pages', {n: it.n}) : t('tx_noFile'), +it.amount ? M(+it.amount, 0, 'ILS') : ''].filter(Boolean).join(' · ');
+  return `<li class="rm-it${it.todo ? ' due' : ''}"><div class="rm-ic" aria-hidden="true">${txIc(it.cat)}</div><div class="rm-b"><b dir="auto">${E(it.title)}</b><span class="rm-w">${E(sub)}</span>
+    ${it.note ? `<small dir="auto">${E(it.note)}</small>` : ''}${it.todo ? `<small dir="auto">📌 ${E(it.todo)}${it.todoDate ? ' · ' + E(rmFmt(it.todoDate)) : ''}</small>` : ''}
+    <div class="rm-acts">${it.n ? `<button type="button" class="px-tb s" data-txview="${E(it.id)}" aria-label="${E(t('tx_viewA', {n: it.title}))}" title="${E(t('tx_viewA', {n: it.title}))}">👁️</button><button type="button" class="px-tb s" data-txmask="${E(it.id)}" aria-label="${E(t('tx_maskA', {n: it.title}))}" title="${E(t('tx_maskA', {n: it.title}))}">🖍️</button><button type="button" class="px-tb s" data-txfam="${E(it.id)}" aria-label="${E(t('tx_famA', {n: it.title}))}" title="${E(t('tx_famA', {n: it.title}))}">👨‍👩‍👧</button>` : ''}<button type="button" class="px-tb s" data-txed="${E(it.id)}" aria-label="${E(t('rm_edit', {t: it.title}))}" title="${E(t('rm_edit', {t: it.title}))}">✏️</button><button type="button" class="px-tb s" data-txrem="${E(it.id)}" aria-label="${E(t('tx_remA', {n: it.title}))}" title="${E(t('tx_remA', {n: it.title}))}">⏰</button><button type="button" class="px-tb s" data-txdel="${E(it.id)}" aria-label="${E(t('rm_del', {t: it.title}))}" title="${E(t('rm_del', {t: it.title}))}">🗑️</button></div></div></li>`;
+}
+function txEditorHTML(){
+  const E = txE, d = txD(), it = TXV.ed && TXV.ed !== 'new' ? d.items.find(x => x.id === TXV.ed) : null, P = TXV.pend;
+  const v = Object.assign({title: '', cat: TXV.cat || 'other', year: txYear(), amount: '', note: '', todo: '', todoDate: ''}, it || {}, TXV.pre || {});
+  const pages = P ? (P.replace ? t('tx_pgReplace', {n: P.pages.length}) : t('tx_pgAdd', {n: P.pages.length})) : it && it.n ? t('tx_pages', {n: it.n}) : t('tx_noFile');
+  return `<form class="bk-acc rm-form" id="tx_form" novalidate><fieldset><legend>${it ? '✏️' : '＋'} ${E(t(it ? 'tx_editT' : 'tx_newT'))}</legend>
+    <p class="fine" role="status">📄 ${E(pages)}${P && P.pages.some(p => p.red.length) ? ' · 🖍️ ' + E(t('tx_hasMask')) : ''}</p>
+    ${P && txNoFiles() ? `<div class="ds-warn" role="note"><span aria-hidden="true">🔒</span><p>${E(t('tx_noPics'))}</p></div>` : ''}
+    <label class="bk-f"><span>${E(t('tx_fTitle'))}</span><input type="text" id="txf_title" maxlength="80" dir="auto" value="${E(v.title)}" placeholder="${E(t('tx_fTitlePh'))}" required></label>
+    <div class="bk-grid"><label class="bk-f"><span>${E(t('tx_fCat'))}</span><select id="txf_cat">${TX_CATS.map(([c, ic]) => `<option value="${c}"${c === v.cat ? ' selected' : ''}>${ic} ${E(txCatName(c))}</option>`).join('')}</select></label>
+    <label class="bk-f"><span>${E(t('tx_year'))}</span><select id="txf_year">${txYears().map(y => `<option value="${y}"${+y === +v.year ? ' selected' : ''}>${y}</option>`).join('')}</select></label>
+    <label class="bk-f"><span>${E(t('tx_fAmt'))} (₪)</span><input type="text" inputmode="decimal" dir="ltr" id="txf_amt" maxlength="12" value="${E(v.amount)}"></label></div>
+    <label class="bk-f"><span>${E(t('rm_fNote'))}</span><textarea id="txf_note" rows="2" maxlength="300" dir="auto">${E(v.note)}</textarea></label>
+    <div class="bk-grid"><label class="bk-f"><span>${E(t('tx_fTodo'))}</span><input type="text" id="txf_todo" maxlength="80" dir="auto" value="${E(v.todo)}" placeholder="${E(t('tx_fTodoPh'))}"></label>
+    <label class="bk-f"><span>${E(t('tx_fTodoD'))}</span><input type="date" id="txf_todod" value="${E(v.todoDate)}"></label></div>
+    <p class="fine">🔒 ${E(t('tx_fPriv'))}</p>
+    <div class="btnrow"><button type="submit" class="gold-btn">✓ ${E(t('rm_save'))}</button><button type="button" class="btn" id="txf_cancel">${E(t('rm_cancel'))}</button></div></fieldset></form>`;
+}
+function txDocs(){
+  const E = txE, y = txYear(), L = txOf(y);
+  return `${TXV.ed ? txEditorHTML() : `<div class="btnrow"><button type="button" class="gold-btn" id="tx_scan">📷 ${E(t('tx_scan'))}</button><label class="btn">📎 ${E(t('tx_file'))}<input type="file" id="tx_file" accept="image/*,application/pdf" multiple hidden></label><button type="button" class="mv" id="tx_rec">＋ ${E(t('tx_noFileAdd'))}</button></div>`}
+    <p class="fine" id="txf_st" role="status" aria-live="polite">${E(TXV.st || '')}</p>
+    <ul class="rm-list" aria-label="${E(t('tx_listA', {y}))}">${L.map(txItemHTML).join('') || `<li class="fine bk-empty">${E(t('tx_none', {y}))}</li>`}</ul>`;
+}
+function txCheck(){
+  const E = txE, y = txYear(), d = txD(), L = txOf(y), na = d.na[y] || [], rel = TX_CK.filter(k => !na.includes(k)), have = rel.filter(k => L.some(x => x.cat === k));
+  return `<div class="ds-warn" role="note"><span aria-hidden="true">ℹ️</span><p>${E(t('tx_ckNote'))}</p></div>
+    <div class="bk-hero"><span>${E(t('tx_ckProg', {y}))}</span><b dir="ltr">${have.length} / ${rel.length}</b><small>${E(rel.length - have.length ? t('tx_ckMiss', {n: rel.length - have.length}) : t('tx_ckAll'))}</small></div>
+    <ul class="rm-list tx-ck">${TX_CK.map(k => { const n = L.filter(x => x.cat === k).length, off = na.includes(k);
+      return `<li class="rm-it${n ? '' : off ? ' done' : ''}"><div class="rm-ic" aria-hidden="true">${n ? '✅' : off ? '➖' : txIc(k)}</div><div class="rm-b"><b>${E(t(txCkL(k)))}</b>
+        <span class="rm-w">${E(n ? t('tx_ckHave', {n}) : off ? t('tx_ckNa') : t('tx_ckNo'))}${k === 'f106' && n === 1 ? ' · ' + E(t('tx_ck106')) : ''}</span><small>${E(t(txCkH(k)))}</small>
+        <div class="rm-acts"><button type="button" class="mv" data-txckadd="${k}" aria-label="${E(t('tx_ckAddA', {n: t(txCkL(k))}))}">＋ ${E(t('tx_ckAdd'))}</button><label class="prn-ck"><input type="checkbox" data-txna="${k}"${off ? ' checked' : ''}> ${E(t('tx_ckNaL'))}</label></div></div></li>`; }).join('')}</ul>
+    <div class="btnrow"><button type="button" class="btn" data-go="taxrefund">↗ ${E(t('tab_taxrefund'))}</button><a class="btn" href="${TX_TAXSITE}" target="_blank" rel="noopener noreferrer">↗ ${E(t('tx_taxSite'))}</a></div>`;
+}
+function txNotes(){
+  const E = txE, y = txYear();
+  return `<label class="bk-f"><span>${E(t('tx_notesL', {y}))}</span><textarea id="tx_notes" rows="8" maxlength="4000" dir="auto" placeholder="${E(t('tx_notesPh'))}">${E(txD().notes[y] || '')}</textarea></label>
+    <p class="fine">🔒 ${E(t('tx_notesH'))}</p>`;
+}
+function txOut(){
+  const E = txE, y = txYear(), L = txOf(y), pg = L.reduce((s, x) => s + (x.n || 0), 0);
+  return `<p class="fine">${E(t('tx_outIntro'))}</p>
+    <div class="bk-hero"><span>${E(t('tx_outSum', {y}))}</span><b>${E(t('tx_outN', {n: L.length, p: pg}))}</b></div>
+    <label class="prn-ck"><input type="checkbox" id="tx_maskck"${TXV.mask ? ' checked' : ''}> ${E(t('tx_maskL'))}</label><p class="fine">${E(t('tx_maskH'))}</p>
+    <div class="btnrow ds-out"><button type="button" class="gold-btn" data-txout="pdf"${L.length && !TXV.busy ? '' : ' disabled'}>📄 ${E(t('tx_outPdf'))}</button><button type="button" class="btn" data-txout="zip"${L.length && !TXV.busy ? '' : ' disabled'}>🗜️ ${E(t('tx_outZip'))}</button>${navigator.share ? `<button type="button" class="btn" data-txout="share"${L.length && !TXV.busy ? '' : ' disabled'}>📤 ${E(t('ds_share'))}</button>` : ''}</div>
+    <p class="fine" id="tx_ost" role="status" aria-live="polite">${E(TXV.busy ? t('ds_making') : L.length ? '' : t('tx_none', {y}))}</p>
+    <p class="fine sl-priv">🔒 ${E(t('tx_outPriv'))}</p>`;
+}
+function txfRender(root){
+  const E = txE, y = txYear(), n = txOf(y).length;
+  root.innerHTML = dsBar('📁 ' + t('tx_title')) + `<p class="fine">${E(t('tx_intro'))}</p>
+    ${txNoFiles() ? `<div class="ds-warn" role="note"><span aria-hidden="true">🔒</span><p>${E(t('tx_noPics'))}</p></div>` : ''}
+    <div class="field cv-f"><label for="tx_y">${E(t('tx_year'))}</label><select id="tx_y">${txYears().map(z => `<option value="${z}"${z === y ? ' selected' : ''}>${z}${z === txY0() ? ' · ' + E(t('tx_yPrev')) : ''}</option>`).join('')}</select></div>
+    <div class="ds-chips bk-tabs" role="tablist" aria-label="${E(t('tx_title'))}">${[['docs', '📄', t('tx_t_docs', {n})], ['ck', '✅', t('tx_t_ck')], ['notes', '📝', t('tx_t_notes')], ['out', '📤', t('tx_t_out')]].map(([k, ic, l]) => `<button type="button" role="tab" id="txt_${k}" class="ds-chip${TXV.tab === k ? ' on' : ''}" aria-selected="${TXV.tab === k}" aria-controls="tx_body" data-txtab="${k}">${ic} ${E(l)}</button>`).join('')}</div>
+    <div id="tx_body" role="tabpanel" aria-labelledby="txt_${TXV.tab}">${({docs: txDocs, ck: txCheck, notes: txNotes, out: txOut})[TXV.tab]()}</div>`;
+}
+function txGo(tab, pre){
+  try { if (typeof tab === 'string' && tab) TXV.tab = tab; if (pre) Object.assign(TXV, pre); if (tab !== 'docscan') activate('docscan'); } catch (e) {}
+  DSX.view = 'taxf'; dscRender(); const r = $('#ds_root'); if (r) r.scrollIntoView({block: 'start', behavior: 'smooth'});
+}
+async function txSave(){
+  const d = txD(), title = txSafe($('#txf_title').value.trim()).slice(0, 80);
+  if (!title){ $('#txf_title').focus(); toast(t('tx_needTitle')); return; }
+  if (TXV.busy) return; TXV.busy = true;
+  const rec = {title, cat: $('#txf_cat').value, year: +$('#txf_year').value || txYear(), amount: $('#txf_amt').value.replace(/[^\d.]/g, '').slice(0, 12), note: txSafe($('#txf_note').value.trim()).slice(0, 300), todo: txSafe($('#txf_todo').value.trim()).slice(0, 80), todoDate: $('#txf_todod').value || ''};
+  let it = TXV.ed && TXV.ed !== 'new' ? d.items.find(x => x.id === TXV.ed) : null;
+  if (it) Object.assign(it, rec); else { it = Object.assign({id: txId(), created: Date.now(), n: 0, red: [], dims: []}, rec); d.items.push(it); }
+  const P = TXV.pend; let fail = false;
+  if (P && P.pages.length && !txNoFiles()){
+    try {
+      if (P.replace){ await txDelFiles(it); it.n = 0; it.red = []; it.dims = []; }
+      for (const pg of P.pages){ await vtPut(txKey(it.id, it.n), await txJpeg(pg.c)); it.red[it.n] = pg.red; it.dims[it.n] = [pg.c.width, pg.c.height]; it.n++; }
+    } catch (e) { fail = true; }
+  }
+  txLinkTodo(it);
+  TXV.ed = null; TXV.pend = null; TXV.pre = null; TXV.busy = false; TXV.y = it.year; TXV.tab = 'docs';
+  if (DSC && DSC.txId === undefined && P && !P.replace) DSC.txId = it.id;
+  saveSet(); txfRender($('#ds_root')); toast(t(fail ? 'vt_picFail' : 'tx_saved', {y: it.year}));
+  const s = $('#txf_st'); if (s) s.textContent = t('tx_saved', {y: it.year});
+}
+/* the pages of a folder item back in the scanner – to hide more, sign or add pages; "save" there brings them back */
+async function txToScan(it){
+  if (!it || !it.n) return;
+  if (DSC && DSC.pages.length && DSC.txId !== it.id && !confirm(t('tx_replaceScan'))) return;
+  const P = await txPages(it); if (!P.length){ toast(t('vt_picGone')); return; }
+  const pages = []; for (const p of P){ const c = await dsLoad(p.b); pages.push({base: c, red: p.red.map(r => r.slice()), dpi: 0, real: 0, sharp: 100, qrDone: true}); }
+  DSC = {pages, type: 'other', filt: 'orig', filtSet: true, wm: '', lay: 'sep', name: it.title, typeSet: true, q: 'max', txId: it.id};
+  DSX.view = 'card'; DSX.red = true; dscRender(); toast(t('tx_maskHint'));
+  const r = $('#ds_root'); if (r) r.scrollIntoView({block: 'start', behavior: 'smooth'});
+}
+async function txView(it){
+  const P = await txPages(it); if (!P.length){ toast(t('vt_picGone')); return; }
+  let o = $('#txv');
+  if (!o){ document.body.insertAdjacentHTML('beforeend', `<div class="cp-ov" id="txv" hidden><div class="cp-box" role="dialog" aria-modal="true" aria-labelledby="txv_h"><div class="cp-top"><h3 id="txv_h"></h3><button type="button" class="cp-x" id="txv_x" aria-label="${txE(t('cp_close'))}">✕</button></div><div class="tx-view" id="txv_b"></div></div></div>`); o = $('#txv'); }
+  $('#txv_h').textContent = it.title; const b = $('#txv_b'); b.innerHTML = '';
+  for (const p of P){ const c = txFit(await txCanvas(p, true), 1400); c.setAttribute('role', 'img'); c.setAttribute('aria-label', t('ds_side', {n: p.i + 1})); b.appendChild(c); }
+  o.hidden = false; document.body.classList.add('cp-lock'); const x = $('#txv_x'); if (x) x.focus();
+}
+function txViewClose(){ const o = $('#txv'); if (!o || o.hidden) return; o.hidden = true; document.body.classList.remove('cp-lock'); const b = $('#txv_b'); if (b) b.innerHTML = ''; }
+
+/* ---- the year for the accountant: a summary page, then every document ---- */
+const TX_A4 = [595.28, 841.89];
+function txCover(y, docs, starts, mask){
+  const W = 1240, H = 1754, rtl = document.documentElement.dir === 'rtl', pages = [];
+  const F = (w, s) => w + ' ' + s + 'px -apple-system,"Segoe UI","Noto Sans Hebrew","Noto Sans Arabic",Arial,sans-serif', X = v => rtl ? W - v : v;
+  let c, x, yy;
+  const page = () => { c = document.createElement('canvas'); c.width = W; c.height = H; x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, W, H); x.direction = rtl ? 'rtl' : 'ltr'; x.textAlign = 'start'; x.textBaseline = 'alphabetic';
+    x.fillStyle = '#0B1F3A'; x.fillRect(0, 0, W, 150); x.fillStyle = '#F2C45A'; x.font = F('700', 50); x.fillText(t('tx_pdfT', {y}), X(80), 88); x.fillStyle = '#fff'; x.font = F('400', 28); x.fillText(t('tx_pdfS', {d: new Date().toLocaleDateString(locOf())}) + (pages.length ? ' · ' + (pages.length + 1) : ''), X(80), 128);
+    x.fillStyle = '#8A94A6'; x.font = F('400', 22); x.fillText(t('tx_pdfFoot'), X(80), H - 50); pages.push(c); yy = 220; };
+  const wrap = (s, font, maxW) => { x.font = font; const out = []; String(s).split('\n').forEach(par => { let line = ''; par.split(/\s+/).forEach(w => { const tt = line ? line + ' ' + w : w; if (x.measureText(tt).width > maxW && line){ out.push(line); line = w; } else line = tt; }); out.push(line); }); return out; };
+  const need = h => { if (yy + h > H - 100) page(); };
+  const line = (s, font, col, h, ind) => { need(h); x.font = font; x.fillStyle = col; x.fillText(s, X(80 + (ind || 0)), yy); yy += h; };
+  page();
+  line(t('tx_pdfList', {n: docs.length}), F('700', 34), '#0B1F3A', 58);
+  docs.forEach((dc, i) => { const it = dc.it, sub = [txCatName(it.cat), +it.amount ? M(+it.amount, 0, 'ILS') : '', dc.P.length ? (starts ? (dc.P.length > 1 ? t('tx_pdfPg', {a: starts[i], b: starts[i] + dc.P.length - 1}) : t('tx_pdfPg1', {a: starts[i]})) : t('tx_pages', {n: dc.P.length})) : t('tx_noFile')].filter(Boolean).join(' · ');
+    need(96); line(txIc(it.cat) + '  ' + (mask ? txSafe(it.title) : it.title), F('700', 30), '#0B1F3A', 42); line(sub, F('400', 26), '#4E5B6E', 54, 50); });
+  const d = txD(), na = d.na[y] || [], miss = TX_CK.filter(k => !na.includes(k) && !docs.some(dc => dc.it.cat === k));
+  if (miss.length){ yy += 10; line(t('tx_pdfMiss'), F('700', 32), '#0B1F3A', 52); miss.forEach(k => line('○  ' + t(txCkL(k)), F('400', 27), '#4E5B6E', 44)); }
+  const notes = String(d.notes[y] || '').trim();
+  if (notes){ yy += 10; line(t('tx_t_notes'), F('700', 32), '#0B1F3A', 52); wrap(mask ? txSafe(notes) : notes, F('400', 27), W - 160).forEach(s => line(s, F('400', 27), '#26324A', 40)); }
+  return pages;
+}
+async function txGather(y){ const out = []; for (const it of txOf(y)) out.push({it, P: txNoFiles() ? [] : await txPages(it)}); return out; }
+const txA4 = c => ({items: [{c, x: 0, y: 0, w: TX_A4[0], h: TX_A4[1]}]});
+function txFitPage(pg, mask){
+  const [PW, PH] = TX_A4, m = 12 * 72 / 25.4, k = Math.min((PW - 2 * m) / pg.w, (PH - 2 * m) / pg.h), w = pg.w * k, h = pg.h * k;
+  return {items: [{c: txLazy(pg, mask), x: (PW - w) / 2, y: (PH - h) / 2, w, h}]};
+}
+async function txYearPdf(y, mask){
+  const docs = await txGather(y), n0 = txCover(y, docs, null, mask).length, starts = []; let at = n0 + 1;
+  docs.forEach(dc => { starts.push(at); at += dc.P.length; });
+  const pages = txCover(y, docs, starts, mask).map(txA4);
+  docs.forEach(dc => dc.P.forEach(pg => pages.push(txFitPage(pg, mask))));
+  return dsPdf(pages, 0.9);
+}
+async function txYearZip(y, mask){
+  const JSZip = await pxZip(), z = new JSZip(), docs = await txGather(y);
+  z.file('00 ' + txFileName(t('tx_pdfT', {y})) + '.pdf', await dsPdf(txCover(y, docs, null, mask).map(txA4), 0.9));
+  let i = 0;
+  for (const dc of docs){ i++; if (!dc.P.length) continue; const nm = String(i).padStart(2, '0') + ' ' + txFileName(txCatName(dc.it.cat) + ' - ' + (mask ? txSafe(dc.it.title) : dc.it.title)) + '.pdf';
+    z.file(nm, await dsPdf(dc.P.map(pg => txFitPage(pg, mask)), 0.9)); }
+  const notes = String(txD().notes[y] || '').trim(); if (notes) z.file(txFileName(t('tx_t_notes')) + '.txt', '﻿' + (mask ? txSafe(notes) : notes));
+  return z.generateAsync({type: 'blob', compression: 'STORE', mimeType: 'application/zip'});
+}
+async function txExport(how){
+  const y = txYear(); if (!txOf(y).length || TXV.busy) return;
+  TXV.busy = true; txfRender($('#ds_root')); await new Promise(r => setTimeout(r, 30));
+  const base = txFileName(t('tx_pdfT', {y}));
+  try {
+    if (how === 'zip'){ const b = await txYearZip(y, TXV.mask), r = await fileSave(b, base + '.zip', 'application/zip'); toast(t(r === 'saved' ? 'ds_fileOk' : r === 'declined' ? 'pdf_declined' : 'pdf_fail')); }
+    else {
+      const b = await txYearPdf(y, TXV.mask), name = base + '.pdf';
+      if (how === 'share'){ const f = new File([b], name, {type: 'application/pdf'}); if (navigator.canShare && navigator.canShare({files: [f]})){ try { await navigator.share({files: [f], title: name}); } catch (e) {} TXV.busy = false; txfRender($('#ds_root')); return; } }
+      const r = await fileSave(b, name, 'application/pdf'); toast(t(r === 'saved' ? 'ds_fileOk' : r === 'declined' ? 'pdf_declined' : 'pdf_fail'));
+    }
+  } catch (e) { toast(t('pdf_fail')); }
+  TXV.busy = false; if (DSX.view === 'taxf') txfRender($('#ds_root'));
+}
+
+/* ================= 👨‍👩‍👧 sending a document to a family member ================= */
+var FXV = {tab: 'send', src: '', exp: 3, ok: false, note: '', out: null, recv: null, busy: false, back: ''};
+const FX_SENS = ['id', 'passport', 'license', 'health', 'credit', 'student', 'army', 'oleh', 'disab', 'ravkav', 'idold'];
+const FX_IT = 310000;
+function fxB64(u){ u = u instanceof Uint8Array ? u : new Uint8Array(u); let s = ''; for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return btoa(s); }
+function fxPw(){       // 12 characters that are easy to say and hard to confuse (about 59 bits)
+  const A = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789', out = [];
+  while (out.length < 12){ const r = crypto.getRandomValues(new Uint8Array(16)); for (const v of r) if (v < 248 && out.length < 12) out.push(A[v % 31]); }
+  return out.join('').replace(/(.{4})(?=.)/g, '$1-');
+}
+const fxNorm = s => String(s || '').toUpperCase().replace(/[^0-9A-Z]/g, '');
+async function fxDerive(pw, salt, it, use){
+  const k0 = await crypto.subtle.importKey('raw', new TextEncoder().encode(fxNorm(pw)), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({name: 'PBKDF2', hash: 'SHA-256', salt, iterations: it}, k0, {name: 'AES-GCM', length: 256}, false, [use]);
+}
+/* the source: the scan on screen (as it will look, hidden parts black) or a document from the tax folder */
+function fxSources(){
+  const L = []; if (DSC && DSC.pages.length) L.push({id: 'scan', name: dsCardName(), n: DSC.pages.length, sens: FX_SENS.includes(DSC.type)});
+  if (!txNoFiles()) txD().items.filter(x => x.n > 0).sort((a, b) => (b.created || 0) - (a.created || 0)).forEach(x => L.push({id: 'tx:' + x.id, name: x.title + ' · ' + x.year, n: x.n, it: x}));
+  return L;
+}
+async function fxCanvases(src, max){
+  const out = [];
+  if (src.id === 'scan'){ for (const p of DSC.pages.slice(0, 10)) out.push(txFit(dsCompose(p), max)); return out; }
+  for (const pg of (await txPages(src.it)).slice(0, 10)) out.push(txFit(await txCanvas(pg, true), max));
+  return out;
+}
+function fxOpenerHTML(pkg, dir, lg){
+  const S = {t: t('fx_oTitle'), lead: t('fx_oLead'), pw: t('fx_pwL'), go: t('fx_oGo'), wait: t('fx_oWait'), bad: t('fx_badPw'), exp: t('fx_expired'), until: t('fx_until'), pdf: t('fx_savePdf'), del: t('fx_oDel'), priv: t('fx_oPriv'), nocrypto: t('m_nocrypto'), page: t('ds_side', {n: '{n}'})};
+  const J = o => JSON.stringify(o).replace(/</g, '\\u003c');
+  return `<!doctype html><html lang="${lg}" dir="${dir}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><meta name="referrer" content="no-referrer"><title>${txE(S.t)}</title>
+<style>:root{color-scheme:light dark}body{margin:0;font:16px/1.5 -apple-system,"Segoe UI","Noto Sans Hebrew","Noto Sans Arabic",Arial,sans-serif;background:#0B1F3A;color:#EEF2FB}main{max-width:640px;margin:0 auto;padding:20px 16px 40px}h1{font-size:1.3rem;color:#F2C45A;margin:0 0 6px}p{margin:8px 0}.box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px;margin:14px 0}label{display:block;font-weight:600;margin-bottom:6px}input{box-sizing:border-box;width:100%;font:600 1.2rem ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;padding:12px;border-radius:12px;border:1.5px solid rgba(255,255,255,.25);background:#fff;color:#111;direction:ltr;text-align:center}button{font:inherit;font-weight:700;padding:12px 18px;border-radius:12px;border:0;background:#F2C45A;color:#1a1202;margin-top:12px;cursor:pointer;min-height:44px}small,.fine{opacity:.8;font-size:.86rem}#st{min-height:1.5em;font-weight:600}img{display:block;width:100%;height:auto;background:#fff;border-radius:8px;margin:10px 0}[hidden]{display:none}</style></head>
+<body><main><h1>🔒 ${txE(S.t)}</h1><p>${txE(S.lead)}</p><p class="fine" id="ex"></p>
+<form class="box" id="f"><label for="pw">${txE(S.pw)}</label><input id="pw" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX" required><button type="submit">${txE(S.go)}</button></form>
+<p id="st" role="status" aria-live="polite"></p><div id="out" hidden><p id="nm" dir="auto"></p><p id="nt" dir="auto"></p><button type="button" id="pdf">${txE(S.pdf)}</button><div id="pg"></div><p class="fine">${txE(S.del)}</p></div>
+<p class="fine">${txE(S.priv)}</p></main>
+<script type="application/json" id="fd">${J(pkg)}</script><script type="application/json" id="fs">${J(S)}</script>
+<script>(function(){'use strict';var D=JSON.parse(document.getElementById('fd').textContent),S=JSON.parse(document.getElementById('fs').textContent),$=function(i){return document.getElementById(i)},O=null;
+function u8(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+var dt='';try{dt=new Date(D.x).toLocaleString(document.documentElement.lang)}catch(e){dt=new Date(D.x).toISOString()}
+if(Date.now()>D.x){$('f').hidden=true;$('st').textContent=S.exp.replace('{d}',dt);return}$('ex').textContent=S.until.replace('{d}',dt);
+$('f').addEventListener('submit',async function(e){e.preventDefault();$('st').textContent=S.wait;try{if(!window.crypto||!crypto.subtle)throw new Error('nc');if(Date.now()>D.x){$('st').textContent=S.exp.replace('{d}',dt);return}
+var pw=$('pw').value.toUpperCase().replace(/[^0-9A-Z]/g,''),k0=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']),
+k=await crypto.subtle.deriveKey({name:'PBKDF2',hash:'SHA-256',salt:u8(D.s),iterations:D.it},k0,{name:'AES-GCM',length:256},false,['decrypt']),
+pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:u8(D.i),additionalData:new TextEncoder().encode('fdoc1|'+D.x)},k,u8(D.c));O=JSON.parse(new TextDecoder().decode(pt));show()}
+catch(er){$('st').textContent=er&&er.message==='nc'?S.nocrypto:S.bad}});
+function show(){$('f').hidden=true;$('st').textContent='';$('nm').textContent=O.n||'';$('nt').textContent=O.m||'';var g=$('pg');g.innerHTML='';O.p.forEach(function(p,i){var im=new Image();im.src='data:image/jpeg;base64,'+p.d;im.alt=S.page.replace('{n}',i+1);g.appendChild(im)});$('out').hidden=false}
+$('pdf').addEventListener('click',function(){var enc=new TextEncoder(),parts=[],offs=[],len=0,put=function(x){var u=typeof x==='string'?enc.encode(x):x;parts.push(u);len+=u.length},PW=595.28,PH=841.89,n=3,P=[];
+O.p.forEach(function(p){P.push({id:n++,cid:n++,im:n++,u:u8(p.d),w:p.w,h:p.h})});var obj=function(i,f){offs[i]=len;put(i+' 0 obj\\n');f();put('\\nendobj\\n')};
+put('%PDF-1.4\\n');obj(1,function(){put('<< /Type /Catalog /Pages 2 0 R >>')});obj(2,function(){put('<< /Type /Pages /Count '+P.length+' /Kids ['+P.map(function(p){return p.id+' 0 R'}).join(' ')+'] >>')});
+P.forEach(function(p){var m=34,k=Math.min((PW-2*m)/p.w,(PH-2*m)/p.h),w=p.w*k,h=p.h*k,cs='q '+w.toFixed(2)+' 0 0 '+h.toFixed(2)+' '+((PW-w)/2).toFixed(2)+' '+((PH-h)/2).toFixed(2)+' cm /Im0 Do Q';
+obj(p.id,function(){put('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+PW+' '+PH+'] /Resources << /XObject << /Im0 '+p.im+' 0 R >> >> /Contents '+p.cid+' 0 R >>')});
+obj(p.cid,function(){put('<< /Length '+enc.encode(cs).length+' >>\\nstream\\n'+cs+'\\nendstream')});
+obj(p.im,function(){put('<< /Type /XObject /Subtype /Image /Width '+p.w+' /Height '+p.h+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+p.u.length+' >>\\nstream\\n');put(p.u);put('\\nendstream')})});
+var x=len;put('xref\\n0 '+n+'\\n0000000000 65535 f \\n');for(var i=1;i<n;i++)put(String(offs[i]||0).padStart(10,'0')+' 00000 n \\n');put('trailer\\n<< /Size '+n+' /Root 1 0 R >>\\nstartxref\\n'+x+'\\n%%EOF');
+var a=document.createElement('a'),u=URL.createObjectURL(new Blob(parts,{type:'application/pdf'}));a.href=u;a.download=(O.n||'document').replace(/[\\\\/:*?"<>|]+/g,' ')+'.pdf';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000)});
+})();</script></body></html>`;
+}
+async function fxSeal(src){
+  const C = await fxCanvases(src, 1800); if (!C.length) throw new Error('empty');
+  const p = []; for (const c of C){ const b = await txJpeg(c, 0.84); p.push({w: c.width, h: c.height, d: fxB64(new Uint8Array(await b.arrayBuffer()))}); }
+  const pw = fxPw(), salt = rnd(16), iv = rnd(12), x = Date.now() + FXV.exp * 864e5, name = txSafe(src.id === 'scan' ? dsCardName() : src.it.title).slice(0, 80);
+  const key = await fxDerive(pw, salt, FX_IT, 'encrypt');
+  const ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv, additionalData: new TextEncoder().encode('fdoc1|' + x)}, key, new TextEncoder().encode(JSON.stringify({v: 1, n: name, m: txSafe(FXV.note).slice(0, 160), at: Date.now(), x, p})));
+  const pkg = {fdoc: 1, it: FX_IT, s: fxB64(salt), i: fxB64(iv), x, c: fxB64(new Uint8Array(ct))};
+  const html = fxOpenerHTML(pkg, document.documentElement.dir || 'rtl', document.documentElement.lang || 'he');
+  const fname = txFileName('🔒 ' + name) + '.html';
+  return {pw, x, name, file: new File([html], fname, {type: 'text/html'})};
+}
+async function fxShare(){
+  const o = FXV.out; if (!o) return;
+  if (navigator.canShare && navigator.canShare({files: [o.file]})){ try { await navigator.share({files: [o.file], title: o.name, text: t('fx_shareTxt')}); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+  const r = await fileSave(o.file, o.file.name, 'text/html'); toast(t(r === 'saved' ? 'ds_fileOk' : r === 'declined' ? 'pdf_declined' : 'pdf_fail'));
+}
+async function fxOpen(file, pw){
+  const txt = await file.text(), m = /<script type="application\/json" id="fd">([\s\S]*?)<\/script>/.exec(txt); if (!m) throw new Error('fmt');
+  const D = JSON.parse(m[1]); if (!D || D.fdoc !== 1 || !(D.it >= 100000 && D.it <= 2000000) || !(D.x > 0)) throw new Error('fmt');
+  if (Date.now() > D.x) { const e = new Error('exp'); e.x = D.x; throw e; }
+  const key = await fxDerive(pw, u8(D.s), D.it, 'decrypt');
+  let pt; try { pt = await crypto.subtle.decrypt({name: 'AES-GCM', iv: u8(D.i), additionalData: new TextEncoder().encode('fdoc1|' + D.x)}, key, u8(D.c)); } catch (e) { throw new Error('pw'); }
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+const fxDate = x => { try { return new Date(x).toLocaleString(locOf(), {dateStyle: 'medium', timeStyle: 'short'}); } catch (e) { return new Date(x).toISOString(); } };
+function fxSendHTML(){
+  const E = txE, L = fxSources();
+  if (FXV.out){ const o = FXV.out;
+    return `<div class="ds-found" role="status"><span class="ds-em" aria-hidden="true">🔐</span><div><b>${E(t('fx_ready'))}</b><small>${E(t('fx_readyS', {d: fxDate(o.x)}))}</small></div></div>
+      <h4 class="ds-q">🗣️ ${E(t('fx_pwH'))}</h4><p class="tx-pw" dir="ltr" id="fx_pw" tabindex="0" aria-label="${E(t('fx_pwA', {p: o.pw.split('').join(' ')}))}">${E(o.pw)}</p>
+      <p class="fine">${E(t('fx_pwSay'))}</p>
+      <div class="btnrow"><button type="button" class="gold-btn" id="fx_share">📤 ${E(t(navigator.share ? 'fx_shareB' : 'fx_saveB'))}</button>${navigator.share ? `<button type="button" class="btn" id="fx_save">💾 ${E(t('fx_saveB'))}</button>` : ''}<button type="button" class="mv" id="fx_done">✓ ${E(t('fx_done'))}</button></div>
+      <div class="ds-warn" role="note"><span aria-hidden="true">⏳</span><p>${E(t('fx_expNote', {n: t(FXV.exp === 1 ? 'fx_day1' : 'fx_days', {n: FXV.exp})}))}</p></div>`; }
+  if (!L.length) return `<p class="fine bk-empty">${E(t('fx_noSrc'))}</p><div class="btnrow"><button type="button" class="gold-btn" id="fx_scan">📷 ${E(t('fx_scanNew'))}</button><button type="button" class="btn" data-txgo="docs">📁 ${E(t('tx_title'))}</button></div>`;
+  if (!L.some(s => s.id === FXV.src)) FXV.src = L[0].id;
+  const S = L.find(s => s.id === FXV.src);
+  return `<div class="field cv-f"><label for="fx_src">${E(t('fx_srcL'))}</label><select id="fx_src">${L.map(s => `<option value="${E(s.id)}"${s.id === FXV.src ? ' selected' : ''}>${E((s.id === 'scan' ? '📷 ' + t('fx_cur') + ': ' : '📁 ') + s.name)} (${E(t('tx_pages', {n: s.n}))})</option>`).join('')}</select></div>
+    <h4 class="ds-q">👀 ${E(t('fx_prevH'))}</h4><p class="fine">${E(t('fx_prevP'))}</p><div class="tx-thumbs" id="fx_thumbs" aria-busy="true"></div>
+    ${S.sens ? `<div class="ds-warn" role="note"><span aria-hidden="true">🪪</span><p>${E(t('fx_sens'))}</p></div>` : ''}
+    <div class="btnrow"><button type="button" class="btn" id="fx_mask">🖍️ ${E(t('fx_maskMore'))}</button></div>
+    <label class="prn-ck"><input type="checkbox" id="fx_ok"${FXV.ok ? ' checked' : ''}> ${E(t('fx_okL'))}</label>
+    <h4 class="ds-q" id="fx_expH">⏳ ${E(t('fx_expL'))}</h4><div class="ds-chips" role="radiogroup" aria-labelledby="fx_expH">${[1, 3, 7].map(n => `<button type="button" role="radio" class="ds-chip${FXV.exp === n ? ' on' : ''}" aria-checked="${FXV.exp === n}" data-fxexp="${n}">${E(t(n === 1 ? 'fx_day1' : 'fx_days', {n}))}</button>`).join('')}</div>
+    <label class="bk-f"><span>${E(t('fx_noteL'))}</span><input type="text" id="fx_note" maxlength="160" dir="auto" value="${E(FXV.note)}" placeholder="${E(t('fx_notePh'))}"></label>
+    <div class="btnrow"><button type="button" class="gold-btn" id="fx_go"${FXV.ok && !FXV.busy ? '' : ' disabled'} aria-describedby="fx_goH">🔐 ${E(t(FXV.busy ? 'ds_making' : 'fx_go'))}</button></div><p class="fine" id="fx_goH">${E(t(FXV.ok ? 'fx_goH' : 'fx_needOk'))}</p>`;
+}
+function fxOpenHTML(){
+  const E = txE, R = FXV.recv;
+  if (R) return `<div class="ds-found" role="status"><span class="ds-em" aria-hidden="true">📬</span><div><b dir="auto">${E(R.n || t('fx_oTitle'))}</b><small>${E(t('fx_until', {d: fxDate(R.x)}))}</small></div></div>${R.m ? `<p dir="auto">💬 ${E(R.m)}</p>` : ''}
+    <div class="tx-view" id="fx_rv"></div><div class="btnrow"><button type="button" class="gold-btn" id="fx_rpdf">📄 ${E(t('fx_savePdf'))}</button><button type="button" class="mv" id="fx_rclose">🗑️ ${E(t('fx_rClose'))}</button></div><p class="fine">${E(t('fx_oDel'))}</p>`;
+  return `<p class="fine">${E(t('fx_openIntro'))}</p>
+    <div class="btnrow"><label class="btn">📂 ${E(t('fx_pick'))}<input type="file" id="fx_file" accept=".html,.htm,text/html" hidden></label><span class="fine" id="fx_fname" dir="auto">${E(FXV.fname || '')}</span></div>
+    <form id="fx_oform" novalidate><label class="bk-f"><span>${E(t('fx_pwL'))}</span><input type="text" id="fx_opw" dir="ltr" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX" maxlength="20"></label>
+    <div class="btnrow"><button type="submit" class="gold-btn" id="fx_ogo"${FXV.busy ? ' disabled' : ''}>🔓 ${E(t('fx_oGo'))}</button></div></form><p class="fine" id="fx_ost" role="status" aria-live="polite"></p>`;
+}
+function fxRender(root){
+  const E = txE;
+  root.innerHTML = dsBar('👨‍👩‍👧 ' + t('fx_title')) + `<p class="fine">${E(t('fx_intro'))}</p>
+    <div class="ds-chips bk-tabs" role="tablist" aria-label="${E(t('fx_title'))}">${[['send', '📤'], ['open', '📥']].map(([k, ic]) => `<button type="button" role="tab" id="fxt_${k}" class="ds-chip${FXV.tab === k ? ' on' : ''}" aria-selected="${FXV.tab === k}" aria-controls="fx_body" data-fxtab="${k}">${ic} ${E(t('fx_t_' + k))}</button>`).join('')}</div>
+    <div id="fx_body" role="tabpanel" aria-labelledby="fxt_${FXV.tab}">${FXV.tab === 'send' ? fxSendHTML() : fxOpenHTML()}</div>
+    <details class="ds-det"><summary>ℹ️ ${E(t('fx_howT'))}</summary><p class="fine">${E(t('fx_how'))}</p></details>
+    <p class="fine sl-priv">🔒 ${E(t('fx_priv'))}</p>`;
+  fxThumbs();
+  if (FXV.tab === 'open' && FXV.recv){ const v = $('#fx_rv'); if (v) FXV.recv.p.forEach((p, i) => { const im = new Image(); im.src = 'data:image/jpeg;base64,' + p.d; im.alt = t('ds_side', {n: i + 1}); v.appendChild(im); }); }
+}
+let FX_TH = 0;
+async function fxThumbs(){
+  const box = $('#fx_thumbs'); if (!box) return; const my = ++FX_TH, S = fxSources().find(s => s.id === FXV.src); if (!S) return;
+  try { const C = await fxCanvases(S, 360); if (my !== FX_TH || !box.isConnected) return; box.innerHTML = ''; C.forEach((c, i) => { c.setAttribute('role', 'img'); c.setAttribute('aria-label', t('ds_side', {n: i + 1})); box.appendChild(c); }); } catch (e) {}
+  box.removeAttribute('aria-busy');
+}
+function fxGo(pre){
+  try { if (tab !== 'docscan') activate('docscan'); } catch (e) {}
+  FXV.out = null; FXV.tab = 'send'; FXV.ok = false; if (pre) Object.assign(FXV, pre);
+  DSX.view = 'famx'; dscRender(); const r = $('#ds_root'); if (r) r.scrollIntoView({block: 'start', behavior: 'smooth'});
+}
+
+/* ================= wiring into the scanner ================= */
+(function txCss(){ if (document.getElementById('txcss')) return; const st = document.createElement('style'); st.id = 'txcss';
+  st.textContent = '.tx-thumbs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 8px;min-height:60px}.tx-thumbs canvas{height:130px;width:auto;flex:none;border-radius:8px;border:1px solid var(--line);background:#fff}'
+    + '.tx-pw{font:700 1.45rem/1.3 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.08em;text-align:center;padding:14px 8px;margin:6px 0;border-radius:14px;border:2px dashed var(--gold-ui,#d4a017);word-break:break-all;user-select:all}'
+    + '.tx-view{overflow:auto;display:flex;flex-direction:column;gap:10px}.tx-view canvas,.tx-view img{display:block;width:100%;height:auto;border-radius:8px;background:#fff}'
+    + '.tx-ck .rm-acts{flex-wrap:wrap;align-items:center;gap:8px}.tx-ck .prn-ck{margin:0}';
+  document.head.appendChild(st); })();
+{
+  const dsrTx = dscRender;
+  dscRender = function(){
+    const root = $('#ds_root');
+    if (root && DSX.view === 'taxf') return txfRender(root);
+    if (root && DSX.view === 'famx') return fxRender(root);
+    return dsrTx.apply(this, arguments);
+  };
+  const cardTx = dsCardRender;
+  dsCardRender = function(root){
+    const r = cardTx.apply(this, arguments);
+    if (DSC && !DSC.cur){ const o = root.querySelector('.ds-out'); if (o && !root.querySelector('#tx_add')) o.insertAdjacentHTML('beforeend', `<button type="button" class="btn" id="tx_add">📁 ${txE(t(DSC.txId && txD().items.some(x => x.id === DSC.txId) ? 'tx_addBack' : 'tx_add'))}</button><button type="button" class="btn" id="fx_send">👨‍👩‍👧 ${txE(t('fx_send'))}</button>`); }
+    return r;
+  };
+  /* the two tools join the scanner's row of tools – added last, after every other part has built the row */
+  setTimeout(() => {
+    const dsrTx2 = dscRender;
+    dscRender = function(){
+      const r = dsrTx2.apply(this, arguments), root = $('#ds_root');
+      try { const row = root && DSX.view === 'kinds' && root.querySelector('.ds-toolrow'); if (row && !row.querySelector('[data-dstool="taxf"]')) row.insertAdjacentHTML('beforeend', `<button type="button" class="ds-tool" data-dstool="taxf"><span aria-hidden="true">📁</span><b>${txE(t('tx_title'))}</b><small>${txE(t('tx_toolH'))}</small></button><button type="button" class="ds-tool" data-dstool="famx"><span aria-hidden="true">👨‍👩‍👧</span><b>${txE(t('fx_tool'))}</b><small>${txE(t('fx_toolH'))}</small></button>`); } catch (e) {}
+      return r;
+    };
+    try { if (tab === 'docscan' || (document.getElementById('panel-docscan') && !document.getElementById('panel-docscan').hidden)) dscRender(); } catch (e) {}
+  }, 0);
+}
+/* back from the folder or the family screen to the scan they were opened from */
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('#ds_back'); if (!b || (DSX.view !== 'taxf' && DSX.view !== 'famx')) return;
+  const back = DSX.view === 'taxf' ? TXV.back : FXV.back;
+  TXV.ed = null; TXV.pend = null; TXV.pre = null; TXV.back = ''; FXV.out = null; FXV.recv = null; FXV.back = ''; FXV.ok = false;
+  if (back === 'card' && DSC && DSC.pages.length){ e.stopPropagation(); e.preventDefault(); DSX.view = 'card'; dscRender(); }
+}, true);
+document.addEventListener('click', async e => {
+  const t0 = e.target; if (!t0.closest) return; let b;
+  if (t0.closest('#txv_x') || t0.id === 'txv'){ txViewClose(); return; }
+  if ((b = t0.closest('[data-txgo]'))){ txGo(b.dataset.txgo); return; }
+  if (t0.closest('[data-dstool="taxf"]')){ TXV.back = ''; txGo(); return; }
+  if (t0.closest('[data-dstool="famx"]')){ fxGo({back: ''}); return; }
+  if (!t0.closest('#ds_root')) return;
+  /* from the scanned pages */
+  if (t0.closest('#tx_add')){ if (!DSC || !DSC.pages.length) return;
+    const own = DSC.txId && txD().items.find(x => x.id === DSC.txId), txt = String(DSC.ocr || '') + ' ' + String(DSC.name || '');
+    TXV.pend = {pages: txFromScan(), replace: !!own}; TXV.ed = own ? own.id : 'new'; TXV.back = 'card'; TXV.tab = 'docs';
+    TXV.pre = own ? null : {title: txSafe(dsCardName()).slice(0, 80), cat: txGuess(txt) || (DSC.type === 'receipt' ? 'credit' : 'other'), year: txGuessYear(txt) || txYear()};
+    if (!own && TXV.pre.year) TXV.y = TXV.pre.year;
+    txGo(); const i = $('#txf_title'); if (i) i.focus(); return; }
+  if (t0.closest('#fx_send')){ fxGo({src: 'scan', back: 'card'}); return; }
+  /* the tax folder */
+  if (DSX.view === 'taxf'){
+    const d = txD();
+    if ((b = t0.closest('[data-txtab]'))){ TXV.tab = b.dataset.txtab; txfRender($('#ds_root')); const n = $('#txt_' + TXV.tab); if (n) n.focus(); return; }
+    if (t0.closest('#tx_scan')){ DSX.kind = 'card'; DSX.cardType = 'doc'; DSX.view = 'kinds'; DSX.det = null; dscRender(); const p = $('#ds_root [data-dscam]'); if (p) p.focus(); toast(t('tx_scanHint')); return; }
+    if (t0.closest('#tx_rec')){ TXV.ed = 'new'; TXV.pend = null; TXV.pre = {cat: TXV.cat || 'other', year: txYear()}; txfRender($('#ds_root')); const i = $('#txf_title'); if (i) i.focus(); return; }
+    if (t0.closest('#txf_cancel')){ TXV.ed = null; TXV.pend = null; TXV.pre = null; txfRender($('#ds_root')); const s = $('#tx_scan'); if (s) s.focus(); return; }
+    if ((b = t0.closest('[data-txed]'))){ TXV.ed = b.dataset.txed; TXV.pend = null; TXV.pre = null; txfRender($('#ds_root')); const i = $('#txf_title'); if (i){ i.focus(); i.scrollIntoView({block: 'center'}); } return; }
+    if ((b = t0.closest('[data-txview]'))){ const it = d.items.find(x => x.id === b.dataset.txview); if (it) txView(it); return; }
+    if ((b = t0.closest('[data-txmask]'))){ const it = d.items.find(x => x.id === b.dataset.txmask); if (it) txToScan(it); return; }
+    if ((b = t0.closest('[data-txfam]'))){ fxGo({src: 'tx:' + b.dataset.txfam, back: ''}); return; }
+    if ((b = t0.closest('[data-txrem]'))){ const it = d.items.find(x => x.id === b.dataset.txrem); if (it) rmNew({title: (it.todo || t('tx_remT')) + ' – ' + it.title, date: it.todoDate || rmIso(new Date(Date.now() + 14 * 864e5)), cat: 'tax', note: t('tx_remN', {y: it.year})}); return; }
+    if ((b = t0.closest('[data-txdel]'))){ const it = d.items.find(x => x.id === b.dataset.txdel); if (!it || !confirm(t('rm_delQ', {t: it.title}))) return;
+      d.items = d.items.filter(x => x !== it); await txDelFiles(it); try { if (it.dsi && typeof dsiRemove === 'function') dsiRemove(it.dsi); } catch (er) {}
+      if (DSC && DSC.txId === it.id) delete DSC.txId; saveSet(); txfRender($('#ds_root')); toast(t('tx_deleted')); return; }
+    if ((b = t0.closest('[data-txckadd]'))){ TXV.tab = 'docs'; TXV.ed = 'new'; TXV.pend = null; TXV.pre = {cat: b.dataset.txckadd, year: txYear(), title: t(txCkL(b.dataset.txckadd))}; txfRender($('#ds_root')); const i = $('#txf_title'); if (i) i.focus(); return; }
+    if ((b = t0.closest('[data-txout]'))){ txExport(b.dataset.txout); return; }
+    return;
+  }
+  /* the family screen */
+  if (DSX.view === 'famx'){
+    if ((b = t0.closest('[data-fxtab]'))){ FXV.tab = b.dataset.fxtab; fxRender($('#ds_root')); const n = $('#fxt_' + FXV.tab); if (n) n.focus(); return; }
+    if ((b = t0.closest('[data-fxexp]'))){ FXV.exp = +b.dataset.fxexp; fxRender($('#ds_root')); const n = $(`[data-fxexp="${FXV.exp}"]`); if (n) n.focus(); return; }
+    if (t0.closest('#fx_scan')){ DSX.kind = 'card'; DSX.view = 'kinds'; DSX.det = null; dscRender(); toast(t('fx_scanHint')); return; }
+    if (t0.closest('#fx_mask')){ const S = fxSources().find(s => s.id === FXV.src); if (!S) return; if (S.id === 'scan'){ DSX.view = 'card'; DSX.red = true; dscRender(); toast(t('tx_maskHint')); } else txToScan(S.it); return; }
+    if (t0.closest('#fx_go')){ const S = fxSources().find(s => s.id === FXV.src); if (!S || !FXV.ok || FXV.busy) return;
+      if (!(window.crypto && crypto.subtle)){ toast(t('m_nocrypto')); return; }
+      FXV.busy = true; fxRender($('#ds_root'));
+      try { FXV.out = await fxSeal(S); } catch (er) { toast(t('pdf_fail')); }
+      FXV.busy = false; FXV.ok = false; fxRender($('#ds_root')); const p = $('#fx_pw'); if (p) p.focus(); if (FXV.out) fxShare(); return; }
+    if (t0.closest('#fx_share')){ fxShare(); return; }
+    if (t0.closest('#fx_save')){ const o = FXV.out; if (o){ const r = await fileSave(o.file, o.file.name, 'text/html'); toast(t(r === 'saved' ? 'ds_fileOk' : r === 'declined' ? 'pdf_declined' : 'pdf_fail')); } return; }
+    if (t0.closest('#fx_done')){ FXV.out = null; FXV.note = ''; fxRender($('#ds_root')); toast(t('fx_doneT')); return; }
+    if (t0.closest('#fx_rclose')){ FXV.recv = null; FXV.file = null; FXV.fname = ''; fxRender($('#ds_root')); return; }
+    if (t0.closest('#fx_rpdf')){ const R = FXV.recv; if (!R) return;
+      try { const pages = []; for (const p of R.p){ const c = await dsLoad(new Blob([u8(p.d)], {type: 'image/jpeg'})); pages.push(txFitPage({w: c.width, h: c.height, red: [], b: null}, false)); pages[pages.length - 1].items[0].c = c; }
+        const r = await fileSave(await dsPdf(pages, 0.9), txFileName(R.n || t('fx_oTitle')) + '.pdf', 'application/pdf'); toast(t(r === 'saved' ? 'ds_fileOk' : r === 'declined' ? 'pdf_declined' : 'pdf_fail')); } catch (er) { toast(t('pdf_fail')); }
+      return; }
+  }
+});
+document.addEventListener('submit', async e => {
+  if (e.target && e.target.id === 'tx_form'){ e.preventDefault(); txSave(); return; }
+  if (e.target && e.target.id === 'fx_oform'){ e.preventDefault(); const st = $('#fx_ost'), pw = $('#fx_opw').value;
+    if (!FXV.file){ if (st) st.textContent = t('fx_needFile'); return; } if (fxNorm(pw).length < 8){ if (st) st.textContent = t('fx_badPw'); $('#fx_opw').focus(); return; }
+    if (st) st.textContent = t('fx_oWait'); FXV.busy = true;
+    try { const o = await fxOpen(FXV.file, pw); FXV.recv = o; FXV.busy = false; fxRender($('#ds_root')); toast(t('fx_opened')); }
+    catch (er){ FXV.busy = false; const m = String(er && er.message); if (st) st.textContent = m === 'exp' ? t('fx_expired', {d: fxDate(er.x)}) : m === 'fmt' ? t('fx_badFile') : t('fx_badPw'); }
+  }
+});
+document.addEventListener('change', async e => {
+  const el = e.target; if (!el || !el.closest || !el.closest('#ds_root')) return;
+  if (el.id === 'tx_y'){ TXV.y = +el.value; TXV.ed = null; TXV.pend = null; txfRender($('#ds_root')); const n = $('#tx_y'); if (n) n.focus(); return; }
+  if (el.id === 'tx_maskck'){ TXV.mask = el.checked; return; }
+  if (el.dataset && el.dataset.txna){ const d = txD(), y = txYear(), L = (d.na[y] = (d.na[y] || []).filter(k => k !== el.dataset.txna)); if (el.checked) L.push(el.dataset.txna); if (!L.length) delete d.na[y]; saveSet(); const k = el.dataset.txna; txfRender($('#ds_root')); const n = $(`[data-txna="${k}"]`); if (n) n.focus(); return; }
+  if (el.id === 'tx_notes'){ const v = txSafe(el.value).slice(0, 4000); if (v !== el.value) el.value = v; const d = txD(); if (v.trim()) d.notes[txYear()] = v; else delete d.notes[txYear()]; saveSet(); return; }
+  if (el.id === 'tx_file' && el.files && el.files.length){ const st = $('#txf_st'); if (st) st.textContent = t('ds_making');
+    try { const pages = await txFromFiles(el.files); if (!pages.length) throw new Error('none'); const f0 = el.files[0];
+      TXV.pend = {pages}; TXV.ed = 'new'; TXV.pre = {title: txSafe(String(f0.name || '').replace(/\.[a-z0-9]{2,5}$/i, '')).slice(0, 80), cat: txGuess(f0.name) || 'other', year: txYear()}; txfRender($('#ds_root')); const i = $('#txf_title'); if (i) i.focus(); }
+    catch (er){ if (st) st.textContent = String(er && er.message) === 'cancel' ? '' : t('tx_fileFail'); }
+    el.value = ''; return; }
+  if (el.id === 'fx_src'){ FXV.src = el.value; FXV.ok = false; fxRender($('#ds_root')); const n = $('#fx_src'); if (n) n.focus(); return; }
+  if (el.id === 'fx_ok'){ FXV.ok = el.checked; const g = $('#fx_go'), h = $('#fx_goH'); if (g) g.disabled = !FXV.ok; if (h) h.textContent = t(FXV.ok ? 'fx_goH' : 'fx_needOk'); return; }
+  if (el.id === 'fx_file' && el.files && el.files[0]){ FXV.file = el.files[0]; FXV.fname = el.files[0].name; const s = $('#fx_fname'); if (s) s.textContent = FXV.fname; const p = $('#fx_opw'); if (p) p.focus(); el.value = ''; }
+});
+let TX_NT = null;
+document.addEventListener('input', e => {
+  const el = e.target; if (!el) return;
+  if (el.id === 'tx_notes'){ const y = txYear(), v = el.value; clearTimeout(TX_NT); TX_NT = setTimeout(() => { const d = txD(), s = txSafe(v).slice(0, 4000); if (s.trim()) d.notes[y] = s; else delete d.notes[y]; saveSet(); }, 500); }
+  else if (el.id === 'fx_note') FXV.note = el.value;
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#txv') && !$('#txv').hidden) txViewClose(); });
+/* leaving the family screen forgets the password on screen and any document that was opened */
+{ const acTx = activate; activate = function(id){ if (id !== 'docscan'){ FXV.out = null; FXV.recv = null; FXV.file = null; FXV.fname = ''; } const r = acTx.apply(this, arguments);
+    try { if (id === 'taxrefund'){ const p = document.getElementById('panel-taxrefund'); if (p && !p.querySelector('#tx_fromRefund')) p.insertAdjacentHTML('beforeend', `<div class="btnrow" id="tx_fromRefund"><button type="button" class="btn" data-txgo="ck">📁 ${txE(t('tx_fromRefund'))}</button></div>`); else if (p){ const b = p.querySelector('#tx_fromRefund button'); if (b) b.textContent = '📁 ' + t('tx_fromRefund'); } } } catch (e) {}
+    return r; }; }
+try { GS_SYN.docscan += ' תיק מס שנתי החזר מס טופס 106 טופס 867 קבלות תרומה סעיף 46 רואה חשבון שליחה לבן משפחה מסמך מוצפן סיסמה tax folder yearly form 106 867 donation receipts accountant send to family encrypted document password ملف ضريبي سنوي نموذج 106 تبرعات محاسب إرسال لفرد من العائلة مستند مشفر'; } catch (e) {}
 
 /* ---------- 13.5: Tax Free — VAT refund on shopping abroad (and for tourists shopping in Israel) ----------
    Rules change from time to time: the minimums and rates here were checked in October 2026 and are shown as a guide,
