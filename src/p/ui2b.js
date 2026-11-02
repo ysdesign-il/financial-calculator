@@ -147,6 +147,7 @@ const DEFS = {
     SEL('l_link','f_lLink','none',[['none','o_llNone'],['cpi','o_llCpi']],{wide:true, hint:'h_lLink', when:['l_rateType','fixed|var']}),
     {id:'l_cpi', label:'f_loanCpi', unit:'%', val:2, when:['l_link','cpi'], hint:'h_lCpi'},
     {id:'l_years',  label:'f_term',    unit:'yrs', val:25, when:['l_mode','pay|amount|rate']},
+    {id:'l_months', label:'f_lMonths', unit:'mo', val:300, when:['l_mode','pay|amount|rate'], hint:'h_lMonths'},
     SEL('l_type','f_method','annuity',[['annuity','o_annuity'],['equal','o_equal'],['bullet','o_bullet']]),
     {id:'l_grace', label:'f_grace', unit:'mo', val:0, adv:'m_adv'},
     {id:'l_extra', label:'f_extraM', unit:'cur', val:0, adv:'m_adv'},
