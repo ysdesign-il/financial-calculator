@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261102.144551'){ try { if (!sessionStorage.getItem('fin-hb-20261102.144551')){ sessionStorage.setItem('fin-hb-20261102.144551', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261102.150120'){ try { if (!sessionStorage.getItem('fin-hb-20261102.150120')){ sessionStorage.setItem('fin-hb-20261102.150120', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -8368,8 +8368,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.59", "date": "2026-11-02", "notes": {"he": "מחשבון ההלוואות: הריבית שלב אחרי שלב (בנק ישראל, תוספת הפריים, הפריים, מה הבנק מציע והריבית בפועל), כפתורים מהירים לפריים פלוס או מינוס, ומדריך לכל אפשרויות ההלוואה.", "ar": "حاسبة القروض: الفائدة خطوة بخطوة (بنك إسرائيل، إضافة البرايم، البرايم، ما يعرضه البنك والفائدة الفعلية)، أزرار سريعة لبرايم زائد أو ناقص، ودليل لكل خيارات القرض.", "en": "Loan calculator: the interest step by step (Bank of Israel, the prime addition, prime, what the bank offers and the rate you pay), quick buttons for prime plus or minus, and a guide to every loan option."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261102.144551';
+var CHANGELOG = [{"v": "13.60", "date": "2026-11-02", "notes": {"he": "פתיחה מהירה יותר בחיבור סלולרי איטי: אם הדף לא הגיע תוך 2.5 שניות, הוא נפתח מהעותק השמור, והגרסה החדשה מגיעה ברקע.", "ar": "فتح أسرع على اتصال خلوي بطيء: إذا لم تصل الصفحة خلال 2.5 ثانية تُفتح من النسخة المحفوظة، والإصدار الجديد يصل في الخلفية.", "en": "Faster opening on a slow mobile connection: if the page hasn't arrived within 2.5 seconds it opens from the kept copy, and the new version arrives in the background."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261102.150120';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
