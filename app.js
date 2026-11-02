@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261102.223028'){ try { if (!sessionStorage.getItem('fin-hb-20261102.223028')){ sessionStorage.setItem('fin-hb-20261102.223028', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261102.223122'){ try { if (!sessionStorage.getItem('fin-hb-20261102.223122')){ sessionStorage.setItem('fin-hb-20261102.223122', '1'); location.reload(); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -8373,7 +8373,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "13.61", "date": "2026-11-02", "notes": {"he": "מחשבון ההלוואות: בריבית קבועה או משתנה אפשר עכשיו לבנות את הריבית מחלקים – ריבית בנק ישראל, מרווח הפריים ותוספת הבנק (פלוס 1, פלוס 2…), והריבית הכוללת מחושבת לבד. אפשר גם להמשיך לכתוב ריבית כוללת אחת, כמו קודם.", "ar": "حاسبة القروض: في الفائدة الثابتة أو المتغيرة يمكن الآن بناء الفائدة من أجزاء – فائدة بنك إسرائيل وهامش البرايم وإضافة البنك (زائد 1، زائد 2…)، وتُحسب الفائدة الإجمالية تلقائيًا. ويمكن أيضًا الاستمرار بكتابة فائدة إجمالية واحدة كما من قبل.", "en": "Loan calculator: for fixed or variable loans you can now build the rate from its parts – the Bank of Israel rate, the prime spread and the bank's addition (plus 1, plus 2…) – and the total is worked out for you. You can still type one total rate, as before."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261102.223028';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261102.223122';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
