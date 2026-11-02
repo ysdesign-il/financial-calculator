@@ -1,5 +1,5 @@
 /* the website works offline: always try the network first (so updates arrive at once), and fall back to the last copy */
-const CACHE = 'fin-v2';
+const CACHE = 'fin-v2';  /* 13.60 */
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).catch(() => {})); self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE && k !== 'fin-share').map(k => caches.delete(k)))).then(() => self.clients.claim())); });
@@ -38,7 +38,7 @@ self.addEventListener('fetch', e => {
     e.respondWith(caches.open(CACHE).then(c => c.match(key).then(m => m || fetch(r).then(res => { if (res && res.ok && res.type === 'basic'){ const cp = res.clone(); c.put(key, cp).catch(() => {}); } return res; }))).catch(() => fetch(r)));
     return;
   }
-  /* 13.51: opening the app on a slow or patchy mobile network: if the page has not arrived within 3 seconds, open the kept copy at once
+  /* 13.51: opening the app on a slow or patchy mobile network: if the page has not arrived within 2.5 seconds (13.60), open the kept copy at once
      (the new version still arrives in the background and is used next time) instead of waiting on the network */
   if (r.mode === 'navigate'){
     /* a reload always asks the server for the newest page, never the browser's old stored copy */
@@ -46,7 +46,7 @@ self.addEventListener('fetch', e => {
     const kept = () => caches.match(key).then(m => m || caches.match(r, {ignoreSearch: true})).then(m => m || caches.match('index.html'));
     e.respondWith(new Promise(ok => {
       let done = false; const fin = x => { if (!done && x){ done = true; ok(x); } };
-      const t = setTimeout(() => kept().then(fin).catch(() => {}), 6000);
+      const t = setTimeout(() => kept().then(fin).catch(() => {}), 2500);
       net.then(res => { clearTimeout(t); fin(res); }, () => { clearTimeout(t); kept().then(m => { fin(m || Response.error()); }).catch(() => fin(Response.error())); });
     }));
     e.waitUntil(net.catch(() => {}));
