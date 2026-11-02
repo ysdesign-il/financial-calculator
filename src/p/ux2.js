@@ -62,7 +62,7 @@ function uxMark(id){
     const dv = dm[ctl.id], changed = dv != null && String(dv) !== '' && String(ctl.value) !== String(dv);
     if (shown < UX_K){ shown++; return; }
     const u = f.querySelector('.u'), lab = (f.querySelector('label') || {}).textContent || '';
-    if (changed || document.activeElement === ctl || (u && u.textContent.trim() === '%' && UX_RATE.test(lab)) || (u && (u.dataset.i === 'u_yrs' || u.dataset.i === 'u_months'))) return;   /* a rate or a period is always a main field */
+    if (changed || document.activeElement === ctl || ctl.id === 'l_margin' || (u && u.textContent.trim() === '%' && UX_RATE.test(lab)) || (u && (u.dataset.i === 'u_yrs' || u.dataset.i === 'u_months'))) return;   /* a rate or a period is always a main field */
     f.classList.add('ux-more'); more++;
   });
   if (more < 2){ fields.forEach(f => f.classList.remove('ux-more')); inputs.classList.remove('ux-simple'); if (btn) btn.remove(); return; }
