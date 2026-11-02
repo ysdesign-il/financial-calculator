@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261103.012734'){ try { if (!sessionStorage.getItem('fin-hb-20261103.012734')){ sessionStorage.setItem('fin-hb-20261103.012734', '1'); location.reload(); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261103.013801'){ try { if (!sessionStorage.getItem('fin-hb-20261103.013801')){ sessionStorage.setItem('fin-hb-20261103.013801', '1'); location.replace(location.pathname + '?v=20261103.013801' + location.hash); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -8373,8 +8373,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.63", "date": "2026-11-03", "notes": {"he": "מחשבון ההלוואות ברור יותר: שלושה שלבים (ההלוואה, הריבית, תוספות), סוג הריבית בכפתורים עם שורת סיכום אחת, התוצאה בראש עם משפט אחד שמסביר אותה, ״מה אם הריבית תשתנה?״ לריבית משתנה ופריים, והסברים קצרים שנפתחים בלחיצה. כל האפשרויות נשארו.", "ar": "حاسبة القروض أوضح: ثلاث خطوات (القرض، الفائدة، إضافات)، نوع الفائدة بأزرار مع سطر ملخص واحد، النتيجة في الأعلى مع جملة واحدة تشرحها، «ماذا لو تغيّرت الفائدة؟» للفائدة المتغيرة والبرايم، وشروح قصيرة تُفتح بنقرة. بقيت كل الخيارات.", "en": "A clearer loan calculator: three steps (the loan, the interest, extras), the interest type as buttons with one summary line, the result on top with one sentence that explains it, \"what if the rate changes?\" for variable and prime loans, and short hints that open on tap. Every option stays."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261103.012734';
+var CHANGELOG = [{"v": "13.64", "date": "2026-11-03", "notes": {"he": "פתיחה מהירה יותר: האפליקציה נפתחת מיד מהעותק השמור, וגרסה חדשה יורדת ברקע ומתחלפת בלי המתנה. גם קובץ השפה נשמר ולא יורד בכל פתיחה.", "ar": "فتح أسرع: يُفتح التطبيق فورًا من النسخة المحفوظة، وتُنزَّل النسخة الجديدة في الخلفية وتُستبدل دون انتظار. ويُحفظ ملف اللغة أيضًا ولا يُنزَّل عند كل فتح.", "en": "Faster opening: the app opens at once from the kept copy, and a new version downloads in the background and switches over without waiting. The language file is kept too and no longer downloads on every open."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261103.013801';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }

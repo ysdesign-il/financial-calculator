@@ -77,7 +77,7 @@ print('version', _ver['v'], _build)
 # and the service worker keeps each version, so opening the app again doesn't download it again
 import re as _re
 _m = max(_re.finditer(r'\n<script>\n(.*?)\n</script>', s, _re.S), key=lambda m: len(m.group(1)))
-_guard = "if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '%s'){ try { if (!sessionStorage.getItem('fin-hb-%s')){ sessionStorage.setItem('fin-hb-%s', '1'); location.reload(); } } catch (e) {} }\n" % (_build, _build, _build)
+_guard = "if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '%s'){ try { if (!sessionStorage.getItem('fin-hb-%s')){ sessionStorage.setItem('fin-hb-%s', '1'); location.replace(location.pathname + '?v=%s' + location.hash); } } catch (e) {} }\n" % (_build, _build, _build, _build)
 # 13.53: the interface texts go to one file per language (tp/he.js, tp/ar.js, tp/en.js); see split_langs.py
 import split_langs as _sl
 _app, _packs = _sl.split(_m.group(1))
