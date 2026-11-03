@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.010703'){ try { if (!sessionStorage.getItem('fin-hb-20261104.010703')){ sessionStorage.setItem('fin-hb-20261104.010703', '1'); location.replace(location.pathname + '?v=20261104.010703' + location.hash); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.012008'){ try { if (!sessionStorage.getItem('fin-hb-20261104.012008')){ sessionStorage.setItem('fin-hb-20261104.012008', '1'); location.replace(location.pathname + '?v=20261104.012008' + location.hash); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -8373,8 +8373,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.65", "date": "2026-11-04", "notes": {"he": "מראה מלוטש יותר: כותרות חדות, יותר מרווח, מעברים ולחיצות רכים, צבע הדגשה אחד וצללים עדינים. העיצובים שבוחרים בהגדרות נשארים כמו שהם.", "ar": "مظهر أكثر صقلًا: عناوين واضحة، مساحات أوسع، انتقالات ونقرات ناعمة، لون إبراز واحد وظلال خفيفة. التصاميم التي تُختار في الإعدادات تبقى كما هي.", "en": "A more polished look: crisp headings, more space, smooth transitions and presses, one accent colour and soft shadows. The designs you pick in settings stay as they are."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.010703';
+var CHANGELOG = [{"v": "13.66", "date": "2026-11-04", "notes": {"he": "מחשבון השכר ברור יותר: ארבעה שלבים, התוצאה בראש עם משפט אחד, והפירוט המלא בלחיצה. בטלפון השורה העליונה נקייה – שפה, מטבע, צליל ועיצוב בכפתור אחד. ובדף הבית: ״המשך מאיפה שעצרת״ והמחשבונים שלך בהישג יד.", "ar": "حاسبة الراتب أوضح: أربع خطوات، النتيجة في الأعلى مع جملة واحدة، والتفاصيل الكاملة بنقرة. على الهاتف الشريط العلوي أنظف – اللغة والعملة والصوت والتصميم في زر واحد. وفي الصفحة الرئيسية: «تابع من حيث توقفت» وحاسباتك في متناول اليد.", "en": "A clearer salary calculator: four steps, the result on top with one sentence, and the full breakdown a tap away. On phones the top bar is cleaner – language, currency, sound and design behind one button. And on the home screen: \"continue where you left off\" and your calculators within reach."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.012008';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -25630,6 +25630,273 @@ show = function(id, res){
   try { luSegSync(); } catch (e) {}
 };
 try { luSetup(); luFold(); } catch (e) {}
+
+/* ---------- 13.66: the salary calculator made clearer – four steps (the salary · personal details · pension and benefits ·
+   more options), the result first (two numbers and one sentence) with the full breakdown folded, and a count of what is
+   switched on in every folded group. Every field and every calculation stays as it was. ---------- */
+
+(function(){
+  const st = document.createElement('style');
+  st.textContent = `
+#panel-salary .su-step{display:flex;align-items:center;gap:10px;margin:22px 0 6px;padding-top:16px;border-top:1px solid var(--line)}
+#panel-salary .inputs > .su-step:first-child{border-top:0;padding-top:0;margin-top:0}
+#panel-salary .su-step b{font-size:1.05rem;font-weight:700;color:var(--ink)}
+#panel-salary .su-step small{display:block;font-size:.8rem;color:var(--ink-2);font-weight:400;margin-top:1px}
+#panel-salary .su-n{flex:0 0 auto;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--gold-ui,#F2C45A);color:#1a1405;font-weight:700;font-size:.86rem;font-variant-numeric:tabular-nums}
+#panel-salary .su-badge{margin-inline-start:8px;font-size:.74rem;padding:2px 8px;border-radius:999px;border:1px solid var(--gold-ui,#F2C45A);color:var(--gold-ui,#F2C45A);font-weight:600;vertical-align:middle}
+#panel-salary .su-badge:empty{display:none}
+#panel-salary .su-f3{margin-bottom:8px}
+#su-sum{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 4px}
+#su-sum .su-t{padding:12px 14px;border-radius:14px;border:1px solid var(--line);display:flex;flex-direction:column;gap:2px;min-width:0}
+#su-sum .su-t span{font-size:.82rem;color:var(--ink-2)}
+#su-sum .su-t b{font-size:1.15rem;font-variant-numeric:tabular-nums;color:var(--ink)}
+#su-sum p{grid-column:1/-1;margin:2px 0 0;line-height:1.65;color:var(--ink)}
+#su-sum p small{display:block;color:var(--ink-2);margin-top:2px}
+#panel-salary.su-g2n #hero-salary .hero-sub{display:none}
+#panel-salary .su-tog{display:flex;align-items:center;gap:8px;width:100%;min-height:48px;margin:10px 0 0;padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-weight:700;cursor:pointer;text-align:start}
+#panel-salary .su-tog::after{content:"▾";margin-inline-start:auto;color:var(--ink-2);transition:transform .2s}
+#panel-salary .su-tog[aria-expanded="true"]::after{transform:rotate(180deg)}
+#panel-salary.su-c-led #led-salary{display:none!important}
+@media (min-width:1180px){#panel-salary.panel:not(.panel-flat){grid-template-areas:"svbar svbar" "inputs hero" "inputs sum" "inputs detail";grid-template-rows:auto auto auto 1fr}
+  #panel-salary > .svbar{grid-area:svbar}#panel-salary > #su-sum{grid-area:sum;margin-top:14px}}
+@media (max-width:380px){#su-sum{grid-template-columns:1fr}}`;
+  document.head.appendChild(st);
+})();
+const suE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+let SU_OPEN = false;
+const suGrp = (inputs, k) => { const s = inputs.querySelector(`:scope > details > summary[data-i="${k}"]`); return s ? s.parentElement : null; };
+function suSetup(){
+  const p = document.getElementById('panel-salary'), inputs = p && p.querySelector(':scope > .inputs');
+  if (!inputs || inputs.dataset.su) return;
+  const main = inputs.querySelector(':scope > .fields'); if (!main) return;
+  inputs.dataset.su = '1';
+  const step = (n, k, h) => { const d = document.createElement('div'); d.className = 'su-step';
+    d.innerHTML = `<span class="su-n" aria-hidden="true">${n}</span><div><b data-i="${k}" role="heading" aria-level="3">${suE(t(k))}</b>${h ? `<small data-i="${h}">${suE(t(h))}</small>` : ''}</div>`; return d; };
+  const box = id => { const f = document.getElementById(id); return f && f.closest('.field'); };
+  const G = k => suGrp(inputs, k);
+  const credits = G('g_credits'), benefits = G('g_benefits');
+  const rest = ['g_salTime', 'g_salCar', 'g_salMore', 'g_salBal', 'g_salExp', 'g_taxFig'].map(G).filter(Boolean);
+  const slip = document.getElementById('sl_box');
+  const others = [...inputs.children].filter(c => c !== main && c !== credits && c !== benefits && c !== slip && !rest.includes(c));
+  /* step 3 gets its own little grid with the employee's pension and study fund */
+  const f3 = document.createElement('div'); f3.className = 'fields su-f3';
+  ['s_pension', 's_study'].map(box).filter(Boolean).forEach(b => f3.appendChild(b));
+  inputs.appendChild(step(1, 'su_s1')); inputs.appendChild(main);
+  if (credits){ inputs.appendChild(step(2, 'su_s2', 'su_s2h')); inputs.appendChild(credits); }
+  inputs.appendChild(step(credits ? 3 : 2, 'su_s3')); inputs.appendChild(f3); if (benefits) inputs.appendChild(benefits);
+  inputs.appendChild(step(credits ? 4 : 3, 'su_s4', 'su_s4h')); rest.forEach(d => inputs.appendChild(d)); if (slip) inputs.appendChild(slip);
+  others.forEach(c => inputs.appendChild(c));
+  /* the two short choices as buttons (the selects stay underneath, so saving and every listener work as before) */
+  try { if (typeof luSeg === 'function'){ luSeg('s_per', [['m', 'o_perMonth'], ['y', 'o_perYear']]); luSeg('s_mode', [['g2n', 'o_g2n'], ['n2g', 'o_n2g']]); } } catch (e) {}
+  /* a count of what is on, next to each folded group's title */
+  [credits, benefits].concat(rest).filter(Boolean).forEach(d => { const s = d.querySelector(':scope > summary'); if (s && !s.querySelector('.su-badge')) s.insertAdjacentHTML('beforeend', '<span class="su-badge"></span>'); });
+}
+/* the payslip check is added later by its own code at the top; it belongs with the other options in step 4 */
+function suSlip(){
+  const p = document.getElementById('panel-salary'), inputs = p && p.querySelector(':scope > .inputs'), slip = document.getElementById('sl_box');
+  if (!inputs || !slip || !inputs.dataset.su || slip.parentNode !== inputs) return;
+  const last = suGrp(inputs, 'g_taxFig'); if (!last || last === slip || last.nextElementSibling === slip) return;
+  last.after(slip);
+}
+/* whenever it is put back at the top (opening the salary screen, coming back from the payslip tab), it moves to step 4 again */
+function suWatch(){
+  const inputs = document.querySelector('#panel-salary > .inputs'); if (!inputs || inputs.dataset.suw) return;
+  inputs.dataset.suw = '1';
+  new MutationObserver(() => { try { suSlip(); } catch (e) {} }).observe(inputs, {childList: true});
+}
+function suBadges(){
+  const p = document.getElementById('panel-salary'); if (!p) return;
+  const def = typeof uxDefaults === 'function' ? uxDefaults('salary') : {};
+  p.querySelectorAll('.inputs > details').forEach(d => {
+    const bd = d.querySelector(':scope > summary .su-badge'); if (!bd) return;
+    if (d.querySelector('summary[data-i="g_credits"]') || d.querySelector('summary[data-i="g_taxFig"]')){ bd.textContent = ''; return; }   // these always hold values; a count would mislead
+    const n = [...d.querySelectorAll('input:not([type=range]):not([type=hidden]),select')].filter(e => {
+      if (!e.id || def[e.id] == null || e.closest('[hidden]')) return false;
+      return String(e.value) !== String(def[e.id]);
+    }).length;
+    bd.textContent = n ? (n === 1 ? t('su_on1') : t('su_on', {n})) : '';
+  });
+}
+function suSummary(res){
+  const p = document.getElementById('panel-salary'), hero = document.getElementById('hero-salary'); if (!p || !hero) return;
+  let s = document.getElementById('su-sum');
+  if (!s){ hero.insertAdjacentHTML('afterend', '<section id="su-sum" aria-live="polite"></section>'); s = document.getElementById('su-sum'); }
+  const mode = ($('#s_mode') || {}).value || 'g2n';
+  p.classList.toggle('su-g2n', mode === 'g2n');
+  if (!res || !res.rows || !res.rows.length){ s.hidden = true; return; }
+  const row = k => { const r = res.rows.find(x => x[0] === t(k)); return r ? String(strip(r[1])).replace(/^[-−]\s*/, '') : ''; };
+  const num = x => parseFloat(String(x).replace(/[^\d.]/g, '')) || 0;
+  const g = row('r_grossMonthly'), n = row('r_netMonthly'), ded = row('r_totalDed'), er = row('r_employerCost');
+  const tax = row('r_incomeTax'), ni = num(row('r_ni')), he = num(row('r_health')), pens = row('r_pensionRow');
+  if (!g || !n){ s.hidden = true; return; }
+  const pct = num(g) > 0 ? N(num(n) / num(g) * 100, 0) + '%' : '';
+  let say;
+  if (mode === 'g2n') say = t('su_sayG2n', {g, n, p: pct}) + `<small>${suE(t('su_sayParts', {t: tax, h: MI(ni + he), x: pens ? t('su_sayPens', {p: pens}) : ''}))}</small>`;
+  else say = suE(t('su_sayN2g', {n, g, e: er}));
+  const tiles = mode === 'g2n' ? [['su_tDed', ded], ['su_tEr', er]] : [['su_tNet', n], ['su_tEr', er]];
+  s.hidden = false;
+  s.innerHTML = tiles.filter(x => x[1]).map(([k, v]) => `<div class="su-t"><span>${suE(t(k))}</span><b class="num">${suE(v)}</b></div>`).join('')
+    + `<p>${mode === 'g2n' ? suE(t('su_sayG2n', {g, n, p: pct})) + `<small>${suE(t('su_sayParts', {t: tax, h: MI(ni + he), x: pens ? t('su_sayPens', {p: pens}) : ''}))}</small>` : say}</p>`;
+}
+function suSegSync(){
+  document.querySelectorAll('#panel-salary [data-lus]').forEach(b => { const s = document.getElementById(b.dataset.lus); const on = !!s && s.value === b.dataset.v; b.setAttribute('aria-checked', String(on)); b.tabIndex = on ? 0 : -1; });
+}
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('#panel-salary [data-lus]'); if (b) setTimeout(suSegSync, 0); });
+function suFold(){
+  const p = document.getElementById('panel-salary'), led = document.getElementById('led-salary'); if (!p || !led) return;
+  if (!p.querySelector('[data-sut]')) led.insertAdjacentHTML('beforebegin', `<button type="button" class="su-tog" data-sut="1" aria-expanded="false" aria-controls="led-salary"><span data-i="su_hLed">${suE(t('su_hLed'))}</span></button>`);
+  p.classList.toggle('su-c-led', !SU_OPEN);
+  const b = p.querySelector('[data-sut]'); if (b) b.setAttribute('aria-expanded', String(SU_OPEN));
+}
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-sut]'); if (!b) return; SU_OPEN = !SU_OPEN; suFold(); });
+const showSU = show;
+show = function(id, res){
+  showSU.apply(this, arguments);
+  if (id !== 'salary') return;
+  try { suSetup(); suWatch(); suSlip(); } catch (e) {}
+  try { suSummary(res); } catch (e) {}
+  try { suFold(); } catch (e) {}
+  try { suBadges(); } catch (e) {}
+  try { suSegSync(); } catch (e) {}
+};
+try { suSetup(); suWatch(); suSlip(); } catch (e) {}
+
+/* ---------- 13.66: a calmer top bar on phones – the brand and search stay; language, currency, sound, design and the
+   update line move behind one "display" button. Every control is the same element as before, so nothing else changes. ---------- */
+
+(function(){
+  const st = document.createElement('style');
+  st.textContent = `
+.pm-hdr-btn{display:none}
+@media (max-width:959px){
+  .rail .brand{display:flex;align-items:center;gap:8px}
+  .rail .brand .beta-pill{margin-inline-start:4px!important;margin-inline-end:0!important}
+  .rail .brand .pm-hdr-btn{order:10}
+  .pm-hdr-btn{display:inline-flex;align-items:center;gap:6px;margin-inline-start:auto;min-height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--nav-line,var(--line));background:transparent;color:var(--on-navy,var(--ink));font:inherit;font-size:.86rem;font-weight:600;cursor:pointer}
+  .pm-hdr-btn svg{width:18px;height:18px;flex:0 0 auto}
+  .pm-hdr-btn .pm-hd-now{font-variant-numeric:tabular-nums;opacity:.9}
+  .pm-hdr-btn[aria-expanded="true"]{border-color:var(--gold-ui,#F2C45A);color:var(--gold-ui,#F2C45A)}
+  .rail:not(.pm-open) .rail-ctrls{display:none!important}
+  .rail.pm-open .rail-ctrls{animation:pmHd .25s cubic-bezier(.22,.61,.36,1) both}
+}
+@keyframes pmHd{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.rail.pm-open .rail-ctrls{animation:none}}`;
+  document.head.appendChild(st);
+})();
+function hdNow(){
+  const b = document.getElementById('pmHdrBtn'); if (!b) return;
+  const lb = (document.querySelector('#seg button.on, #seg button[aria-pressed="true"], #seg button[aria-checked="true"]') || {}).textContent || '';
+  const cs = document.getElementById('cur'), cur = cs && cs.options[cs.selectedIndex] ? (cs.value || '') : '';
+  const now = b.querySelector('.pm-hd-now'); if (now) now.textContent = [lb.trim(), cur].filter(Boolean).join(' · ');
+  b.setAttribute('aria-label', t('hd_btn'));
+}
+function hdSetup(){
+  const rail = document.querySelector('aside.rail'), brand = rail && rail.querySelector('.rail-top .brand'), ctrls = rail && rail.querySelector('.rail-ctrls');
+  if (!brand || !ctrls || document.getElementById('pmHdrBtn')) return;
+  if (!ctrls.id) ctrls.id = 'pmRailCtrls';
+  brand.insertAdjacentHTML('beforeend', `<button type="button" class="pm-hdr-btn" id="pmHdrBtn" aria-expanded="false" aria-controls="${ctrls.id}" title="${t('hd_btn')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg><span class="pm-hd-now"></span></button>`);
+  hdNow();
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('#pmHdrBtn');
+  const rail = document.querySelector('aside.rail'); if (!rail) return;
+  if (b){ const o = rail.classList.toggle('pm-open'); b.setAttribute('aria-expanded', String(o)); return; }
+  /* tapping anywhere outside the open controls closes them */
+  if (rail.classList.contains('pm-open') && !e.target.closest('.rail-ctrls') && !e.target.closest('.cur-pop, .coin-pop, .dz-sheet, [role="dialog"]')){
+    rail.classList.remove('pm-open'); const bb = document.getElementById('pmHdrBtn'); if (bb) bb.setAttribute('aria-expanded', 'false');
+  }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape'){ const rail = document.querySelector('aside.rail.pm-open'); if (rail){ rail.classList.remove('pm-open'); const b = document.getElementById('pmHdrBtn'); if (b){ b.setAttribute('aria-expanded', 'false'); b.focus(); } } } });
+document.addEventListener('change', e => { if (e.target && (e.target.id === 'cur')) setTimeout(hdNow, 0); });
+document.addEventListener('click', e => { if (e.target.closest && e.target.closest('#seg button')) setTimeout(hdNow, 50); });
+{ const hdAL = applyLang; applyLang = function(){ const r = hdAL.apply(this, arguments); try { hdSetup(); hdNow(); } catch (e) {} return r; }; }
+try { hdSetup(); } catch (e) {}
+
+/* ---------- 13.66: a focused home screen – "continue where you left off" (the last calculator you used, with its result)
+   and your most used calculators one tap away, at the top. Nothing is removed from the home screen; the save bar, which
+   belongs to the calculators, is not shown on it. Everything stays on this phone (the app's own storage). ---------- */
+
+(function(){
+  const st = document.createElement('style');
+  st.textContent = `
+.panel-home > .svbar{display:none!important}
+#hm-top{display:flex;flex-direction:column;gap:14px;margin:18px 0 6px}
+.hm-cont{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:14px;width:100%;padding:18px 20px;border-radius:20px;cursor:pointer;
+  background:linear-gradient(160deg,color-mix(in srgb,var(--surface) 90%,var(--gold-ui) 10%),var(--surface));border:1px solid color-mix(in srgb,var(--gold-ui) 35%,var(--line));color:var(--ink)}
+.hm-cont:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.hm-cont .hm-ic{flex:0 0 auto;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--gold-ui) 16%,transparent);color:var(--gold-ui)}
+.hm-cont .hm-ic svg{width:24px;height:24px}
+.hm-cont .hm-bd{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:start}
+.hm-cont .hm-v{unicode-bidi:plaintext}
+.hm-cont small{font-size:.78rem;color:var(--ink-2);letter-spacing:.02em}
+.hm-cont b{font-size:1.05rem;font-weight:700}
+.hm-cont .hm-v{font-size:1.4rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
+.hm-cont .hm-l{font-size:.84rem;color:var(--ink-2)}
+.hm-cont .hm-go{flex:0 0 auto;color:var(--gold-ui);font-size:1.3rem}
+[dir="ltr"] .hm-cont .hm-go{transform:scaleX(-1)}
+.hm-mine h3{margin:0 0 8px;font-size:.92rem;color:var(--ink-2);font-weight:600}
+.hm-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.hm-row .tile{min-height:84px;font-size:.8rem}
+@media (max-width:360px){.hm-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+:root:not([data-contrast="high"]) .hm-cont{box-shadow:var(--pm-soft,none)}
+@media (hover:hover){.hm-cont:hover{transform:translateY(-2px);border-color:var(--gold-ui)}}
+.hm-cont{transition:transform .3s cubic-bezier(.22,.61,.36,1),border-color .3s,box-shadow .3s}
+.hm-cont:active{transform:scale(.98)}`;
+  document.head.appendChild(st);
+})();
+const hmE = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+const HM_K = 'fin-pm-home';
+function hmData(){ try { const d = JSON.parse(LS.getItem(HM_K) || 'null'); return d && typeof d === 'object' ? {use: d.use || {}, last: d.last || null} : {use: {}, last: null}; } catch (e) { return {use: {}, last: null}; } }
+function hmSave(d){ try { LS.setItem(HM_K, JSON.stringify(d)); } catch (e) {} }
+const hmTile = id => document.querySelector(`#tiles .tile[data-go="${CSS.escape(id)}"]`);
+/* count the calculators that are opened, and keep the last result shown */
+{ const hmAct = activate; activate = function(id){
+  const r = hmAct.apply(this, arguments);
+  try { if (id && id !== 'home' && hmTile(id)){ const d = hmData(); d.use[id] = (d.use[id] || 0) + 1; hmSave(d); } } catch (e) {}
+  try { if (id === 'home') hmRender(); } catch (e) {}
+  return r;
+}; }
+{ const hmShow = show; show = function(id, res){
+  hmShow.apply(this, arguments);
+  try {
+    if (id && id !== 'home' && res && res.hero && res.hero.value && hmTile(id)){
+      const v = strip(res.hero.value), l = strip(res.hero.label || '');
+      /* with saving switched off ("none") the result is not kept */
+      if (v && v !== '—' && !(typeof SV === 'object' && SV.mode === 'none')){ const d = hmData(); d.last = {id, v, l, at: Date.now()}; hmSave(d); }
+    }
+  } catch (e) {}
+}; }
+function hmAgo(ts){
+  const m = Math.round((Date.now() - ts) / 60000);
+  if (m < 1) return t('hm_now');
+  const x = m < 60 ? t('hm_min', {n: m}) : m < 1440 ? t('hm_hr', {n: Math.round(m / 60)}) : t('hm_day', {n: Math.round(m / 1440)});
+  return t('hm_ago', {x});
+}
+function hmRender(){
+  const pn = document.querySelector('.panel-home'); if (!pn) return;
+  const sub = pn.querySelector(':scope > .home-sub') || pn.querySelector(':scope > .home-hello'); if (!sub) return;
+  let box = document.getElementById('hm-top');
+  if (!box){ box = document.createElement('div'); box.id = 'hm-top'; sub.after(box); }
+  else if (box.previousElementSibling !== sub) sub.after(box);
+  const d = hmData(), last = d.last && hmTile(d.last.id) ? d.last : null;
+  let h = '';
+  if (last){
+    const tl = hmTile(last.id), ic = tl.querySelector('svg'), name = (tl.querySelector('span') || tl).textContent.trim();
+    h += `<button type="button" class="hm-cont" data-go="${hmE(last.id)}" aria-label="${hmE(t('hm_cont') + ': ' + name + ', ' + last.l + ' ' + last.v)}">`
+      + `<span class="hm-ic" aria-hidden="true">${ic ? ic.outerHTML : ''}</span>`
+      + `<span class="hm-bd"><small>${hmE(t('hm_cont'))} · ${hmE(hmAgo(last.at))}</small><b>${hmE(name)}</b><span class="hm-l">${hmE(last.l)}</span><span class="hm-v num">${hmE(last.v)}</span></span>`
+      + `<span class="hm-go" aria-hidden="true">‹</span></button>`;
+  }
+  const top = Object.entries(d.use).filter(([id]) => hmTile(id)).sort((a, b) => b[1] - a[1]).slice(0, 4).map(x => x[0]);
+  if (top.length >= 2){
+    h += `<section class="hm-mine" aria-label="${hmE(t('hm_mine'))}"><h3>${hmE(t('hm_mine'))}</h3><div class="hm-row"></div></section>`;
+  }
+  box.innerHTML = h; box.hidden = !h;
+  const row = box.querySelector('.hm-row');
+  if (row) top.forEach(id => { const c = hmTile(id).cloneNode(true); c.removeAttribute('id'); row.appendChild(c); });
+}
+{ const hmAL = applyLang; applyLang = function(){ const r = hmAL.apply(this, arguments); try { hmRender(); } catch (e) {} return r; }; }
+try { hmRender(); } catch (e) {}
 
 /* ---------- 13.5: Tax Free — VAT refund on shopping abroad (and for tourists shopping in Israel) ----------
    Rules change from time to time: the minimums and rates here were checked in October 2026 and are shown as a guide,
