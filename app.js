@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.014437'){ try { if (!sessionStorage.getItem('fin-hb-20261104.014437')){ sessionStorage.setItem('fin-hb-20261104.014437', '1'); location.replace(location.pathname + '?v=20261104.014437' + location.hash); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.014514'){ try { if (!sessionStorage.getItem('fin-hb-20261104.014514')){ sessionStorage.setItem('fin-hb-20261104.014514', '1'); location.replace(location.pathname + '?v=20261104.014514' + location.hash); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -8374,7 +8374,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "13.69", "date": "2026-11-04", "notes": {"he": "מחשבון עצמאים ברור יותר: שלושה שלבים, שורת רווח חיה, סוג העוסק בכפתורים, והתוצאה בראש עם משפט אחד. ובמס הכנסה ובשכר: מעבר בין שנתי לחודשי ממיר את הסכום לבד.", "ar": "حاسبة المستقلين أوضح: ثلاث خطوات، سطر ربح مباشر، نوع المشتغل بأزرار، والنتيجة في الأعلى مع جملة واحدة. وفي ضريبة الدخل والراتب: التبديل بين سنوي وشهري يحوّل المبلغ تلقائيًا.", "en": "A clearer self-employed calculator: three steps, a live profit line, the business type as buttons, and the result on top in one sentence. And in income tax and salary, switching between yearly and monthly converts the amount for you."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.014437';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.014514';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
