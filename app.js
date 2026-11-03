@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.013803'){ try { if (!sessionStorage.getItem('fin-hb-20261104.013803')){ sessionStorage.setItem('fin-hb-20261104.013803', '1'); location.replace(location.pathname + '?v=20261104.013803' + location.hash); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.013848'){ try { if (!sessionStorage.getItem('fin-hb-20261104.013848')){ sessionStorage.setItem('fin-hb-20261104.013848', '1'); location.replace(location.pathname + '?v=20261104.013848' + location.hash); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -8374,7 +8374,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "13.68", "date": "2026-11-04", "notes": {"he": "מחשבון מס הכנסה ברור יותר: ארבעה שלבים, שנה או חודש בכפתור, והתוצאה בראש עם משפט אחד – כמה מס, כמה נשאר, ובאיזה שיעור ימוסה כל שקל נוסף.", "ar": "حاسبة ضريبة الدخل أوضح: أربع خطوات، سنة أو شهر بزر، والنتيجة في الأعلى مع جملة واحدة – كم الضريبة، كم يبقى، وبأي نسبة يُضرَّب كل شيكل إضافي.", "en": "A clearer income tax calculator: four steps, year or month as a button, and the result on top in one sentence – how much tax, how much you keep, and the rate on every extra shekel."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.013803';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.013848';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
