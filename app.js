@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.010243'){ try { if (!sessionStorage.getItem('fin-hb-20261104.010243')){ sessionStorage.setItem('fin-hb-20261104.010243', '1'); location.replace(location.pathname + '?v=20261104.010243' + location.hash); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.010703'){ try { if (!sessionStorage.getItem('fin-hb-20261104.010703')){ sessionStorage.setItem('fin-hb-20261104.010703', '1'); location.replace(location.pathname + '?v=20261104.010703' + location.hash); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -8374,7 +8374,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "13.65", "date": "2026-11-04", "notes": {"he": "מראה מלוטש יותר: כותרות חדות, יותר מרווח, מעברים ולחיצות רכים, צבע הדגשה אחד וצללים עדינים. העיצובים שבוחרים בהגדרות נשארים כמו שהם.", "ar": "مظهر أكثر صقلًا: عناوين واضحة، مساحات أوسع، انتقالات ونقرات ناعمة، لون إبراز واحد وظلال خفيفة. التصاميم التي تُختار في الإعدادات تبقى كما هي.", "en": "A more polished look: crisp headings, more space, smooth transitions and presses, one accent colour and soft shadows. The designs you pick in settings stay as they are."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.010243';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.010703';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
