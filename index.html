@@ -2566,6 +2566,76 @@ body:has(#panel-mathx:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 .lge-help{margin:0 0 8px;padding-inline-start:18px}.lge-help li{margin:0 0 2px}
 .lge-code{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700;padding:0 5px;border-radius:6px;border:1px solid var(--line);white-space:pre}
 
+
+/* ================= 13.65 PREMIUM LAYER =================
+   One layer on top of the app: type, space, motion and depth.
+   Typography and colour apply to the default design only (no data-design, or "default"), so the 13 designs people pick
+   keep their own look; motion, press feedback and focus apply everywhere. High contrast and reduced motion are respected. */
+:root{--pm-ease:cubic-bezier(.22,.61,.36,1);--pm-t:.3s;
+  --pm-soft:0 18px 44px -26px rgba(2,6,20,.8),0 2px 8px -4px rgba(2,6,20,.35);
+  --pm-lift:0 28px 60px -28px rgba(2,6,20,.9),0 6px 14px -6px rgba(2,6,20,.4);
+  --pm-glow:0 16px 38px -18px color-mix(in srgb,var(--gold-ui) 70%,transparent)}
+:root[data-theme="light"]{--pm-soft:0 18px 44px -28px rgba(14,26,51,.28),0 2px 8px -4px rgba(14,26,51,.10);--pm-lift:0 26px 56px -26px rgba(14,26,51,.34),0 6px 14px -6px rgba(14,26,51,.12)}
+
+/* ---------- 1. typography (default design) ---------- */
+:is(:root:not([data-design]),:root[data-design="default"]) :is(.page-head h2,.home-hello){font-family:Heebo,'IBM Plex Sans Hebrew','IBM Plex Sans Arabic',system-ui,sans-serif;font-weight:700;letter-spacing:-.02em}
+:is(:root:not([data-design]),:root[data-design="default"]) .page-head h2{font-size:clamp(1.75rem,7vw,2.1rem);line-height:1.15}
+:is(:root:not([data-design]),:root[data-design="default"]) .home-hello{font-size:clamp(1.9rem,8vw,2.3rem);line-height:1.12}
+:is(:root:not([data-design]),:root[data-design="default"]) :is(.sec-t,.tiles-h,.set-cat h3,.lu-step b,#lu-scn h3,.lx-card h3){font-family:Heebo,'IBM Plex Sans Hebrew','IBM Plex Sans Arabic',system-ui,sans-serif;font-weight:700;letter-spacing:-.01em}
+:is(:root:not([data-design]),:root[data-design="default"]) .sec-t{font-size:1.22rem}
+:is(:root:not([data-design]),:root[data-design="default"]) .hero-value{font-family:Heebo,'IBM Plex Sans Hebrew',system-ui,sans-serif;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+:is(.fine,.hint,.home-sub,.page-head p,.hero-words,.lu-sum p,.sec p,.ux-card p,details p,.lx-intro){line-height:1.65}
+.field label{letter-spacing:.005em}
+
+/* ---------- 2. white space ---------- */
+.main-in{padding-inline:max(20px,env(safe-area-inset-left,0px))}
+.page-head{margin-block:14px 22px}
+@media (max-width:900px){.panel > * + *{margin-top:18px}.detail > * + *{margin-top:16px}}
+.hero{padding:24px 24px 26px!important}
+.inputs{padding:22px!important}
+.fields{gap:20px 14px!important}
+.svbar{padding:14px 16px}
+.home-hello{margin-top:26px}
+.hclock,.hhero,.hpic,.ux-card{margin-block:20px!important}
+.tiles{gap:14px!important}
+.fam-row{margin-block:6px 4px}
+
+/* ---------- 4. colour and depth (default design): neutral surfaces, gold as the one action colour ---------- */
+:is(:root:not([data-design]),:root[data-design="default"]){--hero-grad:linear-gradient(160deg,color-mix(in srgb,var(--surface) 92%,var(--ink) 8%),var(--surface));--hero-bd:var(--line);--hero-val:var(--ink);--hero-label:var(--ink-2)}
+:is(:root:not([data-design]),:root[data-design="default"]) .hero{border-top:2px solid color-mix(in srgb,var(--gold-ui) 60%,transparent)}
+:is(:root:not([data-design]),:root[data-design="default"]) .sv-clear{color:var(--ink-2);border-color:var(--line);background:transparent}
+:is(:root:not([data-design]),:root[data-design="default"]) .sv-clear:hover{color:#F0705A;border-color:color-mix(in srgb,#F0705A 50%,transparent)}
+:is(:root:not([data-design]),:root[data-design="default"]):not([data-contrast="high"]) :is(.hero,.inputs,.hhero,.hpic,.ux-card,.ck,.svbar,.tile,.lu-t,#lu-scn,.lx-card,.cx-d,.sched,.scn){box-shadow:var(--pm-soft)}
+:is(:root:not([data-design]),:root[data-design="default"]):not([data-contrast="high"]) :is(.gold-btn,.fam-c.on,.sv-seg .on){box-shadow:var(--pm-glow)}
+:is(:root:not([data-design]),:root[data-design="default"]):not([data-contrast="high"]):not([data-theme="light"]) nav.bottom{background:color-mix(in srgb,var(--surface) 72%,transparent);-webkit-backdrop-filter:blur(22px) saturate(140%);backdrop-filter:blur(22px) saturate(140%);box-shadow:0 -16px 40px -28px rgba(2,6,20,.85)}
+:is(:root:not([data-design]),:root[data-design="default"]):not([data-contrast="high"]) .rail{-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+
+/* ---------- 3. micro-interactions (every design) ---------- */
+:is(a,button,.btn,.gold-btn,.ghost-btn,.tile,.chip,.fam-c,.bt,.sv-seg button,.lu-seg button,.lu-tog,.ux-opt,summary,.seg button,.qbtn,input,select,textarea,.control){
+  transition:transform var(--pm-t) var(--pm-ease),box-shadow var(--pm-t) var(--pm-ease),background-color var(--pm-t) var(--pm-ease),border-color var(--pm-t) var(--pm-ease),color var(--pm-t) var(--pm-ease),opacity var(--pm-t) var(--pm-ease)}
+@media (hover:hover){
+  :is(.gold-btn,.btn,.fam-c,.ux-opt,.lu-seg button,.chip):hover{transform:translateY(-1px) scale(1.02)}
+  :is(.tile,.hhero,.hpic,.lu-tog,.lu-sc,details.sched > summary,details.cx-d > summary):hover{transform:translateY(-2px)}
+  :root:not([data-contrast="high"]) :is(.tile,.hhero,.hpic):hover{box-shadow:var(--pm-lift)}
+  :root:not([data-contrast="high"]) .gold-btn:hover{box-shadow:0 22px 46px -18px color-mix(in srgb,var(--gold-ui) 85%,transparent)}
+  :is(.ghost-btn,.back,.gsearch,.snd-mute,.skin-btn,.refresh-btn,.qbtn):hover{transform:scale(1.05);border-color:color-mix(in srgb,var(--gold-ui) 55%,transparent)}
+  .bt:hover{color:var(--ink)}
+  a:hover{opacity:.82}
+  .control:hover{border-color:color-mix(in srgb,var(--gold-ui) 40%,var(--line))}
+}
+:is(.gold-btn,.btn,.ghost-btn,.tile,.fam-c,.bt,.ux-opt,.lu-seg button,.chip,.back,.qbtn,.sv-seg button):active{transform:scale(.97);transition-duration:.12s}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+:is(:root[data-motion="reduce"],:root[data-motion="reduced"]) :is(a,button,.btn,.gold-btn,.ghost-btn,.tile,.chip,.fam-c,.bt,.ux-opt,.lu-seg button,.lu-tog,.control,summary){transition:none!important;transform:none!important}
+@media (prefers-reduced-motion:reduce){:is(a,button,.tile,.chip,.control){transition:none!important;transform:none!important}}
+
+/* the loan result summary sits under the result on wide screens too (it fell to the bottom of the grid before) */
+@media (min-width:1180px){
+  #panel-loan.panel:not(.panel-flat){grid-template-areas:"svbar svbar" "inputs hero" "inputs sum" "inputs detail";grid-template-rows:auto auto auto 1fr}
+  #panel-loan > .svbar{grid-area:svbar}
+  #panel-loan > #lu-sum{grid-area:sum;margin-top:14px}
+}
+@media (min-width:1180px){#panel-loan .field:has(#l_years),#panel-loan .field:has(#l_months){grid-column:1/-1}}
+
 </style>
 </head>
 <body>
@@ -2609,9 +2679,9 @@ body:has(#panel-mathx:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 <div class="toast" id="toast" role="status" hidden></div>
 
 
-<script>var HTML_BUILD = '20261103.014114';</script>
-<script>(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}if(!l){try{l=(navigator.languages&&navigator.languages[0])||navigator.language||''}catch(e){}}l=String(l).toLowerCase();var p=/^(he|iw)/.test(l)?'he':/^ar/.test(l)?'ar':'en';window.__FIN_TPL=p;if(!(window.__FIN_TP&&window.__FIN_TP[p]))document.write('<script src="tp/'+p+'.js?v=20261103.014114"><\/script>');})();</script>
-<script src="app.js?v=20261103.014114"></script>
+<script>var HTML_BUILD = '20261104.010243';</script>
+<script>(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}if(!l){try{l=(navigator.languages&&navigator.languages[0])||navigator.language||''}catch(e){}}l=String(l).toLowerCase();var p=/^(he|iw)/.test(l)?'he':/^ar/.test(l)?'ar':'en';window.__FIN_TPL=p;if(!(window.__FIN_TP&&window.__FIN_TP[p]))document.write('<script src="tp/'+p+'.js?v=20261104.010243"><\/script>');})();</script>
+<script src="app.js?v=20261104.010243"></script>
 <script src="/__pub.js" defer></script>
 </body>
 </html>
