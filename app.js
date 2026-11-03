@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.015657'){ try { if (!sessionStorage.getItem('fin-hb-20261104.015657')){ sessionStorage.setItem('fin-hb-20261104.015657', '1'); location.replace(location.pathname + '?v=20261104.015657' + location.hash); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.015821'){ try { if (!sessionStorage.getItem('fin-hb-20261104.015821')){ sessionStorage.setItem('fin-hb-20261104.015821', '1'); location.replace(location.pathname + '?v=20261104.015821' + location.hash); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -8374,7 +8374,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "13.70", "date": "2026-11-04", "notes": {"he": "כל המחשבונים ברורים יותר: שלבים ממוספרים, בחירות קצרות בכפתורים, שני המספרים החשובים מתחת לתוצאה, פירוט מלא בלחיצה, ותגית שמראה מה מופעל בכל קבוצה.", "ar": "كل الحاسبات أوضح: خطوات مرقّمة، اختيارات قصيرة بأزرار، الرقمان الأهم تحت النتيجة، التفاصيل الكاملة بنقرة، وشارة تبيّن ما هو مفعّل في كل مجموعة.", "en": "Every calculator is clearer: numbered steps, short choices as buttons, the two key numbers under the result, the full breakdown a tap away, and a tag showing what is on in each group."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.015657';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.015821';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
