@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.012008'){ try { if (!sessionStorage.getItem('fin-hb-20261104.012008')){ sessionStorage.setItem('fin-hb-20261104.012008', '1'); location.replace(location.pathname + '?v=20261104.012008' + location.hash); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.012055'){ try { if (!sessionStorage.getItem('fin-hb-20261104.012055')){ sessionStorage.setItem('fin-hb-20261104.012055', '1'); location.replace(location.pathname + '?v=20261104.012055' + location.hash); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -8374,7 +8374,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "13.66", "date": "2026-11-04", "notes": {"he": "מחשבון השכר ברור יותר: ארבעה שלבים, התוצאה בראש עם משפט אחד, והפירוט המלא בלחיצה. בטלפון השורה העליונה נקייה – שפה, מטבע, צליל ועיצוב בכפתור אחד. ובדף הבית: ״המשך מאיפה שעצרת״ והמחשבונים שלך בהישג יד.", "ar": "حاسبة الراتب أوضح: أربع خطوات، النتيجة في الأعلى مع جملة واحدة، والتفاصيل الكاملة بنقرة. على الهاتف الشريط العلوي أنظف – اللغة والعملة والصوت والتصميم في زر واحد. وفي الصفحة الرئيسية: «تابع من حيث توقفت» وحاسباتك في متناول اليد.", "en": "A clearer salary calculator: four steps, the result on top with one sentence, and the full breakdown a tap away. On phones the top bar is cleaner – language, currency, sound and design behind one button. And on the home screen: \"continue where you left off\" and your calculators within reach."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.012008';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.012055';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
