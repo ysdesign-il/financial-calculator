@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.013130'){ try { if (!sessionStorage.getItem('fin-hb-20261104.013130')){ sessionStorage.setItem('fin-hb-20261104.013130', '1'); location.replace(location.pathname + '?v=20261104.013130' + location.hash); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.013220'){ try { if (!sessionStorage.getItem('fin-hb-20261104.013220')){ sessionStorage.setItem('fin-hb-20261104.013220', '1'); location.replace(location.pathname + '?v=20261104.013220' + location.hash); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -8374,7 +8374,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "13.67", "date": "2026-11-04", "notes": {"he": "מחשבון המשכנתא ברור יותר: שלושה שלבים (הדירה, ההכנסה, המסלולים), כל מסלול בכרטיס משלו עם ההחזר שלו, בדיקה חיה שהחלוקה מגיעה ל-100%, והתוצאה בראש עם משפט אחד.", "ar": "حاسبة الرهن أوضح: ثلاث خطوات (الشقة، الدخل، المسارات)، كل مسار في بطاقة خاصة مع قسطه، فحص مباشر أن التقسيم يصل إلى 100%، والنتيجة في الأعلى مع جملة واحدة.", "en": "A clearer mortgage calculator: three steps (the apartment, the income, the tracks), each track in its own card with its payment, a live check that the split adds up to 100%, and the result on top with one sentence."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.013130';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.013220';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
