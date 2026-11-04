@@ -92,8 +92,11 @@ print('version', _ver['v'], _build)
 # the app's big script goes into its own file: the browser reads and compiles it off the main thread while the page shows,
 # and the service worker keeps each version, so opening the app again doesn't download it again
 import re as _re
+# 13.66: the picture of the home screen (or a calm splash) is drawn first thing in the page – see p/snap_early.html
+assert s.count('<body>\n') == 1
+s = s.replace('<body>\n', '<body>\n' + open('p/snap_early.html', encoding='utf-8').read(), 1)
 _m = max(_re.finditer(r'\n<script>\n(.*?)\n</script>', s, _re.S), key=lambda m: len(m.group(1)))
-_guard = "if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '%s'){ try { if (!sessionStorage.getItem('fin-hb-%s')){ sessionStorage.setItem('fin-hb-%s', '1'); location.replace(location.pathname + '?v=%s' + location.hash); } } catch (e) {} }\n" % (_build, _build, _build, _build)
+_guard = "try { if (window.__snapOff) window.__snapOff(); } catch (e) {}\n" + "if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '%s'){ try { if (!sessionStorage.getItem('fin-hb-%s')){ sessionStorage.setItem('fin-hb-%s', '1'); location.replace(location.pathname + '?v=%s' + location.hash); } } catch (e) {} }\n" % (_build, _build, _build, _build)
 # 13.53: the interface texts go to one file per language (tp/he.js, tp/ar.js, tp/en.js); see split_langs.py
 import split_langs as _sl
 _app, _packs = _sl.split(_m.group(1))
