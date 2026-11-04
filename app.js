@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.095209'){ try { if (!sessionStorage.getItem('fin-hb-20261104.095209')){ sessionStorage.setItem('fin-hb-20261104.095209', '1'); location.replace(location.pathname + '?v=20261104.095209' + location.hash); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.103428'){ try { if (!sessionStorage.getItem('fin-hb-20261104.103428')){ sessionStorage.setItem('fin-hb-20261104.103428', '1'); location.replace(location.pathname + '?v=20261104.103428' + location.hash); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -8373,8 +8373,8 @@ rjEvery(siteRates);
 window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
-var CHANGELOG = [{"v": "13.71", "date": "2026-11-04", "notes": {"he": "כלים ומחשבונים קטנים ברורים יותר: התוצאה מעל הטופס עם שני המספרים החשובים, בחירות קצרות בכפתורים, ופירוט ארוך בלחיצה. בראש כל מסך, שורת השמירה מצומצמת לשורה אחת – והכפתור ״שמירה ושיתוף״ פותח את כל האפשרויות.", "ar": "الأدوات والحاسبات الصغيرة أوضح: النتيجة فوق النموذج مع الرقمين الأهم، اختيارات قصيرة بأزرار، وتفاصيل طويلة بنقرة. في أعلى كل شاشة صار شريط الحفظ سطرًا واحدًا – وزر «الحفظ والمشاركة» يفتح كل الخيارات.", "en": "Clearer tools and small calculators: the result above the form with the two key numbers, short choices as buttons, and a long breakdown a tap away. At the top of every screen the saving bar is one quiet line – \"Saving and sharing\" opens all the options."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.095209';
+var CHANGELOG = [{"v": "13.61", "date": "2026-11-04", "notes": {"he": "שיפורים ותיקונים.", "ar": "تحسينات وإصلاحات.", "en": "Improvements and fixes."}}];
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.103428';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
@@ -32096,6 +32096,30 @@ document.addEventListener('click', async e => {
 
 /* 13.50: texts that users see never name the services that host or store the site (generic wording instead). Owner-only screens keep them. */
 
+
+/* ---------- 13.61: finishing touches for a store-quality feel ----------
+   1. The floating buttons (AI assistant, accessibility) fade out while the page scrolls, so they never hide the text being read,
+      and come back as soon as the scrolling stops.
+   2. Small links and buttons get a larger invisible touch area (at least 44 px high, as the phone makers recommend), without changing how they look. */
+(function(){
+  const FABS = '#ai_fab,#axb,.ai-fab';
+  let quiet = 0;
+  const calm = () => { document.body.classList.remove('fab-quiet'); };
+  addEventListener('scroll', () => {
+    if (!document.body) return;
+    document.body.classList.add('fab-quiet');
+    clearTimeout(quiet); quiet = setTimeout(calm, 650);
+  }, {passive: true, capture: true});
+  /* the end of every screen can scroll clear of the floating buttons and the bottom bar */
+  const st = document.createElement('style');
+  st.textContent =
+    'body.fab-quiet :is(' + FABS + '){opacity:.12!important;pointer-events:none!important}'
+    + ':is(' + FABS + '){transition:opacity .22s ease}'
+    + '@media (prefers-reduced-motion:reduce){:is(' + FABS + '){transition:none}}'
+    + '.beta-pill,.fg-x,.lg-a,.src-a{position:relative}'
+    + '.beta-pill::after,.fg-x::after,.lg-a::after,.src-a::after{content:"";position:absolute;left:-6px;right:-6px;top:50%;height:44px;transform:translateY(-50%)}';
+  document.head.appendChild(st);
+})();
 
 applyLang(false);
 activate(tab);
