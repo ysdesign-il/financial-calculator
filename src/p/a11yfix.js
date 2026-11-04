@@ -37,7 +37,7 @@
     + '.seg button[aria-pressed="false"]{color:var(--ink-2)}'
     + '.se-tog{color:var(--focus,#1F4FB8)}[data-theme="dark"] .se-tog{color:#9DBBFF}'
     + '.qbtn::after{content:"";position:absolute;inset:-6px;border-radius:50%}'
-    + '.tiles>*{min-width:0}.tile span{overflow-wrap:anywhere}.lg-links{flex-wrap:wrap;white-space:normal;max-width:100%}.lg-a{white-space:normal}';
+    + '.tiles>*{min-width:0}.tile span{overflow-wrap:anywhere}.lg-links{flex-wrap:wrap;white-space:normal;max-width:100%}.lg-a{white-space:normal}#exp_views{flex-wrap:wrap;max-width:100%}';
   document.head.appendChild(st);
   setTimeout(() => {
     try { a11yPanels(); } catch (e) {}
