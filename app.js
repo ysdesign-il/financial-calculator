@@ -1,4 +1,4 @@
-if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.094937'){ try { if (!sessionStorage.getItem('fin-hb-20261104.094937')){ sessionStorage.setItem('fin-hb-20261104.094937', '1'); location.replace(location.pathname + '?v=20261104.094937' + location.hash); } } catch (e) {} }
+if (typeof HTML_BUILD !== 'undefined' && HTML_BUILD !== '20261104.095209'){ try { if (!sessionStorage.getItem('fin-hb-20261104.095209')){ sessionStorage.setItem('fin-hb-20261104.095209', '1'); location.replace(location.pathname + '?v=20261104.095209' + location.hash); } } catch (e) {} }
 (function(){
 'use strict';
 
@@ -8374,7 +8374,7 @@ window.addEventListener('online', () => { if (SITE_RATES) siteRates(); });
 
 /* ---- versions & updates: the link never changes; the app notices a newer version and moves to it ---- */
 var CHANGELOG = [{"v": "13.71", "date": "2026-11-04", "notes": {"he": "כלים ומחשבונים קטנים ברורים יותר: התוצאה מעל הטופס עם שני המספרים החשובים, בחירות קצרות בכפתורים, ופירוט ארוך בלחיצה. בראש כל מסך, שורת השמירה מצומצמת לשורה אחת – והכפתור ״שמירה ושיתוף״ פותח את כל האפשרויות.", "ar": "الأدوات والحاسبات الصغيرة أوضح: النتيجة فوق النموذج مع الرقمين الأهم، اختيارات قصيرة بأزرار، وتفاصيل طويلة بنقرة. في أعلى كل شاشة صار شريط الحفظ سطرًا واحدًا – وزر «الحفظ والمشاركة» يفتح كل الخيارات.", "en": "Clearer tools and small calculators: the result above the form with the two key numbers, short choices as buttons, and a long breakdown a tap away. At the top of every screen the saving bar is one quiet line – \"Saving and sharing\" opens all the options."}}];
-var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.094937';
+var APP_VER = CHANGELOG[0].v, APP_BUILD = '20261104.095209';
 var IN_CLAUDE = !!(window.claude && typeof window.claude.use === 'function');
 var UPD = {remote: null, st: '', dbv: null, hide: '', touched: false, whatsNew: false, loadedTry: (() => { try { return !!SS.getItem('fin-upd-try'); } catch (e) { return false; } })()};
 function verNote(e){ const n = (e && e.notes) || {}; return n[lang] || n.he || n.en || ''; }
