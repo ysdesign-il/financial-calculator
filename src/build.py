@@ -9,7 +9,7 @@ assert L[528].startswith('const TABS') and L[612].strip()=='};' and L[615].start
 assert L[743].startswith('const navEl') and L[860].startswith('/* ===') and 'navigation' in L[1243] and L[501].strip()=='};'
 out = []
 out.append(seg(1, 7) + '\n' + P('priv_head.html') + '\n' + seg(11, 11)); out.append(P('tokens.css')); out.append(seg(38, 231)); out.append(P('css.css')); out.append(P('theme.css')); out.append(P('design.css')); out.append(P('fx.css')); out.append(P('design2.css')); out.append(P('acc.css')); out.append(P('perf.css')); out.append(P('cv.css')); out.append(P('mx.css')); out.append(P('cur.css')); out.append(P('premium.css'))
-out.append(seg(232, 234)); out.append(P('body.html')); out.append(seg(267, 502)); out.append(P('i1.js')+P('i2.js')+P('i3.js')+P('i4.js')+P('i5.js')+P('i6.js')+P('i7.js')+P('i8.js')+P('i9.js')+P('i10.js')+P('i11.js')+P('i12.js')+P('i13.js')+P('i14.js')+P('i15.js')+P('i16.js')+P('i17.js')+P('i18.js')+P('i19.js')+P('i20.js')+P('i21.js')+P('i22.js')+P('i23.js')+P('i25.js')+P('i26.js')+P('i27.js')+P('i28.js')+P('i29.js')+P('i30.js')+P('i31.js')+P('i32.js')+P('i33.js')+P('i34.js')+P('i35.js')+P('i36.js')+P('i37.js')+P('i38.js')+P('i39.js')+P('i40.js')+P('i41.js')+P('i42.js')+P('i43.js')+P('i44.js')+P('i45.js')+P('i46.js')+P('i47.js')+P('i48.js')+P('i50.js')+P('i51.js')+P('i52.js')+P('i53.js')+P('i54.js')+P('i55.js')+P('i56.js')+P('i57.js')+P('i58.js')+P('i59.js')+P('i60.js')+P('i61.js')+P('i62.js')+P('i63.js')+P('i64.js')+P('i65.js')+P('i66.js')+P('i67.js')+P('i68.js')+P('i69.js')+P('i70.js')+P('i71.js')+P('i72.js')+P('i73.js')+P('i74.js')+P('i75.js'))
+out.append(seg(232, 234)); out.append(P('body.html')); out.append(seg(267, 502)); out.append(P('i1.js')+P('i2.js')+P('i3.js')+P('i4.js')+P('i5.js')+P('i6.js')+P('i7.js')+P('i8.js')+P('i9.js')+P('i10.js')+P('i11.js')+P('i12.js')+P('i13.js')+P('i14.js')+P('i15.js')+P('i16.js')+P('i17.js')+P('i18.js')+P('i19.js')+P('i20.js')+P('i21.js')+P('i22.js')+P('i23.js')+P('i25.js')+P('i26.js')+P('i27.js')+P('i28.js')+P('i29.js')+P('i30.js')+P('i31.js')+P('i32.js')+P('i33.js')+P('i34.js')+P('i35.js')+P('i36.js')+P('i37.js')+P('i38.js')+P('i39.js')+P('i40.js')+P('i41.js')+P('i42.js')+P('i43.js')+P('i44.js')+P('i45.js')+P('i46.js')+P('i47.js')+P('i48.js')+P('i50.js')+P('i51.js')+P('i52.js')+P('i53.js')+P('i54.js')+P('i55.js')+P('i56.js')+P('i57.js')+P('i58.js')+P('i59.js')+P('i60.js')+P('i61.js')+P('i62.js')+P('i63.js')+P('i64.js')+P('i65.js')+P('i66.js')+P('i67.js')+P('i68.js')+P('i69.js')+P('i70.js')+P('i71.js')+P('i72.js')+P('i73.js')+P('i74.js')+P('i75.js')+P('i76.js'))
 out.append(seg(503, 523)); out.append(P('crypto.js')); out.append(P('fx_official.js')); out.append(P('groups.js'))
 out.append(seg(530, 613)); out.append(P('ico.js'))
 out.append(seg(614, 615)); out.append(P('sico.js')+P('ui2a.js')+P('ui2b.js')+P('ui2d.js')+P('ui2c.js')+P('ui2e.js')+P('ui2f.js')+P('ui2g.js')+P('ui2h.js')+P('ui2i.js'))
@@ -23,7 +23,23 @@ s = s.replace("  const nt = $('#nt-'+id);\n", """  const wn = $('#wn-'+id);
   const nt = $('#nt-'+id);
 """, 1)
 s = s.replace("sub: t('r_taxLabel', {n: MI(best[1] / 12) + ' / ' + t('o_perMonth')})", "sub: t('r_netRent') + ': ' + MI(yr - best[1])")
-exec(open('post.py',encoding='utf-8').read())
+# 13.65: modules that load a moment after the app opens (see splitter.js). Marked here, cut out after the texts are split.
+LATE_DEFAULT = 'ds2,dsig,qr_core,qr,pdfx,cvt,ds3,ds4,ds5,ocr,dsx,dstax,mx_engine,mx_solve,mx,mx2,cv,tf,nfc,sign'
+LATE_TABS = 'docscan,mathx,cv,taxfree,taxrefund,nfc,letter,vault,rcpt,scical,payslip'
+LATE_MODS = [m for m in os.environ.get('FIN_LATE', LATE_DEFAULT).split(',') if m and m != 'none']
+_bopen = open
+def _mopen(path, *a, **k):
+    f = _bopen(path, *a, **k)
+    if isinstance(path, str) and path.startswith('p/') and path.endswith('.js') and path[2:-3] in LATE_MODS:
+        txt = f.read(); f.close(); nm = path[2:-3]
+        class _R:
+            def read(self): return '\n/*@@LATE:' + nm + '*/\n' + txt + '\n/*@@END:' + nm + '*/\n'
+        return _R()
+    return f
+open = _mopen
+exec(_bopen('post.py',encoding='utf-8').read())
+open = _bopen
+
 s = s.replace('localStorage.', 'LS.')
 shim = '''const RAWLS = window.localStorage, SS = window.sessionStorage;
 const ENC_NAME = u => encodeURIComponent(String(u).toLowerCase());
@@ -85,22 +101,40 @@ os.makedirs(os.path.join(ROOT, 'tp'), exist_ok=True)
 for _l, _d in _packs.items():
     open(os.path.join(ROOT, 'tp', _l + '.js'), 'w', encoding='utf-8').write(_sl.pack_js(_l, _d))
 print('texts moved to language packs:', len(_packs['en']))
+import shutil as _sh, subprocess as _sp
+# 13.65: the late part (app-late.js) – see splitter.cjs
+_late = ''
+if LATE_MODS:
+    import tempfile as _tf
+    _td = _tf.mkdtemp()
+    open(os.path.join(_td, 'in.js'), 'w', encoding='utf-8').write(_app)
+    _r = _sp.run(['node', os.path.join(HERE, 'splitter.cjs'), os.path.join(_td, 'in.js'), os.path.join(_td, 'core.js'), os.path.join(_td, 'late.js'), LATE_TABS], capture_output=True, text=True, encoding='utf-8')
+    if _r.returncode: raise SystemExit('splitter: ' + _r.stderr[:2000])
+    print('late part:', _r.stdout.strip()[:300])
+    _app = open(os.path.join(_td, 'core.js'), encoding='utf-8').read().replace('__LATE_BUILD__', _build)
+    _late = open(os.path.join(_td, 'late.js'), encoding='utf-8').read().replace('__LATE_BUILD__', _build)
 # 13.62: the app's script without comments and extra spaces (names and code stay exactly the same), so it downloads and opens faster.
 # Uses esbuild when it is installed (the publish workflow installs it); without it the script is written as is.
-import shutil as _sh, subprocess as _sp
 _esb = os.environ.get('ESBUILD') or _sh.which('esbuild') or next((x for x in ['/opt/npm-tools/node_modules/.bin/esbuild'] if os.path.exists(x)), None)
+if os.environ.get('FIN_NOMIN'): _esb = None
 if _esb:
     _r = _sp.run([_esb, '--loader=js', '--minify-whitespace', '--charset=utf8', '--log-level=error'], input=_app, capture_output=True, text=True, encoding='utf-8')
     if _r.returncode == 0 and len(_r.stdout) > len(_app) * 0.5:
         print('app script made smaller:', len(_app), '->', len(_r.stdout)); _app = _r.stdout.rstrip('\n')
     else: print('app script not made smaller:', _r.stderr[:300])
 else: print('esbuild not found: app script written as is')
+if _late and _esb:
+    _r = _sp.run([_esb, '--loader=js', '--minify-whitespace', '--charset=utf8', '--log-level=error'], input=_late, capture_output=True, text=True, encoding='utf-8')
+    if _r.returncode == 0 and len(_r.stdout) > len(_late) * 0.5: _late = _r.stdout
+_lp = os.path.join(ROOT, 'app-late.js')
+if _late: open(_lp, 'w', encoding='utf-8').write(_late)
+elif os.path.exists(_lp): os.remove(_lp)
 open(os.path.join(ROOT, 'app.js'), 'w', encoding='utf-8').write(_guard + _app + '\n')
 _tpl = ("<script>(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}"
         "if(!l){try{l=(navigator.languages&&navigator.languages[0])||navigator.language||''}catch(e){}}"
         "l=String(l).toLowerCase();var p=/^(he|iw)/.test(l)?'he':/^ar/.test(l)?'ar':'en';window.__FIN_TPL=p;"
         "if(!(window.__FIN_TP&&window.__FIN_TP[p]))document.write('<script src=\"tp/'+p+'.js?v=%s\"><\\/script>');})();</script>" % _build)
-s = s[:_m.start()] + "\n<script>var HTML_BUILD = '%s';</script>\n%s\n<script src=\"app.js?v=%s\"></script>" % (_build, _tpl, _build) + s[_m.end():]
+s = s[:_m.start()] + "\n<script>var HTML_BUILD = '%s';</script>\n%s\n<script src=\"app.js?v=%s\"></script>" % (_build, _tpl, _build)  + s[_m.end():]
 # the admin panel's public part as a static file (message, what's new, maintenance, forced update, settings for the app):
 # no Worker request for the page or the script, only /cfg.json – see worker.js
 _pubsrc = open(os.path.join(ROOT, '_pub.js'), encoding='utf-8').read()
