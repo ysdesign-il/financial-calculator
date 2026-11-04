@@ -2639,6 +2639,61 @@ body:has(#panel-mathx:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 </style>
 </head>
 <body>
+<script>
+/* 13.66: the app opens with a picture of its home screen at once. While the app's script downloads and starts, the home screen as it
+   looked last time is shown (saved by p/snap.js on this phone only; never in private mode or with an account). On a first visit:
+   a calm splash with the app's icon instead of a half-built page. The app's script removes it as its very first step (the screen keeps
+   the picture until the real app draws itself in the same frame), so nothing here is ever clickable. */
+(function(){
+  var d = document, de = d.documentElement, b = d.body, L = null, s = null;
+  try { L = window['local' + 'Storage']; } catch (e) {}
+  var hash = function(t){ var h = 5381, i; for (i = 0; i < t.length; i++) h = ((h << 5) + h + t.charCodeAt(i)) | 0; return h; };
+  try {
+    if (L && L.getItem('fin-priv') !== '1' && !/[?&](go|share|v)=/.test(location.search) && !location.hash && !/\/admin\//.test(location.pathname)){
+      s = JSON.parse(L.getItem('fin-snap') || 'null');
+      var lk = (L.getItem('fin-lang') || '') + '|' + (navigator.language || ''), dk = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 1 : 0;
+      var h = hash(['fin-vals', 'fin-exp', 'fin-dsitems', 'fin-tab'].map(function(k){ return L.getItem(k) || ''; }).join('\u0001'));
+      if (!s || s.v !== 1 || s.lk !== lk || s.dk !== dk || s.h !== h || !(Date.now() - s.at < 30 * 864e5) || typeof s.html !== 'string') s = null;
+    }
+  } catch (e) { s = null; }
+  /* the page's own styles (the app adds more of its own while it runs; those are saved with the picture) */
+  try { var ss = d.head.querySelectorAll('style,link[rel=stylesheet]'); for (var k = 0; k < ss.length; k++) ss[k].setAttribute('data-st', '1'); } catch (e) {}
+  var keepH = [], keepB = [], i, first = b.firstChild;
+  for (i = 0; i < de.attributes.length; i++) keepH.push([de.attributes[i].name, de.attributes[i].value]);
+  for (i = 0; i < b.attributes.length; i++) keepB.push([b.attributes[i].name, b.attributes[i].value]);
+  /* until the app starts, only the picture is shown (the page's own parts wait, hidden) */
+  var st = d.createElement('style');
+  st.textContent = 'body>:not([data-snap]):not(script):not(style){display:none!important}[data-snap] #hclock *{visibility:hidden}[data-snap]{pointer-events:none}'
+    + '@keyframes finSp{0%,100%{opacity:.35}50%{opacity:1}}@media (prefers-reduced-motion:reduce){[data-snap] img{animation:none!important}}';
+  d.head.appendChild(st);
+  if (s){
+    try {
+      (s.ha || []).forEach(function(a){ de.setAttribute(a[0], a[1]); });
+      (s.ba || []).forEach(function(a){ b.setAttribute(a[0], a[1]); });
+      b.insertAdjacentHTML('afterbegin', (s.css ? '<style>' + s.css + '</style>' : '') + s.html);
+      for (var n = b.firstChild; n && n !== first; n = n.nextSibling) if (n.nodeType === 1) n.setAttribute('data-snap', '1'); else if (n.nodeType === 3) n.textContent = '';
+    } catch (e) { s = null; while (b.firstChild && b.firstChild !== first) b.removeChild(b.firstChild); }
+  }
+  if (!s){
+    var o = d.createElement('div'); o.setAttribute('data-snap', '1');
+    o.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:2147483000;background:#0b1220';
+    o.innerHTML = '<img src="icon-192.png" alt="" width="76" height="76" style="position:absolute;top:50%;left:50%;margin:-38px 0 0 -38px;border-radius:18px;animation:finSp 1.6s ease-in-out infinite">';
+    b.insertBefore(o, first);
+  }
+  window.__snapOff = function(){
+    window.__snapOff = null;
+    try { while (b.firstChild && b.firstChild !== first) b.removeChild(b.firstChild); st.remove(); } catch (e) {}
+    try {
+      for (var j = de.attributes.length - 1; j >= 0; j--) de.removeAttribute(de.attributes[j].name);
+      keepH.forEach(function(a){ de.setAttribute(a[0], a[1]); });
+      for (j = b.attributes.length - 1; j >= 0; j--) b.removeAttribute(b.attributes[j].name);
+      keepB.forEach(function(a){ b.setAttribute(a[0], a[1]); });
+    } catch (e) {}
+  };
+  /* the app never arrived (a lost connection): don't keep a picture of it on screen */
+  setTimeout(function(){ if (window.__snapOff) window.__snapOff(); }, 20000);
+})();
+</script>
 <div class="shell">
   <aside class="rail">
     <div class="rail-top">
@@ -2679,9 +2734,9 @@ body:has(#panel-mathx:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 <div class="toast" id="toast" role="status" hidden></div>
 
 
-<script>var HTML_BUILD = '20261104.113105';</script>
-<script>(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}if(!l){try{l=(navigator.languages&&navigator.languages[0])||navigator.language||''}catch(e){}}l=String(l).toLowerCase();var p=/^(he|iw)/.test(l)?'he':/^ar/.test(l)?'ar':'en';window.__FIN_TPL=p;if(!(window.__FIN_TP&&window.__FIN_TP[p]))document.write('<script src="tp/'+p+'.js?v=20261104.113105"><\/script>');})();</script>
-<script src="app.js?v=20261104.113105"></script>
+<script>var HTML_BUILD = '20261104.115310';</script>
+<script>(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}if(!l){try{l=(navigator.languages&&navigator.languages[0])||navigator.language||''}catch(e){}}l=String(l).toLowerCase();var p=/^(he|iw)/.test(l)?'he':/^ar/.test(l)?'ar':'en';window.__FIN_TPL=p;if(!(window.__FIN_TP&&window.__FIN_TP[p]))document.write('<script src="tp/'+p+'.js?v=20261104.115310"><\/script>');})();</script>
+<script src="app.js?v=20261104.115310"></script>
 <script src="/__pub.js" defer></script>
 </body>
 </html>
