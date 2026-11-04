@@ -1,6 +1,16 @@
 {
  "alerts": [
   {
+   "at": 1793781859,
+   "level": "medium",
+   "kind": "workflow",
+   "actor": "ysdesign-il",
+   "msg": "Automation files changed: .github/workflows/publish.yml",
+   "p": {
+    "f": ".github/workflows/publish.yml"
+   }
+  },
+  {
    "at": 1792961961,
    "level": "medium",
    "kind": "workflow",
@@ -129,5 +139,5 @@
    }
   }
  ],
- "updated": 1792961962
+ "updated": 1793781860
 }
