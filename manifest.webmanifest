@@ -5,6 +5,7 @@
  "lang": "he",
  "dir": "rtl",
  "start_url": "./",
+ "id": "/",
  "scope": "./",
  "display": "standalone",
  "background_color": "#111827",
@@ -145,6 +146,34 @@
      "sizes": "192x192"
     }
    ]
+  }
+ ],
+ "categories": [
+  "finance",
+  "productivity",
+  "utilities"
+ ],
+ "screenshots": [
+  {
+   "src": "shots/home.webp",
+   "sizes": "780x1688",
+   "type": "image/webp",
+   "form_factor": "narrow",
+   "label": "מסך הבית"
+  },
+  {
+   "src": "shots/loan.webp",
+   "sizes": "780x1688",
+   "type": "image/webp",
+   "form_factor": "narrow",
+   "label": "מחשבון הלוואות"
+  },
+  {
+   "src": "shots/salary.webp",
+   "sizes": "780x1688",
+   "type": "image/webp",
+   "form_factor": "narrow",
+   "label": "מחשבון שכר"
   }
  ]
 }
