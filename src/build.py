@@ -85,6 +85,16 @@ os.makedirs(os.path.join(ROOT, 'tp'), exist_ok=True)
 for _l, _d in _packs.items():
     open(os.path.join(ROOT, 'tp', _l + '.js'), 'w', encoding='utf-8').write(_sl.pack_js(_l, _d))
 print('texts moved to language packs:', len(_packs['en']))
+# 13.62: the app's script without comments and extra spaces (names and code stay exactly the same), so it downloads and opens faster.
+# Uses esbuild when it is installed (the publish workflow installs it); without it the script is written as is.
+import shutil as _sh, subprocess as _sp
+_esb = os.environ.get('ESBUILD') or _sh.which('esbuild') or next((x for x in ['/opt/npm-tools/node_modules/.bin/esbuild'] if os.path.exists(x)), None)
+if _esb:
+    _r = _sp.run([_esb, '--loader=js', '--minify-whitespace', '--charset=utf8', '--log-level=error'], input=_app, capture_output=True, text=True, encoding='utf-8')
+    if _r.returncode == 0 and len(_r.stdout) > len(_app) * 0.5:
+        print('app script made smaller:', len(_app), '->', len(_r.stdout)); _app = _r.stdout.rstrip('\n')
+    else: print('app script not made smaller:', _r.stderr[:300])
+else: print('esbuild not found: app script written as is')
 open(os.path.join(ROOT, 'app.js'), 'w', encoding='utf-8').write(_guard + _app + '\n')
 _tpl = ("<script>(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}"
         "if(!l){try{l=(navigator.languages&&navigator.languages[0])||navigator.language||''}catch(e){}}"
