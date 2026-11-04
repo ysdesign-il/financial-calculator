@@ -1537,16 +1537,18 @@ function setCat(id, noHist){
   const hub = $('#set_hub', sp); if (hub) hub.hidden = !!id;
   $$('.set-cat', sp).forEach(p => { p.hidden = p.dataset.cat !== id; });
   sp.classList.toggle('in-cat', !!id);
+  if (id && !prev && !noHist){ try { history.pushState({scat: id}, ''); } catch (e) {} }
   if (prev !== id && !noHist) window.scrollTo(0, 0);
   if (id){ const h = $(`.set-cat[data-cat="${id}"] .sc-t`, sp); if (h){ h.setAttribute('tabindex', '-1'); try { h.focus({preventScroll: true}); } catch (e) {} } }
 }
-function setHub(){ setCat('', true); window.scrollTo(0, 0); }   /* the browser history step is handled by backnav.js */
+function setHub(){ if (history.state && history.state.scat){ try { history.back(); return; } catch (e) {} } setCat('', true); window.scrollTo(0, 0); }
 document.addEventListener('click', e => {
   const r = e.target.closest('[data-scat]');
   if (r){ const id = r.dataset.scat; if (id) setCat(id); else setHub(); return; }
   if (tab === 'settings' && SCAT && e.target.closest('button[data-tab="settings"], #tab-settings')) setHub();
 });
 $('#back').addEventListener('click', e => { if (tab === 'settings' && SCAT){ e.stopImmediatePropagation(); setHub(); } }, true);
+window.addEventListener('popstate', () => { if (SCAT){ setCat('', true); window.scrollTo(0, 0); } });
 const _actSet = activate;
 activate = function(id){ const from = tab; const r = _actSet.apply(this, arguments); if (id === 'settings' && from !== 'settings') setCat('', true); return r; };
 const _prSh = permRender;

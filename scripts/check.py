@@ -6,6 +6,10 @@ def fail(m):
 h = open("index.html", encoding="utf-8").read()
 app = open("app.js", encoding="utf-8").read() if os.path.exists("app.js") else ""
 js = "\n;\n".join(s for a, s in re.findall(r"<script([^>]*)>(.*?)</script>", h, re.S) if "src=" not in a and "json" not in a) + ("\n;\n" + app if app else "")
+# 13.65: the late part of the app is checked too
+if os.path.exists("app-late.js"):
+    late = open("app-late.js", encoding="utf-8").read(); app += "\n" + late; js += "\n;\n" + late
+if "app-late.js" in app and "__lateLoad" in app and not os.path.exists("app-late.js"): fail("the app loads app-late.js but it is missing")
 open("/tmp/chk.js", "w", encoding="utf-8").write(js)
 r = subprocess.run(["node", "--check", "/tmp/chk.js"], capture_output=True, text=True)
 if r.returncode: fail("script syntax: " + r.stderr[:500])

@@ -13,6 +13,11 @@ if tp:
     h = h[:i] + '<script>\n' + tp.replace('</script', '<\\/script') + '</script>\n' + h[i:]
 m = re.search(r'<script src="app\.js\?v=[^"]*"></script>', h)
 out = h[:m.start()] + '<script>\n' + app.replace('</script', '<\\/script') + '\n</script>' + h[m.end():]
+# 13.65: the late part goes inside too, right after the app
+if os.path.exists(os.path.join(ROOT, 'app-late.js')):
+    late = open(os.path.join(ROOT, 'app-late.js'), encoding='utf-8').read()
+    i = out.index('\n</script>', out.index('<script>\n' + app[:200].replace('</script', '<\\/script'))) + len('\n</script>')
+    out = out[:i] + '\n<script>\n' + late.replace('</script', '<\\/script') + '\n</script>' + out[i:]
 dst = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'single.html')
 open(dst, 'w', encoding='utf-8').write(out)
 print(dst, len(out))

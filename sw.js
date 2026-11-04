@@ -25,6 +25,8 @@ function warmFrom(res){
   res.text().then(h => {
     const m = h.match(/src="(app\.js\?v=[^"]+)"/);
     if (m) keepVer(new URL(m[1], self.registration.scope).href, '/app.js').then(x => x.arrayBuffer()).catch(() => {});
+    const m2 = h.match(/src="(app-late\.js\?v=[^"]+)"/);
+    if (m2) keepVer(new URL(m2[1], self.registration.scope).href, '/app-late.js').then(x => x.arrayBuffer()).catch(() => {});
   }).catch(() => {});
 }
 self.addEventListener('fetch', e => {
@@ -47,8 +49,8 @@ self.addEventListener('fetch', e => {
   if (r.method !== 'GET' || new URL(r.url).origin !== location.origin) return;     // only this site's own files
   /* the app's script: each version has its own address (app.js?v=…), so a kept copy is always right – open at once, no download */
   const u = new URL(r.url);
-  if (u.pathname.endsWith('/app.js') && u.searchParams.get('v')){
-    e.respondWith(keepVer(r.url, '/app.js').catch(() => fetch(r)));
+  if (/\/app(-late)?\.js$/.test(u.pathname) && u.searchParams.get('v')){   /* 13.65: also the late part (app-late.js) */
+    e.respondWith(keepVer(r.url, u.pathname).catch(() => fetch(r)));
     return;
   }
   /* 13.64: the language file (tp/he.js?v=…) the same way – one kept copy per language and version, opened without asking the network */
