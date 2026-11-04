@@ -204,7 +204,7 @@
     play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg>'
   };
   function trHTML(ids){
-    const pic = lang === 'he' ? 'he' : 'en', n = ids.length;
+    const pic = lang === 'he' ? 'he' : lang === 'ar' ? 'ar' : 'en', n = ids.length;   /* 13.72: Arabic screenshots for Arabic */
     return `<div class="tr-top"><h3 class="sec-t" id="tr_h">${anE(t('tr_h'))}</h3><button type="button" class="tr-x" id="tr_x" aria-label="${anE(t('tr_hide'))}">×</button></div>
       <div class="tr-card"><div class="tr-trk" id="tr_trk">${ids.map((id, i) => {
         const nm = t('tab_' + id);
