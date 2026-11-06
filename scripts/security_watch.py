@@ -171,10 +171,17 @@ elif EV in ('schedule', 'workflow_dispatch'):
         print('live site check skipped:', e)
 
 seed = []
-try:                                   # once: the alerts from the old public file move to the server (the file is then removed)
+try:                                   # once: the alerts from the old public file move to the server (the file is removed in the same change)
     seed = json.load(open(os.path.join(ROOT, 'security.json'), encoding='utf-8')).get('alerts', [])
 except Exception:
-    pass
+    try:
+        import base64
+        prev = E.get('before') or ''
+        if prev and TOKEN and not old_alerts():
+            f = api('/contents/security.json?ref=' + prev) or {}
+            seed = json.loads(base64.b64decode(f.get('content', '')).decode('utf-8')).get('alerts', [])
+    except Exception:
+        pass
 if not alerts and not seed:
     print('Nothing unusual.'); raise SystemExit(0)
 
