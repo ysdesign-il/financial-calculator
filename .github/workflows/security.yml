@@ -12,8 +12,9 @@ on:
     - cron: '23 6 * * *'   # daily: who has access
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
   issues: write
+  id-token: write      # GitHub's signed token for this run, so the site's server knows the alerts come from here
 jobs:
   watch:
     runs-on: ubuntu-latest

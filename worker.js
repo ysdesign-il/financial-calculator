@@ -5,6 +5,7 @@ import {adminGate,publicConfig,publicDocs,errReport,ping,fontProxy} from './_gat
 import {healthCron} from './_push.js';
 import {PUBCFG} from './pubcfg.js';
 import {aiStatus,aiProxy} from './_ai.js';
+import {secApi,secAdmin} from './_sec.js';
 /* every half hour: are the sites up? (phone alert to the owner when one goes down or comes back) */
 const HEALTH=[['calc','מחשבון פיננסי','https://financial-calculator.design-il.workers.dev'],['neshima','נשימה שקטה','https://neshima-shketa.pages.dev']];
 const OPT={app:'calc',title:'מחשבון פיננסי',accent:PUBCFG.accent,priv:PUBCFG.priv,langLS:'fin-lang',store:{key:'fin-dev',name:'fin-dev-n'},
@@ -19,6 +20,7 @@ export default{async scheduled(ev,env,ctx){ctx.waitUntil(healthCron(env,HEALTH))
   async fetch(req,env){const p=new URL(req.url).pathname;
   if(p==='/api/ai/status')return aiStatus(env);   // AI for every visitor through this server (off until the AI_KEY secret is added)
   if(p==='/api/ai')return aiProxy(req,env);
+  if(p==='/api/sec')return secApi(req,env);   // the security watch (GitHub, signed token) reads and adds alerts; kept on the server only
   if(p==='/security.json')return new Response('Not found',{status:404,headers:{'cache-control':'no-store'}});   // the security alerts are read only through the locked admin version
   if(p==='/cfg.json')return publicConfig('calc',env,OPT,req);
   if(p==='/legal.json')return publicDocs('calc',env,OPT,req);
@@ -26,6 +28,7 @@ export default{async scheduled(ev,env,ctx){ctx.waitUntil(healthCron(env,HEALTH))
   if(p.startsWith('/gf/'))return fontProxy(req);
   if(p==='/__ping')return ping('calc',env,OPT,q=>env.ASSETS.fetch(new Request(new URL(q,req.url))));
   if(p==='/admin'||p.startsWith('/admin/'))return adminGate(req,async r=>{const q=new URL(r.url).pathname;
+    if(q==='/admin/security.json')return secAdmin(env);
     if(q==='/admin/'||q==='/admin/index.html'){const a=await env.ASSETS.fetch(new Request(new URL('/',r.url),{headers:r.headers}));const h=(await a.text()).replace('<head>','<head><base href="/"><meta name="robots" content="noindex,nofollow"><script>window.__FIN_ADMIN__=1</script>');
       return new Response(h,{status:a.status,headers:{'content-type':'text/html; charset=utf-8'}})}
     return env.ASSETS.fetch(new Request(new URL(q.slice(6)||'/',r.url),{headers:r.headers}))},OPT,env);
