@@ -5,7 +5,7 @@
 // The market figures are fixed (the copy in scripts/fixtures/rates.json) and the clock is fixed, so two runs give the same numbers.
 const { chromium } = require('playwright');
 const http = require('http'), fs = require('fs'), path = require('path');
-const root = path.resolve(__dirname, '..');
+const root = process.env.APP_ROOT ? path.resolve(process.env.APP_ROOT) : path.resolve(__dirname, '..');   // APP_ROOT: another copy of the app (for a before/after check)
 const [, , mode, A, B] = process.argv;
 
 if (mode === 'diff'){
@@ -50,7 +50,12 @@ const CASES = [
   {tab: 'deposit', name: 'structured: half of a 10% index rise, under the cap', set: {dk_kind: 'struct', dk_amt: 100000, dk_mo: 12, dk_smin: 0, dk_spart: 50, dk_sidx: 10, dk_scap: 20, dk_cpi: 2, dk_tax: 'auto'},
     expect: {hero: 100000 + 5000 * 0.85}},
   {tab: 'deposit', name: 'monthly deposits 1,000 for 12 months at 0% – total deposited', set: {dk_kind: 'fix', dk_amt: 0, dk_add: 1000, dk_mo: 12, dk_rate: 0, dk_comp: 'end', dk_cpi: 0, dk_tax: 'auto'},
-    expect: {row: ['r_dkDep', 11000]}}
+    expect: {row: ['r_dkDep', 11000]}},
+  {tab: 'loan', name: 'full grace of 12 months on 100,000 at 6% for 10 years – payment after the grace', set: {l_mode: 'pay', l_rateType: 'fixed', l_rateIn: 'total', l_link: 'none', l_amount: 100000, l_rate: 6, l_years: 10, l_months: 120, l_type: 'annuity', l_grace: 12, l_graceType: 'full', l_balloon: 0, l_extra: 0, l_pre: 0, l_feePct: 0, l_feeFix: 0},
+    expect: {hero: pmt(100000 * Math.pow(1.005, 12), 6, 108)}},
+  {tab: 'loan', name: 'partial balloon of 30% on 100,000 at 6% for 5 years – monthly payment', set: {l_mode: 'pay', l_rateType: 'fixed', l_rateIn: 'total', l_link: 'none', l_amount: 100000, l_rate: 6, l_years: 5, l_months: 60, l_type: 'annuity', l_grace: 0, l_graceType: 'int', l_balloon: 30, l_extra: 0, l_pre: 0, l_feePct: 0, l_feeFix: 0},
+    expect: {hero: (100000 - 30000 / Math.pow(1.005, 60)) * 0.005 / (1 - Math.pow(1.005, -60))}}
+
 
 ];
 
@@ -84,7 +89,7 @@ const CASES = [
   }
   if (mode === 'snap'){
     const ids = await p.evaluate(() => { const C = window.FinApp.CALC; return Object.keys(C).filter(id => typeof C[id] === 'function'); });
-    await p.evaluate(() => { try { localStorage.clear(); } catch (e) {} });
+    await p.evaluate(() => { try { localStorage.clear(); sessionStorage.clear(); } catch (e) {} }); await p.reload(); await p.waitForTimeout(4000);   // every calculator at its own default values
     const out = {};
     for (const id of ids){ const r = await run(id, null); out[id] = r.err ? {err: r.err} : {hero: r.hero, rows: r.rows}; }
     fs.writeFileSync(A, JSON.stringify(out, null, 1)); console.log('snapshot of', ids.length, 'calculators →', A);

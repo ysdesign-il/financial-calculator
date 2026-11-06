@@ -33,3 +33,22 @@ Object.assign(ICON, {
   deposit: ic('<rect x="3" y="7" width="18" height="12" rx="2"/><path d="M3 11h18"/><path d="M12 3v6M9.5 5.5L12 3l2.5 2.5"/>'),
   depcmp: ic('<rect x="3" y="9" width="7" height="10" rx="1.5"/><rect x="14" y="5" width="7" height="14" rx="1.5"/><path d="M5.5 13h2M16.5 9h2"/>')
 });
+/* 13.75: the loan – full or partial grace, a partial balloon, and a table by month (added after "grace") */
+(function(){
+  const L = DEFS.loan, i = L.findIndex(f => f && f.id === 'l_grace');
+  const add = [
+    SEL('l_graceType','f_lGraceType','int',[['int','o_lgInt'],['full','o_lgFull']],{adv:'m_adv', hint:'h_lGraceType'}),
+    F('l_balloon','f_lBalloon','%',0,{adv:'m_adv', hint:'h_lBalloon'}),
+    SEL('l_tbl','f_lTbl','year',[['year','o_ltYear'],['month','o_ltMonth']],{adv:'m_adv'})
+  ];
+  if (i >= 0) L.splice(i + 1, 0, ...add); else L.push(...add);
+})();
+/* 13.76: investments – the scenario gap on "compound interest", and the investment channels by risk */
+DEFS.compound.push({id:'c_spread', label:'f_cSpread', unit:'%', val:2, adv:'m_adv', hint:'h_cSpread'});
+DEFS.invrisk = [
+  {type:'sub', label:'s_irMix'},
+  F('ir_tbill','ir_n_tbill','%',0), F('ir_gov','ir_n_gov','%',30), F('ir_corp','ir_n_corp','%',0), F('ir_mmf','ir_n_mmf','%',10),
+  F('ir_mutual','ir_n_mutual','%',0), F('ir_etf','ir_n_etf','%',0), F('ir_index','ir_n_index','%',60), F('ir_stock','ir_n_stock','%',0),
+  F('ir_re','ir_n_re','%',0), F('ir_gold','ir_n_gold','%',0), F('ir_fx','ir_n_fx','%',0), F('ir_crypto','ir_n_crypto','%',0), F('ir_alt','ir_n_alt','%',0)
+];
+ICON.invrisk = ic('<path d="M4 20h16"/><path d="M6 16l4-5 3 3 5-7"/><circle cx="18" cy="7" r="1.5"/><path d="M4 4v16"/>');

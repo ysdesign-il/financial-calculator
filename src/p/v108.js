@@ -56,7 +56,7 @@ const PERSONAS = {
   self: ['selfemp', 'freelance', 'vat', 'tax', 'hishtalmut', 'expenses', 'breakeven', 'clients', 'capital', 'workgrant'],
   home: ['mortcap', 'mortgage', 'mortcmp', 'purchasetax', 'rentbuy', 'refi', 'landtax', 'cpilink', 'rental'],
   family: ['childallow', 'kidsave', 'workgrant', 'expenses', 'smartsplit', 'savegoal', 'split', 'insurance', 'discount', 'benefits'],
-  invest: ['compound', 'deposit', 'mmf', 'invfees', 'yield', 'dividends', 'capital', 'avgcost', 'networth', 'fire'],
+  invest: ['compound', 'deposit', 'mmf', 'invfees', 'invrisk', 'yield', 'dividends', 'capital', 'avgcost', 'networth', 'fire'],
   retire: ['retire', 'pensfix', 'oldage', 'mgmtfees', 'pencmp', 'fire', 'severance', 'mmf', 'freedom']
 };
 const PERSONA_IC = {emp: '👔', self: '💼', home: '🏠', family: '👨‍👩‍👧', invest: '📈', retire: '🌅'};
