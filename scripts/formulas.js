@@ -54,7 +54,11 @@ const CASES = [
   {tab: 'loan', name: 'full grace of 12 months on 100,000 at 6% for 10 years – payment after the grace', set: {l_mode: 'pay', l_rateType: 'fixed', l_rateIn: 'total', l_link: 'none', l_amount: 100000, l_rate: 6, l_years: 10, l_months: 120, l_type: 'annuity', l_grace: 12, l_graceType: 'full', l_balloon: 0, l_extra: 0, l_pre: 0, l_feePct: 0, l_feeFix: 0},
     expect: {hero: pmt(100000 * Math.pow(1.005, 12), 6, 108)}},
   {tab: 'loan', name: 'partial balloon of 30% on 100,000 at 6% for 5 years – monthly payment', set: {l_mode: 'pay', l_rateType: 'fixed', l_rateIn: 'total', l_link: 'none', l_amount: 100000, l_rate: 6, l_years: 5, l_months: 60, l_type: 'annuity', l_grace: 0, l_graceType: 'int', l_balloon: 30, l_extra: 0, l_pre: 0, l_feePct: 0, l_feeFix: 0},
-    expect: {hero: (100000 - 30000 / Math.pow(1.005, 60)) * 0.005 / (1 - Math.pow(1.005, -60))}}
+    expect: {hero: (100000 - 30000 / Math.pow(1.005, 60)) * 0.005 / (1 - Math.pow(1.005, -60))}},
+  {tab: 'altcmp', name: 'where to put the money: the current account keeps exactly what was put in', set: {ac_lump: 50000, ac_mon: 500, ac_yrs: 2, ac_cpi: 0, ac_depRate: 0, ac_mktRet: 0, ac_mktFee: 0, ac_loanBal: 0},
+    expect: {hero: 50000 + 500 * 23}},
+  {tab: 'altcmp', name: 'where to put the money: the market at 12% a year for a year, 25% tax on the gain', set: {ac_lump: 100000, ac_mon: 0, ac_yrs: 1, ac_cpi: 0, ac_depRate: 0, ac_mktRet: 12, ac_mktFee: 0, ac_loanBal: 0},
+    expect: {hero: 100000 + 12000 * 0.75}}
 
 
 ];

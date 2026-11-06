@@ -52,3 +52,11 @@ DEFS.invrisk = [
   F('ir_re','ir_n_re','%',0), F('ir_gold','ir_n_gold','%',0), F('ir_fx','ir_n_fx','%',0), F('ir_crypto','ir_n_crypto','%',0), F('ir_alt','ir_n_alt','%',0)
 ];
 ICON.invrisk = ic('<path d="M4 20h16"/><path d="M6 16l4-5 3 3 5-7"/><circle cx="18" cy="7" r="1.5"/><path d="M4 4v16"/>');
+/* 13.77: where to put the money – one screen that compares a deposit, the stock market, paying off a loan and the current account */
+DEFS.altcmp = [
+  F('ac_lump','f_acLump','cur',100000,{wide:true}), F('ac_mon','f_acMon','cur',1000,{hint:'h_acMon'}), F('ac_yrs','f_acYrs','yrs',5), F('ac_cpi','f_dkCpi','%',2.5,{hint:'h_dkCpi'}),
+  {type:'sub', label:'s_acDep'}, F('ac_depRate','f_acDepRate','%',4,{hint:'h_acDepRate'}),
+  {type:'sub', label:'s_acMkt'}, F('ac_mktRet','f_acMktRet','%',6,{hint:'h_acMktRet'}), F('ac_mktFee','f_acMktFee','%',0.5),
+  {type:'sub', label:'s_acLoan'}, F('ac_loanBal','f_acLoanBal','cur',0,{hint:'h_acLoanBal'}), F('ac_loanRate','f_acLoanRate','%',6), F('ac_loanFee','f_acLoanFee','cur',0)
+];
+ICON.altcmp = ic('<path d="M12 3v18"/><path d="M5 8l-3 6h6z"/><path d="M19 8l-3 6h6z"/><path d="M5 8h14"/><path d="M8 21h8"/>');
