@@ -139,7 +139,7 @@ document.addEventListener('change', e => {
 });
 document.addEventListener('click', e => {
   if (!e.target.closest) return; let b;
-  if (e.target.closest('#rc_add')){ const L = rcList(); if (L.length < 8){ L.push(Object.assign({}, L[L.length - 1], {n: ''})); try { saveSet(); } catch (er) {} rcRender(true); try { calc('recmp'); } catch (er) {} } return; }
+  if (e.target.closest('#rc_add')){ const L = rcList(); if (L.length < 8){ L.push(Object.assign({}, L[L.length - 1], {n: '', rid: ''})); try { saveSet(); } catch (er) {} rcRender(true); try { calc('recmp'); } catch (er) {} } return; }
   if ((b = e.target.closest('[data-rcdel]'))){ const L = rcList(); if (L.length > 1){ L.splice(+b.dataset.rcdel, 1); try { saveSet(); } catch (er) {} rcRender(true); try { calc('recmp'); } catch (er) {} } return; }
   if ((b = e.target.closest('[data-algo]'))){ try { activate(b.dataset.algo); } catch (er) {} return; }
   if ((b = e.target.closest('[data-aldone]'))){ const d = SET.alDone || (SET.alDone = {}); d[b.dataset.aldone] = Date.now(); Object.keys(d).forEach(k => { if (Date.now() - d[k] > 60 * 864e5) delete d[k]; }); try { saveSet(); } catch (er) {} try { calc('alerts'); } catch (er) {} return; }

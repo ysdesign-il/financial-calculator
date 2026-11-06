@@ -1,0 +1,7 @@
+/* 13.85: texts – the status of each outside figure, and merging a backup */
+Object.assign(T, {
+  dst_live:['חי · עודכן {d}','حيّ · حُدّث {d}','Live · updated {d}'], dst_old:['לא עדכני · עודכן לאחרונה {d}','غير محدّث · آخر تحديث {d}','Not current · last updated {d}'],
+  dst_off:['רשמי · {d}','رسمي · {d}','Official · {d}'], dst_fixedNo:['ערך מובנה','قيمة مدمجة','Built-in value'], dst_fixed:['ערך מובנה לשנת {y}','قيمة مدمجة لسنة {y}','Built-in value for {y}'],
+  dst_leg:['"חי" = נמשך מהמקור ביממה האחרונה. "לא עדכני" = לא הצלחנו למשוך – החישוב משתמש בערך האחרון שידוע, עם התאריך שלו. "רשמי" = הפרסום הרשמי האחרון ותאריכו. "מובנה" = ערכי שנת המס שבאפליקציה. שום מחיר או שער לא מומצא.','"حيّ" = جُلب من المصدر خلال اليوم الأخير. "غير محدّث" = لم ننجح في الجلب – يستخدم الحساب آخر قيمة معروفة بتاريخها. "رسمي" = آخر نشر رسمي وتاريخه. "مدمجة" = قيم سنة الضريبة في التطبيق. لا يُختلق أي سعر.','"Live" = fetched from the source in the last day. "Not current" = it could not be fetched – the last known value is used, with its date. "Official" = the latest official release and its date. "Built-in" = the tax year\'s values in the app. No price or rate is ever made up.'],
+  rec_merged:['הגיבוי מוזג: {a} רשומות נוספו, ב־{k} נשמרה הגרסה החדשה יותר מהמכשיר, {u} נלקחו מהגיבוי.','تم دمج النسخة الاحتياطية: أُضيف {a} سجلًا، وفي {k} بقيت النسخة الأحدث من الجهاز، و{u} أُخذت من النسخة الاحتياطية.','Backup merged: {a} records added, {k} kept the newer copy from this device, {u} taken from the backup.']
+});
