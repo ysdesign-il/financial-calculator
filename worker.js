@@ -16,6 +16,7 @@ const OPT={app:'calc',title:'מחשבון פיננסי',accent:PUBCFG.accent,pri
     data:[['ריביות, מטבעות ומדדים','/rates.json','updated|asOf',30],['מחירון רכב','/cars.json','asOf',240],['היסטוריית מדדים','/history.json','at',30]]}};
 export default{async scheduled(ev,env,ctx){ctx.waitUntil(healthCron(env,HEALTH))},
   async fetch(req,env){const p=new URL(req.url).pathname;
+  if(p==='/security.json')return new Response('Not found',{status:404,headers:{'cache-control':'no-store'}});   // the security alerts are read only through the locked admin version
   if(p==='/cfg.json')return publicConfig('calc',env,OPT,req);
   if(p==='/legal.json')return publicDocs('calc',env,OPT,req);
   if(p==='/__err')return errReport(req,'calc',env,OPT);
