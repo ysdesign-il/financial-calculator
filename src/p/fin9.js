@@ -33,12 +33,12 @@ CALC.recmp = function(){
     const r = M0.calc(v), row = k => { const x = (r.rows || []).find(q => q[0] === t(k)); return x ? x[1] : ''; };
     const sale = v.price * Math.pow(1 + v.grow / 100, v.hold), gain = sale - v.price - v.price * v.costs / 100;
     return {name: asEsc(String(o.n || '').trim() || t('rc_def', {n: i + 1})), cash: fnum(r.hero && r.hero.v), cashS: r.hero && r.hero.v, gross: row('ia_gross'), net: fnum(row('ia_netEq')), netS: row('ia_netEq'),
-      inv: row('ia_inv'), pmt: row('ia_pmt'), sale, gain, hold: v.hold, w: r.warn};
+      inv: row('ia_inv'), pmt: row('ia_pmt'), sale, gain, hold: v.hold, w: r.warn, ltv: v.price > 0 ? Math.max(0, v.price - v.equity) / v.price * 100 : 0};
   });
-  R.forEach(x => { if (x.w) warn.push(x.name + ': ' + x.w); });
+  R.forEach(x => { if (x.w) warn.push(x.name + ': ' + x.w); if (x.ltv > 70) warn.push(t('rc_wLtv', {x: x.name, p: N(x.ltv, 0)})); });
   const S = R.slice().sort((a, b) => b.net - a.net), best = S[0], next = S[1];
-  const table = {title: t('rc_t'), open: true, head: ['', t('ia_cash'), t('ia_gross'), t('ia_netEq'), t('ia_pmt'), t('ia_inv'), t('rc_sale'), t('rc_gain')],
-    rows: S.map(x => [(next && x === best ? '★ ' : '') + x.name, x.cashS, x.gross, x.netS, x.pmt, x.inv, M(x.sale), M(x.gain)])};
+  const table = {title: t('rc_t'), open: true, head: ['', t('ia_cash'), t('ia_gross'), t('ia_netEq'), t('ia_pmt'), t('ia_inv'), t('rc_sale'), t('rc_gain'), t('rc_ltv')],
+    rows: S.map(x => [(next && x === best ? '★ ' : '') + x.name, x.cashS, x.gross, x.netS, x.pmt, x.inv, M(x.sale), M(x.gain), PC(x.ltv)])};
   return {hero: {label: t('rc_best', {x: best.name}), value: best.netS, sub: next ? t('rc_sub', {y: next.name, v: next.netS}) : ''},
     rows: [[t('ia_cash') + ' · ' + best.name, best.cashS, 'key'], [t('rc_gain') + ' · ' + best.name, M(best.gain)]], warn, note: t('rc_note') + ' ' + t('ia_note'), table};
 };
@@ -160,6 +160,6 @@ document.addEventListener('click', e => {
   st.textContent = '.al-list{list-style:none;margin:0;padding:0}.al-it{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:10px 0;border-top:1px solid var(--line);color:var(--ink)}.al-it.lv2 .al-dot{color:var(--warn,#b45309)}'
     + '.al-tx{flex:1 1 60%}.al-b{display:flex;gap:6px}.al-none{color:var(--ink-2)}.al-set{margin-top:12px}.al-k{display:flex;gap:8px;align-items:center;padding:6px 0}'
     + '.sva{margin-top:18px}.sva-q{width:100%;margin:6px 0 8px}.sva-l{list-style:none;margin:0;padding:0}.sva-l li{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}.sva-l small{display:block;color:var(--ink-2)}'
-    + '#panel-myreport .inputs,#panel-alerts .scn,#panel-myreport .scn{display:none}.ex-inc{margin:12px 0}.ex-inc details{border:1px solid var(--line);border-radius:14px;padding:8px 12px;margin-bottom:10px;background:var(--surface)}.exi-r{display:flex;gap:6px;margin:6px 0}.exi-r input{flex:1;min-width:0}.exi-r input[data-exk="amt"]{flex:0 0 32%}.ex-inc .tot td{font-weight:700}';
+    + '#panel-alerts .scn,#panel-myreport .scn{display:none}.ex-inc{margin:12px 0}.ex-inc details{border:1px solid var(--line);border-radius:14px;padding:8px 12px;margin-bottom:10px;background:var(--surface)}.exi-r{display:flex;gap:6px;margin:6px 0}.exi-r input{flex:1;min-width:0}.exi-r input[data-exk="amt"]{flex:0 0 32%}.ex-inc .tot td{font-weight:700}';
   document.head.appendChild(st);
 })();

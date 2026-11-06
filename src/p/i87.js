@@ -7,6 +7,8 @@ Object.assign(T, {
   rc_hint:['כל נכס מחושב במחשבון "דירה להשקעה". המכירה והשינוי במחיר הם הנחות שלכם.','كل عقار يُحسب بحاسبة "شقة للاستثمار". البيع وتغيّر السعر افتراضات منكم.','Each property uses the "flat for investment" calculator. The sale and price change are your assumptions.'],
   rc_t:['הנכסים זה מול זה','العقارات جنبًا إلى جنب','The properties side by side'], rc_sale:['שווי במכירה','القيمة عند البيع','Value at sale'], rc_gain:['רווח במכירה (לפני מס)','الربح عند البيع (قبل الضريبة)','Gain on sale (before tax)'],
   rc_best:['התשואה הגבוהה על ההון: {x}','أعلى عائد على رأس المال: {x}','Highest return on equity: {x}'], rc_sub:['לעומת {y}: {v}','مقابل {y}: {v}','Against {y}: {v}'],
+  rc_ltv:['מימון מהמחיר (LTV)','نسبة التمويل من السعر (LTV)','Financing share of the price (LTV)'],
+  rc_wLtv:['{x}: מימון של {p}% מהמחיר – משכנתא גדולה מגדילה את הסיכון כשהריבית עולה או כשאין שוכר.','{x}: تمويل {p}% من السعر – رهن كبير يزيد المخاطرة عند ارتفاع الفائدة أو غياب المستأجر.','{x}: {p}% of the price is financed – a big mortgage raises the risk when rates go up or there is no tenant.'],
   rc_note:['רווח במכירה = שווי במכירה פחות המחיר ועלויות הקנייה, לפני מס שבח ועלויות מכירה.','الربح عند البيع = القيمة عند البيع ناقص السعر وتكاليف الشراء، قبل ضريبة التحسين وتكاليف البيع.','Gain on sale = value at sale minus the price and buying costs, before capital-gains tax and selling costs.'],
 
   tab_alerts:['מרכז התראות','مركز التنبيهات','Alerts'],
