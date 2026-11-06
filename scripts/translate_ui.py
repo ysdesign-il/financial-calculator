@@ -1,6 +1,6 @@
 """Translate the app's interface texts into every language and write lang/<code>.json packs.
 
-Runs in GitHub Actions with a free Gemini key stored as the repository secret GEMINI_API_KEY.
+Runs in GitHub Actions with GitHub's own models and the run's built-in token – no outside AI key.
 Only missing or changed texts are translated, so every run continues where the last one
 stopped and a new interface text is picked up automatically. Standard library only.
 """
@@ -180,9 +180,9 @@ def chunks(keys, size):
     return out
 
 def main():
-    providers = [Gemini()] if GKEY else []
+    providers = [GitHubModels()] if TOKEN else []          # GitHub's own models with the run's built-in token – no outside key
     if not providers:
-        LOG['needs'] = 'GEMINI_API_KEY'; note('No Gemini key: add the repository secret GEMINI_API_KEY to translate automatically.'); return 0
+        LOG['needs'] = 'GITHUB_TOKEN'; note('No GitHub token for the run – nothing to translate with.'); return 0
     order = sorted(LANGS, key=lambda l: (PRIORITY.index(l['code']) if l['code'] in PRIORITY else 99))
     total_new = 0
     for lang in order:

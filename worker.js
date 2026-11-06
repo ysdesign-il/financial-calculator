@@ -4,7 +4,6 @@
 import {adminGate,publicConfig,publicDocs,errReport,ping,fontProxy} from './_gate.js';
 import {healthCron} from './_push.js';
 import {PUBCFG} from './pubcfg.js';
-import {aiStatus,aiProxy} from './_ai.js';
 import {secApi,secAdmin} from './_sec.js';
 /* every half hour: are the sites up? (phone alert to the owner when one goes down or comes back) */
 const HEALTH=[['calc','מחשבון פיננסי','https://financial-calculator.design-il.workers.dev'],['neshima','נשימה שקטה','https://neshima-shketa.pages.dev']];
@@ -18,8 +17,6 @@ const OPT={app:'calc',title:'מחשבון פיננסי',accent:PUBCFG.accent,pri
     data:[['ריביות, מטבעות ומדדים','/rates.json','updated|asOf',30],['מחירון רכב','/cars.json','asOf',240],['היסטוריית מדדים','/history.json','at',30]]}};
 export default{async scheduled(ev,env,ctx){ctx.waitUntil(healthCron(env,HEALTH))},
   async fetch(req,env){const p=new URL(req.url).pathname;
-  if(p==='/api/ai/status')return aiStatus(env);   // AI for every visitor through this server (off until the AI_KEY secret is added)
-  if(p==='/api/ai')return aiProxy(req,env);
   if(p==='/api/sec')return secApi(req,env);   // the security watch (GitHub, signed token) reads and adds alerts; kept on the server only
   if(p==='/security.json')return new Response('Not found',{status:404,headers:{'cache-control':'no-store'}});   // the security alerts are read only through the locked admin version
   if(p==='/cfg.json')return publicConfig('calc',env,OPT,req);
