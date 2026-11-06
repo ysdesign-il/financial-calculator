@@ -1,0 +1,82 @@
+// Formula checks, in a real browser on the built app.
+//   node scripts/formulas.js            → the known-answer checks (the numbers worked out here by hand formulas); fails on any miss
+//   node scripts/formulas.js snap F     → also writes every calculator's result at its default values to F (a "before" picture)
+//   node scripts/formulas.js diff A B   → lists every calculator whose result differs between two pictures (before / after a change)
+// The market figures are fixed (the copy in scripts/fixtures/rates.json) and the clock is fixed, so two runs give the same numbers.
+const { chromium } = require('playwright');
+const http = require('http'), fs = require('fs'), path = require('path');
+const root = path.resolve(__dirname, '..');
+const [, , mode, A, B] = process.argv;
+
+if (mode === 'diff'){
+  const a = JSON.parse(fs.readFileSync(A, 'utf8')), b = JSON.parse(fs.readFileSync(B, 'utf8'));
+  let n = 0;
+  for (const k of Object.keys(a)){
+    if (!(k in b)){ console.log('MISSING after:', k); n++; continue; }
+    const x = JSON.stringify(a[k]), y = JSON.stringify(b[k]);
+    if (x !== y){ n++; console.log('CHANGED:', k); console.log('  before', x.slice(0, 400)); console.log('  after ', y.slice(0, 400)); }
+  }
+  Object.keys(b).filter(k => !(k in a)).forEach(k => console.log('NEW:', k));
+  console.log(n ? n + ' calculators changed' : 'no calculator changed'); process.exit(n ? 1 : 0);
+}
+
+const FIX = path.join(__dirname, 'fixtures', 'rates.json');
+const srv = http.createServer((q, s) => {
+  let p = decodeURIComponent(q.url.split('?')[0]); if (p === '/') p = '/index.html';
+  const f = p === '/rates.json' && fs.existsSync(FIX) ? FIX : path.join(root, p);
+  if (!f.startsWith(root) || !fs.existsSync(f)) { s.writeHead(404); return s.end(); }
+  s.end(fs.readFileSync(f));
+}).listen(8766);
+
+/* the answers, from the textbook formulas (worked out here, not by the app) */
+const pmt = (P, yr, n) => { const r = yr / 1200; return r ? P * r / (1 - Math.pow(1 + r, -n)) : P / n; };
+const CASES = [
+  {tab: 'loan', name: 'Spitzer 500,000 at 4.5% for 25 years', set: {l_mode: 'pay', l_rateType: 'fixed', l_rateIn: 'total', l_link: 'none', l_amount: 500000, l_rate: 4.5, l_years: 25, l_months: 300, l_type: 'annuity', l_grace: 0, l_extra: 0, l_pre: 0, l_feePct: 0, l_feeFix: 0},
+    expect: {hero: pmt(500000, 4.5, 300)}},
+  {tab: 'loan', name: 'zero interest 120,000 over 10 years', set: {l_mode: 'pay', l_rateType: 'fixed', l_rateIn: 'total', l_link: 'none', l_amount: 120000, l_rate: 0, l_years: 10, l_months: 120, l_type: 'annuity', l_grace: 0, l_extra: 0, l_pre: 0, l_feePct: 0, l_feeFix: 0},
+    expect: {hero: 1000}},
+  {tab: 'loan', name: 'equal principal 240,000 at 6% for 20 years – first payment', set: {l_mode: 'pay', l_rateType: 'fixed', l_rateIn: 'total', l_link: 'none', l_amount: 240000, l_rate: 6, l_years: 20, l_months: 240, l_type: 'equal', l_grace: 0, l_extra: 0, l_pre: 0, l_feePct: 0, l_feeFix: 0},
+    expect: {hero: 240000 / 240 + 240000 * 0.005}},
+  {tab: 'mmf', name: 'deposit 100,000 at 3% for 12 months – net after 15% tax', set: {mm_amt: 100000, mm_mo: 12, mm_dep: 3, mm_yld: 3, mm_fee: 0, mm_infl: 2},
+    expect: {row: ['r_mmDepN', 100000 * 0.03 * 0.85]}}
+];
+
+(async () => {
+  const b = await chromium.launch(), c = await b.newContext({viewport: {width: 390, height: 844}, locale: 'he-IL', timezoneId: 'Asia/Jerusalem'});
+  await c.route('**/*', r => r.request().url().startsWith('http://localhost:8766') ? r.continue() : r.abort());
+  const p = await c.newPage(), errs = [];
+  try { await p.clock.setFixedTime(new Date('2026-11-01T10:00:00+02:00')); } catch (e) {}
+  p.on('pageerror', e => errs.push(String(e).slice(0, 300)));
+  await p.goto('http://localhost:8766/'); await p.waitForTimeout(4000);
+  const num = s => { const x = parseFloat(String(s || '').replace(/<[^>]*>/g, '').replace(/[−–]/g, '-').replace(/[^0-9.\-]/g, '')); return isFinite(x) ? x : NaN; };
+  const run = (tab, set) => p.evaluate(([id, set]) => {
+    const F = window.FinApp; try { F.open(id); } catch (e) {}
+    const P = document.getElementById('panel-' + id);
+    Object.keys(set || {}).forEach(k => { const e = document.getElementById(k); if (e){ e.value = String(set[k]); e.dispatchEvent(new Event('input', {bubbles: true})); e.dispatchEvent(new Event('change', {bubbles: true})); } });
+    try { F.calc(id); } catch (e) { return {err: String(e)}; }
+    const r = F.last(id); if (!r) return {err: 'no result', panel: !!P};
+    const strip = s => String(s == null ? '' : s).replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+    return {hero: strip(r.hero && r.hero.value), rows: (r.rows || []).filter(Boolean).map(x => [strip(x[0]), strip(x[1])]),
+      keys: Object.fromEntries((r.rows || []).filter(Boolean).map(x => [strip(x[0]), strip(x[1])]))};
+  }, [tab, set]);
+  let bad = 0;
+  for (const cs of CASES){
+    const r = await run(cs.tab, cs.set);
+    if (r.err){ bad++; console.log('FAIL', cs.name, r.err); continue; }
+    let got, want;
+    if (cs.expect.hero != null){ got = num(r.hero); want = cs.expect.hero; }
+    else { const lab = await p.evaluate(k => window.FinApp.t(k), cs.expect.row[0]); got = num(r.keys[lab]); want = cs.expect.row[1]; }
+    const ok = Math.abs(got - want) <= 0.01 + Math.abs(want) * 1e-6 || Math.abs(got - Math.round(want)) < 0.5 && !/\./.test(String(got));
+    if (!ok){ bad++; console.log('FAIL', cs.name, 'got', got, 'want', want.toFixed(2)); } else console.log('ok  ', cs.name, '=', want.toFixed(2));
+  }
+  if (mode === 'snap'){
+    const ids = await p.evaluate(() => { const C = window.FinApp.CALC; return Object.keys(C).filter(id => typeof C[id] === 'function'); });
+    await p.evaluate(() => { try { localStorage.clear(); } catch (e) {} });
+    const out = {};
+    for (const id of ids){ const r = await run(id, null); out[id] = r.err ? {err: r.err} : {hero: r.hero, rows: r.rows}; }
+    fs.writeFileSync(A, JSON.stringify(out, null, 1)); console.log('snapshot of', ids.length, 'calculators →', A);
+  }
+  if (errs.length){ bad++; console.log('page errors:', errs.slice(0, 5)); }
+  console.log(bad ? bad + ' problems' : 'all formula checks passed');
+  await b.close(); srv.close(); process.exit(bad ? 1 : 0);
+})();
