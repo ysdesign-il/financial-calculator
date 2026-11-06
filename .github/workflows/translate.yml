@@ -8,7 +8,6 @@ on:
     paths: ['i18n/source.json', 'scripts/translate_ui.py']
 permissions:
   contents: write
-  models: read        # GitHub's own models translate the texts – no outside key
 concurrency:
   group: site-publish
   cancel-in-progress: false
@@ -25,7 +24,7 @@ jobs:
           python-version: '3.12'
       - name: Translate missing interface texts
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           MAX_MINUTES: '20'
           PUBLISH: '1'
         run: python scripts/translate_ui.py
