@@ -1,32 +1,21 @@
 {
- "started": "2026-11-06 07:11:33 UTC",
+ "started": "2026-11-06 07:21:12 UTC",
  "events": [
-  "catalog unavailable: non-JSON reply 200 text/plain https://models.github.ai/catalog/models b'OK\\r\\n'",
-  "models: openai/gpt-4.1-mini, openai/gpt-4o-mini, openai/gpt-5-mini, openai/gpt-4.1, openai/gpt-4o, openai/gpt-4.1-nano, deepseek/DeepSeek-V3-0324, mistral-ai/mistral-medium-2505, meta/Llama-4-Maverick-17B-128E-Instruct-FP8",
-  "  openai/gpt-4.1-mini: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  openai/gpt-4.1-mini: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  openai/gpt-4o-mini: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  openai/gpt-4o-mini: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  openai/gpt-5-mini: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  openai/gpt-5-mini: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  openai/gpt-4.1: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  openai/gpt-4.1: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  openai/gpt-4o: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  openai/gpt-4o: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  openai/gpt-4.1-nano: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  openai/gpt-4.1-nano: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  deepseek/DeepSeek-V3-0324: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  deepseek/DeepSeek-V3-0324: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  mistral-ai/mistral-medium-2505: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  mistral-ai/mistral-medium-2505: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  meta/Llama-4-Maverick-17B-128E-Instruct-FP8: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  meta/Llama-4-Maverick-17B-128E-Instruct-FP8: non-JSON reply 200 text/plain https://models.github.ai/inference/chat/completions b'OK\\r\\n'",
-  "  github-models: GitHub Models limit reached for today"
+  "  gemini gemini-flash-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
+  "  gemini gemini-3.8-flash: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
+  "  gemini gemini-flash-latest: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex",
+  "  gemini gemini-3.8-flash: HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex"
  ],
  "langs": {
-  "es": 9385
+  "es": 9385,
+  "fr": 9385,
+  "ru": 9385,
+  "pt-BR": 9385,
+  "it": 9385,
+  "zh-CN": 9377,
+  "hi": 9379
  },
- "finished": "2026-11-06 07:13:04 UTC",
+ "finished": "2026-11-06 07:21:37 UTC",
  "coverage": {
   "zh-CN": 9377,
   "fr": 9385,
