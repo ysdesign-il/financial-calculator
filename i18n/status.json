@@ -1,14 +1,19 @@
 {
- "started": "2026-11-05 19:32:55 UTC",
+ "started": "2026-11-06 01:49:45 UTC",
  "events": [
-  "  gemini gemini-3.8-flash: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
-  "  gemini gemini-flash-lite-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
-  "  gemini: gemini quota used up"
+  "  gemini gemini-flash-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
+  "  gemini gemini-3.8-flash: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n"
  ],
  "langs": {
-  "es": 9385
+  "es": 9385,
+  "fr": 9385,
+  "ru": 9385,
+  "pt-BR": 9385,
+  "it": 9385,
+  "zh-CN": 9377,
+  "hi": 9379
  },
- "finished": "2026-11-05 19:36:22 UTC",
+ "finished": "2026-11-06 01:54:01 UTC",
  "coverage": {
   "zh-CN": 9377,
   "fr": 9385,
