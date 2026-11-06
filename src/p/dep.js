@@ -119,9 +119,9 @@ function dqList(){
 const dqName = (o, i) => String((o && o.n) || '').trim() || t('dq_def', {n: i + 1});
 var DQ_T = null;
 function dqSave(){ clearTimeout(DQ_T); DQ_T = setTimeout(() => { try { saveSet(); } catch (e) {} }, 300); }
-function dqRender(){
+function dqRender(force){
   const box = document.getElementById('dq_box'); if (!box) return;
-  if (box.contains(document.activeElement) && /INPUT|SELECT/.test(document.activeElement.tagName)) return;
+  if (!force && box.contains(document.activeElement) && /INPUT|SELECT/.test(document.activeElement.tagName)) return;
   const E = asEsc, L = dqList();
   const opt = (list, cur) => list.map(([k, l]) => `<option value="${k}"${k === cur ? ' selected' : ''}>${E(t(l))}</option>`).join('');
   box.innerHTML = L.map((o, i) => `<div class="lc-card" data-dqi="${i}">
@@ -145,7 +145,7 @@ document.addEventListener('input', e => {
   else if (k === 'kind' || k === 'comp'){ if (k === 'comp' && o.kind === 'call') o.cycle = el.value; else o[k] = el.value; }
   else o[k] = el.value === '' ? 0 : +el.value;
   dqSave();
-  if (k === 'kind'){ dqRender(); const s = document.getElementById('dq_k' + el.dataset.dqi); if (s) s.focus(); }
+  if (k === 'kind'){ dqRender(true); const s = document.getElementById('dq_k' + el.dataset.dqi); if (s) s.focus(); }
   try { calc('depcmp'); } catch (er) {}
 }, true);
 document.addEventListener('change', e => { const el = e.target; if (el && el.tagName === 'SELECT' && el.closest && el.closest('#dq_box')) el.dispatchEvent(new Event('input', {bubbles: true})); }, true);
@@ -154,12 +154,12 @@ document.addEventListener('click', e => {
   if (e.target.closest('#dq_add')){
     const L = dqList(); if (L.length >= DQ_MAX) return;
     L.push(Object.assign({}, L[L.length - 1] || {kind: 'fix', rate: 4, mo: 12, comp: 'end'}, {n: ''}));
-    try { saveSet(); } catch (er) {} dqRender(); try { calc('depcmp'); } catch (er) {}
+    try { saveSet(); } catch (er) {} dqRender(true); try { calc('depcmp'); } catch (er) {}
     const ins = $$('#dq_box .lc-name'), n = ins[ins.length - 1]; if (n) n.focus();
     return;
   }
   const d = e.target.closest('[data-dqdel]');
-  if (d){ const L = dqList(); if (L.length <= 1) return; L.splice(+d.dataset.dqdel, 1); try { saveSet(); } catch (er) {} dqRender(); try { calc('depcmp'); } catch (er) {} const a = document.getElementById('dq_add') || $('#dq_box .lc-name'); if (a) a.focus(); }
+  if (d){ const L = dqList(); if (L.length <= 1) return; L.splice(+d.dataset.dqdel, 1); try { saveSet(); } catch (er) {} dqRender(true); try { calc('depcmp'); } catch (er) {} const a = document.getElementById('dq_add') || $('#dq_box .lc-name'); if (a) a.focus(); }
 });
 CALC.depcmp = function(){
   if (!document.querySelector('#dq_box .lc-card')) dqRender();

@@ -60,3 +60,6 @@ DEFS.altcmp = [
   {type:'sub', label:'s_acLoan'}, F('ac_loanBal','f_acLoanBal','cur',0,{hint:'h_acLoanBal'}), F('ac_loanRate','f_acLoanRate','%',6), F('ac_loanFee','f_acLoanFee','cur',0)
 ];
 ICON.altcmp = ic('<path d="M12 3v18"/><path d="M5 8l-3 6h6z"/><path d="M19 8l-3 6h6z"/><path d="M5 8h14"/><path d="M8 21h8"/>');
+/* 13.79: my insurance policies – a list, like the loan offers */
+DEFS.mypolicies = [{type:'html', id:'mp_box', cls:'lc-wrap'}];
+ICON.mypolicies = ic('<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12h6M9 15h4"/>');
