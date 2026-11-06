@@ -159,7 +159,7 @@ function wiTornado(id){
       ${R.map(z => `<tr><td>${E(t(z.x.f.label))}<small class="wi-sm">${E(wiStep(z.x) ? t('wi_pts') : t('wi_pct'))}</small></td><td class="${z.na ? '' : z.a < base ? 'down' : 'up'}">${z.na ? '—' : E(N(z.a, 0))}</td><td class="${z.b < base ? 'down' : 'up'}">${E(N(z.b, 0))}</td></tr>`).join('')}</tbody></table></div>
       <p class="fine">${E(t('wi_torH', {v: N(base, 0)}))}</p>` : `<p class="fine">${E(t('wi_na'))}</p>`;
   }
-  wiRestore(id); st0.tor = h; const out = document.querySelector('#wi-' + id + ' .wi-tor'); if (out) out.innerHTML = h;
+  wiRestore(id); st0.tor = h; const out = document.querySelector('#wi-' + id + ' .wi-tor'); if (out) out.innerHTML = h; const bt = document.querySelector('[data-witor="' + id + '"]'); if (bt) bt.textContent = t('wi_run');
 }
 function wiSeek(id){
   const box = document.getElementById('wi-' + id); if (!box) return;
@@ -344,7 +344,7 @@ document.addEventListener('click', e => {
   if (!e.target.closest) return; let b; const d = () => lpD(), sv = () => (Array.isArray(lpD().saved) ? lpD().saved : (lpD().saved = []));
   if (e.target.closest('#lf_save')){ const n = (document.getElementById('lf_name').value || '').trim() || t('lf_def', {n: sv().length + 1}); sv().unshift({n: n.slice(0, 30), at: Date.now(), v: JSON.parse(JSON.stringify(d().v)), ev: JSON.parse(JSON.stringify(d().ev))}); sv().splice(12); try { saveSet(); } catch (er) {} lpSimOut(); try { toast(t('lf_saved', {x: n})); } catch (er) {} return; }
   if ((b = e.target.closest('[data-lfload]'))){ const s = sv()[+b.dataset.lfload]; if (!s) return; d().v = JSON.parse(JSON.stringify(s.v)); d().ev = JSON.parse(JSON.stringify(s.ev)); try { saveSet(); lpRender(); } catch (er) {} try { toast(t('sva_loaded', {x: s.n})); } catch (er) {} return; }
-  if ((b = e.target.closest('[data-lfdup]'))){ const s = sv()[+b.dataset.lfdup]; if (!s) return; sv().unshift(Object.assign(JSON.parse(JSON.stringify(s)), {n: t('lf_copy', {x: s.n}).slice(0, 30), at: Date.now()})); sv().splice(12); try { saveSet(); } catch (er) {} lpSimOut(); return; }
+  if ((b = e.target.closest('[data-lfdup]'))){ const s = sv()[+b.dataset.lfdup]; if (!s) return; sv().unshift(Object.assign(JSON.parse(JSON.stringify(s)), {n: t('lf_copy', {x: s.n}).slice(0, 30), at: Date.now(), rid: ''})); sv().splice(12); try { saveSet(); } catch (er) {} lpSimOut(); return; }
   if ((b = e.target.closest('[data-lfdel]'))){ sv().splice(+b.dataset.lfdel, 1); try { saveSet(); } catch (er) {} lpSimOut(); return; }
 });
 

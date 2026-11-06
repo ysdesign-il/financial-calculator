@@ -153,7 +153,7 @@ document.addEventListener('click', e => {
   if (!e.target.closest) return;
   if (e.target.closest('#dq_add')){
     const L = dqList(); if (L.length >= DQ_MAX) return;
-    L.push(Object.assign({}, L[L.length - 1] || {kind: 'fix', rate: 4, mo: 12, comp: 'end'}, {n: ''}));
+    L.push(Object.assign({}, L[L.length - 1] || {kind: 'fix', rate: 4, mo: 12, comp: 'end'}, {n: '', rid: ''}));
     try { saveSet(); } catch (er) {} dqRender(true); try { calc('depcmp'); } catch (er) {}
     const ins = $$('#dq_box .lc-name'), n = ins[ins.length - 1]; if (n) n.focus();
     return;
