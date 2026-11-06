@@ -27,3 +27,5 @@ jobs:
           npm i --no-save playwright@1.47.2 >/dev/null 2>&1
           npx playwright install --with-deps chromium >/dev/null 2>&1
           node scripts/smoke.js
+      - name: Formula checks (known answers)
+        run: node scripts/formulas.js

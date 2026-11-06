@@ -1,8 +1,10 @@
 """Security watch: turns unusual GitHub activity into alerts for the developer.
 
 Runs in GitHub Actions on pushes, branch/tag changes, forks, visibility and rule changes, releases, and once a day.
-Alerts go to security.json (shown in the app's developer mode) and, when serious, to a GitHub issue,
-which GitHub sends to the owner by email and to the GitHub mobile app. Standard library only."""
+Alerts are kept on the site's server only (shown in developer mode of the locked admin version), never as a public file.
+The script proves it is this repository's security workflow with GitHub's signed token for the run (OIDC, audience "fin-sec").
+A serious alert also goes to the owner's phone (from the server) and opens a GitHub issue with no details – the details stay
+on the server. Standard library only."""
 import json, os, re, subprocess, time, urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -44,13 +46,31 @@ SECRET_PATTERNS = [(label, re.compile(NB + rx)) for label, rx in [
 def secrets_in(text):
     return sorted({label for label, rx in SECRET_PATTERNS if rx.search(text)})
 
+def oidc():
+    """GitHub's signed token for this run, made for the site's server (needs `id-token: write`)."""
+    u, t = os.environ.get('ACTIONS_ID_TOKEN_REQUEST_URL', ''), os.environ.get('ACTIONS_ID_TOKEN_REQUEST_TOKEN', '')
+    if not u or not t: return ''
+    req = urllib.request.Request(u + ('&' if '?' in u else '?') + 'audience=fin-sec', headers={'Authorization': 'Bearer ' + t, 'User-Agent': 'security-watch'})
+    with urllib.request.urlopen(req, timeout=20) as r:
+        return json.loads(r.read()).get('value', '')
+
+def server(method='GET', body=None):
+    req = urllib.request.Request(SITE + 'api/sec', method=method, data=json.dumps(body).encode() if body is not None else None,
+                                 headers={'Authorization': 'Bearer ' + oidc(), 'Content-Type': 'application/json', 'User-Agent': 'security-watch'})
+    with urllib.request.urlopen(req, timeout=20) as r:
+        return json.loads(r.read() or b'null')
+
+OLD = None
+def old_alerts():
+    global OLD
+    if OLD is None:
+        try: OLD = (server() or {}).get('alerts', [])
+        except Exception as e: print('could not read the saved alerts:', e); OLD = []
+    return OLD
+
 def raised_recently(kind, days=30):
-    """True if an alert of this kind is already in security.json from the last `days` days (so daily checks don't repeat it)."""
-    try:
-        old = json.load(open(os.path.join(ROOT, 'security.json'), encoding='utf-8')).get('alerts', [])
-    except Exception:
-        return False
-    return any(a.get('kind') == kind and a.get('at', 0) > time.time() - days * 86400 for a in old)
+    """True if an alert of this kind was already saved in the last `days` days (so daily checks don't repeat it)."""
+    return any(a.get('kind') == kind and a.get('at', 0) > time.time() - days * 86400 for a in old_alerts())
 
 def fetch(url, timeout=20):
     req = urllib.request.Request(url, headers={'User-Agent': 'security-watch'})
@@ -150,36 +170,33 @@ elif EV in ('schedule', 'workflow_dispatch'):
     except Exception as e:
         print('live site check skipped:', e)
 
-if not alerts:
+seed = []
+try:                                   # once: the alerts from the old public file move to the server (the file is removed in the same change)
+    seed = json.load(open(os.path.join(ROOT, 'security.json'), encoding='utf-8')).get('alerts', [])
+except Exception:
+    try:
+        import base64
+        prev = E.get('before') or ''
+        if prev and TOKEN and not old_alerts():
+            f = api('/contents/security.json?ref=' + prev) or {}
+            seed = json.loads(base64.b64decode(f.get('content', '')).decode('utf-8')).get('alerts', [])
+    except Exception:
+        pass
+if not alerts and not seed:
     print('Nothing unusual.'); raise SystemExit(0)
 
-path = os.path.join(ROOT, 'security.json')
-for a in alerts: print('ALERT', a)
+for a in alerts: print('ALERT', a['level'], a['kind'])
 serious = [a for a in alerts if a['level'] == 'high']
 if serious and TOKEN:
     try:
-        api('/issues', 'POST', {'title': '🛡️ Security alert: ' + serious[0]['msg'][:80],
-                                'body': '\n'.join(f"- **{a['level']}** {a['msg']} (account: {a['actor'] or '?'})" for a in alerts) +
-                                        '\n\nIf this was not you: change your GitHub password, review Settings → Collaborators and deploy keys, and revoke unknown tokens.'})
+        api('/issues', 'POST', {'title': '🛡️ Security alert – details in developer mode of the admin version',
+                                'body': f"{len(serious)} serious alert(s). The details are kept on the site's server only – open developer mode in the admin version (/admin/).\n\nIf you did not expect this: change your GitHub password, review Settings → Collaborators and deploy keys, and revoke unknown tokens."})
     except Exception as e:
         print('issue not created:', e)
-run = lambda *a: subprocess.run(list(a), cwd=ROOT, capture_output=True, text=True)
-run('git', 'config', 'user.name', 'security-bot'); run('git', 'config', 'user.email', 'security-bot@users.noreply.github.com')
-for attempt in range(5):                       # always start from the newest main, so no alert is ever lost or overwritten
-    run('git', 'fetch', '--depth=1', 'origin', 'main'); run('git', 'checkout', '-B', 'main', 'origin/main')
+for attempt in range(4):
     try:
-        data = json.load(open(path, encoding='utf-8'))
-    except Exception:
-        data = {'alerts': []}
-    old = data.get('alerts', [])
-    sig = {(a.get('at'), a.get('kind'), a.get('msg')) for a in old}
-    data['alerts'] = ([a for a in alerts if (a['at'], a['kind'], a['msg']) not in sig] + old)[:100]
-    data['updated'] = int(time.time())
-    json.dump(data, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    run('git', 'add', 'security.json'); run('git', 'commit', '-m', 'Security alert')
-    r = run('git', 'push', 'origin', 'HEAD:main')
-    if r.returncode == 0:
-        run('git', 'push', '--force', 'origin', 'HEAD:gh-pages'); print('saved'); break
-    print('push retry', attempt + 1, r.stderr[-200:]); time.sleep(5 + attempt * 5)
+        r = server('POST', {'alerts': alerts, 'seed': seed}); print('saved on the server', r); break
+    except Exception as e:
+        print('save retry', attempt + 1, e); time.sleep(5 + attempt * 5)
 else:
     raise SystemExit('could not save the alert')
