@@ -237,6 +237,11 @@ def family_cmd(msg, log, n_b64u=None, now=None):
 
 
 def inbox_pull(log):
+    """13.86: the site's server now collects the relay every half hour into its private storage; nothing is written here."""
+    log.append("inbox: collected by the server"); return
+
+
+def inbox_pull_old(log):
     """collect locked feedback from the relay (it keeps messages ~12 hours; we run twice an hour). Only the app can unlock them."""
     try:
         box = json.load(open(INBOX_PATH, encoding="utf-8"))

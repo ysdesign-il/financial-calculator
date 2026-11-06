@@ -9,11 +9,13 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "none",
     "binding": "ASSETS",
-    "run_worker_first": ["/admin", "/admin/*", "/cfg.json", "/legal.json", "/__err", "/__ping", "/gf/*", "/security.json", "/api/*"]
+    "run_worker_first": ["/admin", "/admin/*", "/cfg.json", "/legal.json", "/__err", "/__ping", "/gf/*", "/security.json", "/api/*", "/inbox.json", "/family.json", "/replies.json"]
   },
   "kv_namespaces": [{ "binding": "CFG", "id": "a44762eefe234d5ebaf128cc9aba83ec" }],
+  // the optional cloud copy of accounts and documents (locked on the phone; the server cannot read them)
+  "d1_databases": [{ "binding": "DB", "database_name": "fin-accounts", "database_id": "85911bc0-8d3d-4361-aa5f-ed37ee8b5186" }],
   // preview versions (made by the automatic updates) need their own KV entry; they use the same settings
-  "previews": { "kv_namespaces": [{ "binding": "CFG", "id": "a44762eefe234d5ebaf128cc9aba83ec" }] },
+  "previews": { "kv_namespaces": [{ "binding": "CFG", "id": "a44762eefe234d5ebaf128cc9aba83ec" }], "d1_databases": [{ "binding": "DB", "database_name": "fin-accounts", "database_id": "85911bc0-8d3d-4361-aa5f-ed37ee8b5186" }] },
   // every half hour: health check of the sites, for the owner's phone alerts
   "triggers": { "crons": ["*/30 * * * *"] }
 }
