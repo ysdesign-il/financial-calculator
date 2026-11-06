@@ -38,7 +38,20 @@ const CASES = [
   {tab: 'loan', name: 'equal principal 240,000 at 6% for 20 years – first payment', set: {l_mode: 'pay', l_rateType: 'fixed', l_rateIn: 'total', l_link: 'none', l_amount: 240000, l_rate: 6, l_years: 20, l_months: 240, l_type: 'equal', l_grace: 0, l_extra: 0, l_pre: 0, l_feePct: 0, l_feeFix: 0},
     expect: {hero: 240000 / 240 + 240000 * 0.005}},
   {tab: 'mmf', name: 'deposit 100,000 at 3% for 12 months – net after 15% tax', set: {mm_amt: 100000, mm_mo: 12, mm_dep: 3, mm_yld: 3, mm_fee: 0, mm_infl: 2},
-    expect: {row: ['r_mmDepN', 100000 * 0.03 * 0.85]}}
+    expect: {row: ['r_mmDepN', 100000 * 0.03 * 0.85]}},
+  {tab: 'deposit', name: 'fixed deposit 100,000 at 4% for 12 months, simple – final after 15% tax', set: {dk_kind: 'fix', dk_amt: 100000, dk_add: 0, dk_mo: 12, dk_rate: 4, dk_comp: 'end', dk_cpi: 2.5, dk_tax: 'auto'},
+    expect: {hero: 100000 + 4000 * 0.85}},
+  {tab: 'deposit', name: 'fixed deposit, monthly compounding – gross profit', set: {dk_kind: 'fix', dk_amt: 100000, dk_add: 0, dk_mo: 12, dk_rate: 4, dk_comp: 'month', dk_cpi: 2.5, dk_tax: 'auto'},
+    expect: {row: ['r_dkGross', 100000 * (Math.pow(1 + 0.04 / 12, 12) - 1)]}},
+  {tab: 'deposit', name: 'deposit at 0% – nothing grows', set: {dk_kind: 'fix', dk_amt: 50000, dk_add: 0, dk_mo: 24, dk_rate: 0, dk_comp: 'end', dk_cpi: 2, dk_tax: 'auto'},
+    expect: {hero: 50000}},
+  {tab: 'deposit', name: 'CPI-linked: the linkage over a year equals the inflation', set: {dk_kind: 'cpi', dk_amt: 100000, dk_add: 0, dk_mo: 12, dk_rate: 1.5, dk_comp: 'end', dk_cpi: 2.5, dk_tax: 'auto'},
+    expect: {row: ['r_dkIdx', 2500]}},
+  {tab: 'deposit', name: 'structured: half of a 10% index rise, under the cap', set: {dk_kind: 'struct', dk_amt: 100000, dk_mo: 12, dk_smin: 0, dk_spart: 50, dk_sidx: 10, dk_scap: 20, dk_cpi: 2, dk_tax: 'auto'},
+    expect: {hero: 100000 + 5000 * 0.85}},
+  {tab: 'deposit', name: 'monthly deposits 1,000 for 12 months at 0% – total deposited', set: {dk_kind: 'fix', dk_amt: 0, dk_add: 1000, dk_mo: 12, dk_rate: 0, dk_comp: 'end', dk_cpi: 0, dk_tax: 'auto'},
+    expect: {row: ['r_dkDep', 11000]}}
+
 ];
 
 (async () => {

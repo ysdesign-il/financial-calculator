@@ -56,7 +56,7 @@ const PERSONAS = {
   self: ['selfemp', 'freelance', 'vat', 'tax', 'hishtalmut', 'expenses', 'breakeven', 'clients', 'capital', 'workgrant'],
   home: ['mortcap', 'mortgage', 'mortcmp', 'purchasetax', 'rentbuy', 'refi', 'landtax', 'cpilink', 'rental'],
   family: ['childallow', 'kidsave', 'workgrant', 'expenses', 'smartsplit', 'savegoal', 'split', 'insurance', 'discount', 'benefits'],
-  invest: ['compound', 'mmf', 'invfees', 'yield', 'dividends', 'capital', 'avgcost', 'networth', 'fire'],
+  invest: ['compound', 'deposit', 'mmf', 'invfees', 'yield', 'dividends', 'capital', 'avgcost', 'networth', 'fire'],
   retire: ['retire', 'pensfix', 'oldage', 'mgmtfees', 'pencmp', 'fire', 'severance', 'mmf', 'freedom']
 };
 const PERSONA_IC = {emp: '👔', self: '💼', home: '🏠', family: '👨‍👩‍👧', invest: '📈', retire: '🌅'};
@@ -158,7 +158,7 @@ if (typeof devTry === 'function'){
 }
 
 /* ---------- members only: the AI assistant and the advanced calculators need a (free, on-device) account ---------- */
-const FREE_TABS = ['home', 'markets', 'saved', 'settings', 'convert', 'vat', 'percent', 'salary', 'tax', 'loan', 'compound', 'savegoal',
+const FREE_TABS = ['home', 'markets', 'saved', 'settings', 'convert', 'vat', 'percent', 'salary', 'tax', 'loan', 'compound', 'savegoal', 'deposit',
   'unitprice', 'discount', 'split', 'workdays', 'inflation', 'expenses'];
 var isMember = () => { try { return !!FUSER || (typeof DEV_ON !== 'undefined' && DEV_ON); } catch (e) { return false; } };
 const mbLocked = id => !isMember() && TABS.includes(id) && !FREE_TABS.includes(id);
