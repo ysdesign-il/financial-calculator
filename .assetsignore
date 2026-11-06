@@ -22,3 +22,9 @@ _push.js
 pubcfg.js
 _sec.js
 security.json
+_fin.js
+_legacy_inbox.json
+_legacy_family.json
+replies.json
+docs
+_acct.js
