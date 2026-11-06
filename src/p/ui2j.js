@@ -63,3 +63,18 @@ ICON.altcmp = ic('<path d="M12 3v18"/><path d="M5 8l-3 6h6z"/><path d="M19 8l-3 
 /* 13.79: my insurance policies – a list, like the loan offers */
 DEFS.mypolicies = [{type:'html', id:'mp_box', cls:'lc-wrap'}];
 ICON.mypolicies = ic('<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12h6M9 15h4"/>');
+/* 13.83: comparing properties, alerts in one place, my financial report */
+DEFS.recmp = [{type:'html', id:'rcx_box', cls:'lc-wrap'}];
+DEFS.alerts = [{type:'html', id:'al_box', cls:'al-wrap'}];
+DEFS.myreport = [];
+ICON.recmp = ic('<path d="M3 21V10l5-4 5 4v11"/><path d="M13 21V13l4-3 4 3v8"/><path d="M6 21v-5h4v5"/>');
+ICON.alerts = ic('<path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/>');
+ICON.myreport = ic('<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>');
+/* 13.84: my financial picture, tax by years, the financial journal, kinds of report */
+DEFS.fpic = [{type:'html', id:'fp_box', cls:'fp-wrap'}];
+DEFS.taxyears = [{type:'html', id:'ty_box', cls:'lc-wrap'}];
+DEFS.finjournal = [{type:'html', id:'jr_box', cls:'jr-wrap'}];
+DEFS.myreport = [SEL('mr_type','f_mrType','full',['full','pic','mbud','ybud','nw','pf','pen','loans','goals','scn'].map(k => [k, 'o_mr_' + k]),{wide:true})];
+ICON.fpic = ic('<circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.5 6"/><path d="M12 12H3"/>');
+ICON.taxyears = ic('<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 4v16"/><path d="M12.5 13h4M12.5 16h3"/>');
+ICON.finjournal = ic('<path d="M6 3h11a2 2 0 0 1 2 2v16H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M8 8h7M8 12h7M8 16h4"/>');
