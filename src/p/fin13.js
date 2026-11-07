@@ -191,7 +191,7 @@ async function paQuotes(){
     try { const r = await fetch(F12_API('api/q?s=' + encodeURIComponent(String(x.sym).trim())), {credentials: 'omit', referrerPolicy: 'no-referrer'}); const j = await r.json();
       if (!j || !j.ok){ skip++; continue; }
       const cur = x.cur && x.cur !== 'other' ? x.cur : 'ILS'; if (j.cur && j.cur !== cur){ skip++; continue; }
-      x.px = String(Math.round(j.px * 10000) / 10000); x.qsrc = j.src; x.qat = j.at || Date.now(); x.date = new Date(x.qat).toISOString().slice(0, 10);
+      x.px = String(Math.round(j.px * 10000) / 10000); x.qsrc = j.src; x.qchg = j.chg == null ? null : j.chg; x.qat = j.at || Date.now(); x.date = new Date(x.qat).toISOString().slice(0, 10);
       if (pfN(x.qty) > 0) x.val = String(Math.round(pfN(x.qty) * j.px * 100) / 100); n++;
     } catch (e) { skip++; }
   }

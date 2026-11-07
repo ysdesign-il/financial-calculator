@@ -88,21 +88,34 @@ export async function acctApi(req, env, path){
   return J({ok: false}, 404);
 }
 
-/* ---- share prices, delayed, from a free public source; cached 15 minutes; nothing about the person is sent ---- */
+/* ---- share prices and index values, delayed, from a free public source; cached 15 minutes; nothing about the person is sent.
+   ?s=SYMBOL           → price, currency, change since yesterday's close
+   ?s=SYMBOL&r=1y      → also a year of weekly closes, the return over the year, yearly volatility, the year's high and low ---- */
 export async function quote(req){
-  const u = new URL(req.url), s = String(u.searchParams.get('s') || '').toUpperCase().trim();
+  const u = new URL(req.url), s = String(u.searchParams.get('s') || '').toUpperCase().trim(), yr = u.searchParams.get('r') === '1y';
   if (!/^[A-Z0-9.\-^=]{1,15}$/.test(s)) return J({ok: false, e: 'bad'}, 400);
-  const cache = caches.default, key = new Request('https://q.local/' + s);
-  let hitR = await cache.match(key); if (hitR) return hitR;
+  const cache = caches.default, key = new Request('https://q.local/' + s + (yr ? '/1y' : ''));
+  let hitR = null; try { hitR = await cache.match(key); } catch (e) {} if (hitR) return hitR;
   let out = {ok: false, e: 'none', s};
   try {
-    const r = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(s) + '?range=1d&interval=1d', {headers: {'user-agent': 'Mozilla/5.0 (compatible; financial-calculator/1.0)', accept: 'application/json'}});
-    if (r.ok){ const j = await r.json(), m = j && j.chart && j.chart.result && j.chart.result[0] && j.chart.result[0].meta;
-      if (m && isFinite(+m.regularMarketPrice)){ let px = +m.regularMarketPrice, cur = String(m.currency || '').toUpperCase();
-        if (cur === 'ILA'){ px = px / 100; cur = 'ILS'; }           /* Tel Aviv prices come in agorot */
-        out = {ok: true, s, px, cur, at: (+m.regularMarketTime || 0) * 1000, src: 'Yahoo Finance', delayed: true}; } }
+    const r = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(s) + (yr ? '?range=1y&interval=1d' : '?range=5d&interval=1d'), {headers: {'user-agent': 'Mozilla/5.0 (compatible; financial-calculator/1.0)', accept: 'application/json'}});
+    if (r.ok){ const j = await r.json(), R = j && j.chart && j.chart.result && j.chart.result[0], m = R && R.meta;
+      if (m && isFinite(+m.regularMarketPrice)){
+        let px = +m.regularMarketPrice, cur = String(m.currency || '').toUpperCase(), k = 1;
+        if (cur === 'ILA'){ k = 0.01; cur = 'ILS'; }           /* Tel Aviv prices come in agorot */
+        const cl = ((R.indicators && R.indicators.quote && R.indicators.quote[0] && R.indicators.quote[0].close) || []).map(x => x == null ? null : +x * k);
+        const ts = (R.timestamp || []).map(x => x * 1000), pairs = ts.map((t, i) => [t, cl[i]]).filter(p => isFinite(p[1]) && p[1] > 0);
+        const prev = pairs.length >= 2 ? pairs[pairs.length - 2][1] : (+m.chartPreviousClose || 0) * k;
+        out = {ok: true, s, px: px * k, cur, at: (+m.regularMarketTime || 0) * 1000, src: 'Yahoo Finance', delayed: true, name: String(m.shortName || m.longName || '').slice(0, 60), ex: String(m.fullExchangeName || m.exchangeName || '').slice(0, 30), prev, chg: prev > 0 ? (px * k / prev - 1) * 100 : null};
+        if (yr && pairs.length > 20){
+          const v = pairs.map(p => p[1]), lr = []; for (let i = 1; i < v.length; i++) lr.push(Math.log(v[i] / v[i - 1]));
+          const mean = lr.reduce((a, b) => a + b, 0) / lr.length, sd = Math.sqrt(lr.reduce((a, b) => a + (b - mean) * (b - mean), 0) / Math.max(1, lr.length - 1));
+          out.y = {ret: (v[v.length - 1] / v[0] - 1) * 100, vol: sd * Math.sqrt(252) * 100, hi: Math.max(...v), lo: Math.min(...v), from: pairs[0][0],
+            w: pairs.filter((p, i) => i % 5 === 0 || i === pairs.length - 1).map(p => [p[0], Math.round(p[1] * 10000) / 10000])};
+        }
+      } }
   } catch (e) {}
   const resp = J(out); resp.headers.set('cache-control', 'public, max-age=900');
-  if (out.ok) await cache.put(key, resp.clone());
+  if (out.ok){ try { await cache.put(key, resp.clone()); } catch (e) {} }
   return resp;
 }
