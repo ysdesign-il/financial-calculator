@@ -55,6 +55,20 @@ export async function finAdmin(req, env, path){
   }
   return null;
 }
+/* 13.92: a message from this server itself (a suspicious-activity alert) – locked with the inbox's public key exactly like a
+   website message, so it shows in the owner's inbox and only the owner can open it */
+const ib64 = u => btoa(String.fromCharCode(...new Uint8Array(u)));
+export async function inboxAdd(env, obj, id){
+  if (!env || !env.CFG) return false;
+  const S = crypto.subtle, pk = await S.importKey('jwk', PUB, {name: 'RSA-OAEP', hash: 'SHA-256'}, false, ['encrypt']);
+  const ak = await S.generateKey({name: 'AES-GCM', length: 256}, true, ['encrypt']), iv = crypto.getRandomValues(new Uint8Array(12));
+  const c = await S.encrypt({name: 'AES-GCM', iv}, ak, enc.encode(JSON.stringify(obj)));
+  const k = await S.encrypt({name: 'RSA-OAEP'}, pk, await S.exportKey('raw', ak));
+  const box = await inbox(env); box.m = Array.isArray(box.m) ? box.m : [];
+  if (box.m.some(m => m.id === id)) return false;
+  box.m.push({id: String(id).slice(0, 40), t: Math.floor(Date.now() / 1000), c: 'fc1.' + ib64(k) + '.' + ib64(iv) + '.' + ib64(c)});
+  box.m = box.m.slice(-1000); await put(env, K_IB, box); return true;
+}
 export async function repliesPublic(env){ const r = await replies(env); return new Response(JSON.stringify(r), {headers: {'content-type': 'application/json', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff'}}); }
 
 /* ---- every half hour: collect from the relay ---- */

@@ -5,8 +5,9 @@ import {adminGate,publicConfig,publicDocs,errReport,ping,fontProxy} from './_gat
 import {healthCron} from './_push.js';
 import {PUBCFG} from './pubcfg.js';
 import {secApi,secAdmin} from './_sec.js';
-import {famCheck,finAdmin,finCron,repliesPublic} from './_fin.js';
+import {famCheck,finAdmin,finCron,repliesPublic,inboxAdd} from './_fin.js';
 import {acctApi,quote} from './_acct.js';
+import {sxKind,sxRoute,sxRecord,sxPrune,sxAdmin} from './_sx.js';
 /* every half hour: are the sites up? (phone alert to the owner when one goes down or comes back) */
 const HEALTH=[['calc','מחשבון פיננסי','https://financial-calculator.design-il.workers.dev'],['neshima','נשימה שקטה','https://neshima-shketa.pages.dev']];
 const OPT={app:'calc',title:'מחשבון פיננסי',accent:PUBCFG.accent,priv:PUBCFG.priv,langLS:'fin-lang',store:{key:'fin-dev',name:'fin-dev-n'},
@@ -17,8 +18,16 @@ const OPT={app:'calc',title:'מחשבון פיננסי',accent:PUBCFG.accent,pri
     links:[['דף הבית','/'],['משכנתא','/?go=mortgage'],['הלוואה','/?go=loan'],['ריבית דריבית','/?go=compound'],['מע״מ','/?go=vat'],['הוצאות','/?go=expenses']],
     
     data:[['ריביות, מטבעות ומדדים','/rates.json','updated|asOf',30],['מחירון רכב','/cars.json','asOf',240],['היסטוריית מדדים','/history.json','at',30]]}};
-export default{async scheduled(ev,env,ctx){ctx.waitUntil(healthCron(env,HEALTH));ctx.waitUntil(finCron(env))},
-  async fetch(req,env){const p=new URL(req.url).pathname;
+/* 13.92: suspicious activity (_sx.js) – after the answer is sent, a refused or blocked request is counted (no address, no
+   personal data); crossing a line adds one alert to the owner's inbox. Logging can never slow or break an answer. */
+const BLOCKED=new Set(['/inbox.json','/family.json','/security.json']);
+function watch(req,env,ctx,p,res){try{const job=(async()=>{let k=await sxKind(req,res,p);
+    if(!k&&res.status===404&&(BLOCKED.has(p)||sxRoute(p)==='/api/*'))k='path';   // a blocked file or an /api/ address that does not exist
+    if(k)await sxRecord(env,req,k,sxRoute(p),inboxAdd)})().catch(()=>{});
+  if(ctx&&ctx.waitUntil)ctx.waitUntil(job)}catch(e){}return res}
+export default{async scheduled(ev,env,ctx){ctx.waitUntil(healthCron(env,HEALTH));ctx.waitUntil(finCron(env));ctx.waitUntil(sxPrune(env))},
+  async fetch(req,env,ctx){const p=new URL(req.url).pathname;return watch(req,env,ctx,p,await route(req,env,p))}};
+async function route(req,env,p){
   if(p==='/api/sec')return secApi(req,env);   // the security watch (GitHub, signed token) reads and adds alerts; kept on the server only
   if(p.startsWith('/api/acct/')||p.startsWith('/api/doc/'))return acctApi(req,env,p);   // optional cloud copy: only locked packages
   if(p==='/api/q')return quote(req);   // delayed share prices from a free public source
@@ -33,8 +42,9 @@ export default{async scheduled(ev,env,ctx){ctx.waitUntil(healthCron(env,HEALTH))
   if(p==='/__ping')return ping('calc',env,OPT,q=>env.ASSETS.fetch(new Request(new URL(q,req.url))));
   if(p==='/admin'||p.startsWith('/admin/'))return adminGate(req,async r=>{const q=new URL(r.url).pathname;
     if(q==='/admin/security.json')return secAdmin(env);
+    if(q==='/admin/suspicious.json')return sxAdmin(env);
     if(q==='/admin/inbox.json'||q==='/admin/fam'){const x=await finAdmin(r,env,q);if(x)return x}
     if(q==='/admin/'||q==='/admin/index.html'){const a=await env.ASSETS.fetch(new Request(new URL('/',r.url),{headers:r.headers}));const h=(await a.text()).replace('<head>','<head><base href="/"><meta name="robots" content="noindex,nofollow"><script>window.__FIN_ADMIN__=1</script>');
       return new Response(h,{status:a.status,headers:{'content-type':'text/html; charset=utf-8'}})}
     return env.ASSETS.fetch(new Request(new URL(q.slice(6)||'/',r.url),{headers:r.headers}))},OPT,env);
-  return env.ASSETS.fetch(req)}};
+  return env.ASSETS.fetch(req)}

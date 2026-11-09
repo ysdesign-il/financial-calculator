@@ -28,3 +28,18 @@ CREATE TABLE IF NOT EXISTS docpart (
   PRIMARY KEY (id, n)
 );
 CREATE INDEX IF NOT EXISTS docmeta_owner ON docmeta (owner);
+-- 13.92: suspicious activity (_sx.js). The code also creates these on first use (CREATE TABLE IF NOT EXISTS), so nothing has to be
+-- applied by hand. No IP address, name or fingerprint: only a 10-minute slot, the kind, a route from a fixed list, a count and
+-- at most a two-letter country code. Slots older than 30 days are removed by the half-hourly cron.
+CREATE TABLE IF NOT EXISTS secev (
+  b INTEGER NOT NULL,             -- the 10-minute slot (milliseconds / 600000)
+  kind TEXT NOT NULL,             -- login | lock | rate | xsite | big | path
+  route TEXT NOT NULL,            -- e.g. /api/acct, /admin/login (never the address the request typed)
+  n INTEGER NOT NULL DEFAULT 0,   -- how many in the slot
+  hint TEXT NOT NULL DEFAULT '',  -- a country code when the platform gives one, else empty
+  PRIMARY KEY (b, kind, route)
+);
+CREATE TABLE IF NOT EXISTS secalert (
+  kind TEXT PRIMARY KEY,          -- the last alert sent to the owner's inbox for this kind (at most one an hour)
+  at INTEGER NOT NULL
+);

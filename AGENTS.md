@@ -56,3 +56,10 @@ with the generic notes `שיפורים ותיקונים.` / `تحسينات وإ
 - Cloud accounts (`_acct.js`): a new account's row key is a fingerprint of the name fingerprint + the password fingerprint, so a name cannot be taken first by someone else and a wrong password looks like "no copy". Rows stored before 13.91 keep their old key and still open. Document limits count the bytes really stored. The tables are in `db/schema.sql` (not served).
 - A moving link (`#migz=`) only fills keys that were empty on the device when the link was opened; it never replaces existing data.
 - No AI API keys anywhere: the translate workflow no longer passes one.
+
+## Suspicious activity (13.92)
+
+- `_sx.js` (called from `worker.js` after each answer, through `ctx.waitUntil`, never blocking or breaking it) counts refused and blocked requests in D1: failed admin sign-ins (`login`), the admin sign-in lock (`lock`), 429 on the APIs (`rate`), blocked cross-site writes (`xsite`), 413 (`big`) and requests for blocked files or unknown `/api/` addresses (`path`). One row per kind + route per 10-minute slot (table `secev`, created by the code on first use, also in `db/schema.sql`); no IP, name or fingerprint – only slot, kind, a route from a fixed list, a count and a country code. Slots older than 30 days are removed by the half-hourly cron.
+- Alerts (table `secalert`, at most one per kind per hour) go into the owner inbox (`ib:calc`) as a normal locked `fc1.` message (`inboxAdd` in `_fin.js`): ≥5 failed admin sign-ins in about 15 minutes, any sign-in lock, ≥50 refusals (429) in about 10 minutes, any blocked cross-site write.
+- The owner sees "פעילות חשודה" (last 7 days, grouped) at the top of the inbox in the admin version (`src/p/fin15.js`, texts `src/p/i95.js`), read from `/admin/suspicious.json` behind the admin lock.
+- `node scripts/security_alerts.mjs` tests it locally (must end with `0 failed`).
