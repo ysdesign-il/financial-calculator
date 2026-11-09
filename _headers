@@ -17,3 +17,15 @@
   Cache-Control: public, max-age=31536000, immutable
 /fonts/fonts.css
   Cache-Control: public, max-age=86400
+# 13.89: the app's scripts and language files are always asked for with their version (?v=…), so a copy can be kept for a year
+/app.js
+  Cache-Control: public, max-age=31536000, immutable
+/app-late.js
+  Cache-Control: public, max-age=31536000, immutable
+/tp/*
+  Cache-Control: public, max-age=31536000, immutable
+# pictures change rarely: keep them a week
+/img/*
+  Cache-Control: public, max-age=604800
+/shots/*
+  Cache-Control: public, max-age=604800

@@ -24,7 +24,9 @@ s = s.replace("  const nt = $('#nt-'+id);\n", """  const wn = $('#wn-'+id);
 """, 1)
 s = s.replace("sub: t('r_taxLabel', {n: MI(best[1] / 12) + ' / ' + t('o_perMonth')})", "sub: t('r_netRent') + ': ' + MI(yr - best[1])")
 # 13.65: modules that load a moment after the app opens (see splitter.js). Marked here, cut out after the texts are split.
-LATE_DEFAULT = 'ds2,dsig,qr_core,qr,pdfx,cvt,ds3,ds4,ds5,ocr,dsx,dstax,mx_engine,mx_solve,mx,mx2,cv,tf,nfc,sign'
+LATE_DEFAULT = 'ds2,dsig,qr_core,qr,pdfx,cvt,ds3,ds4,ds5,ocr,dsx,dstax,mx_engine,mx_solve,mx,mx2,cv,tf,nfc,sign,'
+# 13.89: more screens load a moment after the app opens (each one tested with scripts/early.js: the app works before they arrive)
+LATE_DEFAULT += 'fin14,fin13,fin12,fin11,fin10,mini_c,mini_b,mini_a,calcs2,calcs,tools3,ins,bk,fu,rm,nt,slip,lp,vt,dep,ex2,dualinc,hh,tv,v80,prn,ph_me,st6,rt,mk3,mig,v100,pic5,v79,v96,cmd,v87,pic'
 LATE_TABS = 'docscan,mathx,cv,taxfree,taxrefund,nfc,letter,vault,rcpt,scical,payslip'
 LATE_MODS = [m for m in os.environ.get('FIN_LATE', LATE_DEFAULT).split(',') if m and m != 'none']
 _bopen = open
@@ -39,6 +41,11 @@ def _mopen(path, *a, **k):
 open = _mopen
 exec(_bopen('post.py',encoding='utf-8').read())
 open = _bopen
+# 13.89: every screen whose calculation lives in a late module waits for it (found automatically, so moving a module to the late part is one word)
+for _lm in LATE_MODS:
+    _src = _bopen('p/' + _lm + '.js', encoding='utf-8').read()
+    for _tb in re.findall(r"\bCALC\.([A-Za-z0-9_]+)\s*=(?!=)", _src) + re.findall(r"\bminiDef\('([A-Za-z0-9_]+)'", _src):
+        if _tb not in LATE_TABS.split(','): LATE_TABS += ',' + _tb
 
 s = s.replace('localStorage.', 'LS.')
 shim = '''const RAWLS = window.localStorage, SS = window.sessionStorage;

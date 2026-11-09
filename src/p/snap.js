@@ -14,7 +14,7 @@
       const now = Date.now(); if (!force && now - last < 8000) return; last = now;
       const home = document.getElementById('panel-home'); if (!home || home.hidden || !home.childElementCount) return;
       const c = document.body.cloneNode(true);
-      c.querySelectorAll('script,noscript,template,[data-snap],.cp-ov,[hidden],.toast,.panel:not(#panel-home),iframe,video,canvas').forEach(e => e.remove());
+      c.querySelectorAll('script,noscript,template,[data-snap],.cp-ov,#late-skel,[hidden],.toast,.panel:not(#panel-home),iframe,video,canvas').forEach(e => e.remove());
       c.querySelectorAll('input,textarea').forEach(e => { e.removeAttribute('value'); if (e.tagName === 'TEXTAREA') e.textContent = ''; });
       const html = c.innerHTML;
       /* the styles the app added while running (the page's own ones are already in the page) */
