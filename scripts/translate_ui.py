@@ -1,6 +1,7 @@
 """Translate the app's interface texts into every language and write lang/<code>.json packs.
 
-Runs in GitHub Actions with the owner's Gemini key, stored only as the repository secret GEMINI_API_KEY (never in the site).
+13.91: no AI API keys anywhere (owner decision) – the workflow passes no key, so the script only notes what is missing.
+It still works if run by hand with a key in the environment (never stored in the repository or the site).
 Only missing or changed texts are translated, so every run continues where the last one
 stopped and a new interface text is picked up automatically. Standard library only.
 """

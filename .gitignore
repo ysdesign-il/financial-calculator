@@ -1,1 +1,15 @@
 __pycache__/
+
+# 13.91: local secrets, databases and logs never go into the repository
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+.wrangler/
+node_modules/
+*.db
+*.sqlite
+*.sqlite3
+*.pem
+*.key
+*.log
