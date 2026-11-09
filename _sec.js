@@ -7,7 +7,7 @@
 import {pushAll} from './_push.js';
 const REPO = 'ysdesign-il/financial-calculator', AUD = 'fin-sec', ISS = 'https://token.actions.githubusercontent.com';
 const KEY = 'sec:alerts';
-const J = (o, s = 200) => new Response(JSON.stringify(o), {status: s, headers: {'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store'}});
+const J = (o, s = 200) => new Response(JSON.stringify(o), {status: s, headers: {'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff'}});
 const b64u = s => Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(s.length / 4) * 4, '=')), c => c.charCodeAt(0));
 let JWKS = null, JWKS_AT = 0;
 async function verifyGh(req){

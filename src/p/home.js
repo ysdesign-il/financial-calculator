@@ -104,14 +104,14 @@ function calcHome(){
   if (items.length){
     const top = items[0], r = top.r;
     hh.classList.remove('empty');
-    hh.innerHTML = `<div class="l">${t('tab_' + top.id)} · ${strip(r.hero.label)}</div><div class="v num">${r.hero.value}</div>
-      <div class="s">${r.hero.sub ? strip(r.hero.sub) + '<br>' : ''}<span class="live-dot"></span>${t('home_live', {t: hmTime()})}</div>
+    hh.innerHTML = `<div class="l">${t('tab_' + top.id)} · ${asEsc(strip(r.hero.label))}</div><div class="v num">${r.hero.value}</div>
+      <div class="s">${r.hero.sub ? asEsc(strip(r.hero.sub)) + '<br>' : ''}<span class="live-dot"></span>${t('home_live', {t: hmTime()})}</div>
       ${sparkSVG(chartTotals(r.chart))}
       <button type="button" class="hh-go" data-go="${top.id}" data-i="home_open">${t('home_open')}</button>`;
     const rest = items.slice(1);
     ht.hidden = !rest.length;
     hs.innerHTML = rest.map(({id, r}) => `<button type="button" class="mine-c" data-go="${id}">${ICON[id] || ''}
-      <span class="mine-t">${t('tab_' + id)}</span><b class="num">${r.hero.value}</b><small>${strip(r.hero.label)}</small></button>`).join('');
+      <span class="mine-t">${t('tab_' + id)}</span><b class="num">${r.hero.value}</b><small>${asEsc(strip(r.hero.label))}</small></button>`).join('');
   } else {
     hh.classList.add('empty');
     hh.innerHTML = `<div class="l">${t('home_empty_t')}</div><div class="s">${t('home_empty_s')}</div>

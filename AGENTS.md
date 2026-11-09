@@ -49,3 +49,10 @@ with the generic notes `שיפורים ותיקונים.` / `تحسينات وإ
 - `_fin.js`: the website feedback inbox, the developer replies and the family sign-in list live in KV (`ib:calc`, `rp:calc`, `fam:calc`), filled by the half-hourly cron from the relay. The admin version reads `/admin/inbox.json` and `/admin/fam`. The public site only asks `/api/fam` (yes/no, rate-limited). `_legacy_*.json` seed the first read. They are not served.
 - `_acct.js` + D1 `fin-accounts` (binding `DB`): the optional cloud copy of an account and the cloud documents. Only locked packages are stored, under a fingerprint of the username, with a hash of a second password fingerprint. Each account has a `plan` (`free`) for later subscriptions. `/api/q` serves delayed share prices (cached 15 minutes).
 - The client side is `src/p/fin12.js` and `src/p/fin13.js`. Formulas are listed in `docs/FORMULAS.md`.
+
+## Security (13.91)
+
+- `node scripts/security_api.mjs` (Node 22+) attacks the server code locally (account/document API, prices, family check, the admin lock, the security-alert token): IDOR, squatting, enumeration, brute force, quotas, SQL injection, SSRF, CSRF, JWT forgery. It must end with `0 vulnerable`. It never touches the live site.
+- Cloud accounts (`_acct.js`): a new account's row key is a fingerprint of the name fingerprint + the password fingerprint, so a name cannot be taken first by someone else and a wrong password looks like "no copy". Rows stored before 13.91 keep their old key and still open. Document limits count the bytes really stored. The tables are in `db/schema.sql` (not served).
+- A moving link (`#migz=`) only fills keys that were empty on the device when the link was opened; it never replaces existing data.
+- No AI API keys anywhere: the translate workflow no longer passes one.

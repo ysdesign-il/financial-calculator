@@ -9,10 +9,10 @@ assert L[528].startswith('const TABS') and L[612].strip()=='};' and L[615].start
 assert L[743].startswith('const navEl') and L[860].startswith('/* ===') and 'navigation' in L[1243] and L[501].strip()=='};'
 out = []
 out.append(seg(1, 7) + '\n' + P('priv_head.html') + '\n' + seg(11, 11)); out.append(P('tokens.css')); out.append(seg(38, 231)); out.append(P('css.css')); out.append(P('theme.css')); out.append(P('design.css')); out.append(P('fx.css')); out.append(P('design2.css')); out.append(P('acc.css')); out.append(P('perf.css')); out.append(P('cv.css')); out.append(P('mx.css')); out.append(P('cur.css')); out.append(P('premium.css'))
-out.append(seg(232, 234)); out.append(P('body.html')); out.append(seg(267, 502)); out.append(P('i1.js')+P('i2.js')+P('i3.js')+P('i4.js')+P('i5.js')+P('i6.js')+P('i7.js')+P('i8.js')+P('i9.js')+P('i10.js')+P('i11.js')+P('i12.js')+P('i13.js')+P('i14.js')+P('i15.js')+P('i16.js')+P('i17.js')+P('i18.js')+P('i19.js')+P('i20.js')+P('i21.js')+P('i22.js')+P('i23.js')+P('i25.js')+P('i26.js')+P('i27.js')+P('i28.js')+P('i29.js')+P('i30.js')+P('i31.js')+P('i32.js')+P('i33.js')+P('i34.js')+P('i35.js')+P('i36.js')+P('i37.js')+P('i38.js')+P('i39.js')+P('i40.js')+P('i41.js')+P('i42.js')+P('i43.js')+P('i44.js')+P('i45.js')+P('i46.js')+P('i47.js')+P('i48.js')+P('i50.js')+P('i51.js')+P('i52.js')+P('i53.js')+P('i54.js')+P('i55.js')+P('i56.js')+P('i57.js')+P('i58.js')+P('i59.js')+P('i60.js')+P('i61.js')+P('i62.js')+P('i63.js')+P('i64.js')+P('i65.js')+P('i66.js')+P('i67.js')+P('i68.js')+P('i69.js')+P('i70.js')+P('i71.js')+P('i72.js')+P('i73.js')+P('i74.js')+P('i75.js')+P('i76.js')+P('i77.js')+P('i78.js')+P('i79.js')+P('i80.js')+P('i81.js')+P('i82.js')+P('i83.js')+P('i84.js')+P('i86.js')+P('i87.js')+P('i88.js')+P('i89.js')+P('i90.js')+P('i91.js'))
+out.append(seg(232, 234)); out.append(P('body.html')); out.append(seg(267, 502)); out.append(P('i1.js')+P('i2.js')+P('i3.js')+P('i4.js')+P('i5.js')+P('i6.js')+P('i7.js')+P('i8.js')+P('i9.js')+P('i10.js')+P('i11.js')+P('i12.js')+P('i13.js')+P('i14.js')+P('i15.js')+P('i16.js')+P('i17.js')+P('i18.js')+P('i19.js')+P('i20.js')+P('i21.js')+P('i22.js')+P('i23.js')+P('i25.js')+P('i26.js')+P('i27.js')+P('i28.js')+P('i29.js')+P('i30.js')+P('i31.js')+P('i32.js')+P('i33.js')+P('i34.js')+P('i35.js')+P('i36.js')+P('i37.js')+P('i38.js')+P('i39.js')+P('i40.js')+P('i41.js')+P('i42.js')+P('i43.js')+P('i44.js')+P('i45.js')+P('i46.js')+P('i47.js')+P('i48.js')+P('i50.js')+P('i51.js')+P('i52.js')+P('i53.js')+P('i54.js')+P('i55.js')+P('i56.js')+P('i57.js')+P('i58.js')+P('i59.js')+P('i60.js')+P('i61.js')+P('i62.js')+P('i63.js')+P('i64.js')+P('i65.js')+P('i66.js')+P('i67.js')+P('i68.js')+P('i69.js')+P('i70.js')+P('i71.js')+P('i72.js')+P('i73.js')+P('i74.js')+P('i75.js')+P('i76.js')+P('i77.js')+P('i78.js')+P('i79.js')+P('i80.js')+P('i81.js')+P('i82.js')+P('i83.js')+P('i84.js')+P('i86.js')+P('i87.js')+P('i88.js')+P('i89.js')+P('i90.js')+P('i91.js')+P('i92.js')+P('i93.js')+P('i94.js'))
 out.append(seg(503, 523)); out.append(P('crypto.js')); out.append(P('fx_official.js')); out.append(P('groups.js'))
 out.append(seg(530, 613)); out.append(P('ico.js'))
-out.append(seg(614, 615)); out.append(P('sico.js')+P('ui2a.js')+P('ui2b.js')+P('ui2d.js')+P('ui2c.js')+P('ui2e.js')+P('ui2f.js')+P('ui2g.js')+P('ui2h.js')+P('ui2i.js')+P('ui2j.js'))
+out.append(seg(614, 615)); out.append(P('sico.js')+P('ui2a.js')+P('ui2b.js')+P('ui2d.js')+P('ui2c.js')+P('ui2e.js')+P('ui2f.js')+P('ui2g.js')+P('ui2h.js')+P('ui2i.js')+P('ui2j.js')+P('ui2k.js'))
 out.append(P('home.js')+P('settings_ui.js')+P('tools.js')+P('saved_pre.js')+P('cv_pre.js')+P('mx_pre.js')+P('ds_pre.js')+P('tf_pre.js')+P('bk_pre.js')+P('fu_pre.js')+P('rm_pre.js')+P('nt_pre.js')+P('hub_pre.js')+P('mini_pre.js')+P('pz_pre.js')); out.append(seg(744, 860)); out.append(P('c1.js')+P('c2.js')+P('c3.js')+P('c4.js')+P('c5.js')+P('c6.js')+P('c7.js')+P('c8.js')+P('c9.js')+P('c10.js')+P('c11.js')+P('c12.js')+P('c13.js'))
 out.append(seg(1244, len(L)))
 s = '\n'.join(out)
@@ -24,7 +24,9 @@ s = s.replace("  const nt = $('#nt-'+id);\n", """  const wn = $('#wn-'+id);
 """, 1)
 s = s.replace("sub: t('r_taxLabel', {n: MI(best[1] / 12) + ' / ' + t('o_perMonth')})", "sub: t('r_netRent') + ': ' + MI(yr - best[1])")
 # 13.65: modules that load a moment after the app opens (see splitter.js). Marked here, cut out after the texts are split.
-LATE_DEFAULT = 'ds2,dsig,qr_core,qr,pdfx,cvt,ds3,ds4,ds5,ocr,dsx,dstax,mx_engine,mx_solve,mx,mx2,cv,tf,nfc,sign'
+LATE_DEFAULT = 'ds2,dsig,qr_core,qr,pdfx,cvt,ds3,ds4,ds5,ocr,dsx,dstax,mx_engine,mx_solve,mx,mx2,cv,tf,nfc,sign,'
+# 13.89: more screens load a moment after the app opens (each one tested with scripts/early.js: the app works before they arrive)
+LATE_DEFAULT += 'fin14,fin13,fin12,fin11,fin10,mini_c,mini_b,mini_a,calcs2,calcs,tools3,ins,bk,fu,rm,nt,slip,lp,vt,dep,ex2,dualinc,hh,tv,v80,prn,ph_me,st6,rt,mk3,mig,v100,pic5,v79,v96,cmd,v87,pic'
 LATE_TABS = 'docscan,mathx,cv,taxfree,taxrefund,nfc,letter,vault,rcpt,scical,payslip'
 LATE_MODS = [m for m in os.environ.get('FIN_LATE', LATE_DEFAULT).split(',') if m and m != 'none']
 _bopen = open
@@ -39,6 +41,11 @@ def _mopen(path, *a, **k):
 open = _mopen
 exec(_bopen('post.py',encoding='utf-8').read())
 open = _bopen
+# 13.89: every screen whose calculation lives in a late module waits for it (found automatically, so moving a module to the late part is one word)
+for _lm in LATE_MODS:
+    _src = _bopen('p/' + _lm + '.js', encoding='utf-8').read()
+    for _tb in re.findall(r"\bCALC\.([A-Za-z0-9_]+)\s*=(?!=)", _src) + re.findall(r"\bminiDef\('([A-Za-z0-9_]+)'", _src):
+        if _tb not in LATE_TABS.split(','): LATE_TABS += ',' + _tb
 
 s = s.replace('localStorage.', 'LS.')
 shim = '''const RAWLS = window.localStorage, SS = window.sessionStorage;

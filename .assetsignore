@@ -28,3 +28,28 @@ _legacy_family.json
 replies.json
 docs
 _acct.js
+# 13.91 (security review): never publish database files, local secrets, logs, backups or source maps, even if one lands in the folder by mistake.
+# (_headers must NOT be listed here: it is read at deploy time and is not served.)
+db
+.gitignore
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+*.sql
+*.db
+*.sqlite
+*.sqlite3
+*.pem
+*.key
+*.p12
+*.log
+*.bak
+*.orig
+*.swp
+*~
+*.map
+*.zip
+*.bundle
+__pycache__
+*.pyc

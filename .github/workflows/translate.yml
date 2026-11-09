@@ -23,8 +23,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Translate missing interface texts
+        # 13.91: no AI API keys anywhere (owner decision) – the workflow no longer hands any AI key to the script,
+        # so it only reports which texts are missing. Delete the repository secret GEMINI_API_KEY and revoke the key.
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           MAX_MINUTES: '20'
           PUBLISH: '1'
         run: python scripts/translate_ui.py

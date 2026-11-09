@@ -94,6 +94,7 @@ function __lateRun(f){
   __lateDone = true;
   try { f(__C, __L); } catch (e) { try { console.error(e); } catch (er) {} }
   try { document.documentElement.dataset.late = '1'; document.body.classList.remove('late-wait'); } catch (e) {}
+  __lateSkel(false);
   const w = __lateWant; __lateWant = null;
   if (w) { try { activate.apply(w.self, w.a); } catch (e) {} }
   else if (LATE_TABS.includes(tab)) { try { activate(tab); } catch (e) {} }
@@ -107,6 +108,22 @@ function __lateFetch(){
   const s = document.createElement('script'); s.async = true; s.dataset.late = '1'; s.src = s0.src.replace(/([?&])r=[0-9]+/, '') + (s0.src.indexOf('?') < 0 ? '?' : '&') + 'r=' + __lateRetry;
   document.head.appendChild(s);
 }
+/* 13.89: while a screen waits for the late part, the shape of a calculator screen is shown (grey blocks that shimmer), not the old screen */
+function __lateSkel(on){
+  try {
+    let o = document.getElementById('late-skel');
+    if (!on){ if (o) o.remove(); return; }
+    if (o) return;
+    o = document.createElement('div'); o.id = 'late-skel'; o.setAttribute('aria-hidden', 'true');
+    let bg = ''; try { bg = getComputedStyle(document.body).backgroundColor; } catch (e) {}
+    o.style.background = bg && bg !== 'rgba(0, 0, 0, 0)' ? bg : '#eef1f6';
+    const bx = c => '<i class="ls-b" style="' + c + '"></i>';
+    let f = ''; for (let i = 0; i < 4; i++) f += bx('width:34%;height:12px;margin:22px 0 8px;margin-inline-end:auto') + bx('height:46px');
+    o.innerHTML = '<div class="ls-top">' + bx('width:40px;height:40px;border-radius:50%') + bx('width:46%;height:22px') + '</div>'
+      + '<div class="ls-in">' + bx('height:118px;border-radius:20px;margin-top:6px') + f + '</div>';
+    document.body.appendChild(o);
+  } catch (e) {}
+}
 function __lateKick(){ const f = window.__FIN_LATE_Q; if (f){ window.__FIN_LATE_Q = null; __lateRun(f); } }
 window.__FIN_LATE = f => { if (__lateInit) setTimeout(() => __lateRun(f), 0); else window.__FIN_LATE_Q = f; };
 { const act0 = activate;
@@ -115,16 +132,16 @@ window.__FIN_LATE = f => { if (__lateInit) setTimeout(() => __lateRun(f), 0); el
       if (LATE_TABS.includes(id)){
         __lateWant = {self: this, a: arguments}; __lateKick();
         if (!__lateDone){
-          try { document.body.classList.add('late-wait'); if (typeof toast === 'function') toast(t('late_wait')); } catch (e) {}
+          try { document.body.classList.add('late-wait'); __lateSkel(true); if (typeof toast === 'function') toast(t('late_wait')); } catch (e) {}
           clearTimeout(__lateFetch.t); __lateFetch.t = setTimeout(__lateFetch, 4000);
         }
         return;
       }
-      __lateWant = null; try { document.body.classList.remove('late-wait'); } catch (e) {}
+      __lateWant = null; try { document.body.classList.remove('late-wait'); } catch (e) {} __lateSkel(false);
     }
     return act0.apply(this, arguments);
   }; }
-try { const st = document.createElement('style'); st.textContent = 'body.late-wait{cursor:progress}body.late-wait::before{content:"";position:fixed;top:0;inset-inline:0;height:3px;z-index:99999;background:linear-gradient(90deg,transparent,var(--gold,#E8B13A),transparent);background-size:50% 100%;background-repeat:no-repeat;animation:lateBar 1s linear infinite}@keyframes lateBar{from{background-position:-50% 0}to{background-position:150% 0}}@media (prefers-reduced-motion:reduce){body.late-wait::before{animation:none;background:var(--gold,#E8B13A);opacity:.6}}'; document.head.appendChild(st); } catch (e) {}
+try { const st = document.createElement('style'); st.textContent = 'body.late-wait{cursor:progress}body.late-wait::before{content:"";position:fixed;top:0;inset-inline:0;height:3px;z-index:99999;background:linear-gradient(90deg,transparent,var(--gold,#E8B13A),transparent);background-size:50% 100%;background-repeat:no-repeat;animation:lateBar 1s linear infinite}@keyframes lateBar{from{background-position:-50% 0}to{background-position:150% 0}}#late-skel{position:fixed;inset:0;z-index:9000;overflow:hidden;pointer-events:none}#late-skel .ls-top{display:flex;align-items:center;gap:14px;padding:18px 18px 10px}#late-skel .ls-in{padding:8px 22px;max-width:620px;margin:0 auto}#late-skel .ls-b{display:block;border-radius:12px;background:linear-gradient(90deg,rgba(128,140,160,.16) 0,rgba(128,140,160,.30) 40%,rgba(128,140,160,.16) 80%) 0 0/300% 100%;animation:lsSh 1.4s linear infinite}@keyframes lsSh{0%{background-position:100% 0}100%{background-position:-50% 0}}@media (prefers-reduced-motion:reduce){body.late-wait::before{animation:none;background:var(--gold,#E8B13A);opacity:.6}#late-skel .ls-b{animation:none}}'; document.head.appendChild(st); } catch (e) {}
 `;
 const tailInit = `
 __lateInit = true;

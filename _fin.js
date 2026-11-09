@@ -12,13 +12,21 @@ import LEG_FAMILY from './_legacy_family.json';
 const APP = 'calc', TOPIC = 'fc-in-318ca4899cb6f959f4e4de51';
 const PUB = {kty: 'RSA', e: 'AQAB', n: 'wxtR5meXd5lblZDdURSscmj48iXULVTtEJtrqAj6Lsm6GnSd18JVzEuhQfgRZJZ-3BXPJNaUWFEwRh2YAYsNpeceOWkrKeq3R4vigswqUDVSphAe-v_UUQoCpRXT3vypPYbBps_6ndsVcn96UjdW1Azz12ZrIn0JJprYVhZEh7UDpVoXM0WUHOxItdNHWfeOJ_D9dZXrYPlup9GANJsPMygFPbIv2bdIwHjoPxhir3ZmmGilH5yqTvOJw1Rc504ofLc9JY3oM1cR0pedexJbU8vZwrU2i5atTNvFRNvlh31HH7HrR5FZ1NZxHnRlyMit-lqGIlxA2THDeLLkqr_INQ'};
 const K_IB = 'ib:' + APP, K_RP = 'rp:' + APP, K_FAM = 'fam:' + APP;
-const J = (o, st) => new Response(JSON.stringify(o), {status: st || 200, headers: {'content-type': 'application/json', 'cache-control': 'no-store'}});
+const J = (o, st) => new Response(JSON.stringify(o), {status: st || 200, headers: {'content-type': 'application/json', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff'}});
 const enc = new TextEncoder(), hex = b => Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join('');
 const b64d = s => Uint8Array.from(atob(String(s)), c => c.charCodeAt(0));
 async function kv(env, k, d){ try { const v = await env.CFG.get(k, 'json'); return v == null ? d : v; } catch (e) { return d; } }
 const put = (env, k, v) => env.CFG.put(k, JSON.stringify(v));
-async function inbox(env){ return kv(env, K_IB, LEG_INBOX && Array.isArray(LEG_INBOX.m) ? LEG_INBOX : {v: 1, m: []}); }
-async function family(env){ return kv(env, K_FAM, LEG_FAMILY && Array.isArray(LEG_FAMILY.m) ? LEG_FAMILY : {v: 1, m: []}); }
+/* 13.91: the first read copies the old seed files into the private storage, so the seed files can later be deleted
+   from the repository without losing anything (they hold fingerprints that should not stay in a public repository) */
+async function seeded(env, k, leg){
+  const d = leg && Array.isArray(leg.m) ? leg : {v: 1, m: []};
+  let v = null; try { v = await env.CFG.get(k, 'json'); } catch (e) { return d; }
+  if (v == null){ if (d.m.length){ try { await put(env, k, d); } catch (e) {} } return d; }
+  return v;
+}
+async function inbox(env){ return seeded(env, K_IB, LEG_INBOX); }
+async function family(env){ return seeded(env, K_FAM, LEG_FAMILY); }
 async function replies(env){ return kv(env, K_RP, {v: 1, r: []}); }
 
 /* ---- the family check: yes or no, rate-limited ---- */
@@ -28,7 +36,7 @@ function limited(k){ const now = Date.now(), a = (HITS.get(k) || []).filter(t =>
 export async function famCheck(req, env){
   if (req.method !== 'POST') return J({ok: false}, 405);
   if (limited(await ipKey(req))) return J({ok: false, e: 'wait'}, 429);
-  let h = ''; try { h = String((await req.json()).h || ''); } catch (e) {}
+  let h = ''; try { const t = await req.text(); if (t.length > 2000) return J({ok: false}, 413); h = String(JSON.parse(t).h || ''); } catch (e) {}
   if (!/^[0-9a-f]{64}$/.test(h)) return J({ok: false}, 400);
   const L = await family(env);
   return J({ok: (L.m || []).some(x => x && x.h === h)});
@@ -47,7 +55,7 @@ export async function finAdmin(req, env, path){
   }
   return null;
 }
-export async function repliesPublic(env){ const r = await replies(env); return new Response(JSON.stringify(r), {headers: {'content-type': 'application/json', 'cache-control': 'no-store'}}); }
+export async function repliesPublic(env){ const r = await replies(env); return new Response(JSON.stringify(r), {headers: {'content-type': 'application/json', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff'}}); }
 
 /* ---- every half hour: collect from the relay ---- */
 async function verify(raw, sig){
