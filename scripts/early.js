@@ -10,6 +10,7 @@ const LATE = (process.argv[2] || 'scical').split(',');
   for (const lang of ['he', 'en']) for (const want of LATE){
     const c = await b.newContext({viewport: {width: 390, height: 844}, serviceWorkers: 'block'});
     await c.addInitScript(l => { try { localStorage.setItem('fin-lang', l); } catch (e) {} }, lang);
+    await c.addInitScript(() => { try { localStorage.setItem('fin-consent', JSON.stringify({v: 1, at: 'test'})); } catch (e) {} });
     let release; const gate = new Promise(r => { release = r; });
     await c.route('**/*', async r => { const u = r.request().url(); if (!u.startsWith('http://localhost:8766')) return r.abort(); if (/app-late\.js/.test(u)) await gate; r.continue(); });
     const p = await c.newPage(), errs = [];

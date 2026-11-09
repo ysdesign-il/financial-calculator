@@ -5,6 +5,7 @@ const root = path.resolve(__dirname, '..');
 const srv = http.createServer((q, s) => { let p = decodeURIComponent(q.url.split('?')[0]); if (p === '/') p = '/index.html'; const f = path.join(root, p); if (!f.startsWith(root) || !fs.existsSync(f)) { s.writeHead(404); return s.end(); } s.end(fs.readFileSync(f)); }).listen(8765);
 (async () => {
   const b = await chromium.launch(), c = await b.newContext({viewport: {width: 390, height: 844}});
+  await c.addInitScript(() => { try { localStorage.setItem('fin-consent', JSON.stringify({v: 1, at: 'test'})); } catch (e) {} }); // 13.90: the tests have already agreed to the privacy terms
   await c.route('**/*', r => r.request().url().startsWith('http://localhost:8765') ? r.continue() : r.abort());
   const p = await c.newPage(), errs = [];
   p.on('pageerror', e => errs.push(String(e).slice(0, 300)));
