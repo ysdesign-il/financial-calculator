@@ -10,6 +10,9 @@
 var PRIV = false; try { PRIV = window['local' + 'Storage'].getItem('fin-priv') === '1'; } catch (e) {}
 /* 13.8: which of the app's keys existed before this visit wrote anything (to tell a real user from a first visit when moving address) */
 var FIN_K0 = []; try { var _ls = window['local' + 'Storage']; for (var _i = 0; _i < _ls.length; _i++){ var _k = _ls.key(_i); if (_k && _k.indexOf('fin-') === 0) FIN_K0.push(_k); } } catch (e) {}
+/* 13.91: a moving link (#migz=) may reload the page once before it is read; what was on the device when the link was first
+   opened in this tab is kept for that reload, so the link can only ever fill what was empty then */
+try { if (/^#migz=/.test(location.hash) && !window.sessionStorage.getItem('fin-mig-k0')) window.sessionStorage.setItem('fin-mig-k0', JSON.stringify(FIN_K0)); } catch (e) {}
 /* 13.12: the site's own address – the Claude app reads the shared data files (rates, version…) from here */
 var SITE_BASE = 'https://financial-calculator.design-il.workers.dev/';
 /* 13.48: on the site the main fonts are plain files of the site (/fonts/, no server request); the rarer ones (themes, clock) still come
@@ -2664,7 +2667,7 @@ body:has(#panel-mathx:not([hidden])) :is(#explainBtn,#resetTab){display:none}
   /* until the app starts, only the picture is shown (the page's own parts wait, hidden) */
   var st = d.createElement('style');
   st.textContent = 'body>:not([data-snap]):not(script):not(style){display:none!important}[data-snap] #hclock *{visibility:hidden}[data-snap]{pointer-events:none}'
-    + '@keyframes finSp{0%,100%{opacity:.35}50%{opacity:1}}@media (prefers-reduced-motion:reduce){[data-snap] img{animation:none!important}}';
+    + '@keyframes finSp{0%,100%{opacity:.35}50%{opacity:1}}@keyframes finSk{0%{background-position:100% 0}100%{background-position:-50% 0}}@media (prefers-reduced-motion:reduce){[data-snap] img,[data-snap] i{animation:none!important}}';
   d.head.appendChild(st);
   if (s){
     try {
@@ -2675,9 +2678,22 @@ body:has(#panel-mathx:not([hidden])) :is(#explainBtn,#resetTab){display:none}
     } catch (e) { s = null; while (b.firstChild && b.firstChild !== first) b.removeChild(b.firstChild); }
   }
   if (!s){
-    var o = d.createElement('div'); o.setAttribute('data-snap', '1');
-    o.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:2147483000;background:#0b1220';
-    o.innerHTML = '<img src="icon-192.png" alt="" width="76" height="76" style="position:absolute;top:50%;left:50%;margin:-38px 0 0 -38px;border-radius:18px;animation:finSp 1.6s ease-in-out infinite">';
+    /* 13.89: a first visit shows the shape of the home screen (grey blocks that shimmer) instead of an empty splash, so the
+       screen looks alive from the first moment. Only shapes – no text, nothing clickable; the real screen replaces it. */
+    var o = d.createElement('div'); o.setAttribute('data-snap', '1'); o.setAttribute('aria-hidden', 'true');
+    var bx = function(css){ return '<i style="display:block;border-radius:12px;' + css + '"></i>'; };
+    var sh = 'background:linear-gradient(90deg,#dce2eb 0,#eef2f7 40%,#dce2eb 80%) 0 0/300% 100%;animation:finSk 1.4s linear infinite;';
+    var dk = 'background:rgba(255,255,255,.08);';
+    var tiles = ''; for (var q = 0; q < 4; q++) tiles += bx(sh + 'height:96px;border-radius:18px');
+    o.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:2147483000;background:#eef1f6;overflow:hidden';
+    o.innerHTML = '<div style="background:linear-gradient(180deg,#070D1E,#0E1830);padding:16px 16px 14px">'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">' + bx(dk + 'width:150px;height:30px') + bx(dk + 'width:96px;height:36px;border-radius:12px') + '</div>'
+      + bx(dk + 'height:42px;margin-top:14px;border-radius:14px') + '</div>'
+      + '<div style="padding:26px 34px 0;max-width:620px;margin:0 auto">'
+      + bx(sh + 'width:120px;height:30px;margin-inline-end:auto') + bx(sh + 'width:78%;height:14px;margin-top:14px;margin-inline-end:auto')
+      + bx(sh + 'height:136px;margin-top:22px;border-radius:20px') + bx(sh + 'height:150px;margin-top:20px;border-radius:20px')
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px">' + tiles + '</div></div>'
+      + '<div style="position:absolute;left:12px;right:12px;bottom:10px;height:72px;border-radius:22px;background:#0E1830"></div>';
     b.insertBefore(o, first);
   }
   window.__snapOff = function(){
@@ -2734,9 +2750,9 @@ body:has(#panel-mathx:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 <div class="toast" id="toast" role="status" hidden></div>
 
 
-<script>var HTML_BUILD = '20261106.121714';</script>
-<script>(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}if(!l){try{l=(navigator.languages&&navigator.languages[0])||navigator.language||''}catch(e){}}l=String(l).toLowerCase();var p=/^(he|iw)/.test(l)?'he':/^ar/.test(l)?'ar':'en';window.__FIN_TPL=p;if(!(window.__FIN_TP&&window.__FIN_TP[p]))document.write('<script src="tp/'+p+'.js?v=20261106.121714"><\/script>');})();</script>
-<script src="app.js?v=20261106.121714"></script>
+<script>var HTML_BUILD = '20261109.183440';</script>
+<script>(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}if(!l){try{l=(navigator.languages&&navigator.languages[0])||navigator.language||''}catch(e){}}l=String(l).toLowerCase();var p=/^(he|iw)/.test(l)?'he':/^ar/.test(l)?'ar':'en';window.__FIN_TPL=p;if(!(window.__FIN_TP&&window.__FIN_TP[p]))document.write('<script src="tp/'+p+'.js?v=20261109.183440"><\/script>');})();</script>
+<script src="app.js?v=20261109.183440"></script>
 <script src="/__pub.js" defer></script>
 </body>
 </html>
