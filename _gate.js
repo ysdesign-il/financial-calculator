@@ -19,7 +19,7 @@ const FAILS=new Map(),ERRRATE=new Map(),FBRATE=new Map(),OKSES=new Map();
 const ipKey=async req=>hex(await crypto.subtle.digest('SHA-256',enc.encode('rl:'+(req.headers.get('cf-connecting-ip')||'?')))).slice(0,16);
 function tooMany(ip){const now=Date.now(),a=(FAILS.get(ip)||[]).filter(t=>now-t<15*60e3);FAILS.set(ip,a);return a.length>=8}
 function fail(ip){const a=FAILS.get(ip)||[];a.push(Date.now());FAILS.set(ip,a)}
-const J=(o,st,extra)=>new Response(JSON.stringify(o),{status:st||200,headers:Object.assign({'content-type':'application/json','cache-control':'no-store'},extra||{})});
+const J=(o,st,extra)=>new Response(JSON.stringify(o),{status:st||200,headers:Object.assign({'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff'},extra||{})});
 const CSP="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https: data: blob:; worker-src 'self' blob:; frame-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'self'";
 const SEC={'x-robots-tag':'noindex, nofollow','referrer-policy':'no-referrer','x-frame-options':'DENY','cache-control':'no-store, private','content-security-policy':CSP,'x-content-type-options':'nosniff'};
 async function kvGet(env,k,d){try{const v=await env.CFG.get(k,'json');return v==null?d:v}catch(e){return d}}
