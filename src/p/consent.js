@@ -93,3 +93,13 @@ document.head.insertAdjacentHTML('beforeend', `<style>
 .cg-form{font-size:.92rem;margin:12px 0 8px}
 </style>`);
 cgGate();
+/* the privacy policy gets the amendment-13 sections: consent and how long things are kept (new), breaches under security,
+   a complaint to the authority under rights, and the history line */
+(function(){
+  const P = LG_DOCS.priv.parts, at = h => P.findIndex(p => p[0] === h);
+  const add = (h, k) => { const p = P[at(h)]; if (p && !p[1].includes(k)) p[1].push(k); };
+  add('lg_p_secH', 'lg_p_sec2'); add('lg_p_rightsH', 'lg_p_r4');
+  const li = at('lg_p_lawH');
+  if (at('lg_p_consH') < 0 && li >= 0) P.splice(li + 1, 0, ['lg_p_consH', ['lg_p_cons']], ['lg_p_retH', ['lg_p_ret']]);
+  const Hh = P[at('lg_histH')]; if (Hh && !Hh[1].includes('lg_h_p0911')) Hh[1].unshift('lg_h_p0911');
+})();
