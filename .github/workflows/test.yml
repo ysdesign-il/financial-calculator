@@ -4,7 +4,7 @@ on:
   workflow_dispatch:      # from developer mode in the app, or from GitHub
   push:                   # and after every change to the app: every screen is opened in 3 languages
     branches: [main]
-    paths: ['index.html', 'app.js', 'app-late.js', 'sw.js', 'tp/**']
+    paths: ['index.html', 'app.js', 'app-late.js', 'sw.js', 'tp/**', '_headers', '_gate.js', 'worker.js']
 
 permissions:
   contents: read
@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: '20'
+          node-version: '22'
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.12'
@@ -27,5 +27,7 @@ jobs:
           npm i --no-save playwright@1.47.2 >/dev/null 2>&1
           npx playwright install --with-deps chromium >/dev/null 2>&1
           node scripts/smoke.js
+      - name: Content-Security-Policy (no inline script may be needed; every screen, the admin version)
+        run: node scripts/csp.js
       - name: Formula checks (known answers)
         run: node scripts/formulas.js

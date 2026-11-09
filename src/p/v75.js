@@ -665,7 +665,8 @@ function dcRun(code){
   DC.ran = true;
   try {
     if (code.css){ const st = document.createElement('style'); st.id = 'devcode-css'; st.textContent = String(code.css); document.head.appendChild(st); }
-    if (code.js){ const sc = document.createElement('script'); sc.id = 'devcode-js'; sc.textContent = '(function(FinApp){try{\n' + String(code.js) + '\n}catch(e){console.warn("devcode",e);}})(window.FinApp);'; document.body.appendChild(sc); }
+    /* 13.93: the site and the admin version allow no inline script (Content-Security-Policy), so a draft's script part runs only in the app inside Claude */
+    if (code.js && typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE){ const sc = document.createElement('script'); sc.id = 'devcode-js'; sc.textContent = '(function(FinApp){try{\n' + String(code.js) + '\n}catch(e){console.warn("devcode",e);}})(window.FinApp);'; document.body.appendChild(sc); }
     setTimeout(() => { try { if (tab === 'home') renderMarket(); else calc(tab); } catch (e) {} }, 0);
   } catch (e) { DC.err = String(e && e.message || e); }
 }

@@ -1,4 +1,5 @@
 # security and caching headers for the whole site (Cloudflare reads this file; it is not served)
+# 13.93: no 'unsafe-inline' for scripts – the page's few inline scripts are allowed by their SHA-256, which src/build.py writes here
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
@@ -6,7 +7,7 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   Access-Control-Allow-Origin: *
   X-Frame-Options: SAMEORIGIN
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https:; worker-src 'self' blob: https://cdn.jsdelivr.net; frame-src 'self' https://www.tradingview-widget.com https://s.tradingview.com; manifest-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-xSGbSvCJdg2Tz2FPhEeaBPsvOWf0TPXE/t2SNIwTaY0=' 'sha256-5nj6XzOmqzNQPkk2Hja/U0gW17dPtnZ2HZtbizEChfY=' 'sha256-9XoCCFOJnbk9lgoTZm8K8kC7QzCrGtOTwLtPYVsRTMM=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net/npm/pdfjs-dist@6.2.108/ https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js https://cdn.jsdelivr.net/gh/jiggzson/nerdamer@v1.1.12/all.min.js; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https:; worker-src 'self' blob: https://cdn.jsdelivr.net/npm/pdfjs-dist@6.2.108/; frame-src 'self' https://www.tradingview-widget.com https://s.tradingview.com; manifest-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
 /sw.js
   Cache-Control: no-cache
 /version.json

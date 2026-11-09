@@ -20,8 +20,13 @@ const ipKey=async req=>hex(await crypto.subtle.digest('SHA-256',enc.encode('rl:'
 function tooMany(ip){const now=Date.now(),a=(FAILS.get(ip)||[]).filter(t=>now-t<15*60e3);FAILS.set(ip,a);return a.length>=8}
 function fail(ip){const a=FAILS.get(ip)||[];a.push(Date.now());FAILS.set(ip,a)}
 const J=(o,st,extra)=>new Response(JSON.stringify(o),{status:st||200,headers:Object.assign({'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff'},extra||{})});
-const CSP="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https: data: blob:; worker-src 'self' blob:; frame-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'self'";
+/* 13.93: no 'unsafe-inline' and no 'unsafe-eval' for scripts. Every page this lock serves is sent with the SHA-256 of each of its own
+   inline scripts (htmlCsp below), so a script or on…= attribute injected into the page later can never run */
+const CSPX=h=>"default-src 'self'; script-src 'self'"+(h?' '+h:'')+" 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https: data: blob:; worker-src 'self' blob:; frame-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'self'";
+const CSP=CSPX('');
 const SEC={'x-robots-tag':'noindex, nofollow','referrer-policy':'no-referrer','x-frame-options':'DENY','cache-control':'no-store, private','content-security-policy':CSP,'x-content-type-options':'nosniff'};
+async function htmlCsp(t){const S=new Set();for(const m of String(t).matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi))if(!/\ssrc\s*=/i.test(m[1]))S.add("'sha256-"+btoa(String.fromCharCode(...new Uint8Array(await crypto.subtle.digest('SHA-256',enc.encode(m[2])))))+"'");return CSPX([...S].join(' '))}
+async function htmlRes(t,st,hd){hd=hd instanceof Headers?hd:new Headers(Object.assign({'content-type':'text/html; charset=utf-8'},SEC,hd||{}));hd.set('content-security-policy',await htmlCsp(t));return new Response(t,{status:st||200,headers:hd})}
 async function kvGet(env,k,d){try{const v=await env.CFG.get(k,'json');return v==null?d:v}catch(e){return d}}
 const sh=async id=>hex(await crypto.subtle.digest('SHA-256',enc.encode('h:'+id))).slice(0,16);
 const rid=()=>hex(crypto.getRandomValues(new Uint8Array(20)));
@@ -139,11 +144,11 @@ export async function adminGate(req,serve,o,env){
   if(p==='/admin/__newses'&&req.method==='POST'&&KV){if(!(await keyOk(req.headers.get('x-adm-key')||'',env)))return J({ok:false},401);let v={};try{v=await req.json()}catch(e){}return J({ok:true,id:await sesNew(env,o,req,v,req.headers.get('x-adm-key'))})}
   if(p==='/admin/__sw.js')return new Response(PUSH_SW,{headers:{'content-type':'text/javascript; charset=utf-8','cache-control':'no-cache','x-robots-tag':'noindex'}});
   const id=cookieSes(req);
-  if(p==='/admin/__logout'){if(req.method!=='POST')return new Response(logoutPage(o),{status:200,headers:Object.assign({'content-type':'text/html; charset=utf-8'},SEC)});
+  if(p==='/admin/__logout'){if(req.method!=='POST')return htmlRes(logoutPage(o));
     if(id){if(KV)await env.CFG.delete(SKEY(o,id));else if(o.upstream){try{await fetch(o.upstream+'/admin/__logout',{method:'POST',headers:{cookie:'adm='+id,'x-adm-up':'1'},redirect:'manual'})}catch(e){}}OKSES.delete(id)}
     return new Response(null,{status:303,headers:{location:u.origin+'/admin/','set-cookie':COOK('',0),'cache-control':'no-store','clear-site-data':'"cache"'}})}
   if(!(await sesOk(env,o,id,req))){if(req.method!=='GET'&&req.method!=='HEAD'||p.startsWith('/admin/__'))return J({ok:false},401);
-    return new Response(loginPage(o),{status:200,headers:Object.assign({'content-type':'text/html; charset=utf-8'},SEC)})}
+    return htmlRes(loginPage(o))}
   if(p==='/admin/__kit.js')return new Response('window.__ADMKIT='+JSON.stringify(Object.assign({app:o.app,title:o.title,accent:o.accent,parts:o.parts||[]},o.kit||{}))+';\n'+KIT,{headers:Object.assign({'content-type':'text/javascript; charset=utf-8'},SEC)});
   if(p==='/admin/__qr.js')return new Response(QR,{headers:Object.assign({'content-type':'text/javascript; charset=utf-8'},SEC)});
   if(p==='/admin/__who')return J({ok:true});
@@ -189,7 +194,7 @@ export async function adminGate(req,serve,o,env){
       return J({ok:true,docs:D})}
     return J({ok:false},404)}
   const r=await serve(req);const hd=new Headers(r.headers);for(const k in SEC)hd.set(k,SEC[k]);
-  if((hd.get('content-type')||'').includes('text/html')){hd.delete('content-length');const shim=keyShim(o,await devKey(env,o,id));let t=(await r.text()).replace('</body>','<script src="/admin/__kit.js" defer></script>'+(o.bridge?'<script>'+o.bridge+'</script>':'')+'</body>');t=t.replace(/<head[^>]*>/i,m=>m+'<script>window.__FIN_ADMSES__=1</script>');t=/<head[^>]*>/i.test(t)?t.replace(/<head[^>]*>/i,m=>m+shim):shim+t;return new Response(t,{status:r.status,headers:hd})}
+  if((hd.get('content-type')||'').includes('text/html')){hd.delete('content-length');const shim=keyShim(o,await devKey(env,o,id));let t=(await r.text()).replace('</body>','<script src="/admin/__kit.js" defer></script>'+(o.bridge?'<script>'+o.bridge+'</script>':'')+'</body>');t=t.replace(/<head[^>]*>/i,m=>m+'<script>window.__FIN_ADMSES__=1</script>');t=/<head[^>]*>/i.test(t)?t.replace(/<head[^>]*>/i,m=>m+shim):shim+t;return htmlRes(t,r.status,hd)}
   return new Response(r.body,{status:r.status,headers:hd})}
 /* GitHub writes from the admin panel: only allowed files and workflows, with the key that lives in the Worker (secret GH_TOKEN) */
 const b64t=t=>{const u=enc.encode(t);let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)};

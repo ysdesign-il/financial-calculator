@@ -63,3 +63,12 @@ with the generic notes `שיפורים ותיקונים.` / `تحسينات وإ
 - Alerts (table `secalert`, at most one per kind per hour) go into the owner inbox (`ib:calc`) as a normal locked `fc1.` message (`inboxAdd` in `_fin.js`): ≥5 failed admin sign-ins in about 15 minutes, any sign-in lock, ≥50 refusals (429) in about 10 minutes, any blocked cross-site write.
 - The owner sees "פעילות חשודה" (last 7 days, grouped) at the top of the inbox in the admin version (`src/p/fin15.js`, texts `src/p/i95.js`), read from `/admin/suspicious.json` behind the admin lock.
 - `node scripts/security_alerts.mjs` tests it locally (must end with `0 failed`).
+
+## Content-Security-Policy (13.93)
+
+- No `'unsafe-inline'` or `'unsafe-eval'` for scripts, on the site (`_headers`) or in the admin version (`_gate.js`). Never add inline `on…=` attributes, `javascript:` links, inline `<script>` blocks, `eval`/`new Function` or string timers: use `addEventListener` / delegated `data-…` handlers and script files.
+- The site's few inline scripts (the head script of `src/orig.html`, `src/p/snap_early.html`, the build/language loader) are allowed by their SHA-256: `src/build.py` writes the hashes into `_headers` (and the publish workflow commits it). The build number is on the loader's tag (`data-build`), so the hashes change only when those scripts change.
+- `_gate.js` sends every HTML page it serves (sign-in, sign-out, the admin version) with the SHA-256 of that page's own inline scripts (`htmlCsp`).
+- jsdelivr is allowed only for the exact fallback files (pdf.js 6.2.108, pdf-lib 1.17.1, jszip 3.10.1, nerdamer 1.1.12); `'wasm-unsafe-eval'` stays for text recognition and pdf.js.
+- A developer-code draft's script part runs only inside the Claude app (its CSS still applies everywhere).
+- `node scripts/csp.js` (Node 22+) serves the built site through the real `worker.js` with these headers, opens every screen in 3 languages, taps the buttons, feeds files to every file picker, loads the PDF/ZIP/algebra/OCR parts and opens the admin version with a test session; it must end with `CSP violations: 0`. `python3 scripts/check.py` checks the hashes in `_headers`.

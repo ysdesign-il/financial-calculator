@@ -79,7 +79,7 @@ self.addEventListener('fetch', e => {
     const kept = () => caches.match(key).then(m => m || caches.match(r, {ignoreSearch: true})).then(m => m || caches.match('index.html'));
     e.respondWith((async () => {
       let k = null; try { k = await kept(); } catch (er) {}
-      if (k && (!want || (await k.clone().text().catch(() => '')).indexOf("HTML_BUILD = '" + want + "'") !== -1)) return k;
+      if (k && (!want || (/(?:HTML_BUILD = '|data-build=")([^'"]+)/.exec(await k.clone().text().catch(() => '')) || [])[1] === want)) return k;
       return new Promise(ok => {
         let done = false; const fin = x => { if (!done && x){ done = true; ok(x); } };
         const t = setTimeout(() => { if (k) fin(k); }, 2500);

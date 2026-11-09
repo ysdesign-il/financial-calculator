@@ -35,6 +35,20 @@ for l in ("he", "ar", "en"):
 if packs:
     if set(packs.get("he", {})) != set(packs.get("ar", {})) or set(packs.get("he", {})) != set(packs.get("en", {})): fail("the language packs do not have the same texts")
     n += len(packs.get("en", {}))
+# 13.93: no inline script may run unless _headers allows it by its SHA-256, and nothing may need 'unsafe-inline'
+import base64, hashlib
+if os.path.exists("_headers"):
+    csp = re.search(r"Content-Security-Policy:([^\n]*)", open("_headers", encoding="utf-8").read())
+    ss = re.search(r"script-src([^;]*)", csp.group(1)).group(1).split() if csp else []
+    if not ss: fail("_headers has no script-src")
+    for bad in ("'unsafe-inline'", "'unsafe-eval'", "'strict-dynamic'", "https:", "*", "https://cdn.jsdelivr.net"):
+        if bad in ss: fail("script-src allows " + bad)
+    for a, s in re.findall(r"<script([^>]*)>(.*?)</script>", h, re.S):
+        if "src=" in a: continue
+        hs = "'sha256-%s'" % base64.b64encode(hashlib.sha256(s.encode("utf-8")).digest()).decode()
+        if hs not in ss: fail("an inline script of index.html is not allowed by _headers (run python3 src/build.py): " + s[:80].strip())
+    if re.search(r"<[a-zA-Z][^>]*\son[a-z]+\s*=", h): fail("inline event handler (on…=) in index.html")
+    if "javascript:" in h: fail("javascript: address in index.html")
 print("texts with 3 languages:", n)
 if n < 1000: fail("too few translated texts (%d)" % n)
 print("OK" if ok else "FAILED")

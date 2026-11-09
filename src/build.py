@@ -140,11 +140,14 @@ _lp = os.path.join(ROOT, 'app-late.js')
 if _late: open(_lp, 'w', encoding='utf-8').write(_late)
 elif os.path.exists(_lp): os.remove(_lp)
 open(os.path.join(ROOT, 'app.js'), 'w', encoding='utf-8').write(_guard + _app + '\n')
-_tpl = ("<script>(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}"
+# 13.93: the page's own small scripts never change between builds (the build number rides on the tag as data-build), so the
+# Content-Security-Policy can allow exactly these scripts by their SHA-256 – no 'unsafe-inline' (see _headers, written below)
+_tpl = ("<script data-build=\"%s\">var HTML_BUILD=document.currentScript.getAttribute('data-build');"
+        "(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}"
         "if(!l){try{l=(navigator.languages&&navigator.languages[0])||navigator.language||''}catch(e){}}"
         "l=String(l).toLowerCase();var p=/^(he|iw)/.test(l)?'he':/^ar/.test(l)?'ar':'en';window.__FIN_TPL=p;"
-        "if(!(window.__FIN_TP&&window.__FIN_TP[p]))document.write('<script src=\"tp/'+p+'.js?v=%s\"><\\/script>');})();</script>" % _build)
-s = s[:_m.start()] + "\n<script>var HTML_BUILD = '%s';</script>\n%s\n<script src=\"app.js?v=%s\"></script>" % (_build, _tpl, _build)  + s[_m.end():]
+        "if(!(window.__FIN_TP&&window.__FIN_TP[p]))document.write('<script src=\"tp/'+p+'.js?v='+HTML_BUILD+'\"><\\/script>');})();</script>" % _build)
+s = s[:_m.start()] + "\n%s\n<script src=\"app.js?v=%s\"></script>" % (_tpl, _build)  + s[_m.end():]
 # the admin panel's public part as a static file (message, what's new, maintenance, forced update, settings for the app):
 # no Worker request for the page or the script, only /cfg.json – see worker.js
 _pubsrc = open(os.path.join(ROOT, '_pub.js'), encoding='utf-8').read()
@@ -154,5 +157,15 @@ open(os.path.join(ROOT, '__pub.js'), 'w', encoding='utf-8').write('window.__ADMP
 assert s.count('</body>') == 1
 s = s.replace('</body>', '<script src="/__pub.js" defer></script>\n</body>')
 open(os.path.join(ROOT, 'index.html'),'w',encoding='utf-8').write(s)
+# 13.93: script-src lists the SHA-256 of every inline script of the page (and nothing else inline): an injected <script> or
+# on…= attribute cannot run. The hashes depend only on the source, not on the build number; _headers is updated when they change.
+import base64 as _b64, hashlib as _hl
+_inl = [m.group(2) for m in _re.finditer(r'<script\b([^>]*)>(.*?)</script>', s, _re.S) if 'src=' not in m.group(1)]
+assert not _re.search(r'<[a-z][^>]*\son[a-z]+\s*=', s, _re.I), 'inline event handler in index.html'
+_hs = " ".join("'sha256-%s'" % _b64.b64encode(_hl.sha256(x.encode('utf-8')).digest()).decode() for x in _inl)
+_hp = os.path.join(ROOT, '_headers'); _hd = open(_hp, encoding='utf-8').read()
+_hd2 = _re.sub(r"script-src 'self'(?: 'sha256-[A-Za-z0-9+/=]+')* ", "script-src 'self' " + _hs + " ", _hd, count=1)
+assert _hd2.count("'sha256-") == len(_inl), 'script-src in _headers not found'
+if _hd2 != _hd: open(_hp, 'w', encoding='utf-8').write(_hd2); print('_headers: script hashes updated (%d inline scripts)' % len(_inl))
 # the admin version (/admin/) is this same page: the Worker adds the admin flag only after the developer code (see worker.js), so no admin file is published
 print(len(s.split('\n')), 'lines')
