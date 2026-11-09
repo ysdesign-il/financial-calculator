@@ -3,6 +3,9 @@
 var PRIV = false; try { PRIV = window['local' + 'Storage'].getItem('fin-priv') === '1'; } catch (e) {}
 /* 13.8: which of the app's keys existed before this visit wrote anything (to tell a real user from a first visit when moving address) */
 var FIN_K0 = []; try { var _ls = window['local' + 'Storage']; for (var _i = 0; _i < _ls.length; _i++){ var _k = _ls.key(_i); if (_k && _k.indexOf('fin-') === 0) FIN_K0.push(_k); } } catch (e) {}
+/* 13.91: a moving link (#migz=) may reload the page once before it is read; what was on the device when the link was first
+   opened in this tab is kept for that reload, so the link can only ever fill what was empty then */
+try { if (/^#migz=/.test(location.hash) && !window.sessionStorage.getItem('fin-mig-k0')) window.sessionStorage.setItem('fin-mig-k0', JSON.stringify(FIN_K0)); } catch (e) {}
 /* 13.12: the site's own address – the Claude app reads the shared data files (rates, version…) from here */
 var SITE_BASE = 'https://financial-calculator.design-il.workers.dev/';
 /* 13.48: on the site the main fonts are plain files of the site (/fonts/, no server request); the rarer ones (themes, clock) still come

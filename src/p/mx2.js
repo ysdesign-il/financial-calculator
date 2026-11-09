@@ -113,7 +113,7 @@ function xsAiBlock(raw, primary){
   return `<div class="xs-ai">${ok ? `<button type="button" class="${primary ? 'gold-btn' : 'mv mx-aib'}" id="xs_ai" data-p="${primary ? 1 : 0}">🤖 ${mE(t(primary ? 'xs_aiSolve' : 'xs_aiExplain'))}</button>` : `<p class="fine">${mE(t(gkNo('xs_aiNone')))}</p>${gkAllowed() && !(typeof IN_CLAUDE !== 'undefined' && IN_CLAUDE) ? `<button type="button" class="btn" data-gkgo="1">✦ ${mE(t('xs_connect'))}</button>` : ''}`}<div class="mx-aiout xs-aiout" id="xs_aiout" hidden></div></div>`;
 }
 function xsCopyText(r){
-  const strip = h => { const el = document.createElement('div'); el.innerHTML = h; return el.innerText.replace(/\s+/g, ' ').trim(); };
+  const strip = h => { const d = new DOMParser().parseFromString('<!doctype html><body>' + String(h == null ? '' : h).replace(/<br\s*\/?>|<\/(p|div|li)>/gi, ' '), 'text/html'); return (d.body.textContent || '').replace(/\s+/g, ' ').trim(); };   // 13.91: inert parse
   return [xsD0().solve.q, ''].concat(r.steps.map((s, i) => (i + 1) + '. ' + t(s.k, s.p || {}) + (s.h ? ': ' + strip(s.h) : '')), ['', t('mx_scAns') + ': ' + strip(r.answer)]).join('\n');
 }
 /* the AI: a full worked solution (word problems too), checked by the calculator; or an explanation in words of the steps above */

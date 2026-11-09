@@ -59,11 +59,20 @@ window.addEventListener('message', e => {
 });
 
 /* ---------- the new address ---------- */
-function migApply(items){
+function migApply(items, fromLink){
   if (!items || typeof items !== 'object') return false;
   // never on the owner pages, and never the owner's keys or code drafts (a crafted link must not be able to plant them)
   if (/^\/admin(\/|$)/.test(location.pathname)) return false;
-  const keys = Object.keys(items).filter(k => /^fin-[\w:.\-+=/]*$/.test(k) && k !== 'fin-migrated' && !/^fin-(dev|ibkey|fam$|fam-)/.test(k) && typeof items[k] === 'string');
+  let keys = Object.keys(items).filter(k => /^fin-[\w:.\-+=/]*$/.test(k) && k !== 'fin-migrated' && !/^fin-(dev|ibkey|fam$|fam-)/.test(k) && typeof items[k] === 'string');
+  /* 13.91 (security): a link can be made by anyone and sent to anyone. Data that arrives in a link only fills what is still
+     empty on this device – it never replaces an account, settings or anything else already here (one tap on "OK" used to be
+     enough for a stranger's link to overwrite everything). The direct hand-over from the old address (postMessage, checked
+     origin) is unchanged. */
+  if (fromLink){ const had = keys.length; let k0 = null;   // what was on the device before the link was first opened in this tab
+    try { k0 = JSON.parse(window.sessionStorage.getItem('fin-mig-k0') || 'null'); window.sessionStorage.removeItem('fin-mig-k0'); } catch (e) {}
+    if (!Array.isArray(k0)) k0 = typeof FIN_K0 !== 'undefined' && Array.isArray(FIN_K0) ? FIN_K0 : null;
+    keys = keys.filter(k => { if (k0) return !k0.includes(k); try { return RAWLS.getItem(k) == null; } catch (e) { return false; } });
+    if (had && !keys.length){ try { toast(t('mig_noOver')); } catch (e) {} return false; } }
   if (!keys.length) return false;
   let mine = 0; try { mine = migKeys().filter(k => !['fin-lang', 'fin-ver', 'fin-tab', 'fin-upd-ntf'].includes(k)).length; } catch (e) {}
   if (!confirm(t('mig_over'))) return false;
@@ -95,7 +104,7 @@ function migNew(){
         const z = data.charAt(0), b64 = data.slice(1).replace(/-/g, '+').replace(/_/g, '/'), bin = atob(b64 + '==='.slice((b64.length + 3) % 4)), u = new Uint8Array(bin.length);
         for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
         const txt = z === '1' ? await new Response(new Blob([u]).stream().pipeThrough(new DecompressionStream('gzip'))).text() : new TextDecoder().decode(u);
-        if (migApply(JSON.parse(txt))){ toast(t('mig_ok')); setTimeout(() => location.reload(), 900); }
+        if (migApply(JSON.parse(txt), true)){ toast(t('mig_ok')); setTimeout(() => location.reload(), 900); }
       } catch (e) { toast(t('mig_fail')); }
     })();
   }

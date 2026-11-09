@@ -279,7 +279,8 @@ function applyEffCur(id){
   $$('.u.cur').forEach(el => { el.textContent = symOf(cur); });
 }
 /* --- result export --- */
-const strip = h => { const d = document.createElement('div'); d.innerHTML = String(h); return d.textContent.replace(/\s+/g, ' ').trim(); };
+/* 13.91: parsed in a separate, inert document – markup inside a result (or a name typed into it) is never loaded or run while its text is read */
+const strip = h => { const d = new DOMParser().parseFromString('<!doctype html><body>' + String(h == null ? '' : h), 'text/html'); return (d.body.textContent || '').replace(/\s+/g, ' ').trim(); };
 function resultRows(id){
   const r = LAST[id]; if (!r) return [];
   return [[strip(r.hero.label), strip(r.hero.value)]].concat(r.rows.map(x => [strip(x[0]), strip(x[1])]));
