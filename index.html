@@ -2142,6 +2142,8 @@ details.sub-acc > summary::after{content:"";margin-inline-start:auto;width:8px;h
 details.sub-acc[open] > summary::after{transform:rotate(-135deg)}
 details.sub-acc > :not(summary){margin:0 12px 12px}
 details.sub-acc .dz-h{display:none}
+/* 13.94: bot-trap field – off-screen, never shown (not display:none, which simple bots skip) */
+.hp-f{position:absolute!important;inset-inline-start:-10000px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
 
 /* ================= 8.3: smoother scrolling on phones ================= */
 /* the theme background stays put without background-attachment:fixed, which makes phones repaint the whole page while scrolling */
@@ -2750,8 +2752,8 @@ body:has(#panel-mathx:not([hidden])) :is(#explainBtn,#resetTab){display:none}
 <div class="toast" id="toast" role="status" hidden></div>
 
 
-<script data-build="20261109.233432">var HTML_BUILD=document.currentScript.getAttribute('data-build');(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}if(!l){try{l=(navigator.languages&&navigator.languages[0])||navigator.language||''}catch(e){}}l=String(l).toLowerCase();var p=/^(he|iw)/.test(l)?'he':/^ar/.test(l)?'ar':'en';window.__FIN_TPL=p;if(!(window.__FIN_TP&&window.__FIN_TP[p]))document.write('<script src="tp/'+p+'.js?v='+HTML_BUILD+'"><\/script>');})();</script>
-<script src="app.js?v=20261109.233432"></script>
+<script data-build="20261110.015258">var HTML_BUILD=document.currentScript.getAttribute('data-build');(function(){var l='';try{l=localStorage.getItem('fin-lang')||''}catch(e){}if(!l){try{l=(navigator.languages&&navigator.languages[0])||navigator.language||''}catch(e){}}l=String(l).toLowerCase();var p=/^(he|iw)/.test(l)?'he':/^ar/.test(l)?'ar':'en';window.__FIN_TPL=p;if(!(window.__FIN_TP&&window.__FIN_TP[p]))document.write('<script src="tp/'+p+'.js?v='+HTML_BUILD+'"><\/script>');})();</script>
+<script src="app.js?v=20261110.015258"></script>
 <script src="/__pub.js" defer></script>
 </body>
 </html>

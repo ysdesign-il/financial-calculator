@@ -102,7 +102,7 @@ function accountHTML(){
       ${pwf('acc_rpass','f_password','new-password')}${pwf('acc_rpass2','f_password2','new-password')}${PWREQ.replace('%ID%', 'acc_rpass')}
       <div class="btnrow"><button type="button" class="btn" id="acc_up" data-i="b_signup"></button></div></div>
     <div class="mvx" id="acc_f_mv" hidden></div>
-    ${msg}<p class="fine" data-i="h_account"></p>`;
+    ${msg}<p class="acc-warn acc-guest" role="note"><span aria-hidden="true">🔓</span> <span data-i="acc_guestNote"></span></p><p class="fine" data-i="h_account"></p>`;
 }
 function settingsPanelHTML(){
   const sec = (k, body) => `<div class="set-sec" data-sk="${k}"><div class="sec-h">${sIcon(k)}<h3 class="sec-t" data-i="${k}"></h3></div>${body}</div>`;

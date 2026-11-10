@@ -9,6 +9,10 @@ var FB = {db: null, uid: null};
   try { const db = await window.claude.use('db'); if (!db) return; FB.db = db; const u = await window.claude.use('user'); if (u && u.id) FB.uid = await u.id(); fbBox(); fbOwner(); fbReplies(); } catch (e) {}
 })();
 const fbClean = s => String(s || '').slice(0, 900);
+/* 13.94: a bot trap – a field people never see or fill (kept off-screen, out of the tab order and hidden from screen readers).
+   Forms check it, and the time the form was open, before anything is sent. Also used by the cloud copy form (fin13.js). */
+function hpField(id){ return `<div class="hp-f" aria-hidden="true"><label for="${id}">${E94(t('hp_label'))}</label><input id="${id}" name="${id}" type="text" tabindex="-1" autocomplete="off" autocorrect="off" spellcheck="false" data-pii-ok></div>`; }
+const hpTrip = id => { const el = document.getElementById(id); return !!(el && el.value); };
 const fbMail = s => { s = String(s || '').trim().slice(0, 120); return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s) ? s : ''; };
 function fbBox(){
   const sys = $('.set-cat[data-cat="system"]'); if (!sys) return;
@@ -17,11 +21,12 @@ function fbBox(){
     <div class="fb-kinds" role="radiogroup" aria-label="${E94(t('fb_kind'))}">${['idea', 'bug', 'q', 'other'].map((k, i) => `<button type="button" role="radio" data-fbk="${k}" aria-checked="${i ? 'false' : 'true'}" class="${i ? '' : 'on'}">${E94(t('fb_k_' + k))}</button>`).join('')}</div>
     <div class="fb-stars" role="radiogroup" aria-label="${E94(t('fb_rate'))}">${[1, 2, 3, 4, 5].map(n => `<button type="button" role="radio" data-fbr="${n}" aria-label="${n}" aria-checked="false">★</button>`).join('')}</div>
     <input id="fb_mail" type="email" inputmode="email" autocomplete="email" dir="ltr" maxlength="120" placeholder="${E94(t('fb_mailPh'))}" aria-label="${E94(t('fb_mail'))}" data-pii-ok>
-    <textarea id="fb_msg" rows="4" maxlength="900" dir="auto" placeholder="${E94(t('fb_ph'))}" aria-label="${E94(t('fb_title'))}"></textarea>
+    <textarea id="fb_msg" rows="4" maxlength="900" dir="auto" placeholder="${E94(t('fb_ph'))}" aria-label="${E94(t('fb_title'))}"></textarea>${hpField('fb_hp')}
     <div class="bk-acts"><button type="button" class="lc-add" id="fb_send">📨 ${E94(t('fb_send'))}</button><button type="button" class="lc-add" id="fb_copy">📋 ${E94(t('b_copy'))}</button></div>
     <p class="fine fb-st" id="fb_st" aria-live="polite"></p></div>`);
+  FBV.t0 = Date.now();
 }
-var FBV = {k: 'idea', r: 0};
+var FBV = {k: 'idea', r: 0, t0: 0};
 function fbItem(){ const e = fbMail(($('#fb_mail') || {}).value); return Object.assign({k: FBV.k, r: FBV.r, m: fbClean(($('#fb_msg') || {}).value), v: APP_VER, l: lang, s: tab === 'settings' ? '' : tab, at: Date.now()}, e ? {e} : {}); }
 document.addEventListener('click', async e => {
   if (!e.target.closest) return;
@@ -32,6 +37,8 @@ document.addEventListener('click', async e => {
   if (!e.target.closest('#fb_send')) return;
   const raw = (($('#fb_mail') || {}).value || '').trim(); if (raw && !fbMail(raw)) return st('fb_badMail');
   const it = fbItem(); if (!it.m && !it.r) return st('fb_empty');
+  /* 13.94: bot trap – a filled hidden field, or a form sent within 3 seconds of showing, gets a normal "sent" and nothing goes out */
+  if (hpTrip('fb_hp') || Date.now() - (FBV.t0 || 0) < 3000){ const mm = $('#fb_msg'); if (mm) mm.value = ''; st('fb_ok'); toast(t('fb_ok')); return; }
   if (!(FB.db && FB.uid)){
     st('m_wait');
     try { await ibSendWeb(it); $('#fb_msg').value = ''; st('fb_ok'); toast(t('fb_ok')); } catch (er) { st('fb_fail'); }

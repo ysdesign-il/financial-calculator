@@ -53,8 +53,8 @@ async function syPush(again){
   try {
     const pkg = await syPkg(); if (!pkg) return;
     if (pkg.length > 1900000){ SYC.st = 'sy_big'; syDraw(); return; }
-    const {st, j} = await syCall('/api/acct/put', {id: c.id, auth: c.auth, pkg, base: c.ver || 0});
-    if (st === 200){ c.ver = j.ver; c.at = Date.now(); sySet(c); SYC.plan = j.plan || 'free'; SYC.st = 'sy_ok'; }
+    const {st, j} = await syCall('/api/acct/put', Object.assign({id: c.id, auth: c.auth, pkg, base: c.ver || 0}, SYC.trap || {}));
+    if (st === 200){ SYC.trap = null; c.ver = j.ver; c.at = Date.now(); sySet(c); SYC.plan = j.plan || 'free'; SYC.st = 'sy_ok'; }
     else if (st === 409 && j.pkg && !again){ const m = await syMerge(j.pkg); c.ver = j.ver; sySet(c); if (m === 'pw'){ SYC.st = 'sy_pw'; } else { SYC.busy = false; await syPush(true); if (m === 'changed'){ toast(t('sy_merged')); setTimeout(() => location.reload(), 1200); } return; } }
     else SYC.st = st === 403 ? 'sy_auth' : st === 429 ? 'sy_wait' : 'sy_net';
   } catch (e) { SYC.st = 'sy_net'; } finally { SYC.busy = false; }
@@ -142,9 +142,10 @@ function syDraw(){
   if (box.contains(document.activeElement) && document.activeElement.tagName === 'INPUT') return;
   const c = syGet(), E = syE;
   if (!c || !c.on){
+    if (!SYC.t0) SYC.t0 = Date.now();   // 13.94: when the form first showed (bot trap: a form sent in under 3 seconds)
     box.innerHTML = `<h3 class="sec-t">☁️ ${E(t('sy_t'))}</h3><p class="fine">${E(t('sy_h'))}</p>
       <div class="field wide"><label for="sy_pw">${E(t('sy_pwL'))}</label><input id="sy_pw" type="password" autocomplete="current-password" class="lookup"></div>
-      <label class="al-k"><input type="checkbox" id="sy_agree"> ${E(t('sy_agree'))}</label>
+      <label class="al-k"><input type="checkbox" id="sy_agree"> ${E(t('sy_agree'))}</label>${hpField('sy_hp')}
       <div class="btnrow"><button type="button" class="gold-btn" id="sy_on">${E(t('sy_onB'))}</button></div><p class="gk-st" id="sy_st" role="status">${SYC.st ? E(t(SYC.st)) : ''}</p>`;
     return;
   }
@@ -163,6 +164,10 @@ document.addEventListener('click', async e => {
   if (e.target.closest('#sy_on')){
     const pw = (document.getElementById('sy_pw') || {}).value || '', ag = document.getElementById('sy_agree'), rec = getAcc(FUSER);
     if (!ag || !ag.checked){ SYC.st = 'sy_needAgree'; syDraw(); return; }
+    /* 13.94: bot trap – a filled hidden field or a form sent within 3 seconds looks like success and nothing is sent */
+    const ft = Date.now() - (SYC.t0 || Date.now());
+    if (hpTrip('sy_hp') || ft < 3000){ const s0 = document.getElementById('sy_st'); if (s0){ s0.className = 'gk-st ok'; s0.textContent = t('sy_ok'); } return; }
+    SYC.trap = {hp: '', ft};
     let ok = false; try { ok = (await hashPw(pw, u8(rec.salt), rec.iter || 200000)) === rec.hash; } catch (er) {}
     if (!ok){ SYC.st = 'm_bad'; syDraw(); return; }
     SYC.st = 'm_wait'; syDraw();

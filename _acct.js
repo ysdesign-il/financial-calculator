@@ -17,6 +17,13 @@ const HITS = new Map(), MISS = new Map(), NEW = new Map();
 function hit(m, k, n, ms){ const now = Date.now(), a = (m.get(k) || []).filter(t => now - t < ms); a.push(now); m.set(k, a); if (m.size > 20000) m.clear(); return a.length > n; }
 function seen(m, k, ms){ const now = Date.now(); return (m.get(k) || []).filter(t => now - t < ms).length; }
 const ipKey = async req => (await sha('acct:' + (req.headers.get('cf-connecting-ip') || '?'))).slice(0, 16);
+/* 13.94: the platform's shared limits (bindings RL_AUTH and RL_NEW in wrangler.jsonc) on top of the in-memory ones above, which
+   live in one server copy only. Without the bindings (tests, an older deploy tool) only the in-memory limits apply. */
+async function rlOk(b, key){ if (!b || typeof b.limit !== 'function') return true; try { const r = await b.limit({key}); return !(r && r.success === false); } catch (e) { return true; } }
+/* 13.94: bot trap on a new cloud copy – the form has a hidden field people never fill (hp) and says how long it was open (ft, ms).
+   A filled trap or a form sent in under 3 seconds gets an answer that looks like success, and nothing is stored.
+   Phones with an older version send neither field and are not affected. */
+const isBot = b => (typeof b.hp === 'string' && b.hp.length > 0) || (typeof b.ft === 'number' && isFinite(b.ft) && b.ft >= 0 && b.ft < 3000);
 /* Security fix (13.91): where an account lives.
    Before, the row's key was only the fingerprint of the USERNAME – a public function of the name. So anyone could take a name
    first ("squatting": the real person's cloud copy then always failed), anyone could tell whether a name has a cloud copy
@@ -36,6 +43,7 @@ async function who(env, b){
   if (row && row.auth === ah) return {row, key: b.id};
   /* nothing found for this name + password: count it, so guessing one person's password stays slow */
   if (seen(MISS, b.id, 15 * 60e3) >= 10) return {e: 429};
+  if (!(await rlOk(env.RL_AUTH, 'am:' + b.id.slice(0, 32)))) return {e: 429};
   hit(MISS, b.id, 1e9, 15 * 60e3);
   return {none: true, key: k2};
 }
@@ -63,7 +71,8 @@ export async function acctApi(req, env, path){
   if (path === '/api/acct/put'){
     const pkg = typeof b.pkg === 'string' ? b.pkg : ''; if (!pkg || pkg.length > MAX_PKG) return J({ok: false, e: 'size'}, 413);
     if (W.none){
-      if (seen(NEW, ip, 3600e3) >= 5) return J({ok: false, e: 'wait'}, 429);   // at most 5 new cloud accounts an hour from one address
+      if (isBot(b)) return J({ok: true, ver: 1, plan: 'free'});   // looks like success; nothing is stored
+      if (seen(NEW, ip, 3600e3) >= 5 || !(await rlOk(env.RL_NEW, 'new:' + ip))) return J({ok: false, e: 'wait'}, 429);   // at most 5 new cloud accounts an hour from one address
       hit(NEW, ip, 1e9, 3600e3);
       await env.DB.prepare('INSERT INTO acct (id, auth, asalt, esalt, blob, ver, plan, created, at, size) VALUES (?, ?, ?, ?, ?, 1, ?, ?, ?, ?)')
         .bind(me, await sha('auth:' + b.auth), '-', '-', pkg, 'free', now, now, pkg.length).run();

@@ -88,6 +88,7 @@ document.addEventListener('click', e => {
     const msg = String(($('#fb_msg') || {}).value || '').trim();
     if (msg || !FBV.r || FBV.r === FBR.sent) return;            // with text, the Send button sends both together
     const it = Object.assign(fbItem(), {k: 'rate'}), st = $('#fb_st');
+    if (hpTrip('fb_hp') || Date.now() - (FBV.t0 || 0) < 3000){ FBR.sent = FBV.r; if (st) st.textContent = t('fb_rated'); return; }   // 13.94: bot trap (see v94.js)
     try {
       if (FB.db && FB.uid){
         let mine = []; try { const d = await FB.db.doc('feedback/' + FB.uid).get(); if (d && d.exists) mine = (d.data() || {}).items || []; } catch (er) {}

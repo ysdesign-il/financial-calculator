@@ -17,3 +17,5 @@ details.sub-acc > summary::after{content:"";margin-inline-start:auto;width:8px;h
 details.sub-acc[open] > summary::after{transform:rotate(-135deg)}
 details.sub-acc > :not(summary){margin:0 12px 12px}
 details.sub-acc .dz-h{display:none}
+/* 13.94: bot-trap field – off-screen, never shown (not display:none, which simple bots skip) */
+.hp-f{position:absolute!important;inset-inline-start:-10000px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}

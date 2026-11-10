@@ -14,6 +14,12 @@
   "kv_namespaces": [{ "binding": "CFG", "id": "a44762eefe234d5ebaf128cc9aba83ec" }],
   // the optional cloud copy of accounts and documents (locked on the phone; the server cannot read them)
   "d1_databases": [{ "binding": "DB", "database_name": "fin-accounts", "database_id": "85911bc0-8d3d-4361-aa5f-ed37ee8b5186" }],
+  // 13.94: limits shared by all the server's copies (sign-in tries, the family check, new cloud copies), per one-way address fingerprint;
+  // the code keeps its own in-memory limits too and works without these (older deploy tool = in-memory limits only)
+  "ratelimits": [
+    { "name": "RL_AUTH", "namespace_id": "9401", "simple": { "limit": 10, "period": 60 } },
+    { "name": "RL_NEW", "namespace_id": "9402", "simple": { "limit": 3, "period": 60 } }
+  ],
   // preview versions (made by the automatic updates) need their own KV entry; they use the same settings
   "previews": { "kv_namespaces": [{ "binding": "CFG", "id": "a44762eefe234d5ebaf128cc9aba83ec" }], "d1_databases": [{ "binding": "DB", "database_name": "fin-accounts", "database_id": "85911bc0-8d3d-4361-aa5f-ed37ee8b5186" }] },
   // every half hour: health check of the sites, for the owner's phone alerts

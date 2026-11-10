@@ -32,7 +32,7 @@ with the generic notes `שיפורים ותיקונים.` / `تحسينات وإ
 ## Admin version (/admin/)
 
 - The regular site never opens developer mode or management. Everything for the owner lives in the admin version at `/admin/`.
-- `/admin/*` is served only after the server-side lock in `_gate.js` (a Worker, or a Pages Function in `functions/`): the owner types the name + developer code (or the shared recovery code) on a login page; the browser derives the key (PBKDF2, same as developer mode) and the server compares its SHA-256 with `DEV_CHECK`, then sets an HttpOnly cookie for 30 days.
+- `/admin/*` is served only after the server-side lock in `_gate.js` (a Worker, or a Pages Function in `functions/`): the owner types the name + developer code (or the shared recovery code) on a login page; the browser derives the key (PBKDF2, same as developer mode) and the server compares its SHA-256 with `DEV_CHECK`, then sets an HttpOnly cookie. Since 13.94 a session ends after 60 minutes without use (each use moves the limit on) and at most 7 days after sign-in.
 - The admin panel (`_kit.js`, served at `/admin/__kit.js`) is injected into the admin page: message to all users, "what's new", parts on/off, forced update, feedback, on-device screen test, maintenance, log, security.
 - Its settings are kept in Cloudflare KV (namespace `admin-config`, binding `CFG`, keys `cfg:<app>` public and `st:<app>` private) and read by the public site from `/cfg.json`. The public part for the calculator and VELVITE is `_pub.js`, served at `/__pub.js` and added to the main page by the Worker.
 - **Changing the developer code:** update `DEV_CHECK` in `_gate.js` in all three repos (neshima-shketa: `functions/_gate.js`; financial-calculator and evently: `_gate.js`), and in each app's own developer-mode check, in the same change.
@@ -46,7 +46,7 @@ with the generic notes `שיפורים ותיקונים.` / `تحسينات وإ
 
 ## Server storage for users (13.86–13.87)
 
-- `_fin.js`: the website feedback inbox, the developer replies and the family sign-in list live in KV (`ib:calc`, `rp:calc`, `fam:calc`), filled by the half-hourly cron from the relay. The admin version reads `/admin/inbox.json` and `/admin/fam`. The public site only asks `/api/fam` (yes/no, rate-limited). `_legacy_*.json` seed the first read. They are not served.
+- `_fin.js`: the website feedback inbox, the developer replies and the family sign-in list live in KV (`ib:calc`, `rp:calc`, `fam:calc`), filled by the half-hourly cron from the relay. The admin version reads `/admin/inbox.json` and `/admin/fam`. The public site only asks `/api/fam` (yes/no, rate-limited). `_legacy_inbox.json` seeds the first read of the inbox; it is not served. Since 13.94 the family list stores only a server tag of each fingerprint (SHA-256 of `fam-srv-v1:` + fingerprint, compared in constant time), never the fingerprint itself, and `_legacy_family.json` is gone (its old password must be changed).
 - `_acct.js` + D1 `fin-accounts` (binding `DB`): the optional cloud copy of an account and the cloud documents. Only locked packages are stored, under a fingerprint of the username, with a hash of a second password fingerprint. Each account has a `plan` (`free`) for later subscriptions. `/api/q` serves delayed share prices (cached 15 minutes).
 - The client side is `src/p/fin12.js` and `src/p/fin13.js`. Formulas are listed in `docs/FORMULAS.md`.
 
@@ -63,6 +63,13 @@ with the generic notes `שיפורים ותיקונים.` / `تحسينات وإ
 - Alerts (table `secalert`, at most one per kind per hour) go into the owner inbox (`ib:calc`) as a normal locked `fc1.` message (`inboxAdd` in `_fin.js`): ≥5 failed admin sign-ins in about 15 minutes, any sign-in lock, ≥50 refusals (429) in about 10 minutes, any blocked cross-site write.
 - The owner sees "פעילות חשודה" (last 7 days, grouped) at the top of the inbox in the admin version (`src/p/fin15.js`, texts `src/p/i95.js`), read from `/admin/suspicious.json` behind the admin lock.
 - `node scripts/security_alerts.mjs` tests it locally (must end with `0 failed`).
+
+## Sign-out, bot traps, shared limits (13.94)
+
+- `src/p/sec1.js`: a signed-in account is locked after 15 minutes without use (touch, key, scroll, return to the tab); the time of the last use is kept in the tab (`fin-idle-at`), so a tab that slept is locked as soon as it wakes. Then the sign-in screen opens with a note (`idle_out`).
+- Bot traps: the feedback form (`src/p/v94.js`, also the star-only rating in `v98.js`) and the cloud copy form (`src/p/fin13.js`) have a hidden field (`hpField`) and a 3-second minimum; a bot gets a normal "sent" and nothing goes out. The server (`_acct.js`) checks the same (`hp`, `ft`) before storing a new cloud copy.
+- Shared limits: `ratelimits` in `wrangler.jsonc` (`RL_AUTH`: admin sign-in, family check, cloud-copy password misses; `RL_NEW`: new cloud copies). The code keeps its in-memory limits too and works without the bindings.
+- Guest mode (no account) shows that its data is stored on the device unencrypted (`acc_guestNote`).
 
 ## Content-Security-Policy (13.93)
 

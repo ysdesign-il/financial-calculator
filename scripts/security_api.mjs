@@ -207,11 +207,21 @@ const authOf = (name, pw) => crypto.pbkdf2Sync(pw, 'fin-cloud-auth:v1:' + name.t
   report('family check: malformed fingerprint refused', r.status === 400, 'status ' + r.status);
   const g = await famCheck(req('/api/fam', null, {ip: '30.0.0.3', method: 'GET'}), env);
   report('family check: the list is never returned (GET)', g.status === 405, 'status ' + g.status);
-  if (fs.existsSync(REPO + '/_legacy_family.json')){
-    const env2 = {CFG: mkKV()}, leg = JSON.parse(fs.readFileSync(REPO + '/_legacy_family.json', 'utf8')), h0 = (leg.m[0] || {}).h;   // never printed
+  /* 13.94: the stored value must never work as a credential (it used to be the fingerprint itself) */
+  {
+    const env2 = {CFG: mkKV()}, h0 = rhex(32);   // the phone's PBKDF2 fingerprint of the family password (random here)
+    await env2.CFG.put('fam:calc', JSON.stringify({v: 1, m: [{id: 'p', p: 1, h: h0, at: Date.now()}]}));   // a list stored before 13.94
     const y = await famCheck(req('/api/fam', {h: h0}, {ip: '30.0.0.4'}), env2); const yj = await y.json();
-    report('legit: a fingerprint on the family list is accepted', yj.ok === true, 'ok=' + yj.ok);
-    report('seed: the family list is copied into private storage on first read (seed file can then be removed)', env2.CFG.m.has('fam:calc'), 'stored=' + env2.CFG.m.has('fam:calc'));
+    report('legit: a fingerprint on the family list (stored the old way) is accepted', yj.ok === true, 'ok=' + yj.ok);
+    const st = JSON.parse(env2.CFG.m.get('fam:calc').v), e = st.m[0] || {};
+    report('storage: the raw fingerprint is replaced by a one-way server tag on first read', !('h' in e) && /^[0-9a-f]{64}$/.test(e.s || '') && e.s !== h0, 'keys=' + Object.keys(e).join(','));
+    const z = await famCheck(req('/api/fam', {h: e.s}, {ip: '30.0.0.6'}), env2); const zj = await z.json();
+    report('family bypass: sending the stored value itself is refused', zj.ok === false, 'ok=' + zj.ok);
+    const y2 = await famCheck(req('/api/fam', {h: h0}, {ip: '30.0.0.7'}), env2); const y2j = await y2.json();
+    report('legit: the real fingerprint still works after the change', y2j.ok === true, 'ok=' + y2j.ok);
+    const rl = {CFG: env2.CFG, RL_AUTH: {async limit(){ return {success: false}; }}};
+    const q = await famCheck(req('/api/fam', {h: h0}, {ip: '30.0.0.8'}), rl);
+    report('family check: the shared platform limit is honoured', q.status === 429, 'status ' + q.status);
   }
   const big = await famCheck(new Request(ORIGIN + '/api/fam', {method: 'POST', headers: {'content-type': 'application/json', 'cf-connecting-ip': '30.0.0.5'}, body: JSON.stringify({h: 'a'.repeat(64), pad: 'x'.repeat(100000)})}), env);
   report('family check: oversized body refused', big.status === 413, 'status ' + big.status);
@@ -260,6 +270,39 @@ const authOf = (name, pw) => crypto.pbkdf2Sync(pw, 'fin-cloud-auth:v1:' + name.t
   report('GitHub writes: a path outside the allowed list', r.status === 403, 'status ' + r.status);
   r = await gate('/admin/__docs', {method: 'POST', headers: {'content-type': 'application/json', origin: ORIGIN, cookie: 'adm=' + sid}, body: JSON.stringify({doc: '__proto__', l: 'he', x: 'x'})});
   report('legal texts: an unknown document name (prototype key)', r.status === 400, 'status ' + r.status);
+  /* 13.94: a session ends after 60 minutes without use and 7 days after sign-in; using it moves the idle limit on */
+  const mk = async v => { const id = rhex(20); await env.CFG.put('sx:calc:' + id, JSON.stringify(Object.assign({dev: 'x', cc: '', dk: ''}, v))); return id; };
+  const use = id => gate('/admin/__who', {headers: {cookie: 'adm=' + id}});
+  const idle = await mk({at: Date.now() - 2 * 3600e3, seen: Date.now() - 61 * 60e3});
+  r = await use(idle); report('session: unused for more than 60 minutes is refused', r.status === 401, 'status ' + r.status);
+  const old = await mk({at: Date.now() - 8 * 864e5, seen: Date.now() - 60e3});
+  r = await use(old); report('session: older than 7 days is refused even when in use', r.status === 401, 'status ' + r.status);
+  const act = await mk({at: Date.now() - 3 * 864e5, seen: Date.now() - 50 * 60e3});
+  r = await use(act); const seenNow = JSON.parse(env.CFG.m.get('sx:calc:' + act).v).seen;
+  report('legit: a session used within the hour works and its idle limit moves on', r.status === 200 && Date.now() - seenNow < 5000, 'status ' + r.status);
+  const pre = await mk({at: Date.now() - 2 * 864e5});
+  r = await use(pre); report('legit: a session made before 13.94 (no last-use note) keeps working', r.status === 200, 'status ' + r.status);
+  r = await gate('/admin/__login', {ip: '41.0.0.9', method: 'POST', headers: {'content-type': 'application/json', origin: ORIGIN}, body: JSON.stringify({h: rhex(32)})});
+  const rlEnv = Object.assign({}, env, {RL_AUTH: {async limit(){ return {success: false}; }}});
+  r = await adminGate(new Request(ORIGIN + '/admin/__login', {method: 'POST', headers: {'cf-connecting-ip': '41.0.0.10', 'content-type': 'application/json', origin: ORIGIN}, body: JSON.stringify({h: rhex(32)})}), serve, OPT, rlEnv);
+  report('login: the shared platform limit is honoured', r.status === 429, 'status ' + r.status);
+}
+/* ================= 13.94: bot trap and shared limit on new cloud copies ================= */
+{
+  const env = {DB: mkDB()};
+  const n = () => { const nm = 'u' + rhex(4); return {id: idOf(nm), auth: authOf(nm, 'pw')}; };
+  const rows = () => env.DB.raw.prepare('SELECT COUNT(*) AS c FROM acct').get().c;
+  let r = await call(env, '/api/acct/put', {...n(), pkg: 'P', base: 0, hp: 'http://spam', ft: 9000}, {ip: '50.0.0.1'});
+  report('bot trap: hidden field filled → looks like success, nothing stored', r.st === 200 && r.j.ok === true && rows() === 0, 'rows ' + rows());
+  r = await call(env, '/api/acct/put', {...n(), pkg: 'P', base: 0, hp: '', ft: 400}, {ip: '50.0.0.2'});
+  report('bot trap: form sent in under 3 seconds → looks like success, nothing stored', r.st === 200 && rows() === 0, 'rows ' + rows());
+  r = await call(env, '/api/acct/put', {...n(), pkg: 'P', base: 0, hp: '', ft: 8000}, {ip: '50.0.0.3'});
+  report('legit: a person\'s new cloud copy (trap empty, 8 s) is stored', r.st === 200 && rows() === 1, 'rows ' + rows());
+  r = await call(env, '/api/acct/put', {...n(), pkg: 'P', base: 0}, {ip: '50.0.0.4'});
+  report('legit: an older phone without the trap fields still creates its copy', r.st === 200 && rows() === 2, 'rows ' + rows());
+  const rl = {DB: env.DB, RL_NEW: {async limit(){ return {success: false}; }}};
+  r = await call(rl, '/api/acct/put', {...n(), pkg: 'P', base: 0, ft: 8000}, {ip: '50.0.0.5'});
+  report('new cloud copy: the shared platform limit is honoured', r.st === 429 && rows() === 2, 'status ' + r.st);
 }
 const bad = results.filter(r => !r.secure).length;
 console.log('\n' + results.length + ' scenarios, ' + (results.length - bad) + ' secure, ' + bad + ' vulnerable');

@@ -4,10 +4,14 @@
 //   version reads it, and only developer mode can unlock it.
 // • The family list (fingerprints of name + code, and of the shared family password) is kept only here. The site asks
 //   "is this fingerprint on the list?" and gets yes/no, a few times a minute at most – so it can no longer be copied and guessed offline.
+// • 13.94 (security fix): the list no longer holds the phone's fingerprint itself – only a one-way server tag of it
+//   (SHA-256 of "fam-srv-v1:" + fingerprint), compared in constant time. Before, the fingerprint was both what was stored and
+//   what was sent, so anyone who saw a stored value (an old public seed file) could send it and get "yes". Now a stored value
+//   cannot be sent back: the phone must derive the fingerprint from the real name/code or password. Lists stored before this
+//   change are turned into tags on the first read. The old seed file is gone; a password that was in it must be changed.
 // • Signed family changes from developer mode (fcs1) are checked here with the developer's public key, as the old bot did.
 // No IP address is stored: the limit lives only in memory, keyed by a one-way fingerprint.
 import LEG_INBOX from './_legacy_inbox.json';
-import LEG_FAMILY from './_legacy_family.json';
 
 const APP = 'calc', TOPIC = 'fc-in-318ca4899cb6f959f4e4de51';
 const PUB = {kty: 'RSA', e: 'AQAB', n: 'wxtR5meXd5lblZDdURSscmj48iXULVTtEJtrqAj6Lsm6GnSd18JVzEuhQfgRZJZ-3BXPJNaUWFEwRh2YAYsNpeceOWkrKeq3R4vigswqUDVSphAe-v_UUQoCpRXT3vypPYbBps_6ndsVcn96UjdW1Azz12ZrIn0JJprYVhZEh7UDpVoXM0WUHOxItdNHWfeOJ_D9dZXrYPlup9GANJsPMygFPbIv2bdIwHjoPxhir3ZmmGilH5yqTvOJw1Rc504ofLc9JY3oM1cR0pedexJbU8vZwrU2i5atTNvFRNvlh31HH7HrR5FZ1NZxHnRlyMit-lqGIlxA2THDeLLkqr_INQ'};
@@ -26,20 +30,47 @@ async function seeded(env, k, leg){
   return v;
 }
 async function inbox(env){ return seeded(env, K_IB, LEG_INBOX); }
-async function family(env){ return seeded(env, K_FAM, LEG_FAMILY); }
+/* 13.94: the server tag of a family fingerprint, and a constant-time compare */
+const famTag = async h => hex(await crypto.subtle.digest('SHA-256', enc.encode('fam-srv-v1:' + h)));
+const HEX64 = /^[0-9a-f]{64}$/;
+function sameHex(a, b){ a = String(a || ''); b = String(b || ''); if (a.length !== 64 || b.length !== 64) return false; let d = 0; for (let i = 0; i < 64; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i); return d === 0; }
+/* a stored entry keeps only {id, s (tag), at, p}; an entry still holding the raw fingerprint (h) is turned into a tag */
+async function famEntry(x){
+  if (!x || typeof x !== 'object') return null;
+  const s = HEX64.test(String(x.s || '')) ? String(x.s) : HEX64.test(String(x.h || '')) ? await famTag(String(x.h)) : '';
+  if (!s) return null;
+  return {id: String(x.id || '').slice(0, 24), s, at: +x.at || Date.now(), ...(x.p ? {p: 1} : {})};
+}
+async function famClean(L){
+  const src = L && Array.isArray(L.m) ? L.m : [], m = [];
+  let ch = !(L && Array.isArray(L.m));
+  for (const x of src){ const e = await famEntry(x); if (!e){ ch = true; continue; } if (x.h || !x.s) ch = true; m.push(e); }
+  return {L: {v: 1, m}, ch};
+}
+async function family(env){
+  let v = null; try { v = await env.CFG.get(K_FAM, 'json'); } catch (e) { return {v: 1, m: []}; }
+  if (v == null) return {v: 1, m: []};
+  const {L, ch} = await famClean(v);
+  if (ch){ try { await put(env, K_FAM, L); } catch (e) {} }   // never leave a raw fingerprint in storage
+  return L;
+}
 async function replies(env){ return kv(env, K_RP, {v: 1, r: []}); }
 
 /* ---- the family check: yes or no, rate-limited ---- */
 const HITS = new Map();
 const ipKey = async req => hex(await crypto.subtle.digest('SHA-256', enc.encode('fam:' + (req.headers.get('cf-connecting-ip') || '?')))).slice(0, 16);
 function limited(k){ const now = Date.now(), a = (HITS.get(k) || []).filter(t => now - t < 60e3); a.push(now); HITS.set(k, a); if (HITS.size > 5000) HITS.clear(); return a.length > 10; }
+/* 13.94: the platform's shared limit (binding RL_AUTH in wrangler.jsonc), on top of the in-memory one; without the binding only the memory limit applies */
+async function rlOk(b, key){ if (!b || typeof b.limit !== 'function') return true; try { const r = await b.limit({key}); return !(r && r.success === false); } catch (e) { return true; } }
 export async function famCheck(req, env){
   if (req.method !== 'POST') return J({ok: false}, 405);
-  if (limited(await ipKey(req))) return J({ok: false, e: 'wait'}, 429);
+  const ik = await ipKey(req);
+  if (limited(ik) || !(await rlOk(env && env.RL_AUTH, 'fam:' + ik))) return J({ok: false, e: 'wait'}, 429);
   let h = ''; try { const t = await req.text(); if (t.length > 2000) return J({ok: false}, 413); h = String(JSON.parse(t).h || ''); } catch (e) {}
-  if (!/^[0-9a-f]{64}$/.test(h)) return J({ok: false}, 400);
-  const L = await family(env);
-  return J({ok: (L.m || []).some(x => x && x.h === h)});
+  if (!HEX64.test(h)) return J({ok: false}, 400);
+  const L = await family(env), tag = await famTag(h);
+  let ok = false; for (const x of L.m || []) ok = sameHex(x && x.s, tag) || ok;   // every entry is compared, so the time says nothing
+  return J({ok});
 }
 /* ---- admin only (behind the admin lock): read the inbox, read and change the family list ---- */
 export async function finAdmin(req, env, path){
@@ -48,8 +79,9 @@ export async function finAdmin(req, env, path){
     if (req.method === 'GET') return J(await family(env));
     if (req.method === 'PUT'){
       let d = null; try { d = await req.json(); } catch (e) {}
-      if (!d || !Array.isArray(d.m) || d.m.length > 200 || d.m.some(x => !x || !/^[0-9a-f]{64}$/.test(String(x.h || '')))) return J({ok: false}, 400);
-      const m = d.m.map(x => ({id: String(x.id || '').slice(0, 24), h: x.h, at: +x.at || Date.now(), ...(x.p ? {p: 1} : {})}));
+      /* a new entry comes as the phone's fingerprint (h) and is stored only as its tag; entries read back from here come as tags (s) */
+      if (!d || !Array.isArray(d.m) || d.m.length > 200 || d.m.some(x => !x || !(HEX64.test(String(x.h || '')) || HEX64.test(String(x.s || ''))))) return J({ok: false}, 400);
+      const m = []; for (const x of d.m) m.push(await famEntry(x));
       await put(env, K_FAM, {v: 1, m}); return J({ok: true});
     }
   }
@@ -83,7 +115,7 @@ async function famCmd(fam, msg){
   if (c.k === 'famrevoke'){ const keep = fam.m.filter(x => x.p || (+x.at || 0) > at); if (keep.length === fam.m.length) return false; fam.m = keep; return true; }
   const h = String(c.h || ''); if (c.k !== 'famset' || !/^[0-9a-f]{64}$/.test(h)) return false;
   const cur = fam.m.find(x => x.p); if (cur && (+cur.at || 0) >= at) return false;
-  fam.m = fam.m.filter(x => !x.p).concat([{id: 'p', p: 1, h, at}]); return true;
+  fam.m = fam.m.filter(x => !x.p).concat([{id: 'p', p: 1, s: await famTag(h), at}]); return true;
 }
 export async function finCron(env){
   if (!env || !env.CFG) return;

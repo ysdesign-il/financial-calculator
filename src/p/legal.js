@@ -6,7 +6,9 @@ const LG_DOCS = {
     ['lg_a_doneH', ['lg_a_d1', 'lg_a_d2', 'lg_a_d3', 'lg_a_d4', 'lg_a_d5', 'lg_a_d6', 'lg_a_d7', 'lg_a_d8', 'lg_a_d9', 'lg_a_d10', 'lg_a_d11', 'lg_a_d12', 'lg_a_d13', 'lg_a_d14', 'lg_a_d15'], true],
     ['lg_a_howH', ['lg_a_how']],
     ['lg_a_limH', ['lg_a_l1', 'lg_a_l2', 'lg_a_l3', 'lg_a_l4', 'lg_a_l5'], true],
-    ['lg_contactH', ['lg_a_contact']],
+    /* TODO(owner): Israeli accessibility rules expect the accessibility contact's name, phone and email here. They were not supplied
+       yet and must not be made up: put them in lg_a_coord (src/p/i96.js), or edit this page from the admin version (Edit button). */
+    ['lg_contactH', ['lg_a_contact', 'lg_a_coord']],
     ['lg_histH', ['lg_h_a1910g', 'lg_h_a1910f', 'lg_h_a1910e', 'lg_h_a1910d', 'lg_h_a1910c', 'lg_h_a1910b', 'lg_h_a1910', 'lg_h_1810'], true]
   ]},
   terms: {t: 'lg_termsT', ic: '📜', parts: [

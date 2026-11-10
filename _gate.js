@@ -32,12 +32,14 @@ const sh=async id=>hex(await crypto.subtle.digest('SHA-256',enc.encode('h:'+id))
 const rid=()=>hex(crypto.getRandomValues(new Uint8Array(20)));
 function devOf(req){const ua=req.headers.get('user-agent')||'';const os=/iPhone|iPad/.test(ua)?'iPhone/iPad':/Android/.test(ua)?'Android':/Windows/.test(ua)?'Windows':/Mac OS/.test(ua)?'Mac':'אחר';const br=/Edg\//.test(ua)?'Edge':/Chrome\//.test(ua)?'Chrome':/Firefox\//.test(ua)?'Firefox':/Safari\//.test(ua)?'Safari':'';return os+(br?' · '+br:'')}
 const COOK=(id,age)=>`adm=${id}; Path=/admin; Max-Age=${age}; HttpOnly; Secure; SameSite=Lax`;
-/* ---------- sessions: one KV key per device (sx:<app>:<id>), 30 days, checked on the server every time ----------
+/* ---------- sessions: one KV key per device (sx:<app>:<id>), checked on the server every time ----------
+   13.94: a session ends after 60 minutes without use (each use moves the limit on; the last use is noted at most every 5 minutes)
+   and at the latest 7 days after sign-in (was 30 days); then the sign-in page shows again.
    The developer key itself is never kept and never handed out after login: the session holds only the inbox secret
    (a one-way fingerprint of the key, "ib-v1:"), which opens the feedback inbox but cannot sign in. Stealing a session
-   therefore gives at most 30 days that can be cut off at once – never the permanent key. The Pages site asks its Worker copy. */
+   therefore gives at most an hour without use (7 days at most) that can be cut off at once – never the permanent key. The Pages site asks its Worker copy. */
 const ibSecOf=async h=>hex(await crypto.subtle.digest('SHA-256',enc.encode('ib-v1:'+h)));
-const TTL=2592000,SKEY=(o,id)=>'sx:'+o.app+':'+id;
+const TTL=604800,IDLE=3600e3,TOUCH=300e3,SKEY=(o,id)=>'sx:'+o.app+':'+id;
 async function aesK(id){return crypto.subtle.importKey('raw',await crypto.subtle.digest('SHA-256',enc.encode('dk:'+id)),'AES-GCM',false,['encrypt','decrypt'])}
 const b64=u=>btoa(String.fromCharCode(...new Uint8Array(u))),u8=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
 async function dkWrap(h,id){const iv=crypto.getRandomValues(new Uint8Array(12));return b64(iv)+'.'+b64(await crypto.subtle.encrypt({name:'AES-GCM',iv},await aesK(id),enc.encode(h)))}
@@ -47,10 +49,15 @@ async function sesNew(env,o,req,via,h){const id=rid(),cc=via&&via.cc||(req.cf&&r
   const lk='lg:'+o.app,G=await kvGet(env,lk,[]);G.push({at,dev,cc,h:await sh(id)});await env.CFG.put(lk,JSON.stringify(G.slice(-100)));
   try{await Promise.race([pushAll(env,'login',{t:'🔐 כניסה לניהול · '+(o.title||''),b:[dev,cc].filter(Boolean).join(' · ')+'. אם זה לא את/ה – אפשר לנתק את המכשיר בלוח הניהול.',u:new URL(req.url).origin+'/admin/#admk-s-ses',tag:'login'}),new Promise(r=>setTimeout(r,4000))])}catch(e){}
   return id}
-async function sesGet(env,o,id){if(!id)return null;let v=null;try{v=await env.CFG.get(SKEY(o,id),{type:'json',cacheTtl:30})}catch(e){}return v&&v.at&&Date.now()-v.at<TTL*1000?v:null}
+async function sesGet(env,o,id){if(!id)return null;let v=null;try{v=await env.CFG.get(SKEY(o,id),{type:'json',cacheTtl:30})}catch(e){}const now=Date.now();return v&&v.at&&now-v.at<TTL*1000&&(!v.seen||now-v.seen<IDLE)?v:null}
+/* the session was used: note it (sessions made before 13.94 have no note yet and get one now). The key keeps its first end date. */
+async function sesTouch(env,o,id,v){const now=Date.now();if(!v||(v.seen&&now-v.seen<TOUCH))return;const exp=Math.floor(v.at/1000)+TTL;if(exp-now/1000<120)return;
+  try{await env.CFG.put(SKEY(o,id),JSON.stringify(Object.assign({},v,{seen:now})),{expiration:exp,metadata:{at:v.at,dev:v.dev,cc:v.cc}})}catch(e){}}
+/* 13.94: the platform's shared limit (binding RL_AUTH in wrangler.jsonc), on top of the in-memory one; without the binding only the memory limit applies */
+async function rlOk(b,key){if(!b||typeof b.limit!=='function')return true;try{const r=await b.limit({key});return!(r&&r.success===false)}catch(e){return true}}
 async function sesList(env,o){const out=[];let cur;do{const r=await env.CFG.list({prefix:'sx:'+o.app+':',cursor:cur});for(const k of r.keys){const m=k.metadata||{};if(m.at&&Date.now()-m.at<TTL*1000)out.push({id:k.name.split(':')[2],at:m.at,dev:m.dev,cc:m.cc})}cur=r.list_complete?null:r.cursor}while(cur);return out}
 async function sesOk(env,o,id,req){if(!id)return false;
-  if(env&&env.CFG)return!!(await sesGet(env,o,id));
+  if(env&&env.CFG){const v=await sesGet(env,o,id);if(v)await sesTouch(env,o,id,v);return!!v}
   if(!o.upstream)return false;const c=OKSES.get(id);if(c&&Date.now()-c<5e3)return true;
   try{const r=await fetch(o.upstream+'/admin/__who',{headers:{cookie:'adm='+id}});if(r.ok){OKSES.set(id,Date.now());return true}OKSES.delete(id);return false}catch(e){return false}}
 /* sessions made before this change still hold the key: it is turned into the inbox secret on the way out */
@@ -133,14 +140,14 @@ export async function adminGate(req,serve,o,env){
     if(p==='/admin/__logout'){const sf=req.headers.get('sec-fetch-site');if(!(req.headers.get('x-adm-up')||sf==='same-origin'||(!sf&&(!og||og==='null'||og===u.origin))))return J({ok:false,e:'origin'},403)}
     else{if(og&&og!==u.origin)return J({ok:false,e:'origin'},403);if(!srv&&!og&&!/application\/json/i.test(ct))return J({ok:false,e:'origin'},403);if(og&&!/application\/json/i.test(ct))return J({ok:false,e:'type'},415)}}
   if(p==='/admin/__login'&&req.method==='POST'){
-    if(tooMany(ip))return J({ok:false,e:'wait'},429);
+    if(tooMany(ip)||!(await rlOk(env&&env.RL_AUTH,'adm:'+ip)))return J({ok:false,e:'wait'},429);
     let h='';try{h=(await req.json()).h}catch(e){}
     if(!(await keyOk(h,env))){fail(ip);return J({ok:false},401)}
     FAILS.delete(ip);let id='';
     if(KV)id=await sesNew(env,o,req,null,h);
     else if(o.upstream){try{const r=await fetch(o.upstream+'/admin/__newses',{method:'POST',headers:{'content-type':'application/json','x-adm-key':h},body:JSON.stringify({dev:devOf(req),cc:(req.cf&&req.cf.country)||''})});const j=await r.json();id=j.id||''}catch(e){}}
     if(!id)return J({ok:false,e:'store'},503);
-    return J({ok:true},200,{'set-cookie':COOK(id,2592000)})}
+    return J({ok:true},200,{'set-cookie':COOK(id,TTL)})}
   if(p==='/admin/__newses'&&req.method==='POST'&&KV){if(!(await keyOk(req.headers.get('x-adm-key')||'',env)))return J({ok:false},401);let v={};try{v=await req.json()}catch(e){}return J({ok:true,id:await sesNew(env,o,req,v,req.headers.get('x-adm-key'))})}
   if(p==='/admin/__sw.js')return new Response(PUSH_SW,{headers:{'content-type':'text/javascript; charset=utf-8','cache-control':'no-cache','x-robots-tag':'noindex'}});
   const id=cookieSes(req);
