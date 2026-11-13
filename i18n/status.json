@@ -1,11 +1,11 @@
 {
- "started": "2026-11-12 19:31:51 UTC",
+ "started": "2026-11-13 01:46:33 UTC",
  "events": [
   "No Gemini key: add the repository secret GEMINI_API_KEY to translate automatically."
  ],
  "langs": {},
  "needs": "GEMINI_API_KEY",
- "finished": "2026-11-12 19:31:51 UTC",
+ "finished": "2026-11-13 01:46:34 UTC",
  "coverage": {
   "zh-CN": 11111,
   "fr": 11111,
