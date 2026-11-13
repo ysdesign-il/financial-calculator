@@ -33,6 +33,6 @@ jobs:
               - lang
               - i18n
               - '*.json'
-      - uses: github/codeql-action/analyze@ce5e7eeac396d720fe2d802714996c8ce561e311 # v3
+      - uses: github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066 # v3
         with:
           category: "/language:${{ matrix.language }}"
