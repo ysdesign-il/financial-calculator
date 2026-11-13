@@ -20,6 +20,9 @@
     { "name": "RL_AUTH", "namespace_id": "9401", "simple": { "limit": 10, "period": 60 } },
     { "name": "RL_NEW", "namespace_id": "9402", "simple": { "limit": 3, "period": 60 } }
   ],
+  // 13.11.2026: no public preview links. Old branches would otherwise keep older code reachable on its own address,
+  // working with the live data. To show a sketch again, set this to true for a while (and back to false afterwards).
+  "preview_urls": false,
   // preview versions (made by the automatic updates) need their own KV entry; they use the same settings
   "previews": { "kv_namespaces": [{ "binding": "CFG", "id": "a44762eefe234d5ebaf128cc9aba83ec" }], "d1_databases": [{ "binding": "DB", "database_name": "fin-accounts", "database_id": "85911bc0-8d3d-4361-aa5f-ed37ee8b5186" }] },
   // every half hour: health check of the sites, for the owner's phone alerts
